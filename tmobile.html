@@ -1,0 +1,802 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html> 
+<head> 
+  <meta charset="utf-8" /> 
+
+  <title>twister mobile</title>
+  
+  <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+  <link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />
+  <script src="jquery-1.9.1.min.js"></script>
+  <script src="jquery.mobile.router.min.js"></script>
+  <script>
+    $(document).bind('mobileinit', function () {
+      $.mobile.allowCrossDomainPages = true;
+      $.mobile.zoom.enabled = false;
+      $.mobile.buttonMarkup.hoverDelay = 0; //defaults 200
+      $.mobile.defaultDialogTransition = 'none';
+      $.mobile.defaultPageTransition = 'none';
+    });
+  </script>
+  <script src="jquery.mobile-1.3.2.min.js"></script>
+
+    <script src="jQueryPlugins.js"></script>
+    <script src="jquery.json-2.4.js"></script>
+    <script src="jquery.jsonrpcclient.js"></script>
+    <script src="jquery.storageapi.js"></script>
+    <script src="mobile_abstract.js?vr=9"></script>
+    <script src="twister_io.js?vr=9"></script>
+    <script src="twister_network.js?vr=9"></script>
+    <script src="twister_user.js?vr=9"></script>
+    <script src="twister_formatpost.js?vr=9"></script>
+    <script src="twister_following.js?vr=9"></script>
+    <script src="twister_timeline.js?vr=9"></script>
+    <script src="twister_newmsgs.js?vr=9"></script>
+    <script src="twister_actions.js?vr=9"></script>
+    <script src="twister_directmsg.js?vr=9"></script>
+    <script src="interface_common.js?vr=9"></script>
+    <script src="tmobile.js?vr=9"></script>
+    <script src="jpeg_encoder_basic.js"></script>
+</head> 
+<body> 
+
+<style>
+  .ui-li-heading { margin: 0em 0 0.6em 0; }
+  .ui-li-desc {  margin: -.5em 0 .6em; text-overflow: ellipsis; overflow: visible; white-space: pre-line; }
+  .ui-li-thumb, .ui-li-icon { top: 13px; }
+
+  .ui-input-search { width: 50% !important;}
+
+  .ui-btn-icon-right .ui-icon { position: absolute; top: 30%; margin-top: -9px; }
+
+  .no-ellipsis {text-overflow: initial !important; overflow: visible !important;
+                white-space: normal !important; }
+
+  img.avatar {
+    -webkit-border-radius: 10px;
+    -mox-border-radius:10px;
+    border-radius: 10px;
+    width: 50px; height: 50px;
+  }
+  img.size24 {width: 24px; height: 24px;}
+  #profile-edit img.avatar {display:block; margin-left: auto; margin-right: auto; width: 64px; height: 64px;}
+ 
+  .ui-listview .post a{ color: #0030ff; }
+  
+  #post li.original { background: #fff; /*top:5px; border-width:5px !important;*/}
+  #post li.related .post-interactions { display:none; }
+  
+  #new-user-modal .text { margin: 0 0 15px 0; }
+  #new-user-modal .emphasis { font-size: 18px; text-align: center; }
+  #new-user-modal .secret-key { font-weight: bold; word-break:break-all; }
+  #profile-edit .secret-key { word-break:break-all; }
+  
+  .header {position:fixed;z-index:10;top:0;width:100%}
+  .content {padding:15px 20px 20px 20px;}
+  .footer {position:fixed;z-index:10;bottom:0;width:100%}
+}
+  
+</style>
+
+<div id="index" data-role="page">
+  <div class="content" data-role="content" style="">
+    <div>twister mobile</div>
+    <a href="#login">login</a>
+    <a href="#network">network</a>
+    <a href="#home">home</a>
+  </div>
+</div>
+
+
+<div id="login" data-role="page">
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <h1 class="rtitle">twister login</h1>
+  </div>
+
+  <div class="content" data-role="content" style="">  
+    <div class="login">
+      <div class="module">
+        <span> Existing local users </span>
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <select class="local-usernames login-user"></select>
+            </div>
+            <div class="ui-block-b">
+                <button class="login-local-username">Login</button>
+            </div>
+        </div>
+      </div>
+
+      <hr/>
+      <span> Or... </span>
+
+      <div class="module">
+        <span> Create a new user </span>
+        <div>
+            <input class="new-username" type="textbox" placeholder="Type nickname here" cols="16" rows="1"></input>
+            <button class="check-availability">Check availability</button>
+            <span class="availability"></span>
+        </div>
+        <div>
+            <button class="create-user disabled" disabled="disabled">Create this nickname</button>
+        </div>
+      </div>
+
+      <hr/>
+      <span> Or... </span>
+
+      <div class="module">
+        <div>
+            <span> Import secret key </span>
+            <input class="secret-key-import" type="textbox" placeholder="52-characters secret" size="52" rows="1"></input>
+        </div>
+        <div>
+            <span> With nickname </span>
+            <input class="username-import" type="textbox" placeholder="Type nickname here" size="16" rows="1"></input>
+        </div>
+        <div>
+            <button class="import-secret-key disabled" disabled="disabled">Import key</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="home" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal">
+    <a data-role="button" data-icon="refresh" class="timeline-refresh" rel="external">
+        Refresh
+    </a>
+    <a data-role="button" href="#mentions" class="mentions-count">
+        <!-- <span style="font-weight:normal; font-size: 15px;">@</span> -->
+        @
+    </a>
+    </div>
+    
+    <h1 class="rtitle"></h1>
+
+    <a href="#newmsg" class="ui-btn-right" style="">New post</a>
+  </div>
+
+  <div class="content" data-role="content">  
+    <div class="timeline">
+       <ul class="posts" data-role="listview">
+       </ul>
+    </div>
+  </div>
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#login" data-role="button">Login</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="post" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <a href="#search" class="ui-btn-left" style="">Search</a>
+    <h1 class="rtitle">twister</h1>
+    <a href="#newmsg" class="ui-btn-right" style="">New post</a>
+  </div>
+
+  <div class="content" data-role="content">
+    <ul class="posts" data-role="listview">
+    </ul>
+  </div>
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+
+<div id="mentions" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <a href="#search" class="ui-btn-left" style="">Search</a>
+    <h1 class="rtitle"></h1>
+    <a href="#newmsg" class="mention-newmsg ui-btn-right" style="">New post</a>
+  </div>
+
+  <div class="content" data-role="content">
+    <ul class="posts" data-role="listview">
+    </ul>
+  </div>
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="hashtag" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <a href="#search" class="ui-btn-left" style="">Search</a>
+    <h1 class="rtitle"></h1>
+    <a href="#newmsg" class="hashtag-newmsg ui-btn-right" style="">New post</a>
+  </div>
+
+  <div class="content" data-role="content">
+    <ul class="posts" data-role="listview">
+    </ul>
+  </div>
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+
+
+<div id="newmsg" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <h1 class="rtitle">New post</h1>
+  </div>
+
+  <div class="content" data-role="content">
+  
+    <div class="tbox" style="">
+      <div style="padding-left:5px; width:300px; margin-bottom: 30px;">
+      
+        <form class="post-area-new open">
+          <textarea placeholder="New Post..." style="height:85px; width:270px;"></textarea>
+          <div class="post-area-extras">
+            <span class="post-area-remaining">140</span>
+            <button class="post-submit disabled" disabled="disabled"
+                    style="float:right; height:44px; font-weight: bold; font-size: 115%%; margin-bottom: 5px; margin-right: 5px;">
+              Send</button>
+          </div>
+        </form>
+      </div>
+      <hr/>
+      <ul class="reply-original-post" data-role="listview">
+      </ul>
+    </div>
+  </div>
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="rt" data-role="page">
+
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <h1 class="rtitle">Retransmit</h1>
+  </div>
+
+  <div class="content" data-role="content">
+    <div>
+        <h3>Retransmit this post to your followers? </h3>
+    </div>
+
+    <div>
+      <hr/>
+      <ul class="rt-original-post" data-role="listview">
+      </ul>
+    </div>
+    <div>&nbsp;</div>
+    <button class="retransmit-confirm" href="#">Confirm</button>
+
+  </div>
+
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+
+<div id="profile" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <a href="#search" class="ui-btn-left" style="">Search</a>
+    <h1 class="rtitle">Profile</h1>
+    <a href="#newmsg" class="profile-newmsg ui-btn-right" style="">New post</a>
+  </div>
+
+  <div class="content" data-role="content">
+  
+     <div class="profile-card" data-screen-name="">
+       <!-- Coloquei a imagem de fundo do card do usuário como background da div
+            abaixo inline na tag para poder ser alterada dinamicamente
+            style="background: url(img/imgBack.png) no-repeat center center;"-->
+       <div class="profile-card-main">
+         <img class="profile-card-photo avatar" src="img/grayed_avatar_placeholder_24.png"/>
+         <h1 class="profile-name"></h1>
+         <h2 class="profile-screen-name">@<b></b></h2>
+         <div>
+           <span class="profile-location"></span>
+           <a class="profile-url" rel="nofollow" target="_blank"></a>
+         </div>
+         <div class="profile-bio">
+         </div>
+       </div>
+       <ul class="module profile-data">
+         <li><a href="#"><span class="posts-count">&nbsp;</span>Posts</a></li>
+         <li><a href="#"><span class="following-count">&nbsp;</span>Following</a></li>
+         <li><a href="#"><span class="followers-count">&nbsp;</span>Followers</a></li>
+       </ul>
+       <a data-role="button" data-mini="true" class="follow" href="#following">Follow</a>
+       <a data-role="button" data-mini="true" class="direct-messages-with-user" href="#dmchat">Direct Message</a>
+       <a data-role="button" data-mini="true" class="mentions-from-user" href="#mentions">Mentions</a>
+       <div>&nbsp;</div>
+    </div>
+    
+    <div>
+        <ul class="posts postboard-posts" data-role="listview">
+        </ul>
+    </div>
+  </div>
+
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="profile-edit" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <a href="#login" class="ui-btn-left" style="">Login</a>
+    <h1 class="rtitle">Edit Profile</h1>
+    <a href="#following" class="ui-btn-right" style="">Following</a>
+  </div>
+
+  <div class="content" data-role="content">
+      <input type="file" id="avatar-file" name="avatar_files"/>
+      <div class="profile-card forEdition">
+      <!-- Coloquei a imagem de fundo do card do usuário como background da div abaixo inline na tag para poder ser alterada dinamicamente -->
+      <div class="profile-card-main" style="background: url(img/img.png) no-repeat center center #b43e34;">
+        <img class="profile-card-photo forEdition avatar" src="img/genericPerson.png"/>
+        <input type="text" class="input-name" placeholder="Full name here"/>
+        <h2></h2>
+        <input type="text" class="input-description" placeholder="Describe yourself"/>
+        <input type="text" class="input-city" placeholder="Location"/>
+        <input type="text" class="input-website" placeholder="website"/>
+      </div>
+      <div class="profile-edition-buttons">
+          <button class="cancel-changes" href="#">Cancel</button>
+          <button class="submit-changes" href="#">Save Changes</button>
+      </div>
+
+      <div style="font-size:80%;text-align: center;">
+         Secret key: <span class="secret-key"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+
+<div id="following" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <a href="#search" class="ui-btn-left" style="">Search</a>
+    <h1 class="rtitle">Following</h1>
+  </div>
+
+  <div class="content" data-role="content">
+      <ul class="following-list" data-role="listview">
+        <li id="following-user-template" style="display: none;">
+            <div class="mini-profile-info" data-screen-name="">
+                <a href="#" class="open-profile-modal">
+                    <img class="mini-profile-photo avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                    <span class="mini-profile-name">Fulano da Silva</span>
+                    <span>&nbsp;</span>
+                    <span class="mini-screen-name">@
+                        <b class="following-screen-name"></b>
+                    </span>
+                </a>
+                <div>
+                    <a data-role="button" data-mini="true" class="unfollow">Unfollow</a>
+                    <a data-role="button" data-mini="true" class="direct-messages-with-user" href="#dmchat">Direct Message</a>
+                    <!-- <a data-role="button" data-mini="true" class="public-following">Public</button> -->
+                </div>
+                <div>
+                    <span class="swarm-status" style="display: none;"></span>
+                </div>
+            </div>
+        </li>
+      </ul>
+
+      <div class="not-following-any" style="display:none;">
+            <h3>
+               <div> Not following any users! </div>
+               <div> Use "Search" button to find and follow some.</div>
+            </h3>
+      </div>
+  </div>
+
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+
+<div id="network" data-role="page">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <a href="#login" class="ui-btn-left" style="">Login</a>
+    <h1 class="rtitle">twister</h1>
+  </div>
+
+  <div class="content" data-role="content">
+    <div class="network singleBlock">
+      <h2> Network status </h2>
+
+      <div class="module">
+        <h3> General information</h3>
+        <ul style="background: center center #ffff00; font-weight:bold">
+           <div>&nbsp;</div>
+           <div>
+              <span class="network-status highlight connection-status">Updating status...</span>
+           </div>
+           <div>&nbsp;</div>
+        </ul>
+          
+        <h3> Detailed information </h3>
+        <ul>
+          <li class="connections">
+              <label>Connections: </label>
+              <span class="connection-count">1</span>
+          </li>
+          <li>
+              <label>Known peers: </label>
+              <span class="known-peers">6</span>
+          </li>
+          <li>
+              <label>Active DHT nodes: </label>
+              <span class="dht-nodes">0</span>
+          </li>
+          <li>
+              <label>Force connection to peer:</label>
+              <input class="new-peer-addr" type="textbox" placeholder="peer address" size="20"/>
+              <button class="add-peer disabled" disabled="disabled">Add peer</button>
+          </li>
+          <li>
+              <label>DNS to obtain list of peers:</label>
+              <input class="new-dns-addr" type="textbox" placeholder="dns address" size="20"/>
+              <button class="add-dns disabled" disabled="disabled">Add DNS</button>
+          </li>
+        </ul>
+
+        <h3> Block chain information </h3>
+        <ul>
+          <li>
+              <label>Number of blocks in block chain:</label>
+              <span class="blocks">2813</span>
+          </li>
+          <li>
+              <label>Time of the last block:</label>
+              <span class="last-block-time">Fri Nov 08 2013 08:32:48 </span>
+          </li>
+        </ul>
+      </div>
+
+      <h2>Configure block generation</h2>
+
+      <div class="module">
+        <h3> Generate blocks (send promoted messages)</h3>
+        <ul>
+          <li>
+              <label> Block generation </label>
+              <select class="genblock">
+                  <option value="disable">Disable</option>
+                  <option value="enable">Enable</option>
+              </select>
+          </li>
+          <li>
+              <label> Number of CPUs to use </label>
+              <input class="genproclimit" type="textbox" value="1" size="3"/>
+          </li>
+          <li>
+              <label> Post to promote: </label>
+              <textarea class="spam-msg" placeholder="Type message here"></textarea>
+          </li>
+          <li>
+              <label> Send post with username </label>
+              <select class="local-usernames spam-user">
+                  <option value="nobody">nobody</option>
+              </select>
+              <div class="character-limit">
+                <span class="post-area-remaining">140</span>
+                <button class="update-spam-msg enabled">Update</button>
+              </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+    
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="directmsg" data-role="page">
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <h1 class="rtitle">Direct Messages</h1>
+  </div>
+
+  <div class="content" data-role="content">  
+    <ul class="direct-messages-thread" data-role="listview">
+    </ul>
+  </div>
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="dmchat" data-role="page">
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <h1 class="rtitle">Chat with</h1>
+  </div>
+
+  <div class="content" data-role="content">
+    <ul class="direct-messages-list" data-role="listview">
+    </ul>
+    
+    <div class="dm-form" style="padding:15px 20px 20px 20px;">
+      <form class="post-area-new open">
+        <textarea placeholder="New direct message..."></textarea>
+        <div class="post-area-extras">
+          <span class="post-area-remaining">140</span>
+          <button class="dm-submit disabled" disabled="disabled">send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+<div id="search" data-role="page">
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+    <h1 class="rtitle">Search users</h1>
+  </div>
+
+  <div class="content" data-role="content">
+    <div>
+      <input type="text" class="userMenu-search-field" placeholder="Type partial username here"/>
+    </div>
+    <div>&nbsp;</div>
+    <div>
+        <ul class="userMenu-search-profiles" data-role="listview">
+          <li id="search-profile-template" style="display: none;">
+            <a class="mini-profile-info open-profile-modal" data-screen-name="">
+              <img class="mini-profile-photo avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+              <span class="mini-screen-name">@<b></b></span>
+              <span class="mini-profile-name"></span>
+              <!-- <button class="follow">Follow</button> -->
+            </a>
+          </li>
+        </ul>
+    </div>
+  </div>
+  
+  
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#home" data-role="button">Home</a>
+    <a href="#network" data-role="button">Network</a>
+    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+    <a href="#profile-edit" data-role="button">Profile</a>
+  </div>
+</div>
+
+
+<div id="new-user-modal" data-role="page" style="max-width:400px;" class="ui-corner-all">
+    <div data-role="header" class="ui-corner-top">
+        <h1>New user created</h1>
+    </div>
+    <div role="main" class="ui-corner-bottom ui-content">
+        <div class="text">
+            A new user was created and it is being propagated to the network.
+            Please do not close this window, this might take a few minutes.
+        </div>
+        <div class="text emphasis">
+            Your secret key is: 
+            <div class="secret-key"></div>
+        </div>
+        <div class="text">
+            It is highly recommended that you take this time to save your secret key.
+            Print it, do a screenshot, use the camera in your phone or write it down
+            to a piece of paper.
+        </div>
+        <div class="text">
+            The secret key will be needed to use this account from different computers.
+            If you ever lose your secret key (remember: this is alpha software and it may
+            crash, causing loss of data) your nickname will be locked forever.
+            There is no way to recover a lost key for twister accounts.
+        </div>
+        <div class="text"></div>
+        <div class="text">
+            Please wait. This page will be refreshed automatically.
+        </div>
+
+        <!-- <a href="#" data-role="button" data-inline="true" data-rel="back">Ok</a> -->
+    </div>
+</div>
+
+
+
+<div id="dialog_page" data-role="page" style="background:gray;">
+    
+  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+    <a class="back-btn" href="#home" data-icon="arrow-l" data-rel="back">Back</a>
+    
+    <h1 class="page-title"></h1>
+  </div>
+
+  <div class="content" data-role="content" style="">
+  
+    <div class="ui-body-c" style="padding:10px; border-radius: 10px;">
+      <div class="dialog-title" style="font-size: 105%; font-weight:bold; margin-bottom:10px; text-align:center;"></div>
+      <div class="dialog-description" style="width:100%; margin-bottom:20px; text-align:center;"></div>
+    
+      <div class="dialog-buttons" style="width:100%;"></div>
+    </div>
+  </div>
+  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#" data-role="button" class="logoutButton">Logout</a>    
+  </div>  
+</div>
+
+<div id="anywhere"></div>
+
+<div id="templates" style="display:none;">
+    <li id="post-template-home" class="post-li module post" data-time="">
+        <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+        <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""
+             data-screen-name="" data-id="" data-text="" data-text-mentions="">
+            <h4 class="post-info">
+                <a href="#" class="post-info-name open-profile-modal status_reply"></a>
+                <span class="post-info-tag"></span>
+                <span style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"></span>
+            </h4>
+            <p class="post-text no-ellipsis"></p>
+            <div class="post-context" style="display: none;">
+                <i class="post-retransmited-icon"></i>
+                <span style="font-size:60%;">Retransmited by
+                    <a class="post-retransmited-by open-profile-modal" href=""></a>
+                </span>
+            </div>
+        </div>
+    </li> <!-- post-template -->
+    
+    <li id="post-template-post" class="module post" data-time="">
+        <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+        <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""
+             data-screen-name="" data-id="" data-text="" data-text-mentions="">
+            <h4 class="post-info">
+                <a href="#" class="post-info-name open-profile-modal"></a>
+                <span class="post-info-tag"></span>
+                <span style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"></span>
+            </h4>
+            <p class="post-text no-ellipsis"></p>
+            <div class="post-context" style="display: none;">
+                <i class="post-retransmited-icon"></i>
+                <span style="font-size:60%;">Retransmited by
+                    <a class="post-retransmited-by open-profile-modal" href=""></a>
+                </span>
+            </div>
+            <!-- elementos de interação com o post que são exibidos no hover -->
+            <fieldset class="post-interactions ui-grid-a" data-role="fieldcontain">
+                <div class="ui-block-a">
+                    <button class="post-reply" data-mini="true">Reply</button>
+                </div>
+                <div class="ui-block-b">
+                    <button class="post-propagate" data-mini="true">RT</button>
+                </div>
+            </fieldset>
+            <div class="expanded-content">
+                <span class="post-stats" style="display: none;">
+                    <span class="stat-count" style="font-size:80%;">
+                            <span class="stat-count-value"></span>
+                            <span>Retransmits</span>
+                    </span>
+                    <span class="avatar-row">
+                        <!-- use "avatar-row-template" here -->
+                    </span>
+                </span>
+            </div> <!-- expanded-content -->
+        </div> <!-- post-data -->
+    </li> <!-- post-template -->
+    
+    
+    <!-- template for user links in message (open profile modal) -->
+    <a id="msg-user-link-template" class="open-profile-modal"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="hashtag-link-template" class="open-hashtag-modal"></a>
+    
+    <!-- template para ir dentro de avatar-row -->
+    <a id="avatar-row-template" class="open-profile-modal" href="">
+       <img class="avatar size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+    </a>
+    
+    <!-- template for dm-snippet (dm threads list)  -->
+    <li id="dm-snippet-template" class="module post message" data-icon="arrow-r">
+      <a class="dm-chat-link post-photo" href="#dmchat">
+        <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+        <h4 class="post-info">
+          <span class="post-info-name open-profile-modal"></span>
+          <span class="post-info-tag">@</span>
+          <span style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"></span>
+        </h4>
+        <!-- o texto do post (restrição de caracteres?) -->
+        <p class="post-text"></p>
+      </a>
+    </li>
+    
+    <!-- template for each dm (chat window) -->
+    <li id="dm-chat-template" class="module post message">
+      <h4 class="post-photo">
+        <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+        <span style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"></span>
+      </h4>
+      <p class="post-text no-ellipsis"></p>
+    </li>
+    
+</div> <!-- templates -->
+
+
+</body> 
+</html> 

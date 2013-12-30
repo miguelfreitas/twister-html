@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>twister login</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <script src="jquery.min.js"></script>
+    <script src="jQueryPlugins.js"></script>
+    <script src="jquery.json-2.4.js"></script>
+    <script src="jquery.jsonrpcclient.js"></script>
+    <script src="jquery.storageapi.js"></script>
+    <script src="mobile_abstract.js"></script>
+    <script src="twister_io.js"></script>
+    <script src="twister_network.js"></script>
+    <script src="twister_user.js"></script>
+    <script src="interface_common.js"></script>
+    <script src="interface_login.js"></script>
+
+    <script>
+        $(document).ready(function()
+        {
+           initInterfaceLogin();
+        });
+    </script>
+  </head>
+
+  <body>
+    
+  <!-- MENU SUPERIOR INIT --> 
+  <nav class="userMenu">
+    <ul>
+    <li class="userMenu-home"><a href="home.html">Home</a></li>
+    <li class="userMenu-network"><a href="network.html">Network</a></li>
+    <li class="userMenu-profile current"><a href="login.html">Login</a></li>
+      <li class="userMenu-config">
+      </li>
+      
+    
+
+    </ul>
+  </nav>
+  <!-- MENU SUPERIOR END -->
+
+
+  <div class="wrapper">
+
+  <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
+    <div class="login">
+      <h2> twister login </h2>
+
+      <div class="module">
+        <span> Existing local users </span>
+        <div>
+            <select class="local-usernames login-user">
+            </select>
+            <button class="login-local-username">Login</button>
+        </div>
+      </div>
+
+      <span> Or... </span>
+
+      <div class="module">
+        <span> Create a new user </span>
+        <div>
+            <input class="new-username" type="textbox" placeholder="Type nickname here" cols="16" rows="1"></input>
+            <button class="check-availability">Check availability</button>
+            <span class="availability"></span>
+        </div>
+        <div>
+            <button class="create-user disabled" disable="true">Create this nickname</button>
+        </div>
+      </div>
+
+      <span> Or... </span>
+
+      <div class="module">
+        <div>
+            <span> Import secret key </span>
+            <input class="secret-key-import" type="textbox" placeholder="52-characters secret" size="52" rows="1"></input>
+        </div>
+        <div>
+            <span> With nickname </span>
+            <input class="username-import" type="textbox" placeholder="Type nickname here" size="16" rows="1"></input>
+        </div>
+        <div>
+            <button class="import-secret-key disabled" disable="true">Import key</button>
+        </div>
+      </div>
+
+    </div>
+  <!-- LADO ESQUERDO DE MÓDULOS END -->
+
+  </div>
+
+  <!-- TEMPLATES INIT -->
+  <div id="templates" style="display:none;">
+
+    
+    <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
+    <div class="modal-blackout">
+      <div class="modal-wrapper">
+        <div class="modal-header">
+          <h3></h3>
+          <span id="closeModal" class="modal-close cancel">X</span>
+        </div>
+        <div class="modal-content"></div>
+        <div class="modal-buttons">
+          <button class="modal-cancel cancel">Cancel</button>
+          <button class="modal-propagate">Retransmit</button>
+        </div>
+      </div>
+    </div>
+    <!-- TEMPLATE DO MODAL GENÉRICO END -->
+
+    <!-- MODAL DE NEW USER INIT -->
+    <div id="new-user-modal-template">
+      <div class="warning">
+            <div class="text">
+                A new user was created and it is being propagated to the network.
+                Please do not close this window, this might take a few minutes.
+            </div>
+            <div class="text emphasis">
+                Your secret key is: <span class="secret-key"></span>
+            </div>
+            <div class="text">
+                It is highly recommended that you take this time to save your secret key.
+                Print it, do a screenshot, use the camera in your phone or write it down
+                to a piece of paper.
+            </div>
+            <div class="text">
+                The secret key will be needed to use this account from different computers.
+                If you ever lose your secret key (remember: this is alpha software and it may
+                crash, causing loss of data) your nickname will be locked forever.
+                There is no way to recover a lost key for twister accounts.
+            </div>
+            <div class="text"></div>
+            <div class="text">
+                Please wait. The 'OK' button will be shown when process completes.
+            </div>
+            <div class="text">
+                <button class="login-created-user" style="display:none;">OK</button>
+            </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- TEMPLATES END -->
+    
+  </body>
+</html>
