@@ -90,7 +90,7 @@ function directMsgSubmit(e)
 
     var $dmConversation = $(".directMessages");
 
-    newDirectMsg($replyText.val(), dmConversation.attr("data-dm-screen-name"));
+    newDirectMsg($replyText.val(), $dmConversation.attr("data-dm-screen-name"));
 
     $replyText.val("");
 }
