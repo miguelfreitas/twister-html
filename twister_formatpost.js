@@ -159,6 +159,10 @@ function htmlFormatMsg( msg, output, mentions ) {
         }
 
         var httpindex = msg.indexOf("http://");
+        var httpsindex = msg.indexOf("https://");
+        if (httpsindex != -1) {
+            httpindex = httpsindex;
+        }
         if( httpindex != -1 ) {
             output.append(msg.substr(0, httpindex));
             tmp = msg.substring(httpindex);
