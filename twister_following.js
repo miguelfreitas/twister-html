@@ -12,6 +12,7 @@ var _followingSeqNum = 0;
 var _followSuggestions = [];
 var _searchingPartialUsers = "";
 var _searchKeypressTimer = undefined;
+var _lastSearchUsersResults = [];
 var _lastLoadFromDhtTime = 0;
 
 // load followingUsers from localStorage
@@ -326,6 +327,8 @@ function closeSearchDialog()
 {
     var $this = $(".userMenu-search-field");//$( this );
     $( this ).siblings().slideUp( "fast" );
+    removeUsersFromDhtgetQueue( _lastSearchUsersResults );
+    _lastSearchUsersResults = [];
 }
 
 function userSearchKeypress(item) {
@@ -366,6 +369,9 @@ function processDropdownUserResults(partialName, results){
         searchPartialUsername( _searchingPartialUsers );
         return;
     }
+
+    removeUsersFromDhtgetQueue( _lastSearchUsersResults );
+    _lastSearchUsersResults = results;
 
     var typeaheadAccounts = $(".userMenu-search-profiles");
     var template = $("#search-profile-template").detach();

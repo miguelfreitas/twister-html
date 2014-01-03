@@ -15,10 +15,22 @@ function twisterRpc(method, params, resultFunc, resultArg, errorFunc, errorArg) 
     );
 }
 
-// private variables for cache or pending and already known values returned by dhtget
+// join multiple dhtgets to the same resources in this map
 var _dhtgetPendingMap = {};
+
+// memory cache for profile and avatar
 var _profileMap = {};
 var _avatarMap = {};
+
+// number of dhtgets in progress (requests to the daemon)
+var _dhtgetsInProgress = 0;
+
+// keep _maxDhtgets smaller than the number of daemon/browser sockets
+// most browsers limit to 6 per domain (see http://www.browserscope.org/?category=network)
+var _maxDhtgets = 5;
+
+// requests not yet sent to the daemon due to _maxDhtgets limit
+var _queuedDhtgets = [];
 
 // private function to define a key in _dhtgetPendingMap
 function _dhtgetLocator(username, resource, multi) {
@@ -83,15 +95,58 @@ function dhtget( username, resource, multi, cbFunc, cbArg ) {
         _dhtgetAddPending(locator, cbFunc, cbArg);
     } else {
         _dhtgetAddPending(locator, cbFunc, cbArg);
+        // limit the number of simultaneous dhtgets.
+        // this should leave some sockets for other non-blocking daemon requests.
+        if( _dhtgetsInProgress < _maxDhtgets ) {
+            _dhtgetInternal( username, resource, multi );
+        } else {
+            // just queue the locator. it will be unqueue when some dhtget completes.
+            _queuedDhtgets.push(locator);
+        }
+    }
+}
 
-        twisterRpc("dhtget", [username,resource,multi],
-                   function(args, ret) {
-                       _dhtgetProcessPending(args.locator, args.multi, ret);
-                   }, {locator:locator,multi:multi},
-                   function(cbArg, ret) {
-                       console.log("ajax error:" + ret);
-                       _dhtgetAbortPending(locator);
-                   }, locator);
+function _dhtgetInternal( username, resource, multi ) {
+    var locator = _dhtgetLocator(username, resource, multi);
+    _dhtgetsInProgress++;
+    twisterRpc("dhtget", [username,resource,multi],
+               function(args, ret) {
+                   _dhtgetsInProgress--;
+                   _dhtgetProcessPending(args.locator, args.multi, ret);
+                   _dhtgetDequeue();
+               }, {locator:locator,multi:multi},
+               function(cbArg, ret) {
+                   console.log("ajax error:" + ret);
+                   _dhtgetsInProgress--;
+                   _dhtgetAbortPending(locator);
+                   _dhtgetDequeue();
+               }, locator);
+}
+
+function _dhtgetDequeue() {
+    if( _queuedDhtgets.length ) {
+        var locatorSplit = _queuedDhtgets.pop().split(";");
+        _dhtgetInternal(locatorSplit[0], locatorSplit[1], locatorSplit[2]);
+    }
+}
+
+// removes queued dhtgets (requests that have not been made to the daemon)
+// this is used by user search dropdown to discard old users we are not interested anymore
+function removeUserFromDhtgetQueue(username) {
+    var resources = ["profile","avatar"]
+    for (var i = 0; i < resources.length; i++) {
+        var locator = _dhtgetLocator(username,resources[i],"s");
+        var locatorIndex = _queuedDhtgets.indexOf(locator);
+        if( locatorIndex > -1 ) {
+            _queuedDhtgets.splice(locatorIndex,1);
+            delete _dhtgetPendingMap[locator];
+        }
+    }
+}
+
+function removeUsersFromDhtgetQueue(users) {
+    for (var i = 0; i < users.length; i++ ) {
+        removeUserFromDhtgetQueue( users[i] );
     }
 }
 
