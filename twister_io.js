@@ -111,18 +111,26 @@ function dhtput( username, resource, multi, value, sig_user, seq, cbFunc, cbArg 
 
 // get something from profile and store it in item.text or do callback
 function getProfileResource( username, resource, item, cbFunc, cbArg ){
+    var profile = undefined;
     if( username in _profileMap ) {
+        profile = _profileMap[username];
+    } else {
+        profile = _getResourceFromStorage("profile:" + username);
+    }
+    if( profile ) {
+        _profileMap[username] = profile;
         if( item )
-            item.text(_profileMap[username][resource]);
+            item.text(profile[resource]);
         if( cbFunc )
-            cbFunc(cbArg, _profileMap[username][resource]);
+            cbFunc(cbArg, profile[resource]);
     } else {
         dhtget( username, "profile", "s",
                function(args, profile) {
                    if( profile ) {
                        _profileMap[args.username] = profile;
+                       _putResourceIntoStorage("profile:" + username, profile);
                        if( args.item )
-                            args.item.text(profile[resource]);
+                           args.item.text(profile[resource]);
                        if( args.cbFunc )
                            args.cbFunc(args.cbArg, profile[resource]);
                    } else {
@@ -162,25 +170,25 @@ function getWebpage( username, item ){
 // we must cache avatar results to disk to lower bandwidth on
 // other peers. dht server limits udp rate so requesting too much
 // data will only cause new requests to fail.
-function _getAvatarFromStorage(locator) {
+function _getResourceFromStorage(locator) {
     var storage = $.localStorage;
     if( storage.isSet(locator) ) {
-        var storedAvatar = storage.get(locator);
+        var storedResource = storage.get(locator);
         var curTime = new Date().getTime() / 1000;
         // avatar is downloaded once per day
-        if( storedAvatar.time + 3600*24 > curTime ) {
-            return storedAvatar.data;
+        if( storedResource.time + 3600*24 > curTime ) {
+            return storedResource.data;
         }
     }
     return null;
 }
 
-function _putAvatarToStorage(locator, data) {
+function _putResourceIntoStorage(locator, data) {
     var curTime = new Date().getTime() / 1000;
-    var storedAvatar = {time: curTime, data: data};
+    var storedResource = {time: curTime, data: data};
 
     var storage = $.localStorage;
-    storage.set(locator, storedAvatar);
+    storage.set(locator, storedResource);
 }
 
 // get avatar and set it in img.attr("src")
@@ -194,7 +202,7 @@ function getAvatar( username, img ){
         //img.attr('src', "data:image/jpg;base64,"+avatarMap[username]);
         img.attr('src', _avatarMap[username]);
     } else {
-        var data = _getAvatarFromStorage("avatar:" + username);
+        var data = _getResourceFromStorage("avatar:" + username);
         if( data ) {
             _avatarMap[username] = data;
             img.attr('src', data);
@@ -203,7 +211,7 @@ function getAvatar( username, img ){
                    function(args, imagedata) {
                        if( imagedata && imagedata.length ) {
                            _avatarMap[args.username] = imagedata;
-                           _putAvatarToStorage("avatar:" + username, imagedata);
+                           _putResourceIntoStorage("avatar:" + username, imagedata);
                            args.img.attr('src', imagedata);
                        }
                    }, {username:username,img:img} );
@@ -214,6 +222,7 @@ function getAvatar( username, img ){
 function clearAvatarAndProfileCache(username) {
     var storage = $.localStorage;
     storage.remove("avatar:" + username);
+    storage.remove("profile:" + username);
     if( username in _avatarMap ) {
         delete _avatarMap[username];
     }
