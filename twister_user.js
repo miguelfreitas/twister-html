@@ -35,6 +35,13 @@ function initUser(cbFunc, cbArg) {
                            if( $localUsersLogin.length ) {
                                $localUsersLogin.val(defaultScreenName);
                            }
+
+                           var $userMenuConfig = $(".userMenu-config");
+                           if( $userMenuConfig.length ) {
+                               $userMenuConfig.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
+                               $userMenuConfig.find(".mini-profile-name").text(defaultScreenName);
+                               getFullname( defaultScreenName, $userMenuConfig.find(".mini-profile-name") );
+                           }
                        }
                        lastPostId = undefined;
                        if( cbFunc )
