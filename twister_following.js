@@ -83,6 +83,23 @@ function getNumFollowing( username, item ) {
                          }, null);
 }
 
+function loadFollowingIntoList( username, html_list ) {
+    loadFollowingFromDht( username, 1, [], 0,
+        function(args, following, seqNum) {
+            html_list.html("");
+            $.each(following, function(i, following_user){
+                var following_user_li = $( "#following-by-user-template" ).children().clone(true);
+                following_user_li.find(".mini-following-info").attr("data-screen-name", following_user);
+                following_user_li.find(".following-screen-name b").text(following_user);
+
+                getAvatar( following_user, following_user_li.find(".mini-following-photo") );
+                getFullname( following_user, following_user_li.find(".mini-following-name") );
+      
+                html_list.append( following_user_li );
+            });
+        }, null);
+}
+
 // load following list from localStorage and then from the dht resource
 function loadFollowing(cbFunc, cbArg) {
     loadFollowingFromStorage();

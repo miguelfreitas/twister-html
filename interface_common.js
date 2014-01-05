@@ -100,7 +100,7 @@ function timeSincePost(t) {
 }
 
 //
-// Profile, mentions and hashtag modal
+// Profile, mentions, hashtag, and following modal
 // -----------------------------------
 
 function newProfileModal(username) {
@@ -196,6 +196,32 @@ function openMentionsModal(e)
     $( "."+hashtagModalClass + " h3" ).text( "Mentions of @" + username );
 
     resetMentionsCount();
+}
+
+function newFollowingModal(username) {
+    var followingModalContent = $( "#following-modal-template" ).children().clone(true);
+
+    updateFollowingData(followingModalContent, username);
+
+    return followingModalContent;
+}
+
+function openFollowingModal(e)
+{
+    e.stopPropagation();
+    e.preventDefault();
+
+    var $this = $( this );
+    var username = $.MAL.followingUrlToUser( $this.attr("href") );
+
+    var followingModalClass = "following-modal";
+    openModal( followingModalClass );
+
+    var followingModalContent = newFollowingModal( username );
+    followingModalContent.appendTo("." +followingModalClass + " .modal-content");
+
+    //título do modal
+    $( "."+followingModalClass + " h3" ).text( "Followed by " + username );
 }
 
 //
@@ -438,5 +464,6 @@ function initInterfaceCommon() {
 
     $( ".open-profile-modal").bind( "click", openProfileModal );
     $( ".open-hashtag-modal").bind( "click", openHashtagModal );
+    $( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
 }

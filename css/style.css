@@ -1324,6 +1324,28 @@ button.disabled:hover
 	margin-left: 0;
 }
 /*************************************
+****************** FOLLOWING MODAL
+**************************************/
+.following-modal .modal-wrapper
+{
+	width: 560px;
+	height: 470px;
+	margin: -200px 0 0 -280px;
+	overflow-x: hidden;
+}
+.following-modal .modal-content
+{
+	overflow-y: auto;
+}
+.following-modal .modal-buttons
+{
+	display: none;
+}
+.following-modal ol
+{
+	margin: 15px;
+}
+/*************************************
 ****************** LOADER ************
 **************************************/
 .postboard-loading
