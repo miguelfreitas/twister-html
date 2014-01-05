@@ -76,6 +76,7 @@ function postToElem( post, kind ) {
     elem.find(".post-info-tag").text = "@" + n;
     getAvatar( n, elem.find(".avatar") );
     elem.find(".post-info-time").text(timeGmtToText(t));
+    elem.find(".post-info-time").attr("title",timeSincePost(t));
 
     var mentions = [];
     htmlFormatMsg( msg, elem.find(".post-text"), mentions);
@@ -117,6 +118,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
     getFullname( remoteUser, dmItem.find("a.post-info-name") );
     dmItem.find(".post-text").text(escapeHtmlEntities(dmData.text));
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time));
+    dmItem.find(".post-info-time").attr("title",timeSincePost(dmData.time));
 
     return dmItem;
 }
@@ -129,6 +131,7 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
     dmItem.addClass(classDm);
     getAvatar(dmData.fromMe ? localUser : remoteUser, dmItem.find(".post-photo").find("img") );
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time));
+    dmItem.find(".post-info-time").attr("title",timeSincePost(dmData.time));
     var mentions = [];
     htmlFormatMsg( dmData.text, dmItem.find(".post-text"), mentions);
     return dmItem;

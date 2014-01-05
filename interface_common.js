@@ -66,6 +66,38 @@ function timeGmtToText(t) {
     return d.toString().replace(/GMT.*/g,"");
 }
 
+function timeSincePost(t) {
+    var d = new Date(0);
+    d.setUTCSeconds(t);
+    var now = new Date();
+    var t_delta = Math.ceil((now - d) / 1000);
+    var expression = "";
+    if(t_delta < 2) {
+        expression = "1 second"
+    }
+    else if(t_delta < 60) {
+        expression = t_delta + " seconds"
+    }
+    else if(t_delta < 120) {
+        expression = "1 second"    
+    }
+    else if(t_delta < 60 * 60) {
+        expression = Math.floor(t_delta/60) + " minutes"
+    }
+    else if(t_delta < 2 * 60 * 60) {
+        expression = "1 hour"
+    }
+    else if(t_delta < 24 * 60 * 60) {
+        expression = Math.floor(t_delta/60/60) + " hours"
+    }
+    else if(t_delta < 2 * 24 * 60 * 60) {
+        expression = "1 day"
+    }
+    else {
+        expression = Math.floor(t_delta/24/60/60) + " days"
+    }
+    return expression + " ago";
+}
 
 //
 // Profile, mentions and hashtag modal
