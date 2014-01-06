@@ -174,10 +174,16 @@ function updateProfileData(profileModalContent, username) {
     getPostsCount( username,  profileModalContent.find(".posts-count") );
     getFollowers( username, profileModalContent.find(".followers-count") );
     getNumFollowing( username, profileModalContent.find(".following-count") );
+    
+    profileModalContent.find(".following-count").parent().attr("href", $.MAL.isFollowingUrl(username));                     
 
     requestPostRecursively(profileModalContent.find(".postboard-posts"),username,"status",10);
 }
 
+function updateFollowingData(followingModalContent, username) {
+    followingModalContent.find(".following-screen-name b").text(username);
+    loadFollowingIntoList( username, $(followingModalContent[1]) );
+}
 
 function clearHashtagProcessed() {
     _hashtagProcessedMap = {};

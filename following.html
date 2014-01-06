@@ -346,7 +346,7 @@
             </div>
             <ul class="module profile-data">
               <li><a href="#"><span class="posts-count">&nbsp;</span>Posts</a></li>
-              <li><a href="#"><span class="following-count">&nbsp;</span>Following</a></li>
+              <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span>Following</a></li>
               <li><a href="#"><span class="followers-count">&nbsp;</span>Followers</a></li>
             </ul>
             <button class="follow" href="#">Follow</button>
@@ -390,6 +390,31 @@
         <!-- ÁREA DE POSTS END -->
     </div>
     <!-- MODAL DE HASHTAGS END -->
+
+    <!-- MODAL DE FOLLOWING -->
+    <div id="following-modal-template">
+        <!-- ÁREA DE PROFILE PHOTO INIT -->
+        <h2>All users publicly followed by <span class="following-screen-name">@<b></b></span></h2>
+        <!-- ÁREA DE PROFILE END -->
+
+        <!-- ÁREA DE FOLLOWING INIT -->
+        <ol class="following-list">
+            <li id="following-by-user-template" style="display: none;">
+                <div class="mini-following-info" data-screen-name="">
+                    <a href="#" class="open-profile-modal">
+                        <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                        <span class="mini-following-name">Fulano da Silva</span>
+                        <span class="mini-screen-name">@
+                            <b class="following-screen-name"></b>
+                        </span>
+                    </a>
+                </div>
+            </li>
+        </ol>
+          
+        <!-- ÁREA DE FOLLOWERS END -->
+    </div>
+    <!-- MODAL DE FOLLOWING END -->
 
 
   </div>

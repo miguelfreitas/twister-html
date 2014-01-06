@@ -147,6 +147,15 @@ var MAL = function()
             return "";
     }
 
+    this.followingUrlToUser = function(url) {
+        var dummyUrl = this.isFollowingUrl("");
+        var urlIdx = url.indexOf(dummyUrl);
+        if( urlIdx >= 0 )
+            return url.substr(urlIdx + dummyUrl.length);
+        else
+            return "";
+    }
+
     this.mentionsUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#mentions?user=" + username;
@@ -168,6 +177,14 @@ var MAL = function()
             return "#dmchat?user=" + username;
         } else {
             return "#dmchat?user=" + username;
+        }
+    }
+
+    this.isFollowingUrl = function(username) {
+        if( $.hasOwnProperty("mobile") ) {
+            return "#following?user=" + username;
+        } else {
+            return "#following?user=" + username;
         }
     }
     
