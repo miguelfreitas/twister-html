@@ -96,8 +96,10 @@ function loadFollowingIntoList( username, html_list ) {
 
                 following_user_li.find(".following-screen-name b").text(following_user);
                 getAvatar( following_user, following_user_li.find(".mini-profile-photo") );
-                getFullname( following_user, following_user_li.find(".mini-following-name") );
-      
+                var $followingName = following_user_li.find(".mini-following-name");
+                $followingName.text(following_user);
+                getFullname( following_user, $followingName );
+
                 html_list.append( following_user_li );
             });
         }, null);

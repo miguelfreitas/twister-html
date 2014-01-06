@@ -175,7 +175,7 @@ function updateProfileData(profileModalContent, username) {
     getFollowers( username, profileModalContent.find(".followers-count") );
     getNumFollowing( username, profileModalContent.find(".following-count") );
     
-    profileModalContent.find(".following-count").parent().attr("href", $.MAL.isFollowingUrl(username));                     
+    profileModalContent.find(".following-count").parent().attr("href", $.MAL.followingUrl(username));
 
     requestPostRecursively(profileModalContent.find(".postboard-posts"),username,"status",10);
 }

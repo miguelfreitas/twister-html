@@ -148,7 +148,7 @@ var MAL = function()
     }
 
     this.followingUrlToUser = function(url) {
-        var dummyUrl = this.isFollowingUrl("");
+        var dummyUrl = this.followingUrl("");
         var urlIdx = url.indexOf(dummyUrl);
         if( urlIdx >= 0 )
             return url.substr(urlIdx + dummyUrl.length);
@@ -180,7 +180,7 @@ var MAL = function()
         }
     }
 
-    this.isFollowingUrl = function(username) {
+    this.followingUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#following?user=" + username;
         } else {
