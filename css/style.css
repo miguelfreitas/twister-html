@@ -1335,6 +1335,7 @@ button.disabled:hover
 }
 .following-modal .modal-content
 {
+	padding: 15px;
 	overflow-y: auto;
 }
 .following-modal .modal-buttons
@@ -1343,7 +1344,23 @@ button.disabled:hover
 }
 .following-modal ol
 {
-	margin: 15px;
+	margin: 5px;
+}
+.following-modal .open-profile-modal:hover
+{
+	text-decoration: none;
+}
+.following-modal .open-profile-modal img
+{
+	float: none;
+}
+.following-modal .open-profile-modal span
+{
+	vertical-align: middle;
+}
+.following-modal .open-profile-modal span:hover
+{
+	text-decoration: underline;
 }
 /*************************************
 ****************** LOADER ************

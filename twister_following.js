@@ -89,10 +89,13 @@ function loadFollowingIntoList( username, html_list ) {
             html_list.html("");
             $.each(following, function(i, following_user){
                 var following_user_li = $( "#following-by-user-template" ).children().clone(true);
-                following_user_li.find(".mini-following-info").attr("data-screen-name", following_user);
-                following_user_li.find(".following-screen-name b").text(following_user);
+                
+                // link follower to profile page
+                $(following_user_li.children()[0]).attr("data-screen-name", following_user);
+                $(following_user_li.children()[0]).attr("href", $.MAL.userUrl(following_user));
 
-                getAvatar( following_user, following_user_li.find(".mini-following-photo") );
+                following_user_li.find(".following-screen-name b").text(following_user);
+                getAvatar( following_user, following_user_li.find(".mini-profile-photo") );
                 getFullname( following_user, following_user_li.find(".mini-following-name") );
       
                 html_list.append( following_user_li );
