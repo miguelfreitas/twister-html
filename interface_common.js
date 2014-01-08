@@ -446,7 +446,7 @@ var retweetSubmit = function(e)
 
 
 function initInterfaceCommon() {
-    $("body").on( "click", ".cancel" , function() { closeModal($(this)); } );
+    $( "body" ).on( "click", ".cancel" , function() { closeModal($(this)); } );
     $( ".post-reply" ).bind( "click", postReplyClick );
     $( ".post-propagate" ).bind( "click", reTwistPopup );
     $( ".userMenu-config-dropdown" ).bind( "click", dropDownMenu );
