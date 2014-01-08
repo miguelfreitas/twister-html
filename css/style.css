@@ -255,7 +255,7 @@ button.disabled:hover
     padding: 55px 15px 15px 15px;
     position: relative;
     z-index: 1;
-    height: 100%;
+    min-height: 100%;
 }
 .dashboard
 {
