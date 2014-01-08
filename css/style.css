@@ -1,7 +1,7 @@
 @font-face
 {
-	font-family: "Open Sans";
-	src: url("OpenSans-Regular.ttf");
+    font-family: "Open Sans";
+    src: url("OpenSans-Regular.ttf");
 }
 @font-face
 {
@@ -23,455 +23,455 @@ figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video, textarea
 {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-	box-sizing: border-box;
-	font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
 }
 textarea, input
 {
-	outline: none;
+    outline: none;
 }
 ol, ul, li
 {
-	list-style: none;
+    list-style: none;
 }
 a
 {
-	text-decoration: none;
+    text-decoration: none;
 }
 a:hover
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 blockquote, q
 {
-	quotes: none;
+    quotes: none;
 }
 blockquote:before, blockquote:after,
 q:before, q:after
 {
-	content: '';
-	content: none;
+    content: '';
+    content: none;
 }
 table
 {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 html, body
 {
-	height: 100%;
-	min-height: 100%;
-	background: #ede9dc;
+    height: 100%;
+    min-height: 100%;
+    background: #ede9dc;
 }
 h3
 {
-	font-size: 14px;
-	color: rgba( 0, 0, 0, .5 );
+    font-size: 14px;
+    color: rgba( 0, 0, 0, .5 );
 }
 /*************************************
 **************************** BUTTONS **
 **************************************/
 button
 {
-	background: #45474d;
-	color: rgba( 255, 255, 255, .8 );
-	border: none;
-	padding: 5px 10px;
-	cursor: pointer;
+    background: #45474d;
+    color: rgba( 255, 255, 255, .8 );
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 button:hover
 {
-	color: #fff;
+    color: #fff;
 }
 button.disabled
 {
-	opacity: .4;
+    opacity: .4;
 }
 button.disabled:hover
 {
-	color: rgba( 255, 255, 255, .8 );
+    color: rgba( 255, 255, 255, .8 );
 }
 /*************************************
 **************************** MENU *****
 **************************************/
 .userMenu
 {
-	width: 900px;
-	position: fixed;
-	left: 50%;
-	margin: 0 0 0 -450px;
-	height: 40px;
-	background: #45474d;
-	z-index: 2;
+    width: 900px;
+    position: fixed;
+    left: 50%;
+    margin: 0 0 0 -450px;
+    height: 40px;
+    background: #45474d;
+    z-index: 2;
 }
 .userMenu:after
 {
-	content: "";
-	position: absolute;
-	right: 0;
-	width: 34px;
-	height: 54px;
-	background: url(../img/twister_mini.png) no-repeat right 5px;
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 34px;
+    height: 54px;
+    background: url(../img/twister_mini.png) no-repeat right 5px;
 }
 .userMenu > ul
 {
 }
 .userMenu > ul > li
 {
-	float: left;
-	margin: 0;
+    float: left;
+    margin: 0;
 }
 .userMenu > ul > li > a
 {
-	line-height: 40px;
-	height: 40px;
-	padding: 0 20px 0 45px;
-	display: inline-block;
-	color: #fff;
-	font-size: 14px;
-	font-weight: bold;
-	opacity: .7;
-	transition: all .2s linear;
-	position: relative;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 20px 0 45px;
+    display: inline-block;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: .7;
+    transition: all .2s linear;
+    position: relative;
 }
 .userMenu li > a:hover
 {
-	text-decoration: none;
-	opacity: 1;
+    text-decoration: none;
+    opacity: 1;
 }
 .userMenu li.current > a
 {
-	color: #fff;
-	opacity: 1;
+    color: #fff;
+    opacity: 1;
 }
 .userMenu li.userMenu-home > a
 {
-	background: url(../img/home.png) no-repeat 5px center;
+    background: url(../img/home.png) no-repeat 5px center;
 }
 .userMenu li.userMenu-home:hover > a
 {
-	background: url(../img/home.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
+    background: url(../img/home.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.userMenu-home.current > a
 {
-	background: url(../img/home.png) no-repeat 5px center #b43e34;
+    background: url(../img/home.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-connections > a
 {
-	background: url(../img/connections.png) no-repeat 5px center;
-	padding: 0 30px 0 20px;
-	opacity: 1;
+    background: url(../img/connections.png) no-repeat 5px center;
+    padding: 0 30px 0 20px;
+    opacity: 1;
 }
 .userMenu li.userMenu-connections:hover > a
 {
-	background: url(../img/connections.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
+    background: url(../img/connections.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.userMenu-connections.current > a
 {
-	background: url(../img/connections.png) no-repeat 5px center #b43e34;
+    background: url(../img/connections.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-network > a
 {
-	background: url(../img/network.png) no-repeat 5px center;
+    background: url(../img/network.png) no-repeat 5px center;
 }
 .userMenu li.userMenu-network:hover > a
 {
-	background: url(../img/network.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
+    background: url(../img/network.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.userMenu-network.current > a
 {
-	background: url(../img/network.png) no-repeat 5px center #b43e34;
+    background: url(../img/network.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-messages > a
 {
-	background: url(../img/messages.png) no-repeat center center;
-	padding: 0 25px 0 35px;
-	opacity: 1;
+    background: url(../img/messages.png) no-repeat center center;
+    padding: 0 25px 0 35px;
+    opacity: 1;
 }
 .userMenu li.userMenu-messages:hover > a
 {
-	background: url(../img/messages.png) no-repeat center center rgba( 0, 0, 0 , .4 );
+    background: url(../img/messages.png) no-repeat center center rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.userMenu-messages.current > a
 {
-	background: url(../img/messages.png) no-repeat center center #b43e34;
+    background: url(../img/messages.png) no-repeat center center #b43e34;
 }
 .userMenu li.userMenu-profile > a
 {
-	background: url(../img/profile.png) no-repeat 5px center;
+    background: url(../img/profile.png) no-repeat 5px center;
 }
 .userMenu li.userMenu-profile:hover > a
 {
-	background: url(../img/profile.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
+    background: url(../img/profile.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.userMenu-profile.current > a
 {
-	background: url(../img/profile.png) no-repeat 5px center #b43e34;
+    background: url(../img/profile.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-config
 {
-	float: right;
-	position: relative;
-	margin-right: 40px;
+    float: right;
+    position: relative;
+    margin-right: 40px;
 }
 .userMenu li.userMenu-search
 {
-	float: right;
-	position: relative;
+    float: right;
+    position: relative;
 }
 .userMenu li.userMenu-config > a
 {
-	background: url(../img/config.png) no-repeat 5px center;
-	padding: 0 30px 0 45px;
+    background: url(../img/config.png) no-repeat 5px center;
+    padding: 0 30px 0 45px;
 }
 .userMenu li.userMenu-config > a:after
 {
-	content: "▼";
-	position: absolute;
-	font-size: 10px;
-	transition: all .2 linear;
+    content: "▼";
+    position: absolute;
+    font-size: 10px;
+    transition: all .2 linear;
 }
 .userMenu li.userMenu-config:hover > a,
 .userMenu li.userMenu-config:active > a
 {
-	background: url(../img/config.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
+    background: url(../img/config.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.userMenu-messages > a:empty
 {
-	padding: 0 20px 0 30px;
-	opacity: .7;
+    padding: 0 20px 0 30px;
+    opacity: .7;
 }
 .wrapper
 {
-	width: 900px;
-	margin: 0 auto;
-	background: #f8f5ee;
-	padding: 55px 15px 15px 15px;
-	position: relative;
-	z-index: 1;
-	height: 100%;
+    width: 900px;
+    margin: 0 auto;
+    background: #f8f5ee;
+    padding: 55px 15px 15px 15px;
+    position: relative;
+    z-index: 1;
+    height: 100%;
 }
 .dashboard
 {
-	width: 320px;
-	position: fixed;
-	top: 55px;
+    width: 320px;
+    position: fixed;
+    top: 55px;
 }
 .module
 {
-	border: solid 1px rgba( 69, 71, 77, .1 );
-	background: #fff;
+    border: solid 1px rgba( 69, 71, 77, .1 );
+    background: #fff;
 }
 .messages-qtd
 {
-	position: absolute;
-	background: #b43e34;
-	color: #fff;
-	padding: 3px;
-	line-height: 12px;
-	font-size: 8px;
-	margin-top: 4px;
+    position: absolute;
+    background: #b43e34;
+    color: #fff;
+    padding: 3px;
+    line-height: 12px;
+    font-size: 8px;
+    margin-top: 4px;
 }
 .userMenu-connections .messages-qtd
 {
-	margin: 4px 0 0 10px;
+    margin: 4px 0 0 10px;
 }
 /*******************************************************
 ****************** CONFIG SUBMENU & SEARCH RESULTS *****
 *******************************************************/
 .dialog-modal
 {
-	display: none;
-	background: rgba( 255, 255, 255, 1 );
-	position: absolute;
-	top: 45px;
-	right: 10px;
-	width: 250px;
-	box-shadow: 0 2px 5px #65686f;
-	border: solid 1px rgba( 69, 71, 77, .1 );
+    display: none;
+    background: rgba( 255, 255, 255, 1 );
+    position: absolute;
+    top: 45px;
+    right: 10px;
+    width: 250px;
+    box-shadow: 0 2px 5px #65686f;
+    border: solid 1px rgba( 69, 71, 77, .1 );
 }
 .dialog-modal:after
 {
-	content:"";
-	width: 1px;
-	background: transparent;
-	position: absolute;
-	top: -10px;
-	right: 30px;
-	border-right: solid 10px transparent;
-	border-left: solid 10px transparent;
-	border-bottom: solid 10px rgba( 255, 255, 255, 1 );
+    content:"";
+    width: 1px;
+    background: transparent;
+    position: absolute;
+    top: -10px;
+    right: 30px;
+    border-right: solid 10px transparent;
+    border-left: solid 10px transparent;
+    border-bottom: solid 10px rgba( 255, 255, 255, 1 );
 }
 .userMenu-search .dialog-modal:after
 {
-	right: auto;
-	left: 80px;
+    right: auto;
+    left: 80px;
 }
 .direct-messages,
 .dropdown-menu-item
 {
-	display: block;
-	padding: 10px;
-	font-size: 12px;
-	border-top: solid 1px rgba( 69, 71, 77, .1 );
-	color: rgba( 0, 0, 0, .7 );
+    display: block;
+    padding: 10px;
+    font-size: 12px;
+    border-top: solid 1px rgba( 69, 71, 77, .1 );
+    color: rgba( 0, 0, 0, .7 );
 }
 .direct-messages:hover,
 .userMenu-search-sugestions a:hover,
 .userMenu-search-profiles li:hover a
 {
-	background: #45474d;
-	color: #fff;
+    background: #45474d;
+    color: #fff;
 }
 .userMenu-search-profiles li:hover span
 {
-	color: #fff;	
+    color: #fff;    
 }
 .userMenu-search-profiles button
 {
-	position: absolute;
-	right: 5px;
-	bottom: 5px;
-	background: #fff;
-	z-index: 2;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background: #fff;
+    z-index: 2;
 }
 .userMenu-search input[type="text"]
 {
-	float: right;
-	padding: 3px 10px;
-	margin: 9px 20px 0 0;
-	border-radius: 10px;
-	border: none;
+    float: right;
+    padding: 3px 10px;
+    margin: 9px 20px 0 0;
+    border-radius: 10px;
+    border: none;
 }
 .userMenu-search-sugestions
 {
-	border-bottom: solid 1px rgba( 69, 71, 77, .1 );	
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );    
 }
 .userMenu-search-sugestions a
 {
-	color: rgba( 0, 0, 0, .7 );	
-	padding: 5px 20px;
-	font-size: 12px;
-	display: block;
+    color: rgba( 0, 0, 0, .7 ); 
+    padding: 5px 20px;
+    font-size: 12px;
+    display: block;
 }
 .userMenu-search-profiles a
 {
-	padding: 7px 4px;
-	display: block;
-	position: relative;
-	z-index: 1;
+    padding: 7px 4px;
+    display: block;
+    position: relative;
+    z-index: 1;
 }
 .userMenu-search-profiles .mini-profile-info
 {
-	padding: 0;
+    padding: 0;
 }
 .userMenu-search-profiles .mini-profile-photo
 {
-	width: 36px;
-	height: 36px;
-	margin: 0 5px;
+    width: 36px;
+    height: 36px;
+    margin: 0 5px;
 }
 .userMenu-search-profiles .mini-profile-name
 {
-	font-size: 12px;
-	font-weight: bold;
-	color: rgba( 0, 0, 0, .7 );	
-	padding: 0 75px 0 15px;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba( 0, 0, 0, .7 ); 
+    padding: 0 75px 0 15px;
 }
 /***********************************
 ********************* MINI PROFILE
 ***********************************/
 .mini-profile
 {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 .mini-profile-info
 {
-	position: relative;
-	padding: 5px;
+    position: relative;
+    padding: 5px;
 }
 .mini-profile-view
 {
-	display: block;
-	color: rgba( 0, 0, 0, .5 );
-	font-size: 12px;
-	position: absolute;
-	top: 32px;
-	left: 65px;
-	z-index: 1;
+    display: block;
+    color: rgba( 0, 0, 0, .5 );
+    font-size: 12px;
+    position: absolute;
+    top: 32px;
+    left: 65px;
+    z-index: 1;
 }
 .mini-profile-name
 {
-	padding: 10px 5px 30px 5px;
-	display: block;
-	position: relative;
-	z-index: 2;
+    padding: 10px 5px 30px 5px;
+    display: block;
+    position: relative;
+    z-index: 2;
 }
 .following-list .mini-profile-name
 {
-	padding: 5px 5px 5px 5px;	
+    padding: 5px 5px 5px 5px;   
 }
 .profile-data
 {
-	border-left: none;
-	border-right: none;
-	height: 60px;
+    border-left: none;
+    border-right: none;
+    height: 60px;
 }
 .profile-data li
 {
-	border-right: solid 1px rgba( 69, 71, 77, .1 );
-	padding: 10px 15px 2px 10px;
-	float: left;
-	height: 100%;
+    border-right: solid 1px rgba( 69, 71, 77, .1 );
+    padding: 10px 15px 2px 10px;
+    float: left;
+    height: 100%;
 }
 .profile-data li:last-child
 {
-	border-right: none;
+    border-right: none;
 }
 .profile-data li a
 {
-	color: rgba( 0, 0, 0, .5 );
-	font-size: 13px;
+    color: rgba( 0, 0, 0, .5 );
+    font-size: 13px;
 }
 .profile-data li a:hover
 {
-	color: #b43e34;
+    color: #b43e34;
 }
 .profile-data li a span
 {
-	font-weight: bold;
-	display: block;
-	font-size: 16px;
+    font-weight: bold;
+    display: block;
+    font-size: 16px;
 }
 .mini-profile-actions
 {
-	position: relative;
-	width: auto;
-	display: inline-block;
+    position: relative;
+    width: auto;
+    display: inline-block;
 }
 .mini-profile-actions span
 {
-	color: #e34f42;
-	cursor: pointer;
-	font-size: 14px;
-	display: inline-block;
-	width: 70px;
-	transition: all .2s linear;
+    color: #e34f42;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+    width: 70px;
+    transition: all .2s linear;
 }
 .mini-profile-actions ul
 {
-	height: 0;
-	overflow: hidden;
-	position: absolute;
-	transition: height .2s linear;
-	background: #fff;
-	z-index: 3;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    transition: height .2s linear;
+    background: #fff;
+    z-index: 3;
 }
 .mini-profile-actions:hover span
 {
@@ -481,120 +481,120 @@ button.disabled:hover
 }
 .mini-profile-actions:hover ul
 {
-	height: 118px;
-	box-shadow: 0 2px 5px #65686f;
+    height: 118px;
+    box-shadow: 0 2px 5px #65686f;
 }
 .mini-profile-actions ul li
 {
-	white-space: nowrap;
-	color: rgba( 0, 0, 0, .7 );
-	font-size: 13px;
-	cursor: pointer;
-	padding: 5px;
-	margin: 2px;
+    white-space: nowrap;
+    color: rgba( 0, 0, 0, .7 );
+    font-size: 13px;
+    cursor: pointer;
+    padding: 5px;
+    margin: 2px;
 }
 .mini-profile-actions ul li + li
 {
-	margin: 0 2px;	
+    margin: 0 2px;  
 }
 .mini-profile-actions:hover ul li:hover
 {
-	background: rgba( 0, 0, 0, .7 );
-	color: #fff;	
+    background: rgba( 0, 0, 0, .7 );
+    color: #fff;    
 }
 .mini-profile-info a:hover
 {
-	text-decoration: none;
+    text-decoration: none;
 }
 /***********************************
 ********************* POST AREA ****
 ***********************************/
 .post-area-new
 {
-	padding: 10px;
+    padding: 10px;
 }
 .post-area-new textarea
 {
-	resize: none;
-	width: 100%;
-	display: block;
-	transition: all .3s linear;
-	height: 28px;
-	border-radius: 3px;
-	border: solid 1px rgba(0, 0, 0, .3 );
-	padding: 4px;
-	font-size: 13px;
+    resize: none;
+    width: 100%;
+    display: block;
+    transition: all .3s linear;
+    height: 28px;
+    border-radius: 3px;
+    border: solid 1px rgba(0, 0, 0, .3 );
+    padding: 4px;
+    font-size: 13px;
 }
 .post-area-new.open textarea
 {
-	height: 80px;
-	border: solid 1px rgba( 227, 79, 66, .5 );
-	box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
+    height: 80px;
+    border: solid 1px rgba( 227, 79, 66, .5 );
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
 }
 .post-area-extras
 {
-	overflow: hidden;
-	height: 0;
-	text-align: right;
+    overflow: hidden;
+    height: 0;
+    text-align: right;
 }
 .post-submit
 {
-	background: #45474d;
-	color: rgba( 255, 255, 255, .8 );
-	border: none;
-	padding: 5px 10px;
-	cursor: pointer;
-	display: inline-block;
-	margin-top: 4px;
+    background: #45474d;
+    color: rgba( 255, 255, 255, .8 );
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 4px;
 }
 .post-area-new.open textarea + .post-area-extras
 {
-	height: 35px;
-	transition: all .6s linear;
-	padding-top: 4px;
+    height: 35px;
+    transition: all .6s linear;
+    padding-top: 4px;
 }
 .post-area-remaining
 {
-	font-size: 13px;
+    font-size: 13px;
 }
 .post-area-remaining.warn
 {
-	color: #ff0000;
+    color: #ff0000;
 }
 /***********************************
 ********************* WHO TO FOLLOW
 ***********************************/
 .who-to-follow
 {
-	padding: 10px;
+    padding: 10px;
 }
 .who-to-follow h3
 {
-	display: inline;
+    display: inline;
 }
 .twister-user
 {
-	clear: both;
-	padding-bottom: 10px;
-	margin-top: 4px;
-	border-bottom: solid 1px rgba( 69, 71, 77, .1 );
-	border-top: solid 1px rgba( 69, 71, 77, .1 );
+    clear: both;
+    padding-bottom: 10px;
+    margin-top: 4px;
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
+    border-top: solid 1px rgba( 69, 71, 77, .1 );
 }
 .twister-user + .twister-user
 {
-	border-top: none;
+    border-top: none;
 }
 .twister-user-photo
 {
-	margin: 5px;
-	display: inline-block;
-	float: left;
-	vertical-align: middle;
-	width: 48px;
-	height: 48px;
-	overflow: hidden;
-	border-radius: 20%;
-	/*transform: rotate( 45deg );*/
+    margin: 5px;
+    display: inline-block;
+    float: left;
+    vertical-align: middle;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border-radius: 20%;
+    /*transform: rotate( 45deg );*/
 }
 .twister-user-info
 {
@@ -602,44 +602,44 @@ button.disabled:hover
 }
 .twister-user-info span
 {
-	vertical-align: top;
+    vertical-align: top;
 }
 .followers
 {
-	font-size: 12px;
-	color: rgba( 0, 0, 0, .6 );
+    font-size: 12px;
+    color: rgba( 0, 0, 0, .6 );
 }
 .followed-by
 {
-	color: #e34f42;
-	font-size: 13px;
-	cursor: pointer;
+    color: #e34f42;
+    font-size: 13px;
+    cursor: pointer;
 }
 .twister-user-name
 {
-	font-weight: bold;
-	font-size: 14px;
-	color: #e34f42;
-	text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    color: #e34f42;
+    text-decoration: none;
 }
 .twister-user-tag
 {
-	font-style: italic;
-	font-size: 12px;
-	opacity: .6;
-	margin-top: 4px;
-	display: inline-block;
-	letter-spacing: 0px;
+    font-style: italic;
+    font-size: 12px;
+    opacity: .6;
+    margin-top: 4px;
+    display: inline-block;
+    letter-spacing: 0px;
 }
 .twister-user-remove
 {
-	float: right;
-	font-size: 12px;
-	margin: 5px;
-	opacity: .5;
-	text-decoration: none;
-	font-weight: bold;
-	cursor: pointer;
+    float: right;
+    font-size: 12px;
+    margin: 5px;
+    opacity: .5;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
   position: absolute;
   top: 0;
   right: 0;
@@ -647,244 +647,244 @@ button.disabled:hover
 }
 .twister-user-remove:hover
 {
-	opacity: 1;
-	text-decoration: none;
+    opacity: 1;
+    text-decoration: none;
 }
 .follow
 {
-	background: none;
-	border: solid 1px rgba( 0, 0, 0 ,.2 );
-	padding: 3px 15px;
-	color: rgba( 0, 0, 0 ,.4 );
+    background: none;
+    border: solid 1px rgba( 0, 0, 0 ,.2 );
+    padding: 3px 15px;
+    color: rgba( 0, 0, 0 ,.4 );
 }
 .follow:hover
 {
-	color: rgba( 0, 0, 0 ,.7 );
+    color: rgba( 0, 0, 0 ,.7 );
 }
 .refresh-users,
 .view-all-users
 {
-	color: #e34f42;
-	cursor: pointer;
-	font-size: 12px;
-	border-left: solid 1px rgba( 69, 71, 77, .1 );
-	padding-left: 8px;
+    color: #e34f42;
+    cursor: pointer;
+    font-size: 12px;
+    border-left: solid 1px rgba( 69, 71, 77, .1 );
+    padding-left: 8px;
 }
 /***********************************
 ********************* POST BOARD ***
 ***********************************/
 .postboard
 {
-	margin-left: 335px;
-	/*height: 150%;*/
-	background: rgba( 255, 255, 255, .5 );
-	border: solid 1px rgba( 69, 71, 77, .05 );
-	padding: 10px;
+    margin-left: 335px;
+    /*height: 150%;*/
+    background: rgba( 255, 255, 255, .5 );
+    border: solid 1px rgba( 69, 71, 77, .05 );
+    padding: 10px;
 }
 .postboard h2
 {
-	font-weight: bold;
-	line-height: 40px;
-	color: rgba( 255, 255, 255, 1 );
-	font-variant: small-caps;
-	border-bottom: solid 1px rgba( 69, 71, 77, .1 );
-	margin: 0 0 5px 0;
-	padding-left: 5px;
-	background: #e34f42;
-	width: 513px;
+    font-weight: bold;
+    line-height: 40px;
+    color: rgba( 255, 255, 255, 1 );
+    font-variant: small-caps;
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
+    margin: 0 0 5px 0;
+    padding-left: 5px;
+    background: #e34f42;
+    width: 513px;
 }
 .postboard h2.fixed
 {
-	position: fixed;
-	top: 40px;
-	z-index: 2;
-	border-top: solid 4px #fbf9f6;
+    position: fixed;
+    top: 40px;
+    z-index: 2;
+    border-top: solid 4px #fbf9f6;
 }
 .postboard-posts
 {
-	position: relative;
-	z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 .postboard-news
 {
-	float: right;
-	background: rgba( 0, 0, 0, .2 );
-	border: none;
-	display: inline-block;
-	margin: 0;
-	color: rgba( 255, 255, 255, .8 );
-	padding: 0 15px;
-	line-height: 40px;
-	cursor: pointer;
-	transition: all .2s linear;
-	-moz-transition: all .2s linear;
+    float: right;
+    background: rgba( 0, 0, 0, .2 );
+    border: none;
+    display: inline-block;
+    margin: 0;
+    color: rgba( 255, 255, 255, .8 );
+    padding: 0 15px;
+    line-height: 40px;
+    cursor: pointer;
+    transition: all .2s linear;
+    -moz-transition: all .2s linear;
 }
 .postboard-news:hover
 {
-	color: #fff;
-	padding: 0 15px 0 25px;
+    color: #fff;
+    padding: 0 15px 0 25px;
 }
 .post,
 .post .post,
 .post .original.post,
 .post .post.open
 {
-	background: #fff;
-	position: relative;
-	margin: 0 0 1px 0;
-	transition: background .1s linear;
-	-moz-transition: background .1s linear;
+    background: #fff;
+    position: relative;
+    margin: 0 0 1px 0;
+    transition: background .1s linear;
+    -moz-transition: background .1s linear;
 }
 .post.open
 {
-	margin: 10px 0;
+    margin: 10px 0;
 }
 .postboard-posts > .post.open
 {
-	/*border-left: none;
-	border-right: none;
-	border-top: solid 2px #e34f42;
-	border-bottom: solid 2px #e34f42;*/
-	border: none;
+    /*border-left: none;
+    border-right: none;
+    border-top: solid 2px #e34f42;
+    border-bottom: solid 2px #e34f42;*/
+    border: none;
 }
 .postboard-posts > .post:after
 {
-	content: "";	
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 0;
-	height: 100%;
-	background: #e34f42;
-	transition: all .2s linear;
+    content: "";    
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #e34f42;
+    transition: all .2s linear;
 }
 .postboard-posts > .post.open:after
 {
-	width: 5px;
-	right: -5px;
+    width: 5px;
+    right: -5px;
 }
 .post:hover,
 .post .post
 {
-	background: #ececed;
+    background: #ececed;
 }
 .post:hover
 {
-	cursor: pointer;
+    cursor: pointer;
 }
 .post.open:hover
 {
-	background: #fff;
+    background: #fff;
 }
 .post-photo,
 .mini-profile-photo
 {
-	margin: 5px;
-	display: inline-block;
-	float: left;
-	vertical-align: middle;
-	width: 48px;
-	height: 48px;
-	overflow: hidden;
-	border-radius: 20%;
-	/*transform: rotate( 45deg );*/
+    margin: 5px;
+    display: inline-block;
+    float: left;
+    vertical-align: middle;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border-radius: 20%;
+    /*transform: rotate( 45deg );*/
 }
 .post-photo img,
 .mini-profile-photo img
 {
-	width: 48px;
-	height: 48px;
+    width: 48px;
+    height: 48px;
 }
 .post-info span
 {
-	vertical-align: top;
+    vertical-align: top;
 }
 .post-info-name,
 .mini-profile-name
 {
-	font-weight: bold;
-	font-size: 14px;
-	color: #e34f42;
-	text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    color: #e34f42;
+    text-decoration: none;
 }
 .post-info-tag
 {
-	font-style: italic;
-	font-size: 12px;
-	opacity: .6;
-	margin-top: 4px;
-	display: inline-block;
-	letter-spacing: 0px;
+    font-style: italic;
+    font-size: 12px;
+    opacity: .6;
+    margin-top: 4px;
+    display: inline-block;
+    letter-spacing: 0px;
 }
 .post-info-time
 {
-	float: right;
-	font-size: 12px;
-	margin: 5px;
-	opacity: .5;
-	text-decoration: none;
+    float: right;
+    font-size: 12px;
+    margin: 5px;
+    opacity: .5;
+    text-decoration: none;
 }
 .post-text
 {
-	font-size: 13px;
-	margin: 2px 10px 4px 60px;
+    font-size: 13px;
+    margin: 2px 10px 4px 60px;
 }
 .post-context
 {
-	font-size: 11px;
-	margin: 2px 10px 4px 60px;
+    font-size: 11px;
+    margin: 2px 10px 4px 60px;
 }
 .post-text a,
 .post-context a,
 .mini-screen-name
 {
-	color: #e34f42;
+    color: #e34f42;
 }
 .mini-screen-name
 {
-	font-size: 13px;
-	top: 40px;
+    font-size: 13px;
+    top: 40px;
 }
 .post-retransmited-icon
 {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	background: url(../img/repost.png) no-repeat left center;
-	vertical-align: middle;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../img/repost.png) no-repeat left center;
+    vertical-align: middle;
 }
 .post-interactions
 {
-	margin: 2px 10px 10px 60px;
-	text-align: right;
-	height: 23px;
+    margin: 2px 10px 10px 60px;
+    text-align: right;
+    height: 23px;
 }
 .post-interactions span,
 .post-expand
 {
-	color: #e34f42;
-	cursor: pointer;
-	font-size: 12px;
+    color: #e34f42;
+    cursor: pointer;
+    font-size: 12px;
 }
 .post-expand
 {
-	position: absolute;
-	left: 60px;
-	padding-top: 3px;
+    position: absolute;
+    left: 60px;
+    padding-top: 3px;
 }
 .related .post-expand
 {
-	display: none;
+    display: none;
 }
 .post-reply,
 .post-propagate,
 .post-favorite
 {
-	background: url(../img/reply.png) no-repeat left center;
-	padding-left: 18px;
-	margin-right: 3px;
-	opacity: .7;
-	display: none;
+    background: url(../img/reply.png) no-repeat left center;
+    padding-left: 18px;
+    margin-right: 3px;
+    opacity: .7;
+    display: none;
 }
 .post:hover .post-reply,
 .post:hover .post-propagate,
@@ -896,177 +896,177 @@ button.disabled:hover
 .post:hover .original .post-interactions .post-propagate,
 .post:hover .original .post-interactions .post-favorite
 {
-	display: inline-block;
+    display: inline-block;
 }
 .related.post:hover .post-reply,
 .related.post:hover .post-propagate,
 .related.post:hover .post-favorite
 {
-	display: inline-block;
+    display: inline-block;
 }
 .open .related .post-reply,
 .open .related .post-propagate,
 .open .related .post-favorite
 {
-	display: none!important;
+    display: none!important;
 }
 .open .related:hover .post-reply,
 .open .related:hover .post-propagate,
 .open .related:hover .post-favorite
 {
-	display: inline-block!important;
+    display: inline-block!important;
 }
 .post-propagate
 {
-	background: url(../img/repost.png) no-repeat left center;
+    background: url(../img/repost.png) no-repeat left center;
 }
 .post-favorite
 {
-	background: none;
-	padding-left: 0;
+    background: none;
+    padding-left: 0;
 }
 .post-favorite:before
 {
-	content: "★";
+    content: "★";
 }
 .post-reply:hover,
 .post-propagate:hover,
 .post-favorite:hover
 {
-	text-decoration: underline;
-	opacity: 1;
+    text-decoration: underline;
+    opacity: 1;
 }
 .expanded-content
 {
-	display: none;
-	padding: 5px 5px 0 5px;
+    display: none;
+    padding: 5px 5px 0 5px;
 }
 .post-stats
 {
-	margin: 0 10px 0 55px;
-	border-top: solid 1px rgba( 69, 71, 77, .1 );
-	border-bottom: solid 1px rgba( 69, 71, 77, .1 );
+    margin: 0 10px 0 55px;
+    border-top: solid 1px rgba( 69, 71, 77, .1 );
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
 }
 .post-stats li
 {
-	display: inline-block;
+    display: inline-block;
 }
 .post-stats li.stat-count
 {
-	border-right: solid 1px rgba( 69, 71, 77, .1 );
-	padding-right: 10px;
+    border-right: solid 1px rgba( 69, 71, 77, .1 );
+    padding-right: 10px;
 }
 .post-stats li.stat-count span
 {
-	display: block;
-	font-weight: bold;
-	color: rgba( 0, 0, 0, .5 );
-	font-size: 13px;
+    display: block;
+    font-weight: bold;
+    color: rgba( 0, 0, 0, .5 );
+    font-size: 13px;
 }
 .post-stats li.stat-count span:last-child
 {
-	font-weight: normal;
+    font-weight: normal;
 }
 .post-stats a
 {
-	position: relative;
+    position: relative;
 }
 .post-stats a img
 {
-	width: 24px;
-	height: 24px;
-	border-radius: 100%;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
 }
 .user-name-tooltip
 {
-	display: none;
-	position: absolute;
-	background: #e34f42;
-	font-size: 12px;
-	white-space: nowrap;
-	padding: 3px 5px;
-	color: #fff;
-	top: -42px;
-	left: 0px;
-	border-radius: 5px;
+    display: none;
+    position: absolute;
+    background: #e34f42;
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 3px 5px;
+    color: #fff;
+    top: -42px;
+    left: 0px;
+    border-radius: 5px;
 }
 .user-name-tooltip:after
 {
-	content: "";
-	position: absolute;
-	width: 0;
-	left: 4px;
-	bottom: -5px;
-	border-top: solid 5px #e34f42;
-	border-left: solid 5px transparent;
-	border-right: solid 5px transparent;
+    content: "";
+    position: absolute;
+    width: 0;
+    left: 4px;
+    bottom: -5px;
+    border-top: solid 5px #e34f42;
+    border-left: solid 5px transparent;
+    border-right: solid 5px transparent;
 }
 .post-stats a:hover .user-name-tooltip
 {
-	display: inline-block;
+    display: inline-block;
 }
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***
 ***********************************/
 .singleBlock
 {
-	background: rgba( 255, 255, 255, .5 );
-	border: solid 1px rgba( 69, 71, 77, .05 );
-	padding: 10px;
+    background: rgba( 255, 255, 255, .5 );
+    border: solid 1px rgba( 69, 71, 77, .05 );
+    padding: 10px;
 }
 .singleBlock h2
 {
-	font-weight: bold;
-	line-height: 40px;
-	color: rgba( 255, 255, 255, 1 );
-	font-variant: small-caps;
-	border-bottom: solid 1px rgba( 69, 71, 77, .1 );
-	margin: 15px 0 0 0;
-	padding-left: 5px;
-	background: #e34f42;
+    font-weight: bold;
+    line-height: 40px;
+    color: rgba( 255, 255, 255, 1 );
+    font-variant: small-caps;
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
+    margin: 15px 0 0 0;
+    padding-left: 5px;
+    background: #e34f42;
 }
 .singleBlock h3
 {
-	font-weight: bold;
-	margin: 10px 20% 10px 10px;
-	border-bottom: solid 1px rgba( 0, 0, 0, .2 );
-	padding-bottom: 10px;
+    font-weight: bold;
+    margin: 10px 20% 10px 10px;
+    border-bottom: solid 1px rgba( 0, 0, 0, .2 );
+    padding-bottom: 10px;
 }
 .network.singleBlock ul
 {
-	padding-left: 20px;
-	margin-left: 20px;
+    padding-left: 20px;
+    margin-left: 20px;
 }
 .network.singleBlock ul li
 {
-	line-height: 36px;
-	font-size: 13px;
-	list-style: circle;
+    line-height: 36px;
+    font-size: 13px;
+    list-style: circle;
 }
 .network.singleBlock button
 {
-	padding: 3px 10px;
+    padding: 3px 10px;
 }
 .network.singleBlock ul li > span
 {
-	font-weight: bold;
-	opacity: .7;
+    font-weight: bold;
+    opacity: .7;
 }
 .singleBlock .spam-msg
 {
-	resize: none;
-	width: 100%;
-	display: block;
-	border-radius: 3px;
-	padding: 4px;
-	font-size: 13px;
-	height: 80px;
-	border: solid 1px rgba( 227, 79, 66, .5 );
-	box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
-	line-height: 20px;
-	position: relative;
-	margin-left: -20px;
-	margin-bottom: 10px;
+    resize: none;
+    width: 100%;
+    display: block;
+    border-radius: 3px;
+    padding: 4px;
+    font-size: 13px;
+    height: 80px;
+    border: solid 1px rgba( 227, 79, 66, .5 );
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
+    line-height: 20px;
+    position: relative;
+    margin-left: -20px;
+    margin-bottom: 10px;
 }
 .highlight {
     background: rgba(255, 230, 0, 0.5);
@@ -1078,339 +1078,339 @@ button.disabled:hover
 }
 .connection-status
 {
-	border: 2px solid red;
+    border: 2px solid red;
 }
 .connection-status.connected
 {
-	border: 2px solid green;
+    border: 2px solid green;
 }
 .character-limit
 {
-	float: right;
-	margin-right: 18px;
+    float: right;
+    margin-right: 18px;
 }
 /*************************************
 **************************** POPUP MODAL
 **************************************/
 .modal-blackout
 {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	background: rgba( 0, 0, 0, .6 );
-	display: none;
-	z-index: 3;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba( 0, 0, 0, .6 );
+    display: none;
+    z-index: 3;
 }
 .modal-blackout.reply .post
 {
-	background: #ececed;
-	padding: 10px 15px;	
+    background: #ececed;
+    padding: 10px 15px; 
 }
 .modal-wrapper
 {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	background: rgba( 255, 255, 255, 1.0 );
-	box-shadow: 0 0 30px rgba( 0, 0, 0, .6 );
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: rgba( 255, 255, 255, 1.0 );
+    box-shadow: 0 0 30px rgba( 0, 0, 0, .6 );
 }
 .modal-header
 {
-	position: relative;
+    position: relative;
 }
 .modal-header h3
 {
-	padding: 5px;
-	font-weight: bold;
-	background: #e34f42;
-	color: #fff;
+    padding: 5px;
+    font-weight: bold;
+    background: #e34f42;
+    color: #fff;
 }
 .modal-close
 {
-	position: absolute;
-	right: 0;
-	top: 0;
-	padding: 4px 10px;
-	cursor: pointer;
-	color: rgba( 255, 255, 255, .7 );
-	font-weight: bold;
-	border-left: solid 1px rgba( 255, 255, 255, .3 );
-	transition: all .1s linear; 
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 4px 10px;
+    cursor: pointer;
+    color: rgba( 255, 255, 255, .7 );
+    font-weight: bold;
+    border-left: solid 1px rgba( 255, 255, 255, .3 );
+    transition: all .1s linear; 
 }
 .modal-close:hover
 {
-	color: #fff;
-	background: rgba( 0, 0, 0, .1 );
+    color: #fff;
+    background: rgba( 0, 0, 0, .1 );
 }
 .modal-buttons
 {
-	padding: 10px;
-	text-align: right;
+    padding: 10px;
+    text-align: right;
 }
 .modal-buttons button:last-child
 {
-	padding: 5px 20px;
+    padding: 5px 20px;
 }
 /*************************************
 ****************** RETWIST POSTS MODAL
 **************************************/
 .reTwist .modal-wrapper
 {
-	width: 520px;
-	margin: -100px 0 0 -260px;
+    width: 520px;
+    margin: -100px 0 0 -260px;
 }
 .reTwist .post-expand,
 .reTwist .post-interactions
 {
-	display: none;
+    display: none;
 }
 /*************************************
 ****************** REPLY POSTS MODAL
 **************************************/
 .reply .modal-wrapper
 {
-	width: 520px;
-	margin: -100px 0 0 -260px;
+    width: 520px;
+    margin: -100px 0 0 -260px;
 }
 .reply .modal-buttons
 {
-	display: none;
+    display: none;
 }
 .reply .post-expand,
 .reply .post-interactions
 {
-	display: none;
+    display: none;
 }
 /*************************************
 ****************** DIRECT MESSAGES MODAL
 **************************************/
 .directMessages .modal-wrapper
 {
-	width: 540px;
-	height: 470px;
-	margin: -200px 0 0 -280px;
-	overflow-x: hidden;
+    width: 540px;
+    height: 470px;
+    margin: -200px 0 0 -280px;
+    overflow-x: hidden;
 }
 .directMessages .modal-content
 {
-	overflow-y: auto;
-	height: 300px;
+    overflow-y: auto;
+    height: 300px;
 }
 .directMessages .modal-buttons
 {
-	display: none;
+    display: none;
 }
 .direct-messages-list .post
 {
-	padding: 10px 30px 10px 15px;
-	cursor: pointer;
+    padding: 10px 30px 10px 15px;
+    cursor: pointer;
 }
 .direct-messages-list .post:after
 {
-	content: "►";
-	position: absolute;
-	right: 10px;
-	top: 50%;
-	margin: -6px 0 0 0;
-	color: rgba( 0, 0, 0, .4 );
+    content: "►";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin: -6px 0 0 0;
+    color: rgba( 0, 0, 0, .4 );
 }
 .direct-messages-thread
 {
-	padding: 10px;
+    padding: 10px;
 }
 .direct-messages-thread .post
 {
-	min-height: 82px;
-	margin-left: 65px;
+    min-height: 82px;
+    margin-left: 65px;
 }
 .direct-messages-thread .post:after,
 .direct-messages-thread .post:nth-child(2n):after
 {
-	content: "";
-	width: 1px;
-	background: transparent;
-	position: absolute;
-	top: 25px;
+    content: "";
+    width: 1px;
+    background: transparent;
+    position: absolute;
+    top: 25px;
 }
 .direct-messages-thread .post:after
 {
-	border-top: solid 10px transparent;
-	border-bottom: solid 10px transparent;
-	border-right: solid 10px #ececed;
-	left: -10px;
+    border-top: solid 10px transparent;
+    border-bottom: solid 10px transparent;
+    border-right: solid 10px #ececed;
+    left: -10px;
 }
 .direct-messages-thread .post-text
 {
-	margin: 2px 10px 4px 4px;
-	word-wrap: break-word;
+    margin: 2px 10px 4px 4px;
+    word-wrap: break-word;
 }
 .direct-messages-thread .post-photo
 {
-	position: absolute;
-	left: -65px;
+    position: absolute;
+    left: -65px;
 }
 .direct-messages-thread .post.sent
 {
-	margin-right: 60px;
-	margin-left: 0;
+    margin-right: 60px;
+    margin-left: 0;
 }
 .direct-messages-thread .post.sent:after
 {
-	border-top: solid 10px transparent;
-	border-bottom: solid 10px transparent;
-	border-right: none;
-	border-left: solid 10px #ececed;
-	right: -10px;
-	left: auto;
+    border-top: solid 10px transparent;
+    border-bottom: solid 10px transparent;
+    border-right: none;
+    border-left: solid 10px #ececed;
+    right: -10px;
+    left: auto;
 }
 .direct-messages-thread .post.sent .post-text
 {
-	margin: 2px 10px 4px 4px;
+    margin: 2px 10px 4px 4px;
 }
 .direct-messages-thread .post.sent .post-photo
 {
-	position: absolute;
-	right: -65px;
-	left: auto;
+    position: absolute;
+    right: -65px;
+    left: auto;
 }
 /*************************************
 ****************** NEW USER MODAL
 **************************************/
 .new-user .modal-wrapper
 {
-	width: 720px;
-	height: 400px;
-	margin: -200px 0 0 -280px;
-	overflow-x: hidden;
-	overflow-y: hidden;
+    width: 720px;
+    height: 400px;
+    margin: -200px 0 0 -280px;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 .new-user .modal-content
 {
-	margin: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
 }
 .new-user .modal-buttons,
 .new-user .modal-close
 {
-	display: none;
+    display: none;
 }
 .new-user .text
 {
-	margin: 0 0 15px 0;
+    margin: 0 0 15px 0;
 }
 .new-user .emphasis
 {
-	font-size: 18px;
-	text-align: center;
+    font-size: 18px;
+    text-align: center;
 }
 .new-user .secret-key
 {
-	color: rgba( .5, 0, 0, 1.0 );
-	font-weight: bold;
+    color: rgba( .5, 0, 0, 1.0 );
+    font-weight: bold;
 }
 /*************************************
 ****************** HASHTAG MODAL
 **************************************/
 .hashtag-modal .modal-wrapper
 {
-	width: 560px;
-	height: 470px;
-	margin: -200px 0 0 -280px;
-	overflow-x: hidden;
+    width: 560px;
+    height: 470px;
+    margin: -200px 0 0 -280px;
+    overflow-x: hidden;
 }
 .hashtag-modal .modal-content
 {
-	overflow-y: auto;
+    overflow-y: auto;
 }
 .hashtag-modal .modal-buttons
 {
-	display: none;
+    display: none;
 }
 .hashtag-modal .postboard
 {
-	margin-left: 0;
+    margin-left: 0;
 }
 /*************************************
 ****************** FOLLOWING MODAL
 **************************************/
 .following-modal .modal-wrapper
 {
-	width: 560px;
-	height: 470px;
-	margin: -200px 0 0 -280px;
-	overflow-x: hidden;
+    width: 560px;
+    height: 470px;
+    margin: -200px 0 0 -280px;
+    overflow-x: hidden;
 }
 .following-modal .modal-content
 {
-	padding: 15px;
-	overflow-y: auto;
+    padding: 15px;
+    overflow-y: auto;
 }
 .following-modal .modal-buttons
 {
-	display: none;
+    display: none;
 }
 .following-modal ol
 {
-	margin: 5px;
+    margin: 5px;
 }
 .following-modal .open-profile-modal:hover
 {
-	text-decoration: none;
+    text-decoration: none;
 }
 .following-modal .open-profile-modal img
 {
-	float: none;
+    float: none;
 }
 .following-modal .open-profile-modal span
 {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 .following-modal .open-profile-modal span:hover
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 /*************************************
 ****************** LOADER ************
 **************************************/
 .postboard-loading
 {
-	text-align: right;
+    text-align: right;
 }
 .postboard-loading div
 {
-	display: inline-block;
-	width: 120px;
-	height: 10px;
-	background-color: #b43e34;
-	border-radius: 100px;
-	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.05);
-	position: relative;
-	margin: 10px 0 0 0;
+    display: inline-block;
+    width: 120px;
+    height: 10px;
+    background-color: #b43e34;
+    border-radius: 100px;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.05);
+    position: relative;
+    margin: 10px 0 0 0;
 }
 .postboard-loading div:after
 {
-	border-radius: 50px;
-	content: "";
-	position: absolute;
-	background-color: white;
-	left: 2px;
-	top: 2px;
-	bottom: 2px;
-	z-index: 999;
-	animation-name: slide;
-	animation-duration: 1.5s;
-	animation-easing-function: linear;
-	animation-iteration-count: infinite;
-	-webkit-animation-name: slide;
-	-webkit-animation-duration: 1.5s;
-	-webkit-animation-easing-function: linear;
-	-webkit-animation-iteration-count: infinite;
-	-moz-animation-name: slide;
-	-moz-animation-duration: 1.5s;
-	-moz-animation-easing-function: linear;
-	-moz-animation-iteration-count: infinite;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    content: "";
+    position: absolute;
+    background-color: white;
+    left: 2px;
+    top: 2px;
+    bottom: 2px;
+    z-index: 999;
+    animation-name: slide;
+    animation-duration: 1.5s;
+    animation-easing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: slide;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-easing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: slide;
+    -moz-animation-duration: 1.5s;
+    -moz-animation-easing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 @keyframes slide 
 {
