@@ -182,6 +182,10 @@
 .profile-modal .profile-card-main
 {
 	background: #45474d;
+	color: white;
+}
+.profile-modal .profile-card-main a {
+	color: #8bb9e0;
 }
 .profile-modal .postboard-posts .post
 {
