@@ -596,6 +596,10 @@ button.disabled:hover
 	border-radius: 20%;
 	/*transform: rotate( 45deg );*/
 }
+.twister-user-info
+{
+  position: relative;
+}
 .twister-user-info span
 {
 	vertical-align: top;
@@ -636,6 +640,10 @@ button.disabled:hover
 	text-decoration: none;
 	font-weight: bold;
 	cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 120%;
 }
 .twister-user-remove:hover
 {
