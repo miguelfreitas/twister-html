@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Состояние сети</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <script src="jquery.min.js"></script>
+    <script src="jQueryPlugins.js"></script>
+    <script src="jquery.json-2.4.js"></script>
+    <script src="jquery.jsonrpcclient.js"></script>
+    <script src="jquery.storageapi.js"></script>
+    <script src="mobile_abstract.js"></script>
+    <script src="twister_io.js"></script>
+    <script src="twister_user.js"></script>
+    <script src="twister_formatpost.js"></script>
+    <script src="twister_following.js"></script>
+    <script src="twister_newmsgs.js"></script>
+    <script src="twister_network.js"></script>
+    <script src="interface_common.js"></script>
+
+    <script>
+        $(document).ready(function()
+        {
+           initInterfaceNetwork();
+        });
+    </script>
+  </head>
+
+  <body>
+    
+  <!-- MENU SUPERIOR INIT --> 
+  <nav class="userMenu">
+    <ul>
+        <li class="userMenu-home"><a href="home.html">Домой</a></li>
+        <li class="userMenu-network current"><a href="network.html">Сеть</a></li>
+        <li class="userMenu-profile"><a href="profile-edit.html">Профиль</a></li>
+        <li class="userMenu-config">
+          <a class="userMenu-config-dropdown" href="#">
+            <div class="config-menu dialog-modal">
+              <div class="mini-profile-info">
+                <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+                <a href="#" class="mini-profile-name">Иван Иванов</a>
+                <span class="mini-profile-view">Открыть</span>
+              </div>
+              <a class="dropdown-menu-item" href="profile-edit.html">Настроить аккаунт</a>
+              <a class="dropdown-menu-item" href="following.html">Читаемые мной</a>
+              <a class="dropdown-menu-item" href="network.html">Настройки сети</a>
+              <a class="dropdown-menu-item" href="login.html">Сменить пользователя</a>
+              <a class="direct-messages" href="#">Личные сообщения</a>
+           </div>
+          </a>
+        </li>
+        <li class="userMenu-connections">
+          <a href="#">
+            <span class="messages-qtd" style="display:none;">12</span>
+          </a>
+        </li>
+        <li class="userMenu-messages">
+          <a href="#">
+            <span class="messages-qtd" style="display:none;">12</span>
+          </a>
+        </li>
+        <li class="userMenu-search">
+          <input type="text" class="userMenu-search-field" placeholder="search"/>
+        </li>
+    </ul>
+  </nav>
+  <!-- MENU SUPERIOR END -->
+
+  <div class="wrapper">
+
+    <div class="network singleBlock">
+      <h2> Состояние сети </h2>
+
+      <div class="module">
+        <h3> Основное</h3>
+        <ul>
+          <li>
+              <span class="network-status highlight connection-status">Обновление...</span>
+          </li>
+        </ul>
+          
+        <h3> Подробно </h3>
+        <ul>
+          <li class="connections">
+              <label>Подключений: </label>
+              <span class="connection-count">1</span>
+          </li>
+          <li>
+              <label>Известных пиров: </label>
+              <span class="known-peers">6</span>
+          </li>
+          <li>
+              <label>Активные DHT ноды: </label>
+              <span class="dht-nodes">0</span>
+          </li>
+          <li>
+              <label>Принудительное подключение:</label>
+              <input class="new-peer-addr" type="textbox" placeholder="Адрес пира" size="20"/>
+              <button class="add-peer disabled" disable="true">Добавить пира</button>
+          </li>
+          <li>
+              <label>DNS для поиска пиров:</label>
+              <input class="new-dns-addr" type="textbox" placeholder="Адрес DNS" size="20"/>
+              <button class="add-dns disabled" disable="true">Добавить DNS</button>
+          </li>
+        </ul>
+
+        <h3> Информация блокчейна </h3>
+        <ul>
+          <li>
+              <label>Количество блоков в цепочке:</label>
+              <span class="blocks">2813</span>
+          </li>
+          <li>
+              <label>Время последнего сгенерированного блока:</label>
+              <span class="last-block-time">Fri Nov 08 2013 08:32:48 </span>
+          </li>
+        </ul>
+      </div>
+<h2>Язык</h2>
+
+<a href="/home.html"> <img alt="" src="data:image/png;base64,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" /> </a> <a href="/ru/home.html"> <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAGtSURBVHja7JlLTsQwDIY/ZwqDEC8hRlyALXvuxZKDsWTDDTgG4iFGYmipbRbToZkBVPESsog3jdqkzV//v+M44u5EtkRwKwAKgP8OQIARMO6ukUyBugJ23P025N8X2U/AbmAG7aaOPlFtXKJQAVAAFAAFwP8GUAGcnJ4z2dvgsW5DTHpzXHF9/9QDUHNmdUvdKADeZXlDlvdbtD8a61n2mLcZ6Pve9wSwbitcAbTmzBqjfrYQHnCE1jIA5s7DYxOG9/WzkpJkHlCnVYsl3lHKNWDcTOs3O52fLrh89535+IOdcUYhg9XykP8Kd39uvBm5B5RoBS41XdZASkKrHoT//VznHlADJ44XXNAlAGaAEIlFSxS6vDijMsOb5ksr46rAZGDVZmA1HlqpZX2NNo046qOQ4fgghfwb9z7bd+iZdWGoA6AgiTAccjDXPp12dxCJIwCRV7ZUAK42LywGUrF3qU9aJHPRPLBIp3sKBTNfBSCBPCCZBsKK2DwPo13ETVtbITf1CnA3fYhYlFABDoFjYBJs8tfAlTA/H9gm3jlBDUylnNQXAAVAAfCn9jIAuSzTHtaxfZQAAAAASUVORK5CYII=" /> </a><br> Перевод на русский язык был сделан @shift
+      <h2>Настройка создания блоков</h2>
+
+      <div class="module">
+        <h3> Создание блоков (отправка промо-сообщений)</h3>
+        <ul>
+          <li>
+              <label> Создание блоков </label>
+              <select class="genblock">
+                  <option value="disable">Отключено</option>
+                  <option value="enable">Включено</option>
+              </select>
+          </li>
+          <li>
+              <label> Количество ядер ЦП для генерации </label>
+              <input class="genproclimit" type="textbox" value="1" size="3"/>
+          </li>
+          <li>
+              <label> Сообщение для продвижения: </label>
+              <textarea class="spam-msg" placeholder="Type message here"></textarea>
+          </li>
+          <li>
+              <label> Отправить рекламное сообщение от имени: </label>
+              <select class="local-usernames spam-user">
+                  <option value="nobody">никого</option>
+              </select>
+              <div class="character-limit">
+                <span class="post-area-remaining">140</span>
+                <button class="update-spam-msg enabled">Обновить</button>
+              </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  </body>
+</html>

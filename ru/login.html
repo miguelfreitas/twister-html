@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Вход в twister</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <script src="jquery.min.js"></script>
+    <script src="jQueryPlugins.js"></script>
+    <script src="jquery.json-2.4.js"></script>
+    <script src="jquery.jsonrpcclient.js"></script>
+    <script src="jquery.storageapi.js"></script>
+    <script src="mobile_abstract.js"></script>
+    <script src="twister_io.js"></script>
+    <script src="twister_network.js"></script>
+    <script src="twister_user.js"></script>
+    <script src="interface_common.js"></script>
+    <script src="interface_login.js"></script>
+
+    <script>
+        $(document).ready(function()
+        {
+           initInterfaceLogin();
+        });
+    </script>
+  </head>
+
+  <body>
+    
+  <!-- MENU SUPERIOR INIT --> 
+  <nav class="userMenu">
+    <ul>
+    <li class="userMenu-home"><a href="home.html">Домой</a></li>
+    <li class="userMenu-network"><a href="network.html">Сеть</a></li>
+    <li class="userMenu-profile current"><a href="login.html">Вход</a></li>
+      <li class="userMenu-config">
+      </li>
+      
+    
+
+    </ul>
+  </nav>
+  <!-- MENU SUPERIOR END -->
+
+
+  <div class="wrapper">
+
+  <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
+    <div class="login">
+      <h2>Вход в twister </h2>
+
+      <div class="module">
+        <span> Зарегистрированные вами пользователи </span>
+        <div>
+            <select class="local-usernames login-user">
+            </select>
+            <button class="login-local-username">Войти</button>
+        </div>
+      </div>
+
+      <span> Или... </span>
+
+      <div class="module">
+        <span> Создать нового пользователя </span>
+        <div>
+            <input class="new-username" type="textbox" placeholder="Введите ваш логин" cols="16" rows="1"></input>
+            <button class="check-availability">Проверить доступность</button>
+            <span class="availability"></span>
+        </div>
+        <div>
+            <button class="create-user disabled" disable="true">Создать пользователя</button>
+        </div>
+      </div>
+
+      <span> Или... </span>
+
+      <div class="module">
+        <div>
+            <span> Импортировать секретный ключ </span>
+            <input class="secret-key-import" type="textbox" placeholder="52-значный секретный ключ" size="52" rows="1"></input>
+        </div>
+        <div>
+            <span> Логин, связанный  </span>
+            <input class="username-import" type="textbox" placeholder="Введите ваш логин" size="16" rows="1"></input>
+        </div>
+        <div>
+            <button class="import-secret-key disabled" disable="true">Импортировать ключ</button>
+        </div>
+      </div>
+
+    </div>
+  <!-- LADO ESQUERDO DE MÓDULOS END -->
+
+  </div>
+
+  <!-- TEMPLATES INIT -->
+  <div id="templates" style="display:none;">
+
+    
+    <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
+    <div class="modal-blackout">
+      <div class="modal-wrapper">
+        <div class="modal-header">
+          <h3></h3>
+          <span id="closeModal" class="modal-close cancel">X</span>
+        </div>
+        <div class="modal-content"></div>
+        <div class="modal-buttons">
+          <button class="modal-cancel cancel">Закрыть</button>
+          <button class="modal-propagate">Репост</button>
+        </div>
+      </div>
+    </div>
+    <!-- TEMPLATE DO MODAL GENÉRICO END -->
+
+    <!-- MODAL DE NEW USER INIT -->
+    <div id="new-user-modal-template">
+      <div class="warning">
+            <div class="text">
+               Новый пользователь был создан и информация о нем была отправлена в сеть.
+			   Пожалуйста, не закрывайте это окно, идет регистрация нового пользователя.
+			   Это может занять несколько минут.
+            </div>
+            <div class="text emphasis">
+                Ваш секретный ключ: <span class="secret-key"></span>
+            </div>
+            <div class="text">
+            	Сохраните секретный ключ в надежном месте, распечатайте его или сделайте скриншот.
+            </div>
+            <div class="text">
+                Секретный ключ понадобиться вам, если вы захотите войти в twister с другого устройства.
+				Если вы потеряете свой секретный ключ, то вход в ваш аккаунт будет невозможен.
+				Не существует способа восстановить данный ключ
+            </div>
+            <div class="text"></div>
+            <div class="text">
+                Пожалуйста подождите. Кнопка 'OK' появиться когда процесс завершиться.
+            </div>
+            <div class="text">
+                <button class="login-created-user" style="display:none;">Ок</button>
+            </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- TEMPLATES END -->
+    
+  </body>
+</html>

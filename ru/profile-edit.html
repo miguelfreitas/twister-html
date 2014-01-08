@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <title>Редактирование профиля</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/profile.css" type="text/css">
+    <script src="jquery.min.js"></script>
+    <script src="jQueryPlugins.js"></script>
+    <script src="jquery.json-2.4.js"></script>
+    <script src="jquery.jsonrpcclient.js"></script>
+    <script src="jquery.storageapi.js"></script>
+    <script src="mobile_abstract.js"></script>
+    <script src="twister_io.js"></script>
+    <script src="twister_user.js"></script>
+    <script src="twister_network.js"></script>
+    <script src="twister_following.js"></script>
+    <script src="twister_newmsgs.js"></script>
+    <script src="interface_common.js"></script>
+    <script src="interface_profile-edit.js"></script>
+
+    <script>
+        $(document).ready(function()
+        {
+           initProfileEdit();
+        });
+    </script>
+  </head>
+
+  <body>
+    
+  <!-- MENU SUPERIOR INIT --> 
+  <nav class="userMenu">
+    <ul>
+      <li class="userMenu-home"><a href="home.html">Домой</a></li>
+      <li class="userMenu-network"><a href="network.html">Сеть</a></li>
+      <li class="userMenu-profile current"><a href="profile-edit.html">Мой Профиль</a></li>
+      <li class="userMenu-config">
+        <a class="userMenu-config-dropdown" href="#">
+          <div class="config-menu dialog-modal">
+            <div class="mini-profile-info">
+              <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+              <a href="#" class="mini-profile-name">Иван Иванов</a>
+              <span class="mini-profile-view">Открыть</span>
+            </div>
+            <a class="dropdown-menu-item" href="profile-edit.html">Настроить учетную запись</a>
+            <a class="dropdown-menu-item" href="following.html">Фоловеры</a>
+            <a class="dropdown-menu-item" href="network.html">Настройка сети</a>
+            <a class="dropdown-menu-item" href="login.html">Сменить пользователя</a>
+            <a class="direct-messages" href="#">Личные сообщения</a>
+          </div>
+        </a>
+      </li>
+      <li class="userMenu-connections">
+        <a href="#">
+          <span class="messages-qtd" style="display:none;">12</span>
+        </a>
+      </li>
+      <li class="userMenu-messages">
+        <a href="#">
+          <span class="messages-qtd" style="display:none;">12</span>
+        </a>
+      </li>
+      <li class="userMenu-search">
+        <input type="text" class="userMenu-search-field" placeholder="search">
+      </li>
+    </ul>
+  </nav>
+  <!-- MENU SUPERIOR END -->
+
+
+  <div class="wrapper">
+
+  <!-- ÁREA DE PROFILE PHOTO INIT --> 
+    <div class="profile-card forEdition">
+      <!-- Coloquei a imagem de fundo do card do usuário como background da div abaixo inline na tag para poder ser alterada dinamicamente -->
+      <div class="profile-card-main" style="background: url(img/img.png) no-repeat center center #b43e34;">
+        <img class="profile-card-photo forEdition" src="img/genericPerson.png"/>
+        <input type="text" class="input-name" placeholder="Ваше имя"/>
+        <h2></h2>
+        <input type="text" class="input-description" placeholder="Опиши себя"/>
+        <input type="text" class="input-city" placeholder="Ваше местоположение"/>
+        <input type="text" class="input-website" placeholder="Ваш сайт"/>
+      </div>
+      <div class="profile-edition-buttons">
+          <button class="cancel-changes" href="#">Закрыть</button>
+          <button class="submit-changes" href="#">Сохранить</button>
+      </div>
+
+      <div style="font-size:80%;text-align: center;">
+         Секретный ключ: <span class="secret-key"></span>
+      </div>
+      
+    </div>
+    
+  <!-- ÁREA DE POSTS END -->
+    
+    <input type="file" id="avatar-file" name="avatar_files" style="display:none;"/>
+
+  </body>
+</html>
