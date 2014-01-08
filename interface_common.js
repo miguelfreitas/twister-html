@@ -32,14 +32,15 @@ function openModal( modalClass )
 function closeModal($this)
 {
     var $body = $( "body" );
-    var $modalWindow = $this.parents( ".modal-blackout" );
-    $modalWindow.fadeOut( "fast", function()
+    var $modalWindows = $( "body" ).children( ".modal-blackout" );
+
+    $modalWindows.fadeOut( "fast", function()
     {
-        $modalWindow.detach();
+        $modalWindows.detach();
     });
     $body.css({
         "overflow": "auto",
-         "margin-right": "0"
+        "margin-right": "0"
     });
 }
 
@@ -446,7 +447,7 @@ var retweetSubmit = function(e)
 
 
 function initInterfaceCommon() {
-    $( "body" ).on( "click", ".cancel" , function() { closeModal($(this)); } );
+    $( "body, .cancel, .modal-blackout" ).on( "click", function() { closeModal($(this)); } );
     $( ".post-reply" ).bind( "click", postReplyClick );
     $( ".post-propagate" ).bind( "click", reTwistPopup );
     $( ".userMenu-config-dropdown" ).bind( "click", dropDownMenu );
