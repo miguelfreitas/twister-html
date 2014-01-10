@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Читаемые мной</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="css/profile.css" type="text/css"/>
+    <script src="jquery.min.js"></script>
+    <script src="jQueryPlugins.js"></script>
+    <script src="jquery.json-2.4.js"></script>
+    <script src="jquery.jsonrpcclient.js"></script>
+    <script src="jquery.storageapi.js"></script>
+    <script src="mobile_abstract.js"></script>
+    <script src="twister_io.js"></script>
+    <script src="twister_network.js"></script>
+    <script src="twister_user.js"></script>
+    <script src="twister_formatpost.js"></script>
+    <script src="twister_newmsgs.js"></script>
+    <script src="twister_following.js"></script>
+    <script src="twister_directmsg.js"></script>
+    <script src="twister_actions.js"></script>
+    <script src="interface_common.js"></script>
+
+    <script>
+        $(document).ready(function()
+        {
+           initInterfaceFollowing();
+        });
+    </script>
+  </head>
+
+  <body>
+    
+  <!-- MENU SUPERIOR INIT --> 
+  <nav class="userMenu">
+    <ul>
+      <li class="userMenu-home"><a href="home.html">Домой</a></li>
+      <li class="userMenu-network"><a href="network.html">Сеть</a></li>
+      <li class="userMenu-profile"><a href="profile-edit.html">Мой профиль</a></li>
+      <li class="userMenu-config current">
+        <a class="userMenu-config-dropdown" href="#">
+          <div class="config-menu dialog-modal">
+            <div class="mini-profile-info">
+              <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+              <a href="#" class="mini-profile-name">Иван Иванов</a>
+              <span class="mini-profile-view">Открыть</span>
+            </div>
+            <a class="dropdown-menu-item" href="profile-edit.html">Настроить аккаунт</a>
+            <a class="dropdown-menu-item" href="following.html">Читаемые мной</a>
+            <a class="dropdown-menu-item" href="network.html">Настройка сети</a>
+            <a class="dropdown-menu-item" href="login.html">Сменить пользователя</a>
+            <a class="direct-messages" href="#">Личные сообщения</a>
+          </div>
+        </a>
+      </li>
+      <li class="userMenu-connections">
+        <a href="#">
+          <span class="messages-qtd" style="display:none;">12</span>
+        </a>
+      </li>
+      <li class="userMenu-messages">
+        <a href="#">
+          <span class="messages-qtd" style="display:none;">12</span>
+        </a>
+      </li>
+
+      <!-- BUSCA -->
+      <li class="userMenu-search">
+        <input type="text" class="userMenu-search-field" placeholder="search"/>
+
+        <div class="search-results dialog-modal">
+          <ul class="userMenu-search-sugestions" style="display: none;">
+            <li><a href="#">Иван</a></li>
+            <li><a href="#">Иванов</a></li>
+            <li><a href="#">Иванович</a></li>
+          </ul>
+          <ul class="userMenu-search-profiles">
+            <li id="search-profile-template" style="display: none;">
+              <div class="mini-profile-info" data-screen-name="">
+                <a href="#" class="open-profile-modal">
+                  <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                  <span class="mini-screen-name">@<b></b></span>
+                  <span class="mini-profile-name"></span>
+                </a>
+                <button class="follow">Подписаться</button>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </li>
+
+
+    </ul>
+  </nav>
+  <!-- MENU SUPERIOR END -->
+
+
+  <div class="wrapper">
+
+  <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
+    <div class="following">
+      <h2> Читаю </h2>
+
+      <div class="postboard-loading" style="display: none;">
+            <div></div>
+      </div>
+
+      <ol class="following-list">
+        <li id="following-user-template" style="display: none;">
+            <div class="mini-profile-info" data-screen-name="">
+                <a href="#" class="open-profile-modal">
+                    <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                    <span class="mini-profile-name">Иван иванов</span>
+                    <span class="mini-screen-name">@
+                        <b class="following-screen-name"></b>
+                    </span>
+                </a>
+                <div>
+                    <div class="mini-profile-actions">
+                        <span>Действия ▼</span>
+                        <ul>
+                            <li class="direct-messages-with-user">Отправить личное сообщение</li>
+                            <li>Отправить сообщение для @
+                                <b class="following-screen-name"></b>
+                            </li>
+                            <li class="mentions-from-user">Показать упоминания @
+                                <b class="following-screen-name"></b>
+                            </li>
+                            <li>Показать репосты</li>
+                        </ul>
+                    </div>
+                    <button class="unfollow">Перестать читать</button>
+                    <button class="public-following">Public</button>
+                </div>
+                <div>
+                    <span class="swarm-status" style="display: none;"></span>
+                </div>
+            </div>
+        </li>
+      </ol>
+
+      <div class="not-following-any" style="display:none;">
+            <div> Никого не читаете ? </div>
+            <div> Вы можете найти новых пользователей для чтения с помощью поиска (правый верхних угол). </div>
+      </div>
+    </div>
+  <!-- LADO ESQUERDO DE MÓDULOS END -->
+
+  </div>
+
+  <!-- TEMPLATES INIT -->
+  <div id="templates" style="display:none;">
+
+    
+    <!-- TEMPLATE DE WHO-TO-FOLLOW SUGGESTION -->
+    <li id="follow-suggestion-template" class="twister-user">
+      <div class="">
+        <a href="#" class="twister-user-name open-profile-modal">
+          <img class="twister-user-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+        </a>
+      </div>
+      <div class="twister-user-info" data-screen-name="">
+        <a href="#" class="twister-user-name open-profile-modal">
+          <span class="twister-user-tag"></span>
+        </a>
+        <div class="followers">В читаемых у
+          <span class="followed-by"></span>
+        </div>
+        <a class="twister-user-remove">X</a>
+        <button class="follow">Подписаться</button>
+      </div>
+    </li>
+
+        <!-- TEMPLATE DA OL INVÓLUCRO DAS LIST ELEMENTS DO POST EXPANDIDO INIT -->
+    <ol class="expanded-post">
+    </ol>
+        <!-- TEMPLATE DA OL INVÓLUCRO DAS LIST ELEMENTS DO POST EXPANDIDO END -->
+
+        <!-- TEMPLATE DOS 3 TIPOS DE LI DO POST EXPANDIDO INIT -->
+    <li class="ancestor module post">
+    </li>
+
+    <li id="post-template" class="module post" data-time="">
+        <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""
+             data-screen-name="" data-id="" data-text="" data-text-mentions="">
+            <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+            <div class="post-info">
+                <a href="#" class="post-info-name open-profile-modal"></a>
+                <span class="post-info-tag"></span>
+                <a class="post-info-time"></a>
+            </div>
+            <p class="post-text"></p>
+            <div class="post-context" style="display: none;">
+                <i class="post-retransmited-icon"></i>
+                <span>Retransmitted by
+                    <a class="post-retransmited-by open-profile-modal" href=""></a>
+                </span>
+            </div>
+            <span class="post-expand">Expand</span>
+            <!-- elementos de interação com o post que são exibidos no hover -->
+            <div class="post-interactions">
+                <span class="post-reply">Reply</span>
+                <span class="post-propagate">Retransmit</span>
+                <span class="post-favorite">Favorite</span>
+            </div>
+            <div class="expanded-content" style="display: none;">
+                <ul class="post-stats" style="display: none;">
+                    <li class="stat-count">
+                            <span class="stat-count-value"></span>
+                            <span>Retransmits</span>
+                    </li>
+                    <li class="avatar-row">
+                        <!-- use "avatar-row-template" here -->
+                    </li>
+                </ul>
+                <div class="post-reply-content" style="display: block;">
+                    <form class="post-area-new">
+                        <textarea placeholder="Reply..."></textarea>
+                        <div class="post-area-extras">
+                            <span class="post-area-remaining">140</span>
+                            <button class="post-submit disabled" disabled="true">post</button>
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- expanded-content -->
+        </div> <!-- post-data -->
+    </li> <!-- post-template -->
+
+    <!-- template for user links in message (open profile modal) -->
+    <a id="msg-user-link-template" class="open-profile-modal"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="hashtag-link-template" class="open-hashtag-modal"></a>
+
+
+
+    <!-- template para ir dentro de avatar-row -->
+    <a id="avatar-row-template" class="open-profile-modal" href="">
+       <img class="size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+       <span class="user-name-tooltip"></span>
+    </a>
+
+    <li class="descendant module post">
+    </li>
+    <!-- TEMPLATE INVÓLUCRO DO POST EXPANDIDO END -->
+
+    <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
+    <div class="modal-blackout">
+      <div class="modal-wrapper">
+        <div class="modal-header">
+          <h3></h3>
+          <span id="closeModal" class="modal-close cancel">X</span>
+        </div>
+        <div class="modal-content"></div>
+        <div class="modal-buttons">
+          <button class="modal-cancel cancel">Cancel</button>
+          <button class="modal-propagate">Retransmit</button>
+        </div>
+      </div>
+    </div>
+    <!-- TEMPLATE DO MODAL GENÉRICO END -->
+
+    <!-- MODAL DE RETWEET INIT -->
+    <!-- MODAL DE RETWEET END -->
+
+    <!-- MODAL DE REPLY INIT -->
+    <div id="reply-modal-template">
+      <div class="post-area">
+        <form class="post-area-new open">
+          <textarea placeholder="New Post..."></textarea>
+          <div class="post-area-extras">
+            <span class="post-area-remaining">140</span>
+            <button class="post-submit disabled" disabled="true">post</button>
+          </div>
+        </form>
+      </div>
+      <!-- use "module post" here -->
+    </div>
+    <!-- MODAL DE REPLY END -->
+
+    <!-- MODAL DE DIRECT MESSAGES INIT -->
+    <!-- Este modal possui dois templates, o primeiro da lista de pessoas que enviaram mensagens e o segundo
+    com a thread de mensagens individual -->
+    <div class="direct-messages-template">
+      <ol class="direct-messages-list">
+        <!-- use "dm-snippet-template here -->
+      </ol>
+    </div>
+
+    <li id="dm-snippet-template" class="module post message">
+      <div class="post-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+      <div class="post-info">
+        <a href="#" class="post-info-name open-profile-modal"></a>
+        <span class="post-info-tag">@</span>
+        <a href="#" class="post-info-time" title="">10min</a>
+      </div>
+      <!-- o texto do post (restrição de caracteres?) -->
+      <p class="post-text"></p>
+    </li>
+
+
+    <div class="messages-thread-template">
+      <ol class="direct-messages-thread">
+        <!-- use "dm-chat-template" here -->
+      </ol>
+    </div>
+
+    <!-- cada li é uma mensagem -->
+    <li id="dm-chat-template" class="module post message">
+      <div class="post-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+      <a href="#" class="post-info-time" title="08/10/13 às 18:00">10min</a>
+      <p class="post-text"></p>
+    </li>
+
+    <div class="dm-form-template">
+      <form class="post-area-new open">
+        <textarea placeholder="New direct message..."></textarea>
+        <div class="post-area-extras">
+          <span class="post-area-remaining">140</span>
+          <button class="dm-submit disabled" disabled="true">send</button>
+        </div>
+      </form>
+    </div>
+    <!-- MODAL DE DIRECT MESSAGES INIT -->
+
+
+    <!-- MODAL DE PROFILE -->
+    <div id="profile-modal-template">
+        <!-- ÁREA DE PROFILE PHOTO INIT -->
+          <div class="profile-card" data-screen-name="">
+            <!-- Coloquei a imagem de fundo do card do usuário como background da div
+                 abaixo inline na tag para poder ser alterada dinamicamente
+                 style="background: url(img/imgBack.png) no-repeat center center;"-->
+            <div class="profile-card-main">
+              <img class="profile-card-photo" src="img/grayed_avatar_placeholder_24.png"/>
+              <h1 class="profile-name"></h1>
+              <h2 class="profile-screen-name">@<b></b></h2>
+              <div>
+                <span class="profile-location"></span>
+                <a class="profile-url" rel="nofollow" target="_blank"></a>
+              </div>
+              <div class="profile-bio">
+              </div>
+            </div>
+            <ul class="module profile-data">
+              <li><a href="#"><span class="posts-count">&nbsp;</span>Posts</a></li>
+              <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span>Following</a></li>
+              <li><a href="#"><span class="followers-count">&nbsp;</span>Followers</a></li>
+            </ul>
+            <button class="follow" href="#">Follow</button>
+            <button class="direct-messages-with-user" href="#">Direct Messages</button>
+
+          </div>
+        <!-- ÁREA DE POSTS END -->
+
+        <!-- ÁREA DE POSTS INIT -->
+          <div class="postboard">
+            <h2>
+              Posts
+              <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
+              <button class="postboard-news" style="display:none;">5 novos posts</button>
+            </h2>
+
+            <ol id="profile-posts" class="postboard-posts">
+            </ol>
+
+          </div>
+        <!-- ÁREA DE POSTS END -->
+    </div>
+    <!-- MODAL DE PROFILE END -->
+
+
+    <!-- MODAL DE HASHTAGS -->
+    <div id="hashtag-modal-template">
+
+        <!-- ÁREA DE POSTS INIT -->
+          <div class="postboard">
+            <h2>
+              Posts
+              <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
+              <button class="postboard-news" style="display:none;">5 novos posts</button>
+            </h2>
+
+            <ol id="profile-posts" class="postboard-posts">
+            </ol>
+
+          </div>
+        <!-- ÁREA DE POSTS END -->
+    </div>
+    <!-- MODAL DE HASHTAGS END -->
+
+    <!-- MODAL DE FOLLOWING -->
+    <div id="following-modal-template">
+        <!-- ÁREA DE PROFILE PHOTO INIT -->
+        <h2>All users publicly followed by <span class="following-screen-name">@<b></b></span></h2>
+        <!-- ÁREA DE PROFILE END -->
+
+        <!-- ÁREA DE FOLLOWING INIT -->
+        <ol class="following-list">
+            <li id="following-by-user-template" style="display: none;">
+                <div class="mini-following-info" data-screen-name="">
+                    <a href="#" class="open-profile-modal">
+                        <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                        <span class="mini-following-name">Fulano da Silva</span>
+                        <span class="mini-screen-name">@
+                            <b class="following-screen-name"></b>
+                        </span>
+                    </a>
+                </div>
+            </li>
+        </ol>
+          
+        <!-- ÁREA DE FOLLOWERS END -->
+    </div>
+    <!-- MODAL DE FOLLOWING END -->
+
+
+  </div>
+  <!-- TEMPLATES END -->
+    
+  </body>
+</html>
