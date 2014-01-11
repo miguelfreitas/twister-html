@@ -420,12 +420,17 @@ var postSubmit = function(e)
     var $replyText = $this.closest(".post-area-new").find("textarea");
 
     var $postOrig = $this.closest(".post-data");
-    if( !$postOrig.length )
+
+    if (!$postOrig.length) {
         $postOrig = $this.closest(".modal-content").find(".post-data");
+    }
 
     newPostMsg($replyText.val(), $postOrig);
 
     $replyText.val("");
+    var tweetForm = $this.parents("form");
+    var remainingCount = tweetForm.find(".post-area-remaining");
+    remainingCount.text(140);
     $replyText.attr("placeholder", "Your message was sent!");
     closeModal($this);
 }
