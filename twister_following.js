@@ -355,6 +355,11 @@ function closeSearchDialog()
 
 function userSearchKeypress(item) {
     var partialName = $(".userMenu-search-field").val().toLowerCase();
+
+    if ( partialName.substr( 0, 1 ) == '@' ) {
+        partialName = partialName.substr( 1 );
+    }
+
     //var partialName = item.val();
 
     if( !partialName.length ) {
