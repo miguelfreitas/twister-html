@@ -1327,11 +1327,12 @@ button.disabled:hover
     width: 560px;
     height: 470px;
     margin: -200px 0 0 -280px;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .hashtag-modal .modal-content
 {
     overflow-y: auto;
+    height: 440px;
 }
 .hashtag-modal .modal-buttons
 {
