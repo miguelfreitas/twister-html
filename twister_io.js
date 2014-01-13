@@ -290,7 +290,7 @@ function clearAvatarAndProfileCache(username) {
 function getFollowers( username, item ) {
     dhtget( username, "tracker", "m",
            function(args, ret) {
-               if( ret.length && ret[0]["followers"] ) {
+               if( ret && ret.length && ret[0]["followers"] ) {
                    args.item.text(ret[0]["followers"])
                }
            }, {username:username,item:item} );
@@ -322,7 +322,7 @@ function checkPubkeyExists(username, cbFunc, cbArg) {
                    args.cbFunc(args.cbArg, ret.length > 0);
                }, {cbFunc:cbFunc, cbArg:cbArg},
                function(args, ret) {
-                   alert("Error connecting to local twister deamon.");
+                   alert(polyglot.t("error_connecting_to_daemon"));
                }, {cbFunc:cbFunc, cbArg:cbArg});
 }
 
@@ -336,7 +336,7 @@ function dumpPubkey(username, cbFunc, cbArg) {
                    args.cbFunc(args.cbArg, ret);
                }, {cbFunc:cbFunc, cbArg:cbArg},
                function(args, ret) {
-                   alert("Error connecting to local twister deamon.");
+                   alert(polyglot.t("error_connecting_to_daemon"));
                }, {cbFunc:cbFunc, cbArg:cbArg});
 }
 

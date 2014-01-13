@@ -12,6 +12,8 @@
     <script src="jquery.storageapi.js"></script>
     <script src="mobile_abstract.js"></script>
     <script src="twister_io.js"></script>
+    <script src="polyglot.min.js"></script>
+    <script src="interface_localization.js"></script>
     <script src="twister_network.js"></script>
     <script src="twister_user.js"></script>
     <script src="twister_formatpost.js"></script>
@@ -106,9 +108,9 @@
           <span class="mini-profile-view">View</span>
         </div>
         <ul class="module profile-data">
-          <li><a href="#" class="open-profile-modal"><span class="posts-count">&nbsp;</span>Posts</a></li>
-          <li><a href="following.html"><span class="following-count">&nbsp;</span>Following</a></li>
-          <li><a href="#"><span class="followers-count">&nbsp;</span>Followers *</a></li>
+          <li><a href="#" class="open-profile-modal"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
+          <li><a href="following.html"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+          <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
         </ul>
       
         <div class="post-area">
@@ -143,7 +145,7 @@
       <h2>
         Postboard
         <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
-        <button class="postboard-news" style="display: none;">5 novos posts</button>
+        <button class="postboard-news" style="display: none;"></button>
       </h2>
 
       <ol id="posts" class="postboard-posts">
@@ -354,9 +356,9 @@
               </div>
             </div>
             <ul class="module profile-data">
-              <li><a href="#"><span class="posts-count">&nbsp;</span>Posts</a></li>
-              <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span>Following</a></li>
-              <li><a href="#"><span class="followers-count">&nbsp;</span>Followers</a></li>
+              <li><a href="#"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
+              <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+              <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span></a></li>
             </ul>
             <button class="follow" href="#">Follow</button>
             <button class="direct-messages-with-user" href="#">Direct Messages</button>
@@ -369,7 +371,7 @@
             <h2>
               Posts
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
-              <button class="postboard-news" style="display:none;">5 novos posts</button>
+              <button class="postboard-news" style="display:none;"></button>
             </h2>
 
             <ol id="profile-posts" class="postboard-posts">
@@ -389,7 +391,7 @@
             <h2>
               Posts
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
-              <button class="postboard-news" style="display:none;">5 novos posts</button>
+              <button class="postboard-news" style="display:none;"></button>
             </h2>
 
             <ol id="profile-posts" class="postboard-posts">
@@ -403,7 +405,7 @@
     <!-- MODAL DE FOLLOWING -->
     <div id="following-modal-template">
         <!-- ÁREA DE PROFILE PHOTO INIT -->
-        <h2>All users publicly followed by <span class="following-screen-name">@<b></b></span></h2>
+        <h2><span class="label">All users publicly followed by<span><span class="following-screen-name">@<b></b></span></h2>
         <!-- ÁREA DE PROFILE END -->
 
         <!-- ÁREA DE FOLLOWING INIT -->

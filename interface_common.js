@@ -48,10 +48,7 @@ function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
     networkUpdate(function(args) {
                       if( !twisterdConnectedAndUptodate ) {
                           var redirect =
-                              window.confirm("Local daemon is not connected to the network or\n" +
-                                             "block chain is outdated. If you stay in this page\n" +
-                                             "your actions may not work.\n" +
-                                             "Do you want to check Network Status page instead?");
+                              window.confirm(polyglot.t("switch_to_network"));
                           if( redirect )
                               $.MAL.goNetwork();
                       } else {
@@ -73,31 +70,19 @@ function timeSincePost(t) {
     var now = new Date();
     var t_delta = Math.ceil((now - d) / 1000);
     var expression = "";
-    if(t_delta < 2) {
-        expression = "1 second"
-    }
-    else if(t_delta < 60) {
-        expression = t_delta + " seconds"
-    }
-    else if(t_delta < 120) {
-        expression = "1 second"    
+    if(t_delta < 60) {
+        expression = polyglot.t("seconds", t_delta);
     }
     else if(t_delta < 60 * 60) {
-        expression = Math.floor(t_delta/60) + " minutes"
-    }
-    else if(t_delta < 2 * 60 * 60) {
-        expression = "1 hour"
+        expression = polyglot.t("minutes", Math.floor(t_delta/60));
     }
     else if(t_delta < 24 * 60 * 60) {
-        expression = Math.floor(t_delta/60/60) + " hours"
-    }
-    else if(t_delta < 2 * 24 * 60 * 60) {
-        expression = "1 day"
+        expression = polyglot.t("hours", Math.floor(t_delta/60/60));
     }
     else {
-        expression = Math.floor(t_delta/24/60/60) + " days"
+        expression = polyglot.t("days", Math.floor(t_delta/24/60/60));
     }
-    return expression + " ago";
+    return polyglot.t("time_ago", { time: expression });
 }
 
 //
@@ -127,7 +112,7 @@ function openProfileModal(e)
     profileModalContent.appendTo("." +profileModalClass + " .modal-content");
 
     //título do modal
-    $( "."+profileModalClass + " h3" ).text( username + "'s Profile" );
+    $( "."+profileModalClass + " h3" ).text( polyglot.t("users_profile", { username: username }) );
 }
 
 function newHashtagModal(hashtag) {
@@ -194,7 +179,7 @@ function openMentionsModal(e)
     hashtagModalContent.appendTo("." +hashtagModalClass + " .modal-content");
 
     //título do modal
-    $( "."+hashtagModalClass + " h3" ).text( "Mentions of @" + username );
+    $( "."+hashtagModalClass + " h3" ).text( polyglot.t("users_mentions", { username: username }) );
 
     resetMentionsCount();
 }
@@ -222,7 +207,7 @@ function openFollowingModal(e)
     followingModalContent.appendTo("." +followingModalClass + " .modal-content");
 
     //título do modal
-    $( "."+followingModalClass + " h3" ).text( "Followed by " + username );
+    $( "."+followingModalClass + " h3" ).text( polyglot.t("followed_by", { username: username }) );
 }
 
 //
@@ -235,7 +220,7 @@ var reTwistPopup = function( e )
     openModal( reTwistClass );
 
     //título do modal
-    $( ".reTwist h3" ).text( "Retransmit this post to your followers?" );
+    $( ".reTwist h3" ).text( polyglot.t("retransmit_this") );
 
     var postdata = $(this).parents(".post-data").attr("data-userpost");
     var postElem = postToElem($.evalJSON(postdata),"");
@@ -252,7 +237,7 @@ var replyInitPopup = function(e, post)
 
     //título do modal
     var fullname = post.find(".post-info-name").text();
-    $( ".reply h3" ).text( "Reply to " +  fullname);
+    $( ".reply h3" ).text( polyglot.t("reply_to", { fullname: fullname }) );
 
     //para poder exibir a thread selecionada...
     var replyModalContent = $(".reply .modal-content").hide();
@@ -307,7 +292,7 @@ var postExpandFunction = function( e, postLi )
         originalPost.detach();
         postLi.empty();
         postLi.addClass( openClass );
-        $postInteractionText.text( "Collapse" );
+        $postInteractionText.text( polyglot.t("Collapse") );
 
         var itemOl = $("<ol/>", {class:"expanded-post"}).appendTo(postLi);
         var originalLi = $("<li/>", {class: "module post original"}).appendTo(itemOl);
@@ -325,7 +310,7 @@ var postExpandFunction = function( e, postLi )
     else
     {
         postLi.removeClass( openClass );
-        $postInteractionText.text( "Expand" );
+        $postInteractionText.text( polyglot.t("Expand") );
 
         if( $postsRelated ) $postsRelated.slideUp( "fast" );
         $postExpandedContent.slideUp( "fast", function()
@@ -426,7 +411,7 @@ var postSubmit = function(e)
     newPostMsg($replyText.val(), $postOrig);
 
     $replyText.val("");
-    $replyText.attr("placeholder", "Your message was sent!");
+    $replyText.attr("placeholder", polyglot.t("Your message was sent!"));
     closeModal($this);
 }
 

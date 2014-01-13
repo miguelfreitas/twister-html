@@ -472,9 +472,9 @@ function followingListPublicCheckbox(e) {
     var public = false;
     $this.toggleClass( "private" );
     if( $this.hasClass( "private" ) ) {
-        $this.text( "Private" );
+        $this.text( polyglot.t("Private") );
     } else {
-        $this.text( "Public" );
+        $this.text( polyglot.t("Public") );
         public = true;
     }
 
@@ -507,7 +507,7 @@ function processSwarmProgressFinal(lastHaves, numPieces)
             var $userDiv = $(".mini-profile-info[data-screen-name='" + user + "']");
             if( $userDiv.length ) {
                 var $status = $userDiv.find(".swarm-status");
-                $status.text("Downloaded " + numPieces[user] + "/" + (lastHaves[user]+1) + " posts");
+                $status.text(polyglot.t("download_posts_status", { portion: numPieces[user] + "/" + (lastHaves[user]+1) }));
                 $status.fadeIn();
             }
         }
@@ -535,7 +535,7 @@ function initInterfaceFollowing() {
 
     initUser( function() {
         if( !defaultScreenName ) {
-            alert("Username undefined, login required.");
+            alert(polyglot.t("username_undefined"));
             $.MAL.goLogin();
             return;
         }
