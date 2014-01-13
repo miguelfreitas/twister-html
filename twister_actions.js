@@ -130,9 +130,9 @@ function newPostMsg(msg, $postOrig) {
         twisterRpc("newpostmsg", params,
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
-                                        alert("Ajax error: " + msg); }, null);
+                                        alert(polyglot.t("ajax_error", { error: msg })); }, null);
     } else {
-        alert("Internal error: lastPostId unknown (following yourself may fix!)");
+        alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }
 }
 
@@ -150,9 +150,9 @@ function newRtMsg($postOrig) {
         twisterRpc("newrtmsg", params,
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
-                                        alert("Ajax error: " + msg); }, null);
+                                        alert(polyglot.t("ajax_error", { error: msg })); }, null);
     } else {
-        alert("Internal error: lastPostId unknown (following yourself may fix!)");
+        alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }
 }
 
@@ -214,7 +214,7 @@ function processHashtag(postboard, hashtag, data) {
                 displayHashtagPending(postboard);
             } else {
                 var newTweetsBar = postboard.closest("div").find(".postboard-news");
-                newTweetsBar.text(String(_hashtagPendingPosts.length) + " new posts");
+                newTweetsBar.text(polyglot.t("new_posts", { count: _hashtagPendingPosts.length }));
                 newTweetsBar.fadeIn("slow");
             }
         }

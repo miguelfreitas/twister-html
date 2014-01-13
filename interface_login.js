@@ -13,7 +13,7 @@ function processCreateUser(username, secretKey) {
     openModal( newUserClass );
 
     //título do modal
-    $( "." + newUserClass + " h3" ).text( "Propagating nickname '"+ username + "' to the network..." );
+    $( "." + newUserClass + " h3" ).text( polyglot.t("propagating_nickname", { username: username }) );
 
     var modalContent = $("." + newUserClass + " .modal-content");
     var templateContent = $( "#new-user-modal-template" ).children().clone(true);
