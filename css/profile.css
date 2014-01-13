@@ -153,8 +153,9 @@
 .profile-modal .modal-wrapper
 {
     width: 528px;
-    height: 590px;
-    margin: -300px 0 0 -264px;
+    height: 680px;
+    margin: -340px 0 0 -264px;
+    border-radius: 5px;
     overflow: hidden;
 }
 .profile-modal .modal-content
@@ -189,7 +190,7 @@
 }
 .profile-modal .postboard-posts .post
 {
-    padding: 5px;
+    padding: 0;
 }
 .profile-modal .post-interactions
 {

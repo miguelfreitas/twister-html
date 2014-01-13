@@ -509,21 +509,31 @@ button.disabled:hover
 /***********************************
 ********************* POST AREA ****
 ***********************************/
-.post-area-new
-{
-    padding: 10px;
+.post-area-new {
+    padding-bottom: 4px;
 }
 .post-area-new textarea
 {
     resize: none;
-    width: 100%;
+    width: 445px;
     display: block;
     transition: all .3s linear;
     height: 28px;
     border-radius: 3px;
     border: solid 1px rgba(0, 0, 0, .3 );
+    margin-left: 55px;
+    margin-bottom: 10px;
     padding: 4px;
     font-size: 13px;
+}
+.mini-profile .post-area-new
+{
+    padding: 9px;
+}
+.mini-profile .post-area-new textarea
+{
+    margin-left: 0;
+    width: 100%;
 }
 .post-area-new.open textarea
 {
@@ -551,7 +561,6 @@ button.disabled:hover
 {
     height: 35px;
     transition: all .6s linear;
-    padding-top: 4px;
 }
 .post-area-remaining
 {
@@ -806,6 +815,7 @@ button.disabled:hover
     font-size: 14px;
     color: #e34f42;
     text-decoration: none;
+    padding-left: 2px;
 }
 .post-info-tag
 {
@@ -1317,11 +1327,12 @@ button.disabled:hover
     width: 560px;
     height: 470px;
     margin: -200px 0 0 -280px;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .hashtag-modal .modal-content
 {
     overflow-y: auto;
+    height: 440px;
 }
 .hashtag-modal .modal-buttons
 {
