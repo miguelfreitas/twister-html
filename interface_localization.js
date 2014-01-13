@@ -45,7 +45,7 @@ if(preferredLanguage == "en"){
       "Configure block generation": "Configure block generation",
       "Connections:": "Connections: ", // to network
       "Connection lost.": "Connection lost.",
-      "days": "%{days} day |||| %{days} days",
+      "days": "%{smart_count} day |||| %{smart_count} days",
       "Detailed information": "Detailed information",
       "DHT network down.": "DHT network down.",
       "Direct Messages": "Direct Messages",
@@ -74,19 +74,19 @@ if(preferredLanguage == "en"){
       "General information": "General information",
       "Generate blocks (send promoted messages)": "Generate blocks (send promoted messages)",
       "Home": "Home", // homepage
-      "hours": "%{hours} hour |||| %{hours} hours",
+      "hours": "%{smart_count} hour |||| %{smart_count} hours",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Internal error: lastPostId unknown (following yourself may fix!)",
       "Known peers:": "Known peers: ",
       "Last block is ahead of your computer time, check your clock.": "Last block is ahead of your computer time, check your clock.",
       "mentions_at": "Mentions @%{user}",
-      "minutes": "%{minutes} minute |||| %{minutes} minutes",
+      "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
       "Must be 16 characters or less.": "Must be 16 characters or less.", // username
       "Network": "Network",
       "Network config": "Network config",
       "Network status": "Network status",
       "New direct message...": "New direct message...",
       "New Post...": "New Post...",
-      "new_posts": "%{count} new post |||| %{count} new posts",
+      "new_posts": "%{smart_count} new post |||| %{smart_count} new posts",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Not available", // username is not available
       "Number of blocks in block chain:": "Number of blocks in block chain: ",
@@ -110,7 +110,7 @@ if(preferredLanguage == "en"){
       "Retransmits": "Retransmits",
       "Retransmitted by": "Retransmitted by",
       "search": "search",
-      "seconds": "%{seconds} second |||| %{seconds} seconds",
+      "seconds": "%{smart_count} second |||| %{smart_count} seconds",
       "send": "send",
       "Send post with username": "Send post with username ",
       "Sent Direct Message": "Sent Direct Message",

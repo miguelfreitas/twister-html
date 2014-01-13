@@ -71,16 +71,16 @@ function timeSincePost(t) {
     var t_delta = Math.ceil((now - d) / 1000);
     var expression = "";
     if(t_delta < 60) {
-        expression = polyglot.t("seconds", { seconds: t_delta });
+        expression = polyglot.t("seconds", t_delta);
     }
     else if(t_delta < 60 * 60) {
-        expression = polyglot.t("minutes", { minutes: Math.floor(t_delta/60) });
+        expression = polyglot.t("minutes", Math.floor(t_delta/60));
     }
     else if(t_delta < 24 * 60 * 60) {
-        expression = polyglot.t("hours", { hours: Math.floor(t_delta/60/60) });
+        expression = polyglot.t("hours", Math.floor(t_delta/60/60));
     }
     else {
-        expression = polyglot.t("days", { days: Math.floor(t_delta/24/60/60) });
+        expression = polyglot.t("days", Math.floor(t_delta/24/60/60));
     }
     return polyglot.t("time_ago", { time: expression });
 }

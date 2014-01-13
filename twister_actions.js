@@ -214,7 +214,7 @@ function processHashtag(postboard, hashtag, data) {
                 displayHashtagPending(postboard);
             } else {
                 var newTweetsBar = postboard.closest("div").find(".postboard-news");
-                newTweetsBar.text(polyglot.t("new_posts", { count: _hashtagPendingPosts.length }));
+                newTweetsBar.text(polyglot.t("new_posts", _hashtagPendingPosts.length));
                 newTweetsBar.fadeIn("slow");
             }
         }
