@@ -143,7 +143,42 @@ function htmlFormatMsg( msg, output, mentions ) {
     var tmp;
     msg = escapeHtmlEntities(msg);
     while( msg != undefined && msg.length ) {
+        
+        // Take the first link, mention or hashtag
         var atindex = msg.indexOf("@");
+        var hashindex = msg.indexOf("#");
+        var httpindex = msg.indexOf("http://");
+        var httpsindex = msg.indexOf("https://");
+        if( atindex != -1 ) {
+            if( atindex < hashindex ) {
+                hashindex = -1;
+            }
+            if( atindex < httpindex || atindex < httpsindex) {
+                httpsindex = -1;
+                httpindex = -1;
+            }
+        }
+        if( hashindex != -1 ) {
+            if( hashindex < atindex ) {
+                atindex = -1;
+            }
+            if( hashindex < httpindex || hashindex < httpsindex) {
+                httpsindex = -1;
+                httpindex = -1;
+            }
+        }
+        if( httpindex != -1 || httpsindex != -1 ) {
+            if (httpsindex != -1) {
+                httpindex = httpsindex;
+            }
+            if( httpindex < atindex ) {
+                atindex = -1;
+            }
+            if( httpindex < hashindex ) {
+                hashindex = -1;
+            }
+        }
+
         if( atindex != -1 ) {
             output.append(msg.substr(0, atindex));
             tmp = msg.substr(atindex+1);
@@ -161,11 +196,6 @@ function htmlFormatMsg( msg, output, mentions ) {
             }
         }
 
-        var httpindex = msg.indexOf("http://");
-        var httpsindex = msg.indexOf("https://");
-        if (httpsindex != -1) {
-            httpindex = httpsindex;
-        }
         if( httpindex != -1 ) {
             output.append(msg.substr(0, httpindex));
             tmp = msg.substring(httpindex);
@@ -184,7 +214,6 @@ function htmlFormatMsg( msg, output, mentions ) {
             }
         }
 
-        var hashindex = msg.indexOf("#");
         if( hashindex != -1 ) {
             output.append(msg.substr(0, hashindex));
             tmp = msg.substr(hashindex+1);
