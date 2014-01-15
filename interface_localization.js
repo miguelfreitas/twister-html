@@ -154,9 +154,9 @@ if(preferredLanguage == "nl"){
       "Add DNS": "DNS toevoegen",
       "Add peer": "Add peer",
       "ajax_error": "Ajax error: %{error}", // JavaScript error
-      "All users publicly followed by": "All users publicly followed by",
+      "All users publicly followed by": "Alle gebruikers openbaarlijk gevolgd door",
       "Available": "Beschikbaar", // username is available
-      "Block chain information": "Block chain information",
+      "Block chain information": "Block chain informatie",
       "Block chain is up-to-date, twister is ready to use!": "Block chain is up-to-date, twister is klaar voor gebruik!",
       "Block generation": "Block generation ",
       "Cancel": "Annuleren",
@@ -167,24 +167,24 @@ if(preferredLanguage == "nl"){
       "Connections:": "Connecties: ", // to network
       "Connection lost.": "Verbinding kwijt.",
       "days": "%{smart_count} dag |||| %{smart_count} dagen",
-      "Detailed information": "Detailed information",
+      "Detailed information": "Gedetailleerde information",
       "DHT network down.": "DHT netwerk down.",
       "Direct Messages": "Privéberichten",
       "Disable": "Uitschakelen",
-      "Display mentions to @": "Display mentions to @",
-      "Display retransmissions": "Display retransmissions",
+      "Display mentions to @": "Toon vermeldingen voor @",
+      "Display retransmissions": "Toon retransmissions",
       "DNS to obtain list of peers:": "DNS to obtain list of peers:",
-      "downloading_block_chain": "Downloading block chain, please wait before continuing (block chain is %{days} days old).",
-      "download_posts_status": "Downloaded %{portion} posts", // Downloaded 10/30 posts
+      "downloading_block_chain": "Bezig met downloaden block chain, wacht a.u.b. voordat je doorgaat (block chain is %{days} dagen oud).",
+      "download_posts_status": "%{portion} berichten gedownload", // Downloaded 10/30 posts
       "Enable": "Activeren",
       "error": "Error: %{error}",
       "error_connecting_to_daemon": "Error connecting to local twister daemon.",
       "Error in 'createwalletuser' RPC.": "Error in 'createwalletuser' RPC.",
       "Error in 'importprivkey'": "Error in 'importprivkey' RPC: %{rpc}",
       "Error in 'sendnewusertransaction' RPC.": "Error in 'sendnewusertransaction' RPC.",
-      "Expand": "Expand", // larger view of a post
+      "Expand": "Uitklappen", // larger view of a post
       "Favorite": "Favoriet",
-      "File APIs not supported in this browser.": "File APIs not supported in this browser.",
+      "File APIs not supported in this browser.": "File APIs worden nie ondersteund in deze browser.",
       "Follow": "Volgen",
       "Followed by": "Gevolgd door",
       "followed_by": "Gevolgd door %{username}",
@@ -195,19 +195,19 @@ if(preferredLanguage == "nl"){
       "General information": "Algemene informatie",
       "Generate blocks (send promoted messages)": "Generate blocks (send promoted messages)",
       "Home": "Home", // homepage
-      "hours": "%{smart_count} hour |||| %{smart_count} hours",
+      "hours": "%{smart_count} uur |||| %{smart_count} uren",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Internal error: lastPostId unknown (following yourself may fix!)",
       "Known peers:": "Known peers: ",
       "Last block is ahead of your computer time, check your clock.": "Last block is ahead of your computer time, check your clock.",
-      "mentions_at": "Mentions @%{user}",
-      "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
-      "Must be 16 characters or less.": "Must be 16 characters or less.", // username
-      "Network": "Network",
-      "Network config": "Network config",
-      "Network status": "Network status",
+      "mentions_at": "Vermeldingen @%{user}",
+      "minutes": "%{smart_count} minuut |||| %{smart_count} minuten",
+      "Must be 16 characters or less.": "Moet 16 tekens zijn, of minder.", // username
+      "Network": "Netwerk",
+      "Network config": "Netwerk configuratie",
+      "Network status": "Netwerk status",
       "New direct message...": "Nieuw privébericht...",
       "New Post...": "Nieuw Bericht...",
-      "new_posts": "%{smart_count} new post |||| %{smart_count} new posts",
+      "new_posts": "%{smart_count} nieuw bericht |||| %{smart_count} nieuwe berichten",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Niet beschikbaar", // username is not available
       "Number of blocks in block chain:": "Number of blocks in block chain: ",
@@ -223,31 +223,31 @@ if(preferredLanguage == "nl"){
       "propagating_nickname": "Propagating nickname %{username} to the network...",
       "Public": "Publiek",
       "Refresh": "Vernieuwen",
-      "retransmit_this": "Retransmit this post to your followers?",
+      "retransmit_this": "Retransmit dit bericht naar je volgers?",
       "Reply": "Beantwoorden",
       "Reply...": "Beantwoord...",
       "reply_to": "Beantwoord %{fullname}",
       "Retransmit": "Retransmit",
       "Retransmits": "Retransmits",
-      "Retransmitted by": "Retransmitted by",
+      "Retransmitted by": "Retransmitted door",
       "search": "zoeken",
-      "seconds": "%{smart_count} second |||| %{smart_count} seconds",
+      "seconds": "%{smart_count} seconde |||| %{smart_count} secondes",
       "send": "Verstuur",
-      "Send post with username": "Send post with username ",
-      "Sent Direct Message": "Verstuur Privébericht",
-      "Sent Post to @": "Verstuur Bericht naar @",      
+      "Send post with username": "Verstuur bericht met gebruikersnaam ",
+      "Sent Direct Message": "Verstuur privébericht",
+      "Sent Post to @": "Verstuur bericht naar @",      
       "Setup account": "Account instellingen",
       "switch_to_network": "Local daemon is not connected to the network or\n" +
                 "block chain is outdated. If you stay in this page\n" +
                 "your actions may not work.\n" +
                 "Do you want to check Network Status page instead?",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
-      "time_ago": "%{time} ago", // 5 minutes ago
+      "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
-      "Type message here": "Type message here",
-      "Unfollow": "Unfollow",
+      "Type message here": "Type bericht hier",
+      "Unfollow": "Ontvolgen",
       "Update": "Update",
-      "Updating status...": "Updating status...", // status of block chain
+      "Updating status...": "Status aan het updaten...", // status of block chain
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
                 "or send any posts in this state.\n\n" +
@@ -257,12 +257,12 @@ if(preferredLanguage == "nl"){
                 "the last time you will have to wait before using\n" +
                 "twister).\n\n" +
                 "Tip: choose your avatar in the meantime!",
-      "users_mentions": "Mentions of @%{username}",
-      "users_profile": "%{username}'s Profile",
+      "users_mentions": "Vermeldingen voor @%{username}",
+      "users_profile": "%{username}'s profiel",
       "username_undefined": "Username undefined, login required.",
       "View": "Toon",
       "View All": "Toon alles",
-      "Who to Follow": "Wie volgen",
+      "Who to Follow": "Wie volgen?",
       "Your message was sent!": "Je bericht is verzonden!"
     };
 }
