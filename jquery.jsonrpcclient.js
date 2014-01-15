@@ -90,6 +90,7 @@
       url      : this.options.ajaxUrl,
       data     : $.toJSON(request),
       dataType : 'json',
+      contentType: "application/json; charset=utf-8",
       cache    : false,
       beforeSend: function (xhr) { 
         if( options.username != null  && options.username != undefined ) {
@@ -154,6 +155,7 @@
       url      : this.options.ajaxUrl,
       data     : $.toJSON(request),
       dataType : 'json',
+      contentType: "application/json; charset=utf-8",
       cache    : false,
       beforeSend: function (xhr){ 
         if( options.username != null  && options.username != undefined ) {
@@ -395,6 +397,7 @@
       url      : self.jsonrpcclient.options.ajaxUrl,
       data     : $.toJSON(batch_request),
       dataType : 'json',
+      contentType: "application/json; charset=utf-8",
       cache    : false,
       type     : 'POST',
 
