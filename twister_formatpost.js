@@ -90,7 +90,7 @@ function postToElem( post, kind ) {
             replyTo += "@" + mentions[i] + " ";
         }
     }
-    elem.find(".post-area-new textarea").attr("placeholder","Reply to " + replyTo + "...");
+    elem.find(".post-area-new textarea").attr("placeholder", polyglot.t("reply_to", { fullname: replyTo })+ "...");
     elem.find(".post-area-new textarea").attr("data-reply-to",replyTo);
     postData.attr("data-reply-to",replyTo);
 

@@ -67,7 +67,7 @@ function loadWalletlUsers(cbFunc, cbArg) {
                    args.cbFunc(args.cbArg);
                }, {cbFunc:cbFunc, cbArg:cbArg},
                function(args, ret) {
-                   alert("Error connecting to local twister deamon.");
+                   alert(polyglot.t("error_connecting_to_daemon"));
                }, {});
 }
 
@@ -103,25 +103,25 @@ function checkUsernameAvailability() {
     if( !username.length )
         return;
     if( username.length > 16 ) {
-        $availField.text("Must be 16 characters or less.");
+        $availField.text(polyglot.t("Must be 16 characters or less."));
         return;
     }
 
     //Check for non-alphabetic characters and space
     if(username.search(/[^a-z0-9_]/) != -1) {
-        $availField.text("Only alphanumeric and underscore allowed.");
+        $availField.text(polyglot.t("Only alphanumeric and underscore allowed."));
         return;
     }
 
-    $availField.text("Checking...");
+    $availField.text(polyglot.t("Checking..."));
 
     dumpPubkey(username, function(dummy, pubkey) {
                             var notAvailable =  pubkey.length > 0
                             var $availField = $(".availability");
                             if( notAvailable ) {
-                                $availField.text("Not available");
+                                $availField.text(polyglot.t("Not available"));
                             } else {
-                                $availField.text("Available");
+                                $availField.text(polyglot.t("Available"));
 
                                 var $createButton = $(".create-user");
                                 $.MAL.enableButton( $createButton );
@@ -147,7 +147,7 @@ function createUserClick(cbFunc) {
                        args.cbFunc(args.username, ret);
                    }, {username:username, cbFunc:cbFunc},
                    function(args, ret) {
-                       alert("Error in 'createwalletuser' RPC.");
+                       alert(polyglot.t("Error in 'createwalletuser' RPC."));
                    }, {cbFunc:cbFunc});
     } else {
         // user exists in wallet but transaction not sent
@@ -164,7 +164,7 @@ function sendNewUserTransaction(username, cbFunc) {
                    args.cbFunc();
                }, {cbFunc:cbFunc},
                function(args, ret) {
-                   alert("Error in 'sendnewusertransaction' RPC.");
+                   alert(polyglot.t("Error in 'sendnewusertransaction' RPC."));
                }, {});
 }
 
@@ -190,7 +190,7 @@ function importSecretKeyClick() {
                    processNewSecretKeyImported(args.username);
                }, {username:username},
                function(args, ret) {
-                   alert("Error in 'importprivkey' RPC: " + ret.message);
+                   alert(polyglot.t("Error in 'importprivkey'", {rpc: ret.message }));
                }, {});
 }
 
