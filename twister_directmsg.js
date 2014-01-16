@@ -59,7 +59,7 @@ function requestDmConversation(dmConvo,dm_screenname) {
                function(args, ret) { processDmConversation(args.dmConvo, args.dmUser, ret); }, 
                                    {dmConvo:dmConvo,dmUser:dm_screenname},
                function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
-                                    alert("Ajax error: " + msg); }, null);
+                                    alert(polyglot.t("ajax_error", { error: msg })); }, null);
 }
 
 function processDmConversation(dmConvo, dm_screenname, dmData) {
@@ -103,7 +103,7 @@ function newDirectMsg(msg,  dm_screenname) {
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                         alert("Ajax error: " + msg); }, null);
     } else {
-        alert("Internal error: lastPostId unknown (following yourself may fix!)");
+        alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }
 }
 
@@ -117,7 +117,7 @@ function directMessagesPopup()
     $( directMessagesContent ).clone().appendTo( ".directMessages .modal-content" );
 
     //título do modal
-    $( ".directMessages h3" ).text( "Direct Messages" );
+    $( ".directMessages h3" ).text( polyglot.t("Direct Messages") );
 
     requestDMsnippetList($(".directMessages").find(".direct-messages-list"));
 }

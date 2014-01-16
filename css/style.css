@@ -443,7 +443,7 @@ button.disabled:hover
 {
     color: #b43e34;
 }
-.profile-data li a span
+.profile-data li a span.posts-count, .profile-data li a span.following-count, .profile-data li a span.followers-count
 {
     font-weight: bold;
     display: block;
