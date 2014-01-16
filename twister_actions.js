@@ -223,8 +223,28 @@ function processHashtag(postboard, hashtag, data) {
 
 function displayHashtagPending(postboard) {
     for( var i = 0; i < _hashtagPendingPosts.length; i++ ) {
-        var newStreamPost = postToElem(_hashtagPendingPosts[i], "original");
-        postboard.prepend( newStreamPost );
+        var streamPost = postToElem(_hashtagPendingPosts[i], "original");
+        var timePost = _hashtagPendingPosts[i]["userpost"]["time"];
+
+        var streamItems = postboard.children();
+        if( streamItems.length == 0) {
+            postboard.prepend( streamPost );
+        } else {
+            var j = 0;
+            for( j = 0; j < streamItems.length; j++) {
+                var streamItem = streamItems.eq(j);
+                var timeItem = streamItem.attr("data-time");
+                if( timeItem == undefined ||
+                    timePost > parseInt(timeItem) ) {
+                    // this post in stream is older, so post must be inserted above
+                    streamItem.before(streamPost);
+                    break;
+                }
+            }
+            if( j == streamItems.length ) {
+                postboard.append( streamPost );
+            }
+        }
     }
     $.MAL.postboardLoaded();
     _hashtagPendingPosts = [];

@@ -141,62 +141,65 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
 // todo: hashtags
 function htmlFormatMsg( msg, output, mentions ) {
     var tmp;
+    var match = null;
+    var index;
+    var reAll = new RegExp("(#|@|http[s]?://)");
+    var reHttp = new RegExp("http[s]?://");
+    
     msg = escapeHtmlEntities(msg);
+
     while( msg != undefined && msg.length ) {
-        var atindex = msg.indexOf("@");
-        if( atindex != -1 ) {
-            output.append(msg.substr(0, atindex));
-            tmp = msg.substr(atindex+1);
-            var username = _extractUsername(tmp);
-            if( username.length ) {
-                if( mentions.indexOf(username) < 0 )
-                    mentions.push(username);
-                var userLinkTemplate = $("#msg-user-link-template").clone(true);
-                userLinkTemplate.removeAttr("id");
-                userLinkTemplate.attr("href",$.MAL.userUrl(username));
-                userLinkTemplate.text("@"+username);
-                output.append(userLinkTemplate);
-                msg = tmp.substr(String(username).length);
-                continue;
+        
+        match = reAll.exec(msg);
+        if( match ) {
+            if( match[0] == "@" ) {
+                output.append(msg.substr(0, match.index));
+                tmp = msg.substr(match.index+1);
+                var username = _extractUsername(tmp);
+                if( username.length ) {
+                    if( mentions.indexOf(username) < 0 )
+                        mentions.push(username);
+                    var userLinkTemplate = $("#msg-user-link-template").clone(true);
+                    userLinkTemplate.removeAttr("id");
+                    userLinkTemplate.attr("href",$.MAL.userUrl(username));
+                    userLinkTemplate.text("@"+username);
+                    output.append(userLinkTemplate);
+                    msg = tmp.substr(String(username).length);
+                    continue;
+                }
             }
-        }
-
-        var httpindex = msg.indexOf("http://");
-        var httpsindex = msg.indexOf("https://");
-        if (httpsindex != -1) {
-            httpindex = httpsindex;
-        }
-        if( httpindex != -1 ) {
-            output.append(msg.substr(0, httpindex));
-            tmp = msg.substring(httpindex);
-            var space = tmp.indexOf(" ");
-            var url;
-            if( space != -1 ) url = tmp.substring(0,space); else url = tmp;
-            if( url.length ) {
-                var extLinkTemplate = $("#external-page-link-template").clone(true);
-                extLinkTemplate.removeAttr("id");
-                extLinkTemplate.attr("href",url);
-                extLinkTemplate.text(url);
-                extLinkTemplate.attr("title",url);
-                output.append(extLinkTemplate);
-                msg = tmp.substr(String(url).length);
-                continue;
+    
+            if( reHttp.exec(match[0]) ) {
+                output.append(msg.substr(0, match.index));
+                tmp = msg.substring(match.index);
+                var space = tmp.indexOf(" ");
+                var url;
+                if( space != -1 ) url = tmp.substring(0,space); else url = tmp;
+                if( url.length ) {
+                    var extLinkTemplate = $("#external-page-link-template").clone(true);
+                    extLinkTemplate.removeAttr("id");
+                    extLinkTemplate.attr("href",url);
+                    extLinkTemplate.text(url);
+                    extLinkTemplate.attr("title",url);
+                    output.append(extLinkTemplate);
+                    msg = tmp.substr(String(url).length);
+                    continue;
+                }
             }
-        }
-
-        var hashindex = msg.indexOf("#");
-        if( hashindex != -1 ) {
-            output.append(msg.substr(0, hashindex));
-            tmp = msg.substr(hashindex+1);
-            var hashtag = _extractUsername(tmp);
-            if( hashtag.length ) {
-                var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
-                hashtagLinkTemplate.removeAttr("id");
-                hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(hashtag));
-                hashtagLinkTemplate.text("#"+hashtag);
-                output.append(hashtagLinkTemplate);
-                msg = tmp.substr(String(hashtag).length);
-                continue;
+    
+            if( match[0] == "#" ) {
+                output.append(msg.substr(0, match.index));
+                tmp = msg.substr(match.index+1);
+                var hashtag = _extractUsername(tmp);
+                if( hashtag.length ) {
+                    var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
+                    hashtagLinkTemplate.removeAttr("id");
+                    hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(hashtag));
+                    hashtagLinkTemplate.text("#"+hashtag);
+                    output.append(hashtagLinkTemplate);
+                    msg = tmp.substr(String(hashtag).length);
+                    continue;
+                }
             }
         }
 

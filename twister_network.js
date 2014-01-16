@@ -20,11 +20,17 @@ function requestNetInfo(cbFunc, cbArg) {
                    twisterdAddrman     = ret.addrman_total;
                    twisterdBlocks      = ret.blocks;
                    twisterDhtNodes     = ret.dht_nodes;
+                   twisterVersion      = ("0000000" + ret.version).slice(-8);
+                   twisterDisplayVersion = twisterVersion.slice(0,2) + '.' + 
+                                           twisterVersion.slice(2,4) + '.' + 
+                                           twisterVersion.slice(4,6) + '.' + 
+                                           twisterVersion.slice(6,8);
 
                    $(".connection-count").text(twisterdConnections);
                    $(".known-peers").text(twisterdAddrman);
                    $(".blocks").text(twisterdBlocks);
                    $(".dht-nodes").text(twisterDhtNodes);
+                   $(".version").text(twisterDisplayVersion);
 
                    if( !twisterdConnections ) {
                        $.MAL.setNetworkStatusMsg(polyglot.t("Connection lost."), false);

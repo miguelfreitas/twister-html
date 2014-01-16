@@ -146,7 +146,7 @@ function processReceivedPosts(req, posts)
             streamPostAppended = true;
         } else {
             var j = 0;
-            for( var j = 0; j < streamItems.length; j++) {
+            for( j = 0; j < streamItems.length; j++) {
                 var streamItem = streamItems.eq(j);
                 var timeItem = streamItem.attr("data-time");
                 if( timeItem == undefined ||

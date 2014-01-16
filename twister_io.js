@@ -198,6 +198,8 @@ function getProfileResource( username, resource, item, cbFunc, cbArg ){
 
 // get fullname and store it in item.text
 function getFullname( username, item ){
+    // Set the username first in case the profile has no fullname
+    item.text(username);
     getProfileResource( username, "fullname", item);
 }
 
