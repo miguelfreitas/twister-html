@@ -143,6 +143,32 @@ function networkUpdate(cbFunc, cbArg) {
     });
 }
 
+function getMiningInfo(cbFunc, cbArg) {
+    twisterRpc("getmininginfo", [],
+               function(args, ret) {
+                   miningDifficulty    = ret.difficulty;
+                   miningHashRate      = ret.hashespersec;
+
+                   $(".mining-difficulty").text(miningDifficulty);
+                   $(".mining-hashrate").text(miningHashRate);
+/*
+                   if( !twisterdConnections ) {
+                       $.MAL.setNetworkStatusMsg("Connection lost.", false);
+                       twisterdConnectedAndUptodate = false;
+                   }
+*/
+                   if( args.cbFunc )
+                       args.cbFunc(args.cbArg);
+               }, {cbFunc:cbFunc, cbArg:cbArg},
+               function(args, ret) {
+                   console.log("Error connecting to local twister daemon.");
+               }, {});
+}
+
+function miningUpdate(cbFunc, cbArg) {
+    getMiningInfo(cbFunc, cbArg);
+}
+
 function getGenerate() {
     twisterRpc("getgenerate", [],
                function(args, ret) {
@@ -222,6 +248,10 @@ function initInterfaceNetwork() {
     });
     networkUpdate();
     setInterval("networkUpdate()", 2000);
+
+    miningUpdate();
+    setInterval("miningUpdate()", 2000);
+
     getGenerate();
 
     interfaceNetworkHandlers();

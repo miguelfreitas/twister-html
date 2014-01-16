@@ -332,6 +332,7 @@ function processSuggestion(arg, suggestion, followedBy) {
         item.find(".twister-user-info").attr("data-screen-name", suggestion);
 
         item.find(".twister-user-name").attr("href", $.MAL.userUrl(suggestion));
+        item.find(".twister-by-user-name").attr("href", $.MAL.userUrl(followedBy));
         item.find(".twister-user-tag").text("@" + suggestion);
 
         getAvatar(suggestion,item.find(".twister-user-photo"));
