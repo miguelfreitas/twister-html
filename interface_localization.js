@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl"];
+var knownLanguages = ["en","nl","it"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -114,7 +114,7 @@ if(preferredLanguage == "en"){
       "send": "send",
       "Send post with username": "Send post with username ",
       "Sent Direct Message": "Sent Direct Message",
-      "Sent Post to @": "Sent Post to @",      
+      "Sent Post to @": "Sent Post to @",
       "Setup account": "Setup account",
       "switch_to_network": "Local daemon is not connected to the network or\n" +
                 "block chain is outdated. If you stay in this page\n" +
@@ -235,7 +235,7 @@ if(preferredLanguage == "nl"){
       "send": "Verstuur",
       "Send post with username": "Verstuur bericht met gebruikersnaam ",
       "Sent Direct Message": "Verstuur privébericht",
-      "Sent Post to @": "Verstuur bericht naar @",      
+      "Sent Post to @": "Verstuur bericht naar @",
       "Setup account": "Account instellingen",
       "switch_to_network": "Local daemon is not connected to the network or\n" +
                 "block chain is outdated. If you stay in this page\n" +
@@ -267,6 +267,125 @@ if(preferredLanguage == "nl"){
     };
 }
 
+if(preferredLanguage == "it"){
+    polyglot.locale("it");
+    wordset = {
+      "Actions ▼": "Azioni ▼",
+      "Active DHT nodes:": "Nodi DHT attivi:",
+      "Add DNS": "Connetti DNS",
+      "Add peer": "Connetti nodo",
+      "ajax_error": "Errore AJAX: %{error}", // JavaScript error
+      "All users publicly followed by": "Utenti seguiti pubblicamente da",
+      "Available": "Disponibile", // username is available
+      "Block chain information": "Informazioni sulla catena di blocchi",
+      "Block chain is up-to-date, twister is ready to use!": "Catena di blocchi aggiornata, Twister è pronto per l'uso!",
+      "Block generation": "Generatore di blocchi:",
+      "Cancel": "Cancella",
+      "Change user": "Cambia utente",
+      "Checking...": "Controllo in corso...", // checking if username is available
+      "Collapse": "Chiudi", // smaller view of a post
+      "Configure block generation": "Configura generatore di blocchi",
+      "Connections:": "Connessioni: ", // to network
+      "Connection lost.": "Connessione interrotta.",
+      "days": "%{smart_count} giorno |||| %{smart_count} giorni",
+      "Detailed information": "Informazioni dettagliate",
+      "DHT network down.": "DHT network inaccessibile.",
+      "Direct Messages": "Messaggi Diretti",
+      "Disable": "Disabilitato",
+      "Display mentions to @": "Mostra le menzioni di @",
+      "Display retransmissions": "Mostra Ripubblicazioni",
+      "DNS to obtain list of peers:": "DNS per la lista dei nodi:",
+      "downloading_block_chain": "Scaricamento della catena di blocchi in corso, attendere prego (la catena risale a %{days} giorni fa).",
+      "download_posts_status": "Scaricati %{portion} messaggi", // Downloaded 10/30 posts
+      "Enable": "Attivato",
+      "error": "Errore: %{error}",
+      "error_connecting_to_daemon": "Errore nella connessione al servizio Twister locale.",
+      "Error in 'createwalletuser' RPC.": "Errore in 'createwalletuser' RPC.",
+      "Error in 'importprivkey'": "Errore in 'importprivkey' RPC: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Errore in 'sendnewusertransaction' RPC.",
+      "Expand": "Espandi", // larger view of a post
+      "Favorite": "Preferito",
+      "File APIs not supported in this browser.": "File APIs non supportati in questo browser.",
+      "Follow": "Segui",
+      "Followed by": "Seguito da",
+      "followed_by": "Seguiti da %{username}",
+      "Followers": "Lettori",
+      "Following": "Seguiti",
+      "Following users": "Utenti seguiti",
+      "Force connection to peer:": "Forza connessione al nodo:",
+      "General information": "Informazioni",
+      "Generate blocks (send promoted messages)": "Genera blocchi (invia messaggi pubblicitari)",
+      "Home": "Twister", // homepage -- no direct translation in Italian...?
+      "hours": "%{smart_count} ora |||| %{smart_count} ore",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Errore interno: lastPostId sconosciuto (prova a seguire te stesso per risolvere!)",
+      "Known peers:": "Nodi conosciuti: ",
+      "Last block is ahead of your computer time, check your clock.": "L'ultimo blocco è più recente del tuo orario, controlla l'orologio di sistema.",
+      "mentions_at": "Chi menziona @%{user}",
+      "minutes": "%{smart_count} minuto |||| %{smart_count} minuti",
+      "Must be 16 characters or less.": "Massimo 16 caratteri.", // username
+      "Network": "Rete",
+      "Network config": "Configurazione della rete",
+      "Network status": "Status della rete",
+      "New direct message...": "Nuovo messaggio diretto...",
+      "New Post...": "Nuovo messaggio...",
+      "new_posts": "%{smart_count} nuovo messaggio |||| %{smart_count} nuovi messaggi",
+      "nobody": "nessuno", // used to promote a post without attaching the user
+      "Not available": "Non disponibile", // username is not available
+      "Number of blocks in block chain:": "Numero di blocchi nella catena: ",
+      "Number of CPUs to use": "Numero di processori da usare:",
+      "Only alphanumeric and underscore allowed.": "Sono permessi solo caratteri alfanumerici e '_'",
+      "peer address": "Indirizzo del nodo",
+      "Private": "Privato",
+      "Profile": "Profilo",
+      "Postboard": "Bacheca",
+      "post": "Invia", // verb - button to post a message
+      "Post to promote:": "Messaggio pubblicitario: ",
+      "Posts": "Messaggi",
+      "propagating_nickname": "Propagazione sul network del nome %{username} in corso...",
+      "Public": "Pubblico",
+      "Refresh": "Ricarica",
+      "retransmit_this": "Ripubblica questo post ai tuoi lettori?",
+      "Reply": "Rispondi",
+      "Reply...": "Rispondi...",
+      "reply_to": "Rispondi a %{fullname}",
+      "Retransmit": "Ripubblica",
+      "Retransmits": "Ripubblicati",
+      "Retransmitted by": "Ripubblicato da",
+      "search": "Cerca",
+      "seconds": "%{smart_count} secondo |||| %{smart_count} secondi",
+      "send": "Invia",
+      "Send post with username": "Pubblica come utente ",
+      "Sent Direct Message": "Messaggi Diretti inviati",
+      "Sent Post to @": "Messaggi inviati a @",
+      "Setup account": "Configurazione Utente",
+      "switch_to_network": "Il servizio locale non è connesso alla rete Twister o la catena di blocchi è vecchia.\n" +
+                "Se rimani su questa pagina, Twister potrebbe non funzionare.\n" +
+                "Vuoi controllare lo stato della rete Twister, invece?",
+      "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
+      "time_ago": "%{time} fa", // 5 minutes ago
+      "Time of the last block:": "Orario del blocco più recente: ",
+      "Type message here": "Scrivi qui",
+      "Unfollow": "Smetti di seguire",
+      "Update": "Aggiorna",
+      "Updating status...": "Aggiornamento in corso...", // status of block chain
+      "user_not_yet_accepted": "Gli altri nodi non hanno ancora accettato il nuovo utente.\n" +
+                "Al momento non puoi salvare il profilo o spedire messaggi.\n" +
+                "Attendi qualche minuto prima di continuare.\n\n" +
+                "Please wait a few minutes to continue.\n\n" +
+                "Il pulsante 'Salva modifiche' sarà abilitato automaticamente appena il processo sarà completato.\n" +
+                "(Prometto che è l'ultima attesa prima di poter usare Twister!).\n\n" +
+                "Suggerimento: nel frattempo, trova un'immagine da usare come avatar!",
+      "users_mentions": "Menzioni di @%{username}",
+      "users_profile": "Profilo di %{username}",
+      "username_undefined": "Utente non specificato, è necessario il login.",
+      "View": "Vedi",
+      "View All": "Mostra tutti",
+      "Who to Follow": "Chi seguire?",
+      "Your message was sent!": "Il messaggio è stato inviato!"
+    };
+}
+
+
 // translators: sample adding a language
 if(preferredLanguage == "ru"){
     // polyglot.locale() is used to support plurals
@@ -280,7 +399,7 @@ if(preferredLanguage == "ru"){
       polish:    ['pl'],
       icelandic: ['is']
     */
-    
+
     polyglot.locale("ru");
 
     // list of the English words and translations
