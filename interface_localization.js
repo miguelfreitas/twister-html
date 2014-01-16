@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl"];
+var knownLanguages = ["en","nl","ru"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -286,6 +286,120 @@ if(preferredLanguage == "ru"){
     // list of the English words and translations
     wordset = {
       "Actions ▼": "Действия ▼" // , comma after each match except the last
+      "Active DHT nodes:": "Активные узлы DHT: ",
+      "Add DNS": "Добавить DNS",
+      "Add peer": "Добавить пира",
+      "ajax_error": "Ajax ошибка: %{error}", // JavaScript error
+      "All users publicly followed by": "Все публичные пользователи на которых подписан",
+      "Available": "Доступно", // username is available
+      "Block chain information": "Информация цепочки блоков",
+      "Block chain is up-to-date, twister is ready to use!": "Цепочка блоков обновлена, twister готов к использованию!",
+      "Block generation": "Майнинг блоков ",
+      "Cancel": "Отменить",
+      "Change user": "Сменить пользователя",
+      "Checking...": "Проверка...", // checking if username is available
+      "Collapse": "Свернуть", // smaller view of a post
+      "Configure block generation": "Настройка майнинга",
+      "Connections:": "Подключения: ", // to network
+      "Connection lost.": "Соединение с сетью было потеряно.",
+      "days": "%{smart_count} день |||| %{smart_count} дней",
+      "Detailed information": "Подробная информация",
+      "DHT network down.": "Недоступна DHT сеть.",
+      "Direct Messages": "Личные сообщения",
+      "Disable": "Отключено",
+      "Display mentions to @": "Показать ответы для @",
+      "Display retransmissions": "Показать репосты",
+      "DNS to obtain list of peers:": "DNS адресс для получения пиров:",
+      "downloading_block_chain": "Загрузка цепочки блоков, пожалуйста подождите, (Цепочка блоков устарела на %{days} дней).",
+      "download_posts_status": "Загружено %{portion} постов", // Downloaded 10/30 posts
+      "Enable": "Включено",
+      "error": "Ошибка: %{error}",
+      "error_connecting_to_daemon": "Ошибка подключения к локальному демону twisterd.",
+      "Error in 'createwalletuser' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'createwalletuser'.",
+      "Error in 'importprivkey'": "Ошибка при обращении к RPC - при попытке выполнить 'importprivkey' %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'sendnewusertransaction'",
+      "Expand": "Развернуть", // larger view of a post
+      "Favorite": "Избранное",
+      "File APIs not supported in this browser.": "Ваш браузер не поддерживает File APIs.",
+      "Follow": "Подписаться",
+      "Followed by": "Следят",
+      "followed_by": "%{username} подписан",
+      "Followers": "Подписчиков",
+      "Following": "Подписанных",
+      "Following users": "Подписанные пользователи",
+      "Force connection to peer:": "Принудительно подключиться к пиру:",
+      "General information": "Основное",
+      "Generate blocks (send promoted messages)": "Майнинг (отправка рекламных сообщений)",
+      "Home": "Главная", // homepage
+      "hours": "%{smart_count} час |||| %{smart_count} часов",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Внутренняя ошибка: lastPostId неизвестен (Попробуйте подписаться сами на себя, это должно помоч!)",
+      "Known peers:": "Известные пиры: ",
+      "Last block is ahead of your computer time, check your clock.": "Последний полученный блок опережает время вашего компьютера, проверьте правильно ли работают часы.",
+      "mentions_at": "Упоминания @%{user}",
+      "minutes": "%{smart_count} минута |||| %{smart_count} минут",
+      "Must be 16 characters or less.": "Должно быть не более 16 знаков.", // username
+      "Network": "Сеть",
+      "Network config": "Настройка сети",
+      "Network status": "Состояние сети",
+      "New direct message...": "Новое личное сообщение...",
+      "New Post...": "Новый пост...",
+      "new_posts": "%{smart_count} новый пост |||| %{smart_count} новых постов",
+      "nobody": "Никто", // used to promote a post without attaching the user
+      "Not available": "Недоступно", // username is not available
+      "Number of blocks in block chain:": "Количество блоков в цепочке: ",
+      "Number of CPUs to use": "Сколько использовать ядер процессора",
+      "Only alphanumeric and underscore allowed.": "Разрешены только латинские буквы и цифры.",
+      "peer address": "адрес пира",
+      "Private": "Приватный",
+      "Profile": "Профиль",
+      "Postboard": "Лента",
+      "post": "отправить", // verb - button to post a message
+      "Post to promote:": "Рекламное сообщение: ",
+      "Posts": "Посты",
+      "propagating_nickname": "Распространяю информацию о регистрации %{username} в сеть...",
+      "Public": "Публичный",
+      "Refresh": "Обновить",
+      "retransmit_this": "Перепостить данное сообщение своим подписчикам?",
+      "Reply": "Ответить",
+      "Reply...": "Ответить...",
+      "reply_to": "Ответить %{fullname}",
+      "Retransmit": "Перепостить",
+      "Retransmits": "Репосты",
+      "Retransmitted by": "Перепощено ",
+      "search": "поиск",
+      "seconds": "%{smart_count} секунда |||| %{smart_count} секунд",
+      "send": "отправить",
+      "Send post with username": "Отправить сообщение от имени",
+      "Sent Direct Message": "Отправить личное сообщение",
+      "Sent Post to @": "Отправить сообщение для @",      
+      "Setup account": "Настроить аккаунт",
+      "switch_to_network": "Локальный демон не подключен к сети или\n" +
+                "цепочка блоков устарела. Если вы останитесь на этой странице\n" +
+                "ваши действия могут быть не выполнеными.\n" +
+                "Не хотите перейти на страницу настройки сети?",
+      "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
+      "time_ago": "%{time} назад", // 5 minutes ago
+      "Time of the last block:": "Время последнего блока: ",
+      "Type message here": "Введите ваше сообщение тут",
+      "Unfollow": "Отписаться",
+      "Update": "Обновить",
+      "Updating status...": "Обновление информации...", // status of block chain
+      "user_not_yet_accepted": "Другие участники сети еще не получили информацию о новом пользователе.\n" +
+                "К сожалению, сейчас вы не можете редактировать ваш профиль\n" +
+                "или отправлять сообщение.\n\n" +
+                "Пожалуйста подождите пару минут.\n\n" +
+                "Кнопка 'Сохранить' будет доступна автоматически того,\n" +
+                "когда процес регистрации будет завершен. (Я обещаю, это\n"+
+                "последний раз, когда вы ждете перед использованием\n" +
+                "twister'a).\n\n" +
+                "Хозяйке на заметку: Сейчас вы можете выбрать аватар!",
+      "users_mentions": "Ответ от @%{username}",
+      "users_profile": "%{username}'s профиль",
+      "username_undefined": "Имя пользователя не определено, требуеться войти.",
+      "View": "Просмотреть",
+      "View All": "Просмотреть Всё",
+      "Who to Follow": "Кого почитать",
+      "Your message was sent!": "Ваше сообщение было отправлено!"
     };
 }
 
