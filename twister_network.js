@@ -224,21 +224,24 @@ function setSpamMsg() {
 }
 
 function exitDaemon() {
-  $( ".terminate-daemon").text("Exiting...");
-  $( ".terminate-daemon").addClass("disabled");
-  $.MAL.disableButton( $( ".terminate-daemon") );
+  if (confirm('Are you sure you want to exit the daemon?\nThe Twister client will stop working.')) {
+    $( ".terminate-daemon").text("Exiting...");
+    $( ".terminate-daemon").addClass("disabled");
+    $.MAL.disableButton( $( ".terminate-daemon") );
 
-  twisterRpc("stop", undefined,
-              function(args, ret) {
-                  console.log("daemon exiting");
+    twisterRpc("stop", undefined,
+                function(args, ret) {
+                    console.log("daemon exiting");
 
-                  setTimeout(function _reload_after_exit() {
-                    window.location.href = '/abort.html';
-                  }, 2000);
-              }, {},
-              function(args, ret) {
-                  console.log("error while exiting daemon");
-              }, {});
+                    setTimeout(function _reload_after_exit() {
+                      window.location.href = '/abort.html';
+                    }, 2000);
+                }, {},
+                function(args, ret) {
+                    console.log("error while exiting daemon");
+                }, {});
+
+  }
 }
 
 // handlers common to both desktop and mobile
