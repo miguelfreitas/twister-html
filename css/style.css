@@ -624,7 +624,8 @@ button.disabled:hover
     font-size: 13px;
     cursor: pointer;
 }
-.twister-user-name
+.twister-user-name,
+.twister-by-user-name
 {
     font-weight: bold;
     font-size: 14px;

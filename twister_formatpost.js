@@ -116,7 +116,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
     dmItem.find("a.dm-chat-link").attr("href", $.MAL.dmchatUrl(remoteUser));
     getAvatar( remoteUser, dmItem.find(".post-photo").find("img") );
     getFullname( remoteUser, dmItem.find("a.post-info-name") );
-    dmItem.find(".post-text").text(escapeHtmlEntities(dmData.text));
+    dmItem.find(".post-text").html(escapeHtmlEntities(dmData.text));
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time));
     dmItem.find(".post-info-time").attr("title",timeSincePost(dmData.time));
 

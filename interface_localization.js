@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it"];
+var knownLanguages = ["en","nl","it", "fr"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -385,6 +385,127 @@ if(preferredLanguage == "it"){
     };
 }
 
+
+if(preferredLanguage == "fr"){
+    polyglot.locale("fr");
+    wordset = {
+      "Actions ▼": "Actions ▼",
+      "Active DHT nodes:": "Noeuds DHT actifs: ",
+      "Add DNS": "Ajouter un DNS",
+      "Add peer": "Ajouter un pair",
+      "ajax_error": "Erreur ajax: %{error}", // JavaScript error
+      "All users publicly followed by": "Tous les utilisateurs suivis publiquement par",
+      "Available": "Disponible", // username is available
+      "Block chain information": "Informations à propos de la chaîne de blocs",
+      "Block chain is up-to-date, twister is ready to use!": "La chaîne de blocs est à jour, Twister est maintenant fonctionnel!",
+      "Block generation": "Production de blocs",
+      "Cancel": "Annuler",
+      "Change user": "Changer d'utilisateur",
+      "Checking...": "Vérification...", // checking if username is available
+      "Collapse": "Fermer", // smaller view of a post
+      "Configure block generation": "Configuration de la production de blocs",
+      "Connections:": "Connexions: ", // to network
+      "Connection lost.": "Connexion perdue.",
+      "days": "%{smart_count} jour |||| %{smart_count} jours",
+      "Detailed information": "Informations détaillées",
+      "DHT network down.": "Panne du réseau DHT.",
+      "Direct Messages": "Messages directs",
+      "Disable": "Désactiver",
+      "Display mentions to @": "Afficher les mentions pour @",
+      "Display retransmissions": "Afficher les retransmissions",
+      "DNS to obtain list of peers:": "DNS pour obtenir la liste des pairs:",
+      "downloading_block_chain": "Téléchargement de la chaîne de blocs, s'il vous plaît attendre avant de continuer (la chaîne de blocs a %{days} jours de retard).",
+      "download_posts_status": "%{portion} billets téléchargés", // Downloaded 10/30 posts
+      "Enable": "Activer",
+      "error": "Erreur: %{error}",
+      "error_connecting_to_daemon": "Erreur de connection, impossible de joindre le démon Twister.",
+      "Error in 'createwalletuser' RPC.": "Erreur RPC dans 'createwalletuser'.",
+      "Error in 'importprivkey'": "Erreur RPC dans 'importprivkey': %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Error RPC dans 'sendnewusertransaction'.",
+      "Expand": "Ouvrir", // larger view of a post
+      "Favorite": "Favori",
+      "File APIs not supported in this browser.": "L'API de fichiers n'est pas pris en charge dans votre navigateur.",
+      "Follow": "Suivre",
+      "Followed by": "Suivi par",
+      "followed_by": "Suivi par %{username}",
+      "Followers": "Followers",
+      "Following": "Following",
+      "Following users": "Following users",
+      "Force connection to peer:": "Forcer la connection à un pair:",
+      "General information": "Informations générales",
+      "Generate blocks (send promoted messages)": "Produire des blocs (envoyer des messages promus)",
+      "Home": "Début", // homepage
+      "hours": "%{smart_count} heure |||| %{smart_count} heures",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Erreur interne: lastPostId inconnu",
+      "Known peers:": "Pairs connus: ",
+      "Last block is ahead of your computer time, check your clock.": "Le dernier bloc est en avance sur le l'heure de votre machine, vérifiez votre horloge.",
+      "mentions_at": "Mentions @%{user}",
+      "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
+      "Must be 16 characters or less.": "Doit contenir de 16 caractères ou moins.", // username
+      "Network": "Réseau",
+      "Network config": "Configuration réseau",
+      "Network status": "Etat du réseau",
+      "New direct message...": "Nouveau message direct...",
+      "New Post...": "Nouveau billet...",
+      "new_posts": "%{smart_count} nouveau billet |||| %{smart_count} nouveaux billets",
+      "nobody": "nobody", // used to promote a post without attaching the user
+      "Not available": "Non disponible", // username is not available
+      "Number of blocks in block chain:": "Nombre de blocs dans la chaîne de blocs: ",
+      "Number of CPUs to use": "Nombre de processeurs à utiliser",
+      "Only alphanumeric and underscore allowed.": "Seulement les caractères alphanumérique et la barre de soulignement sont permis.",
+      "peer address": "adresse des pairs",
+      "Private": "Privé",
+      "Profile": "Profil",
+      "Postboard": "Billets",
+      "post": "envoyer", // verb - button to post a message
+      "Post to promote:": "Billet à promouvoir: ",
+      "Posts": "Posts",
+      "propagating_nickname": "Multiplication de votre pseudo %{username} sur le réseau...",
+      "Public": "Public",
+      "Refresh": "Actualiser",
+      "retransmit_this": "Retransmettre ce billet à tes followers?",
+      "Reply": "Répondre",
+      "Reply...": "Répondre...",
+      "reply_to": "Répondre à %{fullname}",
+      "Retransmit": "Retransmission",
+      "Retransmits": "Retransmissions",
+      "Retransmitted by": "Retransmis par",
+      "search": "recherche",
+      "seconds": "%{smart_count} seconde |||| %{smart_count} secondes",
+      "send": "envoyer",
+      "Send post with username": "Envoyer le billet avec le pseudo",
+      "Sent Direct Message": "Message direct envoyé",
+      "Sent Post to @": "Envoyé un billet à @",
+      "Setup account": "Configuration du compte",
+      "switch_to_network": "Le démon local n'est pas connecté au réseau ou\n" +
+                "la chaîne de blocs n'est pas à jour. Si vous restez dans cette page\n" +
+                "vos actions peuvent ne pas fonctionner.\n" +
+                "Voulez-vous consulter la page d'état du réseau au lieu?",
+      "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
+      "time_ago": "Il y a %{time}", // 5 minutes ago
+      "Time of the last block:": "Heure du dernier bloc: ",
+      "Type message here": "Tapez votre message ici",
+      "Unfollow": "Unfollow",
+      "Update": "Mettre à jour",
+      "Updating status...": "Mise à jour du statut...", // status of block chain
+      "user_not_yet_accepted": "Les autres pairs n'ont pas encore accepté ce nouvel utilisateur.\n" +
+                "Malheureusement, il n'est pas possible d'enregistrer le profil\n" +
+                "ou envoyer des billets dans cet état.\n\n" +
+                "S'il vous plaît attendre quelques minutes avant de continuer.\n\n" +
+                "L'action 'enregistrer' sera automatiquement activé\n" +
+                "lorsque le processus sera terminé. (Je vous promets que\n"+
+                "c'est la dernière fois que vous devrez attendre avant d'utiliser\n" +
+                "Twister).\n\n" +
+                "Astuce: choisissez votre avatar entre temps!",
+      "users_mentions": "Mentions de @%{username}",
+      "users_profile": "Profil de %{username}",
+      "username_undefined": "Nom d'utilisateur indéfini, login requis.",
+      "View": "Voir",
+      "View All": "Voir tous",
+      "Who to Follow": "Qui suivre",
+      "Your message was sent!": "Votre message a été envoyé!"
+    };
+}
 
 // translators: sample adding a language
 if(preferredLanguage == "ru"){
