@@ -589,7 +589,7 @@ if(preferredLanguage == "ru"){
 
     // list of the English words and translations
     wordset = {
-       "Actions ▼": "Действия ▼" // , comma after each match except the last
+       "Actions ▼": "Действия ▼", // , comma after each match except the last
        "Active DHT nodes:": "Активные узлы DHT: ",
        "Add DNS": "Добавить DNS",
        "Add peer": "Добавить пира",
