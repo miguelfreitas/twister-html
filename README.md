@@ -12,7 +12,7 @@ Localisation
 If you want a localised interface (currently available only for NL, IT, FR and soon RU),
 use the experimental `i18n` branch:
 
-   git checkout i18n
+    git checkout i18n
    
 If you want to translate it in your own language, check [these instructions](#Translations)
    
@@ -47,33 +47,38 @@ If you want to add your own translation, edit `interface_localization.js` like t
 
 1. fork the repo, checkout `i18n` and create a new branch
 
-     git clone git@github.com:yournickname/twister-html.git ~/.twister/html
-     cd ~/.twister/html
-     git checkout i18n
-     git checkout -b Klingon
+
+        git clone git@github.com:yournickname/twister-html.git ~/.twister/html
+        cd ~/.twister/html
+        git checkout i18n
+        git checkout -b Klingon
 
 2. add your language to the list of available choices. You should use your ISO code here,
 it should match what the browser reports. The Klingon ISO is "tlh", so:
 
-    var knownLanguages = ["en","nl","it","fr","tlh"];
+
+        var knownLanguages = ["en","nl","it","fr","tlh"];`
     
 For multi-region languages, if you want to catch them all, use only the first half 
 (e.g. to match it and it-ch, specify "it").
 
 3. add a new wordset block after  existing ones
 
-    if(preferredLanguage == "tlh"){
-       polyglot.locale("tlh");
-       wordset = {
-          "Insults": "mu'qaD,
-          ....
+
+        if(preferredLanguage == "tlh"){
+            polyglot.locale("tlh");
+            wordset = {
+                "Insults": "mu'qaD,
+                ....
+            }
         }
-    }
+
 
 4. commit & push
 
-    git commit -m "Klingon translation"
-    git push   
+
+        git commit -m "Klingon translation"
+        git push   
  
-3. When opening the pull request on github, make sure you're pointing to miguelfreitas:i18n 
+3. When opening the pull request on github, make sure you're pointing to `miguelfreitas:i18n`
 as the base, so we can merge it straight away in the right place. For any help, ping @toyg.
