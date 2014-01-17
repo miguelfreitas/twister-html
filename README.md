@@ -14,7 +14,7 @@ use the experimental `i18n` branch:
 
     git checkout i18n
    
-If you want to translate it in your own language, check [these instructions](#Translations)
+If you want to translate it in your own language, check [these instructions](#translations)
    
 Contribute
 ----------
