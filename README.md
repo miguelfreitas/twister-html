@@ -9,7 +9,7 @@ To use it, clone this repo under ~/.twister/html like this:
 Localisation
 ------------
 
-If you want a localised interface (currently available only for NL, IT, FR and soon RU),
+If you want a localised interface (currently available only for NL, IT, FR and RU),
 use the experimental `i18n` branch:
 
     git checkout i18n
@@ -57,7 +57,7 @@ If you want to add your own translation, edit `interface_localization.js` like t
 it should match what the browser reports. The Klingon ISO is "tlh", so:
 
 
-        var knownLanguages = ["en","nl","it","fr","tlh"];`
+        var knownLanguages = ["en","nl","it","fr","ru","tlh"];`
     
 For multi-region languages, if you want to catch them all, use only the first half 
 (e.g. to match it and it-ch, specify "it").
