@@ -142,7 +142,23 @@ if(preferredLanguage == "en"){
       "View": "View",
       "View All": "View All",
       "Who to Follow": "Who to Follow",
-      "Your message was sent!": "Your message was sent!"
+      "Your message was sent!": "Your message was sent!",
+      "twister login": "twister login",
+      "Existing local users": "Existing local users",
+      "Or...": "Or...",
+      "Create a new user": "Create a new user",
+      "Login": "Login",
+      "Check availability": "Check availability",
+      "Create this nickname": "Create this nickname",
+      "Type nickname here": "Type nickname here",
+      "Import secret key": "Import secret key",
+      "52-characters secret": "52-characters secret",
+      "With nickname": "With nickname",
+      "Import key": "Import key",
+      "Client Version:": "Client Version:",
+      "Mining difficulty:": "Mining difficulty:",
+      "Block generation status": "Block generation status",
+      "Current hash rate:": "Current hash rate:"
     };
 }
 
@@ -230,7 +246,7 @@ if(preferredLanguage == "nl"){
       "Retransmit": "Retransmit",
       "Retransmits": "Retransmits",
       "Retransmitted by": "Retransmitted door",
-      "search": "zoeken",
+      "search": "Zoeken",
       "seconds": "%{smart_count} seconde |||| %{smart_count} seconden",
       "send": "Verstuur",
       "Send post with username": "Verstuur bericht met gebruikersnaam ",
@@ -263,7 +279,23 @@ if(preferredLanguage == "nl"){
       "View": "Toon",
       "View All": "Toon alles",
       "Who to Follow": "Wie volgen?",
-      "Your message was sent!": "Je bericht is verzonden!"
+      "Your message was sent!": "Je bericht is verzonden!",
+      "twister login": "Twister login",
+      "Existing local users": "Bestaande lokale gebruikers",
+      "Or...": "Of...",
+      "Create a new user": "Maak een nieuwe gebruiker aan",
+      "Login": "Inloggen",
+      "Check availability": "Controleer beschikbaarheid",
+      "Create this nickname": "Maak deze gebruiker aan",
+      "Type nickname here": "Gebruikersnaam",
+      "Import secret key": "Importeer geheime sleutel",
+      "52-characters secret": "52-tekens geheim",
+      "With nickname": "Met gebruikersnaam",
+      "Import key": "Importeer sleutel",
+      "Client Version:": "Client versie:",
+      "Mining difficulty:": "Mining moeilijkheid:",
+      "Block generation status": "Block genereer status",
+      "Current hash rate:": "Huidige hash snelheid:"
     };
 }
 
@@ -381,7 +413,23 @@ if(preferredLanguage == "it"){
       "View": "Vedi",
       "View All": "Mostra tutti",
       "Who to Follow": "Chi seguire?",
-      "Your message was sent!": "Il messaggio è stato inviato!"
+      "Your message was sent!": "Il messaggio è stato inviato!",
+      "twister login": "twister login",
+      "Existing local users": "Existing local users",
+      "Or...": "Or...",
+      "Create a new user": "Create a new user",
+      "Login": "Login",
+      "Check availability": "Check availability",
+      "Create this nickname": "Create this nickname",
+      "Type nickname here": "Type nickname here",
+      "Import secret key": "Import secret key",
+      "52-characters secret": "52-characters secret",
+      "With nickname": "With nickname",
+      "Import key": "Import key",
+      "Client Version:": "Client Version:",
+      "Mining difficulty:": "Mining difficulty:",
+      "Block generation status": "Block generation status",
+      "Current hash rate:": "Current hash rate:"
     };
 }
 
@@ -503,7 +551,23 @@ if(preferredLanguage == "fr"){
       "View": "Voir",
       "View All": "Voir tous",
       "Who to Follow": "Qui suivre",
-      "Your message was sent!": "Votre message a été envoyé!"
+      "Your message was sent!": "Votre message a été envoyé!",
+      "twister login": "twister login",
+      "Existing local users": "Existing local users",
+      "Or...": "Or...",
+      "Create a new user": "Create a new user",
+      "Login": "Login",
+      "Check availability": "Check availability",
+      "Create this nickname": "Create this nickname",
+      "Type nickname here": "Type nickname here",
+      "Import secret key": "Import secret key",
+      "52-characters secret": "52-characters secret",
+      "With nickname": "With nickname",
+      "Import key": "Import key",
+      "Client Version:": "Client Version:",
+      "Mining difficulty:": "Mining difficulty:",
+      "Block generation status": "Block generation status",
+      "Current hash rate:": "Current hash rate:"
     };
 }
 
@@ -564,8 +628,17 @@ var fixedLabels = [
   // network page
   ".network h2, .network h3",
   ".network ul li span",
+  ".network ul li label",
   ".network label",
   ".network textarea, .network input, .network option",
+
+  // login page
+  ".login h2, .login h3",
+  ".login ul li span",
+  ".module span",
+  ".login span",
+  ".login-local-username",
+  ".login input"
 ];
 $(document).ready(function(){
   for(var i=0;i<fixedLabels.length;i++){
