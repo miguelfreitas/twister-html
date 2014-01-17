@@ -73,8 +73,12 @@ For multi-region languages, if you want to catch them all, use only the first ha
             }
         }
 
+4. stage all changes in file `interface_localization.js` 
 
-4. commit & push
+
+        git add interface_localization.js
+        
+5. commit & push
 
 
         git commit -m "Klingon translation"
