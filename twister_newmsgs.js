@@ -9,23 +9,24 @@
 var _knownMentions = {}
 var _lastMentionTime = 0;
 var _newMentions = 0;
+var PURGE_OLD_MENTIONS_TIMEOUT = 3600 * 24 * 30; // one month
 
 // process a mention received to check if it is really new
-function processMention(user, mentionTime) {
+function processMention(user, mentionTime, data) {
     var key = user + ";" + mentionTime;
     var curTime = new Date().getTime() / 1000;
     if( mentionTime > curTime + 3600 ) {
         console.log("mention from the future will be ignored");
     } else {
-        // mention must be somewhat newer compared to last known one to be considered
-        if( mentionTime + 3600 > _lastMentionTime ) {
-            if( !(key in _knownMentions) ) {
-                _knownMentions[key] = mentionTime;
-                _lastMentionTime = mentionTime;
+        if( !(key in _knownMentions) ) {
+            // mention must be somewhat recent compared to last known one to be considered new
+            if( mentionTime + 3600 > _lastMentionTime ) {
                 _newMentions++;
-                purgeOldMentions();
-                saveMentionsToStorage();
+                _lastMentionTime = mentionTime;
             }
+            _knownMentions[key] = {mentionTime:mentionTime, data:data};
+            purgeOldMentions();
+            saveMentionsToStorage();
         }
     }
 }
@@ -33,7 +34,8 @@ function processMention(user, mentionTime) {
 function purgeOldMentions() {
     for( var key in _knownMentions ) {
         if( _knownMentions.hasOwnProperty(key) ) {
-            if( _knownMentions[key] + 3600 < _lastMentionTime ) {
+            if( !_knownMentions[key].mentionTime || !_knownMentions[key].data ||
+                _knownMentions[key].mentionTime + PURGE_OLD_MENTIONS_TIMEOUT < _lastMentionTime ) {
                 delete _knownMentions[key];
             }
         }
@@ -63,7 +65,7 @@ function requestMentionsCount() {
                if( data ) {
                    for( var i = 0; i < data.length; i++ ) {
                        var userpost = data[i]["userpost"];
-                       processMention( userpost["n"], userpost["time"]);
+                       processMention( userpost["n"], userpost["time"], data[i]);
                    }
                    $.MAL.updateNewMentionsUI(_newMentions);
                }
@@ -82,6 +84,16 @@ function initMentionsCount() {
     $.MAL.updateNewMentionsUI(_newMentions);
     requestMentionsCount();
     setInterval("requestMentionsCount()", 10000);
+}
+
+function getMentionsData() {
+    mentions = []
+    for( var key in _knownMentions ) {
+        if( _knownMentions.hasOwnProperty(key) && _knownMentions[key].data ) {
+            mentions.push(_knownMentions[key].data);
+        }
+    }
+    return mentions;
 }
 
 // --- direct messages ---

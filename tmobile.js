@@ -530,6 +530,10 @@ function setupHashtagOrMention( ulElem, tag, res) {
     $.MAL.setPostTemplate( $("#post-template-home") );
     $.mobile.showPageLoadingMsg();
     clearHashtagProcessed();
+    if( tag == defaultScreenName && res == "mention" ) {
+        // obtain already cached mention posts from twister_newmsgs.js
+        processHashtag(hashtag_elem, defaultScreenName, getMentionsData() );
+    }
     requestHashtag(hashtag_elem,hashtag_tag,hashtag_res);
 }
 
