@@ -181,6 +181,8 @@ function openMentionsModal(e)
     //título do modal
     $( "."+hashtagModalClass + " h3" ).text( polyglot.t("users_mentions", { username: username }) );
 
+    // obtain already cached mention posts from twister_newmsgs.js
+    processHashtag(hashtagModalContent.find(".postboard-posts"), defaultScreenName, getMentionsData() );
     resetMentionsCount();
 }
 
