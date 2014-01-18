@@ -158,7 +158,11 @@ if(preferredLanguage == "en"){
       "Client Version:": "Client Version:",
       "Mining difficulty:": "Mining difficulty:",
       "Block generation status": "Block generation status",
-      "Current hash rate:": "Current hash rate:"
+      "Current hash rate:": "Current hash rate:",
+      "Terminate Daemon:": "Terminate Daemon:",
+      "Exit": "Exit",
+      "Save Changes": "Save Changes",
+      "Secret key:": "Secret key:"
     };
 }
 
@@ -280,7 +284,7 @@ if(preferredLanguage == "nl"){
       "View All": "Toon alles",
       "Who to Follow": "Wie volgen?",
       "Your message was sent!": "Je bericht is verzonden!",
-      "twister login": "Twister login",
+      "twister login": "twister login",
       "Existing local users": "Bestaande lokale gebruikers",
       "Or...": "Of...",
       "Create a new user": "Maak een nieuwe gebruiker aan",
@@ -295,7 +299,11 @@ if(preferredLanguage == "nl"){
       "Client Version:": "Client versie:",
       "Mining difficulty:": "Mining moeilijkheid:",
       "Block generation status": "Block genereer status",
-      "Current hash rate:": "Huidige hash snelheid:"
+      "Current hash rate:": "Huidige hash snelheid:",
+      "Terminate Daemon:": "Daemon beëindigen",
+      "Exit": "Beëindigen",
+      "Save Changes": "Opslaan",
+      "Secret key:": "Geheime sleutel:"
     };
 }
 
@@ -429,7 +437,11 @@ if(preferredLanguage == "it"){
       "Client Version:": "Client Version:",
       "Mining difficulty:": "Mining difficulty:",
       "Block generation status": "Block generation status",
-      "Current hash rate:": "Current hash rate:"
+      "Current hash rate:": "Current hash rate:",
+      "Terminate Daemon:": "Terminate Daemon:",
+      "Exit": "Exit",
+      "Save Changes": "Save Changes",
+      "Secret key:": "Secret key:"
     };
 }
 
@@ -567,7 +579,11 @@ if(preferredLanguage == "fr"){
       "Client Version:": "Client Version:",
       "Mining difficulty:": "Mining difficulty:",
       "Block generation status": "Block generation status",
-      "Current hash rate:": "Current hash rate:"
+      "Current hash rate:": "Current hash rate:",
+      "Terminate Daemon:": "Terminate Daemon:",
+      "Exit": "Exit",
+      "Save Changes": "Save Changes",
+      "Secret key:": "Secret key:"
     };
 }
 
@@ -703,7 +719,27 @@ if(preferredLanguage == "ru"){
        "View": "Просмотреть",
        "View All": "Просмотреть Всё",
        "Who to Follow": "Кого почитать",
-       "Your message was sent!": "Ваше сообщение было отправлено!"
+       "Your message was sent!": "Ваше сообщение было отправлено!",
+       "twister login": "twister login",
+       "Existing local users": "Existing local users",
+       "Or...": "Or...",
+       "Create a new user": "Create a new user",
+       "Login": "Login",
+       "Check availability": "Check availability",
+       "Create this nickname": "Create this nickname",
+       "Type nickname here": "Type nickname here",
+       "Import secret key": "Import secret key",
+       "52-characters secret": "52-characters secret",
+       "With nickname": "With nickname",
+       "Import key": "Import key",
+       "Client Version:": "Client Version:",
+       "Mining difficulty:": "Mining difficulty:",
+       "Block generation status": "Block generation status",
+       "Current hash rate:": "Current hash rate:",
+       "Terminate Daemon:": "Terminate Daemon:",
+       "Exit": "Exit",
+       "Save Changes": "Save Changes",
+       "Secret key:": "Secret key:"
     };
 }
 
