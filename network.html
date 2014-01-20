@@ -23,6 +23,21 @@
         {
            initInterfaceNetwork();
         });
+        $.ajax({
+
+  url: 'https://raw2.github.com/miguelfreitas/twister-html/master/version.html',
+  success: function(data) {
+    $('.github_html_version').html(data);
+  }
+});
+  $.ajax({
+
+  url: 'http://127.0.0.1:28332/version.html',
+  success: function(data) {
+    $('.local_html_version').html(data);
+  }
+});
+
     </script>
 
     <link rel="icon" type="image/png" href="img/twister_mini.png" />
@@ -82,8 +97,17 @@
           </li>
           <li>
             <label>Client Version: </label>
-            <span class="version">00.00.00.00</label>
-        </ul>
+            <span class="version">00.00.00.00
+            <li>
+            <label>Terminate Daemon:</label>
+            <button class="terminate-daemon">Exit</button>
+          </li>
+			</ul>
+            <h3>HTML version</h3>
+            <ul>
+			<li>You: <span class="local_html_version"> Loading...</span></li>
+			<li>Last github: <span class="github_html_version"> Loading...</span></li>           
+            </ul>
           
         <h3> Detailed information </h3>
         <ul>
