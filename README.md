@@ -9,7 +9,7 @@ To use it, clone this repo under ~/.twister/html like this:
 Localisation
 ------------
 
-If you want a localised interface (currently available only for NL, IT, FR and RU),
+If you want a localised interface (currently available only for NL, IT, FR, DE and RU),
 use the experimental `i18n` branch:
 
     git checkout i18n
