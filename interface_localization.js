@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it", "fr","ru"];
+var knownLanguages = ["en","nl","it","fr","ru","de"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -740,6 +740,147 @@ if(preferredLanguage == "ru"){
        "Exit": "Exit",
        "Save Changes": "Save Changes",
        "Secret key:": "Secret key:"
+    };
+}
+
+if(preferredLanguage == "de"){
+    polyglot.locale("de");
+    wordset = {
+      "Actions ▼": "Actions ▼",
+      "Active DHT nodes:": "Aktive DHT-Nodes: ",
+      "Add DNS": "DNS hinzufügen",
+      "Add peer": "Peer hinzufügen",
+      "ajax_error": "Ajax error: %{error}", // JavaScript error
+      "All users publicly followed by": "Alle öffentlich gefolgten Benutzer von",
+      "Available": "Verfügbar", // username is available
+      "Block chain information": "Block-Chain Informationen",
+      "Block chain is up-to-date, twister is ready to use!": "Block-Chain ist aktuell, twister ist benutzbar!",
+      "Block generation": "Block-Generierung ",
+      "Cancel": "Abbrechen",
+      "Change user": "Benutzer wechseln",
+      "Checking...": "Überprüfe...", // checking if username is available
+      "Collapse": "Einklappen", // smaller view of a post
+      "Configure block generation": "Block-Generierung einstellen",
+      "Connections:": "Verbindungen: ", // to network
+      "Connection lost.": "Verbindung verloren.",
+      "days": "%{smart_count} Tag |||| %{smart_count} Tage",
+      "Detailed information": "Detaillierte Informationen",
+      "DHT network down.": "DHT-Netzwerk nicht verfügbar.",
+      "Direct Messages": "Direktnachrichten",
+      "Disable": "Deaktivieren",
+      "Display mentions to @": "Zeige Erwähnungen von @", //Ist das richtig? Ich weiß nicht, in welchem Zusammenhang das benutzt wird.
+      "Display retransmissions": "Weiterleitungen anzeigen",
+      "DNS to obtain list of peers:": "DNS um Peer-Liste abzurufen:",
+      "downloading_block_chain": "Block-Chain wird heruntergeladen, bitte warten (Block-Chain ist %{days} Tage alt).",
+      "download_posts_status": "%{portion} Posts heruntergeladen", // Downloaded 10/30 posts
+      "Enable": "Aktivieren",
+      "error": "Fehler: %{error}",
+      "error_connecting_to_daemon": "Fehler beim Verbinden zum lokalen twister-daemon.",
+      "Error in 'createwalletuser' RPC.": "Fehler in 'createwalletuser' RPC.",
+      "Error in 'importprivkey'": "Fehler in 'importprivkey' RPC: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Fehler in 'sendnewusertransaction' RPC.",
+      "Expand": "Ausklappen", // larger view of a post
+      "Favorite": "Favorisieren",
+      "File APIs not supported in this browser.": "File APIs werden von diesem Browser nicht unterstützt.",
+      "Follow": "Folgen",
+      "Followed by": "Gefolgt von",
+      "followed_by": "Gefolgt von %{username}",
+      "Followers": "Followers",
+      "Following": "Folgt",
+      "Following users": "Folgt Benutzern",
+      "Force connection to peer:": "Ertzwinge Verbindung zu Peer:",
+      "General information": "Generelle Informationen",
+      "Generate blocks (send promoted messages)": "Blöcke generieren (Promoted-Messages senden)",
+      "Home": "Home", // homepage
+      "hours": "%{smart_count} Stunde |||| %{smart_count} Stunden",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Internen Fehler: lastPostId unbekannt (Dir selbst volgen kann den Fehler beheben!)",
+      "Known peers:": "Bekannte Peers: ",
+      "Last block is ahead of your computer time, check your clock.": "Letzter Block ist deiner Computerzeit voraus, überprüfe deine Uhrzeit.",
+      "mentions_at": "Erwähnt @%{user}",
+      "minutes": "%{smart_count} Minute |||| %{smart_count} Minuten",
+      "Must be 16 characters or less.": "Darf höchstens 16 Zeichen lang sein.", // username
+      "Network": "Netzwerk",
+      "Network config": "Netzwerkeinstellungen",
+      "Network status": "Netzwerkstatus",
+      "New direct message...": "Neue Direktnachricht...",
+      "New Post...": "Neuer Post...",
+      "new_posts": "%{smart_count} neuer Post |||| %{smart_count} neue Posts",
+      "nobody": "nobody", // used to promote a post without attaching the user
+      "Not available": "Nicht verfügbar", // username is not available
+      "Number of blocks in block chain:": "Anzahl der Blöcke in der Block-Chain: ",
+      "Number of CPUs to use": "Anzahl der zu benutzenden CPU's ",
+      "Only alphanumeric and underscore allowed.": "Nur Buchstaben, Zahlen und Unterstrich erlaubt.",
+      "peer address": "Peer-Adresse",
+      "Private": "Privat",
+      "Profile": "Profil",
+      "Postboard": "Postboard",
+      "post": "senden", // verb - button to post a message
+      "Post to promote:": "Post zum senden: ",
+      "Posts": "Posts",
+      "propagating_nickname": "Mache nickname %{username} dem Netzwerk bekannt...",
+      "Public": "Öffentlich",
+      "Refresh": "Erneuern",
+      "retransmit_this": "Diesen Post an deine Follower weiterleiten?",
+      "Reply": "Antworten",
+      "Reply...": "Antworten...",
+      "reply_to": "%{fullname} antworten",
+      "Retransmit": "Weiterleiten",
+      "Retransmits": "Weiterleitungen",
+      "Retransmitted by": "Weitergeleitet von",
+      "search": "suchen",
+      "seconds": "%{smart_count} Sekunde |||| %{smart_count} Sekunden",
+      "send": "senden",
+      "Send post with username": "Sende Post mit Benutzernamen ",
+      "Sent Direct Message": "Direktnachricht senden",
+      "Sent Post to @": "Sende Post an @",
+      "Setup account": "Accounteinstellungen",
+      "switch_to_network": "Lokaler daemon ist nicht mit dem Netzwerk verbunden oder\n" +
+                "Block-Chain ist veraltet. Wenn du auf dieser Seite bleibst\n" +
+                "können deine Handlungen nicht funktionieren.\n" +
+                "Möchtest du stattdessen den Netzwerkstatus überprüfen?",
+      "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
+      "time_ago": "vor %{time}", // 5 minutes ago
+      "Time of the last block:": "Zeit des letzten Blocks: ",
+      "Type message here": "Nachricht hier eingeben",
+      "Unfollow": "Unfollow",
+      "Update": "Aktualisieren",
+      "Updating status...": "Status wird aktualisiert...", // status of block chain
+      "user_not_yet_accepted": "Andere Peers haben diesen Benutzter noch nicht akzeptiert.\n" +
+                "Leider ist es nicht möglich, das Profil zu speichern\n" +
+                "oder Nachrichten zu senden.\n\n" +
+                "Bitte warten ein paar Minuten, um fortzufahen.\n\n" +
+                "'Änderungen speichern' wird automatisch aktiviert\n" +
+                "wenn der Prozess abgeschlossen ist. (Ich verspreche,\n"+
+                "das ist das letzte Mal, dass du warten musst, bevor\n" +
+                "du twister benutzten kannst).\n\n" +
+                "Tip: Wähle in der Zwischenzeit deinen Avatar aus!",
+      "users_mentions": "Erwähnungen von @%{username}",
+      "users_profile": "%{username}'s Profil",
+      "username_undefined": "Benutzername nicht gesetzt, Login nötig.",
+      "View": "Ansehen",
+      "View All": "Alle ansehen",
+      "Who to Follow": "Wem Folgen?",
+      "Your message was sent!": "Deine Nachricht wurde gesendet!",
+      "twister login": "twister login",
+      "Existing local users": "Existierende lokale Benutzer",
+      "Or...": "Oder...",
+      "Create a new user": "Neuen Benutzer erstellen",
+      "Login": "Einloggen",
+      "Check availability": "Verfügbarkeit überprüfen",
+      "Create this nickname": "Nichnamen erstellen",
+      "Type nickname here": "Nicknamen hier eingeben",
+      "Import secret key": "Privaten Schlüssel hier importieren",
+      "52-characters secret": "52 Zeichen Geheimniss",
+      "With nickname": "Mit Nicknamen",
+      "Import key": "Schlüssel importieren",
+      "Client Version:": "Client Version:",
+      "Mining difficulty:": "Mining Schwierigkeit:",
+      "Block generation status": "Status der Block-Generierung",
+      "Current hash rate:": "Aktuelle Hash-Rate:",
+      "Terminate Daemon:": "Daemon beenden:",
+      "Exit": "Beenden",
+      "Save Changes": "Änderungen speichern",
+      "Secret key:": "Privater Schlüssel:"
     };
 }
 
