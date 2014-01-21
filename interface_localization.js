@@ -620,7 +620,7 @@ if(preferredLanguage == "ru"){
        "Checking...": "Проверка...", // checking if username is available
        "Collapse": "Свернуть", // smaller view of a post
        "Configure block generation": "Настройка майнинга",
-       "Connections:": "Подключения: ", // to network
+       "Connections:": "Соединений: ", // to network
        "Connection lost.": "Соединение с сетью было потеряно.",
        "days": "%{smart_count} день |||| %{smart_count} дней",
        "Detailed information": "Подробная информация",
@@ -634,7 +634,7 @@ if(preferredLanguage == "ru"){
        "download_posts_status": "Загружено %{portion} постов", // Downloaded 10/30 posts
        "Enable": "Включено",
        "error": "Ошибка: %{error}",
-       "error_connecting_to_daemon": "Ошибка подключения к локальному демону twisterd.",
+       "error_connecting_to_daemon": "Ошибка  к локальному демону twisterd.",
        "Error in 'createwalletuser' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'createwalletuser'.",
        "Error in 'importprivkey'": "Ошибка при обращении к RPC - при попытке выполнить 'importprivkey' %{rpc}",
        "Error in 'sendnewusertransaction' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'sendnewusertransaction'",
@@ -737,7 +737,7 @@ if(preferredLanguage == "ru"){
        "Block generation status": "Статус майнинга блоков",
        "Current hash rate:": "Текущая скорость хэширования:",
        "Terminate Daemon:": "Остановить twister:",
-       "Exit": "Exit",
+       "Exit": "Выход",
        "Save Changes": "Сохранить изменения",
        "Secret key:": "Секретный ключ:"
     };
