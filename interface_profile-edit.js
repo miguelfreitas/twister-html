@@ -40,7 +40,12 @@ function initProfileEdit() {
         loadProfileForEdit();
         
         dumpPrivkey(defaultScreenName, function(args, key) {
+            $(".secret-key-container").hide();
             $(".secret-key").text(key);
+
+            $(".toggle-priv-key").click(function () {
+              $(".secret-key-container").fadeToggle();
+            });
         }, {});
     });
 }
