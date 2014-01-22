@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -163,6 +163,146 @@ if(preferredLanguage == "en"){
       "Exit": "Exit",
       "Save Changes": "Save Changes",
       "Secret key:": "Secret key:"
+    };
+}
+
+if(preferredLanguage == "zh"){
+    polyglot.locale("zh");
+    wordset = {
+      "Actions ▼": "操作 ▼",
+      "Active DHT nodes:": "活动的DHT节点： ",
+      "Add DNS": "添加DNS",
+      "Add peer": "添加节点",
+      "ajax_error": "Ajax错误: %{error}", // JavaScript error
+      "All users publicly followed by": "所有用户均被关注",
+      "Available": "可用", // username is available
+      "Block chain information": "块链信息",
+      "Block chain is up-to-date, twister is ready to use!": "块链已经更新，Twister已经可以使用！",
+      "Block generation": "块生成器 ",
+      "Cancel": "取消",
+      "Change user": "切换用户",
+      "Checking...": "检查中...", // checking if username is available
+      "Collapse": "Collapse", // smaller view of a post
+      "Configure block generation": "配置块生成器",
+      "Connections:": "连接数：", // to network
+      "Connection lost.": "链接中断。",
+      "days": "%{smart_count} 天",
+      "Detailed information": "详细信息",
+      "DHT network down.": "DHT网络中断。",
+      "Direct Messages": "即时消息",
+      "Disable": "关闭",
+      "Display mentions to @": "显示@",
+      "Display retransmissions": "显示转发",
+      "DNS to obtain list of peers:": "获取节点列表的DNS：",
+      "downloading_block_chain": "下载块链中，请等待下载完成（块链已经落后 %{days} 天）。",
+      "download_posts_status": "已下载 %{portion} 推文", // Downloaded 10/30 posts
+      "Enable": "开启",
+      "error": "错误：%{error}",
+      "error_connecting_to_daemon": "连接本地Twister守护进程错误",
+      "Error in 'createwalletuser' RPC.": "PRC 'createwalletuser' 错误",
+      "Error in 'importprivkey'": "'importprivkey' 错误 RPC: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "RPC 'sendnewusertransaction' 错误。",
+      "Expand": "扩展", // larger view of a post
+      "Favorite": "收藏",
+      "File APIs not supported in this browser.": "这个浏览器不支持文件APIs",
+      "Follow": "关注",
+      "Followed by": "被关注",
+      "followed_by": "被 %{username} 关注",
+      "Followers": "粉丝",
+      "Following": "关注中",
+      "Following users": "关注的人",
+      "Force connection to peer:": "强制连接到节点：",
+      "General information": "常规信息",
+      "Generate blocks (send promoted messages)": "生成快（发送上行信息）",
+      "Home": "主页", // homepage
+      "hours": "%{smart_count} hour |||| %{smart_count} 小时",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "内部错误：最后推文Id位置（尝试关注你自己进行修复！）",
+      "Known peers:": "已知节点：",
+      "Last block is ahead of your computer time, check your clock.": "最后的块已经慢于你的系统时间，请检查你的系统时间。",
+      "mentions_at": "提到 @%{user}",
+      "minutes": "%{smart_count} 分钟",
+      "Must be 16 characters or less.": "必须少于16个字符", // username
+      "Network": "网络",
+      "Network config": "网络配置",
+      "Network status": "网络状态",
+      "New direct message...": "新的即时信息...",
+      "New Post...": "新推文...",
+      "new_posts": "%{smart_count} 新推文",
+      "nobody": "nobody", // used to promote a post without attaching the user
+      "Not available": "用户名不可用", // username is not available
+      "Number of blocks in block chain:": "块链中的块数：",
+      "Number of CPUs to use": "使用CPU数目 ",
+      "Only alphanumeric and underscore allowed.": "只允许字母和下划线",
+      "peer address": "节点地址",
+      "Private": "私人",
+      "Profile": "个人信息",
+      "Postboard": "信息流",
+      "post": "发送", // verb - button to post a message
+      "Post to promote:": "上行信息内容：",
+      "Posts": "推文",
+      "propagating_nickname": "Propagating nickname %{username} to the network...",
+      "Public": "公共",
+      "Refresh": "刷新",
+      "retransmit_this": "转发推文给你的粉丝？",
+      "Reply": "回复",
+      "Reply...": "回复...",
+      "reply_to": "回复 %{fullname}",
+      "Retransmit": "转发",
+      "Retransmits": "转发",
+      "Retransmitted by": "转发于",
+      "search": "搜索",
+      "seconds": "%{smart_count} 秒",
+      "send": "发送",
+      "Send post with username": "发送推文的用户名 ",
+      "Sent Direct Message": "发送即时消息",
+      "Sent Post to @": "发送推文 @",
+      "Setup account": "设置帐号",
+      "switch_to_network": "本地守护进程没有连接网络或\n" +
+        "块链已经过时。如果你留着此页\n" +
+        "你的操作将不会生效\n" +
+        "你要马上跳转到网络状态页吗？",
+      "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持文件APIs",
+      "time_ago": "%{time} 之前", // 5 minutes ago
+      "Time of the last block:": "最新块的时间：",
+      "Type message here": "输入你的消息内容",
+      "Unfollow": "取消关注",
+      "Update": "更新",
+      "Updating status...": "更新状态中...", // status of block chain
+      "user_not_yet_accepted": "其他节点还没有接受新用户。\n" +
+        "很抱歉，现在你还不能保存你的个人简介\n" +
+        "或发送新的推文。\n\n" +
+        "请稍等几分钟再试试。\n\n" +
+        "当节点接受用户操作完成后\n" +
+        "“保存”将会自动转换为可以。（我保证这是\n"+
+        "在你使用Twister前的最后一次等待。\n\n" +
+        "提示：现在先选好你的头像！ ",
+      "users_mentions": "提到 @%{username}",
+      "users_profile": "%{username} 的简介",
+      "username_undefined": "用户名未设置，请先登录！",
+      "View": "查看",
+      "View All": "查看全部",
+      "Who to Follow": "推荐关注",
+      "Your message was sent!": "你的信息已经发送！"
+      "twister login": "登录Twister",
+      "Existing local users": "已有本地用户",
+      "Or...": "或...",
+      "Create a new user": "创建一个新用户",
+      "Login": "登录",
+      "Check availability": "检查是否可用",
+      "Create this nickname": "使用这个昵称",
+      "Type nickname here": "输入你的昵称",
+      "Import secret key": "导入密钥",
+      "52-characters secret": "52位密钥串",
+      "With nickname": "With nickname",
+      "Import key": "导入密钥",
+      "Client Version:": "客户端版本：",
+      "Mining difficulty:": "挖矿难度：",
+      "Block generation status": "块链状态",
+      "Current hash rate:": "当前hash速率：",
+      "Terminate Daemon:": "断开守护进程数：",
+      "Exit": "退出",
+      "Save Changes": "保存设置",
+      "Secret key:": "密钥："
     };
 }
 
