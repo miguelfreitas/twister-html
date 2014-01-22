@@ -39,9 +39,21 @@ function initProfileEdit() {
         loadAvatarForEdit();
         loadProfileForEdit();
         
-        dumpPrivkey(defaultScreenName, function(args, key) {
-            $(".secret-key").text(key);
-        }, {});
+        $(".secret-key-container").hide();
+
+        $(".toggle-priv-key").click(function () {
+          if ($(".secret-key-container").is(":visible")) {
+              $(".secret-key-container").fadeOut(function () {
+                $(".secret-key").text('');
+              });
+          } else {
+            dumpPrivkey(defaultScreenName, function(args, key) {
+              $(".secret-key").text(key);
+              $(".secret-key-container").fadeIn();
+            }, {});
+          }
+        });
+        
     });
 }
 
