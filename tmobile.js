@@ -180,7 +180,7 @@ var router=new $.mobile.Router(
             var params=router.getParams(match[1]);
             initializeTwister( true, true, function() {
                 var $replyTextarea = $("#newmsg .post-area-new textarea");
-                $replyTextarea.attr("placeholder", "New Post...");
+                $replyTextarea.attr("placeholder", polyglot.t("New Post..."));
                 if( params && params.hasOwnProperty("replyto") ) {
                     $replyTextarea.val(params.replyto);
                 } else {
@@ -227,7 +227,7 @@ var router=new $.mobile.Router(
                     $newmsgLink.attr("href","#newmsg");
                     resetMentionsCount();
                 }
-                $("#mentions .rtitle").text("Mentions @" + user);
+                $("#mentions .rtitle").text(polyglot.t("mentions_at", { user: user }));
                 var $ulMentions = $("#mentions ul.posts");
                 setupHashtagOrMention( $ulMentions, user, "mention");
             });
@@ -375,7 +375,7 @@ function installSubmitClick() {
         newPostMsg(s, $postOrig);
 
         $replyText.val("");
-        $replyText.attr("placeholder", "Your message was sent!");
+        $replyText.attr("placeholder", polyglot.t("Your message was sent!"));
 
         setTimeout( function() {$.MAL.goHome();}, 1000);
     });
@@ -451,7 +451,7 @@ function handleAvatarFileSelectMobile(evt) {
         try {
             reader = new FileReader();
         } catch(e) {
-            alert('File APIs not supported in this browser.');
+            alert(polyglot.t('File APIs not supported in this browser.'));
             return;
         }
 
