@@ -282,7 +282,7 @@ if(preferredLanguage == "zh"){
       "View": "查看",
       "View All": "查看全部",
       "Who to Follow": "推荐关注",
-      "Your message was sent!": "你的信息已经发送！"
+      "Your message was sent!": "你的信息已经发送！",
       "twister login": "登录Twister",
       "Existing local users": "已有本地用户",
       "Or...": "或...",
