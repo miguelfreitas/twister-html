@@ -769,7 +769,7 @@ button.disabled:hover
 .postboard-posts > .post.open:after
 {
     width: 5px;
-    right: -5px;
+    /*right: -5px;*/
 }
 .post:hover,
 .post .post
