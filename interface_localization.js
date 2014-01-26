@@ -1050,7 +1050,7 @@ var fixedLabels = [
   ".post-expand",
   ".post-context span",
   ".post-stats .stat-count span",
-  ".postboard h2",
+  ".postboard span",
 
   // following page
   ".following h2",
