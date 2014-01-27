@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh-cn"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -166,29 +166,29 @@ if(preferredLanguage == "en"){
     };
 }
 
-if(preferredLanguage == "zh"){
-    polyglot.locale("zh");
+if(preferredLanguage == "zh-cn"){
+    polyglot.locale("zh-cn");
     wordset = {
       "Actions ▼": "操作 ▼",
       "Active DHT nodes:": "活动的DHT节点： ",
       "Add DNS": "添加DNS",
       "Add peer": "添加节点",
       "ajax_error": "Ajax错误: %{error}", // JavaScript error
-      "All users publicly followed by": "所有用户均被关注",
+      "All users publicly followed by": "公开关注的用户",
       "Available": "可用", // username is available
       "Block chain information": "块链信息",
-      "Block chain is up-to-date, twister is ready to use!": "块链已经更新，Twister已经可以使用！",
+      "Block chain is up-to-date, twister is ready to use!": "块链已经为最新，Twister已经可以使用！",
       "Block generation": "块生成器 ",
       "Cancel": "取消",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
-      "Collapse": "Collapse", // smaller view of a post
+      "Collapse": "收起", // smaller view of a post
       "Configure block generation": "配置块生成器",
       "Connections:": "连接数：", // to network
-      "Connection lost.": "链接中断。",
+      "Connection lost.": "连接丢失。",
       "days": "%{smart_count} 天",
       "Detailed information": "详细信息",
-      "DHT network down.": "DHT网络中断。",
+      "DHT network down.": "DHT网络下线。",
       "Direct Messages": "即时消息",
       "Disable": "关闭",
       "Display mentions to @": "显示@",
@@ -216,7 +216,7 @@ if(preferredLanguage == "zh"){
       "Generate blocks (send promoted messages)": "生成快（发送上行信息）",
       "Home": "主页", // homepage
       "hours": "%{smart_count} hour |||| %{smart_count} 小时",
-      "Internal error: lastPostId unknown (following yourself may fix!)": "内部错误：最后推文Id位置（尝试关注你自己进行修复！）",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "内部错误：最后推文Id位置（关注自己可能会修复这个问题！）",
       "Known peers:": "已知节点：",
       "Last block is ahead of your computer time, check your clock.": "最后的块已经慢于你的系统时间，请检查你的系统时间。",
       "mentions_at": "提到 @%{user}",
@@ -240,7 +240,7 @@ if(preferredLanguage == "zh"){
       "post": "发送", // verb - button to post a message
       "Post to promote:": "上行信息内容：",
       "Posts": "推文",
-      "propagating_nickname": "Propagating nickname %{username} to the network...",
+      "propagating_nickname": "正在在网络中广播昵称 %{username}",
       "Public": "公共",
       "Refresh": "刷新",
       "retransmit_this": "转发推文给你的粉丝？",
@@ -249,7 +249,7 @@ if(preferredLanguage == "zh"){
       "reply_to": "回复 %{fullname}",
       "Retransmit": "转发",
       "Retransmits": "转发",
-      "Retransmitted by": "转发于",
+      "Retransmitted by": "被这些用户转发",
       "search": "搜索",
       "seconds": "%{smart_count} 秒",
       "send": "发送",
@@ -257,9 +257,8 @@ if(preferredLanguage == "zh"){
       "Sent Direct Message": "发送即时消息",
       "Sent Post to @": "发送推文 @",
       "Setup account": "设置帐号",
-      "switch_to_network": "本地守护进程没有连接网络或\n" +
-        "块链已经过时。如果你留着此页\n" +
-        "你的操作将不会生效\n" +
+      "switch_to_network": "本地守护进程没有连接网络或块链已经过时。"
+        "若你留在本页，你的操作不会有效。\n" +
         "你要马上跳转到网络状态页吗？",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持文件APIs",
       "time_ago": "%{time} 之前", // 5 minutes ago
@@ -293,7 +292,7 @@ if(preferredLanguage == "zh"){
       "Type nickname here": "输入你的昵称",
       "Import secret key": "导入密钥",
       "52-characters secret": "52位密钥串",
-      "With nickname": "With nickname",
+      "With nickname": "昵称",
       "Import key": "导入密钥",
       "Client Version:": "客户端版本：",
       "Mining difficulty:": "挖矿难度：",
@@ -301,7 +300,7 @@ if(preferredLanguage == "zh"){
       "Current hash rate:": "当前hash速率：",
       "Terminate Daemon:": "断开守护进程数：",
       "Exit": "退出",
-      "Save Changes": "保存设置",
+      "Save Changes": "保存更改",
       "Secret key:": "密钥："
     };
 }
