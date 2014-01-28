@@ -249,7 +249,7 @@ if( (preferredLanguage == "zh-cn") | (preferredLanguage == "zh") ) {
       "reply_to": "回复 %{fullname}",
       "Retransmit": "转发",
       "Retransmits": "转发",
-      "Retransmitted by": "被这些用户转发",
+      "Retransmitted by": "转发者:",
       "search": "搜索",
       "seconds": "%{smart_count} 秒",
       "send": "发送",
