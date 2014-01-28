@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh-CN"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh","zh-cn"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -166,7 +166,7 @@ if(preferredLanguage == "en"){
     };
 }
 
-if(preferredLanguage == "zh-CN"){
+if( (preferredLanguage == "zh-cn") | (preferredLanguage == "zh") ) {
     polyglot.locale("zh-CN");
     wordset = {
       "Actions ▼": "操作 ▼",
