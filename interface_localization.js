@@ -167,7 +167,7 @@ if(preferredLanguage == "en"){
 }
 
 if( (preferredLanguage == "zh-cn") | (preferredLanguage == "zh") ) {
-    polyglot.locale("zh-CN");
+    polyglot.locale("zh-cn");
     wordset = {
       "Actions ▼": "操作 ▼",
       "Active DHT nodes:": "活动的DHT节点： ",
