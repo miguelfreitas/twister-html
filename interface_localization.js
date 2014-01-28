@@ -257,7 +257,7 @@ if( (preferredLanguage == "zh-cn") | (preferredLanguage == "zh") ) {
       "Sent Direct Message": "发送即时消息",
       "Sent Post to @": "发送推文 @",
       "Setup account": "设置帐号",
-      "switch_to_network": "本地守护进程没有连接网络或块链已经过时。"
+      "switch_to_network": "本地守护进程没有连接网络或块链已经过时。\n" +
         "若你留在本页，你的操作不会有效。\n" +
         "你要马上跳转到网络状态页吗？",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持文件APIs",
