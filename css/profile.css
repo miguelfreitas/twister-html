@@ -3,7 +3,6 @@
 ***************************************/
 .profile-card
 {
-    margin: 0 0 10px 335px;
     padding: 7px;
     background: rgba( 255, 255, 255, .5 );
     border: solid 1px rgba( 69, 71, 77, .05 );
@@ -11,8 +10,7 @@
 }
 .profile-card-main
 {
-    width: 520px;
-    height: 280px;
+    width: 540px;
     text-align: center;
     position: relative;
     transition: all .2s linear;
@@ -38,10 +36,15 @@
 {
     width: 74px;
     height: 74px;
-    margin: 20px auto 5px auto;
-    border-radius: 15%;
-    border: solid 5px #fff;
+    border: solid 6px #45474d;
+    border-radius: 40%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
     box-sizing: content-box;
+    float:left;
+    top: 50%;
+    background-color: #a12a28;
+
 }
 .profile-card-main h1
 {
@@ -152,24 +155,31 @@
 **************************************/
 .profile-modal .modal-wrapper
 {
-    width: 528px;
-    height: 680px;
-    margin: -340px 0 0 -264px;
+    width: 580px;
     border-radius: 5px;
     overflow: hidden;
+    position: absolute;
+    top:10%;
+    height: 80%;
+    margin-left: -300px;
+
 }
 .profile-modal .modal-content
 {
     padding: 3px;
+    height: 90%;
 }
 .profile-modal .profile-data
 {
     display: inline-block;
+    margin-left: -4px;
+    border-bottom: 0;
 }
 .profile-modal .postboard
 {
     margin-left: 0;
     padding: 5px 0 5px 0;
+    height: 75%;
 }
 .profile-modal .postboard h2
 {
@@ -177,13 +187,15 @@
 }
 .profile-modal .postboard-posts
 {
-    height: 240px;
+    display: block;
+    height: 90%;
     overflow: auto;
 }
 .profile-modal .profile-card-main
 {
     background: #45474d;
     color: white;
+    width:100%;
 }
 .profile-modal .profile-card-main a {
     color: #8bb9e0;
@@ -212,4 +224,15 @@
 .profile-modal .follow
 {
     bottom: 10px;
+}
+
+h1.profile-name {
+    display: inline;
+}
+h2.profile-screen-name {
+    display: inline;
+}
+
+.profile-modal .modal-buttons {
+   display: none;
 }
