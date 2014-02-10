@@ -148,6 +148,8 @@ function getMiningInfo(cbFunc, cbArg) {
 
                    $(".mining-difficulty").text(miningDifficulty);
                    $(".mining-hashrate").text(miningHashRate);
+                   $("select.genblock").val( ret.generate ? "enable" : "disable" );
+                   $(".genproclimit").val( ret.genproclimit );
 /*
                    if( !twisterdConnections ) {
                        $.MAL.setNetworkStatusMsg("Connection lost.", false);
@@ -167,18 +169,7 @@ function miningUpdate(cbFunc, cbArg) {
 }
 
 function getGenerate() {
-    twisterRpc("getgenerate", [],
-               function(args, ret) {
-                   var $genblock = $("select.genblock");
-                   if( ret ) {
-                       $genblock.val("enable");
-                   } else {
-                       $genblock.val("disable");
-                   }
-               }, {},
-               function(args, ret) {
-                   console.log("getgenerate error");
-               }, {});
+    getMiningInfo();
 }
 
 function setGenerate() {
@@ -270,8 +261,6 @@ function initInterfaceNetwork() {
 
     miningUpdate();
     setInterval("miningUpdate()", 2000);
-
-    getGenerate();
 
     interfaceNetworkHandlers();
 }
