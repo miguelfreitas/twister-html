@@ -59,6 +59,24 @@ var InterfaceFunctions = function()
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
+                     
+                     twisterRpc("gettrendinghashtags", [10],
+                                function(args, ret) {
+                                    for( var i = 0; i < ret.length; i++ ) {
+                                    
+                                       var $li = $("<li>");
+                                       var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
+                                       hashtagLinkTemplate.removeAttr("id");
+                                       hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(ret[i]));
+                                       hashtagLinkTemplate.text("#"+ret[i]);
+                                       $li.append(hashtagLinkTemplate);
+                                       $(".toptrends-list").append($li);
+                                    }
+                                }, {},
+                                function(args, ret) {
+                                   console.log("Error with gettrendinghashtags. Older twister daemon?");
+                                }, {});
+                     
                      if( args.cbFunc )
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});
