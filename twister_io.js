@@ -206,9 +206,11 @@ function getFullname( username, item ){
     item.text(username);
     getProfileResource( username, "fullname", undefined, 
                        function(args, value) {
-                           value.replace(/^\s+|\s+$/g, '');
-                           if( value.length )
-                               args.item.text(value);
+                           if( value ) {
+                               value.replace(/^\s+|\s+$/g, '');
+                               if( value.length )
+                                   args.item.text(value);
+                           }
                        }, {item: item} );
 }
 
