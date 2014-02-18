@@ -204,7 +204,12 @@ function getProfileResource( username, resource, item, cbFunc, cbArg ){
 function getFullname( username, item ){
     // Set the username first in case the profile has no fullname
     item.text(username);
-    getProfileResource( username, "fullname", item);
+    getProfileResource( username, "fullname", undefined, 
+                       function(args, value) {
+                           value.replace(/^\s+|\s+$/g, '');
+                           if( value.length )
+                               args.item.text(value);
+                       }, {item: item} );
 }
 
 // get bio and store it in item.text
