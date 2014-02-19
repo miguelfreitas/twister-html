@@ -769,12 +769,12 @@ if(preferredLanguage == "ru"){
        "Disable": "Отключено",
        "Display mentions to @": "Показать ответы для @",
        "Display retransmissions": "Показать репосты",
-       "DNS to obtain list of peers:": "DNS адресс для получения пиров:",
+       "DNS to obtain list of peers:": "DNS адрес для получения пиров:",
        "downloading_block_chain": "Загрузка цепочки блоков, пожалуйста подождите, (Цепочка блоков устарела на %{days} дней).",
        "download_posts_status": "Загружено %{portion} постов", // Downloaded 10/30 posts
        "Enable": "Включено",
        "error": "Ошибка: %{error}",
-       "error_connecting_to_daemon": "Ошибка  к локальному демону twisterd.",
+       "error_connecting_to_daemon": "Ошибка подключения к локальному демону twisterd.",
        "Error in 'createwalletuser' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'createwalletuser'.",
        "Error in 'importprivkey'": "Ошибка при обращении к RPC - при попытке выполнить 'importprivkey' %{rpc}",
        "Error in 'sendnewusertransaction' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'sendnewusertransaction'",
@@ -792,7 +792,7 @@ if(preferredLanguage == "ru"){
        "Generate blocks (send promoted messages)": "Майнинг (отправка рекламных сообщений)",
        "Home": "Главная", // homepage
        "hours": "%{smart_count} час |||| %{smart_count} часов",
-       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутренняя ошибка: lastPostId неизвестен (Попробуйте подписаться сами на себя, это должно помоч!)",
+       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутренняя ошибка: lastPostId неизвестен (Попробуйте подписаться сами на себя, это должно помочь!)",
        "Known peers:": "Известные пиры: ",
        "Last block is ahead of your computer time, check your clock.": "Последний полученный блок опережает время вашего компьютера, проверьте правильно ли работают часы.",
        "mentions_at": "Упоминания @%{user}",
@@ -808,7 +808,7 @@ if(preferredLanguage == "ru"){
        "Not available": "Недоступно", // username is not available
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",
        "Number of CPUs to use": "Сколько использовать ядер процессора",
-       "Only alphanumeric and underscore allowed.": "Разрешены только латинские буквы и цифры.",
+       "Only alphanumeric and underscore allowed.": "Разрешены только латинские буквы, цифры и подчеркивания.",
        "peer address": "адрес пира",
        "Private": "Приватный",
        "Profile": "Профиль",
@@ -834,10 +834,10 @@ if(preferredLanguage == "ru"){
        "Sent Post to @": "Отправить сообщение для @",      
        "Setup account": "Настроить аккаунт",
        "switch_to_network": "Локальный демон не подключен к сети или\n" +
-                 "цепочка блоков устарела. Если вы останитесь на этой странице\n" +
-                 "ваши действия могут быть не выполнеными.\n" +
+                 "цепочка блоков устарела. Если вы останетесь на этой странице\n" +
+                 "ваши действия могут быть не выполнены.\n" +
                  "Не хотите перейти на страницу настройки сети?",
-       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
+       "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
        "Type message here": "Введите ваше сообщение тут",
@@ -848,14 +848,14 @@ if(preferredLanguage == "ru"){
                  "К сожалению, сейчас вы не можете редактировать ваш профиль\n" +
                  "или отправлять сообщение.\n\n" +
                  "Пожалуйста подождите пару минут.\n\n" +
-                 "Кнопка 'Сохранить' будет доступна автоматически того,\n" +
-                 "когда процес регистрации будет завершен. (Я обещаю, это\n"+
+                 "Кнопка 'Сохранить' будет доступна автоматически после того,\n" +
+                 "как процес регистрации завершится. (Я обещаю, это\n"+
                  "последний раз, когда вы ждете перед использованием\n" +
                  "twister'a).\n\n" +
                  "Хозяйке на заметку: Сейчас вы можете выбрать аватар!",
        "users_mentions": "Ответ от @%{username}",
        "users_profile": "%{username}'s профиль",
-       "username_undefined": "Имя пользователя не определено, требуеться войти.",
+       "username_undefined": "Имя пользователя не определено, требуется войти.",
        "View": "Просмотреть",
        "View All": "Просмотреть Всё",
        "Who to Follow": "Кого почитать",
@@ -870,7 +870,7 @@ if(preferredLanguage == "ru"){
        "Type nickname here": "Введите ваш ник тут",
        "Import secret key": "Импортировать секретный ключ",
        "52-characters secret": "52-значный ключ",
-       "With nickname": "С от логина",
+       "With nickname": "С логином",
        "Import key": "Импортировать ключ",
        "Client Version:": "Версия клиента:",
        "Mining difficulty:": "Сложность майнинга:",
