@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/profile.css" type="text/css">
     <script src="jquery.min.js"></script>
+    <script type="text/javascript" src="qrcode.js"></script>
     <script src="jQueryPlugins.js"></script>
     <script src="jquery.json-2.4.js"></script>
     <script src="jquery.jsonrpcclient.js"></script>
@@ -92,8 +93,21 @@
       </div>
 
       <div style="font-size:80%;text-align: center;" class="secret-key-container">
-         <span class="label">Secret key:</span> <span class="secret-key"></span>
+         <span class="label">Secret key:</span> <div id="skey"><span class="secret-key"></span></div>
+                  <a href="#" onclick="showqr()">Show QR code</a>
       </div>
+      
+         <script>
+         function showqr ()
+         {
+         	var skey = document.getElementById('skey').innerText;
+         	new QRCode(document.getElementById("qrcode"), skey);
+        } 
+         </script>
+         
+         <div align="center" id="qrcode"></div>
+
+
       
     </div>
     
