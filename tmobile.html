@@ -22,6 +22,7 @@
     });
   </script>
   <script src="jquery.mobile-1.3.2.min.js"></script>
+  <script type="text/javascript" src="qrcode.js"></script>
 
     <script src="jQueryPlugins.js"></script>
     <script src="jquery.json-2.4.js"></script>
@@ -398,7 +399,17 @@
       </div>
 
       <div style="font-size:80%;text-align: center;">
-         Secret key: <span class="secret-key"></span>
+         Secret key: <div id="skey"><span class="secret-key"></span></div>
+         <script>
+         function gg ()
+         {
+         	var skey = document.getElementById('skey').innerText;
+         	new QRCode(document.getElementById("qrcode"), skey);
+        } 
+         </script>
+         
+         <div align="center" id="qrcode"></div>
+         <a href="#" onclick="gg()">Show QR code</a>
       </div>
     </div>
   </div>
