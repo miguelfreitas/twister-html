@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh","es"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -1021,6 +1021,147 @@ if(preferredLanguage == "de"){
       "Exit": "Beenden",
       "Save Changes": "Änderungen speichern",
       "Secret key:": "Privater Schlüssel:"
+    };
+}
+
+if(preferredLanguage == "es"){
+    polyglot.locale("es");
+    wordset = {
+      "Actions ▼": "Acciones ▼",
+      "Active DHT nodes:": "Activar nodos DHT",
+      "Add DNS": "Agregar DNS",
+      "Add peer": "Agregar par",
+      "ajax_error": "Error de Ajax: %{error}", // JavaScript error
+      "All users publicly followed by": "Todos los usuarios seguidos públicamente por",
+      "Available": "Disponible", // username is available
+      "Block chain information": "Información de cadena de bloques",
+      "Block chain is up-to-date, twister is ready to use!": "La cadena de bloques está actualizada, ¡twister está listo para usar!",
+      "Block generation": "Generación de bloque ",
+      "Cancel": "Cancelar", //(V)
+      "Change user": "Cambiar usuario",
+      "Checking...": "Chequeando...", // checking if username is available
+      "Collapse": "Plegar", // smaller view of a post
+      "Configure block generation": "Configurar la generación de bloque",
+      "Connections:": "Conexiones: ", // to network
+      "Connection lost.": "Conexión perdida",
+      "days": "%{smart_count} día |||| %{smart_count} días",
+      "Detailed information": "Información detallada",
+      "DHT network down.": "Red DHT caída.",
+      "Direct Messages": "Mensajes Directos",
+      "Disable": "Deshabilitar", //(V)
+      "Display mentions to @": "Mostrar menciones a @",
+      "Display retransmissions": "Mostrar retransmiciones",
+      "DNS to obtain list of peers:": "DNS para obtener lista de par",
+      "downloading_block_chain": "Descargando cadena de bloques, por favor espere antes de continuar (la cadena de bloques tiene %{days} días de antigüedad)",
+      "download_posts_status": "Descargadas %{portion} entradas", // Downloaded 10/30 posts
+      "Enable": "Habilitar", //(V)
+      "error": "Error: %{error}",
+      "error_connecting_to_daemon": "Error al conectar con el demonio local de twister.",
+      "Error in 'createwalletuser' RPC.": "Error en 'createwalletuser' RPC.",
+      "Error in 'importprivkey'": "Error en 'importprivkey' RPC: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Error en 'sendnewusertransaction' RPC.",
+      "Expand": "Expandir", // larger view of a post
+      "Favorite": "Hacer favorito",
+      "File APIs not supported in this browser.": "Las APIs de archivos no están soportadas en este navegador.",
+      "Follow": "Seguir", //(V)
+      "Followed by": "Seguido por",
+      "followed_by": "Seguido por %{username}",
+      "Followers": "Seguidores",
+      "Following": "Siguiendo", //(V)
+      "Following users": "Usuarios siguiéndolo",
+      "Force connection to peer:": "Forzar conexión a par:",
+      "General information": "Información general",
+      "Generate blocks (send promoted messages)": "Generar bloques (enviar mensajes promovidos)",
+      "Home": "Inicio", // homepage
+      "hours": "%{smart_count} hora |||| %{smart_count} horas",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Error interno: lastPostId desconocido (¡seguirte a ti mismo podría arreglarlo!)",
+      "Known peers:": "Pares conocidos: ",
+      "Last block is ahead of your computer time, check your clock.": "El último bloque está adelantado a la hora de tu computador, revisa tu reloj.",
+      "mentions_at": "Menciones a @%{user}",
+      "minutes": "%{smart_count} minuto |||| %{smart_count} minutos",
+      "Must be 16 characters or less.": "Debe ser 16 caracteres o menos.", // username
+      "Network": "Red",
+      "Network config": "Configuración de la red",
+      "Network status": "Estado de la red",
+      "New direct message...": "Nuevo mensaje directo...",
+      "New Post...": "Nueva entrada...",
+      "new_posts": "%{smart_count} nueva entrada |||| %{smart_count} nuevas entradas",
+      "nobody": "nadie", // used to promote a post without attaching the user
+      "Not available": "No disponible", // username is not available
+      "Number of blocks in block chain:": "Número de bloques en la cadena: ",
+      "Number of CPUs to use": "Número de CPUs a usar ",
+      "Only alphanumeric and underscore allowed.": "Solo caracteres alfanuméricos y el guión bajo están permitidos.",
+      "peer address": "dirección de par",
+      "Private": "Privado", //(A)
+      "Profile": "Perfil", //(S)
+      "Postboard": "Tablón de entradas",
+      "post": "publicar", // verb - button to post a message
+      "Post to promote:": "Entrada para promoverPost to promote: ",
+      "Posts": "Entradas",
+      "propagating_nickname": "Propagando el apodo %{username} a la red...",
+      "Public": "Público",
+      "Refresh": "Actualizar", //(V)
+      "retransmit_this": "¿Retransmitir esta entrada a tus seguidores?",
+      "Reply": "Contestar", //(V)
+      "Reply...": "Contestar...",
+      "reply_to": "Contestar a %{fullname}",
+      "Retransmit": "Retransmición", //(S)
+      "Retransmits": "Retransmiciones",
+      "Retransmitted by": "Retransmitido por",
+      "search": "buscar",
+      "seconds": "%{smart_count} segundo |||| %{smart_count} segundos",
+      "send": "enviar",
+      "Send post with username": "Enviar entrada con nombre de usuario ",
+      "Sent Direct Message": "Enviar Mensaje Directo",
+      "Sent Post to @": "Enviar entrada a @",
+      "Setup account": "Configurar cuenta",
+      "switch_to_network": "El demonio local no está conectado a la red o\n" +
+                "el bloque de cadenas está desactualizado. Si permanece en esta página\n" +
+                "sus acciones podrían no funcionar.\n" +
+                "¿Quiere chequear la página del Estado de la Red mejor?",
+      "The File APIs are not fully supported in this browser.": "Las APIs de archivos no están completamente soportadas en este navegador.",
+      "time_ago": "%{time} atrás", // 5 minutes ago
+      "Time of the last block:": "Tiempo del último bloque: ",
+      "Type message here": "Tipee el mensaje aquí",
+      "Unfollow": "Dejar de seguir",
+      "Update": "Actualizar", //(V)
+      "Updating status...": "Actualizando el estado...", // status of block chain
+      "user_not_yet_accepted": "Otros pares no han aceptado este usuario nuevo todavía.\n" +
+                "Desafortunadamente, no es posible guardar el perfil\n" +
+                "o enviar una entrada en este estado.\n\n" +
+                "Por favor, espere unos minutos para continuar.\n\n" +
+                "'Guardar Cambios' se habilitará automáticamente\n" +
+                "cuando el proceso finalice. (Le prometo que esta será\n"+
+                "la última vez que tendrá que esperar antes de usar\n" +
+                "twister).\n\n" +
+                "Un consejo: ¡escoja su avatar por mientras!",
+      "users_mentions": "Menciones de @%{username}",
+      "users_profile": "Perfil de %{username}",
+      "username_undefined": "Nombre de usuario indefinido, el ingreso es necesario",
+      "View": "Ver", //(V)
+      "View All": "Ver Todos",
+      "Who to Follow": "A quién Seguir",
+      "Your message was sent!": "¡Su mensaje fue enviado!",
+      "twister login": "ingreso a twister",
+      "Existing local users": "Usuarios locales existentes",
+      "Or...": "O...",
+      "Create a new user": "Crear un usuario nuevo",
+      "Login": "Ingreso", //(S)
+      "Check availability": "Chequear disponibilidad",
+      "Create this nickname": "Crear este seudónimo",
+      "Type nickname here": "Tipee su seudónimo aquí",
+      "Import secret key": "Importar llave secreta",
+      "52-characters secret": "secreto de 52 caracteres",
+      "With nickname": "Con seudónimo",
+      "Import key": "Importar llave",
+      "Client Version:": "Versión de cliente:",
+      "Mining difficulty:": "Dificultad para minar:",
+      "Block generation status": "Estado de la generación de bloque",
+      "Current hash rate:": "Tasa de hash actual:",
+      "Terminate Daemon:": "Terminar Demonio:",
+      "Exit": "Salir", //(V)
+      "Save Changes": "Guardar Cambios",
+      "Secret key:": "Llave secreta:"
     };
 }
 
