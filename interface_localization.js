@@ -4,10 +4,10 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh","ja"];
 
 // detect language with JavaScript
-var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
+var preferredLanguage = "ja"; // ywr --- window.navigator.userLanguage || window.navigator.language || "en";
 if(knownLanguages.indexOf(preferredLanguage) > -1){
   // en for en or similar
   preferredLanguage = preferredLanguage;
@@ -1021,6 +1021,148 @@ if(preferredLanguage == "de"){
       "Exit": "Beenden",
       "Save Changes": "Änderungen speichern",
       "Secret key:": "Privater Schlüssel:"
+    };
+}
+
+if(preferredLanguage == "ja"){
+    polyglot.locale("ja");
+    wordset = {
+      "Actions ▼": "アクション ▼",
+      "Active DHT nodes:": "Active DHT nodes: ",
+      "Add DNS": "DNSを追加",
+      "Add peer": "ピアを追加",
+      "ajax_error": "Ajax error: %{error}", // JavaScript error
+      "All users publicly followed by": "All users publicly followed by",
+      "Available": "Available", // username is available
+      "Block chain information": "Block chain information",
+      "Block chain is up-to-date, twister is ready to use!": "Block chain is up-to-date, twister is ready to use!",
+      "Block generation": "Block generation ",
+      "Cancel": "キャンセル",
+      "Change user": "ユーザーを変更",
+      "Checking...": "チェック...", // checking if username is available
+      "Collapse": "閉じる", // smaller view of a post
+      "Configure block generation": "Configure block generation",
+      "Connections:": "Connections: ", // to network
+      "Connection lost.": "Connection lost.",
+      "days": "%{smart_count} day |||| %{smart_count} days",
+      "Detailed information": "Detailed information",
+      "DHT network down.": "DHT network down.",
+      "Direct Messages": "Direct Messages",
+      "Disable": "Disable",
+      "Display mentions to @": "Display mentions to @",
+      "Display retransmissions": "Display retransmissions",
+      "DNS to obtain list of peers:": "DNS to obtain list of peers:",
+      "downloading_block_chain": "Downloading block chain, please wait before continuing (block chain is %{days} days old).",
+      "download_posts_status": "Downloaded %{portion} posts", // Downloaded 10/30 posts
+      "Enable": "Enable",
+      "error": "Error: %{error}",
+      "error_connecting_to_daemon": "Error connecting to local twister daemon.",
+      "Error in 'createwalletuser' RPC.": "Error in 'createwalletuser' RPC.",
+      "Error in 'importprivkey'": "Error in 'importprivkey' RPC: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Error in 'sendnewusertransaction' RPC.",
+      "Expand": "開く", // larger view of a post
+      "Favorite": "お気に入り",
+      "File APIs not supported in this browser.": "File APIs not supported in this browser.",
+      "Follow": "フォロー",
+      "Followed by": "Followed by",
+      "followed_by": "Followed by %{username}",
+      "Followers": "フォロワー",
+      "Following": "フォロー",
+      "Following users": "Following users",
+      "Force connection to peer:": "Force connection to peer:",
+      "General information": "General information",
+      "Generate blocks (send promoted messages)": "Generate blocks (send promoted messages)",
+      "Home": "ホーム", // homepage
+      "hours": "%{smart_count} hour |||| %{smart_count} hours",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Internal error: lastPostId unknown (following yourself may fix!)",
+      "Known peers:": "Known peers: ",
+      "Last block is ahead of your computer time, check your clock.": "Last block is ahead of your computer time, check your clock.",
+      "mentions_at": "Mentions @%{user}",
+      "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
+      "Must be 16 characters or less.": "Must be 16 characters or less.", // username
+      "Network": "ネットワーク",
+      "Network config": "ネットワーク設定",
+      "Network status": "ネットワークステータス",
+      "New direct message...": "New direct message...",
+      "New Post...": "New Post...",
+      "new_posts": "%{smart_count} new post |||| %{smart_count} new posts",
+      "nobody": "nobody", // used to promote a post without attaching the user
+      "Not available": "Not available", // username is not available
+      "Number of blocks in block chain:": "Number of blocks in block chain: ",
+      "Number of CPUs to use": "Number of CPUs to use ",
+      "Only alphanumeric and underscore allowed.": "Only alphanumeric and underscore allowed.",
+      "peer address": "peer address",
+      "Private": "プライベート",
+  //    "Public" : "公開"
+      "Profile": "プロフィール",
+      "Postboard": "Postboard",
+      "post": "投稿する", // verb - button to post a message
+      "Post to promote:": "Post to promote: ",
+      "Posts": "投稿",
+      "propagating_nickname": "Propagating nickname %{username} to the network...",
+      "Public": "Public",
+      "Refresh": "リフレッシュ",
+      "retransmit_this": "Retransmit this post to your followers?",
+      "Reply": "返信",
+      "Reply...": "返信...",
+      "reply_to": "%{fullname} への返信",
+      "Retransmit": "リトランスミット",
+      "Retransmits": "Retransmits",
+      "Retransmitted by": "Retransmitted by",
+      "search": "検索",
+      "seconds": "%{smart_count} second |||| %{smart_count} seconds",
+      "send": "送信",
+      "Send post with username": "Send post with username ",
+      "Sent Direct Message": "Sent Direct Message",
+      "Sent Post to @": "Sent Post to @",
+      "Setup account": "アカウント設定",
+      "switch_to_network": "Local daemon is not connected to the network or\n" +
+                "block chain is outdated. If you stay in this page\n" +
+                "your actions may not work.\n" +
+                "Do you want to check Network Status page instead?",
+      "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
+      "time_ago": "%{time} ago", // 5 minutes ago
+      "Time of the last block:": "Time of the last block: ",
+      "Type message here": "Type message here",
+      "Unfollow": "解除",
+      "Update": "Update",
+      "Updating status...": "Updating status...", // status of block chain
+      "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
+                "Unfortunately it is not possible to save profile\n" +
+                "or send any posts in this state.\n\n" +
+                "Please wait a few minutes to continue.\n\n" +
+                "The 'Save Changes' will be automatically enabled\n" +
+                "when the process completes. (I promise this is\n"+
+                "the last time you will have to wait before using\n" +
+                "twister).\n\n" +
+                "Tip: choose your avatar in the meantime!",
+      "users_mentions": "Mentions of @%{username}",
+      "users_profile": "%{username}'s Profile",
+      "username_undefined": "Username undefined, login required.",
+      "View": "View",
+      "View All": "すべて見る",
+      "Who to Follow": "おすすめユーザー",
+      "Your message was sent!": "Your message was sent!",
+      "twister login": "twister login",
+      "Existing local users": "Existing local users",
+      "Or...": "Or...",
+      "Create a new user": "Create a new user",
+      "Login": "ログイン",
+      "Check availability": "Check availability",
+      "Create this nickname": "Create this nickname",
+      "Type nickname here": "Type nickname here",
+      "Import secret key": "Import secret key",
+      "52-characters secret": "52-characters secret",
+      "With nickname": "With nickname",
+      "Import key": "Import key",
+      "Client Version:": "Client Version:",
+      "Mining difficulty:": "Mining difficulty:",
+      "Block generation status": "Block generation status",
+      "Current hash rate:": "Current hash rate:",
+      "Terminate Daemon:": "Terminate Daemon:",
+      "Exit": "Exit",
+      "Save Changes": "変更を保存",
+      "Secret key:": "シークレットキー:"
     };
 }
 
