@@ -103,8 +103,7 @@ function requestObj(users, mode, count, getspam)
     this.reportProcessedPost = function(user, id, shown) {
         if( this.getspam ) {
             _idTrackerSpam.receivedId(this.mode, id, shown);
-        }
-        if( this.users.indexOf(user) >= 0 ) {
+        } else if( this.users.indexOf(user) >= 0 ) {
             _idTrackerMap[user].receivedId(this.mode, id, shown);
         }
     }
