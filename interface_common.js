@@ -386,7 +386,7 @@ function replyTextKeypress(e) {
             $.MAL.disableButton(tweetAction);
         }
 
-        if (e.keyCode === 13) {
+        if (false/*ywr e.keyCode === 13*/) {
             if (!e.ctrlKey) {
                 $this.val($this.val().trim());
                 if( !tweetAction.hasClass("disabled") ) {
