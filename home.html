@@ -48,7 +48,8 @@
             <a class="dropdown-menu-item" href="following.html">Following users</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
             <a class="dropdown-menu-item" href="login.html">Change user</a>
-            <a class="direct-messages" href="#">Direct Messages</a>
+            <a class="dropdown-menu-item promoted-posts-only" href="#">Switch to Promoted posts</a>
+            <a class="direct-messages dropdown-menu-item" href="#">Direct Messages</a>
           </div>
         </a>
       </li>
@@ -136,6 +137,14 @@
       </div>
       <!-- WHO TO FOLLOW MODULE END -->
 
+      <!-- WHO TO FOLLOW MODULE INIT -->
+      <div class="module toptrends">
+        <h3>Top Trends</h3>
+        <ol class="toptrends-list">
+          <!-- use "follow-suggestion-template" here -->
+        </ol>
+      </div>
+      <!-- WHO TO FOLLOW MODULE END -->
 
     </div>
   <!-- LADO ESQUERDO DE MÓDULOS END -->
@@ -216,7 +225,7 @@
             <div class="post-interactions">
                 <span class="post-reply">Reply</span>
                 <span class="post-propagate">Retransmit</span>
-                <span class="post-favorite">Favorite</span>
+                <!--span class="post-favorite">Favorite</span-->
             </div>
             <div class="expanded-content" style="display: none;">
                 <ul class="post-stats" style="display: none;">
@@ -333,7 +342,7 @@
         <textarea placeholder="New direct message..."></textarea>
         <div class="post-area-extras">
           <span class="post-area-remaining">140</span>
-          <button class="dm-submit disabled" disabled="true">send</button>
+          <button  title="Direct messages are encrypted, only you and receiver can read them" style="margin-right:7.5%;" class="dm-submit disabled" disabled="true">send</button>
         </div>
       </form>
     </div>
@@ -372,7 +381,7 @@
         <!-- ÁREA DE POSTS INIT -->
           <div class="postboard">
             <h2>
-              Posts
+              <span>Posts</span>
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>
@@ -408,11 +417,11 @@
     <!-- MODAL DE FOLLOWING -->
     <div id="following-modal-template">
         <!-- ÁREA DE PROFILE PHOTO INIT -->
-        <h2><span class="label">All users publicly followed by</span><span class="following-screen-name">@<b></b></span></h2>
+        <h2>All users publicly followed by <span class="following-screen-name">@<b></b></span></h2>
         <!-- ÁREA DE PROFILE END -->
 
         <!-- ÁREA DE FOLLOWING INIT -->
-        <ol class="following-list">
+        <ol class="">
             <li id="following-by-user-template" style="display: none;">
                 <div class="mini-following-info" data-screen-name="">
                     <a href="#" class="open-profile-modal">
