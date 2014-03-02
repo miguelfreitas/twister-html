@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh","ja"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -1021,6 +1021,147 @@ if(preferredLanguage == "de"){
       "Exit": "Beenden",
       "Save Changes": "Änderungen speichern",
       "Secret key:": "Privater Schlüssel:"
+    };
+}
+
+if(preferredLanguage == "ja"){
+    polyglot.locale("ja");
+    wordset = {
+      "Actions ▼": "アクション ▼",
+      "Active DHT nodes:": "アクティブなDHTノード: ",
+      "Add DNS": "DNSを追加",
+      "Add peer": "ピアを追加",
+      "ajax_error": "Ajax error: %{error}", // JavaScript error
+      "All users publicly followed by": "All users publicly followed by",
+      "Available": "Available", // username is available
+      "Block chain information": "ブロックチェイン",
+      "Block chain is up-to-date, twister is ready to use!": "ブロックチェインは最新の状態です。",
+      "Block generation": "ブロック生成",
+      "Cancel": "キャンセル",
+      "Change user": "ユーザーを変更",
+      "Checking...": "チェック...", // checking if username is available
+      "Collapse": "閉じる", // smaller view of a post
+      "Configure block generation": "ブロック生成の設定",
+      "Connections:": "接続数: ", // to network
+      "Connection lost.": "Connection lost.",
+      "days": "%{smart_count} day |||| %{smart_count} days",
+      "Detailed information": "詳細",
+      "DHT network down.": "DHTネットワークがダウンしています",
+      "Direct Messages": "ダイレクトメッセージ",
+      "Disable": "停止",
+      "Display mentions to @": "メンションを表示する",
+      "Display retransmissions": "リトランスミットを表示する",
+      "DNS to obtain list of peers:": "ピア取得のためのDNS:",
+      "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。(block chain is %{days} days old).",
+      "download_posts_status": "ダウンロード済みの投稿 %{portion}", // Downloaded 10/30 posts
+      "Enable": "有効",
+      "error": "Error: %{error}",
+      "error_connecting_to_daemon": "Error connecting to local twister daemon.",
+      "Error in 'createwalletuser' RPC.": "Error in 'createwalletuser' RPC.",
+      "Error in 'importprivkey'": "Error in 'importprivkey' RPC: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Error in 'sendnewusertransaction' RPC.",
+      "Expand": "開く", // larger view of a post
+      "Favorite": "お気に入り",
+      "File APIs not supported in this browser.": "利用しているブラウザはファイルAPIをサポートしていません。",
+      "Follow": "フォロー",
+      "Followed by": "Followed by",
+      "followed_by": "Followed by %{username}",
+      "Followers": "フォロワー",
+      "Following": "フォロー",
+      "Following users": "フォローしているユーザー",
+      "Force connection to peer:": "強制的に経由するピア:",
+      "General information": "概略",
+      "Generate blocks (send promoted messages)": "ブロックチェインを生成する (プロモートメッセージを送信する)",
+      "Home": "ホーム", // homepage
+      "hours": "%{smart_count} hour |||| %{smart_count} hours",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Internal error: lastPostId unknown (following yourself may fix!)",
+      "Known peers:": "ネットワーク全体のピア: ",
+      "Last block is ahead of your computer time, check your clock.": "Last block is ahead of your computer time, check your clock.",
+      "mentions_at": "@%{user}へのメンション",
+      "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
+      "Must be 16 characters or less.": "Must be 16 characters or less.", // username
+      "Network": "ネットワーク",
+      "Network config": "ネットワーク設定",
+      "Network status": "ネットワークステータス",
+      "New direct message...": "ダイレクトメッセージ...",
+      "New Post...": "投稿する",
+      "new_posts": "%{smart_count} new post |||| %{smart_count} new posts",
+      "nobody": "nobody", // used to promote a post without attaching the user
+      "Not available": "Not available", // username is not available
+      "Number of blocks in block chain:": "全ブロック数: ",
+      "Number of CPUs to use": "利用するCPUの数",
+      "Only alphanumeric and underscore allowed.": "アルファベットとアンダースコア(_)が利用可能です",
+      "peer address": "ピア・アドレス",
+      "Private": "プライベート",
+      "Profile": "プロフィール",
+      "Postboard": "Postboard",
+      "post": "投稿する", // verb - button to post a message
+      "Post to promote:": "プロモートメッセージ: ",
+      "Posts": "投稿",
+      "propagating_nickname": "Propagating nickname %{username} to the network...",
+      "Public": "公開",
+      "Refresh": "リフレッシュ",
+      "retransmit_this": "この投稿をリトランスミットしますか？",
+      "Reply": "返信",
+      "Reply...": "返信...",
+      "reply_to": "%{fullname}への返信",
+      "Retransmit": "リトランスミット",
+      "Retransmits": "リトランスミット",
+      "Retransmitted by": "Retransmitted by",
+      "search": "検索",
+      "seconds": "%{smart_count} second |||| %{smart_count} seconds",
+      "send": "送信",
+      "Send post with username": "プロモートメッセージの送信元",
+      "Sent Direct Message": "ダイレクトメッセージを送る",
+      "Sent Post to @": "メンションを投稿する",
+      "Setup account": "アカウント設定",
+      "switch_to_network": "Local daemon is not connected to the network or\n" +
+                "block chain is outdated. If you stay in this page\n" +
+                "your actions may not work.\n" +
+                "Do you want to check Network Status page instead?",
+      "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
+      "time_ago": "%{time} ago", // 5 minutes ago
+      "Time of the last block:": "最新ブロックの生成日時: ",
+      "Type message here": "ここにメッセージを書いてね",
+      "Unfollow": "解除",
+      "Update": "アップデート",
+      "Updating status...": "Updating status...", // status of block chain
+      "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
+                "Unfortunately it is not possible to save profile\n" +
+                "or send any posts in this state.\n\n" +
+                "Please wait a few minutes to continue.\n\n" +
+                "The 'Save Changes' will be automatically enabled\n" +
+                "when the process completes. (I promise this is\n"+
+                "the last time you will have to wait before using\n" +
+                "twister).\n\n" +
+                "Tip: choose your avatar in the meantime!",
+      "users_mentions": "@%{username}へのメンション",
+      "users_profile": "%{username}のプロフィール",
+      "username_undefined": "ログインしてください。",
+      "View": "見る",
+      "View All": "すべて見る",
+      "Who to Follow": "おすすめユーザー",
+      "Your message was sent!": "投稿が送信されました！",
+      "twister login": "Twisterログイン",
+      "Existing local users": "既存のローカルユーザー",
+      "Or...": "もしくは...",
+      "Create a new user": "新規ユーザーを作成",
+      "Login": "ログイン",
+      "Check availability": "取得可能かチェック",
+      "Create this nickname": "作成",
+      "Type nickname here": "ニックネーム",
+      "Import secret key": "シークレットキーをインポートする",
+      "52-characters secret": "52文字からなるシークレット",
+      "With nickname": "このニックネームで",
+      "Import key": "キーをインポートする",
+      "Client Version:": "クライアントのヴァージョン:",
+      "Mining difficulty:": "採掘の難しさ:",
+      "Block generation status": "ブロック生成の状態",
+      "Current hash rate:": "現在のハッシュレート:",
+      "Terminate Daemon:": "デーモンを終了する:",
+      "Exit": "終了",
+      "Save Changes": "変更を保存",
+      "Secret key:": "シークレットキー:"
     };
 }
 
