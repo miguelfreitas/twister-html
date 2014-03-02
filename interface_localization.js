@@ -1034,8 +1034,8 @@ if(preferredLanguage == "ja"){
       "ajax_error": "Ajax error: %{error}", // JavaScript error
       "All users publicly followed by": "All users publicly followed by",
       "Available": "Available", // username is available
-      "Block chain information": "ブロックチェーン",
-      "Block chain is up-to-date, twister is ready to use!": "ブロックチェーンは最新の状態です。",
+      "Block chain information": "ブロックチェイン",
+      "Block chain is up-to-date, twister is ready to use!": "ブロックチェインは最新の状態です。",
       "Block generation": "ブロック生成",
       "Cancel": "キャンセル",
       "Change user": "ユーザーを変更",
@@ -1043,7 +1043,7 @@ if(preferredLanguage == "ja"){
       "Collapse": "閉じる", // smaller view of a post
       "Configure block generation": "ブロック生成の設定",
       "Connections:": "接続数: ", // to network
-      "Connection lost.": "切断されました.",
+      "Connection lost.": "Connection lost.",
       "days": "%{smart_count} day |||| %{smart_count} days",
       "Detailed information": "詳細",
       "DHT network down.": "DHTネットワークがダウンしています",
@@ -1052,11 +1052,11 @@ if(preferredLanguage == "ja"){
       "Display mentions to @": "メンションを表示する",
       "Display retransmissions": "リトランスミットを表示する",
       "DNS to obtain list of peers:": "ピア取得のためのDNS:",
-      "downloading_block_chain": "ブロックチェーンをダウンロードしています。しばらくお待ちください。(block chain is %{days} days old).",
+      "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。(block chain is %{days} days old).",
       "download_posts_status": "ダウンロード済みの投稿 %{portion}", // Downloaded 10/30 posts
       "Enable": "有効",
       "error": "Error: %{error}",
-      "error_connecting_to_daemon": "ローカルのTwisterデーモンへの接続が失敗しました。",
+      "error_connecting_to_daemon": "Error connecting to local twister daemon.",
       "Error in 'createwalletuser' RPC.": "Error in 'createwalletuser' RPC.",
       "Error in 'importprivkey'": "Error in 'importprivkey' RPC: %{rpc}",
       "Error in 'sendnewusertransaction' RPC.": "Error in 'sendnewusertransaction' RPC.",
@@ -1071,7 +1071,7 @@ if(preferredLanguage == "ja"){
       "Following users": "フォローしているユーザー",
       "Force connection to peer:": "強制的に経由するピア:",
       "General information": "概略",
-      "Generate blocks (send promoted messages)": "ブロックチェーンを生成する (プロモートメッセージを送信する)",
+      "Generate blocks (send promoted messages)": "ブロックチェインを生成する (プロモートメッセージを送信する)",
       "Home": "ホーム", // homepage
       "hours": "%{smart_count} hour |||| %{smart_count} hours",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Internal error: lastPostId unknown (following yourself may fix!)",
@@ -1115,24 +1115,26 @@ if(preferredLanguage == "ja"){
       "Sent Direct Message": "ダイレクトメッセージを送る",
       "Sent Post to @": "メンションを投稿する",
       "Setup account": "アカウント設定",
-      "switch_to_network": "ローカルデーモンがネットワークが接続されていないか、\n" +
-                "ブロックチェーンがアップデートされていません。このまま利用すると\n" +
-                "正常に動作しない可能性があります。\n" +
-                "ネットワークの状態を表示しますか？",
-      "The File APIs are not fully supported in this browser.": "このブロウザはファイルAPIを十分にサポートしていません。",
+      "switch_to_network": "Local daemon is not connected to the network or\n" +
+                "block chain is outdated. If you stay in this page\n" +
+                "your actions may not work.\n" +
+                "Do you want to check Network Status page instead?",
+      "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
       "Type message here": "ここにメッセージを書いてね",
       "Unfollow": "解除",
       "Update": "アップデート",
       "Updating status...": "Updating status...", // status of block chain
-      "user_not_yet_accepted": "他のピアが新規作成したユーザーを確認中です。Other peers have not yet accepted this new user.\n" +
-                "確認中はプロフィールを更新さたり、\n" +
-                "投稿することはできません。\n\n" +
-                "しばらくお待ちください。Please wait a few minutes to continue.\n\n" +
-                "確認が完了すると自動的に'変更を保存する'ボタンが有効になります。\n" +
-                "このプロセスが終わると、すぐにTwisterを開始できます。\n"+
-                "Tip: 今のうちにプロフィール画像を選ぼう！",
+      "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
+                "Unfortunately it is not possible to save profile\n" +
+                "or send any posts in this state.\n\n" +
+                "Please wait a few minutes to continue.\n\n" +
+                "The 'Save Changes' will be automatically enabled\n" +
+                "when the process completes. (I promise this is\n"+
+                "the last time you will have to wait before using\n" +
+                "twister).\n\n" +
+                "Tip: choose your avatar in the meantime!",
       "users_mentions": "@%{username}へのメンション",
       "users_profile": "%{username}のプロフィール",
       "username_undefined": "ログインしてください。",
