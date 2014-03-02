@@ -10,7 +10,7 @@ function initProfileEdit() {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       // Great success! All the File APIs are supported.
     } else {
-      alert('The File APIs are not fully supported in this browser.');
+      alert(polyglot.t("The File APIs are not fully supported in this browser."));
     }
     
     initInterfaceCommon();
@@ -22,7 +22,7 @@ function initProfileEdit() {
 
     initUser( function() {
         if( !defaultScreenName ) {
-            alert("Username undefined, login required.");
+            alert(polyglot.t("username_undefined"));
             $.MAL.goLogin();
             return;
         }
@@ -39,21 +39,14 @@ function initProfileEdit() {
         loadAvatarForEdit();
         loadProfileForEdit();
         
-        $(".secret-key-container").hide();
+        dumpPrivkey(defaultScreenName, function(args, key) {
+            $(".secret-key-container").hide();
+            $(".secret-key").text(key);
 
-        $(".toggle-priv-key").click(function () {
-          if ($(".secret-key-container").is(":visible")) {
-              $(".secret-key-container").fadeOut(function () {
-                $(".secret-key").text('');
-              });
-          } else {
-            dumpPrivkey(defaultScreenName, function(args, key) {
-              $(".secret-key").text(key);
-              $(".secret-key-container").fadeIn();
-            }, {});
-          }
-        });
-        
+            $(".toggle-priv-key").click(function () {
+              $(".secret-key-container").fadeToggle();
+            });
+        }, {});
     });
 }
 
@@ -103,15 +96,7 @@ function verifyUserAlreadyInBlockchain()
                         });
                     } else {
                         if( !newUserWarnDisplayed ) {
-                            alert("Other peers have not yet accepted this new user.\n" +
-                                  "Unfortunately it is not possible to save profile\n" +
-                                  "or send any posts in this state.\n\n" +
-                                  "Please wait a few minutes to continue.\n\n" +
-                                  "The 'Save Changes' will be automatically enabled\n" +
-                                  "when the process completes. (I promise this is\n"+
-                                  "the last time you will have to wait before using\n" +
-                                  "twister).\n\n" +
-                                  "Tip: choose your avatar in the meantime!");
+                            alert(polyglot.t("user_not_yet_accepted"));
                             newUserWarnDisplayed = true;
                         }
                         setTimeout("verifyUserAlreadyInBlockchain()", 5000);

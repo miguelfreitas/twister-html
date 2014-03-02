@@ -302,6 +302,9 @@ function showFollowingUsers(){
     $followingList.append($template);
 
     for( var i = 0; i < followingUsers.length; i++ ) {
+        if( followingUsers[i] == defaultScreenName )
+            continue;
+
         var resItem = $template.clone(true);
         resItem.removeAttr('id');
         resItem.show();
@@ -313,10 +316,7 @@ function showFollowingUsers(){
         resItem.find(".public-following").prop("checked",isPublicFollowing(followingUsers[i]));
         getAvatar(followingUsers[i],resItem.find(".mini-profile-photo"));
         getFullname(followingUsers[i],resItem.find(".mini-profile-name"));
-        if( followingUsers[i] == defaultScreenName ) {
-            resItem.find("button").hide();
-        }
-        
+
         resItem.appendTo($followingList);
     }
     $.MAL.followingListLoaded();

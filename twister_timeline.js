@@ -9,7 +9,6 @@
 
 
 var _idTrackerMap = {};
-var _idTrackerSpam = new idTrackerObj();
 var _lastHaveMap = {};
 var _refreshInProgress = false;
 var _newPostsPending = 0;
@@ -73,21 +72,17 @@ function idTrackerObj()
 /* object to maintain a request state for several users.
  * each user is tracked by idTrackerObj in global _idTrackerMap.
  */
-function requestObj(users, mode, count, getspam)
+function requestObj(users, mode, count)
 {
     this.users = users;
     this.mode = mode; // 'latest', 'latestFirstTime' or 'older'
     this.count = count;
-    this.getspam = getspam;
 
     // getRequest method returns the list parameter expected by getposts rpc
     this.getRequest = function() {
         var req = [];
         if( this.mode == 'done')
             return req;
-        if( this.getspam ) {
-            return _idTrackerSpam.getRequest(this.mode);
-        }
         for( var i = 0; i < this.users.length; i++ ) {
             var user = this.users[i];
             if( !(user in _idTrackerMap) )
@@ -101,9 +96,6 @@ function requestObj(users, mode, count, getspam)
 
     // receiveId method notifies that a post was received (and possibly shown)
     this.reportProcessedPost = function(user, id, shown) {
-        if( this.getspam ) {
-            _idTrackerSpam.receivedId(this.mode, id, shown);
-        }
         if( this.users.indexOf(user) >= 0 ) {
             _idTrackerMap[user].receivedId(this.mode, id, shown);
         }
@@ -123,16 +115,10 @@ function requestObj(users, mode, count, getspam)
 function requestGetposts(req)
 {
     var r = req.getRequest();
-    if( !req.getspam ) {
-        if( r.length ) {
-            twisterRpc("getposts", [req.count,r],
-                       function(req, posts) {processReceivedPosts(req, posts);}, req,
-                       function(req, ret) {console.log("ajax error:" + ret);}, req);
-        }
-    } else {
-        twisterRpc("getspamposts", [req.count,r.max_id?r.max_id:-1,r.since_id?r.since_id:-1],
-                   function(req, posts) {processReceivedPosts(req, posts);}, req,
-                   function(req, ret) {console.log("ajax error:" + ret);}, req);
+    if( r.length ) {
+        twisterRpc("getposts", [req.count,r],
+               function(req, posts) {processReceivedPosts(req, posts);}, req,
+               function(req, ret) {console.log("ajax error:" + ret);}, req);
     }
 }
 
@@ -203,14 +189,14 @@ function processReceivedPosts(req, posts)
 }
 
 // request timeline update for a given list of users
-function requestTimelineUpdate(mode, count, timelineUsers, getspam)
+function requestTimelineUpdate(mode, count, timelineUsers)
 {
     if( _refreshInProgress )
         return;
     $.MAL.postboardLoading();
     _refreshInProgress = true;
     if( timelineUsers.length ) {
-        var req = new requestObj(timelineUsers, mode, count, getspam);
+        var req = new requestObj(timelineUsers, mode, count);
         requestGetposts(req);
     } else {
         console.log("requestTimelineUpdate: not following any users");
@@ -283,7 +269,6 @@ function processNewPostsConfirmation(expected, posts)
 function timelineChangedUser()
 {
     _idTrackerMap = {};
-    _idTrackerSpam = new idTrackerObj();
     _lastHaveMap = {};
     _refreshInProgress = false;
     _newPostsPending = 0;

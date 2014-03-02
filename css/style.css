@@ -705,6 +705,8 @@ button.disabled:hover
 }
 .postboard h2.fixed
 {
+    position: fixed;
+    top: 40px;
     z-index: 2;
     border-top: solid 4px #fbf9f6;
 }
@@ -769,7 +771,7 @@ button.disabled:hover
 .postboard-posts > .post.open:after
 {
     width: 5px;
-    /*right: -5px;*/
+    right: -5px;
 }
 .post:hover,
 .post .post

@@ -194,8 +194,7 @@ function requestHashtag(postboard,hashtag,resource) {
     dhtget( hashtag, resource, "m",
            function(args, data) {
                processHashtag(args.postboard, args.hashtag, data);
-           }, {postboard:postboard,hashtag:hashtag}, 
-           [10000,2000,3]); // use extended timeout parameters (requires twister_core >= 0.9.14)
+           }, {postboard:postboard,hashtag:hashtag} );
 
 }
 
