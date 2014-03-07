@@ -89,7 +89,7 @@ function _dhtgetAbortPending(locator)
 // get data from dht resource
 // the value ["v"] is extracted from response and returned to callback
 // null is passed to callback in case of an error
-function dhtget( username, resource, multi, cbFunc, cbArg ) {
+function dhtget( username, resource, multi, cbFunc, cbArg, timeoutArgs ) {
     var locator = _dhtgetLocator(username, resource, multi);
     if( locator in _dhtgetPendingMap) {
         _dhtgetAddPending(locator, cbFunc, cbArg);
@@ -98,7 +98,7 @@ function dhtget( username, resource, multi, cbFunc, cbArg ) {
         // limit the number of simultaneous dhtgets.
         // this should leave some sockets for other non-blocking daemon requests.
         if( _dhtgetsInProgress < _maxDhtgets ) {
-            _dhtgetInternal( username, resource, multi );
+            _dhtgetInternal( username, resource, multi, timeoutArgs );
         } else {
             // just queue the locator. it will be unqueue when some dhtget completes.
             _queuedDhtgets.push(locator);
@@ -106,10 +106,14 @@ function dhtget( username, resource, multi, cbFunc, cbArg ) {
     }
 }
 
-function _dhtgetInternal( username, resource, multi ) {
+function _dhtgetInternal( username, resource, multi, timeoutArgs ) {
     var locator = _dhtgetLocator(username, resource, multi);
     _dhtgetsInProgress++;
-    twisterRpc("dhtget", [username,resource,multi],
+    argsList = [username,resource,multi];
+    if( typeof timeoutArgs !== 'undefined' ) {
+        argsList = argsList.concat(timeoutArgs);
+    }
+    twisterRpc("dhtget", argsList,
                function(args, ret) {
                    _dhtgetsInProgress--;
                    _dhtgetProcessPending(args.locator, args.multi, ret);
@@ -200,7 +204,14 @@ function getProfileResource( username, resource, item, cbFunc, cbArg ){
 function getFullname( username, item ){
     // Set the username first in case the profile has no fullname
     item.text(username);
-    getProfileResource( username, "fullname", item);
+    getProfileResource( username, "fullname", undefined, 
+                       function(args, value) {
+                           if( value ) {
+                               value.replace(/^\s+|\s+$/g, '');
+                               if( value.length )
+                                   args.item.text(value);
+                           }
+                       }, {item: item} );
 }
 
 // get bio and store it in item.text

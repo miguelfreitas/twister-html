@@ -3,6 +3,8 @@
 //
 // Specific interface functions for home.html
 
+var promotedPostsOnly = false;
+
 //***********************************************
 //******************* DECLARATIONS **************
 //***********************************************
@@ -12,8 +14,15 @@ var InterfaceFunctions = function()
     this.init = function()
     {
         $( ".wrapper .postboard-news").click(function() {
-            requestTimelineUpdate("latest",postsPerRefresh,followingUsers);});
-
+            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+        $( ".promoted-posts-only").click(function() {
+            promotedPostsOnly = !promotedPostsOnly;
+            $(this).text( promotedPostsOnly ? "Switch to Normal posts" : "Switch to Promoted posts" );
+            timelineChangedUser();
+            $.MAL.getStreamPostsParent().empty();
+            requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
+            });
+            
         initInterfaceCommon();
         initUserSearch();
         initInterfaceDirectMsg();
@@ -45,13 +54,13 @@ var InterfaceFunctions = function()
                      setInterval("requestLastHave()", 1000);
                      initMentionsCount();
                      initDMsCount();
-                     requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers);
+                     requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
 
                      // install scrollbottom handler to load more posts as needed
                      $(window).scroll(function(){
                         if  ($(window).scrollTop() >= $(document).height() - $(window).height() - 20){
                             if( timelineLoaded ) {
-                                requestTimelineUpdate("older", postsPerRefresh, followingUsers);
+                                requestTimelineUpdate("older", postsPerRefresh, followingUsers, promotedPostsOnly);
                             }
                         }
                      });
@@ -59,6 +68,24 @@ var InterfaceFunctions = function()
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
+                     
+                     twisterRpc("gettrendinghashtags", [10],
+                                function(args, ret) {
+                                    for( var i = 0; i < ret.length; i++ ) {
+                                    
+                                       var $li = $("<li>");
+                                       var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
+                                       hashtagLinkTemplate.removeAttr("id");
+                                       hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(ret[i]));
+                                       hashtagLinkTemplate.text("#"+ret[i]);
+                                       $li.append(hashtagLinkTemplate);
+                                       $(".toptrends-list").append($li);
+                                    }
+                                }, {},
+                                function(args, ret) {
+                                   console.log("Error with gettrendinghashtags. Older twister daemon?");
+                                }, {});
+                     
                      if( args.cbFunc )
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});

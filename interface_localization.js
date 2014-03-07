@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh","pt-BR"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -769,12 +769,12 @@ if(preferredLanguage == "ru"){
        "Disable": "Отключено",
        "Display mentions to @": "Показать ответы для @",
        "Display retransmissions": "Показать репосты",
-       "DNS to obtain list of peers:": "DNS адресс для получения пиров:",
+       "DNS to obtain list of peers:": "DNS адрес для получения пиров:",
        "downloading_block_chain": "Загрузка цепочки блоков, пожалуйста подождите, (Цепочка блоков устарела на %{days} дней).",
        "download_posts_status": "Загружено %{portion} постов", // Downloaded 10/30 posts
        "Enable": "Включено",
        "error": "Ошибка: %{error}",
-       "error_connecting_to_daemon": "Ошибка  к локальному демону twisterd.",
+       "error_connecting_to_daemon": "Ошибка подключения к локальному демону twisterd.",
        "Error in 'createwalletuser' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'createwalletuser'.",
        "Error in 'importprivkey'": "Ошибка при обращении к RPC - при попытке выполнить 'importprivkey' %{rpc}",
        "Error in 'sendnewusertransaction' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'sendnewusertransaction'",
@@ -792,7 +792,7 @@ if(preferredLanguage == "ru"){
        "Generate blocks (send promoted messages)": "Майнинг (отправка рекламных сообщений)",
        "Home": "Главная", // homepage
        "hours": "%{smart_count} час |||| %{smart_count} часов",
-       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутренняя ошибка: lastPostId неизвестен (Попробуйте подписаться сами на себя, это должно помоч!)",
+       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутренняя ошибка: lastPostId неизвестен (Попробуйте подписаться сами на себя, это должно помочь!)",
        "Known peers:": "Известные пиры: ",
        "Last block is ahead of your computer time, check your clock.": "Последний полученный блок опережает время вашего компьютера, проверьте правильно ли работают часы.",
        "mentions_at": "Упоминания @%{user}",
@@ -808,7 +808,7 @@ if(preferredLanguage == "ru"){
        "Not available": "Недоступно", // username is not available
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",
        "Number of CPUs to use": "Сколько использовать ядер процессора",
-       "Only alphanumeric and underscore allowed.": "Разрешены только латинские буквы и цифры.",
+       "Only alphanumeric and underscore allowed.": "Разрешены только латинские буквы, цифры и подчеркивания.",
        "peer address": "адрес пира",
        "Private": "Приватный",
        "Profile": "Профиль",
@@ -834,10 +834,10 @@ if(preferredLanguage == "ru"){
        "Sent Post to @": "Отправить сообщение для @",      
        "Setup account": "Настроить аккаунт",
        "switch_to_network": "Локальный демон не подключен к сети или\n" +
-                 "цепочка блоков устарела. Если вы останитесь на этой странице\n" +
-                 "ваши действия могут быть не выполнеными.\n" +
+                 "цепочка блоков устарела. Если вы останетесь на этой странице\n" +
+                 "ваши действия могут быть не выполнены.\n" +
                  "Не хотите перейти на страницу настройки сети?",
-       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
+       "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
        "Type message here": "Введите ваше сообщение тут",
@@ -848,14 +848,14 @@ if(preferredLanguage == "ru"){
                  "К сожалению, сейчас вы не можете редактировать ваш профиль\n" +
                  "или отправлять сообщение.\n\n" +
                  "Пожалуйста подождите пару минут.\n\n" +
-                 "Кнопка 'Сохранить' будет доступна автоматически того,\n" +
-                 "когда процес регистрации будет завершен. (Я обещаю, это\n"+
+                 "Кнопка 'Сохранить' будет доступна автоматически после того,\n" +
+                 "как процес регистрации завершится. (Я обещаю, это\n"+
                  "последний раз, когда вы ждете перед использованием\n" +
                  "twister'a).\n\n" +
                  "Хозяйке на заметку: Сейчас вы можете выбрать аватар!",
        "users_mentions": "Ответ от @%{username}",
        "users_profile": "%{username}'s профиль",
-       "username_undefined": "Имя пользователя не определено, требуеться войти.",
+       "username_undefined": "Имя пользователя не определено, требуется войти.",
        "View": "Просмотреть",
        "View All": "Просмотреть Всё",
        "Who to Follow": "Кого почитать",
@@ -870,7 +870,7 @@ if(preferredLanguage == "ru"){
        "Type nickname here": "Введите ваш ник тут",
        "Import secret key": "Импортировать секретный ключ",
        "52-characters secret": "52-значный ключ",
-       "With nickname": "С от логина",
+       "With nickname": "С логином",
        "Import key": "Импортировать ключ",
        "Client Version:": "Версия клиента:",
        "Mining difficulty:": "Сложность майнинга:",
@@ -1024,6 +1024,148 @@ if(preferredLanguage == "de"){
     };
 }
 
+// Brazilian Portuguese translation
+if(preferredLanguage == "pt-BR"){
+    polyglot.locale("pt-BR");
+    wordset = {
+      "Actions ▼": "Ações ▼",
+      "Active DHT nodes:": "Nós DHT ativos: ",
+      "Add DNS": "Adicionar DNS",
+      "Add peer": "Adicionar nó",
+      "ajax_error": "Erro Ajax: %{error}", // JavaScript error
+      "All users publicly followed by": "Todos os usuários seguidos publicamente por",
+      "Available": "Disponível", // username is available
+      "Block chain information": "Informações da Cadeia de Blocos",
+      "Block chain is up-to-date, twister is ready to use!": "Cadeida de Blocos sincronizada, Twister está pronto para utilização!",
+      "Block generation": "Geração de blocos ",
+      "Cancel": "Cancelar",
+      "Change user": "Trocar usuário",
+      "Checking...": "Verificando...", // checking if username is available
+      "Collapse": "Recolher", // smaller view of a post
+      "Configure block generation": "Configurar a geração de blocos",
+      "Connections:": "Conexões: ", // to network
+      "Connection lost.": "Conexão perdida.",
+      "days": "%{smart_count} dia |||| %{smart_count} dias",
+      "Detailed information": "Informações detalhadas",
+      "DHT network down.": "Falha na rede DHT",
+      "Direct Messages": "Mensagens Diretas",
+      "Disable": "Desabilitado",
+      "Display mentions to @": "Exibir menções a @",
+      "Display retransmissions": "Exibir retransmissões",
+      "DNS to obtain list of peers:": "DNS para obter a lista de nós:",
+      "downloading_block_chain": "Baixando a Cadeia de Blocos, por favor aguarde (A Cadeia de Blocos está %{days} dias desatualizada).",
+      "download_posts_status": "%{portion} posts baixados.", // Downloaded 10/30 posts
+      "Enable": "Habilitado",
+      "error": "Erro: %{error}",
+      "error_connecting_to_daemon": "Erro ao tentar se conectar com o Cliente do Twister.",
+      "Error in 'createwalletuser' RPC.": "Erro ao executar a RPC 'createwalletuser'.",
+      "Error in 'importprivkey'": "Erro ao executar a RPC 'importprivkey' : %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Erro ao executar a RPC 'sendnewusertransaction'",
+      "Expand": "Expandir", // larger view of a post
+      "Favorite": "Favorito",
+      "File APIs not supported in this browser.": "O gerenciamento de arquivos não é suportado neste navegador.",
+      "Follow": "Seguir",
+      "Followed by": "Seguido por",
+      "followed_by": "Seguido por %{username}",
+      "Followers": "Seguidores",
+      "Following": "Seguindo",
+      "Following users": "Usuários que sigo",
+      "Force connection to peer:": "Forçar conexão com o nó:",
+      "General information": "Informações gerais",
+      "Generate blocks (send promoted messages)": "Gerar blocos (enviar mensagens promovidas)",
+      "Home": "Início", // homepage
+      "hours": "%{smart_count} hora |||| %{smart_count} horas",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Erro interno: lastPostId desconhecido (seguir você mesmo pode corrigir este erro!)",
+      "Known peers:": "Nós (peers) conhecidos: ",
+      "Last block is ahead of your computer time, check your clock.": "O último bloco está adiantado em relação ao horário do seu computador, verifique seu relógio.",
+      "mentions_at": "Menções @%{user}",
+      "minutes": "%{smart_count} minuto |||| %{smart_count} minutos",
+      "Must be 16 characters or less.": "Deve conter 16 caracteres ou menos.", // username
+      "Network": "Rede",
+      "Network config": "Configuração de rede",
+      "Network status": "Estado da rede",
+      "New direct message...": "Nova mensagem direta...",
+      "New Post...": "Nova Postagem...",
+      "new_posts": "%{smart_count} nova postagem |||| %{smart_count} novas postagens",
+      "nobody": "nobody", // used to promote a post without attaching the user
+      "Not available": "Indisponível", // username is not available
+      "Number of blocks in block chain:": "Número de blocos na Cadeia de Blocos: ",
+      "Number of CPUs to use": "Número de CPUs a utilizar ",
+      "Only alphanumeric and underscore allowed.": "Permitido apenas caracteres alfanuméricos e underscore '_'.",
+      "peer address": "endereço do nó",
+      "Private": "Privado",
+      "Profile": "Perfil",
+      "Postboard": "Postagens",
+      "post": "Postar", // verb - button to post a message
+      "Post to promote:": "Postagem para ser promovida: ",
+      "Posts": "Postagens",
+      "propagating_nickname": "Propagando o nome de usuário %{username} para a rede...",
+      "Public": "Público",
+      "Refresh": "Atualizar",
+      "retransmit_this": "Retransmitir esta postagem para seus seguidores?",
+      "Reply": "Responder",
+      "Reply...": "Responder...",
+      "reply_to": "Responder à %{fullname}",
+      "Retransmit": "Retransmissão",
+      "Retransmits": "Retransmissões",
+      "Retransmitted by": "Retransmitido por",
+      "search": "procurar",
+      "seconds": "%{smart_count} segundo |||| %{smart_count} segundos",
+      "send": "enviar",
+      "Send post with username": "Enviar mensagem com nome de usuário",
+      "Sent Direct Message": "Mensagens Diretas enviadas",
+      "Sent Post to @": "Postagem enviada para @",
+      "Setup account": "Configurar conta",
+      "switch_to_network": "O Cliente do Twister não está conectado à rede ou\n" +
+                "a cadeia de blocos está desatualizada. Se permanecer \n" +
+                "nesta página suas ações podem não funcionar.\n" +
+                "Gostaria de verificar o Estado da Rede ao invés disso?",
+      "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
+      "time_ago": "%{time} atrás", // 5 minutes ago
+      "Time of the last block:": "Horário do último bloco: ",
+      "Type message here": "Escreva sua mensagem aqui",
+      "Unfollow": "Deixar de seguir",
+      "Update": "Atualizar",
+      "Updating status...": "Atualizando estado da Cadeia de Blocos...", // status of block chain
+      "user_not_yet_accepted": "Outros nós (peers) ainda não aceitaram este novo usuário.\n" +
+                "Infelizmente não é possível salvar o perfil\n" +
+                "ou realizar postagens neste estado.\n\n" +
+                "Por favor, aguarde alguns minutos para continuar.\n\n" +
+                "O botão 'Salvar Alterações' será habilitado automaticamente\n" +
+                "qundo o processo for completado (Eu prometo que\n"+
+                "está será a última vez que você terá que esperar\n" +
+                "antes de utilizar o Twister).\n\n" +
+                "Dica: escolha uma foto para o seu avatar enquanto espera!",
+      "users_mentions": "Mençoes de @%{username}",
+      "users_profile": "Perfil de %{username}",
+      "username_undefined": "Nome de usuário indefinido, login requerido.",
+      "View": "Visualizar",
+      "View All": "Visualizar Todos",
+      "Who to Follow": "Quem seguir",
+      "Your message was sent!": "Sua mensagem foi enviada!",
+      "twister login": "Login no Twister",
+      "Existing local users": "Usuários existentes localmente",
+      "Or...": "Ou...",
+      "Create a new user": "Crie um novo usuário",
+      "Login": "Login",
+      "Check availability": "Verificar disponibilidade",
+      "Create this nickname": "Criar este usuário",
+      "Type nickname here": "Digite o nome aqui",
+      "Import secret key": "Importe uma chave secreta",
+      "52-characters secret": "52 caracteres secretos",
+      "With nickname": "Com o nome de usuário",
+      "Import key": "Importar chave",
+      "Client Version:": "Versão do Cliente:",
+      "Mining difficulty:": "Dificulade de mineração:",
+      "Block generation status": "Estado da geração de blocos",
+      "Current hash rate:": "Taxa de 'hash' atual:",
+      "Terminate Daemon:": "Encerrar a execução do Cliente do Twister",
+      "Exit": "Sair",
+      "Save Changes": "Salvar Alterações",
+      "Secret key:": "Chave secreta:"
+    };
+}
+
 // uncomment to see all translated words replaced with filler
 //for(var word in wordset){
 //  wordset[word] = "AAAA";
@@ -1050,7 +1192,7 @@ var fixedLabels = [
   ".post-expand",
   ".post-context span",
   ".post-stats .stat-count span",
-  ".postboard h2",
+  ".postboard span",
 
   // following page
   ".following h2",
