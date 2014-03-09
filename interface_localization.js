@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh"];
+var knownLanguages = ["en","es","nl","it","fr","ru","de","zh"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -163,6 +163,146 @@ if(preferredLanguage == "en"){
       "Exit": "Exit",
       "Save Changes": "Save Changes",
       "Secret key:": "Secret key:"
+    };
+}
+if(preferredLanguage == "es"){
+    polyglot.locale("es");
+    wordset = {
+      "Actions ▼": "Acciones ▼",
+      "Active DHT nodes:": "Nodos DHT activos: ",
+      "Add DNS": "Agregar DNS",
+      "Add peer": "Agragar pares",
+      "ajax_error": "Error ajax: %{error}", // JavaScript error
+      "All users publicly followed by": "Todos los usuarios seguidos públicamente por",
+      "Available": "Available", // username is available
+      "Block chain information": "Información de la cadena de bloques",
+      "Block chain is up-to-date, twister is ready to use!": "La cadena de bloques está puesta al día, twister está listo para usar!",
+      "Block generation": "Generación de bloques ",
+      "Cancel": "Cancelar",
+      "Change user": "Cambiar de usuario",
+      "Checking...": "Comprobando ...", // checking if username is available
+      "Collapse": "Colapsar", // smaller view of a post
+      "Configure block generation": "Configure la generación de bloques",
+      "Connections:": "Conexiones: ", // to network
+      "Connection lost.": "Conexión perdida.",
+      "days": "%{smart_count} día |||| %{smart_count} días",
+      "Detailed information": "Información detallada",
+      "DHT network down.": "Red DHT caida.",
+      "Direct Messages": "Mensajes directos",
+      "Disable": "Inhabilitar",
+      "Display mentions to @": "Visualización de menciones a @",
+      "Display retransmissions": "Visualización de retransmisiones",
+      "DNS to obtain list of peers:": "DNS para obtener la lista de los pares:",
+      "downloading_block_chain": "Descarga de la cadena de bloques, por favor espere antes de continuar (la cadena de bloques esta %{days} días).",
+      "download_posts_status": "Post %{portion} descargados", // Downloaded 10/30 posts
+      "Enable": "Permitir",
+      "error": "Error: %{error}",
+      "error_connecting_to_daemon": "Error al conectar con el demonio twister local.",
+      "Error in 'createwalletuser' RPC.": "Error en RPC 'createwalletuser'.",
+      "Error in 'importprivkey'": "Error en RPC 'importprivkey': %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Error en 'sendnewusertransaction' RPC.",
+      "Expand": "Expandir", // larger view of a post
+      "Favorite": "Favorito",
+      "File APIs not supported in this browser.": "Los archivos API no compatibles con este navegador",
+      "Follow": "Seguir",
+      "Followed by": "Seguido por",
+      "followed_by": "Seguido por %{username}",
+      "Followers": "Seguidores",
+      "Following": "Siguiendo",
+      "Following users": "Siguiendo los usuarios",
+      "Force connection to peer:": "Forzar la conexión a  los pares:",
+      "General information": "Información general",
+      "Generate blocks (send promoted messages)": "Generar bloques (enviar mensajes promovidos)",
+      "Home": "Inicio", // homepage
+      "hours": "%{smart_count} hora |||| %{smart_count} horas",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Error interno: Último Mensaje Id desconocido (siguiendo a usted mismo lo puede solucionar!)",
+      "Known peers:": "Pares conocidos: ",
+      "Last block is ahead of your computer time, check your clock.": "El último bloque está por delante de su tiempo en la computadora, compruebe su reloj.",
+      "mentions_at": "Menciones @%{user}",
+      "minutes": "%{smart_count} minuto |||| %{smart_count} minutos",
+      "Must be 16 characters or less.": "Debe tener 16 caracteres o menos.", // username
+      "Network": "Red",
+      "Network config": "Configuración de la red",
+      "Network status": "Estado de la red",
+      "New direct message...": "Nuevo mensaje directo...",
+      "New Post...": "Nuevo Post...",
+      "new_posts": "%{smart_count} nuevo post |||| %{smart_count} nuevos posts",
+      "nobody": "Nadie", // used to promote a post without attaching the user
+      "Not available": "No disponible", // username is not available
+      "Number of blocks in block chain:": "Número de bloques en la cadena de bloques: ",
+      "Number of CPUs to use": "Número de CPUs para utilizar ",
+      "Only alphanumeric and underscore allowed.": "Sólo alfanuméricos y subrayados permitido.",
+      "peer address": "dirección de pares",
+      "Private": "Privado",
+      "Profile": "Perfil",
+      "Postboard": "Postboard",
+      "post": "post", // verb - button to post a message
+      "Post to promote:": "Post para promover: ",
+      "Posts": "Posts",
+      "propagating_nickname": "La propagación de seudónimo %{username} a la red...",
+      "Public": "Publicar",
+      "Refresh": "Recargar",
+      "retransmit_this": "¿Retransmitir este mensaje a tus seguidores?",
+      "Reply": "Responder",
+      "Reply...": "Responder...",
+      "reply_to": "Responder a %{fullname}",
+      "Retransmit": "Retransmicion",
+      "Retransmits": "Retransmiciones",
+      "Retransmitted by": "Retransmitido por",
+      "search": "search",
+      "seconds": "%{smart_count} segundos |||| %{smart_count} segundos",
+      "send": "send",
+      "Send post with username": "Enviar post con nombre de usuario ",
+      "Sent Direct Message": "Mensaje directo",
+      "Sent Post to @": "El Post enviado a @",
+      "Setup account": "Configuración de la cuenta",
+      "switch_to_network": "Demonio local no está conectado a la red o\n" +
+                "la cadena de bloques no está actualizada. Si te quedas en esta página\n" +
+                "tus acciones pueden no funcionar.\n" +
+                "¿Quieres comprobar la página de estado de la red en su lugar?",
+      "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
+      "time_ago": "hace %{time}", // 5 minutes ago
+      "Time of the last block:": "Hora del último bloque: ",
+      "Type message here": "Escriba el mensaje aquí",
+      "Unfollow": "Dejar de seguir",
+      "Update": "Actualizar",
+      "Updating status...": "Actualización del estado ...", // status of block chain
+      "user_not_yet_accepted": "Otros pares no han aceptado este nuevo usuario.\n" +
+                "Por desgracia, no es posible guardar el perfil\n" +
+                "o enviar ningún mensaje en este estado.\n\n" +
+                "Espera unos minutos para continuar.\n\n" +
+                "El 'Guardar cambios' se activará automáticamente\n" +
+                "cuando el proceso se complete. (Prometo esto es\n"+
+                "la última vez que tendrá que esperar antes de usar\n" +
+                "twister).\n\n" +
+                "Consejo: elija su avatar mientras tanto!",
+      "users_mentions": "Las menciones de @%{username}",
+      "users_profile": "%{username}'s Profile",
+      "username_undefined": "Usuario no definido, es necesario iniciar sesión.",
+      "View": "Ver",
+      "View All": "Ver todos",
+      "Who to Follow": "A quién seguir",
+      "Your message was sent!": "¡Tu mensaje ha sido enviado!",
+      "twister login": "twister inicio de sesión",
+      "Existing local users": "Los actuales usuarios locales",
+      "Or...": "O...",
+      "Create a new user": "Crear un nuevo usuario",
+      "Login": "Iniciar sesión",
+      "Check availability": "Consultar disponibilidad",
+      "Create this nickname": "Crear este seudónimo",
+      "Type nickname here": "Escriba seudónimo aquí",
+      "Import secret key": "Importar clave secreta",
+      "52-characters secret": "52-carácteres secretos",
+      "With nickname": "Con seudónimo",
+      "Import key": "Importar llave",
+      "Client Version:": "Versión del cliente:",
+      "Mining difficulty:": "Dificultad Minado:",
+      "Block generation status": "Estado de generación de bloques",
+      "Current hash rate:": "Tasa de hash actual:",
+      "Terminate Daemon:": "Terminar Demonio:",
+      "Exit": "Salir",
+      "Save Changes": "Guardar cambios",
+      "Secret key:": "Clave secreta:"
     };
 }
 
