@@ -134,7 +134,7 @@ function openHashtagModal(e)
     e.preventDefault();
 
     var $this = $( this );
-    var hashtag = $this.text().substring(1);
+    var hashtag = $this.text().substring(1).toLowerCase();
 
     var hashtagModalClass = "hashtag-modal";
     openModal( hashtagModalClass );

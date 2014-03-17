@@ -219,7 +219,7 @@ function htmlFormatMsg( msg, output, mentions ) {
                 if( hashtag.length ) {
                     var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
                     hashtagLinkTemplate.removeAttr("id");
-                    hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(hashtag));
+                    hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(hashtag.toLowerCase()));
                     hashtagLinkTemplate.text("#"+hashtag);
                     output.append(hashtagLinkTemplate);
                     msg = tmp.substr(String(hashtag).length);

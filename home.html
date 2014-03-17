@@ -24,6 +24,10 @@
     <script src="js/twister_directmsg.js"></script>
     <script src="js/interface_common.js"></script>
     <script src="js/interface_home.js"></script>
+    <script src="js/jquery.textcomplete.js"></script>
+    <script src="js/calm.js"></script>
+    <script src="js/options.js"></script>
+    <script>$(function(){setTimeout(mensAutocomplete, 800);})</script> <!-- calm init for autocomplete -->
 
     <link rel="icon" type="image/png" href="img/twister_mini.png" />
   </head>
@@ -270,11 +274,12 @@
     <!-- TEMPLATE INVÓLUCRO DO POST EXPANDIDO END -->
     
     <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
-    <div class="modal-blackout">
+    <div class="modal-blackout cancel">
       <div class="modal-wrapper">
         <div class="modal-header">
           <h3></h3>
           <span id="closeModal" class="modal-close cancel">&times;</span>
+          <span class="modal-back">&lt;</span>
         </div>
         <div class="modal-content"></div>
         <div class="modal-buttons">
@@ -441,6 +446,7 @@
 
   </div>
   <!-- TEMPLATES END -->
-    
+  <audio id="player"></audio>
+  <audio id="playerSec"></audio> 
   </body>
 </html>

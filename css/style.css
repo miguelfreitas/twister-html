@@ -557,7 +557,7 @@ button.disabled:hover
     display: inline-block;
     margin-top: 4px;
 }
-.post-area-new.open textarea + .post-area-extras
+.post-area-new.open > .post-area-extras
 {
     height: 35px;
     transition: all .6s linear;
@@ -1154,6 +1154,23 @@ button.disabled:hover
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
 }
+.modal-back {
+    position: absolute;
+    right: 30px;
+    top: 0;
+    padding: 3px 10px;
+    cursor: pointer;
+    color: rgba( 255, 255, 255, .7 );
+    font-weight: bold;
+    border-left: solid 1px rgba( 255, 255, 255, .3 );
+    transition: all .1s linear;
+    display: none;  
+}
+.modal-back:hover
+{
+    color: #fff;
+    background: rgba( 0, 0, 0, .1 );
+}
 .modal-buttons
 {
     padding: 10px;
@@ -1497,4 +1514,60 @@ button.disabled:hover
     right: 60px;
     left: 2px;
   }
+}
+
+/* Options */
+#playerVol {
+    float: right;
+    margin-right: 20px;
+}
+.volValue {
+    float: right;
+    margin-right: -163px;
+    font: 12px "Open Sans", sans-serif;
+}
+#notifyForm p, #choseLanguage p, #keysOpt p {
+    margin-top: 15px;
+}
+
+/* Autocomplite*/
+.textcomplete-wrapper textarea {
+    display: inline;
+}
+ul.dropdown-menu {
+    position: absolute;
+    top: 23px;
+    left: 170px;
+    z-index: 100;
+    display: block;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0, .2);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0, .2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0, .2);
+    box-shadow: 0 5px 10px rgba(0,0,0, .2);
+
+}
+ul.dropdown-menu li {
+    line-height: 20px;
+
+}
+ul.dropdown-menu > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font: 13px/20px "Open Sans", sans-serif;
+    white-space: nowrap;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
 }
