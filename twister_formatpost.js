@@ -147,6 +147,7 @@ function htmlFormatMsg( msg, output, mentions ) {
     var reHttp = new RegExp("http[s]?://");
     
     msg = escapeHtmlEntities(msg);
+    msg = msg.replace(/\n/g, '<br/>'); // preserve linefeeds
 
     while( msg != undefined && msg.length ) {
         
