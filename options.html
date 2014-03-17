@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>twister login</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jQueryPlugins.js"></script>
+    <script src="js/jquery.json-2.4.js"></script>
+    <script src="js/jquery.jsonrpcclient.js"></script>
+    <script src="js/jquery.storageapi.js"></script>
+    <script src="js/mobile_abstract.js"></script>
+    <script src="js/twister_io.js"></script>
+    <script src="js/twister_network.js"></script>
+    <script src="js/twister_user.js"></script>
+    <script src="js/interface_common.js"></script>
+    <script src="js/interface_login.js"></script>
+    <script src="js/polyglot.min.js"></script>
+    <script src="js/interface_localization.js"></script>
+    <script src="js/calm.js"></script>
+    <script src="js/options.js"></script>
+    <script>$(function(){
+      initInterfaceCommon();
+      InitOptions();})
+    </script>
+  </head>
+
+  <body>
+    
+  <!-- MENU SUPERIOR INIT --> 
+  <nav class="userMenu">
+    <ul>
+    <li class="userMenu-home"><a href="home.html"></a></li>
+    <li class="userMenu-options current"><a href="options.html">Options</a></li>
+      <li class="userMenu-config">
+        <a class="userMenu-config-dropdown" href="#">
+          <div class="config-menu dialog-modal">
+            <a class="dropdown-menu-item" href="options.html">Options</a>
+            <a class="dropdown-menu-item" href="network.html">Network config</a>
+            <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
+            <a class="dropdown-menu-item" href="following.html">Following users</a>
+            <a class="dropdown-menu-item" href="login.html">Change user</a>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="wrapper">
+
+    <div class="language">
+
+      <div class="module">
+        <p> Use language </p>
+        <div>
+            <form action="" id="choseLanguage">
+              <select name="" id="language">
+                <option value="auto">Auto</option>
+                <option value="en">English</option>
+                <option value="ru">Russian</option>
+                <option value="zh">Chinese</option>
+        				<option value="de">German</option>
+        				<option value="fr">French</option>
+        				<option value="it">Italian</option>
+        				<option value="nl">Dutch</option>
+              </select>
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="sounds">
+
+      <div class="module">
+        <p> Sound notifications </p>
+        <div>
+            <form action="" id="notifyForm">
+              <p>Mentions</p>
+              <select name="" id="sndMention" class="sndOpt">
+                <option value="false">none</option>
+                <option value="1">beat</option>
+                <option value="2">pip</option>
+                <option value="3">vibro</option>
+                <option value="4">flip</option>
+                <option value="5">click</option>
+              </select><br>
+              <p>Direct Messages</p>
+              <select name="" id="sndDM" class="sndOpt">
+                <option value="false">none</option>
+                <option value="1">beat</option>
+                <option value="2">pip</option>
+                <option value="3">vibro</option>
+                <option value="4">flip</option>
+                <option value="5">click</option>
+              </select>
+              <input type="range" name="playerVol" id="playerVol" min="0" max="1" step="0.01"><span class="volValue">0</span>
+            </form>
+            <audio id="player"></audio>
+        </div>
+      </div>
+    </div>
+
+      <div class="keys">
+        <div class="module">
+          <p> Keys </p>
+          <div>
+              <form action="" id="keysOpt">
+                <p>Send key</p>
+                <select name="" id="keysSend">
+                  <option value="1">Enter</option>
+                  <option value="2">Ctrl/Cmd+Enter</option>
+                </select>
+              </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  </body>
+</html>

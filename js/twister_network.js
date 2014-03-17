@@ -30,6 +30,7 @@ function requestNetInfo(cbFunc, cbArg) {
                    $(".known-peers").text(twisterdAddrman);
                    $(".blocks").text(twisterdBlocks);
                    $(".dht-nodes").text(twisterDhtNodes);
+                   $(".userMenu-dhtindicator a").text(twisterDhtNodes);
                    $(".version").text(twisterDisplayVersion);
 
                    if( !twisterdConnections ) {
