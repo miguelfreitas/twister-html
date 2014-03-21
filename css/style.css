@@ -1372,6 +1372,7 @@ button.disabled:hover
 .following-modal .modal-content
 {
     padding: 15px;
+    height: 400px;
     overflow-y: auto;
 }
 .following-modal .modal-buttons
