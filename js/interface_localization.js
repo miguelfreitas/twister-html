@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","es","nl","it","fr","ru","de","zh","ja","pt-BR"];
+var knownLanguages = ["en","es","nl","it","fr","ru","de","zh","ja","pt-BR","tr"];
 
 if(!localStorage['locLang'] || localStorage['locLang'] == 'auto'){
   if(!localStorage['locLang']) localStorage['locLang'] = 'auto';
@@ -1451,6 +1451,146 @@ if(preferredLanguage == "pt-BR"){
       "Save Changes": "Salvar Alterações",
       "Secret Key": "Chave Secreta", // não existia
       "Secret key:": "Chave secreta:"
+    };
+}
+
+if(preferredLanguage == "tr"){
+    polyglot.locale("tr");
+    wordset = {
+      "Actions ▼": "Eylemler ▼",
+      "Active DHT nodes:": "Aktif DHT düğümleri: ",
+      "Add DNS": "DNS ekle",
+      "Add peer": "Eş ekle",
+      "ajax_error": "Ajax hatası: %{error}", // JavaScript error
+      "All users publicly followed by": "Açık olarak takip edilen tüm kullanıcılar",
+      "Available": "Kullanılabilir", // username is available
+      "Block chain information": "Blok zincir bilgisi",
+      "Block chain is up-to-date, twister is ready to use!": "Blok zinciri güncel, twister kullanıma hazır!",
+      "Block generation": "Blok üretimi ",
+      "Cancel": "İptal",
+      "Change user": "Kullanıcı değiştir",
+      "Checking...": "Denetleniyor...", // checking if username is available
+      "Collapse": "Daralt", // smaller view of a post
+      "Configure block generation": "Blok üretim ayarları",
+      "Connections:": "Bağlantılar: ", // to network
+      "Connection lost.": "Bağlantı koptu.",
+      "days": "%{smart_count} gün |||| %{smart_count} gün",
+      "Detailed information": "Detaylı bilgi",
+      "DHT network down.": "DHT ağı çalışmıyor.",
+      "Direct Messages": "Direk Mesajlar",
+      "Disable": "Kullanılmaz",
+      "Display mentions to @": "@ 'dan bahsedilen twistler",
+      "Display retransmissions": "Tekrar iltimleri göster",
+      "DNS to obtain list of peers:": "Eş listesini almak için DNS:",
+      "downloading_block_chain": "Blok zinciri indiriliyor, devam edebilmek için lütfen bekleyiniz (blok zinciri %{days} günlük).",
+      "download_posts_status": "Göderilerin indirilme oranı: %{portion}", // Downloaded 10/30 posts
+      "Enable": "Kullanılabilir",
+      "error": "Hata: %{error}",
+      "error_connecting_to_daemon": "Yerel twister servisine bağlanma hatası.",
+      "Error in 'createwalletuser' RPC.": "'createwalletuser' RPC'de (Uzak Yordam Çağrısında) hata.",
+      "Error in 'importprivkey'": "'importprivkey' RPC'de (Uzak Yordam Çağrısında) hata: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "'sendnewusertransaction' RPC'de (Uzak Yordam Çağrısında) hata.",
+      "Expand": "Genişlet", // larger view of a post
+      "Favorite": "Favori",
+      "File APIs not supported in this browser.": "Tarayıcınızda dosya API'si desteklenmiyor.",
+      "Follow": "Takip et",
+      "Followed by": "Takip edenler",
+      "followed_by": "%{username} tarafından takip edilenler",
+      "Followers": "Takipçiler",
+      "Following": "Takip edilenler",
+      "Following users": "Takip edilen kullanıcılar",
+      "Force connection to peer:": "Bağlantı için zorlanacak eş:",
+      "General information": "Genel bilgi",
+      "Generate blocks (send promoted messages)": "Blok oluştur (destekli mesaj gönder)",
+      "Home": "Anasayfa", // homepage
+      "hours": "%{smart_count} saat |||| %{smart_count} saat",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Dahili hata: lastPostId bilinmiyor (kendinizi takip etmek bu sorunu giderebilir!)",
+      "Known peers:": "Bilinen eşler: ",
+      "Last block is ahead of your computer time, check your clock.": "Son blok zamanı sistem saatinden daha ileride, saatinizi kontrol ediniz.",
+      "mentions_at": "@%{user} kullanıcısından bahsedenler",
+      "minutes": "%{smart_count} dakika |||| %{smart_count} dakika",
+      "Must be 16 characters or less.": "16 karakterden daha uzun olamaz.", // username
+      "Network": "Ağ",
+      "Network config": "Ağ ayarları",
+      "Network status": "Ağ durumu",
+      "New direct message...": "Yeni direk mesaj...",
+      "New Post...": "Yeni gönderi...",
+      "new_posts": "%{smart_count} yeni gönederi |||| %{smart_count} yeni gönderi",
+      "nobody": "hiçkimse", // used to promote a post without attaching the user
+      "Not available": "Kullanılamaz", // username is not available
+      "Number of blocks in block chain:": "Blok zincirindeki blok sayısı: ",
+      "Number of CPUs to use": "Kullanılacak CPU sayısı ",
+      "Only alphanumeric and underscore allowed.": "Sadece harf ve alt çizgi kullanılabilir.",
+      "peer address": "eş adresi",
+      "Private": "Özel",
+      "Profile": "Profil",
+      "Postboard": "Gönderiler",
+      "post": "gönder", // verb - button to post a message
+      "Post to promote:": "Desteklenecek gönderi: ",
+      "Posts": "Gönderiler",
+      "propagating_nickname": "%{username} kullanıcı adı ağda yayımlanıyor...",
+      "Public": "Genel",
+      "Refresh": "Yenile",
+      "retransmit_this": "Bu gönderi, takipçilerine takrar iletilsin mi?",
+      "Reply": "Cevapla",
+      "Reply...": "Cevapla...",
+      "reply_to": "%{fullname} kullancısını cevapla",
+      "Retransmit": "Tekar ilet",
+      "Retransmits": "Tekrar iletenler",
+      "Retransmitted by": "Tekrar ileten",
+      "search": "ara",
+      "seconds": "%{smart_count} saniye |||| %{smart_count} saniye",
+      "send": "gönder",
+      "Send post with username": "İletiyi kullanıcı adıyla gönder ",
+      "Sent Direct Message": "Gönderilen Direk Mesaj",
+      "Sent Post to @": "Kullanıcıya gönder @",
+      "Setup account": "Hesap ayarları",
+      "switch_to_network": "Yerel servis ağa bağlı değil ya da\n" +
+                "blok zinciri güncel değil. Eğer bu sayfada kalırsanız\n" +
+                "eylemlerinizi işlemeyebilir.\n" +
+                "Bunun yerine Ağ Durumu sayfasını kontrol etmek ister misiniz?",
+      "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
+      "time_ago": "%{time} önce", // 5 minutes ago
+      "Time of the last block:": "Son blok saati: ",
+      "Type message here": "Mesajı buraya yazınız",
+      "Unfollow": "Takibi bırak",
+      "Update": "Güncelle",
+      "Updating status...": "Durum güncelleniyor...", // status of block chain
+      "user_not_yet_accepted": "Diğer eşler bu yeni kullanıcıyı henüz kabul etmediler.\n" +
+                "Malesef profili kaydetmek ya da bu durumda\n" +
+                "ileti gönedermek mümkün değil.\n\n" +
+                "Lütfen devam etmek için bir kaç dakika bekleyin.\n\n" +
+                "İşlem tamamlandığında 'Değişiklikleri Kaydet'\n" +
+                "kediliğinden kullanılabilir olacaktır. (Twister'ı kullanmak için\n"+
+                "bu son bekleyişiniz olduğu konusunda size teminat veriyorum).\n\n" +
+                "İpucu: beklerken profil resminizi seçiniz!",
+      "users_mentions": "@%{username} kullanıcısından bahsedenler",
+      "users_profile": "%{username} kullanıcısının Profili",
+      "username_undefined": "Kullanıcı adı belirsiz, giriş gerekli.",
+      "View": "Göster",
+      "View All": "Hepsini Göster",
+      "Who to Follow": "Kimi takip etmeli",
+      "Your message was sent!": "Mesajınız gönderildi!",
+      "twister login": "twister girişi",
+      "Existing local users": "Var olan yerel kullanıcılar",
+      "Or...": "Ya da...",
+      "Create a new user": "Yeni bir kullanıcı oluştur",
+      "Login": "Giriş",
+      "Check availability": "Kullanılabilirliliği denetle",
+      "Create this nickname": "Bu takma ismi oluştur",
+      "Type nickname here": "Takma ismi buraya yazınınız",
+      "Import secret key": "Gizli anahtarı içeri aktar",
+      "52-characters secret": "52-karakterli gizli anahtar",
+      "With nickname": "Takma ismi kullanarak",
+      "Import key": "Anahtarı içe aktar",
+      "Client Version:": "İstemci versiyonu:",
+      "Mining difficulty:": "Madencilik zorluğu:",
+      "Block generation status": "Block oluşturma durumu",
+      "Current hash rate:": "Geçerli özet oranı:",
+      "Terminate Daemon:": "Servisi Durdur:",
+      "Exit": "Çıkış",
+      "Save Changes": "Değişiklikleri Kaydet",
+      "Secret key:": "Gizli anahtar:"
     };
 }
 
