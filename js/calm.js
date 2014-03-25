@@ -85,8 +85,8 @@ function changeStyle() {
 		$(".userMenu-dhtindicator").hide();
 	}else 
 	{
-		style = 'css/calm/style.css';
-		profile = 'css/calm/profile.css';
+		style = 'theme_calm/css/style.css';
+		profile = 'theme_calm/css/profile.css';
 		menu = '.calm_menu';
 	}
 	$('#stylecss').attr('href', style);
