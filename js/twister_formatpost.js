@@ -157,7 +157,7 @@ function htmlFormatMsg( msg, output, mentions ) {
         if( match ) {
             index = (match[0] === match[1]) ? match.index : match.index + 1;
             if( match[1] == "@" ) {
-                output.append(msg.substr(0, index));
+                output.append(_formatText(msg.substr(0, index)));
                 tmp = msg.substr(index+1);
                 var username = _extractUsername(tmp);
                 if( username.length ) {
@@ -177,27 +177,28 @@ function htmlFormatMsg( msg, output, mentions ) {
             }
     
             if( reHttp.exec(match[1]) ) {
-                output.append(msg.substr(0, index));
+                output.append(_formatText(msg.substr(0, index)));
                 tmp = msg.substring(index);
-                var space = tmp.indexOf(" ");
+                var space = tmp.search(/[ \n\t]/);
                 var url;
                 if( space != -1 ) url = tmp.substring(0,space); else url = tmp;
                 if( url.length ) {
+                    msg = tmp.substr(String(url).length);
+                    url = url.replace('&amp;', '&');
                     var extLinkTemplate = $("#external-page-link-template").clone(true);
                     extLinkTemplate.removeAttr("id");
                     extLinkTemplate.attr("href",url);
                     extLinkTemplate.text(url);
                     extLinkTemplate.attr("title",url);
                     output.append(extLinkTemplate);
-                    msg = tmp.substr(String(url).length);
                     continue;
                 }
             }
 
             if( reEmail.exec(match[1]) ) {
-                output.append(msg.substr(0, index));
+                output.append(_formatText(msg.substr(0, index)));
                 tmp = msg.substring(index);
-                var space = tmp.indexOf(" ");
+                var space = tmp.search(/[ \n\t]/);
                 var email;
                 if( space != -1 ) email = tmp.substring(0,space); else email = tmp;
                 if( email.length ) {
@@ -213,13 +214,18 @@ function htmlFormatMsg( msg, output, mentions ) {
             }
     
             if( match[1] == "#" ) {
-                output.append(msg.substr(0, index));
+                output.append(_formatText(msg.substr(0, index)));
                 tmp = msg.substr(index+1);
                 var hashtag = _extractHashtag(tmp);
                 if( hashtag.length ) {
+                    var hashtag_lc='';
+                    for( var i = 0; i < hashtag.length; i++ ) {
+                        var c = hashtag[i];
+                        hashtag_lc += (c >= 'A' && c <= 'Z') ? c.toLowerCase() : c;
+                    }
                     var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
                     hashtagLinkTemplate.removeAttr("id");
-                    hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(hashtag.toLowerCase()));
+                    hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(hashtag_lc));
                     hashtagLinkTemplate.text("#"+hashtag);
                     output.append(hashtagLinkTemplate);
                     msg = tmp.substr(String(hashtag).length);
@@ -231,12 +237,21 @@ function htmlFormatMsg( msg, output, mentions ) {
             }
         }
 
-        output.append(msg);
+        output.append(_formatText(msg));
         msg = "";
     }
 }
 
 // internal function for htmlFormatMsg
+function _formatText(msg)
+{
+    // TODO: add options for emotions and linefeeds
+    //msg = $.emotions(msg);
+    if( $.Options.getLineFeedsOpt() == "enable" )
+        msg = msg.replace(/\n/g, '<br />');
+    return msg;
+}
+
 function _extractUsername(s) {
     var username = "";
     for( var i = 0; i < s.length; i++ ) {
@@ -267,6 +282,6 @@ function _extractHashtag(s) {
 }
 
 function escapeHtmlEntities(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+    return str.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&apos;');
 }
 

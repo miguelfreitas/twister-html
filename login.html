@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8"/>
     <title>twister login</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link id="stylecss" rel="stylesheet" href="css/style.css" type="text/css"/>
     <script src="js/jquery.min.js"></script>
     <script src="js/jQueryPlugins.js"></script>
     <script src="js/jquery.json-2.4.js"></script>
     <script src="js/jquery.jsonrpcclient.js"></script>
     <script src="js/jquery.storageapi.js"></script>
+    <script src="js/options.js"></script>
     <script src="js/mobile_abstract.js"></script>
     <script src="js/twister_io.js"></script>
     <script src="js/twister_network.js"></script>
@@ -17,12 +18,14 @@
     <script src="js/interface_login.js"></script>
     <script src="js/polyglot.min.js"></script>
     <script src="js/interface_localization.js"></script>
+    <script src="js/calm.js"></script>
 
     <script>
         $(document).ready(function()
         {
            initInterfaceLogin();
         });
+        changeStyle();
     </script>
 
     <link rel="icon" type="image/png" href="img/twister_mini.png" />
@@ -53,7 +56,7 @@
       <h2> twister login </h2>
 
       <div class="module">
-        <span> Existing local users </span>
+        <p> Existing local users </p>
         <div>
             <select class="local-usernames login-user">
             </select>
@@ -61,10 +64,10 @@
         </div>
       </div>
 
-      <span> Or... </span>
+     <!--  <span> Or... </span> -->
 
       <div class="module">
-        <span> Create a new user </span>
+        <p> Create a new user </p>
         <div>
             <input class="new-username" type="textbox" placeholder="Type nickname here" cols="16" rows="1"></input>
             <button class="check-availability">Check availability</button>
@@ -75,15 +78,15 @@
         </div>
       </div>
 
-      <span> Or... </span>
+      <!-- <span> Or... </span> -->
 
       <div class="module">
         <div>
-            <span> Import secret key </span>
+            <p> Import secret key </p>
             <input class="secret-key-import" type="textbox" placeholder="52-characters secret" size="52" rows="1"></input>
         </div>
         <div>
-            <span> With nickname </span>
+            <p class="with-nickname"> With nickname </p>
             <input class="username-import" type="textbox" placeholder="Type nickname here" size="16" rows="1"></input>
         </div>
         <div>

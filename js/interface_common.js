@@ -30,7 +30,7 @@ function openModal( modalClass )
 
 //fecha o modal removendo o conteúdo por detach
 function closeModal($this)
-{
+{   
     var $body = $( "body" );
     var $modalWindows = $( "body" ).children( ".modal-blackout" );
 
@@ -93,7 +93,6 @@ function newProfileModal(username) {
     var profileModalContent = $( "#profile-modal-template" ).children().clone(true);
 
     updateProfileData(profileModalContent, username);
-
     return profileModalContent;
 }
 
@@ -113,6 +112,17 @@ function openProfileModal(e)
 
     //título do modal
     $( "."+profileModalClass + " h3" ).text( polyglot.t("users_profile", { username: username }) );
+    
+    //hed//add dinamic follow button in profile modal window
+    if(followingUsers.indexOf(username) != -1){
+        $('.profile-card button.followButton').first().removeClass('follow').addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
+            unfollow(username);
+        });
+    };
+    $mc = $('.modal-content');
+    $mch = parseInt($('.modal-content').css('height'));//
+    $pch = parseInt($('.profile-card').css('height'));//
+    $mc.css('height', $mch - ($pch + Math.floor($mch/50)));//hed//fix .modal-content height
 }
 
 function newHashtagModal(hashtag) {
@@ -386,14 +396,20 @@ function replyTextKeypress(e) {
             $.MAL.disableButton(tweetAction);
         }
 
-        if (e.keyCode === 13) {
-            if (!e.ctrlKey) {
+        if( $.Options.keyEnterToSend() && $('.dropdown-menu').css('display') == 'none'){
+            if (e.keyCode === 13 && (!e.metaKey && !e.ctrlKey)) {
+                $this.val($this.val().trim());
+                if( !tweetAction.hasClass("disabled")) {
+                    tweetAction.click();
+                }
+            }
+        }else if( !$.Options.keyEnterToSend() ){
+            if (e.keyCode === 13 && (e.metaKey || e.ctrlKey)) {
+                
                 $this.val($this.val().trim());
                 if( !tweetAction.hasClass("disabled") ) {
                     tweetAction.click();
                 }
-            } else {
-                $this.val($this.val() + "\r");
             }
         }
     }
@@ -411,7 +427,7 @@ var postSubmit = function(e)
     if (!$postOrig.length) {
         $postOrig = $this.closest(".modal-content").find(".post-data");
     }
-
+    
     newPostMsg($replyText.val(), $postOrig);
 
     $replyText.val("");
@@ -421,6 +437,10 @@ var postSubmit = function(e)
     remainingCount.text(140);
     $replyText.attr("placeholder", "Your message was sent!");
     closeModal($this);
+    if($this.closest('.post-area,.post-reply-content')){
+        $('.post-area-new').removeClass('open').find('textarea').blur();
+    };
+    setTimeout('requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly)', 1000);
 }
 
 
@@ -440,13 +460,15 @@ var retweetSubmit = function(e)
 
 
 function initInterfaceCommon() {
-    $( "body" ).on( "click", ".cancel" , function() { closeModal($(this)); } );
+    $( "body" ).on( "click", function(event) { 
+        if($(event.target).hasClass('cancel')) closeModal($(this));
+    });
     $( ".post-reply" ).bind( "click", postReplyClick );
     $( ".post-propagate" ).bind( "click", reTwistPopup );
     $( ".userMenu-config-dropdown" ).bind( "click", dropDownMenu );
     $( ".config-menu" ).clickoutside( closeThis );
     $( ".module.post" ).bind( "click", function(e) {
-        postExpandFunction(e,$(this)); });
+        if(window.getSelection() == 0)postExpandFunction(e,$(this)); });
     $( ".post-area-new" ).bind( "click", function(e) {
         composeNewPost(e,$(this));} );
     $( ".post-area-new" ).clickoutside( unfocusThis );
@@ -454,10 +476,11 @@ function initInterfaceCommon() {
     $( ".modal-propagate").click( retweetSubmit );
 
     var $replyText = $( ".post-area-new textarea" );
-    $replyText.keyup( replyTextKeypress );
+    $replyText.on("keyup", replyTextKeypress );
 
     $( ".open-profile-modal").bind( "click", openProfileModal );
     $( ".open-hashtag-modal").bind( "click", openHashtagModal );
     $( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
+
 }

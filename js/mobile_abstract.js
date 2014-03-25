@@ -350,6 +350,21 @@ var MAL = function()
             window.location.href = "home.html";
         }
     }
+    
+    this.soundNotifyMentions = function() {
+         if( $.hasOwnProperty("mobile") ) {
+         } else {
+             $.Options.mensNotif();
+         }
+    }
+
+    this.soundNotifyDM = function() {
+         if( $.hasOwnProperty("mobile") ) {
+         } else {
+             $.Options.DMsNotif();
+         }
+    }
+
 }
 
 jQuery.MAL = new MAL;

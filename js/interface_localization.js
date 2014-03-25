@@ -6,8 +6,7 @@
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
 var knownLanguages = ["en","es","nl","it","fr","ru","de","zh","ja","pt-BR","tr"];
 
-if(!localStorage['locLang'] || localStorage['locLang'] == 'auto'){
-  if(!localStorage['locLang']) localStorage['locLang'] = 'auto';
+if( $.Options.getOption('locLang','auto') == 'auto'){
   // detect language with JavaScript
   preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
   if(knownLanguages.indexOf(preferredLanguage) > -1){
@@ -23,7 +22,7 @@ if(!localStorage['locLang'] || localStorage['locLang'] == 'auto'){
     preferredLanguage = "en";
   }
 }else{
-  preferredLanguage = localStorage['locLang'];
+  preferredLanguage = $.Options.getOption('locLang','en');
 }
 // set up Polyglot
 polyglot = new Polyglot();

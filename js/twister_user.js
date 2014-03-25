@@ -171,7 +171,7 @@ function sendNewUserTransaction(username, cbFunc) {
 
 function importSecretKeypress() {
     var secretKey = $(".secret-key-import").val();
-    var username = $(".username-import").val();
+    var username = $(".username-import").val().toLowerCase();
     var $importButton = $(".import-secret-key");
 
     if( secretKey.length == 52 && username.length ) {

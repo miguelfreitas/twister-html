@@ -120,6 +120,7 @@ function directMessagesPopup()
     $( ".directMessages h3" ).text( polyglot.t("Direct Messages") );
 
     requestDMsnippetList($(".directMessages").find(".direct-messages-list"));
+    $('.modal-back').css('display','inline');
 }
 
 
