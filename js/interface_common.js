@@ -119,10 +119,6 @@ function openProfileModal(e)
             unfollow(username);
         });
     };
-    $mc = $('.modal-content');
-    $mch = parseInt($('.modal-content').css('height'));//
-    $pch = parseInt($('.profile-card').css('height'));//
-    $mc.css('height', $mch - ($pch + Math.floor($mch/50)));//hed//fix .modal-content height
 }
 
 function newHashtagModal(hashtag) {
