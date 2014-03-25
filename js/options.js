@@ -89,7 +89,7 @@ var TwisterOptions = function()
     }
 
     this.keysSend = function() {
-        $('#keysOpt select')[0].value = $.Options.getOption('keysSend',"enter");
+        $('#keysOpt select')[0].value = $.Options.getOption('keysSend',"ctrlenter");
 
         $('#keysOpt select').on('change', function(){
             $.Options.setOption(this.id, this.value);
