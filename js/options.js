@@ -88,8 +88,9 @@ var TwisterOptions = function()
         player[0].play();
     }
 
+    this.keysSendDefault = "ctrlenter";
     this.keysSend = function() {
-        $('#keysOpt select')[0].value = $.Options.getOption('keysSend',"ctrlenter");
+        $('#keysOpt select')[0].value = $.Options.getOption('keysSend',this.keysSendDefault);
 
         $('#keysOpt select').on('change', function(){
             $.Options.setOption(this.id, this.value);
@@ -97,7 +98,7 @@ var TwisterOptions = function()
     }
     
     this.keyEnterToSend = function() {
-        return $.Options.getOption('keysSend',"enter") == "enter";
+        return $.Options.getOption('keysSend',this.keysSendDefault) == "enter";
     }
 
     this.setLang = function() {
