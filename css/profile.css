@@ -169,6 +169,12 @@
     padding: 3px;
     height: 90%;
 }
+.profile-modal .profile-bio,
+.profile-modal .profile-contact
+{
+   min-height: 27px;
+   overflow-y: visible;
+}
 .profile-modal .profile-data
 {
     display: inline-block;
