@@ -4,7 +4,7 @@
 // uses Polyglot.js ( https://github.com/airbnb/polyglot.js ) to translate interface
 
 // translators: add your language code here such as "es" for Spanish, "ru" for Russian
-var knownLanguages = ["en","nl","it","fr","ru","de","zh","ja"];
+var knownLanguages = ["en","nl","it","fr","ru","de","zh","ja","uk"];
 
 // detect language with JavaScript
 var preferredLanguage = window.navigator.userLanguage || window.navigator.language || "en";
@@ -163,6 +163,147 @@ if(preferredLanguage == "en"){
       "Exit": "Exit",
       "Save Changes": "Save Changes",
       "Secret key:": "Secret key:"
+    };
+}
+
+if(preferredLanguage == "uk"){
+    polyglot.locale("uk");
+    wordset = {
+      "Actions ▼": "Дії ▼",
+      "Active DHT nodes:": "Активних вузлів DHT: ",
+      "Add DNS": "Додати DNS",
+      "Add peer": "Додати пір",
+      "ajax_error": "Помилка Ajax: %{error}", // JavaScript error
+      "All users publicly followed by": "Усі публічні користувачі яких читають",
+      "Available": "Доступний", // username is available
+      "Block chain information": "Інформація про ланцюжок блоків",
+      "Block chain is up-to-date, twister is ready to use!": "Ланцюг блоків оновлено, twister готовий до використання!",
+      "Block generation": "Генерація блоку ",
+      "Cancel": "Відміна",
+      "Change user": "Змінити користувача",
+      "Checking...": "Перевірка...", // checking if username is available
+      "Collapse": "Згорнути", // smaller view of a post
+      "Configure block generation": "Налаштувати генерацію блоку",
+      "Connections:": "З’єднання: ", // to network
+      "Connection lost.": "З’єднання втрачеон.",
+      "days": "%{smart_count} день |||| %{smart_count} днів",
+      "Detailed information": "Детальна інформація",
+      "DHT network down.": "Мережа DHT недоступна.",
+      "Direct Messages": "Особисті повідомлення",
+      "Disable": "Відключено",
+      "Display mentions to @": "Показати згадування @",
+      "Display retransmissions": "Показати пересилання",
+      "DNS to obtain list of peers:": "DNS для отримання пірів:",
+      "dns address": "адреса dns",
+      "downloading_block_chain": "Завантаження ланцюга блоків, будьласка, зачекайте перед продовженням (ланцюг блоків віком %{days} днів).",
+      "download_posts_status": "Завантажено %{portion} повідомлень", // Downloaded 10/30 posts
+      "Enable": "Включено",
+      "error": "Помилка: %{error}",
+      "error_connecting_to_daemon": "Помилка з’єднання з локальним сервером twister.",
+      "Error in 'createwalletuser' RPC.": "Помилка у 'createwalletuser' RPC.",
+      "Error in 'importprivkey'": "Помилка у 'importprivkey' RPC: %{rpc}",
+      "Error in 'sendnewusertransaction' RPC.": "Помилка у 'sendnewusertransaction' RPC.",
+      "Expand": "Розгорнути", // larger view of a post
+      "Favorite": "Улюблені",
+      "File APIs not supported in this browser.": "File APIs не підтримуєтся цим браузером.",
+      "Follow": "Підписатись",
+      "Followed by": "Підписаний на",
+      "followed_by": "%{username} підписан",
+      "Followers": "Читачі",
+      "Following": "Читаємі",
+      "Following users": "Підписані користувачі",
+      "Force connection to peer:": "Примусове з’єднання з піром:",
+      "General information": "Загальна інформація",
+      "Generate blocks (send promoted messages)": "Генерація блоків (відправка рекламних повідомень)",
+      "Home": "Головна", // homepage
+      "hours": "%{smart_count} година |||| %{smart_count} годин",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "Внутрішня помилка: lastPostId невизначено (підписка на себе може виправити!)",
+      "Known peers:": "Відомі піри: ",
+      "Last block is ahead of your computer time, check your clock.": "Останній блок датований майбутнім часом, перевірте свій годинник.",
+      "mentions_at": "Згадування @%{user}",
+      "minutes": "%{smart_count} хвилина |||| %{smart_count} хвилин",
+      "Must be 16 characters or less.": "Повинно бути не більше 16 символів.", // username
+      "Network": "Мережа",
+      "Network config": "Налаштування мережі",
+      "Network status": "Статус мережі",
+      "New direct message...": "Нове особисте повідомлення...",
+      "New Post...": "Нове повідомлення...",
+      "new_posts": "%{smart_count} нове повідомлення |||| %{smart_count} нових повідомлень",
+      "nobody": "nobody", // used to promote a post without attaching the user
+      "Not available": "Не доступне", // username is not available
+      "Number of blocks in block chain:": "Кількість блоків у ланцюгу: ",
+      "Number of CPUs to use": "Кількість CPUs до використання ",
+      "Only alphanumeric and underscore allowed.": "Тільки літеро-численні сиволи та нижнє підкреслення дозволені.",
+      "peer address": "адреса піру",
+      "Private": "Особистий",
+      "Profile": "Проіфль",
+      "Postboard": "Стрічка оновлень",
+      "post": "відістати", // verb - button to post a message
+      "Post to promote:": "Рекламне повідомлення: ",
+      "Posts": "Повідомлення",
+      "propagating_nickname": "Поширення інформації шо до %{username} у мережі...",
+      "Public": "Публічний",
+      "Refresh": "Оновити",
+      "retransmit_this": "Переслати це повідомлення читачам?",
+      "Reply": "Відповісти",
+      "Reply...": "Відповісти...",
+      "reply_to": "Відповісти %{fullname}",
+      "Retransmit": "Переслати",
+      "Retransmits": "Пересилання",
+      "Retransmitted by": "Переслано ",
+      "search": "пошук",
+      "seconds": "%{smart_count} секунда |||| %{smart_count} секунд",
+      "send": "відіслати",
+      "Send post with username": "Відіслати повідомлення з ім’ям ",
+      "Sent Direct Message": "Відіслати особисте повідомлення",
+      "Sent Post to @": "Відіслати повідомлення @",
+      "Setup account": "Налаштувати акаунт",
+      "switch_to_network": "Локальний сервер не підєднаний до мережі або \n" +
+                "ланцюг блоків не актуальний. Якщо ви залишитесь на цій сторінці\n" +
+                "ваші дії можуть не спрацювати.\n" +
+                "Чи бажаєта ви перевірити сторінку зі статусом мережі?",
+      "The File APIs are not fully supported in this browser.": "File APIs не повністью підтримуєтся браузером.",
+      "time_ago": "%{time} тому", // 5 minutes ago
+      "Time of the last block:": "Час останнього блоку: ",
+      "Type message here": "Напишіть повідомлення тут",
+      "Unfollow": "Відписатись",
+      "Update": "Оновити",
+      "Updating status...": "Оновлення статусу...", // status of block chain
+      "user_not_yet_accepted": "Інші піри ще не прийняли цього користувача.\n" +
+                "Нажаль, у цьому стані не можливо зберегти профіль\n" +
+                "або послати якісь повідомлення.\n\n" +
+                "Будьласка, зачекайте декілька хвилин для продовження.\n\n" +
+                "Кнопка 'Зберегти зміни' стане доступною автоматично,\n" +
+                "коли цей процес завершится. (Я обіцяю, це останній раз,\n"+
+                "коли ви змушені чекати перед використанням twister).\n\n" +
+                "Підказка: тим часом ви можете вибрати аватар!",
+      "users_mentions": "Згадування @%{username}",
+      "users_profile": "Профіль %{username}",
+      "username_undefined": "Користувач невизначений, потрібен логін.",
+      "View": "Дивитись",
+      "View All": "Дивитись все",
+      "Who to Follow": "Кого читати",
+      "Your message was sent!": "Ваше повідомлення відправлене!",
+      "twister login": "Вхід до twister",
+      "Existing local users": "Вже зареєстровані",
+      "Or...": "Або...",
+      "Create a new user": "Створити нового користувача",
+      "Login": "Увійти",
+      "Check availability": "Перевірити доступність",
+      "Create this nickname": "Створити цей нік",
+      "Type nickname here": "Напишіть нік тут",
+      "Import secret key": "Імпортувати секретний ключ",
+      "52-characters secret": "52-символьний ключ",
+      "With nickname": "З ніком",
+      "Import key": "Імпортувати",
+      "Client Version:": "Версія клієнту:",
+      "Mining difficulty:": "Складність майнінгу:",
+      "Block generation status": "Статус генерації блоків",
+      "Current hash rate:": "Поточна швидкість хешування:",
+      "Terminate Daemon:": "Зупинити twister:",
+      "Exit": "Вихід",
+      "Save Changes": "Зберегти зміни",
+      "Secret key:": "Секретний ключ:"
     };
 }
 
