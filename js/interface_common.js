@@ -308,14 +308,17 @@ var postExpandFunction = function( e, postLi )
 
         $postExpandedContent.slideDown( "fast" );
         
-        var previewContainer=$postExpandedContent.find(".preview-container")[0];
-        /* was the preview added before... */
-        if ($(previewContainer).children().length == 0)
+        if ($.Options.getShowPreviewOpt() == 'enable')
         {
-            var link = originalPost.find("a[rel='nofollow']");
-            if (/(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase()))
+            var previewContainer=$postExpandedContent.find(".preview-container")[0];
+            /* was the preview added before... */
+            if ($(previewContainer).children().length == 0)
             {
-                $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
+                var link = originalPost.find("a[rel='nofollow']");
+                if (/(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase()))
+                {
+                    $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
+                }
             }
         }
         // insert "reply_to" before
