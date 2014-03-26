@@ -131,6 +131,18 @@ var TwisterOptions = function()
             $.Options.setOption(this.id, this.value);
         })
     }
+    
+    this.getShowPreviewOpt = function() {
+        return $.Options.getOption('displayPreview',"disable");
+    }
+    
+    this.setShowPreviewOpt = function () {
+        $('#showPreviewOpt select')[0].value = this.getShowPreviewOpt();
+
+        $('#showPreviewOpt select').on('change', function(){
+            $.Options.setOption(this.id, this.value);
+        })
+    }
 
     this.InitOptions = function() {
         this.soundNotifOptions();
@@ -139,6 +151,7 @@ var TwisterOptions = function()
         this.setLang();
         this.setTheme();
         this.setLineFeedsOpt();
+        this.setShowPreviewOpt();
     }
 }
 
