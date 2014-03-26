@@ -307,7 +307,17 @@ var postExpandFunction = function( e, postLi )
         originalLi.append(originalPost);
 
         $postExpandedContent.slideDown( "fast" );
-
+        
+        var previewContainer=$postExpandedContent.find(".preview-container")[0];
+        /* was the preview added before... */
+        if ($(previewContainer).children().length == 0)
+        {
+            var link = originalPost.find("a[rel='nofollow']");
+            if (/(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase()))
+            {
+                $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
+            }
+        }
         // insert "reply_to" before
         requestRepliedBefore(originalLi);
         // insert replies to this post after

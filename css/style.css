@@ -951,6 +951,16 @@ button.disabled:hover
     display: none;
     padding: 5px 5px 0 5px;
 }
+.image-preview
+{
+    max-height: 500px;
+    width: auto;
+}
+.preview-container
+{
+    max-height: 500px;
+    width: 100%;
+}
 .post-stats
 {
     margin: 0 10px 0 55px;
