@@ -1619,8 +1619,8 @@ if(preferredLanguage == "tr"){
       "DHT network down.": "DHT ağı çalışmıyor.",
       "Direct Messages": "Direk Mesajlar",
       "Disable": "Kullanılmaz",
-      "Display mentions to @": "@ 'dan bahsedilen twistler",
-      "Display retransmissions": "Tekrar iltimleri göster",
+      "Display mentions to @": "@ adının geçtiği gönderiler",
+      "Display retransmissions": "Tekrar iletimleri göster",
       "DNS to obtain list of peers:": "Eş listesini almak için DNS:",
       "downloading_block_chain": "Blok zinciri indiriliyor, devam edebilmek için lütfen bekleyiniz (blok zinciri %{days} günlük).",
       "download_posts_status": "Göderilerin indirilme oranı: %{portion}", // Downloaded 10/30 posts
@@ -1682,8 +1682,8 @@ if(preferredLanguage == "tr"){
       "seconds": "%{smart_count} saniye |||| %{smart_count} saniye",
       "send": "gönder",
       "Send post with username": "İletiyi kullanıcı adıyla gönder ",
-      "Sent Direct Message": "Gönderilen Direk Mesaj",
-      "Sent Post to @": "Kullanıcıya gönder @",
+      "Sent Direct Message": "Direk Mesaj Gönder",
+      "Sent Post to @": "@ Kullanıcıya Gönder",
       "Setup account": "Hesap ayarları",
       "switch_to_network": "Yerel servis ağa bağlı değil ya da\n" +
                 "blok zinciri güncel değil. Eğer bu sayfada kalırsanız\n" +
@@ -1730,7 +1730,10 @@ if(preferredLanguage == "tr"){
       "Terminate Daemon:": "Servisi Durdur:",
       "Exit": "Çıkış",
       "Save Changes": "Değişiklikleri Kaydet",
-      "Secret key:": "Gizli anahtar:"
+      "Secret key:": "Gizli anahtar:",
+      "Options": "Ayarlar",
+      "Switch to Promoted posts": "Destekli Mesajlara Geç",
+      "Switch to Normal posts": "Normal Mesajlara Geç"
     };
 }
 
