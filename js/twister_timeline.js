@@ -204,7 +204,7 @@ function processReceivedPosts(req, posts)
 // request timeline update for a given list of users
 function requestTimelineUpdate(mode, count, timelineUsers, getspam)
 {
-    if( _refreshInProgress )
+    if( _refreshInProgress || !defaultScreenName)
         return;
     $.MAL.postboardLoading();
     _refreshInProgress = true;

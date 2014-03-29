@@ -165,7 +165,16 @@ if(preferredLanguage == "en"){
       "Terminate Daemon:": "Terminate Daemon:",
       "Exit": "Exit",
       "Save Changes": "Save Changes",
-      "Secret key:": "Secret key:"
+      "Secret key:": "Secret key:",
+      "You have to log in to post messages.": "You have to log in to post messages.",
+      "You have to log in to post replies.": "You have to log in to post replies.",
+      "You have to log in to retransmit messages.": "You have to log in to retransmit messages.",
+      "You have to log in to use direct messages.": "You have to log in to use direct messages.",
+      "You have to log in to follow users.": "You have to log in to follow users.",
+      "You are not following anyone because you are not logged in.": "You are not following anyone because you are not logged in.",
+      "You don't have any followers because you are not logged in.": "You don't have any followers because you are not logged in.",      
+      "No one can mention you because you are not logged in.": "No one can mention you because you are not logged in.",
+      "You don't have any profile because you are not logged in.": "You don't have any profile because you are not logged in."
     };
 }
 if(preferredLanguage == "es"){

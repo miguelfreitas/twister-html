@@ -437,6 +437,12 @@ function userClickFollow(e) {
     var $this = $(this);
     var $userInfo = $this.closest("[data-screen-name]");
     var username = $userInfo.attr("data-screen-name");
+    
+    if(!defaultScreenName)
+    {
+      alert(polyglot.t("You have to log in to follow users."));
+      return;
+    }
 
     follow(username, true, function() {
         // delay reload so dhtput may do it's job
