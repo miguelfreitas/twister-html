@@ -308,19 +308,18 @@ var postExpandFunction = function( e, postLi )
 
         $postExpandedContent.slideDown( "fast" );
         
-        if ($.Options.getShowPreviewOpt() != 'disable')
-        {
+        if ($.Options.getShowPreviewOpt() != 'disable'){
             var previewContainer=$postExpandedContent.find(".preview-container")[0];
             /* was the preview added before... */
-            if ($(previewContainer).children().length == 0)
-            {
+            if ($(previewContainer).children().length == 0){
                 var link = originalPost.find("a[rel='nofollow']");
-                if ($.Options.getShowPreviewOpt() == 'enable' && /(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase()))
-                {
-                    $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
-                } else if (/https:\/\/img.bi/.test(link.html().toLowerCase())){
-                    $(previewContainer).append($("<img data-imgbi='" + link.html() + "' class='image-preview' />"));
-                    imgBiJS();
+                if (link.siblings().length > 0){ 
+                    if ($.Options.getShowPreviewOpt() == 'enable' && /(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase())){
+                        $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
+                    } else if (/https:\/\/img.bi/.test(link.html().toLowerCase())){
+                        $(previewContainer).append($("<img data-imgbi='" + link.html() + "' class='image-preview' />"));
+                        imgBiJS();
+                    }
                 }
             }
         }
