@@ -19,8 +19,24 @@ function processDMsnippet(dmUsers, dmThreadList) {
 
     for( var u in dmUsers ) {
         if( dmUsers.hasOwnProperty(u) ) {
+            // convert snipped to html and add it to date-sorted list
             var dmItem = dmDataToSnippetItem(dmUsers[u][0], u);
-            dmThreadList.append(dmItem);
+            var timeDmItem = parseInt(dmItem.attr("data-time"));
+            var existingItems = dmThreadList.children();
+            var j = 0;
+            for( j = 0; j < existingItems.length; j++) {
+                var streamItem = existingItems.eq(j);
+                var timeExisting = streamItem.attr("data-time");
+                if( timeExisting == undefined ||
+                    timeDmItem > parseInt(timeExisting) ) {
+                    // this post in stream is older, so post must be inserted above
+                    streamItem.before(dmItem);
+                    break;
+                }
+            }
+            if( j == existingItems.length ) {
+                dmThreadList.append(dmItem);
+            }
         }
     }
     $.MAL.dmThreadListLoaded();

@@ -117,6 +117,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
     dmItem.removeAttr('id');
     dmItem.attr("data-dm-screen-name",remoteUser);
     dmItem.attr("data-last_id", dmData.id);
+    dmItem.attr("data-time", dmData.time);
 
     dmItem.find(".post-info-tag").text("@" + remoteUser);
     dmItem.find("a.post-info-name").attr("href", $.MAL.userUrl(remoteUser));
