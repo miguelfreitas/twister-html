@@ -265,6 +265,11 @@ function initInterfaceNetwork() {
                 initDMsCount();
             });
         }
+        else
+	{
+	    $(".userMenu-profile > a").text(polyglot.t("Login"));
+	    $(".userMenu-profile > a").attr("href","login.html");
+	}
     });
     networkUpdate();
     setInterval("networkUpdate()", 2000);
