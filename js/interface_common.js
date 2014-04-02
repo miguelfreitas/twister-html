@@ -336,16 +336,16 @@ var postExpandFunction = function( e, postLi )
 
         $postExpandedContent.slideDown( "fast" );
         
-        if ($.Options.getShowPreviewOpt() == 'enable')
-        {
+        if ($.Options.getShowPreviewOpt() == 'enable'){
             var previewContainer=$postExpandedContent.find(".preview-container")[0];
             /* was the preview added before... */
-            if ($(previewContainer).children().length == 0)
-            {
+            if ($(previewContainer).children().length == 0) {
                 var link = originalPost.find("a[rel='nofollow']");
-                if (/(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase()))
-                {
-                    $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
+                /*is there any link in the post?*/
+                if (link.siblings().length > 0){
+                    if (/(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase())){
+                        $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
+                    }
                 }
             }
         }
