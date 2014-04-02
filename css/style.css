@@ -954,12 +954,14 @@ button.disabled:hover
 .image-preview
 {
     max-height: 500px;
+    max-width: 530px;
     width: auto;
 }
 .preview-container
 {
     max-height: 500px;
     width: 100%;
+    text-align: center;
 }
 .post-stats
 {
