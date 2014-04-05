@@ -424,6 +424,15 @@ function replyTextKeypress(e) {
     var $this = $( this );
     var tweetForm = $this.parents("form");
     if( tweetForm != undefined ) {
+        //replace triple dots with u+2026
+        var ct = $this.val().replace(/\.\.\./, "…");
+        //replace double dots with u+2025
+        //wait for any next char to prevent from an early replacing and
+        //get that char to prevent from any data loss
+        var nc = ct[ct.indexOf("..") + 2];
+        ct = ct.replace(/\.\../, "‥" + nc);
+        $this.val(ct);
+
         var c = 140 - $this.val().length;
         var remainingCount = tweetForm.find(".post-area-remaining");
         remainingCount.text(c);
