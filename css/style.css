@@ -1542,6 +1542,17 @@ button.disabled:hover
 #notifyForm p, #choseLanguage p, #keysOpt p {
     margin-top: 15px;
 }
+.suboptions {
+    margin: 5px 30px;
+    border: double 2px rgba( 69, 71, 77, .1 );
+    height: 0px;
+    overflow: hidden;
+    transition: height 1s linear;
+    -webkit-transition: height 1s linear;
+    -moz-transition: height 1s linear;
+    -o-transition: height 1s linear;
+    -ms-transition: height 1s linear;
+}
 
 /* Autocomplite*/
 .textcomplete-wrapper textarea {

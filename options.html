@@ -52,7 +52,7 @@
     <div class="language">
 
       <div class="module">
-        <p> Use language </p>
+        <p class="label"> Use language </p>
         <div>
             <form action="" id="selectLanguage">
               <select name="" id="language">
@@ -76,7 +76,7 @@
     <div class="language">
 
       <div class="module">
-        <p> Theme </p>
+        <p class="label"> Theme </p>
         <div>
             <form action="" id="selectTheme">
               <select name="" id="theme">
@@ -91,10 +91,10 @@
     <div class="sounds">
 
       <div class="module">
-        <p> Sound notifications </p>
+        <p class="label"> Sound notifications </p>
         <div>
             <form action="" id="notifyForm">
-              <p>Mentions</p>
+              <p class="label">Mentions</p>
               <select name="" id="sndMention" class="sndOpt">
                 <option value="false">none</option>
                 <option value="1">beat</option>
@@ -103,7 +103,7 @@
                 <option value="4">flip</option>
                 <option value="5">click</option>
               </select><br>
-              <p>Direct Messages</p>
+              <p class="label">Direct Messages</p>
               <select name="" id="sndDM" class="sndOpt">
                 <option value="false">none</option>
                 <option value="1">beat</option>
@@ -121,10 +121,10 @@
 
       <div class="keys">
         <div class="module">
-          <p> Keys </p>
+          <p class="label"> Keys </p>
           <div>
               <form action="" id="keysOpt">
-                <p>Send key</p>
+                <p class="label">Send key</p>
                 <select name="" id="keysSend">
                   <option value="enter">Enter</option>
                   <option value="ctrlenter">Ctrl/Cmd+Enter</option>
@@ -133,10 +133,10 @@
           </div>
         </div>
       </div>
-      
+
     <div class="posts-display">
       <div class="module">
-        <p> Posts display </p>
+        <p class="label"> Posts display </p>
         <div>
             <form action="" id="lineFeedsOpt">
               <p>Line feeds</p>
@@ -148,7 +148,7 @@
         </div>
         <div>
             <form action="" id="showPreviewOpt">
-              <p>Inline image preview</p>
+              <p class="label">Inline image preview</p>
               <select name="" id="displayPreview">
                 <option value="disable">Ignore</option>
                 <option value="enable">Display</option>
@@ -156,6 +156,48 @@
             </form>
         </div>
       </div>
+    </div>
+
+    <div class="post-editor">
+        <div class="module">
+            <p class="label"> Post editor</p>
+            <br/>
+            <div>
+                <form action="" id="unicodeConversionOpt">
+                    <p class="label">Automatic unicode conversion options</p>
+                    <select name="" id="unicodeConversion">
+                        <option value="disable">Ignore</option>
+                        <option value="enable">Convert all</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <div class="suboptions">
+                        <input name="" id="convertPunctuationsOpt" type="checkbox" /> <span class="label">Convert punctuations to unicode</span><br/>
+                        <div>
+                            <label class="label">Supported punctuations: </label>
+                            <span>‥ … ⁇ ⁈ ⁉ ‼ — ⁓</span>
+                        </div> 
+                        <br/>
+                        <input name="" id="convertEmotionsOpt" type="checkbox" /> <span class="label">Convert emotions codes to unicode symbols</span><br/>
+                        <div>
+                            <label class="label">Supported emotions: </label>
+                            <span>😃 😇 🍺 😈 ❤ 😕 😢 😞 😎 😊 😊 😗 😆 😛 😉 😉 😮 😱 😐</span>
+                        </div>
+                        <br/>
+                        <input name="" id="convertSignsOpt" type="checkbox" /> <span class="label">Convert common signs to unicode</span><br/>
+                        <div>
+                            <label class="label">Supported signs:</label>
+                            <span>℡ ℻</span>
+                        </div>
+                        <br/>
+                        <input name="" id="convertFractionsOpt" type="checkbox" /> <span class="label">Convert fractions to unicode</span><br/>
+                        <div>
+                            <label class="label">Supported fractions:</label>
+                            <span>½ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅐ ⅛ ⅜ ⅝ ⅞ ⅑ ⅒</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
   </div>
