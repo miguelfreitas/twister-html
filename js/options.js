@@ -141,7 +141,74 @@ var TwisterOptions = function()
 
         $('#showPreviewOpt select').on('change', function(){
             $.Options.setOption(this.id, this.value);
-        })
+        });
+    }
+
+    this.getUnicodeConversionOpt = function () {
+        return $.Options.getOption('unicodeConversion', "disable");
+    }
+
+    this.setUnicodeConversionOpt = function () {
+        $("#unicodeConversion")[0].value = this.getUnicodeConversionOpt();
+
+        if (this.getUnicodeConversionOpt() === "custom")
+            $("#unicodeConversionOpt .suboptions")[0].style.height = "230px";
+
+        $("#unicodeConversion").on('change', function () {
+            $.Options.setOption(this.id, this.value);
+            if (this.value === "custom")
+                $("#unicodeConversionOpt .suboptions")[0].style.height = "230px";
+            else
+                $("#unicodeConversionOpt .suboptions")[0].style.height = "0px";
+        });
+    }
+
+    this.getConvertPunctuationsOpt = function() {
+        return $.Options.getOption('convertPunctuationsOpt', false);
+    }
+    
+    this.setConvertPunctuationsOpt = function () {
+        $('#convertPunctuationsOpt')[0].checked = this.getConvertPunctuationsOpt();
+
+        $('#convertPunctuationsOpt').on('change', function(){
+            $.Options.setOption(this.id, this.checked);
+        });
+    }
+
+    this.getConvertEmotionsOpt = function() {
+        return $.Options.getOption('convertEmotionsOpt', false);
+    }
+    
+    this.setConvertEmotionsOpt = function () {
+        $('#convertEmotionsOpt')[0].checked = this.getConvertEmotionsOpt();
+
+        $('#convertEmotionsOpt').on('change', function(){
+            $.Options.setOption(this.id, this.checked);
+        });
+    }
+
+    this.getConvertSignsOpt = function() {
+        return $.Options.getOption('convertSignsOpt', false);
+    }
+    
+    this.setConvertSignsOpt = function () {
+        $('#convertSignsOpt')[0].checked = this.getConvertSignsOpt();
+
+        $('#convertSignsOpt').on('change', function(){
+            $.Options.setOption(this.id, this.checked);
+        });
+    }
+
+    this.getConvertFractionsOpt = function() {
+        return $.Options.getOption('convertFractionsOpt', false);
+    }
+    
+    this.setConvertFractionsOpt = function () {
+        $('#convertFractionsOpt')[0].checked = this.getConvertFractionsOpt();
+
+        $('#convertFractionsOpt').on('change', function(){
+            $.Options.setOption(this.id, this.checked);
+        });
     }
 
     this.InitOptions = function() {
@@ -152,6 +219,11 @@ var TwisterOptions = function()
         this.setTheme();
         this.setLineFeedsOpt();
         this.setShowPreviewOpt();
+        this.setUnicodeConversionOpt();
+        this.setConvertPunctuationsOpt();
+        this.setConvertEmotionsOpt();
+        this.setConvertSignsOpt();
+        this.setConvertFractionsOpt();
     }
 }
 

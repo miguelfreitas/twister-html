@@ -1742,7 +1742,42 @@ if(preferredLanguage == "tr"){
       "Secret key:": "Gizli anahtar:",
       "Options": "Ayarlar",
       "Switch to Promoted posts": "Destekli Mesajlara Geç",
-      "Switch to Normal posts": "Normal Mesajlara Geç"
+      "Switch to Normal posts": "Normal Mesajlara Geç",
+      "Use language": "Dil ayarla",
+      "Ignore": "Görmezden gel",
+      "Theme": "Tema",
+      "Keys": "Tuşlar",
+      "Sound notifications": "Sesli uyarılar",
+      "Send key": "Gönderme tuşu",
+      "Posts display": "Gönderiler",
+      "Post editor": "Gönderi düzenleyici",
+      "Inline image preview": "Dahili resim ön izleme",
+      "Display": "Göster",
+      "Line feeds": "Satır sonları",
+      "Supported punctuations:": "Desteklenen noktalama işaretleri:",
+      "Supported emotions:": "Desteklenen duygu simgeleri:",
+      "Supported signs:": "Desteklenen işaretler:",
+      "Supported fractions:": "Desteklenen kesirler:",
+      "Automatic unicode conversion options": "Otomatik unicode dönüştürme seçenekleri",
+      "Convert punctuations to unicode": "Noktalama işaretlerini unicode'a dönüştür",
+      "Convert emotions codes to unicode symbols": "Duygu simge kodlarını unicode simgelerine dönüştür",
+      "Convert common signs to unicode": "Yaygın işaretleri unicode'a dönüştür",
+      "Convert fractions to unicode": "Kesirleri unicode'a dönüştür",
+      "Convert all": "Hepsini dönüştür",
+      "Auto": "Otomatik",
+      "Original": "Orjinal",
+      "none": "Hiçbiri",
+      "Custom": "Özel",
+      "Mentions": "Bahsedenler",
+      "You have to log in to post messages.": "Mesaj göndermek için giriş yapmalısınız.",
+      "You have to log in to post replies.": "Cevap göndermek için giriş yapmalısınız.",
+      "You have to log in to retransmit messages.": "Yeniden iletmek için giriş yapmalısınız.",
+      "You have to log in to use direct messages.": "Direk masajları kullanabilmek için giriş yapmalısınız.",
+      "You have to log in to follow users.": "Kullanıcı takip etmek için giriş yapmalısınız.",
+      "You are not following anyone because you are not logged in.": "Giriş yapmadığınız için kimseyi takip etmiyorsunuz.",
+      "You don't have any followers because you are not logged in.": "Giriş yapmadığınız için hiç takipçiniz yok.",
+      "No one can mention you because you are not logged in.": "Giriş yapmadığınız için kimse adınıza mesaj gönderemiyor.",
+      "You don't have any profile because you are not logged in.": "Giriş yapmadığınız için profiliniz yok."
     };
 }
 
@@ -1791,7 +1826,10 @@ var fixedLabels = [
   ".module span",
   ".login span",
   ".login-local-username",
-  ".login input"
+  ".login input",
+
+  //options page
+  "option"
 ];
 $(document).ready(function(){
   for(var i=0;i<fixedLabels.length;i++){
