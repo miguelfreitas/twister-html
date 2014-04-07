@@ -470,238 +470,253 @@ var unicodeConversionList = {
     "ponctuations": [
         {
             "k": /\.\.\./,
-            "u": "…",
+            "u": "\u2026",
             "n": -1
         },
         {
             "k": /\.\../,
-            "u": "‥",
+            "u": "\u2025",
             "n": 2
         },
         {
             "k": /\?\?/,
-            "u": "⁇",
+            "u": "\u2047",
             "n": -1
         },
         {
             "k": /\?!/,
-            "u": "⁈",
+            "u": "\u2048",
             "n": -1
         },
         {
             "k": /!\?/,
-            "u": "⁉",
+            "u": "\u2049",
             "n": -1
         },
         {
             "k": /!!/,
-            "u": "‼",
+            "u": "\u203C",
+            "n": -1
+        },
+        {
+            "k": /--/,
+            "u": "\u2014",
+            "n": -1
+        },
+        {
+            "k": /~~/,
+            "u": "\u2053",
             "n": -1
         }
     ],
     "emotions": [
         {
             "k": /:.{0,1}D/,
-            "u": "😃",
+            "u": "\uD83D\uDE03",
             "n": -1
         },
         {
             "k": /(0|O):-{0,1}\)/i,
-            "u": "😇",
+            "u": "\uD83D\uDE07",
             "n": -1
         },
         {
             "k": /:beer:/,
-            "u": "🍺",
+            "u": "\uD83C\uDF7A",
             "n": -1
         },
         {
-            "k": /3:.{0,1}\)/,
-            "u": "😈",
+            "k": /3:-{0,1}\)/,
+            "u": "\uD83D\uDE08",
             "n": -1
         },
         {
             "k": /<3/,
-            "u":"❤",
+            "u":"\u2764",
             "n": -1
         },
         {
             "k": /o.O|:\/|:\\/,
-            "u": "😕",
+            "u": "\uD83D\uDE15",
             "n": -1
         },
         {
             "k": /:\'\(/,
-            "u": "😢",
+            "u": "\uD83D\uDE22",
             "n": -1
         },
         {
-            "k": /(:|=).{0,1}\(/,
-            "u": "😞",
+            "k": /(:|=)-{0,1}\(/,
+            "u": "\uD83D\uDE1E",
             "n": -1
         },
         {
             "k": /8(\)<|\|)/,
-            "u": "😎",
+            "u": "\uD83D\uDE0E",
             "n": -1
         },
         {
             "k": /(:|=)-{0,1}(\)|\])/,
-            "u": "😊",
+            "u": "\uD83D\uDE0A",
             "n": -1
         },
         {
             "k": /(\(|\[)-{0,1}(:|=)/,
-            "u": "😊",
+            "u": "\uD83D\uDE0A",
             "n": -1
         },
         {
             "k": /:\*/,
-            "u": "😗",
+            "u": "\uD83D\uDE17",
             "n": -1
         },
         {
-            "k": /\^.{0,1}\^/,
-            "u": "😆",
+            "k": /\^-{0,1}\^/,
+            "u": "\uD83D\uDE06",
             "n": -1
         },
         {
             "k": /:p/i,
-            "u": "😛",
+            "u": "\uD83D\uDE1B",
             "n": -1
         },
         {
             "k": /;-{0,1}\)/,
-            "u": "😉",
+            "u": "\uD83D\uDE09",
             "n": -1
         },
         {
             "k": /\(-{0,1};/,
-            "u": "😉",
+            "u": "\uD83D\uDE09",
             "n": -1
         },
         {
             "k": /:(O|0)/,
-            "u": "😮",
+            "u": "\uD83D\uDE2E",
             "n": -1
         },
         {
             "k": /:@/,
-            "u": "😱",
+            "u": "\uD83D\uDE31",
+            "n": -1
+        },
+        {
+            "k": /:\|/,
+            "u": "\uD83D\uDE10",
             "n": -1
         }
     ],
     "signs": [
         {
             "k": / tel( |:|=)/i,
-            "u": " ℡",
+            "u": " \u2121",
             "n": 4
         },
         {
             "k": /^tel( |:|=)/i,
-            "u": "℡",
+            "u": "\u2121",
             "n": 3
         },
         {
             "k": / fax( |:|=)/i,
-            "u": " ℻",
+            "u": " \u213B",
             "n": 4
         },
         {
             "k": /^fax( |:|=)/i,
-            "u": "℻",
+            "u": "\u213B",
             "n": 3
         }
     ],
     "fractions": [
         {
             "k": /1\/2/,
-            "u": "½",
+            "u": "\u00BD",
             "n": -1
         },
         {
             "k": /1\/3/,
-            "u": "⅓",
+            "u": "\u2153",
             "n": -1
         },
         {
             "k": /2\/3/,
-            "u": "⅔",
+            "u": "\u2154",
             "n": -1
         },
         {
             "k": /1\/4/,
-            "u": "¼",
+            "u": "\u00BC",
             "n": -1
         },
         {
             "k": /3\/4/,
-            "u": "¾",
+            "u": "\u00BE",
             "n": -1
         },
         {
             "k": /1\/5/,
-            "u": "⅕",
+            "u": "\u2155",
             "n": -1
         },
         {
             "k": /2\/5/,
-            "u": "⅖",
+            "u": "\u2156",
             "n": -1
         },
         {
             "k": /3\/5/,
-            "u": "⅗",
+            "u": "\u2157",
             "n": -1
         },
         {
             "k": /4\/5/,
-            "u": "⅘",
+            "u": "\u2158",
             "n": -1
         },
         {
             "k": /1\/6/,
-            "u": "⅙",
+            "u": "\u2159",
             "n": -1
         },
         {
             "k": /5\/6/,
-            "u": "⅚",
+            "u": "\u215A",
             "n": -1
         },
         {
             "k": /1\/7/,
-            "u": "⅐",
+            "u": "\u2150",
             "n": -1
         },
         {
             "k": /1\/8/,
-            "u": "⅛",
+            "u": "\u215B",
             "n": -1
         },
         {
             "k": /3\/8/,
-            "u": "⅜",
+            "u": "\u215C",
             "n": -1
         },
         {
             "k": /5\/8/,
-            "u": "⅝",
+            "u": "\u215D",
             "n": -1
         },
         {
             "k": /7\/8/,
-            "u": "⅞",
+            "u": "\u215E",
             "n": -1
         },
         {
             "k": /1\/9/,
-            "u": "⅑",
+            "u": "\u2151",
             "n": -1
         },
         {
             "k": /1\/10/,
-            "u": "⅒",
+            "u": "\u2152",
             "n": -1
         }
     ]
@@ -774,7 +789,7 @@ function convert2Unicodes(s, ta) {
                 var len = s.length - tmp.length + list[i].u.length;
                 unicodeConversionStack.unshift({
                     "k": s.substr(kl.index, len),
-                    "u": list[i].u + nc,
+                    "u": list[i].u,
                     "p": kl.index,
                     "l": len,
                     "m": tmp.length
@@ -800,7 +815,7 @@ function convert2Unicodes(s, ta) {
                 var len = s.length - tmp.length + list[i].u.length;
                 unicodeConversionStack.unshift({
                     "k": s.substr(kl.index, len),
-                    "u": list[i].u + nc,
+                    "u": list[i].u,
                     "p": kl.index,
                     "l": len,
                     "m": tmp.length
@@ -826,7 +841,7 @@ function convert2Unicodes(s, ta) {
                 var len = s.length - tmp.length + list[i].u.length;
                 unicodeConversionStack.unshift({
                     "k": s.substr(kl.index, len),
-                    "u": list[i].u + nc,
+                    "u": list[i].u,
                     "p": kl.index,
                     "l": len,
                     "m": tmp.length
@@ -852,7 +867,7 @@ function convert2Unicodes(s, ta) {
                 var len = s.length - tmp.length + list[i].u.length;
                 unicodeConversionStack.unshift({
                     "k": s.substr(kl.index, len),
-                    "u": list[i].u + nc,
+                    "u": list[i].u,
                     "p": kl.index,
                     "l": len,
                     "m": tmp.length
@@ -888,12 +903,12 @@ function undoLastUnicode(e) {
     var pt = $ta.val();
 
     if (pt.substr(uc.p, uc.u.length) === uc.u)
-        $ta.val(pt.substr(0,uc.p) + uc.k + pt.substr(uc.p + 2));
+        $ta.val(pt.substr(0,uc.p) + uc.k + pt.substr(uc.p + uc.u.length));
     else {
         //if it can't be found at its index, last unicode will be removed
         var i = pt.lastIndexOf(uc.u);
         if (i>-1) {
-            $ta.val(pt.substr(0,i) + uc.k + pt.substr(i + 2));
+            $ta.val(pt.substr(0,i) + uc.k + pt.substr(i + uc.u.length));
         }
     }
 
@@ -901,6 +916,8 @@ function undoLastUnicode(e) {
         $(this).text("undo: " + unicodeConversionStack[0].u);
     else
         $.MAL.disableButton($(this));
+
+    lastConvertedIndex = $ta.val().length;
 }
 
 var postSubmit = function(e)
