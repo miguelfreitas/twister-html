@@ -889,6 +889,13 @@ function undoLastUnicode(e) {
 
     if (pt.substr(uc.p, uc.u.length) === uc.u)
         $ta.val(pt.substr(0,uc.p) + uc.k + pt.substr(uc.p + 2));
+    else {
+        //if it can't be found at its index, last unicode will be removed
+        var i = pt.lastIndexOf(uc.u);
+        if (i>-1) {
+            $ta.val(pt.substr(0,i) + uc.k + pt.substr(i + 2));
+        }
+    }
 
     if (unicodeConversionStack.length > 0)
         $(this).text("undo: " + unicodeConversionStack[0].u);
