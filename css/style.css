@@ -1595,3 +1595,25 @@ ul.dropdown-menu > li > a {
     -o-transition: all 200ms;
     transition: all 200ms;
 }
+/*******************************************************
+****************** PUBLIC SERVER MODE PAGE *************
+*******************************************************/
+.announcement-title
+{
+    font-size: 32px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.announcement-line
+{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.download-page-link
+{
+    font-size: 16px;
+    margin-top: 5px;
+}

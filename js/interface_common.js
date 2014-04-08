@@ -60,6 +60,15 @@ function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
                   }, {cbFunc:cbFunc,cbArg:cbArg});
 }
 
+function checkNetworkStatusAndShowAlert(cbFunc, cbArg) {
+    networkUpdate(function(args)
+    {
+        if(!twisterdConnectedAndUptodate)
+            alert(polyglot.t("Server was not able to connect to the network.\nSome functions may not work properly."));
+        else if(args.cbFunc)
+            args.cbFunc(args.cbArg);
+    }, {cbFunc:cbFunc,cbArg:cbArg});
+}
 function timeGmtToText(t) {
     var d = new Date(0);
     d.setUTCSeconds(t);
@@ -399,6 +408,10 @@ var postReplyClick = function( e )
 var composeNewPost = function( e, postAreaNew )
 {
     e.stopPropagation();
+    
+    if(!defaultScreenName)
+        return;
+
     if( !postAreaNew.hasClass("open") ) {
         postAreaNew.addClass( "open" );
         //se o usuário clicar fora é pra fechar

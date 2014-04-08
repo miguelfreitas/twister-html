@@ -31,16 +31,31 @@ var InterfaceFunctions = function()
     }
 
     function initHome(cbFunc, cbArg) {
-        checkNetworkStatusAndAskRedirect();
+        if(publicServerMode)
+            checkNetworkStatusAndShowAlert();
+        else
+            checkNetworkStatusAndAskRedirect();
 
         //$("span.screen-name").text('@' + user);
         var $miniProfile = $(".mini-profile");
         if(!defaultScreenName)
         {
+            if(publicServerMode)
+            {
+                $(".userMenu-network").remove();
+                $(".userMenu-connections").remove();
+                $(".userMenu-messages").remove();
+                $(".who-to-follow").remove();
+                $(".dropdown-menu-network").remove();
+                $(".dropdown-menu-profile").attr("href","public-server.html");
+                $(".dropdown-menu-change-user").attr("href","public-server.html");
+                $(".userMenu-profile > a").attr("href","public-server.html");
+            }
+            else
+                $(".userMenu-profile > a").attr("href","login.html");
             $(".userMenu-profile > a").text(polyglot.t("Login"));
-            $(".userMenu-profile > a").attr("href","login.html");
-            $(".post-area-new > textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
-            $(".post-area-new > textarea").attr("disabled","true");
+            $(".post-area-new textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
+            $(".post-area-new textarea").attr("disabled","true");
             $miniProfile.find(".mini-profile-name").text("guest");
             $miniProfile.find(".posts-count").text("0");
             $miniProfile.find(".following-count").text("0");

@@ -204,6 +204,11 @@ if(preferredLanguage == "en"){
       "none": "none",
       "Custom": "Custom",
       "Mentions": "Mentions",
+      "This is a read-only server": "This is a read-only server",
+      "The website you are now viewing is a public, read-only server.":"The website you are now viewing is a public, read-only server.",
+      "If you want to be active on the network, download and run your own Twister.":"If you want to be active on the network, download and run your own Twister.",
+      "Click here to start":"Click here to start",
+      "Server was not able to connect to the network.\nSome functions may not work properly.": "Server was not able to connect to the network.\nSome functions may not work properly.",
     };
 }
 if(preferredLanguage == "es"){

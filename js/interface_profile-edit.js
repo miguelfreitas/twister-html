@@ -21,7 +21,9 @@ function initProfileEdit() {
     $(".cancel-changes").click( $.MAL.goHome );
 
     initUser( function() {
-        if( !defaultScreenName ) {
+        if(publicServerMode)
+            window.location.href = "public-server.html";
+        else if( !defaultScreenName ) {
             alert(polyglot.t("username_undefined"));
             $.MAL.goLogin();
             return;

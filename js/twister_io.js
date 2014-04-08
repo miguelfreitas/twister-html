@@ -366,3 +366,24 @@ function dumpPrivkey(username, cbFunc, cbArg) {
                }, {cbFunc:cbFunc, cbArg:cbArg});
 }
 
+function getInfo(cbFunc, cbArg) {
+    twisterRpc("getinfo", [],
+               function(args, ret) {
+                   args.cbFunc(args.cbArg, ret);
+               }, {cbFunc:cbFunc, cbArg:cbArg},
+               function(args, ret) {
+                   alert(polyglot.t("error_connecting_to_daemon"));
+               }, {cbFunc:cbFunc, cbArg:cbArg});
+}
+
+function getPublicServerMode(cbFunc, cbArg) {
+    getInfo(
+        function(args, info) {
+            publicServerMode=info["public_server_mode"];
+            if(publicServerMode)
+                defaultScreenName=undefined;
+            if(cbFunc)
+                cbFunc(cbArg);
+      }, {cbFunc:cbFunc, cbArg:cbArg}
+    )
+}
