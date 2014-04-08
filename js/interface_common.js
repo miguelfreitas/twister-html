@@ -343,7 +343,7 @@ var postExpandFunction = function( e, postLi )
                 var link = originalPost.find("a[rel='nofollow']");
                 /*is there any link in the post?*/
                 if (link.siblings().length > 0){
-                    if (/(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase())){
+                    if (/((\.jpe{0,1}g)|(\.gif)|(\.png))$/i.test(link.html())){
                         $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
                     }
                 }

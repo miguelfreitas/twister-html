@@ -195,7 +195,25 @@ function htmlFormatMsg( msg, output, mentions ) {
                     url = url.replace('&amp;', '&');
                     var extLinkTemplate = $("#external-page-link-template").clone(true);
                     extLinkTemplate.removeAttr("id");
-                    extLinkTemplate.attr("href",url);
+                    var proxy = false;
+                    if ($.Options.getOption('useProxy') === 'disable'){
+                        extLinkTemplate.attr("href",url);
+                    } else if ($.Options.getOption('useProxyForImgOnly')){
+                        if ($.Options.getOption('displayPreview') !== 'disable' && /((\.jpe{0,1}g)|(\.gif)|(\.png))$/i.test(url))
+                            proxy = true;
+                    } else {
+                        proxy = true;
+                    }
+
+                    if (proxy){
+                        //proxy alternatives may be added to options page...
+                        if ($.Options.getOption('useProxy') === 'ssl-proxy-my-addr') {
+                            extLinkTemplate.attr('href', 'https://ssl-proxy.my-addr.com/' +
+                                                         url.substring(0, url.indexOf(':')) +
+                                                         url.substr(url.indexOf('/') + 1));
+                        }
+                    }
+
                     extLinkTemplate.text(url);
                     extLinkTemplate.attr("title",url);
                     output.append(extLinkTemplate);
