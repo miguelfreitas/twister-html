@@ -33,7 +33,10 @@ function loginCreatedUser() {
 }
 
 function initInterfaceLogin() {
-    initUser();
+    initUser(function()
+    {   if(publicServerMode)
+            window.location.href = "public-server.html";
+    });
     initInterfaceCommon();
     checkNetworkStatusAndAskRedirect();
 

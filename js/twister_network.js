@@ -257,6 +257,8 @@ function interfaceNetworkHandlers() {
 function initInterfaceNetwork() {
     initInterfaceCommon();
     initUser( function () {
+        if(publicServerMode)
+            window.location.href = "public-server.html";
         getSpamMsg();
 
         if( defaultScreenName ) {
@@ -268,7 +270,10 @@ function initInterfaceNetwork() {
         else
 	{
 	    $(".userMenu-profile > a").text(polyglot.t("Login"));
-	    $(".userMenu-profile > a").attr("href","login.html");
+            if(publicServerMode)
+                $(".userMenu-profile > a").attr("href","public-server.html");
+            else
+                $(".userMenu-profile > a").attr("href","login.html");
 	}
     });
     networkUpdate();

@@ -8,6 +8,7 @@
 var defaultScreenName = undefined;
 var localUsernames = [];
 var lastPostId = undefined;
+var publicServerMode = false;
 
 // basic user functions
 // -------------------------------
@@ -44,8 +45,7 @@ function initUser(cbFunc, cbArg) {
                            }
                        }
                        lastPostId = undefined;
-                       if( cbFunc )
-                           cbFunc(cbArg);
+                       getPublicServerMode(cbFunc,cbArg);
     });
 }
 
