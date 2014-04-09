@@ -218,7 +218,7 @@ var TwisterOptions = function()
     this.setUseProxyOpt = function () {
         $('#useProxy')[0].value = this.getUseProxyOpt();
 
-        if (this.getProxyOpt() === 'disable')
+        if (this.getUseProxyOpt() === 'disable')
             $('#useProxyForImgOnly').attr('disabled','disabled');
 
         $('#useProxy').on('change', function () {
@@ -238,8 +238,8 @@ var TwisterOptions = function()
     this.setUseProxyForImgOnlyOpt = function () {
         $('#useProxyForImgOnly')[0].checked = this.getUseProxyForImgOnlyOpt();
 
-        $('useProxyForImgOnly').on('change', function () {
-            $.Options.setOption(this.id, this.value);
+        $('#useProxyForImgOnly').on('change', function () {
+            $.Options.setOption(this.id, this.checked);
         });
     }
 
@@ -256,6 +256,8 @@ var TwisterOptions = function()
         this.setConvertEmotionsOpt();
         this.setConvertSignsOpt();
         this.setConvertFractionsOpt();
+        this.setUseProxyOpt();
+        this.setUseProxyForImgOnlyOpt();
     }
 }
 

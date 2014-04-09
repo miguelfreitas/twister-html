@@ -204,6 +204,8 @@ if(preferredLanguage == "en"){
       "none": "none",
       "Custom": "Custom",
       "Mentions": "Mentions",
+      "Use proxy for image preview only": "Use proxy for image preview only",
+      "Use external links behind a proxy": "Use external links behind a proxy"
     };
 }
 if(preferredLanguage == "es"){
@@ -1806,7 +1808,9 @@ if(preferredLanguage == "tr"){
       "You are not following anyone because you are not logged in.": "Giriş yapmadığınız için kimseyi takip etmiyorsunuz.",
       "You don't have any followers because you are not logged in.": "Giriş yapmadığınız için hiç takipçiniz yok.",
       "No one can mention you because you are not logged in.": "Giriş yapmadığınız için kimse adınıza mesaj gönderemiyor.",
-      "You don't have any profile because you are not logged in.": "Giriş yapmadığınız için profiliniz yok."
+      "You don't have any profile because you are not logged in.": "Giriş yapmadığınız için profiliniz yok.",
+      "Use proxy for image preview only": "Vekil sunucuyu sadece resim ön izleme için kullan",
+      "Use external links behind a proxy": "Harici bağlantılar için vekil sunucu kullan"
     };
 }
 
