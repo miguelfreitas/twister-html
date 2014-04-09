@@ -546,11 +546,12 @@ var unicodeConversionList = {
             "u":"\u2764",
             "n": -1
         },
-        {
-            "k": /o.O|:\/|:\\/,
-            "u": "\uD83D\uDE15",
-            "n": -1
-        },
+// disabled due to urls :/
+//        {
+//            "k": /o.O|:\/|:\\/,
+//            "u": "\uD83D\uDE15",
+//            "n": -1
+//        },
         {
             "k": /:\'\(/,
             "u": "\uD83D\uDE22",
