@@ -956,12 +956,15 @@ button.disabled:hover
     max-height: 500px;
     max-width: 530px;
     width: auto;
+    display: block;
+    margin: 0 auto;
 }
 .preview-container
 {
     max-height: 500px;
     width: 100%;
     text-align: center;
+    overflow-y: auto;
 }
 .post-stats
 {

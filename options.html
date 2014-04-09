@@ -137,6 +137,7 @@
     <div class="posts-display">
       <div class="module">
         <p class="label"> Posts display </p>
+        <br/>
         <div>
             <form action="" id="lineFeedsOpt">
               <p>Line feeds</p>
@@ -146,6 +147,7 @@
               </select>
             </form>
         </div>
+        <br/>
         <div>
             <form action="" id="showPreviewOpt">
               <p class="label">Inline image preview</p>
@@ -153,6 +155,18 @@
                 <option value="disable">Ignore</option>
                 <option value="enable">Display</option>
               </select>
+            </form>
+        </div>
+        <br/>
+        <div>
+            <form action="" id="useProxyOpt">
+                <p class="label">Use external links behind a proxy</p>
+                <select name="" id="useProxy">
+                    <option value="disable">none</option>
+                    <option value="ssl-proxy-my-addr">ssl-proxy.my-addr.org</option>
+                    <option value="anonymouse">anonymouse.org</option>
+                </select>
+                <input name="" id="useProxyForImgOnly" type="checkbox" /> <span class="label">Use proxy for image preview only</span>
             </form>
         </div>
       </div>

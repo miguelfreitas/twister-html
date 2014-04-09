@@ -195,7 +195,20 @@ function htmlFormatMsg( msg, output, mentions ) {
                     url = url.replace('&amp;', '&');
                     var extLinkTemplate = $("#external-page-link-template").clone(true);
                     extLinkTemplate.removeAttr("id");
-                    extLinkTemplate.attr("href",url);
+
+                    if ($.Options.getUseProxyOpt() !== 'disable' && !$.Options.getUseProxyForImgOnlyOpt()){
+                        //proxy alternatives may be added to options page...
+                        if ($.Options.getUseProxyOpt() === 'ssl-proxy-my-addr') {
+                            extLinkTemplate.attr('href', 'https://ssl-proxy.my-addr.org/myaddrproxy.php/' +
+                                                         url.substring(0, url.indexOf(':')) +
+                                                         url.substr(url.indexOf('/') + 1));
+                        } else if ($.Options.getUseProxyOpt() ==='anonymouse') {
+                            extLinkTemplate.attr('href', 'http://anonymouse.org/cgi-bin/anon-www.cgi/' + url);
+                        }
+                    } else {
+                        extLinkTemplate.attr("href",url);
+                    }
+
                     extLinkTemplate.text(url);
                     extLinkTemplate.attr("title",url);
                     output.append(extLinkTemplate);

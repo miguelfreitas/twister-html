@@ -211,6 +211,38 @@ var TwisterOptions = function()
         });
     }
 
+    this.getUseProxyOpt = function () {
+        return $.Options.getOption('useProxy', 'disable');
+    }
+
+    this.setUseProxyOpt = function () {
+        $('#useProxy')[0].value = this.getUseProxyOpt();
+
+        if (this.getUseProxyOpt() === 'disable')
+            $('#useProxyForImgOnly').attr('disabled','disabled');
+
+        $('#useProxy').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+
+            if (this.value === 'disable')
+                $('#useProxyForImgOnly').attr('disabled','disabled');
+            else
+                $('#useProxyForImgOnly').removeAttr('disabled');
+        });
+    }
+
+    this.getUseProxyForImgOnlyOpt = function () {
+        return $.Options.getOption('useProxyForImgOnly', false);
+    }
+
+    this.setUseProxyForImgOnlyOpt = function () {
+        $('#useProxyForImgOnly')[0].checked = this.getUseProxyForImgOnlyOpt();
+
+        $('#useProxyForImgOnly').on('change', function () {
+            $.Options.setOption(this.id, this.checked);
+        });
+    }
+
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
@@ -224,6 +256,8 @@ var TwisterOptions = function()
         this.setConvertEmotionsOpt();
         this.setConvertSignsOpt();
         this.setConvertFractionsOpt();
+        this.setUseProxyOpt();
+        this.setUseProxyForImgOnlyOpt();
     }
 }
 

@@ -342,9 +342,20 @@ var postExpandFunction = function( e, postLi )
             if ($(previewContainer).children().length == 0) {
                 var link = originalPost.find("a[rel='nofollow']");
                 /*is there any link in the post?*/
-                if (link.siblings().length > 0){
-                    if (/(\.jpg)|(\.gif)|(\.png)|(\.jpeg)/.test(link.html().toLowerCase())){
-                        $(previewContainer).append($("<img src='" + link.html() + "' class='image-preview' />"));
+                for (var i=0; i<link.length; i++){
+                    if (/((\.jpe{0,1}g)|(\.gif)|(\.png))$/i.test(link[i].href)){
+                        var url = link[i].href;
+                        if ($.Options.getUseProxyOpt() !== 'disable' && $.Options.getUseProxyForImgOnlyOpt()){
+                            //proxy alternatives may be added to options page...
+                            if ($.Options.getUseProxyOpt() === 'ssl-proxy-my-addr') {
+                                url = 'https://ssl-proxy.my-addr.org/myaddrproxy.php/' +
+                                     url.substring(0, url.indexOf(':')) +
+                                     url.substr(url.indexOf('/') + 1);
+                            } else if ($.Options.getUseProxyOpt() ==='anonymouse') {
+                                url = 'http://anonymouse.org/cgi-bin/anon-www.cgi/' + url;
+                            }
+                        }
+                        $(previewContainer).append($("<img src='" + url + "' class='image-preview' />"));
                     }
                 }
             }
