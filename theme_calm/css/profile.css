@@ -231,6 +231,9 @@
     margin-left: -300px;
 
 }
+.profile-modal .modal-header, .profile-modal .profile-card {
+    z-index: 1;
+}
 .profile-modal .modal-content
 {
     padding: 3px;
@@ -250,19 +253,19 @@
     text-align: center;
 }
 #msngrswr {
-    position: absolute;
-    left: 10px;
-    margin-top: 10px;
+    display: none;
+    margin-top: 20px;
+    height: 30px;
 }
 #toxbtnwr, #bmbtnwr {
     float: left;
     display: none;
 }
 .bitmessage-ctc, .tox-ctc {
-    height: 35px;
+    height: 30px;
     width: 30px;
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 5px;
     border: 1px solid #d6d8dc;
     background: #e3e5ea url(img/clipboard.png) center no-repeat;
     opacity: .8;
@@ -285,8 +288,8 @@
 }
 .profile-modal .profile-tox, .profile-modal .profile-bitmessage {
     display: inline-block;
-    width: 80px;
-    height: 35px;
+    width: 70px;
+    height: 30px;
     border: 1px solid #c0c2c6;
     opacity: .8;
     -webkit-border-radius: 5px 0 0 5px;
@@ -315,7 +318,6 @@
 {
     display: inline-block;
     margin-left: -4px;
-    margin-top: 40px;
     border-bottom: 0;
 }
 button.follow:hover {
@@ -334,6 +336,11 @@ button.follow:hover {
     background: #b2d67b;
     color: #fff;
 }
+.profile-modal .separator {
+    height: 10px;
+    width: 100%;
+    background-color: #000;
+}
 .profile-modal .postboard
 {
     margin-left: 0;
@@ -347,11 +354,16 @@ button.follow:hover {
     font: 18px/40px 'Open Sans Condensed', sans-serif;
     padding-left: 10px;
 }
-.profile-modal .postboard-posts
+.profile-modal .postboard-posts-wrapper
 {
-    display: block;
-    height: 90%;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 99%;
+    box-sizing: border-box;
+    border-top: 292px solid transparent;
     overflow: auto;
+    z-index: 0;
 }
 .profile-modal .profile-card-main
 {
@@ -401,4 +413,17 @@ h2.profile-screen-name {
 
 .profile-modal .modal-buttons {
    display: none;
+}
+
+.profile-modal h1.profile-name,
+.profile-modal h2.profile-screen-name,
+.profile-modal span.profile-location,
+.profile-modal a.profile-url {
+    display: block;
+}
+
+.profile-modal span.profile-location:empty,
+.profile-modal a.profile-url:empty,
+.profile-modal a.profile-bio:empty {
+    display: none;
 }
