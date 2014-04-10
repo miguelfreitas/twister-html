@@ -11,6 +11,7 @@
 .profile-card-main
 {
     width: 540px;
+    padding: 10px;
     text-align: center;
     position: relative;
     transition: all .2s linear;
@@ -91,6 +92,8 @@
 .forEdition .profile-card-photo
 {
     border: solid 2px #fff;
+    border-radius: 0%;
+    float:none;
     position: relative;
     cursor: pointer;
     transition: all .2s linear;
@@ -145,6 +148,12 @@
 {
     display: inline-block;
 }
+.forEdition .profile-card-main .input-tox,
+.forEdition .profile-card-main .input-bitmessage
+{
+    width: 90%;
+    margin-top: 10px;
+}
 .profile-edition-buttons
 {
     padding: 10px;
@@ -170,10 +179,71 @@
     height: 90%;
 }
 .profile-modal .profile-bio,
-.profile-modal .profile-contact
 {
    min-height: 27px;
    overflow-y: visible;
+}
+#msngrswr {
+    display: none;
+    margin-top: 20px;
+    height: 30px;
+}
+#toxbtnwr, #bmbtnwr {
+    float: left;
+    display: none;
+}
+.bitmessage-ctc, .tox-ctc {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    margin-right: 5px;
+    border: 1px solid #d6d8dc;
+    background: #e3e5ea url(img/clipboard.png) center no-repeat;
+    opacity: .8;
+    -webkit-border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0;
+    -webkit-transition: all 20ms;
+    -moz-transition: all 20ms;
+    -ms-transition: all 20ms;
+    -o-transition: all 20ms;
+    transition: all 20ms;
+}
+.bitmessage-ctc:hover, .tox-ctc:hover {
+    background-color: #f0f2f8;
+    opacity: 1;
+    cursor: pointer;
+}
+.bitmessage-ctc:active, .tox-ctc:active {
+    background-color: #edfced;
+}
+.profile-modal .profile-tox, .profile-modal .profile-bitmessage {
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    border: 1px solid #c0c2c6;
+    opacity: .8;
+    -webkit-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+.profile-modal .profile-tox:hover, .profile-modal .profile-bitmessage:hover {
+    opacity: 1;
+    background-color: #f0f2f8;
+}
+.profile-modal .profile-tox:active, .profile-modal .profile-bitmessage:active {
+    background-color: #edfced;
+}
+.profile-modal .profile-tox {
+    background: #e3e5ea url(../img/tox.png) center no-repeat;
+}
+.profile-modal .profile-bitmessage {
+    background: #e3e5ea url(../img/bm.png) center no-repeat;
 }
 .profile-modal .profile-data
 {

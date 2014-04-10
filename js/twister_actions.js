@@ -170,6 +170,8 @@ function updateProfileData(profileModalContent, username) {
     getLocation( username, profileModalContent.find(".profile-location") );
     getWebpage( username, profileModalContent.find(".profile-url") );
     getBio( username, profileModalContent.find(".profile-bio") );
+    getTox( username, profileModalContent.find(".profile-tox") );
+    getBitmessage( username, profileModalContent.find(".profile-bitmessage") );
     getAvatar( username, profileModalContent.find(".profile-card-photo") );
     getPostsCount( username,  profileModalContent.find(".posts-count") );
     getFollowers( username, profileModalContent.find(".followers-count") );
