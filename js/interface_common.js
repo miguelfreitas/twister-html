@@ -974,11 +974,71 @@ var retweetSubmit = function(e)
     closeModal($this);
 }
 
+function changeStyle() {
+    var style, profile, menu;
+    var theme = $.Options.getTheme();
+    if(theme == 'original')
+    {
+        style = 'css/style.css';
+        profile = 'css/profile.css';
+        menu = '.original_menu';
+        $(".userMenu-dhtindicator").hide();
+    }else
+    {
+        style = 'theme_calm/css/style.css';
+        profile = 'theme_calm/css/profile.css';
+        menu = '.calm_menu';
+    }
+    $('#stylecss').attr('href', style);
+    $('#profilecss').attr('href', profile);
+    setTimeout(function(){$(menu).removeAttr('style')}, 0);
+}
 
+function mensAutocomplete() {
+        var suggests = [];
+
+        for(var i = 0; i < followingUsers.length; i++){
+                if(followingUsers[i] == localStorage.defaultScreenName) continue;
+                suggests.push(followingUsers[i]);
+        }
+        suggests.reverse();
+        $('textarea').textcomplete([
+    { // html
+        mentions: suggests,
+        match: /\B@(\w*)$/,
+        search: function (term, callback) {
+            callback($.map(this.mentions, function (mention) {
+                return mention.indexOf(term) === 0 ? mention : null;
+            }));
+        },
+        index: 1,
+        replace: function (mention) {
+            return '@' + mention + ' ';
+        }
+    }
+])
+}
 
 function initInterfaceCommon() {
     $( "body" ).on( "click", function(event) { 
         if($(event.target).hasClass('cancel')) closeModal($(this));
+    });
+    $(".cancel").on('click', function(event){
+        if(!$(event.target).hasClass("cancel")) return;
+        if($(".modal-content").attr("style") != undefined){$(".modal-content").removeAttr("style")};
+        $('.modal-back').css('display', 'none');
+    });
+    $('.modal-back').on('click', function(){
+        if($('.modal-content .direct-messages-list')[0]) return;
+        directMessagesPopup();
+        $(".modal-content").removeAttr("style");
+    });
+    $('.dropdown-menu').on('keydown', function(e){
+            e = event || window.event;
+            e.stopPropagation();
+    })
+    $('.post-text').on('click', 'a', function(e){
+            e.stopPropagation();
     });
     $( ".post-reply" ).bind( "click", postReplyClick );
     $( ".post-propagate" ).bind( "click", reTwistPopup );

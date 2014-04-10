@@ -1,11 +1,4 @@
 $(function(){
-	$('.dropdown-menu').on('keydown', function(e){
-		e = event || window.event;
-		e.stopPropagation();
-	})
-	$('.post-text').on('click', 'a', function(e){
-		e.stopPropagation();
-	});
 	$('#showqr').on('click', function(){
 		if($('#qrcode img')[0]) return;
          var skey = document.getElementById('skey').innerText;
@@ -36,65 +29,7 @@ $(function(){
 	setTimeout(dhtIndicatorBg, 300);
 	setTimeout(function() {setInterval(dhtIndicatorBg, 2000)}, 400);
 
-function modalDMIntr() {
-	$(".cancel").on('click', function(event){
-		if(!$(event.target).hasClass("cancel")) return;
-		if($(".modal-content").attr("style") != undefined){$(".modal-content").removeAttr("style")};
-		$('.modal-back').css('display', 'none');
-	});
-	$('.modal-back').on('click', function(){
-		if($('.modal-content .direct-messages-list')[0]) return;
-		directMessagesPopup();
-		$(".modal-content").removeAttr("style");
-	});
-};
-
-function mensAutocomplete() {
-	var suggests = [];
-	
-	for(var i = 0; i < followingUsers.length; i++){
-		if(followingUsers[i] == localStorage.defaultScreenName) continue;
-		suggests.push(followingUsers[i]);
-	}
-	suggests.reverse();
-	$('textarea').textcomplete([
-    { // html
-        mentions: suggests,
-        match: /\B@(\w*)$/,
-        search: function (term, callback) {
-            callback($.map(this.mentions, function (mention) {
-                return mention.indexOf(term) === 0 ? mention : null;
-            }));
-        },
-        index: 1,
-        replace: function (mention) {
-            return '@' + mention + ' ';
-        }
-    }
-])
-}
-
-function changeStyle() {
-	var style, profile, menu;
-	var theme = $.Options.getTheme();
-	if(theme == 'original')
-	{
-		style = 'css/style.css';
-		profile = 'css/profile.css';
-		menu = '.original_menu';
-		$(".userMenu-dhtindicator").hide();
-	}else 
-	{
-		style = 'theme_calm/css/style.css';
-		profile = 'theme_calm/css/profile.css';
-		menu = '.calm_menu';
-	}
-	$('#stylecss').attr('href', style);
-	$('#profilecss').attr('href', profile);
-	setTimeout(function(){$(menu).removeAttr('style')}, 0);
-}
 
 function homeIntInit () {
-	modalDMIntr ();
 	setTimeout(mensAutocomplete, 800);
 }
