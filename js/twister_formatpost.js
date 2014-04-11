@@ -63,6 +63,7 @@ function postToElem( post, kind ) {
     postData.attr('data-content_to_sigrt', content_to_sigrt);
     postData.attr('data-screen-name', n);
     postData.attr('data-id', k);
+    postData.attr('data-lastk', userpost["lastk"]);
     postData.attr('data-text', msg);
     if( "reply" in userpost ) {
         postData.attr('data-replied-to-screen-name', userpost["reply"]["n"]);

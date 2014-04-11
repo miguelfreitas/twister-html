@@ -95,8 +95,19 @@ function requestRTs(postLi)
     }
 }
 
+var profilePostsLoading = false;
+
 function requestPostRecursively(containerToAppend,username,resource,count)
 {
+    if( !resource ) {
+        var streamItems = containerToAppend.children();
+        if( streamItems.length != 0 ) {
+            var lastItem = streamItems.eq(streamItems.length-1);
+            resource = "post" + lastItem.find(".post-data").attr("data-lastk");
+        }
+    }
+
+    profilePostsLoading = true;
     dhtget( username, resource, "s",
             function(args, postFromJson) {
                if( postFromJson ) {
@@ -114,7 +125,11 @@ function requestPostRecursively(containerToAppend,username,resource,count)
                            lastk = userpost["k"] - 1; // not true with directmsgs in stream
 
                        requestPostRecursively(args.containerToAppend, n, "post"+lastk, count-1);
+                   } else {
+                       profilePostsLoading = false;
                    }
+               } else {
+                   profilePostsLoading = false;
                }
            }, {containerToAppend:containerToAppend, count:count} );
 }
@@ -179,7 +194,17 @@ function updateProfileData(profileModalContent, username) {
     
     profileModalContent.find(".following-count").parent().attr("href", $.MAL.followingUrl(username));
 
-    requestPostRecursively(profileModalContent.find(".postboard-posts"),username,"status",10);
+    var postsView = profileModalContent.find(".postboard-posts");
+    requestPostRecursively(postsView,username,"status",10);
+
+    postsView.scroll(function(){
+        if (!profilePostsLoading) {
+            var $this = $(this);
+            if ($this.scrollTop() >= this.scrollHeight - $this.height() - 20) {
+                requestPostRecursively($this,username,"",10);
+            }
+        }
+     });
 }
 
 function updateFollowingData(followingModalContent, username) {
