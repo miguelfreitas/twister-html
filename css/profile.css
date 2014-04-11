@@ -59,7 +59,8 @@
 }
 .profile-card .direct-messages,
 .profile-card .direct-messages-with-user,
-.profile-card .follow
+.profile-card .follow,
+.profile-card .unfollow
 {
     display: block;
     position: absolute;
@@ -74,15 +75,24 @@
     border: none;
     transition: all .2s linear;
 }
-.profile-card .follow
+.profile-card .follow,
+.profile-card .unfollow
 {
     right: 135px;
+}
+.profile-card .unfollow
+{
+    background-color: rgba( 0, 0, 0, .3 );
 }
 .profile-card .direct-messages:hover,
 .profile-card .direct-messages-with-user:hover,
 .profile-card .follow:hover
 {
     background: rgba( 0, 0, 0, .3 );
+}
+.profile-card .unfollow:hover
+{
+    background: rgba( 0, 0, 0, .1 );
 }
 .profile-card.forEdition
 {
@@ -177,11 +187,6 @@
 {
     padding: 3px;
     height: 90%;
-}
-.profile-modal .profile-bio,
-{
-   min-height: 27px;
-   overflow-y: visible;
 }
 #msngrswr {
     display: none;
@@ -297,7 +302,8 @@
 */
 .profile-modal .direct-messages,
 .profile-modal .direct-messages-with-user,
-.profile-modal .follow
+.profile-modal .follow,
+.profile-modal .unfollow
 {
     bottom: 10px;
 }

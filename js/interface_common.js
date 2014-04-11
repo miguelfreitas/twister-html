@@ -123,7 +123,7 @@ function openProfileModal(e)
     
     //hed//add dinamic follow button in profile modal window
     if(followingUsers.indexOf(username) != -1){
-        $('.profile-card button.followButton').first().removeClass('follow').addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
+        $('.profile-card button.followButton').first().removeClass('follow').addClass('unfollow').text(polyglot.t('Unfollow')).on('click', function(){
             unfollow(username);
         });
     };
