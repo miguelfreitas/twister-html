@@ -981,16 +981,15 @@ function changeStyle() {
     {
         style = 'css/style.css';
         profile = 'css/profile.css';
-        menu = '.original_menu';
-        $(".userMenu-dhtindicator").hide();
     }else
     {
         style = 'theme_calm/css/style.css';
         profile = 'theme_calm/css/profile.css';
-        menu = '.calm_menu';
     }
     $('#stylecss').attr('href', style);
     $('#profilecss').attr('href', profile);
+    $("<style type='text/css'> .selectable_theme{display:none!important;}\n" +
+       ".theme_" + theme + "{display:block!important;}</style>").appendTo("head");
     setTimeout(function(){$(menu).removeAttr('style')}, 0);
 }
 

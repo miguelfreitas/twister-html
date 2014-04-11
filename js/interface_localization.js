@@ -1829,7 +1829,6 @@ var fixedLabels = [
 
   // navbar and home
   "button",
-  ".userMenu > ul > li > a",
   ".postboard-news",
   ".post-area-new textarea",
   ".refresh-users, .view-all-users",

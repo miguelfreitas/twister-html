@@ -40,13 +40,13 @@
   <!-- MENU SUPERIOR INIT --> 
   <nav class="userMenu">
     <ul>
-      <li class="userMenu-home"><a href="home.html">Home</a></li>
-      <li class="userMenu-network"><a href="network.html">Network</a></li>
-      <li class="userMenu-profile"><a href="profile-edit.html">Profile</a></li>
+      <li class="userMenu-home"><a href="home.html"><span class="selectable_theme theme_original label">Home</span></a></li>
+      <li class="userMenu-network selectable_theme theme_original"><a class="label" href="network.html">Network</a></li>
+      <li class="userMenu-profile selectable_theme theme_original"><a class="label" href="profile-edit.html">Profile</a></li>
       <li class="userMenu-config current">
         <a class="userMenu-config-dropdown" href="#">
           <div class="config-menu dialog-modal">
-            <div class="mini-profile-info">
+            <div class="mini-profile-info selectable_theme theme_original">
               <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
               <a href="#" class="mini-profile-name">Fulano da Silva</a>
               <span class="mini-profile-view">View</span>
@@ -56,20 +56,21 @@
             <a class="dropdown-menu-item" href="following.html">Following users</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
             <a class="dropdown-menu-item" href="login.html">Change user</a>
-            <a class="direct-messages" href="#">Direct Messages</a>
+            <a class="direct-messages selectable_theme theme_original" href="#">Direct Messages</a>
           </div>
         </a>
       </li>
       <li class="userMenu-connections">
         <a href="#">
-          <span class="messages-qtd" style="display:none;">12</span>
+          <span class="messages-qtd" style="display:none;">0</span>
         </a>
       </li>
       <li class="userMenu-messages">
         <a href="#">
-          <span class="messages-qtd" style="display:none;">12</span>
+          <span class="messages-qtd" style="display:none;">0</span>
         </a>
       </li>
+      <li class="userMenu-dhtindicator selectable_theme theme_calm"><a href="network.html"></a></li>
 
       <!-- BUSCA -->
       <li class="userMenu-search">
