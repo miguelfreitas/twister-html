@@ -374,8 +374,10 @@
               <img class="profile-card-photo" src="img/grayed_avatar_placeholder_24.png"/>
               <h1 class="profile-name"></h1>
               <h2 class="profile-screen-name">@<b></b></h2>
-              <span class="profile-location"></span>
-              <a class="profile-url" rel="nofollow" target="_blank"></a>
+              <div>
+                <span class="profile-location"></span>
+                <a class="profile-url" rel="nofollow" target="_blank"></a>
+              </div>
               <div class="profile-bio"></div>
               <div id="msngrswr">
                 <div id="toxbtnwr">
@@ -386,11 +388,13 @@
                 </div>
               </div>
             </div>
-            <ul class="module profile-data">
-              <li><a href="#"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
-              <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
-              <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span></a></li>
-            </ul>
+            <div class="clearfix">
+              <ul class="module profile-data">
+                <li><a href="#"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
+                <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+                <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span></a></li>
+              </ul>
+            </div>
             <button class="followButton follow" href="#">Follow</button>
             <button class="direct-messages-with-user" href="#">Direct Messages</button>
 

@@ -74,6 +74,13 @@ h3
     font-size: 14px;
     color: rgba( 0, 0, 0, .5 );
 }
+.clearfix:before,
+.clearfix:after
+{
+    display: block;
+    content: "";
+    clear: both;
+}
 /*************************************
 **************************** BUTTONS **
 **************************************/
