@@ -60,7 +60,7 @@
 .profile-card .direct-messages,
 .profile-card .direct-messages-with-user,
 .profile-card .follow,
-.profile-card .unfollow
+.profile-card .profileUnfollow
 {
     display: block;
     position: absolute;
@@ -76,11 +76,11 @@
     transition: all .2s linear;
 }
 .profile-card .follow,
-.profile-card .unfollow
+.profile-card .profileUnfollow
 {
     right: 135px;
 }
-.profile-card .unfollow
+.profile-card .profileUnfollow
 {
     background-color: rgba( 0, 0, 0, .3 );
 }
@@ -90,7 +90,7 @@
 {
     background: rgba( 0, 0, 0, .3 );
 }
-.profile-card .unfollow:hover
+.profile-card .profileUnfollow:hover
 {
     background: rgba( 0, 0, 0, .1 );
 }
@@ -303,7 +303,7 @@
 .profile-modal .direct-messages,
 .profile-modal .direct-messages-with-user,
 .profile-modal .follow,
-.profile-modal .unfollow
+.profile-modal .profileUnfollow
 {
     bottom: 10px;
 }
