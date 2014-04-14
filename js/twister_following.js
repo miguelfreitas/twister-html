@@ -354,8 +354,20 @@ function closeSearchDialog()
     _lastSearchUsersResults = [];
 }
 
-function userSearchKeypress(item) {
+function userSearchKeypress(event) {
     var partialName = $(".userMenu-search-field").val().toLowerCase();
+    var searchResults = $(".search-results");
+    
+    if ( partialName.substr( 0, 1 ) == '#' ) {
+      
+        if(searchResults.is(":visible"))
+            searchResults.slideUp( "fast" );
+
+        if ( event.which == 13 )
+            openHashtagModalFromSearch(partialName.substr(1));
+
+        return;
+    }
 
     if ( partialName.substr( 0, 1 ) == '@' ) {
         partialName = partialName.substr( 1 );

@@ -205,7 +205,8 @@ if(preferredLanguage == "en"){
       "Custom": "Custom",
       "Mentions": "Mentions",
       "Use proxy for image preview only": "Use proxy for image preview only",
-      "Use external links behind a proxy": "Use external links behind a proxy"
+      "Use external links behind a proxy": "Use external links behind a proxy",
+      "There aren't any posts with this hashtag.": "There aren't any posts with this hashtag.",
     };
 }
 if(preferredLanguage == "es"){
