@@ -94,7 +94,7 @@ var MAL = function()
                 newTweetsBar.text("Refresh");
             }
         } else {
-            var newTweetsBar = $(".postboard-news");
+            var newTweetsBar = $(".wrapper").find(".postboard-news");
             if( newPosts ) {
                 document.title = "(" + String(newPosts) + ") twister";
                 newTweetsBar.text(String(newPosts) + " new posts");
