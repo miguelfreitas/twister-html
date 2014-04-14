@@ -236,6 +236,9 @@ function processHashtag(postboard, hashtag, data) {
                 _hashtagPendingPosts.push(data[i]);
             }
         }
+        
+        if(!postboard.children().length&&!_hashtagPendingPosts.length)
+            postboard.closest("div").find(".no-posts-found-message").show();
 
         if( _hashtagPendingPosts.length ) {
             if( !postboard.children().length || autoUpdateHashtag ) {
@@ -245,6 +248,7 @@ function processHashtag(postboard, hashtag, data) {
                 newTweetsBar.text(polyglot.t("new_posts", _hashtagPendingPosts.length));
                 newTweetsBar.fadeIn("slow");
             }
+            postboard.closest("div").find(".no-posts-found-message").hide();
         }
     }
 }

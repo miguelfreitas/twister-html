@@ -5,8 +5,6 @@
 // Profile, mentions and hashtag modal
 // Post actions: submit, count characters
 
-var preventSlide = false;
-
 //dispara o modal genérico
 //o modalClass me permite fazer tratamentos específicos de CSS para cada modal
 function openModal( modalClass )
@@ -161,6 +159,19 @@ function openHashtagModal(e)
     $( "."+hashtagModalClass + " h3" ).text( "#" + hashtag );
 }
 
+function openHashtagModalFromSearch(hashtag)
+{
+    var hashtagModalClass = "hashtag-modal";
+    openModal( hashtagModalClass );
+    $( "."+hashtagModalClass ).attr("data-resource","hashtag");
+
+    var hashtagModalContent = newHashtagModal( hashtag );
+    hashtagModalContent.appendTo("." +hashtagModalClass + " .modal-content");
+
+    //título do modal
+    $( "."+hashtagModalClass + " h3" ).text( "#" + hashtag );
+}
+
 function updateHashtagModal(postboard,hashtag) {
     var $hashtagModalClass = $(".hashtag-modal");
     if( !$hashtagModalClass.length || $hashtagModalClass.css("display") == 'none' )
@@ -239,7 +250,7 @@ var reTwistPopup = function( e )
 {
     if(!defaultScreenName)
     {
-	preventSlide=true;
+	e.stopPropagation();
 	alert(polyglot.t("You have to log in to retransmit messages."));
 	return;
     }
@@ -317,14 +328,7 @@ var postExpandFunction = function( e, postLi )
 
     var openClass = "open";
     
-    //This is used in "guest mode", when user gets an alert that he can't reply or retransmit
-    //when not logged in. Otherwise, this click would also be understood as a command to open/close
-    //the post, which would look weird.
-    if(preventSlide)
-    {
-	preventSlide=false;
-    }
-    else if( !postLi.hasClass( openClass ) ) {
+    if( !postLi.hasClass( openClass ) ) {
         originalPost.detach();
         postLi.empty();
         postLi.addClass( openClass );
@@ -388,7 +392,7 @@ var postReplyClick = function( e )
 {
     if(!defaultScreenName)
     {
-	preventSlide=true;
+	e.stopPropagation();
 	alert(polyglot.t("You have to log in to post replies."));
 	return;
     }
