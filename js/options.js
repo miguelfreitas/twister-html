@@ -243,6 +243,28 @@ var TwisterOptions = function()
         });
     }
 
+    this.getSplitPostsOpt = function (){
+        return $.Options.getOption('splitPosts', 'disable');
+    }
+
+    this.setSplitPostsOpt = function (){
+        $('#splitPosts')[0].value = this.getSplitPostsOpt();
+
+        if (this.getSplitPostsOpt() === 'enable')
+            $("#splitPostWarning")[0].style.display = "inline";
+        else
+            $("#splitPostWarning")[0].style.display = "none";
+
+        $('#splitPosts').on('change', function (){
+            $.Options.setOption(this.id, this.value);
+
+            if (this.value === 'enable')
+                $("#splitPostWarning")[0].style.display = "inline";
+            else
+                $("#splitPostWarning")[0].style.display = "none";
+        });
+    }
+
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
@@ -258,6 +280,7 @@ var TwisterOptions = function()
         this.setConvertFractionsOpt();
         this.setUseProxyOpt();
         this.setUseProxyForImgOnlyOpt();
+        this.setSplitPostsOpt();
     }
 }
 

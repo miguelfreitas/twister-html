@@ -207,6 +207,11 @@ if(preferredLanguage == "en"){
       "Use proxy for image preview only": "Use proxy for image preview only",
       "Use external links behind a proxy": "Use external links behind a proxy",
       "There aren't any posts with this hashtag.": "There aren't any posts with this hashtag.",
+      "Mentions at replies aren't handled!": "Mentions at replies aren't handled!",
+      "Split only new post": "Split only new post",
+      "Split all": "Split all",
+      "Don't split": "Don't split",
+      "Split long posts": "Split long posts"
     };
 }
 if(preferredLanguage == "es"){
@@ -1811,7 +1816,13 @@ if(preferredLanguage == "tr"){
       "No one can mention you because you are not logged in.": "Giriş yapmadığınız için kimse adınıza mesaj gönderemiyor.",
       "You don't have any profile because you are not logged in.": "Giriş yapmadığınız için profiliniz yok.",
       "Use proxy for image preview only": "Vekil sunucuyu sadece resim ön izleme için kullan",
-      "Use external links behind a proxy": "Harici bağlantılar için vekil sunucu kullan"
+      "Use external links behind a proxy": "Harici bağlantılar için vekil sunucu kullan",
+      "There aren't any posts with this hashtag.": "Bu etiketle ilgili gönderi yok.",
+      "Mentions at replies aren't handled!": "Cevaplardaki isimler yönetilmiyor!",
+      "Split only new post": "Sadece yeni postaları böl",
+      "Split all": "Hepsini böl",
+      "Don't split": "Bölme",
+      "Split long posts": "Uzun gönderileri böl"
     };
 }
 
