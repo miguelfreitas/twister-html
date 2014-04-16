@@ -476,9 +476,12 @@ function replyTextKeypress(e) {
                     $tas[i + 1].value = $tas[i].value.substr(ci) + $tas[i + 1].value;
                     $tas[i].value = $tas[i].value.substr(0, ci);
 
-                    splitedPosts[i] = $tas[i].value;
                     splitedPosts[i+1] = $tas[i + 1].value;
+                } else if ($tas[i].value.length === 0) {
+                    $($tas[i]).remove();
+                    splitedPosts.splice(i, 1);
                 }
+                splitedPosts[i] = $tas[i].value;
             }
             c = 140 - splitedPosts[splitedPosts.length - 1].length;
         }
@@ -505,7 +508,7 @@ function replyTextKeypress(e) {
             if ($tas.length < splitedPosts.length){
                 tweetForm.find(".textcomplete-wrapper").prepend("<textarea class='splited-post'></textarea>");
                 $tas = tweetForm.find("textarea");
-                $tas.on("click", function(e) {e.stopPropagation()});
+                $($tas[0]).on("click", function(e) {e.stopPropagation()});
                 $tas.on("blur", replyTextKeypress);
             }
 
@@ -1033,7 +1036,7 @@ var postSubmit = function(e)
 
     if (splitedPosts.length == 1) {
         if (splitedPostsCount > 1)
-            newPostMsg("(" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ") " + $replyText.val(), $postOrig);
+            newPostMsg("(" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ") " + splitedPosts[0], $postOrig);
         else
             newPostMsg($replyText.val(), $postOrig);
 
@@ -1045,7 +1048,7 @@ var postSubmit = function(e)
         $($tas[0]).remove();
 
         newPostMsg("(" + (splitedPostsCount-splitedPosts.length+1).toString() + "/" + splitedPostsCount.toString() + ") " + splitedPosts.shift() + " + ", $postOrig);
-        setTimeout(postSubmit, 1000, $replyText);
+        setTimeout(postSubmit, 1000, $tas);
 
         return;
     }
