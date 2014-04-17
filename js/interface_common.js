@@ -417,7 +417,23 @@ var composeNewPost = function( e, postAreaNew )
     if( !postAreaNew.hasClass("open") ) {
         postAreaNew.addClass( "open" );
         //se o usuário clicar fora é pra fechar
-        postAreaNew.clickoutside( unfocusThis )
+        postAreaNew.clickoutside( unfocusThis );
+
+        if ($.Options.getSplitPostsOpt() === "enable")
+            usePostSpliting = true;
+        else if ($.Options.getSplitPostsOpt() === "only-new") {
+            var $postOrig = postAreaNew.closest(".post-data");
+
+            if (!$postOrig.length) {
+                $postOrig = postAreaNew.closest(".modal-content").find(".post-data");
+            }
+
+            if ($postOrig.length)
+                usePostSpliting = false;
+            else
+                usePostSpliting = true;
+        } else
+            usePostSpliting = false;
     }
 
     var textArea = postAreaNew.find("textarea");
@@ -434,6 +450,10 @@ var unfocusThis = function()
     $this.removeClass( "open" );
 }
 
+var splitedPosts = [""];
+var splitedPostsCount = 1;
+var usePostSpliting = false;
+
 function replyTextKeypress(e) {
     e = e || event;
     var $this = $( this );
@@ -442,10 +462,63 @@ function replyTextKeypress(e) {
         if ($.Options.getUnicodeConversionOpt() !== "disable")
             $this.val(convert2Unicodes($this.val(), $this));
         var c = 140 - $this.val().length;
+        if (usePostSpliting) {
+            if (splitedPosts.length == 0)
+                splitedPosts = [""];
+
+            var $tas = tweetForm.find("textarea");
+            splitedPosts[splitedPosts.length - 1] = $tas[$tas.length - 1].value;
+
+            for (var i = 0; i < $tas.length - 1; i++) {
+                if ($tas[i].value.length > 131) {
+                    var ci = $tas[i].value.lastIndexOf(" ", 131);
+                    ci = (ci == -1 ? 131 : ci);
+                    $tas[i + 1].value = $tas[i].value.substr(ci) + $tas[i + 1].value;
+                    $tas[i].value = $tas[i].value.substr(0, ci);
+
+                    splitedPosts[i+1] = $tas[i + 1].value;
+                } else if ($tas[i].value.length === 0) {
+                    $($tas[i]).remove();
+                    splitedPosts.splice(i, 1);
+                }
+                splitedPosts[i] = $tas[i].value;
+            }
+            c = 140 - splitedPosts[splitedPosts.length - 1].length;
+        }
         var remainingCount = tweetForm.find(".post-area-remaining");
-        remainingCount.text(c);
-        if( c < 0 ) remainingCount.addClass("warn");
-        else        remainingCount.removeClass("warn");
+
+        if( c < 0 ) {
+            if (usePostSpliting){
+                var cp = splitedPosts[splitedPosts.length-1];
+                var ci = cp.lastIndexOf(" ", 131);
+                ci = (ci == -1 ? 131 : ci);
+                splitedPosts[splitedPosts.length-1] = cp.substr(0, ci);
+                splitedPosts.push(cp.substr(ci));
+                splitedPostsCount = splitedPosts.length;
+                c += ci - 1;
+            } else
+                remainingCount.addClass("warn");
+        } else
+            remainingCount.removeClass("warn");
+
+        if (usePostSpliting) {
+            //var np = "";
+            var $tas = tweetForm.find("textarea");
+
+            if ($tas.length < splitedPosts.length){
+                tweetForm.find(".textcomplete-wrapper").prepend("<textarea class='splited-post'></textarea>");
+                $tas = tweetForm.find("textarea");
+                $($tas[0]).on("click", function(e) {e.stopPropagation()});
+                $tas.on("blur", replyTextKeypress);
+            }
+
+            for (var i = 0; i < splitedPosts.length; i++) {
+                $tas[i].value = splitedPosts[i];
+            }
+
+            remainingCount.text(splitedPostsCount.toString() + ". post: " + c.toString());
+        } else
+            remainingCount.text(c.toString());
 
         var tweetAction = tweetForm.find(".post-submit");
         if( !tweetAction.length ) tweetAction = tweetForm.find(".dm-submit");
@@ -938,18 +1011,47 @@ function undoLastUnicode(e) {
 
 var postSubmit = function(e)
 {
-    e.stopPropagation();
-    e.preventDefault();
+    if (!(e instanceof $)) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
     var $this = $( this );
     var $replyText = $this.closest(".post-area-new").find("textarea");
+
+    if (!$replyText.length)
+        $replyText = e;
 
     var $postOrig = $this.closest(".post-data");
 
     if (!$postOrig.length) {
         $postOrig = $this.closest(".modal-content").find(".post-data");
     }
-    
-    newPostMsg($replyText.val(), $postOrig);
+
+    if (splitedPostsCount > 1) {
+        if (splitedPosts.length < splitedPostsCount) {
+            //current part will be sent as reply to the previous part...
+            $postOrig = $("<div data-id='" + lastPostId + "' data-screen-name='" + defaultScreenName + "'></div>");
+        }
+    }
+
+    if (splitedPosts.length == 1) {
+        if (splitedPostsCount > 1)
+            newPostMsg("(" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ") " + splitedPosts[0], $postOrig);
+        else
+            newPostMsg($replyText.val(), $postOrig);
+
+        splitedPosts[0] = '';
+        splitedPostsCount = 1;
+    } else {
+        var $twistform = $replyText.parents("form");
+        var $tas = $twistform.find("textarea");
+        $($tas[0]).remove();
+
+        newPostMsg("(" + (splitedPostsCount-splitedPosts.length+1).toString() + "/" + splitedPostsCount.toString() + ") " + splitedPosts.shift() + " + ", $postOrig);
+        setTimeout(postSubmit, 1000, $tas);
+
+        return;
+    }
 
     $replyText.val("");
     $replyText.attr("placeholder", polyglot.t("Your message was sent!"));
