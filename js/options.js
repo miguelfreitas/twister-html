@@ -247,7 +247,7 @@ var TwisterOptions = function()
         return $.Options.getOption('splitPosts', 'disable');
     }
 
-    this.setSplitPostsOpt = function (){
+    this.setSplitPostsOpt = function () {
         $('#splitPosts')[0].value = this.getSplitPostsOpt();
 
         if (this.getSplitPostsOpt() === 'enable')
@@ -255,13 +255,25 @@ var TwisterOptions = function()
         else
             $("#splitPostWarning")[0].style.display = "none";
 
-        $('#splitPosts').on('change', function (){
+        $('#splitPosts').on('change', function () {
             $.Options.setOption(this.id, this.value);
 
             if (this.value === 'enable')
                 $("#splitPostWarning")[0].style.display = "inline";
             else
                 $("#splitPostWarning")[0].style.display = "none";
+        });
+    }
+
+    this.getHideRepliesOpt = function () {
+        return $.Options.getOption('hideReplies', 'following');
+    }
+
+    this.setHideRepliesOpt = function () {
+        $('#hideReplies')[0].value = this.getHideRepliesOpt();
+
+        $('#hideReplies').on('change', function () {
+            $.Options.setOption(this.id, this.value);
         });
     }
 
@@ -281,6 +293,7 @@ var TwisterOptions = function()
         this.setUseProxyOpt();
         this.setUseProxyForImgOnlyOpt();
         this.setSplitPostsOpt();
+        this.setHideRepliesOpt();
     }
 }
 

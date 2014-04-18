@@ -211,7 +211,12 @@ if(preferredLanguage == "en"){
       "Split only new post": "Split only new post",
       "Split all": "Split all",
       "Don't split": "Don't split",
-      "Split long posts": "Split long posts"
+      "Split long posts": "Split long posts",
+      "Posts that begin with mention": "Posts that begin with mention",
+      "Show all": "Show all",
+      "Show only if I am in": "Show only if I am in",
+      "Show if it's between users I follow": "Show if it's between users I follow",
+      "Postboard displays": "Postboard displays"
     };
 }
 if(preferredLanguage == "es"){
@@ -1822,7 +1827,12 @@ if(preferredLanguage == "tr"){
       "Split only new post": "Sadece yeni postaları böl",
       "Split all": "Hepsini böl",
       "Don't split": "Bölme",
-      "Split long posts": "Uzun gönderileri böl"
+      "Split long posts": "Uzun gönderileri böl",
+      "Posts that begin with mention": "Bahsettiği kullanıcının adıyla başlayan gönderiler",
+      "Show all": "Hepsini göster",
+      "Show only if I am in": "Sadece ben içindeysem göster",
+      "Show if it's between users I follow": "Takip ettiğim kullanıcılar arasında ise göster",
+      "Postboard displays": "Zaman çizelgesinde"
     };
 }
 
