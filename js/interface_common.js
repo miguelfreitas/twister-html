@@ -467,31 +467,45 @@ function replyTextKeypress(e) {
                 splitedPosts = [""];
 
             var $tas = tweetForm.find("textarea");
+            if ($tas.length > 1 && $tas[$tas.length - 1].value.length === 0) {
+                $tas[$tas.length - 1].value = $tas[$tas.length - 2].value;
+                $($tas[$tas.length - 2]).remove();
+                splitedPosts.splice(0, 1);
+            }
+
             splitedPosts[splitedPosts.length - 1] = $tas[$tas.length - 1].value;
 
             for (var i = 0; i < $tas.length - 1; i++) {
-                if ($tas[i].value.length > 131) {
-                    var ci = $tas[i].value.lastIndexOf(" ", 131);
-                    ci = (ci == -1 ? 131 : ci);
+                var pml = 140 - i.toString().length - $tas.length.toLocaleString().length - 6;
+                if ($tas[i].value.length > pml) {
+                    var ci = $tas[i].value.lastIndexOf(" ", pml);
+                    ci = (ci == -1 ? pml : ci);
                     $tas[i + 1].value = $tas[i].value.substr(ci) + $tas[i + 1].value;
                     $tas[i].value = $tas[i].value.substr(0, ci);
 
                     splitedPosts[i+1] = $tas[i + 1].value;
                 } else if ($tas[i].value.length === 0) {
                     $($tas[i]).remove();
-                    splitedPosts.splice(i, 1);
+                    splitedPosts[i] = '';
+                    continue;
                 }
                 splitedPosts[i] = $tas[i].value;
             }
+            for (var i = splitedPosts.length-1; i >= 0; i--) {
+                if (splitedPosts[i].length == 0)
+                    splitedPosts.splice(i, 1);
+            }
+            splitedPostsCount = splitedPosts.length;
             c = 140 - splitedPosts[splitedPosts.length - 1].length;
         }
         var remainingCount = tweetForm.find(".post-area-remaining");
 
         if( c < 0 ) {
             if (usePostSpliting){
+                var pml = 140 - (2*splitedPosts.length.toLocaleString().length) - 6;
                 var cp = splitedPosts[splitedPosts.length-1];
-                var ci = cp.lastIndexOf(" ", 131);
-                ci = (ci == -1 ? 131 : ci);
+                var ci = cp.lastIndexOf(" ", pml);
+                ci = (ci == -1 ? pml : ci);
                 splitedPosts[splitedPosts.length-1] = cp.substr(0, ci);
                 splitedPosts.push(cp.substr(ci));
                 splitedPostsCount = splitedPosts.length;
@@ -502,7 +516,6 @@ function replyTextKeypress(e) {
             remainingCount.removeClass("warn");
 
         if (usePostSpliting) {
-            //var np = "";
             var $tas = tweetForm.find("textarea");
 
             if ($tas.length < splitedPosts.length){
