@@ -216,7 +216,11 @@ if(preferredLanguage == "en"){
       "Show all": "Show all",
       "Show only if I am in": "Show only if I am in",
       "Show if it's between users I follow": "Show if it's between users I follow",
-      "Postboard displays": "Postboard displays"
+      "Postboard displays": "Postboard displays",
+      "RTs those are close to original twist": "RTs those are close to original twist",
+      "Show if the original is older than": "Show if the original is older than",
+      "hour(s)": "hour(s)",
+      "only numbers are allowed!": "only numbers are allowed!"
     };
 }
 if(preferredLanguage == "es"){
@@ -1832,7 +1836,11 @@ if(preferredLanguage == "tr"){
       "Show all": "Hepsini göster",
       "Show only if I am in": "Sadece ben içindeysem göster",
       "Show if it's between users I follow": "Takip ettiğim kullanıcılar arasında ise göster",
-      "Postboard displays": "Zaman çizelgesinde"
+      "Postboard displays": "Zaman çizelgesinde",
+      "RTs those are close to original twist": "Orjinal twist'e yakın olan RTler",
+      "Show if the original is older than": "Orjinali yandaki süreden daha eskiyse göster",
+      "hour(s)": "saat",
+      "only numbers are allowed!": "sadece rakam girilebilir!"
     };
 }
 

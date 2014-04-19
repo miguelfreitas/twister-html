@@ -277,6 +277,49 @@ var TwisterOptions = function()
         });
     }
 
+    this.getHideCloseRTsOpt = function () {
+        return $.Options.getOption('hideCloseRTs', 'disable');
+    };
+
+    this.setHideCloseRTsOpt = function () {
+        $('#hideCloseRTs')[0].value = this.getHideCloseRTsOpt();
+
+        if (this.getHideCloseRTsOpt() === 'disable') {
+            $('#hideCloseRTsDesc')[0].style.display = 'none';
+        } else {
+            $('#hideCloseRTsDesc')[0].style.display = 'inline';
+        }
+
+        $('#hideCloseRTs').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+
+            if (this.value === 'disable') {
+                $('#hideCloseRTsDesc')[0].style.display = 'none';
+            } else {
+                $('#hideCloseRTsDesc')[0].style.display = 'inline';
+            }
+        });
+    };
+
+    this.getHideCloseRTsHourOpt = function () {
+        return parseInt($.Options.getOption('hideCloseRtsHour', '1'));
+    };
+
+    this.setHideCloseRTsHourOpt = function () {
+        $('#hideCloseRtsHour')[0].value = this.getHideCloseRTsHourOpt().toString();
+
+        $('#hideCloseRtsHour').on('keyup', function () {
+            if (/^\d+$/.test(this.value)) {
+                this.style.backgroundColor = '';
+                $.Options.setOption(this.id, this.value);
+                $(this).next('span').text(polyglot.t('hour(s)'));
+            } else {
+                this.style.backgroundColor = '#f00';
+                $(this).next('span').text(polyglot.t('only numbers are allowed!'));
+            }
+        });
+    };
+
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
@@ -294,6 +337,8 @@ var TwisterOptions = function()
         this.setUseProxyForImgOnlyOpt();
         this.setSplitPostsOpt();
         this.setHideRepliesOpt();
+        this.setHideCloseRTsHourOpt();
+        this.setHideCloseRTsOpt();
     }
 }
 

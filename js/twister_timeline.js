@@ -319,8 +319,17 @@ function willBeHiden(post){
                 ($.Options.getHideRepliesOpt() === 'following' &&
                  followingUsers.indexOf(msg.substring(1, msg.search(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n/))) === -1 ))
             {
-                return true
+                return true;
             }
     }
+
+    if (typeof(post['userpost']['rt']) !== 'undefined' &&
+        $.Options.getHideCloseRTsOpt() != 'disable' &&
+        followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
+        parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.getHideCloseRTsHourOpt() * 3600)
+    {
+        return true;
+    }
+
     return false;
 }
