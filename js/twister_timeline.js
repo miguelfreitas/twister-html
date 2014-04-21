@@ -310,8 +310,11 @@ function timelineChangedUser()
 
 function willBeHiden(post){
     var msg = post['userpost']['msg'];
-    if (post['userpost']['n'] !== defaultScreenName &&
-        $.Options.getHideRepliesOpt() !== 'disable' &&
+
+    if (post['userpost']['n'] === defaultScreenName)
+        return false;
+
+    if ($.Options.getHideRepliesOpt() !== 'disable' &&
         /^\@/.test(msg) &&
         !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|$)').test(msg)))
     {
