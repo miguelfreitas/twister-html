@@ -491,7 +491,7 @@ function replyTextKeypress(e) {
                 }
                 splitedPosts[i] = $tas[i].value;
             }
-            for (var i = splitedPosts.length-1; i >= 0; i--) {
+            for (var i = splitedPosts.length-1; i > 0; i--) {
                 if (splitedPosts[i].length == 0)
                     splitedPosts.splice(i, 1);
             }
@@ -1047,7 +1047,7 @@ var postSubmit = function(e)
         }
     }
 
-    if (splitedPosts.length == 1) {
+    if (splitedPosts.length <= 1) {
         if (splitedPostsCount > 1)
             newPostMsg("(" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ") " + splitedPosts[0], $postOrig);
         else
