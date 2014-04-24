@@ -144,7 +144,7 @@ function processReceivedPosts(req, posts)
     var p2a = posts.length;
     for( var i = 0; i < posts.length; i++ ) {
         var post = posts[i];
-        if (willBeHiden(post)) {
+        if (willBeHidden(post)) {
             p2a--;
             continue;
         }
@@ -280,8 +280,7 @@ function processNewPostsConfirmation(expected, posts)
     //we don't want to produce alert for the posts that won't be displayed
     var p2h = 0;
     for( var i = posts.length-1; i >= 0; i-- ) {
-        if (willBeHiden(posts[i])) {
-            //posts.splice(i, 1);
+        if (willBeHidden(posts[i])) {
             p2h++;
         }
     }
@@ -308,8 +307,9 @@ function timelineChangedUser()
     timelineLoaded = false;
 }
 
-function willBeHiden(post){
+function willBeHidden(post){
     var msg = post['userpost']['msg'];
+    var hidden = false;
 
     if (post['userpost']['n'] === defaultScreenName)
         return false;
@@ -322,7 +322,7 @@ function willBeHiden(post){
                 ($.Options.getHideRepliesOpt() === 'following' &&
                  followingUsers.indexOf(msg.substring(1, msg.search(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n/))) === -1 ))
             {
-                return true;
+                hidden = true;
             }
     }
 
@@ -331,8 +331,11 @@ function willBeHiden(post){
         followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
         parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.getHideCloseRTsHourOpt() * 3600)
     {
-        return true;
+        if (hidden)
+            return false;
+        else
+            return true;
     }
 
-    return false;
+    return hidden;
 }
