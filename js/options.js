@@ -247,7 +247,7 @@ var TwisterOptions = function()
         return $.Options.getOption('splitPosts', 'disable');
     }
 
-    this.setSplitPostsOpt = function (){
+    this.setSplitPostsOpt = function () {
         $('#splitPosts')[0].value = this.getSplitPostsOpt();
 
         if (this.getSplitPostsOpt() === 'enable')
@@ -255,7 +255,7 @@ var TwisterOptions = function()
         else
             $("#splitPostWarning")[0].style.display = "none";
 
-        $('#splitPosts').on('change', function (){
+        $('#splitPosts').on('change', function () {
             $.Options.setOption(this.id, this.value);
 
             if (this.value === 'enable')
@@ -264,6 +264,61 @@ var TwisterOptions = function()
                 $("#splitPostWarning")[0].style.display = "none";
         });
     }
+
+    this.getHideRepliesOpt = function () {
+        return $.Options.getOption('hideReplies', 'following');
+    }
+
+    this.setHideRepliesOpt = function () {
+        $('#hideReplies')[0].value = this.getHideRepliesOpt();
+
+        $('#hideReplies').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+        });
+    }
+
+    this.getHideCloseRTsOpt = function () {
+        return $.Options.getOption('hideCloseRTs', 'disable');
+    };
+
+    this.setHideCloseRTsOpt = function () {
+        $('#hideCloseRTs')[0].value = this.getHideCloseRTsOpt();
+
+        if (this.getHideCloseRTsOpt() === 'disable') {
+            $('#hideCloseRTsDesc')[0].style.display = 'none';
+        } else {
+            $('#hideCloseRTsDesc')[0].style.display = 'inline';
+        }
+
+        $('#hideCloseRTs').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+
+            if (this.value === 'disable') {
+                $('#hideCloseRTsDesc')[0].style.display = 'none';
+            } else {
+                $('#hideCloseRTsDesc')[0].style.display = 'inline';
+            }
+        });
+    };
+
+    this.getHideCloseRTsHourOpt = function () {
+        return parseInt($.Options.getOption('hideCloseRtsHour', '1'));
+    };
+
+    this.setHideCloseRTsHourOpt = function () {
+        $('#hideCloseRtsHour')[0].value = this.getHideCloseRTsHourOpt().toString();
+
+        $('#hideCloseRtsHour').on('keyup', function () {
+            if (/^\d+$/.test(this.value)) {
+                this.style.backgroundColor = '';
+                $.Options.setOption(this.id, this.value);
+                $(this).next('span').text(polyglot.t('hour(s)'));
+            } else {
+                this.style.backgroundColor = '#f00';
+                $(this).next('span').text(polyglot.t('only numbers are allowed!'));
+            }
+        });
+    };
 
     this.InitOptions = function() {
         this.soundNotifOptions();
@@ -281,6 +336,9 @@ var TwisterOptions = function()
         this.setUseProxyOpt();
         this.setUseProxyForImgOnlyOpt();
         this.setSplitPostsOpt();
+        this.setHideRepliesOpt();
+        this.setHideCloseRTsHourOpt();
+        this.setHideCloseRTsOpt();
     }
 }
 
