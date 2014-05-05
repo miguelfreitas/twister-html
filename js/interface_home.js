@@ -97,6 +97,26 @@ var InterfaceFunctions = function()
                         }
                      });
 
+                     loadSessionData();
+                     //geting followings of following...
+                     for(var i = 0; i < followingUsers.length; i++) {
+                        if (typeof(followingsFollowings[followingUsers[i]]) === 'undefined') {
+                            loadFollowingFromDht(followingUsers[i], 1, [], 0, function (args, following, seqNum) {
+                                if (following.indexOf(defaultScreenName) > -1) {
+                                    if (knownFollowers.indexOf(args) < 0)
+                                        knownFollowers.push(args);
+                                } else {
+                                    if (notFollowers.indexOf(args) < 0)
+                                        notFollowers.push(args);
+                                }
+                                $(".open-followers").attr("title", knownFollowers.length.toString());
+
+                                followingsFollowings[args] = following;
+                            }, followingUsers[i]);
+                        }
+                     }
+                     storeSessionData();
+
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
@@ -117,7 +137,7 @@ var InterfaceFunctions = function()
                                 function(args, ret) {
                                    console.log("Error with gettrendinghashtags. Older twister daemon?");
                                 }, {});
-                     
+
                      if( args.cbFunc )
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});

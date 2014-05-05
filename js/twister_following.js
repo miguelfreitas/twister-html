@@ -5,6 +5,9 @@
 // Provides random user suggestions to follow.
 
 var followingUsers = [];
+var knownFollowers = [];
+var notFollowers = [];
+var followingsFollowings = {};
 var _isFollowPublic = {};
 var _followsPerPage = 200;
 var _maxFollowingPages = 50;
@@ -39,6 +42,28 @@ function saveFollowingToStorage() {
     ns.localStorage.set("isFollowPublic", _isFollowPublic);
     ns.localStorage.set("followingSeqNum", _followingSeqNum);
     ns.localStorage.set("lastLoadFromDhtTime", _lastLoadFromDhtTime);
+}
+
+// load followers & following's followings from sessionStorage
+function loadSessionData() {
+    var ns = $.initNamespaceStorage(defaultScreenName);
+
+    if (ns.sessionStorage.isSet("followingsFollowings"))
+        followingsFollowings = ns.sessionStorage.get("followingsFollowings");
+
+    if (ns.sessionStorage.isSet("followers"))
+        knownFollowers = ns.sessionStorage.get("followers");
+
+    if (ns.sessionStorage.isSet("notFollowers"))
+        notFollowers = ns.sessionStorage.get("notFollowers");
+}
+
+// save list of followers & following's followings to sessionStorage
+function storeSessionData() {
+    var ns = $.initNamespaceStorage(defaultScreenName);
+    ns.sessionStorage.set("followingsFollowings", followingsFollowings);
+    ns.sessionStorage.set("followers", knownFollowers);
+    ns.sessionStorage.set("notFollowers", notFollowers);
 }
 
 // load public list of following users from dht resources
@@ -256,33 +281,60 @@ function getRandomFollowSuggestion(cbFunc, cbArg) {
         return;
     }
 
-    var i;
-    do{
-        var i = parseInt( Math.random() * followingUsers.length );
-    } while( i < followingUsers.length && followingUsers[i] == defaultScreenName);
+    var i = parseInt( Math.random() * followingUsers.length );
+
+    if ( (i < followingUsers.length && followingUsers[i] == defaultScreenName) ||
+         typeof(followingsFollowings[followingUsers[i]]) === 'undefined') {
+
+        setTimeout(getRandomFollowSuggestion, 500, cbFunc, cbArg);
+        return;
+    }
 
     if( i < followingUsers.length ) {
-        loadFollowingFromDht( followingUsers[i], 1, [], 0,
-           function(args, following, seqNum) {
-             if( following ) {
-                 var suggested = false;
-                 var j = parseInt( Math.random() * following.length );
-                 for( ; j < following.length; j++ ) {
-                     if( followingUsers.indexOf(following[j]) < 0 &&
-                         _followSuggestions.indexOf(following[j]) < 0 ) {
-                         args.cbFunc(args.cbArg, following[j], args.followedBy);
-                         _followSuggestions.push(following[j]);
-                         suggested = true;
-                         break;
-                     }
-                 }
-                 if( !suggested ) {
-                     args.cbFunc(args.cbArg, null, null);
-                 }
+         var suggested = false;
+         var j = parseInt( Math.random() * followingsFollowings[followingUsers[i]].length );
+         for( ; j < followingsFollowings[followingUsers[i]].length; j++ ) {
+             if( followingUsers.indexOf(followingsFollowings[followingUsers[i]][j]) < 0 &&
+                 _followSuggestions.indexOf(followingsFollowings[followingUsers[i]][j]) < 0 ) {
+                 cbFunc(cbArg, followingsFollowings[followingUsers[i]][j], followingUsers[i]);
+                 _followSuggestions.push(followingsFollowings[followingUsers[i]][j]);
+                 suggested = true;
+                 break;
              }
-           }, {cbFunc:cbFunc, cbArg:cbArg, followedBy:followingUsers[i]});
+         }
+         if( !suggested ) {
+             cbFunc(cbArg, null, null);
+         }
     } else {
         cbFunc(cbArg, null, null);
+    }
+}
+
+function whoFollows(username) {
+    var list = [];
+
+    for (var following in followingsFollowings) {
+        if (followingsFollowings[following].indexOf(username) > -1) {
+            list.push(following);
+        }
+    }
+    return list;
+}
+
+function getWhoFollows(username, item) {
+    var list = whoFollows(username);
+
+    for (var i = 0; i < list.length; i++) {
+        var follower_link = $( '<a class="mini-follower-link"></a>' );
+
+        // link follower to profile page
+        follower_link.attr("data-screen-name", list[i]);
+        follower_link.attr("href", $.MAL.userUrl(list[i]));
+        follower_link.text(list[i]);
+        follower_link.on("click", openProfileModal);
+        getFullname( list[i], follower_link );
+
+        item.append( follower_link );
     }
 }
 
@@ -337,10 +389,15 @@ function processSuggestion(arg, suggestion, followedBy) {
 
         getAvatar(suggestion,item.find(".twister-user-photo"));
 
-        getFullname(suggestion,item.find(".twister-user"));
-        $spanFollowedBy = item.find(".followed-by");
+        //getFullname(suggestion,item.find(".twister-user"));
+        var $spanFollowedBy = item.find(".followed-by");
         $spanFollowedBy.text(followedBy);
         getFullname(followedBy,$spanFollowedBy);
+
+        item.find('.twister-user-remove').bind("click", function() {
+            item.remove();
+            getRandomFollowSuggestion(processSuggestion);
+        });
 
         dashboard.append(item);
     }

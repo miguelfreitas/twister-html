@@ -86,7 +86,7 @@ function timeSincePost(t) {
 }
 
 //
-// Profile, mentions, hashtag, and following modal
+// Profile, mentions, hashtag, and following modal, who to follow
 // -----------------------------------
 
 function newProfileModal(username) {
@@ -240,6 +240,75 @@ function openFollowingModal(e)
 
     //título do modal
     $( "."+followingModalClass + " h3" ).text( polyglot.t("followed_by", { username: username }) );
+}
+
+function refreshWhoToFollow(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    $('.follow-suggestions').html('');
+
+    getRandomFollowSuggestion(processSuggestion);
+    getRandomFollowSuggestion(processSuggestion);
+    getRandomFollowSuggestion(processSuggestion);
+}
+
+function fillWhoToFollowModal(list, hlist, start) {
+    for (var i = 0; i < followingUsers.length && list.length < start + 25; i++) {
+        if (typeof(followingsFollowings[followingUsers[i]]) !== 'undefined') {
+            for (var j = 0; j < followingsFollowings[followingUsers[i]].length && list.length < start + 25; j++) {
+
+                if (followingUsers.indexOf(followingsFollowings[followingUsers[i]][j]) < 0 &&
+                    list.indexOf(followingsFollowings[followingUsers[i]][j]) < 0) {
+                    list.push(followingsFollowings[followingUsers[i]][j]);
+
+                    var item = $("#follow-suggestion-template").clone(true);
+                    item.removeAttr("id");
+
+                    item.find(".twister-user-info").attr("data-screen-name", followingsFollowings[followingUsers[i]][j]);
+
+                    item.find(".twister-user-name").attr("href", $.MAL.userUrl(followingsFollowings[followingUsers[i]][j]));
+                    item.find(".twister-by-user-name").attr("href", $.MAL.userUrl(followingUsers[i]));
+                    item.find(".twister-user-tag").text("@" + followingsFollowings[followingUsers[i]][j]);
+
+                    getAvatar(followingsFollowings[followingUsers[i]][j], item.find(".twister-user-photo"));
+                    getFullname(followingsFollowings[followingUsers[i]][j], item.find(".twister-user-full"));
+                    getBio(followingsFollowings[followingUsers[i]][j], item.find(".bio"));
+
+                    var $spanFollowedBy = item.find(".followed-by");
+                    $spanFollowedBy.text(followingUsers[i]);
+                    getFullname(followingUsers[i], $spanFollowedBy);
+
+                    item.find('.twister-user-remove').remove();
+
+                    hlist.append(item);
+                }
+            }
+        }
+    }
+}
+
+function openWhoToFollowModal(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    var whoToFollowModalClass = "who-to-follow-modal";
+    openModal( whoToFollowModalClass );
+
+    var content = $("." + whoToFollowModalClass + " .modal-content");
+    var hlist = $('<ol class="follow-suggestions"></ol>');
+    var tmplist = [];
+
+    content.scroll(function(){
+        if  (content.scrollTop() >= hlist.height() - content.height() - 20){
+            fillWhoToFollowModal(tmplist, hlist, tmplist.length);
+        }
+    });
+
+    fillWhoToFollowModal(tmplist, hlist, 0);
+
+    hlist.appendTo( "." + whoToFollowModalClass + " .modal-content" );
+    $( "." + whoToFollowModalClass + " h3" ).text( polyglot.t("Who to Follow") );
 }
 
 //
@@ -1183,4 +1252,6 @@ function initInterfaceCommon() {
     $( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
 
+    $( ".who-to-follow .refresh-users" ).bind( "click", refreshWhoToFollow );
+    $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
 }

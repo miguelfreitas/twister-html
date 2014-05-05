@@ -81,6 +81,14 @@ h3
     content: "";
     clear: both;
 }
+.isFollowing:after {
+    color: #1a1;
+    content: '\2714';
+}
+.notFollowing:after {
+    color: #a11;
+    content: '\2718';
+}
 /*************************************
 **************************** BUTTONS **
 **************************************/
@@ -274,6 +282,11 @@ button.disabled:hover
 {
     border: solid 1px rgba( 69, 71, 77, .1 );
     background: #fff;
+}
+.options .module
+{
+    margin: 5px;
+    padding: 5px;
 }
 .messages-qtd
 {
@@ -512,6 +525,21 @@ button.disabled:hover
 .mini-profile-info a:hover
 {
     text-decoration: none;
+}
+.who-follow
+{
+    height: auto;
+    background-color: rgba(69, 71, 77, 0.1);
+    overflow: hidden;
+}
+.mini-follower-link
+{
+    display: inline-block;
+    margin-right: 10px;
+}
+.mini-follower-link:before
+{
+    content: " \2027";
 }
 /***********************************
 ********************* POST AREA ****
@@ -1455,6 +1483,51 @@ ol.toptrends-list {
 .following-modal .open-profile-modal span:hover
 {
     text-decoration: underline;
+}
+/*************************************
+******************* WHO TO FOLLOW MODAL
+**************************************/
+.who-to-follow-modal .modal-wrapper
+{
+    width: 560px;
+    height: 470px;
+    margin: -200px 0 0 -280px;
+    overflow-x: hidden;
+}
+.who-to-follow-modal .modal-content
+{
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+}
+.who-to-follow-modal .modal-buttons
+{
+    display: none;
+}
+.who-to-follow-modal ol
+{
+    margin: 5px;
+}
+.who-to-follow-modal .open-profile-modal:hover
+{
+    text-decoration: none;
+}
+.who-to-follow-modal .open-profile-modal span
+{
+    vertical-align: middle;
+}
+.who-to-follow-modal .open-profile-modal span:hover
+{
+    text-decoration: underline;
+}
+.who-to-follow-modal .follow
+{
+    float: right;
+    margin: -30px 10px 0 10px;
+}
+.who-to-follow-modal .twister-user-info span
+{
+    vertical-align: bottom;
 }
 /*************************************
 ****************** LOADER ************

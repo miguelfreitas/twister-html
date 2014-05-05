@@ -220,7 +220,11 @@ if(preferredLanguage == "en"){
       "RTs those are close to original twist": "RTs those are close to original twist",
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
-      "only numbers are allowed!": "only numbers are allowed!"
+      "only numbers are allowed!": "only numbers are allowed!",
+      "Show with every user name": "Show with every user name",
+      "Show at profile modal only": "Show at profile modal only",
+      "Show if a user follows me": "Show if a user follows me",
+      "follows you": "follows you"
     };
 }
 if(preferredLanguage == "es"){
@@ -1840,7 +1844,11 @@ if(preferredLanguage == "tr"){
       "RTs those are close to original twist": "Orjinal twist'e yakın olan RTler",
       "Show if the original is older than": "Orjinali yandaki süreden daha eskiyse göster",
       "hour(s)": "saat",
-      "only numbers are allowed!": "sadece rakam girilebilir!"
+      "only numbers are allowed!": "sadece rakam girilebilir!",
+      "Show with every user name": "Tüm kullanıcı adlarının yanında göster",
+      "Show at profile modal only": "Sadece profilinde göster",
+      "Show if a user follows me": "Bir kullanıcının beni takip edip etmediğini göster",
+      "follows you": "seni takip ediyor"
     };
 }
 
