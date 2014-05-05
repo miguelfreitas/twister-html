@@ -603,6 +603,7 @@ textarea.splited-post {
 .who-to-follow
 {
     padding: 10px;
+    margin-bottom: 10px;
 }
 .who-to-follow h3
 {
@@ -704,9 +705,23 @@ textarea.splited-post {
     color: #e34f42;
     cursor: pointer;
     font-size: 12px;
-    border-left: solid 1px rgba( 69, 71, 77, .1 );
-    padding-left: 8px;
 }
+
+/***********************************
+**********TOP TRENDS****************
+***********************************/
+ol.toptrends-list {
+    margin: 0% 5% 5% 5%;
+    padding: 5px;
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
+    border-top: solid 1px rgba( 69, 71, 77, .1 );
+}
+
+.toptrends h3
+{
+    margin: 5% 5% 2% 5%;
+}
+
 /***********************************
 ********************* POST BOARD ***
 ***********************************/
