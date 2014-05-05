@@ -1529,6 +1529,11 @@ ol.toptrends-list {
 {
     vertical-align: bottom;
 }
+.who-to-follow-modal .bio
+{
+    font-size: 12px;
+    color: rgba( 0, 0, 0, .6 );
+}
 /*************************************
 ****************** LOADER ************
 **************************************/
