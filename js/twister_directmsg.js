@@ -142,6 +142,16 @@ function directMessagesPopup()
 
     requestDMsnippetList($(".directMessages").find(".direct-messages-list"));
     $('.modal-back').css('display','inline');
+    $('.mark-all-as-read').css('display', 'inline');
+    $('.mark-all-as-read').attr('title', polyglot.t("Mark all as read"));
+
+    $('.mark-all-as-read').on('click', function() {
+        for (var k in _newDMsPerUser) {
+            _newDMsPerUser[k] = 0;
+        }
+        saveDMsToStorage();
+        $.MAL.updateNewDMsUI(getNewDMsCount());
+    });
 }
 
 

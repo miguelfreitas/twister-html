@@ -1211,7 +1211,8 @@ ol.toptrends-list {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
 }
-.modal-back {
+.modal-back,
+.mark-all-as-read {
     position: absolute;
     right: 30px;
     top: 0;
@@ -1223,8 +1224,8 @@ ol.toptrends-list {
     transition: all .1s linear;
     display: none;  
 }
-.modal-back:hover
-{
+.modal-back:hover,
+.mark-all-as-read:hover {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
 }
@@ -1358,6 +1359,12 @@ ol.toptrends-list {
     position: absolute;
     right: -65px;
     left: auto;
+}
+.mark-all-as-read {
+    right: 60px;
+}
+.mark-all-as-read:before {
+    content: '\2714';
 }
 /*************************************
 ****************** NEW USER MODAL
