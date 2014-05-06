@@ -320,6 +320,18 @@ var TwisterOptions = function()
         });
     };
 
+    this.getIsFollowingMeOpt = function () {
+        return $.Options.getOption('isFollowingMe');
+    };
+
+    this.setIsFollowingMeOpt = function () {
+        $('#isFollowingMe')[0].value = this.getIsFollowingMeOpt();
+
+        $('#isFollowingMe').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+        });
+    };
+
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
@@ -339,6 +351,7 @@ var TwisterOptions = function()
         this.setHideRepliesOpt();
         this.setHideCloseRTsHourOpt();
         this.setHideCloseRTsOpt();
+        this.setIsFollowingMeOpt();
     }
 }
 

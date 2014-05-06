@@ -212,6 +212,31 @@ function getFullname( username, item ){
                                    args.item.text(value);
                            }
                        }, {item: item} );
+    if ($.Options.getIsFollowingMeOpt() === 'everywhere' || item.hasClass('profile-name')) {
+        if (knownFollowers.indexOf(username) > -1) {
+            item.addClass('isFollowing');
+            item.attr("title", polyglot.t("follows you"));
+        } else if (notFollowers.indexOf(username) > -1)
+            item.addClass("notFollowing");
+        else {
+            loadFollowingFromDht(username, 1, [], 0, function (args, following, seqNum) {
+                if (following.indexOf(args.user) > -1) {
+                    item.addClass('isFollowing');
+                    item.attr("title", polyglot.t("follows you"));
+                    if (knownFollowers.indexOf(args.username) < 0)
+                        knownFollowers.push(args.username);
+                } else {
+                    item.addClass('notFollowing');
+                    if (notFollowers.indexOf(args.username) < 0)
+                        notFollowers.push(args.username);
+                }
+
+                storeSessionData();
+            }, {"user": defaultScreenName, "item": item, "username": username});
+        }
+
+        $(".open-followers").attr("title", knownFollowers.length.toString());
+    }
 }
 
 // get bio and store it in item.text
@@ -252,10 +277,12 @@ function getLocation( username, item ){
 function getWebpage( username, item ){
     getProfileResource( username, "url", item,
                       function(args, val) {
-                           if( val.indexOf("://") < 0 ) {
-                               val = "http://" + val;
-                           }
-                           args.item.attr("href", val);
+                          if(typeof(val) !== 'undefined') {
+                              if (val.indexOf("://") < 0) {
+                                  val = "http://" + val;
+                              }
+                              args.item.attr("href", val);
+                          }
                       }, {item:item} );
 }
 

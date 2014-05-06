@@ -191,6 +191,7 @@ function updateProfileData(profileModalContent, username) {
     getPostsCount( username,  profileModalContent.find(".posts-count") );
     getFollowers( username, profileModalContent.find(".followers-count") );
     getNumFollowing( username, profileModalContent.find(".following-count") );
+    getWhoFollows ( username, profileModalContent.find(".who-follow") );
     
     profileModalContent.find(".following-count").parent().attr("href", $.MAL.followingUrl(username));
 
