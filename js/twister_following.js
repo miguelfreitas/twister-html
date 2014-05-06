@@ -45,7 +45,7 @@ function saveFollowingToStorage() {
 }
 
 // load followers & following's followings from sessionStorage
-function loadSessionData() {
+function loadFollowingSessionData() {
     var ns = $.initNamespaceStorage(defaultScreenName);
 
     if (ns.sessionStorage.isSet("followingsFollowings"))
@@ -59,7 +59,7 @@ function loadSessionData() {
 }
 
 // save list of followers & following's followings to sessionStorage
-function storeSessionData() {
+function storeFollowingSessionData() {
     var ns = $.initNamespaceStorage(defaultScreenName);
     ns.sessionStorage.set("followingsFollowings", followingsFollowings);
     ns.sessionStorage.set("followers", knownFollowers);

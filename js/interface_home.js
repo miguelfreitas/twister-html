@@ -97,7 +97,7 @@ var InterfaceFunctions = function()
                         }
                      });
 
-                     loadSessionData();
+                     loadFollowingSessionData();
                      //geting followings of following...
                      for(var i = 0; i < followingUsers.length; i++) {
                         if (typeof(followingsFollowings[followingUsers[i]]) === 'undefined') {
@@ -115,7 +115,7 @@ var InterfaceFunctions = function()
                             }, followingUsers[i]);
                         }
                      }
-                     storeSessionData();
+                     storeFollowingSessionData();
 
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);

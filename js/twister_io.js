@@ -231,7 +231,7 @@ function getFullname( username, item ){
                         notFollowers.push(args.username);
                 }
 
-                storeSessionData();
+                storeFollowingSessionData();
             }, {"user": defaultScreenName, "item": item, "username": username});
         }
 
