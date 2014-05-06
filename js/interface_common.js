@@ -254,7 +254,8 @@ function refreshWhoToFollow(e) {
 }
 
 function fillWhoToFollowModal(list, hlist, start) {
-    for (var i = 0; i < followingUsers.length && list.length < start + 25; i++) {
+    var i;
+    for (i = 0; i < followingUsers.length && list.length < start + 20; i++) {
         if (typeof(followingsFollowings[followingUsers[i]]) !== 'undefined') {
             for (var j = 0; j < followingsFollowings[followingUsers[i]].length && list.length < start + 25; j++) {
 
@@ -286,6 +287,12 @@ function fillWhoToFollowModal(list, hlist, start) {
             }
         }
     }
+
+    if (i >= followingUsers.length - 1) {
+        return false;
+    }
+    // returns true, if there are more...
+    return true;
 }
 
 function openWhoToFollowModal(e) {
@@ -301,7 +308,8 @@ function openWhoToFollowModal(e) {
 
     content.scroll(function(){
         if  (content.scrollTop() >= hlist.height() - content.height() - 20){
-            fillWhoToFollowModal(tmplist, hlist, tmplist.length);
+            if (!fillWhoToFollowModal(tmplist, hlist, tmplist.length))
+                content.unbind("scroll");
         }
     });
 
