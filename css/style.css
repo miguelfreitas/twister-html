@@ -669,8 +669,7 @@ textarea.splited-post {
     display: inline-block;
     letter-spacing: 0px;
 }
-.twister-user-remove
-{
+.twister-user-remove{
     float: right;
     font-size: 12px;
     margin: 5px;
@@ -678,14 +677,14 @@ textarea.splited-post {
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 120%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 120%;
+    display: none;
 }
-.twister-user-remove:hover
-{
-    opacity: 1;
+.twister-user:hover .twister-user-remove{
+    display: inline-block;
     text-decoration: none;
 }
 .follow
