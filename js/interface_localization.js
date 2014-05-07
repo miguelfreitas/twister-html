@@ -224,7 +224,9 @@ if(preferredLanguage == "en"){
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
-      "follows you": "follows you"
+      "follows you": "follows you",
+      "Show conversation": "Show conversation",
+      "Mark all as read": "Mark all as read"
     };
 }
 if(preferredLanguage == "es"){
@@ -1669,7 +1671,7 @@ if(preferredLanguage == "tr"){
       "Cancel": "İptal",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
-      "Collapse": "Daralt", // smaller view of a post
+      "Collapse": "Kapat", // smaller view of a post
       "Configure block generation": "Blok üretim ayarları",
       "Connections:": "Bağlantılar: ", // to network
       "Connection lost.": "Bağlantı koptu.",
@@ -1689,7 +1691,7 @@ if(preferredLanguage == "tr"){
       "Error in 'createwalletuser' RPC.": "'createwalletuser' RPC'de (Uzak Yordam Çağrısında) hata.",
       "Error in 'importprivkey'": "'importprivkey' RPC'de (Uzak Yordam Çağrısında) hata: %{rpc}",
       "Error in 'sendnewusertransaction' RPC.": "'sendnewusertransaction' RPC'de (Uzak Yordam Çağrısında) hata.",
-      "Expand": "Genişlet", // larger view of a post
+      "Expand": "Aç", // larger view of a post
       "Favorite": "Favori",
       "File APIs not supported in this browser.": "Tarayıcınızda dosya API'si desteklenmiyor.",
       "Follow": "Takip et",
@@ -1848,7 +1850,10 @@ if(preferredLanguage == "tr"){
       "Show with every user name": "Tüm kullanıcı adlarının yanında göster",
       "Show at profile modal only": "Sadece profilinde göster",
       "Show if a user follows me": "Bir kullanıcının beni takip edip etmediğini göster",
-      "follows you": "seni takip ediyor"
+      "follows you": "seni takip ediyor",
+      "Show conversation": "Sohbeti göster",
+      "Mark all as read": "hepsini okundu olarak işaretle"
+
     };
 }
 

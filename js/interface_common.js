@@ -451,7 +451,13 @@ var postExpandFunction = function( e, postLi )
     else
     {
         postLi.removeClass( openClass );
-        $postInteractionText.text( polyglot.t("Expand") );
+
+        var postData = postLi.find('.post-data.original');
+
+        if (typeof(postData.attr('data-replied-to-id')) === 'undefined')
+            $postInteractionText.text( polyglot.t("Expand") );
+        else
+            $postInteractionText.text( polyglot.t("Show conversation") );
 
         if( $postsRelated ) $postsRelated.slideUp( "fast" );
         $postExpandedContent.slideUp( "fast", function()
@@ -1222,6 +1228,7 @@ function initInterfaceCommon() {
         if(!$(event.target).hasClass("cancel")) return;
         if($(".modal-content").attr("style") != undefined){$(".modal-content").removeAttr("style")};
         $('.modal-back').css('display', 'none');
+        $('.mark-all-as-read').css('display', 'none');
     });
     $('.modal-back').on('click', function(){
         if($('.modal-content .direct-messages-list')[0]) return;

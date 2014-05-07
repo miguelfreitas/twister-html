@@ -68,6 +68,8 @@ function postToElem( post, kind ) {
     if( "reply" in userpost ) {
         postData.attr('data-replied-to-screen-name', userpost["reply"]["n"]);
         postData.attr('data-replied-to-id', userpost["reply"]["k"]);
+
+        postData.find('.post-expand').text(polyglot.t("Show conversation"));
     }
 
     var postInfoName = elem.find(".post-info-name");
