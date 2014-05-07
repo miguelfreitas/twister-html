@@ -1328,7 +1328,7 @@ if(preferredLanguage == "de"){
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
       "Type message here": "Nachricht hier eingeben",
-      "Unfollow": "Unfollow",
+      "Unfollow": "Nicht mehr folgen",
       "Update": "Aktualisieren",
       "Updating status...": "Status wird aktualisiert...", // status of block chain
       "user_not_yet_accepted": "Andere Peers haben diesen Benutzter noch nicht akzeptiert.\n" +
@@ -1366,7 +1366,26 @@ if(preferredLanguage == "de"){
       "Terminate Daemon:": "Daemon beenden:",
       "Exit": "Beenden",
       "Save Changes": "Änderungen speichern",
-      "Secret key:": "Privater Schlüssel:"
+      "Secret key:": "Privater Schlüssel:",
+      "Options": "Einstellungen",
+      "new_posts": "%{smart_count} neue Nachricht |||| %{smart_count} neue Nachrichten",
+      "Use language": "Sprache einstellen",
+      "Sound notifications": "Audioeinstellungen",
+      "Switch to Promoted posts": "Wechsle zu Promoted Nachrichten",
+      "none": "kein(e)",
+      "Show if a user follows me": "Zeige an, wenn mir ein Benutzer folgt",
+      "Show with every user name": "Zeige mit jedem Benutzernamen",
+      "Split long posts": "Teile längere Nachrichten auf",
+      "Split only new post": "Teile nur neue Nachrichten auf",
+      "Split all": "Alle aufteilen",
+      "Don't split": "Nicht aufteilen",
+      "Post editor": "Nachrichten-Editor",
+      "Convert all": "Alle konvertieren",
+      "Custom": "Benutzerdefiniert",
+      "Ignore": "Ignorieren",
+      "Automatic unicode conversion options": "Automatische Unicode Konvertierungseinstellungen",
+      "Use proxy for image preview only": "Benutze Proxy nur für Bildvorschau",
+      "Use external links behind a proxy": "Benutze externe Links hinter einem Proxy"
     };
 }
 
