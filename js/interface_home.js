@@ -22,13 +22,13 @@ var InterfaceFunctions = function()
             $.MAL.getStreamPostsParent().empty();
             requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
             });
-            
+
         initInterfaceCommon();
         initUserSearch();
         initInterfaceDirectMsg();
 
         initUser(initHome);
-    }
+    };
 
     function initHome(cbFunc, cbArg) {
         checkNetworkStatusAndAskRedirect();
@@ -56,7 +56,7 @@ var InterfaceFunctions = function()
             twisterRpc("gettrendinghashtags", [10],
                                 function(args, ret) {
                                     for( var i = 0; i < ret.length; i++ ) {
-                                    
+
                                        var $li = $("<li>");
                                        var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
                                        hashtagLinkTemplate.removeAttr("id");
@@ -68,7 +68,7 @@ var InterfaceFunctions = function()
                                 }, {},
                                 function(args, ret) {
                                    console.log("Error with gettrendinghashtags. Older twister daemon?");
-                                }, {});	    
+                                }, {});
         }
         else
         {
@@ -97,34 +97,16 @@ var InterfaceFunctions = function()
                         }
                      });
 
-                     loadFollowingSessionData();
-                     //geting followings of following...
-                     for(var i = 0; i < followingUsers.length; i++) {
-                        if (typeof(followingsFollowings[followingUsers[i]]) === 'undefined') {
-                            loadFollowingFromDht(followingUsers[i], 1, [], 0, function (args, following, seqNum) {
-                                if (following.indexOf(defaultScreenName) > -1) {
-                                    if (knownFollowers.indexOf(args) < 0)
-                                        knownFollowers.push(args);
-                                } else {
-                                    if (notFollowers.indexOf(args) < 0)
-                                        notFollowers.push(args);
-                                }
-                                $(".open-followers").attr("title", knownFollowers.length.toString());
-
-                                followingsFollowings[args] = following;
-                            }, followingUsers[i]);
-                        }
-                     }
-                     storeFollowingSessionData();
+                     twisterFollowingO = TwisterFollowing(defaultScreenName);
 
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
-                     
+
                      twisterRpc("gettrendinghashtags", [10],
                                 function(args, ret) {
                                     for( var i = 0; i < ret.length; i++ ) {
-                                    
+
                                        var $li = $("<li>");
                                        var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
                                        hashtagLinkTemplate.removeAttr("id");
@@ -143,7 +125,7 @@ var InterfaceFunctions = function()
                  }, {cbFunc:cbFunc, cbArg:cbArg});
         }
     }
-}
+};
 
 //***********************************************
 //******************* INIT **************

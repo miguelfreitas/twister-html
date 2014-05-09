@@ -256,25 +256,26 @@ function refreshWhoToFollow(e) {
 function fillWhoToFollowModal(list, hlist, start) {
     var i;
     for (i = 0; i < followingUsers.length && list.length < start + 20; i++) {
-        if (typeof(followingsFollowings[followingUsers[i]]) !== 'undefined') {
-            for (var j = 0; j < followingsFollowings[followingUsers[i]].length && list.length < start + 25; j++) {
+        if (typeof(twisterFollowingO.followingsFollowings[followingUsers[i]]) !== 'undefined') {
+            for (var j = 0; j < twisterFollowingO.followingsFollowings[followingUsers[i]]["following"].length && list.length < start + 25; j++) {
 
-                if (followingUsers.indexOf(followingsFollowings[followingUsers[i]][j]) < 0 &&
-                    list.indexOf(followingsFollowings[followingUsers[i]][j]) < 0) {
-                    list.push(followingsFollowings[followingUsers[i]][j]);
+                var utf = twisterFollowingO.followingsFollowings[followingUsers[i]]["following"][j];
+                if (followingUsers.indexOf(utf) < 0 &&
+                    list.indexOf(utf) < 0) {
+                    list.push(utf);
 
                     var item = $("#follow-suggestion-template").clone(true);
                     item.removeAttr("id");
 
-                    item.find(".twister-user-info").attr("data-screen-name", followingsFollowings[followingUsers[i]][j]);
+                    item.find(".twister-user-info").attr("data-screen-name", utf);
 
-                    item.find(".twister-user-name").attr("href", $.MAL.userUrl(followingsFollowings[followingUsers[i]][j]));
+                    item.find(".twister-user-name").attr("href", $.MAL.userUrl(utf));
                     item.find(".twister-by-user-name").attr("href", $.MAL.userUrl(followingUsers[i]));
-                    item.find(".twister-user-tag").text("@" + followingsFollowings[followingUsers[i]][j]);
+                    item.find(".twister-user-tag").text("@" + utf);
 
-                    getAvatar(followingsFollowings[followingUsers[i]][j], item.find(".twister-user-photo"));
-                    getFullname(followingsFollowings[followingUsers[i]][j], item.find(".twister-user-full"));
-                    getBio(followingsFollowings[followingUsers[i]][j], item.find(".bio"));
+                    getAvatar(utf, item.find(".twister-user-photo"));
+                    getFullname(utf, item.find(".twister-user-full"));
+                    getBio(utf, item.find(".bio"));
 
                     var $spanFollowedBy = item.find(".followed-by");
                     $spanFollowedBy.text(followingUsers[i]);

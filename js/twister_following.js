@@ -5,9 +5,6 @@
 // Provides random user suggestions to follow.
 
 var followingUsers = [];
-var knownFollowers = [];
-var notFollowers = [];
-var followingsFollowings = {};
 var _isFollowPublic = {};
 var _followsPerPage = 200;
 var _maxFollowingPages = 50;
@@ -17,6 +14,135 @@ var _searchingPartialUsers = "";
 var _searchKeypressTimer = undefined;
 var _lastSearchUsersResults = [];
 var _lastLoadFromDhtTime = 0;
+
+var twisterFollowingO = undefined;
+
+var TwisterFollowing = function (user) {
+    if (!(this instanceof TwisterFollowing))
+        return new TwisterFollowing(user);
+
+    this.init(user);
+};
+
+TwisterFollowing.minUpdateInterval = 43200;  // 1/2 day
+TwisterFollowing.maxUpdateInterval = 691200; // 8 days
+
+TwisterFollowing.prototype = {
+    user: undefined,
+    init: function (user) {
+        this.user = user;
+        this.load();
+        this.update();
+    },
+    knownFollowers: [],
+    knownFollowersResetTime: new Date().getTime() / 1000,
+    notFollowers: [],
+    /*
+    followinsFollowings = {
+        "username": {
+            "lastUpdate": <updatetime>,
+            "updateInterval": <updateinterval>,
+            "following": []
+        }
+    }
+     */
+    followingsFollowings: {},
+
+    load: function () {
+        var ns = $.initNamespaceStorage(this.user);
+
+        if (ns.localStorage.isSet("followingsFollowings"))
+            this.followingsFollowings = ns.localStorage.get("followingsFollowings");
+
+        if (ns.localStorage.isSet("knownFollowersResetTime"))
+            this.knownFollowersResetTime = ns.localStorage.get("knownFollowersResetTime");
+
+        var ctime = new Date().getTime() / 1000;
+        if (ctime - this.knownFollowersResetTime < TwisterFollowing.maxUpdateInterval &&
+            ns.localStorage.isSet("knownFollowers")) {
+            this.knownFollowers = ns.localStorage.get("knownFollowers");
+        } else {
+            this.knownFollowers = [];
+            this.knownFollowersResetTime = ctime;
+            ns.localStorage.set("knownFollowersResetTime", this.knownFollowersResetTime);
+        }
+
+        if (ns.sessionStorage.isSet("notFollowers"))
+            this.notFollowers = ns.sessionStorage.get("notFollowers");
+    },
+
+    save: function () {
+        var ns = $.initNamespaceStorage(this.user);
+        ns.localStorage.set("followingsFollowings", this.followingsFollowings);
+        ns.sessionStorage.set("notFollowers", this.notFollowers);
+        ns.localStorage.set("knownFollowers", this.knownFollowers);
+        ns.localStorage.set("knownFollowersResetTime", this.knownFollowersResetTime);
+    },
+
+    update: function (username) {
+        var oneshot = false;
+        var i = 0;
+        if (typeof(username) !== 'undefined') {
+            i = followingUsers[username];
+
+            if (i > -1)
+                oneshot = true;
+            else
+                i = 0;
+        }
+
+        for (; i < followingUsers.length; i++) {
+            var ctime = new Date().getTime() / 1000;
+
+            if (typeof(this.followingsFollowings[followingUsers[i]]) === 'undefined' ||
+                ctime - this.followingsFollowings[followingUsers[i]]["lastUpdate"] >= this.followingsFollowings[followingUsers[i]]["updateInterval"]) {
+
+                loadFollowingFromDht(followingUsers[i], 1, [], 0, function (args, following, seqNum) {
+                    if (following.indexOf(args.tf.user) > -1) {
+                        if (args.tf.knownFollowers.indexOf(args.fu) < 0)
+                            args.tf.knownFollowers.push(args.fu);
+                    } else {
+                        if (args.tf.notFollowers.indexOf(args.fu) < 0)
+                            args.tf.notFollowers.push(args.fu);
+                        var tmpi = args.tf.knownFollowers.indexOf(args.fu);
+                        if (tmpi > -1)
+                            args.tf.knownFollowers.splice(tmpi, 1);
+                    }
+                    $(".open-followers").attr("title", args.tf.knownFollowers.length.toString());
+
+                    var ctime = new Date().getTime() / 1000;
+                    if (typeof(args.tf.followingsFollowings[args.fu]) === 'undefined' ||
+                        typeof(args.tf.followingsFollowings[args.fu]["following"]) === 'undefined') {
+                        args.tf.followingsFollowings[args.fu] = {};
+                        args.tf.followingsFollowings[args.fu]["lastUpdate"] = ctime;
+                        args.tf.followingsFollowings[args.fu]["updateInterval"] = TwisterFollowing.minUpdateInterval;
+                        args.tf.followingsFollowings[args.fu]["following"] = following;
+
+                        args.tf.save();
+                    } else {
+                        var diff = [];
+                        var ff = args.tf.followingsFollowings[args.fu]["following"];
+
+                        for (var j = 0; j < following.length; j++) {
+                            if (ff.indexOf(following[j]) === -1) {
+                                diff.push(following[j]);
+                                ff.push(following[j]);
+                            }
+                        }
+
+                        if (diff.length > 0) {
+                            args.tf.followingsFollowings[args.fu]["updateInterval"] = TwisterFollowing.minUpdateInterval;
+                            args.tf.followingsFollowings[args.fu]["lastUpdate"] = ctime;
+                            args.tf.save();
+                        } else if (args.tf.followingsFollowings[args.fu]["updateInterval"] < TwisterFollowing.maxUpdateInterval) {
+                            args.tf.followingsFollowings[args.fu]["updateInterval"] *= 2;
+                        }
+                    }
+                }, {"tf": this, "fu": followingUsers[i]});
+            }
+        }
+    }
+};
 
 // load followingUsers from localStorage
 function loadFollowingFromStorage() {
@@ -42,28 +168,6 @@ function saveFollowingToStorage() {
     ns.localStorage.set("isFollowPublic", _isFollowPublic);
     ns.localStorage.set("followingSeqNum", _followingSeqNum);
     ns.localStorage.set("lastLoadFromDhtTime", _lastLoadFromDhtTime);
-}
-
-// load followers & following's followings from sessionStorage
-function loadFollowingSessionData() {
-    var ns = $.initNamespaceStorage(defaultScreenName);
-
-    if (ns.sessionStorage.isSet("followingsFollowings"))
-        followingsFollowings = ns.sessionStorage.get("followingsFollowings");
-
-    if (ns.sessionStorage.isSet("followers"))
-        knownFollowers = ns.sessionStorage.get("followers");
-
-    if (ns.sessionStorage.isSet("notFollowers"))
-        notFollowers = ns.sessionStorage.get("notFollowers");
-}
-
-// save list of followers & following's followings to sessionStorage
-function storeFollowingSessionData() {
-    var ns = $.initNamespaceStorage(defaultScreenName);
-    ns.sessionStorage.set("followingsFollowings", followingsFollowings);
-    ns.sessionStorage.set("followers", knownFollowers);
-    ns.sessionStorage.set("notFollowers", notFollowers);
 }
 
 // load public list of following users from dht resources
@@ -284,7 +388,7 @@ function getRandomFollowSuggestion(cbFunc, cbArg) {
     var i = parseInt( Math.random() * followingUsers.length );
 
     if ( (i < followingUsers.length && followingUsers[i] == defaultScreenName) ||
-         typeof(followingsFollowings[followingUsers[i]]) === 'undefined') {
+         typeof(twisterFollowingO.followingsFollowings[followingUsers[i]]) === 'undefined') {
 
         setTimeout(getRandomFollowSuggestion, 500, cbFunc, cbArg);
         return;
@@ -292,12 +396,12 @@ function getRandomFollowSuggestion(cbFunc, cbArg) {
 
     if( i < followingUsers.length ) {
          var suggested = false;
-         var j = parseInt( Math.random() * followingsFollowings[followingUsers[i]].length );
-         for( ; j < followingsFollowings[followingUsers[i]].length; j++ ) {
-             if( followingUsers.indexOf(followingsFollowings[followingUsers[i]][j]) < 0 &&
-                 _followSuggestions.indexOf(followingsFollowings[followingUsers[i]][j]) < 0 ) {
-                 cbFunc(cbArg, followingsFollowings[followingUsers[i]][j], followingUsers[i]);
-                 _followSuggestions.push(followingsFollowings[followingUsers[i]][j]);
+         var j = parseInt( Math.random() * twisterFollowingO.followingsFollowings[followingUsers[i]]["following"].length );
+         for( ; j < twisterFollowingO.followingsFollowings[followingUsers[i]]["following"].length; j++ ) {
+             if( followingUsers.indexOf(twisterFollowingO.followingsFollowings[followingUsers[i]]["following"][j]) < 0 &&
+                 _followSuggestions.indexOf(twisterFollowingO.followingsFollowings[followingUsers[i]]["following"][j]) < 0 ) {
+                 cbFunc(cbArg, twisterFollowingO.followingsFollowings[followingUsers[i]]["following"][j], followingUsers[i]);
+                 _followSuggestions.push(twisterFollowingO.followingsFollowings[followingUsers[i]]["following"][j]);
                  suggested = true;
                  break;
              }
@@ -313,8 +417,8 @@ function getRandomFollowSuggestion(cbFunc, cbArg) {
 function whoFollows(username) {
     var list = [];
 
-    for (var following in followingsFollowings) {
-        if (followingsFollowings[following].indexOf(username) > -1) {
+    for (var following in twisterFollowingO.followingsFollowings) {
+        if (twisterFollowingO.followingsFollowings[following]["following"].indexOf(username) > -1) {
             list.push(following);
         }
     }

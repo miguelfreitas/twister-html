@@ -212,30 +212,32 @@ function getFullname( username, item ){
                                    args.item.text(value);
                            }
                        }, {item: item} );
-    if ($.Options.getIsFollowingMeOpt() === 'everywhere' || item.hasClass('profile-name')) {
-        if (knownFollowers.indexOf(username) > -1) {
+    if (typeof(twisterFollowingO) !== 'undefined' &&
+        ($.Options.getIsFollowingMeOpt() === 'everywhere' || item.hasClass('profile-name'))) {
+        if (twisterFollowingO.knownFollowers.indexOf(username) > -1) {
             item.addClass('isFollowing');
             item.attr("title", polyglot.t("follows you"));
-        } else if (notFollowers.indexOf(username) > -1)
+        } else if (twisterFollowingO.notFollowers.indexOf(username) > -1)
             item.addClass("notFollowing");
         else {
             loadFollowingFromDht(username, 1, [], 0, function (args, following, seqNum) {
                 if (following.indexOf(args.user) > -1) {
                     item.addClass('isFollowing');
                     item.attr("title", polyglot.t("follows you"));
-                    if (knownFollowers.indexOf(args.username) < 0)
-                        knownFollowers.push(args.username);
+                    if (twisterFollowingO.knownFollowers.indexOf(args.username) < 0)
+                        twisterFollowingO.knownFollowers.push(args.username);
                 } else {
                     item.addClass('notFollowing');
-                    if (notFollowers.indexOf(args.username) < 0)
-                        notFollowers.push(args.username);
+                    if (twisterFollowingO.notFollowers.indexOf(args.username) < 0)
+                        twisterFollowingO.notFollowers.push(args.username);
                 }
 
-                storeFollowingSessionData();
+                //storeFollowingSessionData();
+                twisterFollowingO.save();
             }, {"user": defaultScreenName, "item": item, "username": username});
         }
 
-        $(".open-followers").attr("title", knownFollowers.length.toString());
+        $(".open-followers").attr("title", twisterFollowingO.knownFollowers.length.toString());
     }
 }
 
