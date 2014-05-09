@@ -725,6 +725,8 @@ function initInterfaceFollowing() {
         loadFollowing( function(args) {
                           showFollowingUsers();
                           requestSwarmProgress();
+
+                          twisterFollowingO = TwisterFollowing(defaultScreenName);
         });
         initMentionsCount();
         initDMsCount();
