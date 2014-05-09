@@ -52,6 +52,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
                         requestLastHave();
                         initMentionsCount();
                         initDMsCount();
+                        twisterFollowingO = TwisterFollowing(defaultScreenName);
                     
                         twisterInitialized = true;
                         if( cbFunc )
