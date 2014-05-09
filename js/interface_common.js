@@ -546,14 +546,16 @@ function replyTextKeypress(e) {
         var c = 140 - $this.val().length;
         if (usePostSpliting) {
             var $tas = tweetForm.find("textarea");
+            splitedPostsCount = $tas.length;
             if ($tas.length > 1 && $tas[$tas.length - 1].value.length === 0) {
                 $tas[$tas.length - 1].value = $tas[$tas.length - 2].value;
                 $($tas[$tas.length - 2]).remove();
+                splitedPostsCount--;
             }
 
             var reply_to = $this.attr('data-reply-to');
-            for (var i = 0; i < $tas.length - 1; i++) {
-                var pml = 140 - (i+1).toString().length - $tas.length.toString().length - 6;
+            for (var i = 0; i < splitedPostsCount - 1; i++) {
+                var pml = 140 - (i+1).toString().length - splitedPostsCount.toString().length - 6;
                 //if mention exists, we shouldn't add it while posting.
                 if (typeof(reply_to) !== 'undefined' &&
                     !(new RegExp('^.{0,' + (pml - reply_to.length).toString() + '}' + reply_to).test($tas[i].value))) {
@@ -568,13 +570,13 @@ function replyTextKeypress(e) {
 
                 } else if ($tas[i].value.length === 0) {
                     $($tas[i]).remove();
+                    splitedPostsCount--;
                 }
             }
 
-            splitedPostsCount = $tas.length;
             c = 140 - $this.val().length - (2 * splitedPostsCount.toString().length) - 6;
             if (typeof(reply_to) !== 'undefined' &&
-                !(new RegExp('^.{0,' + (c - reply_to.length).toString() + '}' + reply_to).test(this.value)))
+                !(new RegExp('^.{0,' + (140 - c - reply_to.length).toString() + '}' + reply_to).test($this.val())))
                 c -=  reply_to.length;
         }
         var remainingCount = tweetForm.find(".post-area-remaining");
@@ -599,6 +601,7 @@ function replyTextKeypress(e) {
 
                 var reply_to = $this.attr('data-reply-to');
                 $this.on("click", function(e) {e.stopPropagation()});
+                $this.unbind("keyup");
                 $this.on("blur", replyTextKeypress);
                 $this.addClass('splited-post');
                 tweetForm.find(".textcomplete-wrapper").append($newta);
