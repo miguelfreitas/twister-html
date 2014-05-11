@@ -85,10 +85,6 @@ h3
     color: #1a1;
     content: '\2714';
 }
-.notFollowing:after {
-    color: #a11;
-    content: '\2718';
-}
 /*************************************
 **************************** BUTTONS **
 **************************************/
@@ -535,6 +531,12 @@ button.disabled:hover
     background-color: rgba(69, 71, 77, 0.1);
     overflow: hidden;
     font-size: 12px;
+}
+.show-more-followers {
+    color: #f11;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
 }
 .mini-follower-link
 {

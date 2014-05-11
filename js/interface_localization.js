@@ -225,7 +225,9 @@ if(preferredLanguage == "en"){
       "Show if a user follows me": "Show if a user follows me",
       "follows you": "follows you",
       "Show conversation": "Show conversation",
-      "Mark all as read": "Mark all as read"
+      "Mark all as read": "Mark all as read",
+      "show_more_count": "%{count} more...",
+      "hide": "hide"
     };
 }
 if(preferredLanguage == "es"){
@@ -1869,8 +1871,9 @@ if(preferredLanguage == "tr"){
       "Show if a user follows me": "Bir kullanıcının beni takip edip etmediğini göster",
       "follows you": "seni takip ediyor",
       "Show conversation": "Sohbeti göster",
-      "Mark all as read": "hepsini okundu olarak işaretle"
-
+      "Mark all as read": "hepsini okundu olarak işaretle",
+      "show_more_count": "%{count} tane daha...",
+      "hide": "gizle"
     };
 }
 

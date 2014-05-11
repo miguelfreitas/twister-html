@@ -425,10 +425,8 @@ function whoFollows(username) {
     return list;
 }
 
-function getWhoFollows(username, item) {
-    var list = whoFollows(username);
-
-    for (var i = 0; i < list.length; i++) {
+function fillWhoFollows(list, item, offset, size) {
+    for (var i = offset; i < offset + size; i++) {
         var follower_link = $( '<a class="mini-follower-link"></a>' );
 
         // link follower to profile page
@@ -439,6 +437,32 @@ function getWhoFollows(username, item) {
         getFullname( list[i], follower_link );
 
         item.append( follower_link );
+    }
+}
+
+function getWhoFollows(username, item) {
+    var list = whoFollows(username);
+
+    fillWhoFollows(list, item, 0, (list.length > 5 ? 5 : list.length));
+
+    if (list.length > 5) {
+        var more_link = $('<a class="show-more-followers">' + polyglot.t('show_more_count', {'count': list.length - 5}) + '</a>');
+        more_link.on('click', function() {
+            fillWhoFollows(list, item, 5, list.length - 5);
+
+            var $this = $(this);
+            $this.remove();
+
+            $this.text(polyglot.t('hide'));
+            $this.unbind('click');
+            $this.bind('click', function() {
+                item.html('');
+                getWhoFollows(username, item);
+            });
+
+            item.append($this);
+        });
+        item.append(more_link);
     }
 }
 

@@ -217,22 +217,16 @@ function getFullname( username, item ){
         if (twisterFollowingO.knownFollowers.indexOf(username) > -1) {
             item.addClass('isFollowing');
             item.attr("title", polyglot.t("follows you"));
-        } else if (twisterFollowingO.notFollowers.indexOf(username) > -1)
-            item.addClass("notFollowing");
-        else {
+        } else if (twisterFollowingO.notFollowers.indexOf(username) === -1) {
             loadFollowingFromDht(username, 1, [], 0, function (args, following, seqNum) {
                 if (following.indexOf(args.user) > -1) {
                     item.addClass('isFollowing');
                     item.attr("title", polyglot.t("follows you"));
                     if (twisterFollowingO.knownFollowers.indexOf(args.username) < 0)
                         twisterFollowingO.knownFollowers.push(args.username);
-                } else {
-                    item.addClass('notFollowing');
-                    if (twisterFollowingO.notFollowers.indexOf(args.username) < 0)
-                        twisterFollowingO.notFollowers.push(args.username);
-                }
+                } else
+                    twisterFollowingO.notFollowers.push(args.username);
 
-                //storeFollowingSessionData();
                 twisterFollowingO.save();
             }, {"user": defaultScreenName, "item": item, "username": username});
         }
