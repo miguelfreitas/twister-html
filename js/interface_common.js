@@ -534,6 +534,12 @@ var unfocusThis = function()
     $this.removeClass( "open" );
 }
 
+function checkPostForMentions(post, mentions, max) {
+    var m = mentions.trim();
+    var ml = m.split(' ').join('|');
+    return new RegExp('^.{0,' + max.toString() + '}(' + ml + ')').test(post);
+}
+
 var splitedPostsCount = 1;
 var usePostSpliting = false;
 
@@ -548,75 +554,76 @@ function replyTextKeypress(e) {
         if (usePostSpliting) {
             var $tas = tweetForm.find("textarea");
             splitedPostsCount = $tas.length;
-            if ($tas.length > 1 && $tas[$tas.length - 1].value.length === 0) {
-                $tas[$tas.length - 1].value = $tas[$tas.length - 2].value;
-                $($tas[$tas.length - 2]).remove();
-                splitedPostsCount--;
-            }
+            if ($this.hasClass('splited-post'))
+                $this.css('height', '24px');
 
             var reply_to = $this.attr('data-reply-to');
-            for (var i = 0; i < splitedPostsCount - 1; i++) {
-                var pml = 140 - (i+1).toString().length - splitedPostsCount.toString().length - 6;
+            for (var i = 0; i < $tas.length; i++) {
+                var pml = 140 - (i+1).toString().length - splitedPostsCount.toString().length - 4;
                 //if mention exists, we shouldn't add it while posting.
                 if (typeof(reply_to) !== 'undefined' &&
-                    !(new RegExp('^.{0,' + (pml - reply_to.length).toString() + '}' + reply_to).test($tas[i].value))) {
+                    !checkPostForMentions($tas[i].value, reply_to, pml - reply_to.length)) {
                     pml -= reply_to.length;
                 }
 
                 if ($tas[i].value.length > pml) {
-                    var ci = $tas[i].value.lastIndexOf(" ", pml);
-                    ci = (ci == -1 ? pml : ci);
-                    $tas[i + 1].value = $tas[i].value.substr(ci) + $tas[i + 1].value;
-                    $tas[i].value = $tas[i].value.substr(0, ci);
+                    var endings = $tas[i].value.match(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n|\t/g);
+                    var ci = $tas[i].value.lastIndexOf(endings[endings.length - 1]);
+                    for (var j = endings.length - 2; j >= 0 && ci > pml; j--) {
+                        ci = $tas[i].value.lastIndexOf(endings[j], ci - 1);
+                    }
+                    ci = (ci > pml ? pml : ci);
+                    if (i < splitedPostsCount - 1) {
+                        $tas[i + 1].value = $tas[i].value.substr(ci) + $tas[i + 1].value;
+                        $tas[i].value = $tas[i].value.substr(0, ci);
+                    } else {
+                        var $oldta = $($tas[i]);
+                        var $newta = $($oldta).clone(true);
+                        var cp = $oldta.val();
 
-                } else if ($tas[i].value.length === 0) {
-                    $($tas[i]).remove();
-                    splitedPostsCount--;
+                        $oldta.val(cp.substr(0, ci));
+                        $oldta.on("click", function(e) {
+                            e.stopPropagation();
+                            this.style.height = '80px';
+                        });
+                        $oldta.unbind("keyup");
+                        $oldta.on("blur", replyTextKeypress);
+                        $oldta.addClass('splited-post');
+
+                        tweetForm.find(".textcomplete-wrapper").append($newta);
+                        $newta.val(cp.substr(ci));
+                        $newta.focus();
+                        if ($newta[0].setSelectionRange)
+                            $newta[0].setSelectionRange($newta.val().length, $newta.val().length);
+                        else if ($newta[0].createTextRange)
+                            $newta[0].createTextRange().moveEnd('character', $newta.val().length);
+
+                        $tas = tweetForm.find("textarea");
+                        splitedPostsCount = $tas.length;
+                    }
+
+                } else if ($tas.length > 1 && $tas[i].value.length === 0) {
+                    if (i === $tas.length - 1) {
+                        $tas[i].value = $tas[i - 1].value;
+                        $($tas[i - 1]).remove();
+                    } else {
+                        $($tas[i]).remove();
+                    }
+                    $tas = tweetForm.find("textarea");
+                    splitedPostsCount = $tas.length;
                 }
             }
 
-            c = 140 - $this.val().length - (2 * splitedPostsCount.toString().length) - 6;
+            c = 140 - $tas[$tas.length - 1].value.length - (2 * splitedPostsCount.toString().length) - 4;
             if (typeof(reply_to) !== 'undefined' &&
-                !(new RegExp('^.{0,' + (140 - c - reply_to.length).toString() + '}' + reply_to).test($this.val())))
+                !checkPostForMentions($tas[$tas.length - 1].value, reply_to, 140 - c - reply_to.length))
                 c -=  reply_to.length;
         }
         var remainingCount = tweetForm.find(".post-area-remaining");
 
-        if( c < 0 ) {
-            if (usePostSpliting){
-                var pml = 140 - (2 * splitedPostsCount.toString().length) - 6;
-                var reply_to = $this.attr('data-reply-to');
-                //if mention exists, we shouldn't add it while posting.
-                if (typeof(reply_to) !== 'undefined' &&
-                    !(new RegExp('^.{0,' + (pml - reply_to.length).toString() + '}' + reply_to).test(this.value))) {
-                    pml -= reply_to.length;
-                }
-
-                var cp = this.value;
-                var ci = cp.lastIndexOf(" ", pml);
-                ci = (ci == -1 ? pml : ci);
-                this.value = cp.substr(0, ci);
-                splitedPostsCount++;
-
-                var $newta = $this.clone(true);
-
-                var reply_to = $this.attr('data-reply-to');
-                $this.on("click", function(e) {e.stopPropagation()});
-                $this.unbind("keyup");
-                $this.on("blur", replyTextKeypress);
-                $this.addClass('splited-post');
-                tweetForm.find(".textcomplete-wrapper").append($newta);
-                $newta.val(cp.substr(ci));
-                $newta.focus();
-                if ($newta[0].setSelectionRange)
-                    $newta[0].setSelectionRange($newta.val().length, $newta.val().length);
-                else if ($newta[0].createTextRange)
-                    $newta[0].createTextRange().moveEnd('character', $newta.val().length);
-
-                c += ci - 1;
-            } else
-                remainingCount.addClass("warn");
-        } else
+        if( c < 0 )
+            remainingCount.addClass("warn");
+        else
             remainingCount.removeClass("warn");
 
         if (usePostSpliting)
@@ -1141,12 +1148,10 @@ var postSubmit = function(e)
             var postxt = "";
             var reply_to = $replyText.attr('data-reply-to');
             var val = $replyText.val();
-            if (typeof(reply_to) === 'undefined' || val.indexOf(reply_to) > 0)
-                postxt = "(" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ") " + val;
-            else if (val.indexOf(reply_to) === 0)
-                postxt = val.replace(reply_to, reply_to + "(" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ") ");
+            if (typeof(reply_to) === 'undefined' || checkPostForMentions(val, reply_to, 140))
+                postxt = val + " (" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ")";
             else
-                postxt = reply_to + "(" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ") " + val;
+                postxt = reply_to + val + " (" + splitedPostsCount.toString() + "/" + splitedPostsCount.toString() + ")";
 
             newPostMsg(postxt, $postOrig);
         } else
@@ -1157,17 +1162,14 @@ var postSubmit = function(e)
         var postxt = "";
         var reply_to = $replyText.attr('data-reply-to');
         var val = $replyText[0].value;
-        if (typeof(reply_to) === 'undefined' || val.indexOf(reply_to) > 0)
-            postxt = "(" + (splitedPostsCount - $replyText.length + 1).toString() + "/" + splitedPostsCount.toString() + ") " + val;
-        else if (val.indexOf(reply_to) === 0) {
-            postxt = val.replace(reply_to, reply_to + "(" + (splitedPostsCount - $replyText.length + 1).toString() + "/" + splitedPostsCount.toString() + ") ");
-            //splitedPosts.shift();
-        } else
-            postxt = reply_to + "(" + (splitedPostsCount - $replyText.length + 1).toString() + "/" + splitedPostsCount.toString() + ") " + val;
+        if (typeof(reply_to) === 'undefined' || checkPostForMentions(val, reply_to, 140))
+            postxt = val + " (" + (splitedPostsCount - $replyText.length + 1).toString() + "/" + splitedPostsCount.toString() + ")";
+        else
+            postxt = reply_to + val + " (" + (splitedPostsCount - $replyText.length + 1).toString() + "/" + splitedPostsCount.toString() + ")";
 
         $($replyText[0]).remove();
 
-        newPostMsg(postxt  + " +", $postOrig);
+        newPostMsg(postxt, $postOrig);
         setTimeout(postSubmit, 1000, $this);
 
         return;

@@ -156,9 +156,11 @@ function htmlFormatMsg( msg, output, mentions ) {
     var index;
     var strUrlRegexp = "http[s]?://";
     var strEmailRegexp = "\\S+@\\S+\\.\\S+";
-    var reAll = new RegExp("(?:^|[ \\n\\t.,:\\/?!])(#|@|" + strUrlRegexp + "|" + strEmailRegexp + ")");
+    var strSplitCounterR = "\\(\\d{1,2}\\/\\d{1,2}\\)$";
+    var reAll = new RegExp("(?:^|[ \\n\\t.,:\\/?!])(#|@|" + strUrlRegexp + "|" + strEmailRegexp + "|" + strSplitCounterR + ")");
     var reHttp = new RegExp(strUrlRegexp);
     var reEmail = new RegExp(strEmailRegexp);
+    var reSplitCounter = new RegExp(strSplitCounterR);
     
     msg = escapeHtmlEntities(msg);
 
@@ -258,6 +260,18 @@ function htmlFormatMsg( msg, output, mentions ) {
                 output.append('#');
                 msg = tmp;
                 continue;
+            }
+
+            if (reSplitCounter.exec(match[1])) {
+                output.append(_formatText(msg.substr(0, index)));
+                tmp = msg.substring(index);
+                if( tmp.length ) {
+                    var splitCounter = $('<span class="splited-post-counter"></span>');
+                    splitCounter.text(tmp);
+                    output.append(splitCounter);
+                    msg = "";
+                    continue;
+                }
             }
         }
 

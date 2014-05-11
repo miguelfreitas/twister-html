@@ -584,8 +584,14 @@ button.disabled:hover
 }
 textarea.splited-post {
     box-shadow: none!important;
-    animation-name: sent-part;
-    animation-duration: 0,5s;
+    height: 28px;
+    transition: height 1s linear;
+    -webkit-transition: height 0.3s linear;
+    -moz-transition: height 0.3s linear;
+    -o-transition: height 0.3s linear;
+    -ms-transition: height 0.3s linear;
+    animation-name: splited-part;
+    animation-duration: 0.5s;
     animation-easing-function: linear;
     -webkit-animation-name: sent-part;
     -webkit-animation-duration: 0.5s;
@@ -594,13 +600,20 @@ textarea.splited-post {
     -moz-animation-duration: 0.5s;
     -moz-animation-easing-function: linear;
 }
-@keyframes sent-part {
+@keyframes splited-part {
     from {
         height: 0px;
     }
     to {
         height: 80px;
     }
+}
+.splited-post-counter {
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+.splited-post-counter:before {
+    content: '\2026';
 }
 .post-area-extras
 {

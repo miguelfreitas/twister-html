@@ -316,11 +316,11 @@ function willBeHidden(post){
 
     if ($.Options.getHideRepliesOpt() !== 'disable' &&
         /^\@/.test(msg) &&
-        !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|$)').test(msg)))
+        !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|\\t|$)').test(msg)))
     {
             if ($.Options.getHideRepliesOpt() === 'only-me' ||
                 ($.Options.getHideRepliesOpt() === 'following' &&
-                 followingUsers.indexOf(msg.substring(1, msg.search(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n/))) === -1 ))
+                 followingUsers.indexOf(msg.substring(1, msg.search(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n|\t|$/))) === -1 ))
             {
                 hidden = true;
             }
