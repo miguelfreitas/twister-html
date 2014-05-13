@@ -441,6 +441,9 @@ function fillWhoFollows(list, item, offset, size) {
 }
 
 function getWhoFollows(username, item) {
+    if (!defaultScreenName || typeof(defaultScreenName) === 'undefined')
+        return;
+
     var list = whoFollows(username);
 
     fillWhoFollows(list, item, 0, (list.length > 5 ? 5 : list.length));
