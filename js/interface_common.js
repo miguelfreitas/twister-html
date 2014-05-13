@@ -320,6 +320,37 @@ function openWhoToFollowModal(e) {
     $( "." + whoToFollowModalClass + " h3" ).text( polyglot.t("Who to Follow") );
 }
 
+function newConversationModal(postLi) {
+    var hashtagModalContent = $( "#hashtag-modal-template" ).children().clone(true);
+    hashtagModalContent.find( ".postboard-news").click(function (){
+        $(this).hide();
+        displayHashtagPending($(".conversation-modal .postboard-posts"));
+    });
+
+    getTopPostOfConversation(postLi, null, hashtagModalContent.find(".postboard-posts"));
+
+    return hashtagModalContent;
+}
+
+function openConversationModal(e)
+{
+    e.stopPropagation();
+    e.preventDefault();
+
+    var $this = $( this );
+    var postLi = $this.parents(".module.post.original.open").find('.module.post.original');
+
+    var conversationModalClass = "conversation-modal";
+    openModal( conversationModalClass );
+    //$( "." + threadingModalClass ).attr("data-resource","hashtag");
+
+    var hashtagModalContent = newConversationModal( postLi );
+    hashtagModalContent.appendTo("." + conversationModalClass + " .modal-content");
+
+    //título do modal
+    $( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': postLi.find('.post-data').attr('data-screen-name')}) );
+}
+
 //
 // Post actions, submit, count characters
 // --------------------------------------
@@ -1279,6 +1310,7 @@ function initInterfaceCommon() {
     $( ".post-area-new" ).clickoutside( unfocusThis );
     $( ".post-submit").click( postSubmit );
     $( ".modal-propagate").click( retweetSubmit );
+    $( ".expanded-content .show-more").bind('click', openConversationModal);
 
     if ($.Options.getUnicodeConversionOpt() === "disable")
         $( ".undo-unicode" ).click( undoLastUnicode ).css("display", "none");

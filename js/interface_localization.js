@@ -227,7 +227,9 @@ if(preferredLanguage == "en"){
       "Show conversation": "Show conversation",
       "Mark all as read": "Mark all as read",
       "show_more_count": "%{count} more...",
-      "hide": "hide"
+      "hide": "hide",
+      "Show more in this conversation...": "Show more in this conversation...",
+      "conversation_title": "Conversation of @%{username}"
     };
 }
 if(preferredLanguage == "es"){
@@ -1873,7 +1875,9 @@ if(preferredLanguage == "tr"){
       "Show conversation": "Sohbeti göster",
       "Mark all as read": "hepsini okundu olarak işaretle",
       "show_more_count": "%{count} tane daha...",
-      "hide": "gizle"
+      "hide": "gizle",
+      "Show more in this conversation...": "Sohbetin tamamını göster...",
+      "conversation_title": "@%{username} kullanıcısının bir sohbeti"
     };
 }
 

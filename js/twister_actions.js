@@ -10,7 +10,8 @@
 // global variables
 
 var postsPerRefresh = 10;
-var maxExpandPost = 20;
+var maxExpandPost = 8;
+var maxExpandPostTop = 4;
 var _hashtagProcessedMap = {};
 var _hashtagPendingPosts = [];
 var autoUpdateHashtag = false;
@@ -19,7 +20,7 @@ var autoUpdateHashtag = false;
 
 function requestRepliedBefore(postLi)
 {
-    if(postLi.siblings().length >= maxExpandPost)
+    if(postLi.siblings().length >= maxExpandPostTop)
         return;
 
     var originalPost = postLi.find(".post-data");
@@ -41,7 +42,7 @@ function requestRepliedBefore(postLi)
 
 function requestRepliesAfter(postLi)
 {
-    if(postLi.siblings().length >= maxExpandPost)
+    if(postLi.parents('.module.post.original.open').find('.post.related').length >= maxExpandPost)
         return;
 
     var originalPost = postLi.find(".post-data");
@@ -49,16 +50,56 @@ function requestRepliesAfter(postLi)
     var original_k = originalPost.attr('data-id');
 
     if( original_n != undefined && original_k != undefined ) {
-        dhtget( original_n, "replies" + original_k, "m",
-               function(postLi, postsFromJson) {
-                   for( var i = 0; i < postsFromJson.length; i++) {
-                       var newStreamPost = postToElem(postsFromJson[i], "related");
-                       newStreamPost.hide();
-                       postLi.after(newStreamPost);
-                       newStreamPost.slideDown("fast");
-                   }
-                   $.MAL.relatedPostLoaded();
-               }, postLi);
+        dhtget( original_n, "replies" + original_k, "m", $.MAL.reqRepAfterCB, postLi);
+    }
+}
+
+function getTopPostOfConversation(postLi, post, postboard) {
+    var reply_n;
+    var reply_k;
+
+    if (post && typeof(post) !== 'undefined' && "reply" in post["userpost"]) {
+        reply_k = post["userpost"]["reply"]["k"];
+        reply_n = post["userpost"]["reply"]["n"];
+    } else if (postLi && typeof(postLi) !== 'undefined') {
+        var originalPost = postLi.find(".post-data");
+        reply_n = originalPost.attr('data-replied-to-screen-name');
+        reply_k = originalPost.attr('data-replied-to-id');
+    }
+
+    if( reply_n != undefined && reply_k != undefined ) {
+        dhtget( reply_n, "post" + reply_k, "s",
+            function(postLi, postFromJson) {
+                getTopPostOfConversation(null, postFromJson, postboard);
+            }, postLi);
+    } else {
+        var newStreamPost;
+        if (post)
+            newStreamPost = postToElem(post, "related");
+        else {
+            newStreamPost = postLi.clone(true);
+            newStreamPost.removeClass('original');
+            newStreamPost.addClass('related');
+            newStreamPost.find('.expanded-content').hide();
+            newStreamPost.find('.show-more').hide();
+        }
+        requestRepliesAfterAll(newStreamPost);
+        newStreamPost.find('.post-expand').remove();
+        newStreamPost.unbind('click');
+        newStreamPost.hide();
+        postboard.append(newStreamPost);
+        newStreamPost.slideDown("fast");
+    }
+}
+
+function requestRepliesAfterAll(postLi)
+{
+    var originalPost = postLi.find(".post-data");
+    var original_n = originalPost.attr('data-screen-name');
+    var original_k = originalPost.attr('data-id');
+
+    if( original_n != undefined && original_k != undefined ) {
+        dhtget( original_n, "replies" + original_k, "m", $.MAL.reqRepAfterCB, postLi);
     }
 }
 

@@ -365,6 +365,29 @@ var MAL = function()
          }
     }
 
+    this.reqRepAfterCB = function(postLi, postsFromJson) {
+        if ($.hasOwnProperty("mobile")) {
+            for( var i = 0; i < postsFromJson.length; i++) {
+                var newStreamPost = postToElem(postsFromJson[i], "related");
+                newStreamPost.hide();
+                postLi.after(newStreamPost);
+                newStreamPost.slideDown("fast");
+            }
+        } else {
+            var $replist = $('<ol class="sub-replies"></ol>');
+            var $newli = $('<li class="post open related"></li>');
+            postLi.after($newli);
+            $newli.append($replist);
+            for (var i = 0; i < postsFromJson.length; i++) {
+                var newStreamPost = postToElem(postsFromJson[i], "related");
+                newStreamPost.hide();
+                $replist.prepend(newStreamPost);
+                newStreamPost.slideDown("fast");
+                requestRepliesAfter(newStreamPost);
+            }
+        }
+        $.MAL.relatedPostLoaded();
+    };
 }
 
 jQuery.MAL = new MAL;
