@@ -20,6 +20,11 @@
     font-family: "Open Sans Condensed";
     src: url("OpenSansCondensed300.ttf");
 }
+@font-face
+{
+    font-family: "Symbola";
+    src: url("/css/Symbola.ttf");
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -41,7 +46,7 @@ time, mark, audio, video, textarea
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif, Symbola;
 }
 textarea, input
 {
@@ -747,6 +752,15 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 {
     color: #ff0000;
 }
+.post .show-more {
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 60px;
+    color: rgba(0, 0, 0, 0.5);
+}
+.post .show-more:before {
+    content: '💭';
+}
 /***********************************
 ********************* WHO TO FOLLOW
 ***********************************/
@@ -1394,6 +1408,10 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 {
     display: inline-block;
 }
+.post .sub-replies {
+    border-left: solid 3px #43464d;
+    margin-left: 2px;
+}
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***
 ***********************************/
@@ -1820,6 +1838,31 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 .hashtag-modal .postboard h2 {
     width: 100%;
     padding-left: 10px;
+}
+/*************************************
+****************** CONVERSATION MODAL
+**************************************/
+.conversation-modal .modal-wrapper
+{
+    position: absolute;
+    width: 560px;
+    height: 80%;
+    top: 10%;
+    margin: 0 0 0 -330px;
+    overflow: hidden;
+}
+.conversation-modal .modal-content
+{
+    overflow-y: auto;
+    height: 90%;
+}
+.conversation-modal .modal-buttons
+{
+    display: none;
+}
+.conversation-modal .postboard
+{
+    margin-left: 0;
 }
 /*************************************
 ****************** FOLLOWING MODAL
