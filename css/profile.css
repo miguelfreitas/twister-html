@@ -198,12 +198,13 @@
     display: none;
 }
 .bitmessage-ctc, .tox-ctc {
+    position: absolute;
     height: 30px;
     width: 30px;
     display: inline-block;
     margin-right: 5px;
     border: 1px solid #d6d8dc;
-    background: #e3e5ea url(img/clipboard.png) center no-repeat;
+    background: #e3e5ea;
     opacity: .8;
     -webkit-border-radius: 0 5px 5px 0;
     -moz-border-radius: 0 5px 5px 0;
@@ -213,14 +214,20 @@
     -ms-transition: all 20ms;
     -o-transition: all 20ms;
     transition: all 20ms;
+    font-size: 18px;
 }
 .bitmessage-ctc:hover, .tox-ctc:hover {
     background-color: #f0f2f8;
     opacity: 1;
     cursor: pointer;
+    text-decoration: none;
 }
 .bitmessage-ctc:active, .tox-ctc:active {
     background-color: #edfced;
+}
+.bitmessage-ctc:after,
+.tox-ctc:after {
+    content: '📋';
 }
 .profile-modal .profile-tox, .profile-modal .profile-bitmessage {
     display: inline-block;

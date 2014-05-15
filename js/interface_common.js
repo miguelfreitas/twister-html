@@ -1327,4 +1327,11 @@ function initInterfaceCommon() {
 
     $( ".who-to-follow .refresh-users" ).bind( "click", refreshWhoToFollow );
     $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
+
+    $('.tox-ctc').on('click', function(){
+        window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
+    });
+    $('.bitmessage-ctc').on('click', function(){
+        window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
+    });
 }
