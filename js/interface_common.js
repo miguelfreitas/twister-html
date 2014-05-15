@@ -586,7 +586,7 @@ function replyTextKeypress(e) {
             var $tas = tweetForm.find("textarea");
             splitedPostsCount = $tas.length;
             if ($this.hasClass('splited-post'))
-                $this.css('height', '24px');
+                $this.css('height', '28px');
 
             var reply_to = $this.attr('data-reply-to');
             for (var i = 0; i < $tas.length; i++) {

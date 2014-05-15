@@ -345,10 +345,16 @@ button.follow:hover {
 {
     margin-left: 0;
     padding: 5px 0 5px 0;
-    height: 100%;
+    height: 60%;
 }
 .profile-modal .postboard h2 {
     width: auto;
+}
+.profile-modal .postboard-posts
+{
+    display: block;
+    height: 90%;
+    overflow: auto;
 }
 .profile-modal .postboard h2 span {
     font: 18px/40px 'Open Sans Condensed', sans-serif;
