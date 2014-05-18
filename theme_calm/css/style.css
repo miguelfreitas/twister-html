@@ -20,6 +20,11 @@
     font-family: "Open Sans Condensed";
     src: url("OpenSansCondensed300.ttf");
 }
+@font-face
+{
+    font-family: "Symbola";
+    src: url("/css/Symbola.ttf");
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -41,7 +46,7 @@ time, mark, audio, video, textarea
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif, Symbola;
 }
 textarea, input
 {
@@ -91,6 +96,10 @@ h3
 {
     font-size: 14px;
     color: rgba( 0, 0, 0, .5 );
+}
+.isFollowing:after {
+    color: #1a1;
+    content: '\2714';
 }
 /*************************************
 **************************** BUTTONS **
@@ -639,6 +648,28 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 {
     text-decoration: none;
 }
+.who-follow
+{
+    height: auto;
+    background-color: rgba(69, 71, 77, 0.1);
+    overflow: hidden;
+    font-size: 12px;
+}
+.show-more-followers {
+    color: #f11;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+}
+.mini-follower-link
+{
+    display: inline-block;
+    margin-right: 10px;
+}
+.mini-follower-link:before
+{
+    content: " \2027";
+}
 /***********************************
 ********************* POST AREA ****
 ***********************************/
@@ -651,6 +682,10 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     width: 430px;
     display: block;
     transition: all .3s linear;
+    -webkit-transition: height 0.3s linear;
+    -moz-transition: height 0.3s linear;
+    -o-transition: height 0.3s linear;
+    -ms-transition: height 0.3s linear;
     height: 28px;
     border-radius: 3px;
     border: solid 1px rgba(0, 0, 0, .3 );
@@ -673,6 +708,17 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     height: 80px;
     border: solid 1px rgba( 118, 145, 206, .8 );
     box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
+}
+textarea.splited-post {
+    box-shadow: none!important;
+    height: 28px;
+}
+.splited-post-counter {
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+.splited-post-counter:before {
+    content: '\2026';
 }
 .post-area-extras
 {
@@ -746,6 +792,15 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 .post-area-remaining.warn
 {
     color: #ff0000;
+}
+.post .show-more {
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 60px;
+    color: rgba(0, 0, 0, 0.5);
+}
+.post .show-more:before {
+    content: '💭';
 }
 /***********************************
 ********************* WHO TO FOLLOW
@@ -1394,6 +1449,10 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 {
     display: inline-block;
 }
+.post .sub-replies {
+    border-left: solid 3px #43464d;
+    margin-left: 2px;
+}
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***
 ***********************************/
@@ -1606,7 +1665,8 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
 }
-.modal-back {
+.modal-back,
+.mark-all-as-read {
     position: absolute;
     right: 30px;
     top: 0;
@@ -1618,8 +1678,8 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     transition: all .1s linear;
     display: none;  
 }
-.modal-back:hover
-{
+.modal-back:hover,
+.mark-all-as-read:hover {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
 }
@@ -1760,6 +1820,12 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 .direct-messages-thread li.message:hover {
     background: none;
 }
+.mark-all-as-read {
+    right: 60px;
+}
+.mark-all-as-read:before {
+    content: '\2714';
+}
 /*************************************
 ****************** NEW USER MODAL
 **************************************/
@@ -1822,6 +1888,31 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     padding-left: 10px;
 }
 /*************************************
+****************** CONVERSATION MODAL
+**************************************/
+.conversation-modal .modal-wrapper
+{
+    position: absolute;
+    width: 560px;
+    height: 80%;
+    top: 10%;
+    margin: 0 0 0 -330px;
+    overflow: hidden;
+}
+.conversation-modal .modal-content
+{
+    overflow-y: auto;
+    height: 90%;
+}
+.conversation-modal .modal-buttons
+{
+    display: none;
+}
+.conversation-modal .postboard
+{
+    margin-left: 0;
+}
+/*************************************
 ****************** FOLLOWING MODAL
 **************************************/
 .following-modal .modal-wrapper
@@ -1834,6 +1925,7 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 .following-modal .modal-content
 {
     padding: 15px;
+    height: 400px;
     overflow-y: auto;
 }
 .following-modal .modal-buttons
@@ -1859,6 +1951,56 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 .following-modal .open-profile-modal span:hover
 {
     text-decoration: underline;
+}
+/*************************************
+******************* WHO TO FOLLOW MODAL
+**************************************/
+.who-to-follow-modal .modal-wrapper
+{
+    width: 560px;
+    height: 470px;
+    margin: -200px 0 0 -280px;
+    overflow-x: hidden;
+}
+.who-to-follow-modal .modal-content
+{
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+}
+.who-to-follow-modal .modal-buttons
+{
+    display: none;
+}
+.who-to-follow-modal ol
+{
+    margin: 5px;
+}
+.who-to-follow-modal .open-profile-modal:hover
+{
+    text-decoration: none;
+}
+.who-to-follow-modal .open-profile-modal span
+{
+    vertical-align: middle;
+}
+.who-to-follow-modal .open-profile-modal span:hover
+{
+    text-decoration: underline;
+}
+.who-to-follow-modal .follow
+{
+    float: right;
+    margin: -30px 10px 0 10px;
+}
+.who-to-follow-modal .twister-user-info span
+{
+    vertical-align: bottom;
+}
+.who-to-follow-modal .bio
+{
+    font-size: 12px;
+    color: rgba( 0, 0, 0, .6 );
 }
 /*************************************
 ****************** LOADER ************

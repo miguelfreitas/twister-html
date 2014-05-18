@@ -262,6 +262,7 @@
     display: none;
 }
 .bitmessage-ctc, .tox-ctc {
+    position: absolute;
     height: 30px;
     width: 30px;
     display: inline-block;
@@ -277,14 +278,20 @@
     -ms-transition: all 20ms;
     -o-transition: all 20ms;
     transition: all 20ms;
+    font-size: 18px;
 }
 .bitmessage-ctc:hover, .tox-ctc:hover {
     background-color: #f0f2f8;
     opacity: 1;
     cursor: pointer;
+    text-decoration: none;
 }
 .bitmessage-ctc:active, .tox-ctc:active {
     background-color: #edfced;
+}
+.bitmessage-ctc:after,
+.tox-ctc:after {
+    content: '📋';
 }
 .profile-modal .profile-tox, .profile-modal .profile-bitmessage {
     display: inline-block;
@@ -345,10 +352,16 @@ button.follow:hover {
 {
     margin-left: 0;
     padding: 5px 0 5px 0;
-    height: 100%;
+    height: 60%;
 }
 .profile-modal .postboard h2 {
     width: auto;
+}
+.profile-modal .postboard-posts
+{
+    display: block;
+    height: 90%;
+    overflow: auto;
 }
 .profile-modal .postboard h2 span {
     font: 18px/40px 'Open Sans Condensed', sans-serif;
