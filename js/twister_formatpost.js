@@ -310,7 +310,7 @@ function _extractUsername(s) {
 function _extractHashtag(s) {
     var hashtag = "";
     for( var i = 0; i < s.length; i++ ) {
-        if( " \n\t.,:/?!".indexOf(s[i]) < 0 ) {
+        if( " \n\t.,:/?!;'\"()[]{}*".indexOf(s[i]) < 0 ) {
             hashtag += s[i];
         } else {
             break;
