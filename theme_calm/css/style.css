@@ -1449,7 +1449,7 @@ textarea.splited-post {
 {
     display: inline-block;
 }
-.post .sub-replies {
+.post-replies .sub-replies {
     border-left: solid 3px #43464d;
     margin-left: 2px;
 }

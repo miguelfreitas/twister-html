@@ -1117,7 +1117,7 @@ ol.toptrends-list {
 {
     display: inline-block;
 }
-.post .sub-replies {
+.post-replies .sub-replies {
     border-left: solid 3px #E34F42;
     margin-left: 2px;
 }

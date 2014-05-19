@@ -375,10 +375,10 @@ var MAL = function()
             }
         } else {
             var $replist = $('<ol class="sub-replies"></ol>');
-            var $newli = $('<li class="post open related"></li>');
+            var $newli = $('<li class="post-replies"></li>');
             postLi.after($newli);
             $newli.append($replist);
-            for (var i = 0; i < postsFromJson.length; i++) {
+            for (var i = 0; i < postsFromJson.length && $.MAL.getExpandedPostsCount(postLi) < maxExpandPost; i++) {
                 var newStreamPost = postToElem(postsFromJson[i], "related");
                 newStreamPost.hide();
                 $replist.prepend(newStreamPost);
@@ -387,6 +387,14 @@ var MAL = function()
             }
         }
         $.MAL.relatedPostLoaded();
+    };
+
+    this.getExpandedPostsCount = function(postLi) {
+        if ($.hasOwnProperty('mobile')) {
+            return postLi.siblings().length;
+        } else {
+            return postLi.parents('.module.post.original.open').find('.post.related').length;
+        }
     };
 }
 

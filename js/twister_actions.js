@@ -42,7 +42,7 @@ function requestRepliedBefore(postLi)
 
 function requestRepliesAfter(postLi)
 {
-    if(postLi.parents('.module.post.original.open').find('.post.related').length >= maxExpandPost)
+    if($.MAL.getExpandedPostsCount(postLi) >= maxExpandPost)
         return;
 
     var originalPost = postLi.find(".post-data");

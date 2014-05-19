@@ -193,9 +193,10 @@
     margin-top: 20px;
     height: 30px;
 }
-#toxbtnwr, #bmbtnwr {
+.profile-extra-contact {
     float: left;
     display: none;
+    margin-right: 35px;
 }
 .bitmessage-ctc, .tox-ctc {
     position: absolute;
