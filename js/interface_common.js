@@ -1151,15 +1151,20 @@ function undoLastUnicode(e) {
     lastConvertedIndex = $ta.val().length;
 }
 
-var postSubmit = function(e)
+var postSubmit = function(e, oldLastPostId)
 {
     var $this = $( this );
-    if (e instanceof $)
+    if (e instanceof $) {
         $this = e;
-    else {
+        //check if previous part was sent...
+        if ( oldLastPostId === lastPostId)
+            setTimeout(postSubmit, 1000, $this, oldLastPostId);
+    } else {
         e.stopPropagation();
         e.preventDefault();
     }
+    $.MAL.disableButton($this);
+
     var $replyText = $this.closest(".post-area-new").find("textarea");
 
     var $postOrig = $this.closest(".post-data");
@@ -1201,7 +1206,7 @@ var postSubmit = function(e)
         $($replyText[0]).remove();
 
         newPostMsg(postxt, $postOrig);
-        setTimeout(postSubmit, 1000, $this);
+        setTimeout(postSubmit, 1000, $this, lastPostId);
 
         return;
     }
