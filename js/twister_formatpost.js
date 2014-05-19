@@ -197,7 +197,7 @@ function htmlFormatMsg( msg, output, mentions ) {
                 if( space != -1 ) url = tmp.substring(0,space); else url = tmp;
                 if( url.length ) {
                     msg = tmp.substr(String(url).length);
-                    url = url.replace('&amp;', '&');
+                    url = url.replace(/&amp;/g, '&');
                     var extLinkTemplate = $("#external-page-link-template").clone(true);
                     extLinkTemplate.removeAttr("id");
 
@@ -309,6 +309,7 @@ function _extractUsername(s) {
 // internal function for htmlFormatMsg
 function _extractHashtag(s) {
     var hashtag = "";
+    s = reverseHtmlEntities(s);
     for( var i = 0; i < s.length; i++ ) {
         if( " \n\t.,:/?!;'\"()[]{}*".indexOf(s[i]) < 0 ) {
             hashtag += s[i];
@@ -320,6 +321,20 @@ function _extractHashtag(s) {
 }
 
 function escapeHtmlEntities(str) {
-    return str.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&apos;');
+    return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;');
+}
+
+function reverseHtmlEntities(str) {
+    return str
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&apos;/g, "'");
 }
 
