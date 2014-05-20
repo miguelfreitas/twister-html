@@ -137,6 +137,10 @@ button.disabled:hover
     background: #43464d;
     z-index: 2;
 }
+.userMenu.w1200 {
+    width: 1200px;
+    margin-left: -600px;
+}
 .userMenu:after{
     position: absolute;
     content: '';
@@ -387,11 +391,20 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     z-index: 1;
     min-height: 100%;
 }
-.dashboard
-{
+.wrapper.w1200 {
+    width: 1200px;
+    padding: 55px 7px 15px 7px;
+}
+.dashboard.left {
     width: 320px;
     position: fixed;
     top: 55px;
+}
+.dashboard.right {
+    width: 320px;
+    position: fixed;
+    top: 55px;
+    margin-left: 864px;
 }
 .module
 {
@@ -401,6 +414,10 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 }
 .dashboard .module {
     border-radius: 6px;
+}
+.options .module {
+    margin: 5px;
+    padding: 5px;
 }
 .messages-qtd
 {
@@ -940,6 +957,10 @@ textarea.splited-post {
     border: solid 1px rgba( 69, 71, 77, .05 );
     padding: 10px;
     border-radius: 6px;
+}
+.w1200 .postboard {
+    margin-left: 327px;
+    width: 530px;
 }
 .postboard h2 {
     font: 18px/40px 'Open Sans Condensed', sans-serif;
@@ -2136,6 +2157,17 @@ textarea.splited-post {
 .optionsPage .module h2 {
     margin-top: 10px;
     font-size: 12px;
+}
+.suboptions {
+    margin: 5px 30px;
+    border: double 2px rgba( 69, 71, 77, .1 );
+    height: 0px;
+    overflow: hidden;
+    transition: height 1s linear;
+    -webkit-transition: height 1s linear;
+    -moz-transition: height 1s linear;
+    -o-transition: height 1s linear;
+    -ms-transition: height 1s linear;
 }
 /* Following page */
 .following ol.following-list > li{

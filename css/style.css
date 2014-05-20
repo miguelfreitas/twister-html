@@ -126,6 +126,10 @@ button.disabled:hover
     background: #45474d;
     z-index: 2;
 }
+.userMenu.w1200 {
+    width: 1200px;
+    margin-left: -600px;
+}
 .userMenu:after
 {
     content: "";
@@ -273,11 +277,20 @@ button.disabled:hover
     z-index: 1;
     min-height: 100%;
 }
-.dashboard
-{
+.wrapper.w1200 {
+    width: 1200px;
+    padding: 55px 7px 15px 7px;
+}
+.dashboard.left {
     width: 320px;
     position: fixed;
     top: 55px;
+}
+.dashboard.right {
+    width: 320px;
+    position: fixed;
+    top: 55px;
+    margin-left: 864px;
 }
 .module
 {
@@ -777,6 +790,10 @@ ol.toptrends-list {
     background: rgba( 255, 255, 255, .5 );
     border: solid 1px rgba( 69, 71, 77, .05 );
     padding: 10px;
+}
+.w1200 .postboard {
+    margin-left: 327px;
+    width: 530px;
 }
 .postboard h2
 {

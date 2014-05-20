@@ -132,7 +132,7 @@ var InterfaceFunctions = function()
 //***********************************************
 var interfaceFunctions = new InterfaceFunctions;
 $( document ).ready( interfaceFunctions.init );
-
+$( window ).resize(replaceDashboards);
 
 //função no window que fixa o header das postagens
 function fixDiv()
