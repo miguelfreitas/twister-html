@@ -390,7 +390,7 @@ function getRandomFollowSuggestion(cbFunc, cbArg) {
     if ( (i < followingUsers.length && followingUsers[i] == defaultScreenName) ||
          typeof(twisterFollowingO.followingsFollowings[followingUsers[i]]) === 'undefined') {
 
-        setTimeout(getRandomFollowSuggestion, 500, cbFunc, cbArg);
+        setTimeout(function() {getRandomFollowSuggestion(cbFunc, cbArg);}, 500);
         return;
     }
 

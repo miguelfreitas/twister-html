@@ -1157,8 +1157,12 @@ var postSubmit = function(e, oldLastPostId)
     if (e instanceof $) {
         $this = e;
         //check if previous part was sent...
-        if ( oldLastPostId === lastPostId)
-            setTimeout(postSubmit, 1000, $this, oldLastPostId);
+        if ( oldLastPostId === lastPostId) {
+            setTimeout(function () {
+                postSubmit($this, oldLastPostId);
+            }, 1000);
+            return;
+        }
     } else {
         e.stopPropagation();
         e.preventDefault();
@@ -1205,8 +1209,9 @@ var postSubmit = function(e, oldLastPostId)
 
         $($replyText[0]).remove();
 
+        oldLastPostId = lastPostId;
         newPostMsg(postxt, $postOrig);
-        setTimeout(postSubmit, 1000, $this, lastPostId);
+        setTimeout(function() {postSubmit($this, oldLastPostId);}, 1000);
 
         return;
     }
