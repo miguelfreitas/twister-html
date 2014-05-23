@@ -1287,6 +1287,25 @@ function mensAutocomplete() {
 ])
 }
 
+function replaceDashboards() {
+    if ($(window).width() >= 1200 && !$('.wrapper').hasClass('w1200')) {
+        $('.wrapper').addClass('w1200');
+        $('.userMenu').addClass('w1200');
+        var wf = $('.module.who-to-follow');
+        wf.remove();
+        wf.appendTo($('.dashboard.right'));
+    } else if ($(window).width() < 1200 && $('.wrapper').hasClass('w1200')) {
+        $('.wrapper').removeClass('w1200');
+        $('.userMenu').removeClass('w1200');
+        var wf = $('.module.who-to-follow');
+        wf.remove();
+        $('.module.mini-profile').after(wf);
+    }
+
+    $( ".who-to-follow .refresh-users" ).bind( "click", refreshWhoToFollow );
+    $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
+}
+
 function initInterfaceCommon() {
     $( "body" ).on( "click", function(event) { 
         if($(event.target).hasClass('cancel')) closeModal($(this));
@@ -1335,8 +1354,7 @@ function initInterfaceCommon() {
     $( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
 
-    $( ".who-to-follow .refresh-users" ).bind( "click", refreshWhoToFollow );
-    $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
+    replaceDashboards();
 
     $('.tox-ctc').on('click', function(){
         window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
