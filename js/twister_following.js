@@ -301,8 +301,8 @@ function saveFollowingToDht() {
 
 // save following to local storage, dht and json rpc
 function saveFollowing(cbFunc, cbArg) {
-    saveFollowingToStorage();
     saveFollowingToDht();
+    saveFollowingToStorage();
     updateFollowing(cbFunc, cbArg);
 }
 
