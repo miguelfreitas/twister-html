@@ -1058,10 +1058,10 @@ ol.toptrends-list {
 .image-preview
 {
     max-height: 500px;
-    max-width: 530px;
+    max-width: 495px;
     width: auto;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
 }
 .preview-container
 {

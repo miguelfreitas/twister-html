@@ -218,17 +218,27 @@ function getFullname( username, item ){
             item.addClass('isFollowing');
             item.attr("title", polyglot.t("follows you"));
         } else if (twisterFollowingO.notFollowers.indexOf(username) === -1) {
-            loadFollowingFromDht(username, 1, [], 0, function (args, following, seqNum) {
-                if (following.indexOf(args.user) > -1) {
+            if (typeof(twisterFollowingO.followingsFollowings[username]) !== 'undefined' &&
+                typeof(twisterFollowingO.followingsFollowings[username]["following"]) !== 'undefined') {
+                if (twisterFollowingO.followingsFollowings[username]["following"].indexOf(defaultScreenName) > -1) {
+                    twisterFollowingO.knownFollowers.push(username);
+                    twisterFollowingO.save();
                     item.addClass('isFollowing');
                     item.attr("title", polyglot.t("follows you"));
-                    if (twisterFollowingO.knownFollowers.indexOf(args.username) < 0)
-                        twisterFollowingO.knownFollowers.push(args.username);
-                } else
-                    twisterFollowingO.notFollowers.push(args.username);
+                }
+            } else {
+                loadFollowingFromDht(username, 1, [], 0, function (args, following, seqNum) {
+                    if (following.indexOf(args.user) > -1) {
+                        item.addClass('isFollowing');
+                        item.attr("title", polyglot.t("follows you"));
+                        if (twisterFollowingO.knownFollowers.indexOf(args.username) < 0)
+                            twisterFollowingO.knownFollowers.push(args.username);
+                    } else
+                        twisterFollowingO.notFollowers.push(args.username);
 
-                twisterFollowingO.save();
-            }, {"user": defaultScreenName, "item": item, "username": username});
+                    twisterFollowingO.save();
+                }, {"user": defaultScreenName, "item": item, "username": username});
+            }
         }
 
         $(".open-followers").attr("title", twisterFollowingO.knownFollowers.length.toString());

@@ -83,13 +83,27 @@ TwisterFollowing.prototype = {
         var oneshot = false;
         var i = 0;
         if (typeof(username) !== 'undefined') {
-            i = followingUsers[username];
+            //activate updating for only one user...
+            i = followingUsers.indexOf(username);
 
             if (i > -1)
                 oneshot = true;
-            else
-                i = 0;
+            else if (typeof(this.followingsFollowings[username]) !== 'undefined') {
+                delete this.followingsFollowings[username];
+                this.save();
+                return;
+            }
         }
+
+        var updated = false;
+        for (var user in this.followingsFollowings) {
+            if (followingUsers.indexOf(user) < 0) {
+                delete this.followingsFollowings[user];
+                updated = true;
+            }
+        }
+        if (updated)
+            this.save();
 
         for (; i < followingUsers.length; i++) {
             var ctime = new Date().getTime() / 1000;
@@ -98,15 +112,22 @@ TwisterFollowing.prototype = {
                 ctime - this.followingsFollowings[followingUsers[i]]["lastUpdate"] >= this.followingsFollowings[followingUsers[i]]["updateInterval"]) {
 
                 loadFollowingFromDht(followingUsers[i], 1, [], 0, function (args, following, seqNum) {
+                    var updated = false;
                     if (following.indexOf(args.tf.user) > -1) {
-                        if (args.tf.knownFollowers.indexOf(args.fu) < 0)
+                        if (args.tf.knownFollowers.indexOf(args.fu) < 0) {
                             args.tf.knownFollowers.push(args.fu);
+                            updated = true;
+                        }
                     } else {
-                        if (args.tf.notFollowers.indexOf(args.fu) < 0)
+                        if (args.tf.notFollowers.indexOf(args.fu) < 0) {
                             args.tf.notFollowers.push(args.fu);
+                            updated = true;
+                        }
                         var tmpi = args.tf.knownFollowers.indexOf(args.fu);
-                        if (tmpi > -1)
+                        if (tmpi > -1) {
                             args.tf.knownFollowers.splice(tmpi, 1);
+                            updated = true;
+                        }
                     }
                     $(".open-followers").attr("title", args.tf.knownFollowers.length.toString());
 
@@ -118,28 +139,42 @@ TwisterFollowing.prototype = {
                         args.tf.followingsFollowings[args.fu]["updateInterval"] = TwisterFollowing.minUpdateInterval;
                         args.tf.followingsFollowings[args.fu]["following"] = following;
 
-                        args.tf.save();
+                        updated = true;
                     } else {
-                        var diff = [];
+                        var diff = []; //diff for following
+                        var difu = []; //diff for unfollowing
                         var ff = args.tf.followingsFollowings[args.fu]["following"];
 
+                        //is there any new following?
                         for (var j = 0; j < following.length; j++) {
                             if (ff.indexOf(following[j]) === -1) {
                                 diff.push(following[j]);
                                 ff.push(following[j]);
                             }
                         }
+                        //did user unfollow someone?
+                        for (var j = ff.length - 1; j >= 0 && ff.length > following.length; j--) {
+                            if (following.indexOf(ff[j]) === -1) {
+                                difu.push(ff[j]);
+                                ff.splice(j, 1);
+                            }
+                        }
 
-                        if (diff.length > 0) {
+                        if (diff.length > 0 || difu.length > 0) {
                             args.tf.followingsFollowings[args.fu]["updateInterval"] = TwisterFollowing.minUpdateInterval;
                             args.tf.followingsFollowings[args.fu]["lastUpdate"] = ctime;
-                            args.tf.save();
+                            updated = true;
                         } else if (args.tf.followingsFollowings[args.fu]["updateInterval"] < TwisterFollowing.maxUpdateInterval) {
                             args.tf.followingsFollowings[args.fu]["updateInterval"] *= 2;
                         }
+
+                        if (updated)
+                            args.tf.save();
                     }
                 }, {"tf": this, "fu": followingUsers[i]});
             }
+            if (oneshot)
+                break;
         }
     }
 };
@@ -339,6 +374,7 @@ function unfollow(user, cbFunc, cbArg) {
     var i = followingUsers.indexOf(user);
     if( i >= 0 ) {
         followingUsers.splice(i,1);
+        twisterFollowingO.update(user);
     }
     delete _isFollowPublic[user];
     saveFollowing();
@@ -750,10 +786,10 @@ function initInterfaceFollowing() {
 
         $(".postboard-loading").fadeIn();
         loadFollowing( function(args) {
+                          twisterFollowingO = TwisterFollowing(defaultScreenName);
+
                           showFollowingUsers();
                           requestSwarmProgress();
-
-                          twisterFollowingO = TwisterFollowing(defaultScreenName);
         });
         initMentionsCount();
         initDMsCount();
