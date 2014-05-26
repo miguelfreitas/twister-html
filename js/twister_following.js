@@ -110,23 +110,18 @@ TwisterFollowing.prototype = {
 
             if (typeof(this.followingsFollowings[followingUsers[i]]) === 'undefined' ||
                 ctime - this.followingsFollowings[followingUsers[i]]["lastUpdate"] >= this.followingsFollowings[followingUsers[i]]["updateInterval"]) {
-
                 loadFollowingFromDht(followingUsers[i], 1, [], 0, function (args, following, seqNum) {
-                    var updated = false;
                     if (following.indexOf(args.tf.user) > -1) {
                         if (args.tf.knownFollowers.indexOf(args.fu) < 0) {
                             args.tf.knownFollowers.push(args.fu);
-                            updated = true;
                         }
                     } else {
                         if (args.tf.notFollowers.indexOf(args.fu) < 0) {
                             args.tf.notFollowers.push(args.fu);
-                            updated = true;
                         }
                         var tmpi = args.tf.knownFollowers.indexOf(args.fu);
                         if (tmpi > -1) {
                             args.tf.knownFollowers.splice(tmpi, 1);
-                            updated = true;
                         }
                     }
                     $(".open-followers").attr("title", args.tf.knownFollowers.length.toString());
@@ -138,8 +133,6 @@ TwisterFollowing.prototype = {
                         args.tf.followingsFollowings[args.fu]["lastUpdate"] = ctime;
                         args.tf.followingsFollowings[args.fu]["updateInterval"] = TwisterFollowing.minUpdateInterval;
                         args.tf.followingsFollowings[args.fu]["following"] = following;
-
-                        updated = true;
                     } else {
                         var diff = []; //diff for following
                         var difu = []; //diff for unfollowing
@@ -163,14 +156,13 @@ TwisterFollowing.prototype = {
                         if (diff.length > 0 || difu.length > 0) {
                             args.tf.followingsFollowings[args.fu]["updateInterval"] = TwisterFollowing.minUpdateInterval;
                             args.tf.followingsFollowings[args.fu]["lastUpdate"] = ctime;
-                            updated = true;
                         } else if (args.tf.followingsFollowings[args.fu]["updateInterval"] < TwisterFollowing.maxUpdateInterval) {
                             args.tf.followingsFollowings[args.fu]["updateInterval"] *= 2;
+                        } else {
+                            args.tf.followingsFollowings[args.fu]["lastUpdate"] = ctime;
                         }
-
-                        if (updated)
-                            args.tf.save();
                     }
+                    args.tf.save();
                 }, {"tf": this, "fu": followingUsers[i]});
             }
             if (oneshot)
