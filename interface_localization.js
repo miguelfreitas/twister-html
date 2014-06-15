@@ -634,7 +634,7 @@ if(preferredLanguage == "fr"){
       "Force connection to peer:": "Forcer la connection à un pair:",
       "General information": "Informations générales",
       "Generate blocks (send promoted messages)": "Produire des blocs (envoyer des messages promus)",
-      "Home": "Début", // homepage
+      "Home": "Accueil", // homepage
       "hours": "%{smart_count} heure |||| %{smart_count} heures",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Erreur interne: lastPostId inconnu",
       "Known peers:": "Pairs connus: ",
@@ -707,7 +707,7 @@ if(preferredLanguage == "fr"){
       "twister login": "Nom d'utilisateur Twister",
       "Existing local users": "Utilisateurs locaux existants",
       "Or...": "Ou...",
-      "Create a new user": "Créer un nouel utilisateur",
+      "Create a new user": "Créer un nouvel utilisateur",
       "Login": "Se connecter",
       "Check availability": "Vérifier la disponibilité",
       "Create this nickname": "Créer cet utilisateur",
