@@ -70,6 +70,11 @@ function postToElem( post, kind ) {
         postData.attr('data-replied-to-id', userpost["reply"]["k"]);
 
         postData.find('.post-expand').text(polyglot.t("Show conversation"));
+    } else if ( "rt" in userpost && "reply" in userpost["rt"] ) {
+        postData.attr('data-replied-to-screen-name', userpost["rt"]["reply"]["n"]);
+        postData.attr('data-replied-to-id', userpost["rt"]["reply"]["k"]);
+
+        postData.find('.post-expand').text(polyglot.t("Show conversation"));
     }
 
     var postInfoName = elem.find(".post-info-name");
