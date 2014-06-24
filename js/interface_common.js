@@ -582,7 +582,7 @@ function replyTextKeypress(e) {
         if ($.Options.getUnicodeConversionOpt() !== "disable")
             $this.val(convert2Unicodes($this.val(), $this));
         var c = 140 - $this.val().length;
-        if (usePostSpliting) {
+        if (usePostSpliting && !$this.parents('.directMessages').length) {
             var $tas = tweetForm.find("textarea");
             splitedPostsCount = $tas.length;
             if ($this.hasClass('splited-post'))
@@ -657,7 +657,7 @@ function replyTextKeypress(e) {
         else
             remainingCount.removeClass("warn");
 
-        if (usePostSpliting)
+        if (usePostSpliting && !$this.parents('.directMessages').length)
             remainingCount.text(splitedPostsCount.toString() + ". post: " + c.toString());
         else
             remainingCount.text(c.toString());
