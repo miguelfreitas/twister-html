@@ -853,6 +853,41 @@ ol.toptrends-list {
     -o-animation: highlight 5s linear;
     -ms-animation: highlight 5s linear;
 }
+@-webkit-keyframes highlight {
+    0% {
+        border-color: #ff0000;
+    }
+    10% {
+        border-color: #ffffff;
+    }
+    20% {
+        border-color: #ff0000;
+    }
+    30% {
+        border-color: #ffffff;
+    }
+    40% {
+        border-color: #ff0000;
+    }
+    50% {
+        border-color: #ffffff;
+    }
+    60% {
+        border-color: #ff0000;
+    }
+    70% {
+        border-color: #ffffff;
+    }
+    80% {
+        border-color: #ff0000;
+    }
+    90% {
+        border-color: #ffffff;
+    }
+    100% {
+        border-color: #ff0000;
+    }
+}
 @keyframes highlight {
     0% {
         border-color: #ff0000;
@@ -887,7 +922,6 @@ ol.toptrends-list {
     100% {
         border-color: #ff0000;
     }
-
 }
 .post.open
 {
