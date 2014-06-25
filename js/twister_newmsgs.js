@@ -15,13 +15,13 @@ var PURGE_OLD_MENTIONS_TIMEOUT = 3600 * 24 * 30; // one month
 function processMention(user, mentionTime, data) {
     var key = user + ";" + mentionTime;
     var curTime = new Date().getTime() / 1000;
-    if( mentionTime > curTime + 3600 ) {
+    if( mentionTime > curTime + 3600 * 2 ) {
         console.log("mention from the future will be ignored");
     } else {
         var newMentionsUpdated = false;
         if( !(key in _knownMentions) ) {
             // mention must be somewhat recent compared to last known one to be considered new
-            if( mentionTime + 3600 > _lastMentionTime ) {
+            if( mentionTime + 3600 * 24 * 3 > _lastMentionTime ) {
                 _newMentions++;
                 newMentionsUpdated = true;
                 _lastMentionTime = mentionTime;
