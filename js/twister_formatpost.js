@@ -6,7 +6,7 @@
 
 // format "userpost" to html element
 // kind = "original"/"ancestor"/"descendant"
-function postToElem( post, kind ) {
+function postToElem( post, kind, promoted ) {
     /*
     "userpost" :
     {
@@ -115,6 +115,9 @@ function postToElem( post, kind ) {
         retweetedByElem.attr("href", $.MAL.userUrl(retweeted_by));
         retweetedByElem.text('@'+retweeted_by);
     }
+
+    if (typeof(promoted) !== 'undefined' && promoted)
+        elem.find('.post-propagate').remove();
 
     return elem;
 }

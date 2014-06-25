@@ -149,7 +149,7 @@ function processReceivedPosts(req, posts)
             continue;
         }
 
-        var streamPost = postToElem(post, "original");
+        var streamPost = postToElem(post, "original", req.getspam);
         var timePost = post["userpost"]["time"];
         streamPost.attr("data-time",timePost);
 
