@@ -846,83 +846,6 @@ ol.toptrends-list {
     transition: background .1s linear;
     -moz-transition: background .1s linear;
 }
-.postboard-posts > .post.original {
-    animation: highlight 5s linear;
-    -moz-animation: highlight 5s linear;
-    -webkit-animation: highlight 5s linear;
-    -o-animation: highlight 5s linear;
-    -ms-animation: highlight 5s linear;
-}
-@-webkit-keyframes highlight {
-    0% {
-        border-color: #ff0000;
-    }
-    10% {
-        border-color: #ffffff;
-    }
-    20% {
-        border-color: #ff0000;
-    }
-    30% {
-        border-color: #ffffff;
-    }
-    40% {
-        border-color: #ff0000;
-    }
-    50% {
-        border-color: #ffffff;
-    }
-    60% {
-        border-color: #ff0000;
-    }
-    70% {
-        border-color: #ffffff;
-    }
-    80% {
-        border-color: #ff0000;
-    }
-    90% {
-        border-color: #ffffff;
-    }
-    100% {
-        border-color: #ff0000;
-    }
-}
-@keyframes highlight {
-    0% {
-        border-color: #ff0000;
-    }
-    10% {
-        border-color: #ffffff;
-    }
-    20% {
-        border-color: #ff0000;
-    }
-    30% {
-        border-color: #ffffff;
-    }
-    40% {
-        border-color: #ff0000;
-    }
-    50% {
-        border-color: #ffffff;
-    }
-    60% {
-        border-color: #ff0000;
-    }
-    70% {
-        border-color: #ffffff;
-    }
-    80% {
-        border-color: #ff0000;
-    }
-    90% {
-        border-color: #ffffff;
-    }
-    100% {
-        border-color: #ff0000;
-    }
-}
 .post.open
 {
     margin: 10px 0;
@@ -1213,6 +1136,53 @@ ol.toptrends-list {
 .post-replies .sub-replies {
     border-left: solid 3px #E34F42;
     margin-left: 2px;
+}
+.postboard-posts > .post.original.blinking {
+    animation: blinking-animation .5s 0s 10 alternate;
+    -moz-animation: blinking-animation .5s 0s 10 alternate;
+    -webkit-animation: blinking-animation .5s 0s 10 alternate;
+    -o-animation: blinking-animation .5s 0s 10 alternate;
+    -ms-animation: blinking-animation .5s 0s 10 alternate;
+}
+@keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-moz-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-webkit-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-o-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-ms-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
 }
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***

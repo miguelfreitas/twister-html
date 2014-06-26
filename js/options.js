@@ -322,6 +322,18 @@ var TwisterOptions = function()
         });
     };
 
+    this.getBlinkNewPostOpt = function () {
+        return $.Options.getOption('blinkNewPosts');
+    };
+
+    this.setBlinkNewPostOpt = function () {
+        $('#blinkNewPosts')[0].value = this.getBlinkNewPostOpt();
+
+        $('#blinkNewPosts').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+        });
+    };
+
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
@@ -342,6 +354,7 @@ var TwisterOptions = function()
         this.setHideCloseRTsHourOpt();
         this.setHideCloseRTsOpt();
         this.setIsFollowingMeOpt();
+        this.setBlinkNewPostOpt();
     }
 }
 

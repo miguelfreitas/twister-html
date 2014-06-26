@@ -119,6 +119,9 @@ function postToElem( post, kind, promoted ) {
     if (typeof(promoted) !== 'undefined' && promoted)
         elem.find('.post-propagate').remove();
 
+    if ($.Options.getBlinkNewPostOpt() === 'enable')
+        elem.addClass("blinking");
+
     return elem;
 }
 

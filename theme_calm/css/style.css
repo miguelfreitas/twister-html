@@ -1474,6 +1474,53 @@ textarea.splited-post {
     border-left: solid 3px #43464d;
     margin-left: 2px;
 }
+.postboard-posts > .post.original.blinking {
+    animation: blinking-animation .5s 0s 10 alternate;
+    -moz-animation: blinking-animation .5s 0s 10 alternate;
+    -webkit-animation: blinking-animation .5s 0s 10 alternate;
+    -o-animation: blinking-animation .5s 0s 10 alternate;
+    -ms-animation: blinking-animation .5s 0s 10 alternate;
+}
+@keyframes blinking-animation {
+    from {
+        border-color: #B2D67B;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-moz-keyframes blinking-animation {
+    from {
+        border-color: #B2D67B;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-webkit-keyframes blinking-animation {
+    from {
+        border-color: #B2D67B;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-o-keyframes blinking-animation {
+    from {
+        border-color: #B2D67B;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-ms-keyframes blinking-animation {
+    from {
+        border-color: #B2D67B;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***
 ***********************************/
