@@ -839,8 +839,7 @@ ol.toptrends-list {
 .post,
 .post .post,
 .post .original.post,
-.post .post.open
-{
+.post .post.open {
     background: #fff;
     position: relative;
     margin: 0 0 1px 0;
@@ -1137,6 +1136,53 @@ ol.toptrends-list {
 .post-replies .sub-replies {
     border-left: solid 3px #E34F42;
     margin-left: 2px;
+}
+.postboard-posts > .post.original.blinking {
+    animation: blinking-animation .5s 0s 10 alternate;
+    -moz-animation: blinking-animation .5s 0s 10 alternate;
+    -webkit-animation: blinking-animation .5s 0s 10 alternate;
+    -o-animation: blinking-animation .5s 0s 10 alternate;
+    -ms-animation: blinking-animation .5s 0s 10 alternate;
+}
+@keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-moz-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-webkit-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-o-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
+}
+@-ms-keyframes blinking-animation {
+    from {
+        border-color: #ff0000;
+    }
+    to {
+        border-color: #ffffff;
+    }
 }
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***

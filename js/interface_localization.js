@@ -230,7 +230,8 @@ if(preferredLanguage == "en"){
       "hide": "hide",
       "Show more in this conversation...": "Show more in this conversation...",
       "conversation_title": "Conversation of @%{username}",
-      "copy_to_clipboard": "Press Ctrl/Cmd+C to copy then Enter to close"
+      "copy_to_clipboard": "Press Ctrl/Cmd+C to copy then Enter to close",
+      "Blink the new posts": "Blink the new posts"
     };
 }
 if(preferredLanguage == "es"){
@@ -1879,7 +1880,8 @@ if(preferredLanguage == "tr"){
       "hide": "gizle",
       "Show more in this conversation...": "Sohbetin tamamını göster...",
       "conversation_title": "@%{username} kullanıcısının bir sohbeti",
-      "copy_to_clipboard": "Kopyalamak için Ctrl/Cmd+C tuşlarına, kapatmak için Enter tuşuna basınız"
+      "copy_to_clipboard": "Kopyalamak için Ctrl/Cmd+C tuşlarına, kapatmak için Enter tuşuna basınız",
+      "Blink the new posts": "Yeni gönderileri belirt"
     };
 }
 
