@@ -562,7 +562,7 @@ if(preferredLanguage == "zh"){
       "Following users": "关注的人",
       "Force connection to peer:": "强制连接到节点：",
       "General information": "常规信息",
-      "Generate blocks (send promoted messages)": "生成快（发送上行信息）",
+      "Generate blocks (send promoted messages)": "生成块（发送广告信息）",
       "Home": "主页", // homepage
       "hours": "%{smart_count} hour |||| %{smart_count} 小时",
       "Internal error: lastPostId unknown (following yourself may fix!)": "内部错误：最后推文Id位置（尝试关注你自己进行修复！）",
@@ -587,7 +587,7 @@ if(preferredLanguage == "zh"){
       "Profile": "个人信息",
       "Postboard": "信息流",
       "post": "发送", // verb - button to post a message
-      "Post to promote:": "上行信息内容：",
+      "Post to promote:": "要发布的广告信息：",
       "Posts": "推文",
       "propagating_nickname": "Propagating nickname %{username} to the network...",
       "Public": "公共",
@@ -607,13 +607,13 @@ if(preferredLanguage == "zh"){
       "Sent Post to @": "发送推文 @",
       "Setup account": "设置帐号",
       "switch_to_network": "本地守护进程没有连接网络或\n" +
-        "块链已经过时。如果你留着此页\n" +
+        "块链已经过时。如果你留在此页\n" +
         "你的操作将不会生效\n" +
         "你要马上跳转到网络状态页吗？",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持文件APIs",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新块的时间：",
-      "Type message here": "输入你的消息内容",
+      "Type message here": "输入消息内容",
       "Unfollow": "取消关注",
       "Update": "更新",
       "Updating status...": "更新状态中...", // status of block chain
