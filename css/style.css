@@ -631,6 +631,10 @@ textarea.splited-post {
     display: inline-block;
     margin-top: 4px;
 }
+.undo-unicode
+{
+    font-family: sans-serif, Symbola;
+}
 .post-area-new.open > .post-area-extras
 {
     height: 35px;
