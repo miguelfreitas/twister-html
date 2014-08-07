@@ -1,7 +1,7 @@
 twister-html
 ============
 
-HTML interface for [Twister](http://twister.net.co).
+HTML interface for [Twister](http://twister.net.co) [(github)](https://github.com/miguelfreitas/twister-core).
 To use it, clone this repo under ~/.twister/html like this:
 
     git clone https://github.com/miguelfreitas/twister-html.git ~/.twister/html
