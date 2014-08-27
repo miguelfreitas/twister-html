@@ -77,6 +77,9 @@ function postToElem( post, kind, promoted ) {
         postData.find('.post-expand').text(polyglot.t("Show conversation"));
     }
 
+	var postScreenName = elem.find(".post-info-screen-name b");
+	postScreenName.text(n);
+
     var postInfoName = elem.find(".post-info-name");
     postInfoName.attr('href',$.MAL.userUrl(n));
     postInfoName.text(n);

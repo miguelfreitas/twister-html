@@ -920,6 +920,13 @@ ol.toptrends-list {
     text-decoration: none;
     padding-left: 2px;
 }
+
+.post-info-screen-name {
+	display: inline;
+	font-size: 12px;
+	color: rgba(0,0,0,.5);
+}
+
 .post-info-tag
 {
     font-style: italic;

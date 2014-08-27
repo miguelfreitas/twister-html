@@ -125,6 +125,15 @@ function openProfileModal(e)
             unfollow(username);
         });
     };
+	
+	var dmButton = $('.profile-card button.direct-messages-with-user');
+	if ($('.profile-card .profile-card-main .profile-name').hasClass('isFollowing')){
+		dmButton.removeClass('disabled');
+		dmButton.removeAttr('disabled');
+	}else{
+		dmButton.addClass('disabled');
+		dmButton.attr('disabled', 'disabled');
+	}
 }
 
 function newHashtagModal(hashtag) {
