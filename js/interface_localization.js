@@ -1241,7 +1241,7 @@ if(preferredLanguage == "ru"){
        "You don't have any profile because you are not logged in.": "Нет профиля, так как вы не вошли.",
        "Options": "Настройки",
        "Switch to Promoted posts": "Отображать только рекламные сообщения",
-       "Switch to Normal posts": "Отображать только рекламные сообщения",
+       "Switch to Normal posts": "Отображать сообщения пользователей",
        "Use language": "Язык",
        "Ignore": "Игнорировать",
        "Theme": "Тема",
