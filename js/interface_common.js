@@ -1246,14 +1246,25 @@ var retweetSubmit = function(e)
 function changeStyle() {
     var style, profile, menu;
     var theme = $.Options.getTheme();
+
+    if(theme == 'nin')
+    {
+        style = 'theme_nin/css/style.css';
+        profile = 'theme_nin/css/profile.css';
+        $.getScript('theme_nin/js/theme_option.js');
+
+    }
+
+    if(theme == 'calm')
+    {
+        style = 'theme_calm/css/style.css';
+        profile = 'theme_calm/css/profile.css';
+    }
+
     if(theme == 'original')
     {
         style = 'css/style.css';
         profile = 'css/profile.css';
-    }else
-    {
-        style = 'theme_calm/css/style.css';
-        profile = 'theme_calm/css/profile.css';
     }
     $('#stylecss').attr('href', style);
     $('#profilecss').attr('href', profile);

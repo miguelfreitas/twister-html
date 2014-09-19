@@ -46,85 +46,106 @@
     </ul>
   </nav>
 
-  <div class="wrapper options">
+  <div class="wrapper">
+    <div class="options">
 
-    <div class="language">
+      <input id="tab_language" name="option_tab" type="radio" checked="checked" class="selectable_theme theme_nin"/>
+      <label for="tab_language" class="tabs selectable_theme theme_nin">Language</label>
+      <input id="t-2" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
+      <label for="t-2" class="tabs selectable_theme theme_nin">Theme</label>
+      <input id="t-3" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
+      <label for="t-3" class="tabs selectable_theme theme_nin">Sound</label>
+      <input id="t-4" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
+      <label for="t-4" class="tabs selectable_theme theme_nin">Keys</label>
+      <input id="t-5" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
+      <label for="t-5" class="tabs selectable_theme theme_nin">Postboard</label>
+      <input id="t-6" name="option_tab" type="radio" class="selectable_theme theme_nin" />
+      <label for="t-6" class="tabs selectable_theme theme_nin">Users</label>
 
-      <div class="module">
-        <p class="label"> Use language </p>
-        <div>
-            <form action="" id="selectLanguage">
-              <select name="" id="language">
-                <option value="auto">Auto</option>
-                <option value="pt-BR">Brazilian Portuguese</option>
-                <option value="zh">Chinese</option>
-                <option value="nl">Dutch</option>
-                <option value="en">English</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-                <option value="it">Italian</option>
-                <option value="ja">Japanese</option>
-                <option value="ru">Russian</option>
-                <option value="es">Spanish</option>
-                <option value="tr">Turkish</option>
-              </select>
-            </form>
+      <div class="tab-content">
+
+        <div class="language">
+
+          <div class="module">
+            <p class="label"> Use language </p>
+            <div>
+              <form action="" id="selectLanguage">
+                <select name="" id="language">
+                  <option value="auto">Auto</option>
+                  <option value="pt-BR">Brazilian Portuguese</option>
+                  <option value="zh">Chinese</option>
+                  <option value="nl">Dutch</option>
+                  <option value="en">English</option>
+                  <option value="fr">French</option>
+                  <option value="de">German</option>
+                  <option value="it">Italian</option>
+                  <option value="ja">Japanese</option>
+                  <option value="ru">Russian</option>
+                  <option value="es">Spanish</option>
+                  <option value="tr">Turkish</option>
+                </select>
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="language">
 
-      <div class="module">
-        <p class="label"> Theme </p>
-        <div>
-            <form action="" id="selectTheme">
-              <select name="" id="theme">
-                <option value="original">Original</option>
-                <option value="calm">Calm</option>
-              </select>
-            </form>
-            <span class="selectable_theme theme_calm">
+        <div class="theme">
+          <div class="module">
+            <p class="label"> Theme </p>
+            <div>
+              <form action="" id="selectTheme">
+                <select name="" id="theme">
+                  <option value="original">Original</option>
+                  <option value="calm">Calm</option>
+                  <option value="nin">Nin</option>
+                </select>
+              </form>
+              <span class="selectable_theme theme_calm">
                 For new features check <a href="https://github.com/iHedgehog/twister-calm">twister-calm repository</a>!
-            </span>
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="sounds">
+        <div class="sounds">
 
-      <div class="module">
-        <p class="label"> Sound notifications </p>
-        <div>
-            <form action="" id="notifyForm">
-              <p class="label">Mentions</p>
-              <select name="" id="sndMention" class="sndOpt">
-                <option value="false">none</option>
-                <option value="1">beat</option>
-                <option value="2">pip</option>
-                <option value="3">vibro</option>
-                <option value="4">flip</option>
-                <option value="5">click</option>
-              </select><br>
-              <p class="label">Direct Messages</p>
-              <select name="" id="sndDM" class="sndOpt">
-                <option value="false">none</option>
-                <option value="1">beat</option>
-                <option value="2">pip</option>
-                <option value="3">vibro</option>
-                <option value="4">flip</option>
-                <option value="5">click</option>
-              </select>
-              <input type="range" name="playerVol" id="playerVol" min="0" max="1" step="0.01"><span class="volValue">0</span>
-            </form>
-            <audio id="player"></audio>
+          <div class="module">
+            <p class="label"> Sound notifications </p>
+            <div>
+              <form action="" id="notifyForm">
+                <div>
+                  <p class="label">Mentions</p>
+                  <select name="" id="sndMention" class="sndOpt">
+                    <option value="false">none</option>
+                    <option value="1">beat</option>
+                    <option value="2">pip</option>
+                    <option value="3">vibro</option>
+                    <option value="4">flip</option>
+                    <option value="5">click</option>
+                  </select>
+                </div>
+                <div>
+                  <p class="label">Direct Messages</p>
+                  <select name="" id="sndDM" class="sndOpt">
+                    <option value="false">none</option>
+                    <option value="1">beat</option>
+                    <option value="2">pip</option>
+                    <option value="3">vibro</option>
+                    <option value="4">flip</option>
+                    <option value="5">click</option>
+                  </select>
+                </div>
+                <input type="range" name="playerVol" id="playerVol" min="0" max="1" step="0.01"><span class="volValue">0</span>
+              </form>
+              <audio id="player"></audio>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-      <div class="keys">
-        <div class="module">
-          <p class="label"> Keys </p>
-          <div>
+        <div class="keys">
+          <div class="module">
+            <p class="label"> Keys </p>
+            <div>
               <form action="" id="keysOpt">
                 <p class="label">Send key</p>
                 <select name="" id="keysSend">
@@ -132,55 +153,48 @@
                   <option value="ctrlenter">Ctrl/Cmd+Enter</option>
                 </select>
               </form>
+            </div>
           </div>
         </div>
-      </div>
 
-  <div class="postboard-display">
-    <div class="module">
-      <p class="label"> Postboard displays </p>
-      <br/>
-      <div>
-        <form action="" id="hideRepliesOpt">
-          <p class="label">Posts that begin with mention</p>
-          <select name="" id="hideReplies">
-            <option value="disable">Show all</option>
-            <option value="only-me">Show only if I am in</option>
-            <option value="following">Show if it's between users I follow</option>
-          </select>
-        </form>
-      </div>
-      <br/>
-      <div>
-        <form action="" id="hideCloseRTsOpt">
-          <p class="label">RTs those are close to original twist</p>
-          <select name="" id="hideCloseRTs">
-            <option value="disable">Show all</option>
-            <option value="show-if">Show if the original is older than</option>
-          </select>
-          <div id="hideCloseRTsDesc">
-            <input name="" id="hideCloseRtsHour" maxlength="2" size="3"/> <span class="label">hour(s)</span>
+        <div class="postboard-display">
+          <div class="module">
+            <p class="label"> Postboard displays </p>
+            <div>
+              <form action="" id="hideRepliesOpt">
+                <p class="label">Posts that begin with mention</p>
+                <select name="" id="hideReplies">
+                  <option value="disable">Show all</option>
+                  <option value="only-me">Show only if I am in</option>
+                  <option value="following">Show if it's between users I follow</option>
+                </select>
+              </form>
+            </div>
+            <div>
+              <form action="" id="hideCloseRTsOpt">
+                <p class="label">RTs those are close to original twist</p>
+                <select name="" id="hideCloseRTs">
+                  <option value="disable">Show all</option>
+                  <option value="show-if">Show if the original is older than</option>
+                </select>
+                <div id="hideCloseRTsDesc">
+                  <input name="" id="hideCloseRtsHour" maxlength="2" size="3"/> <span class="label">hour(s)</span>
+                </div>
+              </form>
+            </div>
           </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-    <div class="posts-display">
-      <div class="module">
-        <p class="label"> Posts display </p>
-        <br/>
-        <div>
-            <form action="" id="lineFeedsOpt">
-              <p>Line feeds</p>
-              <select name="" id="displayLineFeeds">
-                <option value="disable">Ignore</option>
-                <option value="enable">Display</option>
-              </select>
-            </form>
-        </div>
-        <br/>
-        <div>
+          <div class="module">
+            <p class="label"> Posts display </p>
+            <div>
+              <form action="" id="lineFeedsOpt">
+                <p>Line feeds</p>
+                <select name="" id="displayLineFeeds">
+                  <option value="disable">Ignore</option>
+                  <option value="enable">Display</option>
+                </select>
+              </form>
+            </div>
+            <div>
             <form action="" id="showPreviewOpt">
               <p class="label">Inline image preview</p>
               <select name="" id="displayPreview">
@@ -188,87 +202,84 @@
                 <option value="enable">Display</option>
               </select>
             </form>
-        </div>
-        <br/>
-        <div>
+          </div>
+          <div>
             <form action="" id="useProxyOpt">
-                <p class="label">Use external links behind a proxy</p>
-                <select name="" id="useProxy">
-                    <option value="disable">none</option>
-                    <option value="ssl-proxy-my-addr">ssl-proxy.my-addr.org</option>
-                    <option value="anonymouse">anonymouse.org</option>
-                </select>
-                <input name="" id="useProxyForImgOnly" type="checkbox" /> <span class="label">Use proxy for image preview only</span>
+              <p class="label">Use external links behind a proxy</p>
+              <select name="" id="useProxy">
+                <option value="disable">none</option>
+                <option value="ssl-proxy-my-addr">ssl-proxy.my-addr.org</option>
+                <option value="anonymouse">anonymouse.org</option>
+              </select>
+              <input name="" id="useProxyForImgOnly" type="checkbox" /> <span class="label">Use proxy for image preview only</span>
             </form>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="post-editor">
-        <div class="module">
+        <div class="post-editor">
+          <div class="module">
             <p class="label"> Post editor</p>
-            <br/>
             <div>
-                <form action="" id="unicodeConversionOpt">
-                    <p class="label">Automatic unicode conversion options</p>
-                    <select name="" id="unicodeConversion">
-                        <option value="disable">Ignore</option>
-                        <option value="enable">Convert all</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <div class="suboptions">
-                        <input name="" id="convertPunctuationsOpt" type="checkbox" /> <span class="label">Convert punctuations to unicode</span><br/>
-                        <div>
-                            <label class="label">Supported punctuations: </label>
-                            <span>‥ … ⁇ ⁈ ⁉ ‼ — ⁓</span>
-                        </div> 
-                        <br/>
-                        <input name="" id="convertEmotionsOpt" type="checkbox" /> <span class="label">Convert emotions codes to unicode symbols</span><br/>
-                        <div>
-                            <label class="label">Supported emotions: </label>
-                            <span>😃 😇 🍺 😈 ❤ 😕 😢 😞 😎 😊 😊 😗 😆 😛 😉 😉 😮 😱 😐</span>
-                        </div>
-                        <br/>
-                        <input name="" id="convertSignsOpt" type="checkbox" /> <span class="label">Convert common signs to unicode</span><br/>
-                        <div>
-                            <label class="label">Supported signs:</label>
-                            <span>℡ ℻</span>
-                        </div>
-                        <br/>
-                        <input name="" id="convertFractionsOpt" type="checkbox" /> <span class="label">Convert fractions to unicode</span><br/>
-                        <div>
-                            <label class="label">Supported fractions:</label>
-                            <span>½ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅐ ⅛ ⅜ ⅝ ⅞ ⅑ ⅒</span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <br/>
-            <div>
-                <form action="" id="splitPostsOpt">
-                    <p class="label">Split long posts</p>
-                    <select name="" id="splitPosts">
-                        <option value="disable">Don't split</option>
-                        <option value="enable">Split all</option>
-                        <option value="only-new">Split only new post</option>
-                    </select>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="users">
-        <div class="module">
-            <form action="" id="isFollowingMeOpt">
-                <p class="label">Show if a user follows me</p>
-                <select name="" id="isFollowingMe">
-                    <option value="in-profile">Show at profile modal only</option>
-                    <option value="everywhere">Show with every user name</option>
+              <form action="" id="unicodeConversionOpt">
+                <p class="label">Automatic unicode conversion options</p>
+                <select name="" id="unicodeConversion">
+                  <option value="disable">Ignore</option>
+                  <option value="enable">Convert all</option>
+                  <option value="custom">Custom</option>
                 </select>
-            </form>
-        </div>
-    </div>
+                <div class="suboptions">
+                  <input name="" id="convertPunctuationsOpt" type="checkbox" /> <span class="label">Convert punctuations to unicode</span><br/>
+                  <div>
+                    <label class="label">Supported punctuations: </label>
+                    <span>‥ … ⁇ ⁈ ⁉ ‼ — ⁓</span>
+                  </div> 
+                  <input name="" id="convertEmotionsOpt" type="checkbox" /> <span class="label">Convert emotions codes to unicode symbols</span>
+                  <div>
+                    <label class="label">Supported emotions: </label>
+                    <span>😃 😇 🍺 😈 ❤ 😕 😢 😞 😎 😊 😊 😗 😆 😛 😉 😉 😮 😱 😐</span>
+                  </div>
+                  <input name="" id="convertSignsOpt" type="checkbox" /> <span class="label">Convert common signs to unicode</span><br/>
+                  <div>
+                    <label class="label">Supported signs:</label>
+                    <span>℡ ℻</span>
+                  </div>
+                  <input name="" id="convertFractionsOpt" type="checkbox" /> <span class="label">Convert fractions to unicode</span><br/>
+                  <div>
+                    <label class="label">Supported fractions:</label>
+                    <span>½ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅐ ⅛ ⅜ ⅝ ⅞ ⅑ ⅒</span>
+                  </div>
+                </div>
+              </form>
+              </div>
 
-  </div>
-  </body>
+              <div>
+              <form action="" id="splitPostsOpt">
+                <p class="label">Split long posts</p>
+                <select name="" id="splitPosts">
+                  <option value="disable">Don't split</option>
+                  <option value="enable">Split all</option>
+                  <option value="only-new">Split only new post</option>
+                </select>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="users">
+          <div class="module">
+            <form action="" id="isFollowingMeOpt">
+              <p class="label">Show if a user follows me</p>
+              <select name="" id="isFollowingMe">
+                <option value="in-profile">Show at profile modal only</option>
+                <option value="everywhere">Show with every user name</option>
+              </select>
+            </form>
+          </div>
+        </div>
+
+      </div><!-- /tab-content -->
+    </div><!-- /options -->
+  </div><!-- /options -->
+</body>
 </html>

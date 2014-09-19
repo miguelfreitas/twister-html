@@ -39,9 +39,12 @@
   <!-- MENU SUPERIOR INIT --> 
   <nav class="userMenu">
     <ul>
-      <li class="userMenu-home current"><a href="home.html"><span class="selectable_theme theme_original label">Home</span></a></li>
-      <li class="userMenu-network selectable_theme theme_original"><a class="label" href="network.html">Network</a></li>
-      <li class="userMenu-profile selectable_theme theme_original"><a class="label" href="profile-edit.html">Profile</a></li>
+      <li class="userMenu-home current"><a href="home.html">
+        <span class="selectable_theme theme_original label">Home</span>
+        <span class="menu-news"></span>
+      </a></li>
+      <li class="userMenu-network selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
+      <li class="userMenu-profile selectable_theme theme_original theme_nin"><a class="label" href="profile-edit.html">Profile</a></li>
       <li class="userMenu-config">
         <a class="userMenu-config-dropdown" href="#">
           <div class="config-menu dialog-modal">
@@ -112,6 +115,19 @@
       <!-- PROFILE MODULE INIT -->
       <div class="module mini-profile">
         <div class="mini-profile-info">
+          <!-- THEME NIN added sub-menu (mentions, messages and edit profile) -->
+          <ul class="mini-profile-indicators selectable_theme theme_nin">
+            <li class="userMenu-connections">
+              <a href="#" title="Mentions"><span class="messages-qtd" style="display:none;">0</span>Mentions</a>
+            </li>
+            <li class="userMenu-messages">
+              <a href="#" title="Direct Messages"><span class="messages-qtd" style="display:none;">0</span>Messages</a>
+            </li>
+            <li class="userMenu-user">
+              <a href="profile-edit.html" title="Edit profile">Edit profile</a>
+            </li>
+          </ul>
+          <!--/sub-menu -->
           <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
           <a href="#" class="mini-profile-name open-profile-modal"></a>
           <span class="mini-profile-view">View</span>
@@ -163,10 +179,33 @@
   <!-- ÁREA DE POSTS INIT --> 
     <div class="postboard">
       <h2>
-        Postboard
+        <span>Postboard</span>
         <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
-        <button class="postboard-news" style="display: none;"></button>
+        <button class="postboard-news selectable_theme theme_original theme_calm" style="display: none;"></button>
       </h2>
+      <!-- Tabs to switch between promoted post and normal posts-->
+      <ul class="promoted-posts-only promoted selectable_theme theme_nin">
+        <li class="normal-posts active">Normal posts</li>
+        <li class="promoted-posts disabled">Promoted posts</li>
+      </ul>
+      <!-- Post area on top of postboard --> 
+      <div id="postboard-top" class=" selectable_theme theme_nin">
+        <div class="post-area">
+          <form class="post-area-new">
+            <textarea placeholder="New Post..."></textarea>
+            <div class="post-area-extras">
+             <span class="post-area-remaining">140</span>
+                <button class="undo-unicode disabled" disabled="true">undo</button>
+                <button class="post-submit disabled" disabled="true">post</button>
+            </div>
+          </form>
+        </div>
+        <!-- User's pic --> 
+        <div class="profile-photo"><img src="img/genericPerson.png" alt="user-photo"/></div>
+      </div>
+      <div class="postboard-news" style="display:none"></div>
+      <!-- END postboard-top --> 
+
 
       <ol id="posts" class="postboard-posts">
         <!-- use "post-template" here -->
@@ -388,10 +427,10 @@
               <div class="profile-bio"></div>
               <div id="msngrswr">
                 <div id="toxbtnwr" class="profile-extra-contact">
-                  <a class="profile-tox"></a><a class="tox-ctc"></a>
+                  <a class="profile-tox"><span class="selectable_theme theme_nin">TOX</span></a><a class="tox-ctc"></a>
                 </div>
                 <div id="bmbtnwr" class="profile-extra-contact">
-                  <a class="profile-bitmessage"></a><a class="bitmessage-ctc"></a>
+                  <a class="profile-bitmessage"><span class="selectable_theme theme_nin">BitMessage</span></a><a class="bitmessage-ctc"></a>
                 </div>
               </div>
             </div>
@@ -433,7 +472,7 @@
         <!-- ÁREA DE POSTS INIT -->
           <div class="postboard">
             <h2>
-              Posts
+              <span class="selectable_theme theme_original">Posts</span>
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>

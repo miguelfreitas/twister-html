@@ -95,12 +95,16 @@ var MAL = function()
             }
         } else {
             var newTweetsBar = $(".wrapper").find(".postboard-news");
+            var newTweetsBarMenu = $(".userMenu").find(".menu-news"); // added for home menu entry
             if( newPosts ) {
                 document.title = "(" + String(newPosts) + ") twister";
                 newTweetsBar.text(String(newPosts) + " new posts");
                 newTweetsBar.fadeIn("slow");
+                newTweetsBarMenu.text(String(newPosts));
+                newTweetsBarMenu.addClass("show");
             } else {
                 newTweetsBar.hide();
+                newTweetsBarMenu.removeClass("show");
                 document.title = "twister";
             }
         }
