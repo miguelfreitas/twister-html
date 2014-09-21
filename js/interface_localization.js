@@ -1249,7 +1249,7 @@ if(preferredLanguage == "ru"){
        "Terminate Daemon:": "Остановить twister:",
        "Exit": "Выход",
        "Save Changes": "Сохранить изменения",
-       "Secret key:": "Секретный ключ:"
+       "Secret key:": "Секретный ключ:",
        "You have to log in to post messages.": "Войдите, чтобы отправлять сообщения.",
        "You have to log in to post replies.": "Войдите, чтобы отвечать на сообщения.",
        "You have to log in to retransmit messages.": "Войдите, чтобы репостить сообщения.",
