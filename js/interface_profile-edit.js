@@ -103,18 +103,22 @@ function verifyUserAlreadyInBlockchain()
                         });
                     } else {
                         if( !newUserWarnDisplayed ) {
-                            alert("Other peers have not yet accepted this new user.\n" +
-                                  "Unfortunately it is not possible to save profile\n" +
-                                  "or send any posts in this state.\n\n" +
-                                  "Please wait a few minutes to continue.\n\n" +
-                                  "The 'Save Changes' will be automatically enabled\n" +
-                                  "when the process completes. (I promise this is\n"+
-                                  "the last time you will have to wait before using\n" +
-                                  "twister).\n\n" +
-                                  "Tip: choose your avatar in the meantime!");
+                            alert(polyglot.t("user_not_yet_accepted"));
                             newUserWarnDisplayed = true;
                         }
                         setTimeout("verifyUserAlreadyInBlockchain()", 5000);
                     }
                 }, {} );
 }
+
+function localizePlaceholders()
+{
+    $(".input-name").attr("placeholder",polyglot.t("Full name here"));
+    $(".input-description").attr("placeholder",polyglot.t("Describe yourself"));
+    $(".input-city").attr("placeholder",polyglot.t("Location"));
+    $(".input-website").attr("placeholder",polyglot.t("website"));
+    $(".input-tox").attr("placeholder",polyglot.t("Tox address"));
+    $(".input-bitmessage").attr("placeholder",polyglot.t("Bitmessage address"));
+}
+
+$(document).ready(localizePlaceholders);

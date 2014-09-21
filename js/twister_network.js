@@ -222,7 +222,7 @@ function setSpamMsg() {
 }
 
 function exitDaemon() {
-  if (confirm('Are you sure you want to exit the daemon?\nThe Twister client will stop working.')) {
+  if (confirm(polyglot.t("Are you sure you want to exit the daemon?\nThe Twister client will stop working."))) {
     $( ".terminate-daemon").text("Exiting...");
     $( ".terminate-daemon").addClass("disabled");
     $.MAL.disableButton( $( ".terminate-daemon") );

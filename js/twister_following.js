@@ -477,7 +477,7 @@ function getWhoFollows(username, item) {
     fillWhoFollows(list, item, 0, (list.length > 5 ? 5 : list.length));
 
     if (list.length > 5) {
-        var more_link = $('<a class="show-more-followers">' + polyglot.t('show_more_count', {'count': list.length - 5}) + '</a>');
+        var more_link = $('<a class="show-more-followers">' + polyglot.t('show_more_count', {'smart_count': list.length - 5}) + '</a>');
         more_link.on('click', function() {
             fillWhoFollows(list, item, 5, list.length - 5);
 
