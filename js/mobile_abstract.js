@@ -98,7 +98,7 @@ var MAL = function()
             var newTweetsBarMenu = $(".userMenu").find(".menu-news"); // added for home menu entry
             if( newPosts ) {
                 document.title = "(" + String(newPosts) + ") twister";
-                newTweetsBar.text(String(newPosts) + " new posts");
+                newTweetsBar.text(polyglot.t("new_posts", newPosts));
                 newTweetsBar.fadeIn("slow");
                 newTweetsBarMenu.text(String(newPosts));
                 newTweetsBarMenu.addClass("show");

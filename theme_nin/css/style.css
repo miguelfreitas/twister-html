@@ -8,6 +8,7 @@
 @font-face { font-family: "Roboto"; src: url("fonts/roboto/Roboto-MediumItalic.ttf"); font-weight: 500; font-style: italic; }
 @font-face { font-family: "Roboto"; src: url("fonts/roboto/Roboto-BoldItalic.ttf"); font-weight: 700; font-style: italic; }
 @font-face { font-family: "Bemio"; src: url("fonts/BemioItalic.otf"); }
+@font-face { font-family: "Symbola"; src: url("/css/Symbola.ttf"); }
 /****** fontello ****** */
 @font-face { font-family: "fontello"; src: url("fonts/fontello/fontello.eot?7584488"); src: url("fonts/fontello/fontello.eot?7584488#iefix") format("embedded-opentype"), url("fonts/fontello/fontello.woff?7584488") format("woff"), url("fonts/fontello/fontello.ttf?7584488") format("truetype"), url("fonts/fontello/fontello.svg?7584488#fontello") format("svg"); font-weight: normal; font-style: normal; }
 [class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, ul.userMenu-search-profiles .modal-back:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after { font-family: "fontello"; font-style: normal; font-weight: normal; speak: none; display: inline-block; text-decoration: inherit; width: 1em; margin-right: 3px; text-align: center; font-variant: normal; text-transform: none; line-height: 1em; margin-left: 2px; }
@@ -229,7 +230,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .post-info-time { float: right; font-size: 11px; line-height: 14px; text-decoration: none; color: #b3b5b7; }
 .post-info-time:hover { color: #727578; }
 
-.post-text { margin: 0 0 0 58px; word-wrap: break-word; min-height: 25px; padding: 0; }
+.post-text { margin: 0 0 0 58px; word-wrap: break-word; min-height: 25px; padding: 0; font-family: "Roboto", sans-serif, Symbola; }
 
 .post-context { font-size: 11px; line-height: 11px; margin: 0 0 1em 0; color: #b3b5b7; }
 .post-context span:before { display: block; float: left; background: #b4c669; text-align: center; padding: 1px 2px 2px 2px; line-height: 9px; font-size: 9px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; color: white; margin-right: 0.4em; }
@@ -411,6 +412,7 @@ button, .mini-profile-actions span, .modal-back, a.button { padding: 6px 8px; fo
 button:hover, .mini-profile-actions span:hover, .modal-back:hover, a.button:hover { background: #aaaaaa; text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1); }
 button.disabled, .mini-profile-actions span.disabled, .disabled.modal-back, a.button.disabled { opacity: 0.5; background-color: #999999; }
 button.disabled:hover, .mini-profile-actions span.disabled:hover, .disabled.modal-back:hover, a.button.disabled:hover { color: white; }
+button.undo-unicode { font-family: "fontello", "Roboto", Symbola; }
 
 .options { position: relative; }
 .options .label { font-weight: 700; }
@@ -499,7 +501,7 @@ ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-prof
 .mini-follower-link:after { content: "·"; font-weight: 900; color: #66686b; margin-left: 1px; }
 
 /**************** POST AREA ************** */
-.post-area-new textarea { resize: none; box-shadow: none !important; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; display: block; transition: all 0.3s linear; -webkit-transition: height 0.3s linear; -moz-transition: height 0.3s linear; -o-transition: height 0.3s linear; -ms-transition: height 0.3s linear; height: 28px; border: none; background: white; border: 1px solid rgba(0, 0, 0, 0.1); padding: 3px; margin: 5px 0; }
+.post-area-new textarea { resize: none; box-shadow: none !important; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; width: 100%; display: block; transition: all 0.3s linear; -webkit-transition: height 0.3s linear; -moz-transition: height 0.3s linear; -o-transition: height 0.3s linear; -ms-transition: height 0.3s linear; height: 28px; border: none; background: white; border: 1px solid rgba(0, 0, 0, 0.1); padding: 3px; margin: 5px 0; font-family: "Roboto", sans-serif, Symbola; }
 
 #postboard-top { clear: both; position: relative; margin-bottom: 1px; transition: height 0.3s linear; padding: 10px 10px 5px 10px; background: white; overflow: hidden; }
 #postboard-top.hide { display: none !important; }
@@ -688,6 +690,7 @@ ol.toptrends-list a:hover { background: white; color: #66686b; }
 .suboptions { margin: 5px 30px; border: double 2px rgba(69, 71, 77, 0.1); height: 0px; padding: 0 !important; overflow: hidden; float: right; transition: height 0.3s linear; -webkit-transition: height 0.3s linear; -moz-transition: height 0.3s linear; -o-transition: height 0.3s linear; -ms-transition: height 0.3s linear; font-size: 0.9em; line-height: 0.9em; font-style: italic; }
 .suboptions div { float: none !important; }
 .suboptions span { font-style: normal; }
+.unicode-suboptions { font-family: "Roboto", sans-serif, Symbola; }
 
 /* Autocomplite */
 .textcomplete-wrapper textarea { display: inline; }

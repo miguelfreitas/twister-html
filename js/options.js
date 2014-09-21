@@ -105,6 +105,7 @@ var TwisterOptions = function()
         $('#language').val($.Options.getOption('locLang','auto'))
         $('#language').on('change', function(){
             $.Options.setOption('locLang', $(this).val());
+            location.reload();
         })
     }
     
@@ -347,3 +348,14 @@ var TwisterOptions = function()
 
 jQuery.Options = new TwisterOptions;
 
+function localizeLabels()
+{
+    $("label[for=tab_language]").text(polyglot.t("Language"));
+    $("label[for=t-2]").text(polyglot.t("Theme"));
+    $("label[for=t-3]").text(polyglot.t("Sound"));
+    $("label[for=t-4]").text(polyglot.t("Keys"));
+    $("label[for=t-5]").text(polyglot.t("Postboard"));
+    $("label[for=t-6]").text(polyglot.t("Users"));
+}
+
+$(document).ready(localizeLabels);

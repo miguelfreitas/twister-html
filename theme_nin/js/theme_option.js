@@ -3,7 +3,7 @@ $(function(){
 	$('#closeModal').html('');
     $('.profile-card-main').attr('style', '');
     $('img[src$="img/tornado_avatar.png"]').attr("src","theme_nin/img/tornado_avatar.png");
-    $('.userMenu-search-profiles button').html('').attr('title','Follow');
+    $('.userMenu-search-profiles button').html('').attr('title',polyglot.t('Follow'));
     $('.mini-profile-actions span').html('');
 
 	$('.post-context').each(function(){
