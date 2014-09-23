@@ -104,6 +104,7 @@ var MAL = function()
                 newTweetsBarMenu.addClass("show");
             } else {
                 newTweetsBar.hide();
+                newTweetsBar.text("");
                 newTweetsBarMenu.removeClass("show");
                 document.title = "twister";
             }
