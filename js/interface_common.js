@@ -125,6 +125,9 @@ function openProfileModal(e)
             unfollow(username);
         });
     };
+    
+    $(".tox-ctc").attr("title", polyglot.t("Copy to clipboard"));
+    $(".bitmessage-ctc").attr("title", polyglot.t("Copy to clipboard"));
 }
 
 function newHashtagModal(hashtag) {
@@ -697,7 +700,7 @@ function replyTextKeypress(e) {
  *  n: index of char to be stored and appended to result
  */
 var unicodeConversionList = {
-    "ponctuations": [
+    "punctuation": [
         {
             "k": /\.\.\./,
             "u": "\u2026",
@@ -953,202 +956,161 @@ var unicodeConversionList = {
     ]
 };
 
-/*
- * a stack for undo...
- * element for the unicodeConversionStack
- * {
-        k: original string that's replaced
-        u: unicode
-        p: position in string
-        l: length of k
-        m: new string length after convertion
- * }
- */
-var unicodeConversionStack = [];
-//we want to handle new typed text after the last conversion.
-var lastConvertedIndex = -1;
-
-function convert2Unicodes(s, ta) {
-
-    var tmp = s;
-
-    //check if there is a deletion...
-    //NOTE: BUGGY... can't handle everytime...
-    if (unicodeConversionStack.length>0 && s.length < unicodeConversionStack[0].m){
-        //check if a replaced unicode was deleted...
-        for (var i=unicodeConversionStack.length-1; i>=0; i--){
-            //get position and check the positions are same...
-            var ni = s.indexOf(unicodeConversionStack[i].u);
-            if (ni > -1 && s[ni] !== unicodeConversionStack[i].p){
-                var op = -1;
-                for (var j=i-1; j>=0; j--){
-                    if (unicodeConversionStack[j].u === unicodeConversionStack[i].u){
-                        if (unicodeConversionStack[j].p === ni){
-                            op = -1;
-                            break;
-                        }
-                        op = unicodeConversionStack[j].p;
-                    }
-                }
-                if (op === -1) {
-                    //remove deleted unicode...
-                    unicodeConversionStack.splice(i, 1);
-                } else {
-                    //update the position of the unicode!
-                    unicodeConversionStack[i].p = ni;
-                }
-            }
+// Marks ranges in a message where unicode replacements will be ignored (inside URLs).
+function getRangesForUnicodeConversion(msg)
+{
+    if(!msg) return;
+                    
+    var tempMsg = msg;
+    var results = [];
+    var regexHttpStart = /http[s]?:\/\//;
+    var regexHttpEnd = /[ \n\t]/;
+    var start=0, end, position, rep = true;
+    
+    position = tempMsg.search(regexHttpStart);
+    
+    while(position!=-1)
+    {
+        end = start + position;
+        if(end > start)
+        {
+            results.push({start: start, end: end, replace: rep});
         }
-        unicodeConversionStack[0].m = s.length;
+        rep = !rep;
+        start = end;
+        tempMsg = tempMsg.substring(position, tempMsg.length);
+      
+        if(rep == true)
+            position = tempMsg.search(regexHttpStart);
+        else
+            position = tempMsg.search(regexHttpEnd);
     }
+    end = msg.length;
+    if(end > start)
+        results.push({start: start, end: end, replace: rep});
+                                                           
+    return results; 
+}
 
-    if (s.length < lastConvertedIndex)
-        lastConvertedIndex = s.length;
+function getUnicodeReplacement(msg, list, ranges, ta)
+{
+   if(!msg || !list || !ranges) return;
+   if(ranges.length===0) return "";
+                    
+   var position, substrings = [];
+   for (var j=0; j<ranges.length; j++)
+   {
+      substrings[j] = msg.substring(ranges[j].start, ranges[j].end);
+      if(ranges[j].replace==true)
+      {
+          for (var i=0; i<list.length; i++)
+          {
+              position = substrings[j].search(list[i].k);
+              if(position!=-1 && ta.data("disabledUnicodeRules").indexOf(list[i].u)==-1)
+              {
+                  var oldSubstring = substrings[j];
+                  substrings[j] = substrings[j].replace(list[i].k, list[i].u);
+                  
+                  var len = oldSubstring.length - substrings[j].length + list[i].u.length;
+                  ta.data("unicodeConversionStack").unshift({
+                      "k": oldSubstring.substr(position, len),
+                      "u": list[i].u,
+                      "p": ranges[j].start + position
+                  });
+              }
+          }
+      }
+   }
+   var returnString = substrings[0];
+   for (var j=1; j<ranges.length; j++)
+   {
+       returnString += substrings[j];
+   }
+   return returnString;
+}
 
-    if ($.Options.getUnicodeConversionOpt() === "enable" || $.Options.getConvertPunctuationsOpt()){
-
-        var list = unicodeConversionList.ponctuations;
-        for (var i=0; i<list.length; i++){
-            var kl = list[i].k.exec(tmp);
-            if (kl && kl.length > 0 && kl.index >= lastConvertedIndex) {
-                var nc = "";
-                if (list[i].n > -1){
-                    //if it's necessary, get any next char to prevent from any data loss
-                    nc = tmp[kl.index + list[i].n];
-                }
-                tmp = tmp.replace(list[i].k, list[i].u + nc);
-                var len = s.length - tmp.length + list[i].u.length;
-                unicodeConversionStack.unshift({
-                    "k": s.substr(kl.index, len),
-                    "u": list[i].u,
-                    "p": kl.index,
-                    "l": len,
-                    "m": tmp.length
-                });
-                s = tmp;
-                lastConvertedIndex = tmp.length;
-            }
-        }
+function convert2Unicodes(s, ta)
+{
+    if(!ta.data("unicodeConversionStack"))      // A stack of undo steps
+        ta.data("unicodeConversionStack", []);
+    if(!ta.data("disabledUnicodeRules"))        // A list of conversion rules that are temporarily disabled
+        ta.data("disabledUnicodeRules", []);
+    var ranges = getRangesForUnicodeConversion(s);
+    var list; 
+    if ($.Options.getUnicodeConversionOpt() === "enable" || $.Options.getConvertPunctuationsOpt())
+    {
+        list = unicodeConversionList.punctuation;
+        s = getUnicodeReplacement(s, list, ranges, ta);
     }
-
-    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertEmotionsOpt()){
-
-        var list = unicodeConversionList.emotions;
-        for (var i=0; i<list.length; i++){
-            var kl = list[i].k.exec(tmp);
-            if (kl && kl.length > 0 && kl.index >= lastConvertedIndex) {
-                var nc = "";
-                if (list[i].n > -1){
-                    //if it's necessary, get any next char to prevent from any data loss
-                    nc = tmp[kl.index + list[i].n];
-                }
-                tmp = tmp.replace(list[i].k, list[i].u + nc);
-                var len = s.length - tmp.length + list[i].u.length;
-                unicodeConversionStack.unshift({
-                    "k": s.substr(kl.index, len),
-                    "u": list[i].u,
-                    "p": kl.index,
-                    "l": len,
-                    "m": tmp.length
-                });
-                s = tmp;
-                lastConvertedIndex = tmp.length;
-            }
-        }
+    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertEmotionsOpt())
+    {
+        list = unicodeConversionList.emotions;
+        s = getUnicodeReplacement(s, list, ranges, ta);
     }
-
-    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertSignsOpt()){
-
-        var list = unicodeConversionList.signs;
-        for (var i=0; i<list.length; i++){
-            var kl = list[i].k.exec(tmp);
-            if (kl && kl.length > 0 && kl.index >= lastConvertedIndex) {
-                var nc = "";
-                if (list[i].n > -1){
-                    //if it's necessary, get any next char to prevent from any data loss
-                    nc = tmp[kl.index + list[i].n];
-                }
-                tmp = tmp.replace(list[i].k, list[i].u + nc);
-                var len = s.length - tmp.length + list[i].u.length;
-                unicodeConversionStack.unshift({
-                    "k": s.substr(kl.index, len),
-                    "u": list[i].u,
-                    "p": kl.index,
-                    "l": len,
-                    "m": tmp.length
-                });
-                s = tmp;
-                lastConvertedIndex = tmp.length;
-            }
-        }
+    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertSignsOpt())
+    {
+        list = unicodeConversionList.signs;
+        s = getUnicodeReplacement(s, list, ranges, ta);
     }
-
-    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertFractionsOpt()){
-
-        var list = unicodeConversionList.fractions;
-        for (var i=0; i<list.length; i++){
-            var kl = list[i].k.exec(tmp);
-            if (kl && kl.length > 0 && kl.index >= lastConvertedIndex) {
-                var nc = "";
-                if (list[i].n > -1){
-                    //if it's necessary, get any next char to prevent from any data loss
-                    nc = tmp[kl.index + list[i].n];
-                }
-                tmp = tmp.replace(list[i].k, list[i].u + nc);
-                var len = s.length - tmp.length + list[i].u.length;
-                unicodeConversionStack.unshift({
-                    "k": s.substr(kl.index, len),
-                    "u": list[i].u,
-                    "p": kl.index,
-                    "l": len,
-                    "m": tmp.length
-                });
-                s = tmp;
-                lastConvertedIndex = tmp.length;
-            }
-        }
+    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertFractionsOpt())
+    {
+        list = unicodeConversionList.fractions;
+        s = getUnicodeReplacement(s, list, ranges, ta);
     }
-
-    if (unicodeConversionStack.length > 0){
+    
+    if (ta.data("unicodeConversionStack").length > 0)
+    {
         var ub = ta.closest(".post-area-new").find(".undo-unicode");
-        ub.text("undo: " + unicodeConversionStack[0].u);
+        ub.text(polyglot.t("undo") + ": " + ta.data("unicodeConversionStack")[0].u);
         $.MAL.enableButton(ub);
-    } else {
+    }
+    else
+    {
         $.MAL.disableButton(ta.closest(".post-area-new").find(".undo-unicode"));
     }
 
-    return tmp;
+    return s;
 }
 
-//BUGGY... if user deletes something in the middle, stack could be deformed...
 function undoLastUnicode(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    if (unicodeConversionStack.length === 0)
+    var $ta = $(this).closest(".post-area-new").find("textarea");
+    if ($ta.data("unicodeConversionStack").length === 0)
         return;
 
-    var uc = unicodeConversionStack.shift();
+    var uc = $ta.data("unicodeConversionStack").shift();
 
-    $ta = $(this).closest(".post-area-new").find("textarea");
     var pt = $ta.val();
-
-    if (pt.substr(uc.p, uc.u.length) === uc.u)
-        $ta.val(pt.substr(0,uc.p) + uc.k + pt.substr(uc.p + uc.u.length));
-    else {
-        //if it can't be found at its index, last unicode will be removed
-        var i = pt.lastIndexOf(uc.u);
-        if (i>-1) {
-            $ta.val(pt.substr(0,i) + uc.k + pt.substr(i + uc.u.length));
-        }
+    
+    // If the text was shifted, and character is no longer at the saved position, this function
+    // searches for it to the right. If it is not there, it searches in the oposite direction.
+    // if it's not there either, it means it was deleted, so it is skipped.
+    var substrLeft = pt.substring(0, uc.p);
+    var substrRight = pt.substring(uc.p, pt.length);
+    if(substrRight.search(uc.u)!=-1)
+    {
+        substrRight = substrRight.replace(uc.u, uc.k);
+        $ta.val(substrLeft + substrRight);
+        $ta.data("disabledUnicodeRules").push(uc.u);
+    }
+    else if(substrLeft.search(uc.u)!=-1)
+    {
+        var closestToTheLeft = substrLeft.lastIndexOf(uc.u);
+        var substrCenter = substrLeft.substring(closestToTheLeft, substrLeft.length).replace(uc.u, uc.k);
+        substrLeft = substrLeft.substring(0, closestToTheLeft);
+        $ta.val(substrLeft + substrCenter + substrRight);
+        $ta.data("disabledUnicodeRules").push(uc.u);
     }
 
-    if (unicodeConversionStack.length > 0)
-        $(this).text("undo: " + unicodeConversionStack[0].u);
+    if ($ta.data("unicodeConversionStack").length > 0)
+        $(this).text(polyglot.t("undo") + ": " + $ta.data("unicodeConversionStack")[0].u);
     else
+    {
+        $(this).text("undo");
         $.MAL.disableButton($(this));
-
-    lastConvertedIndex = $ta.val().length;
+    }
 }
 
 var postSubmit = function(e, oldLastPostId)
@@ -1227,6 +1189,8 @@ var postSubmit = function(e, oldLastPostId)
         $('.post-area-new').removeClass('open').find('textarea').blur();
     };
     setTimeout('requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly)', 1000);
+    $replyText.data("unicodeConversionStack", []);
+    $replyText.data("disabledUnicodeRules", []);
 }
 
 
@@ -1246,14 +1210,25 @@ var retweetSubmit = function(e)
 function changeStyle() {
     var style, profile, menu;
     var theme = $.Options.getTheme();
+
+    if(theme == 'nin')
+    {
+        style = 'theme_nin/css/style.css';
+        profile = 'theme_nin/css/profile.css';
+        $.getScript('theme_nin/js/theme_option.js');
+
+    }
+
+    if(theme == 'calm')
+    {
+        style = 'theme_calm/css/style.css';
+        profile = 'theme_calm/css/profile.css';
+    }
+
     if(theme == 'original')
     {
         style = 'css/style.css';
         profile = 'css/profile.css';
-    }else
-    {
-        style = 'theme_calm/css/style.css';
-        profile = 'theme_calm/css/profile.css';
     }
     $('#stylecss').attr('href', style);
     $('#profilecss').attr('href', profile);

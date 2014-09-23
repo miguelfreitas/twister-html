@@ -1,0 +1,81 @@
+
+.userMenu
+  width: 100%
+  position: fixed
+  left: 0
+  margin: 0
+  height: 50px
+  background: $main-color-dark
+  z-index: 2
+  ul
+    @extend .clear-fix
+    +box-sizing(border-box)
+    width: $site-width
+    max-width: 100%
+    margin: auto
+    background: image-url("twister_logo.png") no-repeat 50% 50%
+    background-size: 20px
+    li
+      float: left
+      margin: 0 20px 0 0
+      position: relative
+      display: block
+      > a
+        line-height: 50px
+        height: 50px
+        padding: 0 .5em
+        display: inline-block
+        color: rgba(white, 0.5)
+        font-size: 1.1em
+        transition: all .2s linear
+        position: relative
+        font-weight: 500
+        border-bottom: 3px solid transparent
+        +box-sizing(border-box)
+        &:hover
+          color: white
+      &.current > a
+        color: white
+        border-bottom: 3px solid $main-color-color
+
+
+/* Menu specific entries */ 
+
+.userMenu li
+
+  &.userMenu-home 
+    a span.label
+      display: block!important
+
+    .menu-news
+      position: absolute
+      top: 6px 
+      right: -6px
+      background: $main-color-color
+      color: #fff
+      padding: 1px 3px
+      line-height: 12px
+      display: none
+      font-size: 9px
+      font-weight: 700
+      border-radius: 2px
+      &.show 
+        display: block
+
+  &.userMenu-dhtindicator, &.userMenu-connections, &.userMenu-messages
+    display: none!important
+
+  &.userMenu-config, &.userMenu-search
+    float: right
+    position: relative
+    margin-right: 0
+    color: white
+    + a 
+      color: $main-color-dark 
+  &.userMenu-search
+    padding-top: 5px
+  &.userMenu-config > a
+    @extend .icon-cog
+    @extend .extend-icon
+    font-size: 1.5em
+

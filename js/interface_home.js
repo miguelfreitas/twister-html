@@ -15,13 +15,37 @@ var InterfaceFunctions = function()
     {
         $( ".wrapper .postboard-news").click(function() {
             requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
-        $( ".promoted-posts-only").click(function() {
+
+
+        /*$( ".promoted-posts-only").click(function() {
             promotedPostsOnly = !promotedPostsOnly;
             $(this).text( promotedPostsOnly ? "Switch to Normal posts" : "Switch to Promoted posts" );
             timelineChangedUser();
             $.MAL.getStreamPostsParent().empty();
             requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
-            });
+            });*/
+
+
+        // Add refresh posts for home link in menu
+        $( ".userMenu-home.current a").click(function() {
+            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+
+        // modified the way promoted posts are shown
+        $( ".promoted-posts-only").click(function() { 
+            promotedPostsOnly = !promotedPostsOnly;
+            //active promoted posts tab
+            $(this).children('.promoted-posts').addClass(promotedPostsOnly ? "active" : "disabled");
+            $(this).children('.normal-posts').addClass(promotedPostsOnly ? "disabled" : "active");
+            $('#postboard-top').removeClass(promotedPostsOnly ? "show" : "hide");
+            //active normal posts
+            $(this).children('.promoted-posts').removeClass(promotedPostsOnly ? "disabled" : "active");
+            $(this).children('.normal-posts').removeClass(promotedPostsOnly ? "active" : "disabled");
+            $('#postboard-top').addClass(promotedPostsOnly ? "hide" : "show");
+
+            timelineChangedUser();
+            $.MAL.getStreamPostsParent().empty();
+            requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
+        });
 
         initInterfaceCommon();
         initUserSearch();
@@ -77,6 +101,8 @@ var InterfaceFunctions = function()
             $miniProfile.find(".mini-profile-name").text(defaultScreenName);
             getFullname( defaultScreenName, $miniProfile.find(".mini-profile-name") );
             getAvatar( defaultScreenName, $miniProfile.find(".mini-profile-photo").find("img") );
+            // add avatar in postboard-top
+            getAvatar( defaultScreenName, $("#postboard-top").find("img") );
             getPostsCount( defaultScreenName,  $miniProfile.find(".posts-count") );
             getFollowers( defaultScreenName, $miniProfile.find(".followers-count") );
 
@@ -123,6 +149,10 @@ var InterfaceFunctions = function()
                      if( args.cbFunc )
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});
+
+
+
+
         }
     }
 };
@@ -143,5 +173,5 @@ function fixDiv()
   else
     $cache.removeClass( "fixed" );
 }
-
 $(window).scroll(fixDiv);
+

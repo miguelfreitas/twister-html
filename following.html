@@ -41,8 +41,8 @@
   <nav class="userMenu">
     <ul>
       <li class="userMenu-home"><a href="home.html"><span class="selectable_theme theme_original label">Home</span></a></li>
-      <li class="userMenu-network selectable_theme theme_original"><a class="label" href="network.html">Network</a></li>
-      <li class="userMenu-profile selectable_theme theme_original"><a class="label" href="profile-edit.html">Profile</a></li>
+      <li class="userMenu-network selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
+      <li class="userMenu-profile selectable_theme theme_original theme_nin"><a class="label" href="profile-edit.html">Profile</a></li>
       <li class="userMenu-config current">
         <a class="userMenu-config-dropdown" href="#">
           <div class="config-menu dialog-modal">
@@ -105,10 +105,47 @@
 
 
   <div class="wrapper">
+  <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
+    <div class="dashboard left">
+      
+      <!-- PROFILE MODULE INIT -->
+      <div class="module mini-profile selectable_theme theme_nin">
+        <div class="mini-profile-info">
+
+
+
+          <!-- THEME NIN added user menu (mentions, messages and edit profile) -->
+          <ul class="mini-profile-indicators selectable_theme theme_nin">
+            <li class="userMenu-connections">
+              <a href="#" title="Mentions"><span class="messages-qtd" style="display:none;">0</span><span>Mentions</span></a>
+            </li>
+            <li class="userMenu-messages">
+              <a href="#" title="Direct Messages"><span class="messages-qtd" style="display:none;">0</span><span>Messages</span></a>
+            </li>
+            <li class="userMenu-user">
+              <a href="profile-edit.html" title="Edit profile"><span>Edit profile</span></a>
+            </li>
+          </ul>
+
+
+          <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+          <a href="#" class="mini-profile-name open-profile-modal"></a>
+          <span class="mini-profile-view">View</span>
+        </div>
+        <ul class="module profile-data">
+          <li><a href="#" class="open-profile-modal"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
+          <li class="current"><a href="following.html" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+          <li><a href="#" class="open-followers"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
+        </ul>
+      
+      </div>
+      <!-- PROFILE MODULE INIT -->
+    </div>
+
 
   <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
     <div class="following">
-      <h2> Following </h2>
+      <h2><span>Following</span></h2>
 
       <div class="postboard-loading" style="display: none;">
             <div></div>
@@ -360,10 +397,10 @@
               <div class="profile-bio"></div>
               <div id="msngrswr">
                 <div id="toxbtnwr" class="profile-extra-contact">
-                  <a class="profile-tox"></a><a class="tox-ctc"></a>
+                  <a class="profile-tox"><span class="selectable_theme theme_nin">TOX</span></a><a class="tox-ctc"></a>
                 </div>
                 <div id="bmbtnwr" class="profile-extra-contact">
-                  <a class="profile-bitmessage"></a><a class="bitmessage-ctc"></a>
+                  <a class="profile-bitmessage"><span class="selectable_theme theme_nin">BM</span></a><a class="bitmessage-ctc"></a>
                 </div>
               </div>
             </div>
@@ -385,7 +422,7 @@
         <!-- ÁREA DE POSTS INIT -->
           <div class="postboard">
             <h2>
-              Posts
+              <span>Posts</span>
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>

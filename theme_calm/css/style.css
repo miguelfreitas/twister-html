@@ -759,7 +759,23 @@ textarea.splited-post {
     transition: all 200ms;
 
 }
-.post-submit:hover, .dm-submit:hover {
+.undo-unicode {
+    display: inline-block;
+    height: 34px;
+    padding: 0 10px 0 10px;
+    color: #f1f1f1;
+    font: 17px/34px "Open Sans Condensed", Symbola;
+    border-radius: 2px;
+    opacity: 1;
+    
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+
+}
+.post-submit:hover, .dm-submit:hover, .undo-unicode:hover {
     color: #fff;
     opacity: .9;
     

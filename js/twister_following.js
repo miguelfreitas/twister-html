@@ -477,7 +477,7 @@ function getWhoFollows(username, item) {
     fillWhoFollows(list, item, 0, (list.length > 5 ? 5 : list.length));
 
     if (list.length > 5) {
-        var more_link = $('<a class="show-more-followers">' + polyglot.t('show_more_count', {'count': list.length - 5}) + '</a>');
+        var more_link = $('<a class="show-more-followers">' + polyglot.t('show_more_count', {'smart_count': list.length - 5}) + '</a>');
         more_link.on('click', function() {
             fillWhoFollows(list, item, 5, list.length - 5);
 
@@ -528,7 +528,7 @@ function showFollowingUsers(){
             resItem.find("button").hide();
         }
         
-        resItem.appendTo($followingList);
+        resItem.prependTo($followingList);
     }
     $.MAL.followingListLoaded();
 }
@@ -787,3 +787,44 @@ function initInterfaceFollowing() {
         initDMsCount();
     });
 }
+
+
+var InterfaceFunctions = function()
+{
+    this.init = function()
+    {
+        initUser(initFollowing_);
+    };
+
+    function initFollowing_(cbFunc, cbArg) {
+        var $miniProfile = $(".left .mini-profile");
+        if(!defaultScreenName)
+        {
+
+        }
+        else
+        {
+            $miniProfile.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
+            $miniProfile.find("a.open-profile-modal").attr("href",$.MAL.userUrl(defaultScreenName));
+            $miniProfile.find(".mini-profile-name").text(defaultScreenName);
+            getFullname( defaultScreenName, $miniProfile.find(".mini-profile-name") );
+            getAvatar( defaultScreenName, $miniProfile.find(".mini-profile-photo").find("img") );
+            getPostsCount( defaultScreenName,  $miniProfile.find(".posts-count") );
+            getFollowers( defaultScreenName, $miniProfile.find(".followers-count") );
+
+            loadFollowing( function(args) {
+                     $(".left .following-count").text(followingUsers.length-1);
+                     initMentionsCount();
+                     initDMsCount();
+                 }, {cbFunc:cbFunc, cbArg:cbArg});
+
+        }
+        
+    }
+};
+
+//***********************************************
+//******************* INIT **************
+//***********************************************
+var interfaceFunctions = new InterfaceFunctions;
+$( document ).ready( interfaceFunctions.init );

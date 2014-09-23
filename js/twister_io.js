@@ -255,11 +255,11 @@ function getBio( username, item ){
 // get tox address and store it in item.text
 function getTox( username, item ){
     getProfileResource( username, "tox", false, function(item, text){
-        item.empty();
+        //item.empty();
         if(text) {
             item.attr('href', 'tox:'+text);
-            item.next().attr('data', text);
-            item.parent().show().parent().show();
+            item.next().attr('data', text).attr('title', 'Copy to clipboard');
+            item.parent().css('display','inline-block').parent().show();
         }
     }, item);
 }
@@ -267,11 +267,11 @@ function getTox( username, item ){
 // get bitmessage address and store it in item.text
 function getBitmessage( username, item ){
     getProfileResource( username, "bitmessage", false, function(item, text){
-        item.empty();
+        //item.empty();
         if(text) {
             item.attr('href', 'bitmsg:'+text+'?action=add&label='+username);
-            item.next().attr('data', text);
-            item.parent().show().parent().show();
+            item.next().attr('data', text).attr('title', 'Copy to clipboard');
+            item.parent().css('display','inline-block').parent().show();
         }
     }, item);
 }
@@ -320,8 +320,10 @@ function _putResourceIntoStorage(locator, data) {
 
 // get avatar and set it in img.attr("src")
 function getAvatar( username, img ){
+    var theme = $.Options.getTheme();
     if( username == "nobody" ) {
-        img.attr('src', "img/tornado_avatar.png");
+        if(theme == 'nin') {img.attr('src', "theme_nin/img/tornado_avatar.png");}
+        else {img.attr('src', "img/tornado_avatar.png");}
         return;
     }
 

@@ -38,8 +38,8 @@
   <nav class="userMenu">
     <ul>
         <li class="userMenu-home"><a href="home.html"><span class="selectable_theme theme_original label">Home</span></a></li>
-        <li class="userMenu-network current selectable_theme theme_original"><a class="label" href="network.html">Network</a></li>
-        <li class="userMenu-profile selectable_theme theme_original"><a class="label" href="profile-edit.html">Profile</a></li>
+        <li class="userMenu-network current selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
+        <li class="userMenu-profile selectable_theme theme_original theme_nin"><a class="label" href="profile-edit.html">Profile</a></li>
         <li class="userMenu-config">
           <a class="userMenu-config-dropdown" href="#">
             <div class="config-menu dialog-modal">
@@ -57,9 +57,6 @@
           </a>
         </li>
         <li class="userMenu-dhtindicator selectable_theme theme_calm"><a href="network.html"></a></li>
-        <li class="userMenu-search">
-          <input type="text" class="userMenu-search-field" placeholder="search"/>
-        </li>
     </ul>
   </nav>
   <!-- MENU SUPERIOR END -->
@@ -67,9 +64,9 @@
   <div class="wrapper">
 
     <div class="network singleBlock">
-      <h2> Network status </h2>
-
+      <h2 class="selectable_theme theme_original theme_calm"> Network status </h2>
       <div class="module">
+        <h2 class="selectable_theme theme_nin"> Network status </h2>
         <h3> General information</h3>
         <ul>
           <li>
@@ -129,9 +126,10 @@
 
       </div>
 
-      <h2>Configure block generation</h2>
+      <h2 class="selectable_theme theme_original theme_calm">Configure block generation</h2>
 
       <div class="module">
+        <h2 class="selectable_theme theme_nin">Configure block generation</h2>
         <h3> Generate blocks (send promoted messages)</h3>
         <ul>
           <li>
