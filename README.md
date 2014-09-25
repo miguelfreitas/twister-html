@@ -16,6 +16,10 @@ use the experimental `i18n` branch:
    
 If you want to translate it in your own language, check [these instructions](#translations)
    
+
+## Support project with Bitcoin
+[![tip for next commit](https://tip4commit.com/projects/565.svg)](https://tip4commit.com/github/miguelfreitas/twister-html)
+
 Contribute
 ----------
 
