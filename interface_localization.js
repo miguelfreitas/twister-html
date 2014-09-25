@@ -1031,8 +1031,8 @@ if(preferredLanguage == "ja"){
       "Active DHT nodes:": "アクティブなDHTノード: ",
       "Add DNS": "DNSを追加",
       "Add peer": "ピアを追加",
-      "ajax_error": "Ajax error: %{error}", // JavaScript error
-      "All users publicly followed by": "All users publicly followed by",
+      "ajax_error": "AJAXエラー: %{error}", // JavaScript error
+      "All users publicly followed by": "このユーザがフォローを公開している",
       "Available": "Available", // username is available
       "Block chain information": "ブロックチェイン",
       "Block chain is up-to-date, twister is ready to use!": "ブロックチェインは最新の状態です。",
@@ -1043,29 +1043,29 @@ if(preferredLanguage == "ja"){
       "Collapse": "閉じる", // smaller view of a post
       "Configure block generation": "ブロック生成の設定",
       "Connections:": "接続数: ", // to network
-      "Connection lost.": "Connection lost.",
-      "days": "%{smart_count} day |||| %{smart_count} days",
+      "Connection lost.": "切断されました。",
+      "days": "%{smart_count}日 |||| %{smart_count}日",
       "Detailed information": "詳細",
       "DHT network down.": "DHTネットワークがダウンしています",
       "Direct Messages": "ダイレクトメッセージ",
       "Disable": "停止",
       "Display mentions to @": "メンションを表示する",
       "Display retransmissions": "リトランスミットを表示する",
-      "DNS to obtain list of peers:": "ピア取得のためのDNS:",
-      "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。(block chain is %{days} days old).",
+      "DNS to obtain list of peers:": "ピア取得用のDNS:",
+      "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。（ブロックチェーンは%{days}日送れています）",
       "download_posts_status": "ダウンロード済みの投稿 %{portion}", // Downloaded 10/30 posts
       "Enable": "有効",
       "error": "Error: %{error}",
-      "error_connecting_to_daemon": "Error connecting to local twister daemon.",
-      "Error in 'createwalletuser' RPC.": "Error in 'createwalletuser' RPC.",
-      "Error in 'importprivkey'": "Error in 'importprivkey' RPC: %{rpc}",
-      "Error in 'sendnewusertransaction' RPC.": "Error in 'sendnewusertransaction' RPC.",
+      "error_connecting_to_daemon": "ロカールtwisterデーモンに接続したが、エラーが発生しました。",
+      "Error in 'createwalletuser' RPC.": "'createwalletuser' RPCにエラー発生",
+      "Error in 'importprivkey'": "'importprivkey' RPC: %{rpc}にエラー発生",
+      "Error in 'sendnewusertransaction' RPC.": "'sendnewusertransaction' RPCにエラー発生",
       "Expand": "開く", // larger view of a post
       "Favorite": "お気に入り",
       "File APIs not supported in this browser.": "利用しているブラウザはファイルAPIをサポートしていません。",
       "Follow": "フォロー",
-      "Followed by": "Followed by",
-      "followed_by": "Followed by %{username}",
+      "Followed by": "フォローされている",
+      "followed_by": "%{username}にフォローされている",
       "Followers": "フォロワー",
       "Following": "フォロー",
       "Following users": "フォローしているユーザー",
@@ -1073,32 +1073,32 @@ if(preferredLanguage == "ja"){
       "General information": "概略",
       "Generate blocks (send promoted messages)": "ブロックチェインを生成する (プロモートメッセージを送信する)",
       "Home": "ホーム", // homepage
-      "hours": "%{smart_count} hour |||| %{smart_count} hours",
-      "Internal error: lastPostId unknown (following yourself may fix!)": "Internal error: lastPostId unknown (following yourself may fix!)",
+      "hours": "%{smart_count}時間 |||| %{smart_count}時間",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "内部エラー: lastPostId不明（自分をフォローすれば解決するかもしれません）",
       "Known peers:": "ネットワーク全体のピア: ",
-      "Last block is ahead of your computer time, check your clock.": "Last block is ahead of your computer time, check your clock.",
+      "Last block is ahead of your computer time, check your clock.": "最新ブロックはあなたのコンピューター時間より進んでいます。日付設定を確認してください。",
       "mentions_at": "@%{user}へのメンション",
-      "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
-      "Must be 16 characters or less.": "Must be 16 characters or less.", // username
+      "minutes": "%{smart_count}分 |||| %{smart_count}分",
+      "Must be 16 characters or less.": "16字以下を入力してください。", // username
       "Network": "ネットワーク",
       "Network config": "ネットワーク設定",
       "Network status": "ネットワークステータス",
       "New direct message...": "ダイレクトメッセージ...",
       "New Post...": "投稿する",
-      "new_posts": "%{smart_count} new post |||| %{smart_count} new posts",
-      "nobody": "nobody", // used to promote a post without attaching the user
-      "Not available": "Not available", // username is not available
+      "new_posts": "%{smart_count} 新投稿 |||| %{smart_count} 新投稿",
+      "nobody": "ナナシ", // used to promote a post without attaching the user
+      "Not available": "使用中", // username is not available
       "Number of blocks in block chain:": "全ブロック数: ",
       "Number of CPUs to use": "利用するCPUの数",
       "Only alphanumeric and underscore allowed.": "アルファベットとアンダースコア(_)が利用可能です",
       "peer address": "ピア・アドレス",
       "Private": "プライベート",
       "Profile": "プロフィール",
-      "Postboard": "Postboard",
+      "Postboard": "投稿ボード",
       "post": "投稿する", // verb - button to post a message
       "Post to promote:": "プロモートメッセージ: ",
       "Posts": "投稿",
-      "propagating_nickname": "Propagating nickname %{username} to the network...",
+      "propagating_nickname": "ユーザネーム%{username}をネットワークへ普及しています…",
       "Public": "公開",
       "Refresh": "リフレッシュ",
       "retransmit_this": "この投稿をリトランスミットしますか？",
@@ -1107,34 +1107,31 @@ if(preferredLanguage == "ja"){
       "reply_to": "%{fullname}への返信",
       "Retransmit": "リトランスミット",
       "Retransmits": "リトランスミット",
-      "Retransmitted by": "Retransmitted by",
+      "Retransmitted by": "リトランスミットしたユーザー",
       "search": "検索",
-      "seconds": "%{smart_count} second |||| %{smart_count} seconds",
+      "seconds": "%{smart_count} 秒 |||| %{smart_count} 秒",
       "send": "送信",
       "Send post with username": "プロモートメッセージの送信元",
       "Sent Direct Message": "ダイレクトメッセージを送る",
       "Sent Post to @": "メンションを投稿する",
       "Setup account": "アカウント設定",
-      "switch_to_network": "Local daemon is not connected to the network or\n" +
-                "block chain is outdated. If you stay in this page\n" +
-                "your actions may not work.\n" +
-                "Do you want to check Network Status page instead?",
-      "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
-      "time_ago": "%{time} ago", // 5 minutes ago
+      "switch_to_network": "ローカルデーモンが切断しているか、\n" +
+                "ブロックチェーンが最新状態ではない。このページを使用しつづければ、\n" +
+                "あなたの変更が適用されないおそれがあります。\n" +
+                "ネットワーク状態ページへ移動して確認しますか？",
+      "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
+      "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
       "Type message here": "ここにメッセージを書いてね",
       "Unfollow": "解除",
       "Update": "アップデート",
-      "Updating status...": "Updating status...", // status of block chain
-      "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
-                "Unfortunately it is not possible to save profile\n" +
-                "or send any posts in this state.\n\n" +
-                "Please wait a few minutes to continue.\n\n" +
-                "The 'Save Changes' will be automatically enabled\n" +
-                "when the process completes. (I promise this is\n"+
-                "the last time you will have to wait before using\n" +
-                "twister).\n\n" +
-                "Tip: choose your avatar in the meantime!",
+      "Updating status...": "ブロックチェーンを更新中…", // status of block chain
+      "user_not_yet_accepted": "この新ユーザーが他のピアーにまだ認証されていない。\n" +
+                "なので、プロファイルの保存やメッセージの投稿は現在不可能です。\n" +
+                "しばらくしてから続行してください。\n\n" +
+                "処理が終了したら、「保存」ボタンは有効化されます。\n" +
+                "twisterを使用するあいだ、待たされることはこれが最後です。\n\n"+
+                "待っている間、アバターを選択したら？",
       "users_mentions": "@%{username}へのメンション",
       "users_profile": "%{username}のプロフィール",
       "username_undefined": "ログインしてください。",
