@@ -136,27 +136,52 @@ function requestRTs(postLi)
     }
 }
 
+function appendPostToContainer(postFromJson, containerToAppend)
+{
+    var newStreamPost = postToElem(postFromJson, "original");
+    newStreamPost.hide();
+    containerToAppend.append( newStreamPost );
+    newStreamPost.slideDown("fast");
+    $.MAL.postboardLoaded();
+}
+
 var profilePostsLoading = false;
 
-function requestPostRecursively(containerToAppend,username,resource,count)
+function requestPostRecursively(containerToAppend,username,resource,count,useGetposts)
 {
+    var max_id = -1;
     if( !resource ) {
         var streamItems = containerToAppend.children();
         if( streamItems.length != 0 ) {
             var lastItem = streamItems.eq(streamItems.length-1);
             resource = "post" + lastItem.find(".post-data").attr("data-lastk");
+            max_id = parseInt(lastItem.find(".post-data").attr("data-id"))-1;
         }
     }
 
     profilePostsLoading = true;
-    dhtget( username, resource, "s",
+    
+    if( useGetposts ) {
+        req = {username: username}
+        if( max_id != -1 ) {
+            req.max_id = max_id;
+        }
+
+        twisterRpc("getposts", [count,[req]],
+                       function(args, posts) {
+                           for( var i = 0; i < posts.length; i++ ) {
+                              appendPostToContainer(posts[i],args.containerToAppend);
+                           }
+                           profilePostsLoading = false;
+                       }, {containerToAppend:containerToAppend},
+                       function(args, ret) {
+                           profilePostsLoading = false;
+                       }, {});
+    } else {
+        dhtget( username, resource, "s",
             function(args, postFromJson) {
                if( postFromJson ) {
-                   var newStreamPost = postToElem(postFromJson, "original");
-                   newStreamPost.hide();
-                   args.containerToAppend.append( newStreamPost );
-                   newStreamPost.slideDown("fast");
-                   $.MAL.postboardLoaded();
+                   appendPostToContainer(postFromJson,args.containerToAppend);
 
                    if( args.count > 1 ) {
                        var userpost = postFromJson["userpost"];
@@ -174,6 +199,7 @@ function requestPostRecursively(containerToAppend,username,resource,count)
                    profilePostsLoading = false;
                }
            }, {containerToAppend:containerToAppend, count:count} );
+    }
 }
 
 
@@ -238,13 +264,25 @@ function updateProfileData(profileModalContent, username) {
     profileModalContent.find(".following-count").parent().attr("href", $.MAL.followingUrl(username));
 
     var postsView = profileModalContent.find(".postboard-posts");
-    requestPostRecursively(postsView,username,"status",10);
+    
+    // try using getposts first. fallback to dht.
+    twisterRpc("getposts", [1,[{username: username}]],
+                       function(args, posts) {
+                           updateProfilePosts(postsView, username, posts.length);
+                       }, {},
+                       function(args, ret) {
+                           updateProfilePosts(postsView, username, false);
+                       }, {});
+}
+
+function updateProfilePosts(postsView, username, useGetposts) {
+    requestPostRecursively(postsView,username,"status",postsPerRefresh, useGetposts);
 
     postsView.scroll(function(){
         if (!profilePostsLoading) {
             var $this = $(this);
             if ($this.scrollTop() >= this.scrollHeight - $this.height() - 20) {
-                requestPostRecursively($this,username,"",10);
+                requestPostRecursively($this,username,"",postsPerRefresh, useGetposts);
             }
         }
      });
