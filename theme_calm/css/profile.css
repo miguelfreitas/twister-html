@@ -1,0 +1,443 @@
+/**************************************
+********************* PROFILE PHOTO ***
+***************************************/
+.profile-card
+{
+    padding: 9px;
+    background: rgba( 255, 255, 255, .5 );
+    border: solid 1px rgba( 69, 71, 77, .05 );
+    position: relative;
+    background: #43464d;
+}
+.profile-card-main
+{
+    width: 520px;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    transition: all .2s linear;
+    background: rgba(255,255,255, .1);
+}
+/*.profile-card-main:before
+{
+    content: "";
+    border: solid 0px #fff;
+    transition: all .2s linear;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    z-index: 0;
+}*/
+.profile-card-main *
+{
+    position: relative;
+    z-index: 1;
+}
+.profile-card-photo
+{
+    width: 74px;
+    height: 74px;
+    border: solid 3px #45474d;
+    border-radius: 10%;
+    box-sizing: content-box;
+    float:left;
+    top: 50%;
+    background-color: #3b3c41;
+}
+.profile-card-main h1
+{
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+.profile-card-main h2 {
+    color: #7691ce;
+    font-size: 14px;
+}
+.forEdition .profile-card-main h2 {
+    left: 20%;
+    top: 19%;
+    color: #f8f8f8;
+}
+.profile-card .direct-messages,
+.profile-card .direct-messages-with-user,
+.profile-card .follow,
+.profile-card .profileUnfollow
+{
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    right: 3px;
+    padding: 10px 3px;
+    font-size: 12px;
+    width: 120px;
+    text-align: center;
+    color: rgba( 0, 0, 0, .7 );
+    background: rgba( 0, 0, 0, .1 );
+    border: none;
+    transition: all .2s linear;
+}
+.profile-card .follow,
+.profile-card .profileUnfollow
+{
+    right: 128px;
+}
+.profile-card .direct-messages:hover,
+.profile-card .direct-messages-with-user:hover,
+.profile-card .follow:hover,
+.profile-card .profileUnfollow:hover
+{
+    background: rgba( 0, 0, 0, .3 );
+}
+.profile-card.forEdition
+{
+    margin: 0 auto;
+    width: 540px;
+}
+.forEdition .profile-card-photo
+{
+    border: solid 2px #fff;
+    position: relative;
+    cursor: pointer;
+    transition: all .2s linear;
+    z-index: 10;
+}
+.forEdition .profile-card-main:hover:after,
+.forEdition .profile-card-photo:after
+{
+    content: "";
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: -5px;
+    right: 0px;
+    background: url(../img/edit.png) no-repeat right top;
+}
+.forEdition .profile-card-main:hover:before
+{
+    border: solid 5px #fff;
+}
+.forEdition .profile-card-main h2
+{
+    margin-bottom: 8px;
+}
+.forEdition .profile-card-main input
+{
+    display: block;
+    margin: 0 auto;
+    background: rgba( 255, 255, 255, .8 );
+    border: none;
+    padding: 6px 4px;
+    margin-bottom: 4px;
+    text-align: center;
+    transition: all .2s linear;
+}
+.forEdition .profile-card-main input:hover
+{
+    background: rgba( 255, 255, 255, .7 );    
+}
+.forEdition .profile-card-photo:hover{
+    background: #9096a5;
+}
+.forEdition .profile-card-main input:focus{
+    background: #fff;
+    color: #4d4d4d;
+}
+
+/* inputs placeholders color */
+.forEdition .profile-card-main input::-webkit-input-placeholder {
+    color: #4d4d4d;
+}
+.forEdition .profile-card-main input:-moz-placeholder {
+    color: #4d4d4d;
+}
+.forEdition .profile-card-main input::-moz-placeholder {
+    color: #4d4d4d;
+}
+.forEdition .profile-card-main input:-ms-input-placeholder {
+    color: #4d4d4d;
+}
+.forEdition .profile-card-main input:focus::-webkit-input-placeholder {
+    color: #fff;
+}
+.forEdition .profile-card-main input:focus:-moz-placeholder {
+    color: #fff;
+}
+.forEdition .profile-card-main input:focus::-moz-placeholder {
+    color: #fff;
+}
+.forEdition .profile-card-main input:focus::-ms-input-placeholder {
+    color: #fff;
+}
+
+.profile-card-main input.input-name{
+    position: absolute;
+    top: 30px;
+    right: 20px;
+}
+.profile-card-main input.input-description
+{
+    width: 90%;
+    margin-top: 100px;
+}
+.input-name
+{
+    font-size: 20px;
+}
+.forEdition .profile-card-main .input-website,
+.forEdition .profile-card-main .input-city
+{
+    display: inline-block;
+    margin-top: 10px;
+}
+.forEdition .profile-card-main .input-tox,
+.forEdition .profile-card-main .input-bitmessage
+{
+    width: 90%;
+    margin-top: 10px;
+}
+.profile-edition-buttons
+{
+    padding: 10px;
+    text-align: right;
+}
+.profile-edition-buttons button {
+    background: #f1f1f1;
+    color: #333;
+}
+.profile-edition-buttons button:hover {
+    background: #fff;
+    transition: background-color 300ms ease-in;
+}
+.secret-key-container .label {
+    color: #9096a5;
+}
+.secret-key-container .secret-key {
+    color: #d2dbf1;
+}
+/*************************************
+****************** PROFILE MODAL
+**************************************/
+.profile-modal .modal-wrapper
+{
+    width: 580px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: absolute;
+    top:5%;
+    height: 90%;
+    margin-left: -300px;
+
+}
+.profile-modal .modal-header, .profile-modal .profile-card {
+    z-index: 1;
+}
+.profile-modal .modal-content
+{
+    padding: 3px;
+    height: 100%;
+}
+.profile-modal h1.profile-name {
+    color: #43464d;
+}
+.profile-modal .profile-location {
+    color: #48577d;
+}
+.profile-modal .profile-url {
+    font-size: 14px;
+    font-style: italic;
+}
+.profile-modal .profile-bio {
+    text-align: center;
+}
+#msngrswr {
+    display: none;
+    margin-top: 20px;
+    height: 30px;
+}
+.profile-extra-contact {
+    float: left;
+    display: none;
+    margin-right: 35px;
+}
+.bitmessage-ctc, .tox-ctc {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    margin-right: 5px;
+    border: 1px solid #d6d8dc;
+    background: #e3e5ea url(img/clipboard.png) center no-repeat;
+    opacity: .8;
+    -webkit-border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0;
+    -webkit-transition: all 20ms;
+    -moz-transition: all 20ms;
+    -ms-transition: all 20ms;
+    -o-transition: all 20ms;
+    transition: all 20ms;
+    font-size: 18px;
+}
+.bitmessage-ctc:hover, .tox-ctc:hover {
+    background-color: #f0f2f8;
+    opacity: 1;
+    cursor: pointer;
+    text-decoration: none;
+}
+.bitmessage-ctc:active, .tox-ctc:active {
+    background-color: #edfced;
+}
+.bitmessage-ctc:after,
+.tox-ctc:after {
+    content: '📋';
+}
+.profile-modal .profile-tox, .profile-modal .profile-bitmessage {
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    border: 1px solid #c0c2c6;
+    opacity: .8;
+    -webkit-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+.profile-modal .profile-tox:hover, .profile-modal .profile-bitmessage:hover {
+    opacity: 1;
+    background-color: #f0f2f8;
+}
+.profile-modal .profile-tox:active, .profile-modal .profile-bitmessage:active {
+    background-color: #edfced;
+}
+.profile-modal .profile-tox {
+    background: #e3e5ea url(../img/tox.png) center no-repeat;
+}
+.profile-modal .profile-bitmessage {
+    background: #e3e5ea url(../img/bm.png) center no-repeat;
+}
+.profile-modal .profile-data
+{
+    display: inline-block;
+    margin-left: -4px;
+    border-bottom: 0;
+}
+button.follow:hover {
+    background: #b2d67b;
+    color: #fff;
+}
+.profile-modal button.follow:hover {
+    background: #b2d67b;
+    color: #fff;
+}
+.profile-card .profileUnfollow:hover {
+    background: #e18882;
+    color: #fff;
+}
+.profile-modal button.direct-messages-with-user:hover {
+    background: #b2d67b;
+    color: #fff;
+}
+.profile-modal .separator {
+    height: 10px;
+    width: 100%;
+    background-color: #000;
+}
+.profile-modal .postboard
+{
+    margin-left: 0;
+    padding: 5px 0 5px 0;
+    height: 60%;
+}
+.profile-modal .postboard h2 {
+    width: auto;
+}
+.profile-modal .postboard-posts
+{
+    display: block;
+    height: 90%;
+    overflow: auto;
+}
+.profile-modal .postboard h2 span {
+    font: 18px/40px 'Open Sans Condensed', sans-serif;
+    padding-left: 10px;
+}
+.profile-modal .postboard-posts-wrapper
+{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 99%;
+    box-sizing: border-box;
+    border-top: 292px solid transparent;
+    overflow: auto;
+    z-index: 0;
+}
+.profile-modal .profile-card-main
+{
+    background: #f3f5fb;
+    color: #8d8d8d;
+    width:100%;
+}
+.profile-modal .profile-card-main a {
+    color: #8bb9e0;
+}
+.profile-modal .postboard-posts .post
+{
+    padding: 0;
+}
+.profile-modal .post-interactions
+{
+    margin: 2px 10px 3px 60px;
+}
+.profile-modal .profile-card
+{
+    margin: 0;
+    padding: 0;
+    background: #f3f5fb;
+}
+/*
+.profile-card-main
+{
+    height: 200px;
+}
+*/
+.profile-modal .direct-messages,
+.profile-modal .direct-messages-with-user,
+.profile-modal .follow,
+.profile-card .profileUnfollow
+{
+    bottom: 10px;
+}
+
+h1.profile-name {
+    display: inline;
+}
+h2.profile-screen-name {
+    display: inline;
+    bottom: 0;
+    color: #8f95a4;
+}
+
+.profile-modal .modal-buttons {
+   display: none;
+}
+
+.profile-modal h1.profile-name,
+.profile-modal h2.profile-screen-name,
+.profile-modal span.profile-location,
+.profile-modal a.profile-url {
+    display: block;
+}
+
+.profile-modal span.profile-location:empty,
+.profile-modal a.profile-url:empty,
+.profile-modal a.profile-bio:empty {
+    display: none;
+}

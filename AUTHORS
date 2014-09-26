@@ -1,0 +1,36 @@
+twister-html authors
+====================
+
+Miguel Freitas
+    Original javascript code and basic UI functionality
+
+Lucas Leal
+    Original theme, CSS + artwork
+
+Msjoinder
+    Polyglot support (internationalization), multiple fixes
+
+erkan yüksel
+    Image preview, automatic unicode conversion, split long posts, hiding posts with mentions and more.
+
+Hedgehog
+    Calm theme, CSS + artwork and more.
+
+Denis Ryabov
+    Tox and bitmessage profile fields, multiple fixes
+
+Giacomo Lacava
+    i18n branch maintainer, fixes
+
+BlockTester
+    Secret key button, exit button, fixes
+
+Dionysis Zindros
+    Several visual fixes
+
+digital-dreamer
+    Guest mode browsing
+
+Mylène Bressan
+    Nin theme
+

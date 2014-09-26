@@ -1,0 +1,246 @@
+.following 
+  width: 100%!important
+
+.following-list li
+  text-align: center
+  @extend .clear-fix
+  float: left
+  width: 30%
+  padding: 13px
+  +box-sizing(border-box)
+  float: left
+  margin: 0 2% 2% 0
+
+
+.following .mini-profile
+  margin-bottom: 10px
+
+.following .mini-profile-info
+  position: relative
+
+.following .mini-profile-photo
+  margin: 0 auto 10px auto
+  display: block
+  width: 64px
+  height: 64px
+  overflow: hidden
+  background: $main-background-color
+
+.following .mini-profile-view
+  display: inline
+  color: rgba(0, 0, 0, 0.5)
+  font-size: 12px
+  position: absolute
+  top: 32px
+  left: 65px
+  z-index: 1
+
+.following .mini-profile-name
+  font-weight: 900
+  font-size: 1em
+  line-height: 1em
+  padding: 0
+  text-decoration: none
+  display: block
+  color: inherit
+  display: inline
+.following .mini-screen-name
+  color: inherit
+  display: block
+  margin-bottom: 10px
+
+.following button
+  display: inline-block
+  margin: 5px 0
+  &.unfollow
+    background-color: $main-color-light
+  &.public-following
+    background-color: $main-color-color
+
+
+
+.mini-profile-actions
+  position: absolute
+  width: auto
+  top: 0
+  right: -16px
+  display: inline-block
+
+  span
+    cursor: pointer!important
+    @extend button
+    border-top-right-radius: 0!important
+    border-bottom-right-radius: 0!important
+    @extend .extend-icon
+    @extend .icon-plus
+    &:before
+      margin: 0
+      padding: 0
+      line-height: 1em
+      font-size: 10px
+  ul
+    $action-padding-height: 8px
+    height: 0
+    overflow: hidden
+    position: absolute
+    top: 2em
+    right: -2em
+    transition: height .4s linear
+    transition: padding-top .1s linear
+    background: $main-color-dark
+    z-index: 3
+    
+
+
+  &:hover
+    ul
+      $action-li-height : 12px
+      $action-padding-height: 8px
+      padding: $action-padding-height
+      height: $action-li-height*4 + $action-padding-height*2*4
+  ul li
+    text-align: left
+    margin: 0
+    background: $main-color-dark
+    $action-li-height : 12px
+    $action-padding-height: 8px
+    white-space: nowrap
+    color: $main-color-light
+    font-size: $action-li-height
+    line-height: $action-li-height
+    cursor: pointer
+    display: block
+    float: none
+    width: auto
+    padding: $action-padding-height
+
+  &:hover ul li:hover
+    color: $main-color-color
+
+
+
+
+.following .who-follow
+  height: auto
+  background-color: rgba(69, 71, 77, 0.1)
+  overflow: hidden
+  font-size: 12px
+
+.following .show-more-followers
+  color: #f11
+  font-weight: bold
+  cursor: pointer
+  float: right
+
+.following .mini-follower-link
+  display: inline-block
+  margin-right: 10px
+  &:before
+    content: " \2027"
+
+.following a.open-profile-modal
+  display: inline
+  text-align: center
+  color: $dark-grey
+  &:hover
+    color: $main-color-light
+
+
+
+
+.following .post-area-new
+  padding-bottom: 4px
+  textarea
+    resize: none
+    width: 445px
+    display: block
+    transition: all .3s linear
+    -webkit-transition: height 0.3s linear
+    -moz-transition: height 0.3s linear
+    -o-transition: height 0.3s linear
+    -ms-transition: height 0.3s linear
+    height: 28px
+    border-radius: 3px
+    border: solid 1px rgba(0, 0, 0, 0.3)
+    margin-left: 55px
+    margin-bottom: 10px
+    padding: 4px
+    font-size: 13px
+
+.following .mini-profile .post-area-new
+  padding: 9px
+  textarea
+    margin-left: 0
+    width: 100%
+
+.following .post-area-new.open textarea
+  height: 80px
+  border: solid 1px rgba(227, 79, 66, 0.5)
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
+
+.following textarea.splited-post
+  box-shadow: none!important
+  height: 28px
+
+.following .splited-post-counter
+  color: rgba(0, 0, 0, 0.3)
+  font-weight: bold
+  &:before
+    content: '\2026'
+
+.following .post-area-extras
+  overflow: hidden
+  height: 0
+  text-align: right
+
+.following .post-submit
+  background: #45474d
+  color: rgba(255, 255, 255, 0.8)
+  border: none
+  padding: 5px 10px
+  cursor: pointer
+  display: inline-block
+  margin-top: 4px
+
+.following .post-area-new.open > .post-area-extras
+  height: 35px
+  transition: all .6s linear
+
+.following .post-area-remaining
+  font-size: 13px
+  &.warn
+    color: #ff0000
+
+.following .post .show-more
+  font-size: 13px
+  font-weight: bold
+  margin-left: 60px
+  color: rgba(0, 0, 0, 0.5)
+  &:before
+    content: '💭'
+
+.swarm-status
+  display: none!important
+
+
+.following-modal
+  .modal-wrapper
+    width: 200px
+  h2
+    display: none
+
+.mini-following-info
+  width: 45px
+  height: 45px
+  text-align: center 
+  background: $bloc-background-color
+  margin: 1%
+  float: left
+  &:after 
+    @extend .clear-fix
+  .mini-screen-name, .mini-following-name
+    display: none
+  .mini-profile-photo
+    height: 45px
+    width: 45px
+    border-radius: 0

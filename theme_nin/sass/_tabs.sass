@@ -1,0 +1,65 @@
+.options
+  position: relative
+
+  .label
+    font-weight: 700
+
+  label
+    cursor: pointer
+  input[type=radio]
+    display: none!important
+    visibility: hidden
+    opacity: 0
+
+  .postboard-display div
+    clear: both
+    div
+      float: left
+      clear: none
+      padding: 10px
+      .label
+        font-weight: 400
+      
+
+  .tab-content
+    background: $bloc-background-color
+    position: relative
+    padding: 20px
+    @extend .clear-fix
+    > div
+      position: absolute
+      top: 0
+      left: 0
+      height: auto
+      width: 100%
+      z-index: -1
+      opacity: 0
+      visibility: hidden
+  input
+    &#tab_language:checked ~ .tab-content .language,
+    &#t-2:checked ~ .tab-content .theme,
+    &#t-3:checked ~ .tab-content .sounds,
+    &#t-4:checked ~ .tab-content .keys,
+    &#t-5:checked ~ .tab-content .postboard-display,
+    &#t-6:checked ~ .tab-content .users
+      position: relative
+      z-index: 10
+      opacity: 1
+      visibility: visible
+
+  label.tabs
+    &:hover
+      color: $main-color-dark
+    text-align: center
+    width: auto
+    display: inline-block!important
+    margin: 0 5px 0 0 
+    padding: 5px 15px
+    color: $main-color-light
+    background: $background-light
+
+  input:checked + label.tabs
+    background: $bloc-background-color
+    color: $main-color-dark
+
+

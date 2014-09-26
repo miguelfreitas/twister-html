@@ -3,27 +3,33 @@
   <head>
     <meta charset="utf-8"/>
     <title>twister</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
-    <link rel="stylesheet" href="css/profile.css" type="text/css"/>
-    <script src="jquery.min.js"></script>
-    <script src="jQueryPlugins.js"></script>
-    <script src="jquery.json-2.4.js"></script>
-    <script src="jquery.jsonrpcclient.js"></script>
-    <script src="jquery.storageapi.js"></script>
-    <script src="mobile_abstract.js"></script>
-    <script src="twister_io.js"></script>
-    <script src="polyglot.min.js"></script>
-    <script src="interface_localization.js"></script>
-    <script src="twister_network.js"></script>
-    <script src="twister_user.js"></script>
-    <script src="twister_formatpost.js"></script>
-    <script src="twister_following.js"></script>
-    <script src="twister_timeline.js"></script>
-    <script src="twister_newmsgs.js"></script>
-    <script src="twister_actions.js"></script>
-    <script src="twister_directmsg.js"></script>
-    <script src="interface_common.js"></script>
-    <script src="interface_home.js"></script>
+    <link id="stylecss" rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link id="profilecss" rel="stylesheet" href="css/profile.css" type="text/css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jQueryPlugins.js"></script>
+    <script src="js/jquery.json-2.4.js"></script>
+    <script src="js/jquery.jsonrpcclient.js"></script>
+    <script src="js/jquery.storageapi.js"></script>
+    <script src="js/options.js"></script>
+    <script src="js/mobile_abstract.js"></script>
+    <script src="js/twister_io.js"></script>
+    <script src="js/polyglot.min.js"></script>
+    <script src="js/interface_localization.js"></script>
+    <script src="js/twister_network.js"></script>
+    <script src="js/twister_user.js"></script>
+    <script src="js/twister_formatpost.js"></script>
+    <script src="js/twister_following.js"></script>
+    <script src="js/twister_timeline.js"></script>
+    <script src="js/twister_newmsgs.js"></script>
+    <script src="js/twister_actions.js"></script>
+    <script src="js/twister_directmsg.js"></script>
+    <script src="js/interface_common.js"></script>
+    <script src="js/interface_home.js"></script>
+    <script src="js/jquery.textcomplete.js"></script>
+    <script>
+    $(function(){setTimeout(mensAutocomplete, 800);})
+    changeStyle();
+    </script> <!-- calm init for autocomplete -->
 
     <link rel="icon" type="image/png" href="img/twister_mini.png" />
   </head>
@@ -33,35 +39,41 @@
   <!-- MENU SUPERIOR INIT --> 
   <nav class="userMenu">
     <ul>
-      <li class="userMenu-home current"><a href="#">Home</a></li>
-      <li class="userMenu-network"><a href="network.html">Network</a></li>
-      <li class="userMenu-profile"><a href="profile-edit.html">Profile</a></li>
+      <li class="userMenu-home current"><a href="home.html">
+        <span class="selectable_theme theme_original label">Home</span>
+        <span class="menu-news"></span>
+      </a></li>
+      <li class="userMenu-network selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
+      <li class="userMenu-profile selectable_theme theme_original theme_nin"><a class="label" href="profile-edit.html">Profile</a></li>
       <li class="userMenu-config">
         <a class="userMenu-config-dropdown" href="#">
           <div class="config-menu dialog-modal">
-            <div class="mini-profile-info">
+            <div class="mini-profile-info selectable_theme theme_original">
               <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
               <a href="#" class="mini-profile-name">Fulano da Silva</a>
               <span class="mini-profile-view">View</span>
             </div>
-            <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
-            <a class="dropdown-menu-item" href="following.html">Following users</a>
+            <a class="dropdown-menu-item" href="options.html">Options</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
+            <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
+            <a class="dropdown-menu-item dropdown-menu-following" href="following.html">Following users</a>
             <a class="dropdown-menu-item" href="login.html">Change user</a>
-            <a class="direct-messages" href="#">Direct Messages</a>
+            <a class="dropdown-menu-item promoted-posts-only selectable_theme theme_original" href="#">Switch to Promoted posts</a>
+            <a class="direct-messages dropdown-menu-item selectable_theme theme_original" href="#">Direct Messages</a>
           </div>
         </a>
       </li>
       <li class="userMenu-connections">
         <a href="#">
-          <span class="messages-qtd" style="display:none;">12</span>
+          <span class="messages-qtd" style="display:none;">0</span>
         </a>
       </li>
       <li class="userMenu-messages">
         <a href="#">
-          <span class="messages-qtd" style="display:none;">12</span>
+          <span class="messages-qtd" style="display:none;">0</span>
         </a>
       </li>
+      <li class="userMenu-dhtindicator selectable_theme theme_calm"><a href="network.html"></a></li>
 
       <!-- BUSCA -->
       <li class="userMenu-search">
@@ -98,19 +110,32 @@
   <div class="wrapper">
 
   <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
-    <div class="dashboard">
+    <div class="dashboard left">
       
       <!-- PROFILE MODULE INIT -->
       <div class="module mini-profile">
         <div class="mini-profile-info">
+          <!-- THEME NIN added sub-menu (mentions, messages and edit profile) -->
+          <ul class="mini-profile-indicators selectable_theme theme_nin">
+            <li class="userMenu-connections">
+              <a href="#" title="Mentions"><span class="messages-qtd" style="display:none;">0</span><span>Mentions</span></a>
+            </li>
+            <li class="userMenu-messages">
+              <a href="#" title="Direct Messages"><span class="messages-qtd" style="display:none;">0</span><span>Messages</span></a>
+            </li>
+            <li class="userMenu-user">
+              <a href="profile-edit.html" title="Edit profile"><span>Edit profile</span></a>
+            </li>
+          </ul>
+          <!--/sub-menu -->
           <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
           <a href="#" class="mini-profile-name open-profile-modal"></a>
           <span class="mini-profile-view">View</span>
         </div>
         <ul class="module profile-data">
           <li><a href="#" class="open-profile-modal"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
-          <li><a href="following.html"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
-          <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
+          <li><a href="following.html" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+          <li><a href="#" class="open-followers"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
         </ul>
       
         <div class="post-area">
@@ -118,6 +143,7 @@
             <textarea placeholder="New Post..."></textarea>
             <div class="post-area-extras">
               <span class="post-area-remaining">140</span>
+              <button class="undo-unicode disabled" disabled="true">undo</button>
               <button class="post-submit disabled" disabled="true">post</button>
             </div>
           </form>
@@ -128,7 +154,9 @@
       <!-- WHO TO FOLLOW MODULE INIT -->
       <div class="module who-to-follow">
         <h3>Who to Follow</h3>
+        <small>.</small>
         <a class="refresh-users">Refresh</a>
+        <small>.</small>
         <a class="view-all-users">View All</a>
         <ol class="follow-suggestions">
           <!-- use "follow-suggestion-template" here -->
@@ -136,6 +164,14 @@
       </div>
       <!-- WHO TO FOLLOW MODULE END -->
 
+      <!-- WHO TO FOLLOW MODULE INIT -->
+      <div class="module toptrends">
+        <h3><span>Top Trends</span></h3>
+        <ol class="toptrends-list">
+          <!-- use "follow-suggestion-template" here -->
+        </ol>
+      </div>
+      <!-- WHO TO FOLLOW MODULE END -->
 
     </div>
   <!-- LADO ESQUERDO DE MÓDULOS END -->
@@ -143,10 +179,33 @@
   <!-- ÁREA DE POSTS INIT --> 
     <div class="postboard">
       <h2>
-        Postboard
+        <span>Postboard</span>
         <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
-        <button class="postboard-news" style="display: none;"></button>
+        <button class="postboard-news selectable_theme theme_original theme_calm" style="display: none;"></button>
       </h2>
+      <!-- Tabs to switch between promoted post and normal posts-->
+      <ul class="promoted-posts-only promoted selectable_theme theme_nin">
+        <li class="normal-posts active"><span>Normal posts</span></li>
+        <li class="promoted-posts disabled"><span>Promoted posts</span></li>
+      </ul>
+      <!-- Post area on top of postboard --> 
+      <div id="postboard-top" class=" selectable_theme theme_nin">
+        <div class="post-area">
+          <form class="post-area-new">
+            <textarea placeholder="New Post..."></textarea>
+            <div class="post-area-extras">
+             <span class="post-area-remaining">140</span>
+                <button class="undo-unicode disabled" disabled="true">undo</button>
+                <button class="post-submit disabled" disabled="true">post</button>
+            </div>
+          </form>
+        </div>
+        <!-- User's pic --> 
+        <div class="profile-photo"><img src="img/genericPerson.png" alt="user-photo"/></div>
+      </div>
+      <div class="postboard-news" style="display:none"></div>
+      <!-- END postboard-top --> 
+
 
       <ol id="posts" class="postboard-posts">
         <!-- use "post-template" here -->
@@ -159,6 +218,7 @@
     </div>
   <!-- ÁREA DE POSTS END -->
 
+      <div class="dashboard right"></div>
   </div>
 
   <!-- TEMPLATES INIT -->
@@ -173,8 +233,10 @@
       </div>
       <div class="twister-user-info" data-screen-name="">
         <a href="#" class="twister-user-name open-profile-modal">
+          <span class="twister-user-full"></span>
           <span class="twister-user-tag"></span>
         </a>
+        <div class="bio"></div>
         <div class="followers">
             <span class="label">Followed by</span>
           <a href="#" class="twister-by-user-name open-profile-modal">
@@ -207,16 +269,15 @@
             <p class="post-text"></p>
             <div class="post-context" style="display: none;">
                 <i class="post-retransmited-icon"></i>
-                <span>Retransmitted by
-                    <a class="post-retransmited-by open-profile-modal" href=""></a>
-                </span>
+                <span>twisted again by</span>
+                <a class="post-retransmited-by open-profile-modal" href=""></a>
             </div>
             <span class="post-expand">Expand</span>
             <!-- elementos de interação com o post que são exibidos no hover -->
             <div class="post-interactions">
                 <span class="post-reply">Reply</span>
                 <span class="post-propagate">Retransmit</span>
-                <span class="post-favorite">Favorite</span>
+                <!--span class="post-favorite">Favorite</span-->
             </div>
             <div class="expanded-content" style="display: none;">
                 <ul class="post-stats" style="display: none;">
@@ -228,15 +289,19 @@
                         <!-- use "avatar-row-template" here -->
                     </li>
                 </ul>
+                <div class="preview-container">
+                </div>
                 <div class="post-reply-content" style="display: block;">
                     <form class="post-area-new">
                         <textarea placeholder="Reply..."></textarea>
                         <div class="post-area-extras">
                             <span class="post-area-remaining">140</span>
+                            <button class="undo-unicode disabled" disabled="true">undo</button>
                             <button class="post-submit disabled" disabled="true">post</button>
                         </div>
                     </form>
                 </div>
+                <span class="show-more label">Show more in this conversation...</span>
             </div> <!-- expanded-content -->
         </div> <!-- post-data -->
     </li> <!-- post-template -->
@@ -261,11 +326,13 @@
     <!-- TEMPLATE INVÓLUCRO DO POST EXPANDIDO END -->
     
     <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
-    <div class="modal-blackout">
+    <div class="modal-blackout cancel">
       <div class="modal-wrapper">
         <div class="modal-header">
           <h3></h3>
           <span id="closeModal" class="modal-close cancel">&times;</span>
+          <span class="modal-back">&lt;</span>
+          <span class="mark-all-as-read"></span>
         </div>
         <div class="modal-content"></div>
         <div class="modal-buttons">
@@ -286,6 +353,7 @@
           <textarea placeholder="New Post..."></textarea>
           <div class="post-area-extras">
             <span class="post-area-remaining">140</span>
+            <button class="undo-unicode disabled" disabled="true">undo</button>
             <button class="post-submit disabled" disabled="true">post</button>
           </div>
         </form>
@@ -333,7 +401,8 @@
         <textarea placeholder="New direct message..."></textarea>
         <div class="post-area-extras">
           <span class="post-area-remaining">140</span>
-          <button class="dm-submit disabled" disabled="true">send</button>
+          <button class="undo-unicode disabled" disabled="true">undo</button>
+          <button  title="Direct messages are encrypted, only you and receiver can read them" style="margin-right:7.5%;" class="dm-submit disabled" disabled="true">send</button>
         </div>
       </form>
     </div>
@@ -355,24 +424,35 @@
                 <span class="profile-location"></span>
                 <a class="profile-url" rel="nofollow" target="_blank"></a>
               </div>
-              <div class="profile-bio">
+              <div class="profile-bio"></div>
+              <div id="msngrswr">
+                <div id="toxbtnwr" class="profile-extra-contact">
+                  <a class="profile-tox"><span class="selectable_theme theme_nin">TOX</span></a><a class="tox-ctc"></a>
+                </div>
+                <div id="bmbtnwr" class="profile-extra-contact">
+                  <a class="profile-bitmessage"><span class="selectable_theme theme_nin">BitMessage</span></a><a class="bitmessage-ctc"></a>
+                </div>
               </div>
             </div>
-            <ul class="module profile-data">
-              <li><a href="#"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
-              <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
-              <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span></a></li>
-            </ul>
-            <button class="follow" href="#">Follow</button>
-            <button class="direct-messages-with-user" href="#">Direct Messages</button>
-
+            <div class="twister-user-info">
+              <div class="clearfix">
+                <ul class="module profile-data">
+                  <li><a href="#"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
+                  <li><a href="#" class="open-following-modal"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+                  <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span></a></li>
+                </ul>
+              </div>
+              <button class="followButton follow" href="#">Follow</button>
+              <button class="direct-messages-with-user" href="#">Direct Messages</button>
+            </div>
+            <div class="who-follow"></div>
           </div>
         <!-- ÁREA DE POSTS END -->
 
         <!-- ÁREA DE POSTS INIT -->
           <div class="postboard">
             <h2>
-              Posts
+              <span>Posts</span>
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>
@@ -392,11 +472,12 @@
         <!-- ÁREA DE POSTS INIT -->
           <div class="postboard">
             <h2>
-              Posts
+              <span class="selectable_theme theme_original theme_calm">Posts</span>
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>
 
+            <span class="no-posts-found-message" style="display:none;">There aren't any posts with this hashtag.</span>
             <ol id="profile-posts" class="postboard-posts">
             </ol>
 
@@ -408,11 +489,11 @@
     <!-- MODAL DE FOLLOWING -->
     <div id="following-modal-template">
         <!-- ÁREA DE PROFILE PHOTO INIT -->
-        <h2><span class="label">All users publicly followed by</span><span class="following-screen-name">@<b></b></span></h2>
+        <h2>All users publicly followed by <span class="following-screen-name">@<b></b></span></h2>
         <!-- ÁREA DE PROFILE END -->
 
         <!-- ÁREA DE FOLLOWING INIT -->
-        <ol class="following-list">
+        <ol class="">
             <li id="following-by-user-template" style="display: none;">
                 <div class="mini-following-info" data-screen-name="">
                     <a href="#" class="open-profile-modal">
@@ -432,6 +513,8 @@
 
   </div>
   <!-- TEMPLATES END -->
-    
+  <audio id="player"></audio>
+  <audio id="playerSec"></audio> 
+  <!-- hide elements -->
   </body>
 </html>

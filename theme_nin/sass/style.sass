@@ -1,0 +1,1080 @@
+@import _fonts
+@import compass/reset
+@import compass
+@import "compass/utilities/"
+@import _var
+@import _utils
+@import _menu
+@import _profile
+@import _postboard
+@import _following
+@import _network
+@import _commons
+@import _tabs
+
+
+
+ 
+
+.promoted-posts-only
+  margin: 0 0
+  @extend .clear-fix
+  float: right
+
+  li 
+    cursor: pointer
+    display: inline-block
+    margin: 0 0 0 5px
+    padding: 5px 15px
+    font-size: .9em
+    transition: color .1s linear
+    &.active
+      color: $main-color-dark
+      background: white
+      cursor: default
+    &:hover, &.disabled:hover
+      color: $main-color-dark
+    &.disabled
+      color: $main-color-light
+      background: $background-light
+
+
+
+
+
+
+/* Wrapper and blocks */
+.wrapper
+  max-width: 100%
+  width: $site-width
+  margin: 0 auto
+  padding-top: 70px
+  position: relative
+  z-index: 1
+  min-height: 100%
+
+.dashboard
+  &.left, &.right 
+    width: $column-width
+    position: fixed
+    top: 0
+    padding-top: 70px
+    height: 100%
+  &.right
+    display: block
+    position: absolute
+    right: 0
+    .module
+      position: fixed
+      height: 100%
+    @extend .clear-fix
+
+
+
+/********** CONFIG SUBMENU & SEARCH RESULTS ************/
+
+.dialog-modal
+  display: none
+  background: $main-color-dark
+  position: absolute
+  top: 45px
+  right: -10px
+  width: 250px
+  overflow: hidden
+
+.userMenu-search .dialog-modal:after
+  right: auto
+  left: 150px
+
+.direct-messages, .dropdown-menu-item
+  display: block
+  padding: 10px
+  
+
+ul.userMenu-search-profiles
+  width: 100%
+  padding: 0
+  background: white
+  li 
+    float: none
+    display: block
+    padding: 5px 10px
+    margin: 0
+    @extend .clear-fix
+    border-bottom: 1px solid $main-background-color
+  .mini-profile-name
+    font-size: 12px
+    display: block
+    margin: 0
+    padding: 0
+  .mini-profile-photo
+    width: 30px
+    height: 30px
+    margin: 0 10px 0 0 
+    float: left
+  .mini-profile-info
+    width: 100%
+    float: none
+
+  button
+    background-color: $main-color-dark
+    padding: 3px
+    @extend .extend-icon
+    @extend .icon-plus
+    &:after
+      content: ''
+      font-family: $symbol-font-family
+
+
+.userMenu-search input[type="text"]
+  float: right
+  padding: 3px 10px
+  margin: 9px 20px 0 0
+  border: none
+  background: $bloc-background-color
+  box-sizing: border-box
+
+.userMenu-search-sugestions a
+  color: rgba(0, 0, 0, 0.7)
+  padding: 10x 20px
+  display: block
+  clear: both
+
+
+
+/***************** MINI PROFILE *******************************/
+
+.mini-profile
+  .mini-profile-info
+    position: relative
+    text-align: center
+    background: $bloc-background-color
+  a.button 
+    background: $main-color-light
+    margin: 1em auto
+  .post-area
+    margin-top: 1px
+    margin-bottom: 20px
+    padding: .5em
+    background: $background-light
+    @extend .clear-fix
+  .post-area-new
+    @extend .open
+    padding: 0
+    display: none
+    margin: 0
+    textarea
+      width: 100%
+
+.mini-profile-indicators
+  margin: 0 0 1em 0
+  @extend .clear-fix
+  background-color: $background-light
+  li
+    +box-sizing(border-box)
+    display: block
+    width: $indicators-width
+    float: left
+    font-size: .8em
+    position: relative
+    padding: 0 
+    a
+      position: relative
+      color: $dark-grey
+      display: block
+      +transition-property(color)
+      +transition-duration(.2s)
+      padding: 1em 0
+      &:hover
+        background-color: white
+      
+      &:before
+        font-size: 2.2em
+        display: block!important
+        text-align: center!important
+        margin: auto!important
+        padding-top: .2em
+
+  .userMenu-connections a
+    @extend .icon-bell
+    @extend .extend-icon
+  .userMenu-messages a
+    @extend .icon-mail
+    @extend .extend-icon
+  .userMenu-user a
+    @extend .icon-user
+    @extend .extend-icon
+
+.messages-qtd
+  position: absolute
+  top: 10px
+  right: 25px
+  background: $main-color-color
+  color: #fff
+  padding: 1px 3px
+  line-height: 12px
+  font-size: .8em
+  font-weight: 700
+  border-radius: 2px
+  
+.mini-profile-view
+  display: none
+
+.mini-profile-name
+  color: $dark-grey
+  font-size: 1.3em
+  font-weight: 700
+  padding: 10px  0
+  display: block
+  margin: auto
+  &:hover
+    color: $main-color-light
+
+
+.mini-profile-photo
+  width: 80px
+  height: 80px
+  overflow: hidden
+  +border-radius(50%)
+  display: block
+  margin: auto
+  img
+    min-width: 100%
+    min-height: 100%
+    border-radius: (50%)
+
+
+
+.profile-data
+  @extend .clear-fix
+  clear: both
+  padding: 1em 0
+  text-align: center
+  background: $bloc-background-color
+
+  li
+    display: block
+    float: left
+    width: $indicators-width
+    +box-sizing(border-box)
+    &.current a
+      border-bottom: 3px solid $main-color-color
+    a
+      color: $dark-grey
+      display: inline-block
+      font-size: 13px
+      padding-bottom: 3px
+      &:hover
+        color: $main-color-light
+      span
+        &.posts-count, &.following-count, &.followers-count
+          font-weight: 900
+          display: block
+          line-height: 15px
+
+
+
+
+.mini-profile-info a:hover
+  text-decoration: none
+
+.who-follow  
+  display: block
+  position: absolute
+  bottom: 50px
+  text-align: center
+  padding: 10px
+  font-size: 12px
+  background: lighten($background-light, 5%)
+  z-index: 10
+  +transition(all .2s linear)
+  
+.show-more-followers
+  font-weight: 700
+  display: block
+  cursor: pointer
+  float: right
+  color: $dark-grey
+
+.mini-follower-link
+  display: inline-block
+  margin: 1px
+  line-height: 12px
+  &.isFollowing:after
+    display: none
+  &:after 
+    content: '·'
+    font-weight: 900
+    color: $main-color-dark
+    margin-left: 1px
+
+    
+
+/***************** POST AREA ***************/
+
+.post-area-new
+  textarea
+    resize: none
+    box-shadow: none!important
+    +box-sizing(border-box)
+    width: 100%
+    display: block
+    transition: all .3s linear
+    -webkit-transition: height 0.3s linear
+    -moz-transition: height 0.3s linear
+    -o-transition: height 0.3s linear
+    -ms-transition: height 0.3s linear
+    height: 28px
+    border: none
+    background: rgba(255, 255, 255, 1)
+    border: 1px solid rgba(0, 0, 0, 0.1)
+    padding: 3px
+    margin: 5px 0
+
+#postboard-top 
+  clear: both
+  position: relative
+  @extend .clear-fix
+  margin-bottom: 1px
+  transition: height .3s linear
+  padding: 10px 10px 5px 10px
+  background: white
+  overflow: hidden
+  &.hide 
+    display: none!important
+  &.show 
+    display: block
+
+  .profile-photo
+    position: absolute
+    top: 10px
+    left: 10px
+    width: 48px
+    height: 48px
+    overflow: hidden
+    img 
+      width: 100%
+  .post-area
+    overflow: hidden
+    @extend .clear-fix
+    width: 100%
+    padding-left: 58px
+    padding-right: 0
+    display: inline
+    +box-sizing(border-box)
+    float: right
+    .post-area-new
+      @extend .open
+      textarea
+        margin: 0 0 5px 0
+
+
+
+
+
+
+
+.post-area-new.open textarea
+  height: 80px
+
+textarea.splited-post
+  box-shadow: none!important
+  height: 28px
+
+.splited-post-counter
+  color: rgba(0, 0, 0, 0.3)
+  font-weight: bold
+  &:before
+    content: '\2026'
+
+.post-area-extras
+  overflow: hidden
+  height: 0
+  text-align: right
+
+.post-area-new.open > .post-area-extras
+  height: auto
+  transition: all .6s linear
+
+.post-area-remaining
+  padding-right: 3px
+  &.warn
+    color: #ff0000
+ 
+
+
+
+
+
+/****** WHO TO FOLLOW *******/
+
+.who-to-follow
+  width: inherit
+  margin-bottom: 20px
+  small 
+    display: none
+  h3 
+    float: left
+  ol 
+    @extend .clear-fix
+    clear: both
+
+.twister-user
+  clear: both
+  width: 100%
+  position: relative
+  margin: 0 0 1px 0
+  width: 100%
+  box-sizing: border-box
+  float: right
+  background: $bloc-background-color
+  @extend .clear-fix
+
+.twister-user-photo
+  display: inline-block
+  float: left
+  vertical-align: middle
+  width: 48px
+  height: auto
+  overflow: hidden
+  margin: 10px
+  background: $main-background-color
+
+.twister-user-info
+  width: 80%
+
+
+.followers
+  font-size: 12px
+  color: $dark-grey
+  label, a
+    display: block
+
+.followed-by
+  color: $main-color-light
+  font-size: 12px
+  cursor: pointer
+  display: block
+
+.twister-user-name, .twister-by-user-name
+  font-weight: bold
+  font-size: 14px
+  color: $main-color-light
+  text-decoration: none
+
+.twister-user-tag
+  font-size: 12px
+  line-height: 14px
+  opacity: .8
+  display: inline-block
+  letter-spacing: 0px
+
+.twister-user-remove
+  font-size: 13px
+  opacity: .2
+  text-decoration: none
+  cursor: pointer
+  position: absolute
+  padding: 5px
+  top: -5px
+  right: -5px
+  display: inline-block
+  @extend .icon-cancel
+  @extend .extend-icon
+
+.twister-user:hover .twister-user-remove
+  text-decoration: none
+
+.twister-user-remove:hover
+  opacity: 1
+
+button.follow
+  position: absolute
+  bottom: 10px
+  right: 10px
+  background: $main-color-color
+  &:hover
+    background: $main-color-light
+
+.refresh-users
+  @extend .icon-arrows
+  @extend .extend-icon
+  color: $main-color-dark
+  cursor: pointer
+  font-size: 11px
+  font-weight: 500
+  text-transform: none
+  letter-spacing: 0
+  float: right
+  display: block
+  padding: 4px
+  margin: 0 0 0 15px
+  position: relative
+
+.view-all-users
+  color: $main-color-dark
+  cursor: pointer
+  font-size: 11px
+  font-weight: 500
+  text-transform: none
+  letter-spacing: 0
+  float: right
+  display: block
+  padding: 4px
+  margin: 0 0 0 15px
+  position: relative
+
+.refresh-users:hover, .view-all-users:hover
+  color: $main-color-color
+  text-decoration: none
+  background-color: transparent
+
+/***********TOP TRENDS***************/
+
+ol.toptrends-list
+  margin: 0
+  margin-bottom: 10px
+
+  li
+    display: inline-block
+
+  a
+    color: $main-color-light
+    padding: 3px 8px
+    display: inline-block
+    background: $background-light
+    text-transform: uppercase
+    font-size: 11px
+    margin: 3px
+    font-weight: 500
+
+    &:hover
+      background: white
+      color: $main-color-dark
+
+
+
+
+
+/*********** POPUP MODAL*************/
+
+.modal-blackout
+  position: fixed
+  width: 100%
+  height: 100%
+  left: 0
+  top: 0
+  background:  rgba($main-color-light, 0.8)
+  display: none
+  z-index: 3
+
+.modal-wrapper
+  position: absolute
+  top: 50%
+  left: 50%
+  overflow: hidden
+  .post-area-new
+    padding: 10px
+
+.modal-content 
+  @extend .clear-fix
+  background: $background-light
+  padding: 20px
+  .postboard h2
+    position: fixed
+    z-index: 2
+    margin-top: -60px
+    margin-left: -60px
+    width: 100px
+    width: $postboard-modal-width
+    span 
+      display: none
+  .postboard-news
+    line-height: 30px
+    position: absolute
+    right: 0
+    top: 40px
+    font-weight: 900
+    display: block
+    padding: 0 20px
+    color: white
+    +text-shadow(1px 1px 1px rgba(black, .1)) 
+    background: $main-color-color
+
+
+.modal-header
+  position: relative
+  background: $main-color-dark
+  height: 40px
+  +box-sizing(border-box)
+  @extend .clear-fix
+  h3
+    font-size: .8em
+    line-height: 40px
+    float: left
+    font-weight: 900
+    padding-left: 10px
+    color: white
+    display: block!important
+
+.modal-close
+  @extend .extend-icon
+  @extend .icon-cancel
+  position: absolute
+  right: 10px
+  top: 0
+  font-size: 14px
+  line-height: 40px
+  cursor: pointer
+  color:  rgba(white, 0.7)
+  &:hover
+    color: white
+  b 
+    display: none
+
+.mark-all-as-read
+  float: left
+  cursor: pointer
+  font-size: 1.3em
+  line-height: 40px
+  padding: 0 5px
+  color:  $main-color-light
+  transition: all .1s linear
+  display: none
+
+.modal-back:hover, .mark-all-as-read:hover
+  color: $main-color-color
+
+.mark-all-as-read
+  @extend .extend-icon
+  @extend .icon-ok
+
+
+.modal-back
+  @extend .extend-icon
+  @extend .icon-left
+  @extend button
+  margin: 0
+  background: $main-color-color
+  display: none!important
+  float: left
+
+.modal-buttons
+  padding: 10px
+  text-align: right
+
+
+/************ RETWIST POSTS MODAL **********/
+
+.reTwist
+  .modal-wrapper
+    width: $postboard-modal-width
+    top: 20%
+    margin: 0 0 0 0-($postboard-modal-width/2)
+  .post-expand, .post-interactions
+    display: none
+
+/********* REPLY POSTS MODAL***************/
+
+.reply
+  .modal-wrapper
+    width: $postboard-modal-width
+    top: 20%
+    margin: 0 0 0 0-($postboard-modal-width/2)
+  .modal-buttons, .post-expand, .post-interactions
+    display: none
+
+/****** DIRECT MESSAGES MODAL**********/
+
+.directMessages
+  .post-area-new
+    display: none
+    padding: 20px
+    z-index: 5
+    background: $main-background-color
+
+    .modal-header
+      h3 span
+        display: inline!important
+  .modal-wrapper
+    width: $postboard-modal-width
+    height: 490px
+    top: 10%
+    margin: 0 0 0 0-($postboard-modal-width/2)
+    overflow-x: hidden
+    
+  .modal-content
+    overflow-y: auto
+    height: 300px
+    
+    +box-sizing(border-box)
+    width: $postboard-modal-width
+
+  .modal-buttons
+    display: none
+  .post-photo
+    height: 48px
+    width: 48px
+  .post-text
+    margin-left: 58px
+    font-size: .9em
+  .post-info-name
+    float: none
+  .post-info-tag
+    line-height: 1em
+    padding: 0
+    display: inline
+    font-size: 80%
+    margin: 0 0 0 1em
+
+.direct-messages-list .post
+  padding: 10px 30px 10px 15px
+  cursor: pointer
+  &:after
+    content: ""
+    font-family: $symbol-font-family
+    position: absolute
+    right: 10px
+    top: 50%
+    font-size: 1.2em
+    margin: -6px 0 0 0
+    color: rgba(0, 0, 0, 0.4)
+    display: none
+
+.direct-messages-list
+  .post:hover:after
+    display: block
+
+.direct-messages-thread
+
+  .post
+    @extend .clear-fix
+    background: none
+    left: 0
+    margin: 0px 10px 20px 10px
+    cursor: default
+    .post-info-time
+      float: none
+      display: block
+      text-align: center
+      font-size: 10px
+      margin: 10px 0
+      cursor: default
+      &:hover
+        color: $main-color-light
+
+
+    .post-text:after, .post-text:nth-child(2n):after
+      content: ""
+      width: 1px
+      background: transparent
+      position: absolute
+      top: 10px
+      white-space: normal
+
+    .post-text:after
+      border-top: solid 7px transparent
+      border-bottom: solid 7px transparent
+      border-right: solid 7px white
+      left: -7px
+
+    .post-text
+      background: white
+      margin-right: 60px
+      margin-left: 60px
+      position: relative
+      display: inline-block
+      max-width: 300px
+      font-size: .9em
+      padding: 5px 10px
+      z-index: 4
+      float: left
+      word-wrap: break-word
+      max-width: 60%
+      min-height: 15px
+
+    .post-photo
+      position: absolute
+      left: 0
+      top: 10px
+
+
+
+  .post.sent
+
+    .post-text:after
+      border-top: solid 7px transparent
+      border-bottom: solid 7px transparent
+      border-right: none
+      border-left: solid 7px white
+      right: -7px
+      left: auto
+    .post-text
+      float: right
+    .post-photo
+      position: absolute
+      right: 0
+      left: auto
+
+
+
+/********* NEW USER MODAL**************/
+
+.new-user
+  .modal-wrapper
+    width: $postboard-modal-width
+    height: 600px
+    top: 10%
+    margin: 0 0 0 0-($postboard-modal-width/2)
+    overflow-x: hidden
+    overflow-y: hidden
+  .modal-content
+    margin: 10px 10px 10px 10px
+  .modal-buttons, .modal-close
+    display: none
+  .text
+    margin: 0 0 15px 0
+  .emphasis
+    font-size: 18px
+    text-align: center
+  .secret-key
+    color: rgba(0.5, 0, 0, 1)
+    font-weight: bold
+
+/******** HASHTAG MODAL***********/
+
+.hashtag-modal
+  .modal-wrapper
+    width: $postboard-modal-width
+    height: 600px
+    top: 10%
+    margin: 0 0 0 0-($postboard-modal-width/2)
+    overflow: hidden
+  .modal-content
+    overflow-y: auto
+    height: 500px
+  .modal-buttons
+    display: none
+  .postboard
+    padding: 0
+
+/****** CONVERSATION MODAL***********/
+
+.conversation-modal
+  .modal-wrapper
+    position: absolute
+    width: $postboard-modal-width
+    height: 575px
+    top: 10%
+    margin: 0 0 0 0-($postboard-modal-width/2)
+    overflow: hidden
+    background: white
+  .modal-content
+    overflow-y: auto
+    height: 90%
+  .modal-buttons
+    display: none
+  .postboard
+    padding: 0
+
+/****** FOLLOWING MODAL*******/
+
+.following-modal
+  .modal-wrapper
+    width: $postboard-modal-width
+    top: 10%
+    height: 400px
+    margin: 0 0 0 0-($postboard-modal-width/2)
+    overflow-x: hidden
+  .modal-content
+    height: 300px
+    overflow-y: auto
+    padding: 0
+  .modal-buttons
+    display: none
+  ol
+    margin: 5px
+  .open-profile-modal
+    &:hover
+      text-decoration: none
+
+
+
+/******* WHO TO FOLLOW MODAL*******/
+
+.who-to-follow-modal
+  .modal-wrapper
+    width: $postboard-modal-width
+    top: 10%
+    height: 455px
+    margin: 0 0 0 0-($postboard-modal-width/2)
+    overflow-x: hidden
+  .modal-content
+    padding: 15px
+    height: 400px
+    overflow-y: auto
+  .modal-buttons
+    display: none
+  ol
+    margin: 5px
+  .open-profile-modal
+    &:hover
+      text-decoration: none
+  .twister-user
+    position: relative
+    padding: 5px
+  .twister-user-photo
+    position: relative
+    left: 0
+    float: left
+    display: block
+  .twister-user-info
+    position: relative
+    padding-left: 70px
+    width: auto
+  .bio
+    color: rgba(0, 0, 0, 0.6)
+    font-style: italic
+
+/******* LOADER *************/
+
+.postboard-loading
+  text-align: center
+  div
+    display: inline-block
+    width: 120px
+    height: 10px
+    background-color: $main-color-light
+    position: relative
+    margin: 10px 0 0 0
+    &:after
+      content: ""
+      position: absolute
+      background-color: white
+      left: 2px
+      top: 2px
+      bottom: 2px
+      z-index: 999
+      animation-name: slide
+      animation-duration: 1.5s
+      animation-easing-function: linear
+      animation-iteration-count: infinite
+      -webkit-animation-name: slide
+      -webkit-animation-duration: 1.5s
+      -webkit-animation-easing-function: linear
+      -webkit-animation-iteration-count: infinite
+      -moz-animation-name: slide
+      -moz-animation-duration: 1.5s
+      -moz-animation-easing-function: linear
+      -moz-animation-iteration-count: infinite
+
+@keyframes slide
+  0%
+    right: 60px
+    left: 2px
+  5%
+    left: 2px
+  50%
+    right: 2px
+    left: 60px
+  55%
+    right: 2px
+  100%
+    right: 60px
+    left: 2px
+
+
+@-webkit-keyframes slide
+  0%
+    right: 100px
+    left: 2px
+  5%
+    left: 2px
+  50%
+    right: 2px
+    left: 100px
+  55%
+    right: 2px
+  100%
+    right: 100px
+    left: 2px
+
+
+@-moz-keyframes slide
+  0%
+    right: 60px
+    left: 2px
+  5%
+    left: 2px
+  50%
+    right: 2px
+    left: 60px
+  55%
+    right: 2px
+  100%
+    right: 60px
+    left: 2px
+
+
+/* Options*/
+
+      
+
+
+
+.suboptions
+  margin: 5px 30px
+  border: double 2px rgba(69, 71, 77, 0.1)
+  height: 0px
+  padding: 0!important
+  overflow: hidden
+  float: right
+  transition: height .3s linear
+  -webkit-transition: height .3s linear
+  -moz-transition: height .3s linear
+  -o-transition: height .3s linear
+  -ms-transition: height .3s linear
+  font-size: .9em
+  line-height: .9em
+  font-style: italic
+  div
+    float: none!important
+  span
+    font-style: normal
+
+/* Autocomplite*/
+
+.textcomplete-wrapper textarea
+  display: inline
+
+ul.dropdown-menu
+  position: absolute
+  top: 23px
+  left: 155px
+  z-index: 100
+  display: block
+  float: left
+  min-width: 160px
+  padding: 5px 0
+  margin: 2px 0 0
+  list-style: none
+  background-color: #fff
+  border: 1px solid rgba(0, 0, 0, 0.2)
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+  li
+    line-height: 20px
+  > li > a
+    display: block
+    padding: 3px 20px
+    clear: both
+    white-space: nowrap
+    -webkit-transition: all 200ms
+    -moz-transition: all 200ms
+    -ms-transition: all 200ms
+    -o-transition: all 200ms
+    transition: all 200ms
+
+
+@import _responsive

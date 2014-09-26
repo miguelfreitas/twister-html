@@ -9,6 +9,11 @@
     src: url("OpenSans-Bold.ttf");
     font-weight: bold;
 }
+@font-face
+{
+    font-family: "Symbola";
+    src: url("Symbola.ttf");
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -30,7 +35,7 @@ time, mark, audio, video, textarea
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif, Symbola;
 }
 textarea, input
 {
@@ -74,6 +79,17 @@ h3
     font-size: 14px;
     color: rgba( 0, 0, 0, .5 );
 }
+.clearfix:before,
+.clearfix:after
+{
+    display: block;
+    content: "";
+    clear: both;
+}
+.isFollowing:after {
+    color: #1a1;
+    content: '\2714';
+}
 /*************************************
 **************************** BUTTONS **
 **************************************/
@@ -109,6 +125,10 @@ button.disabled:hover
     height: 40px;
     background: #45474d;
     z-index: 2;
+}
+.userMenu.w1200 {
+    width: 1200px;
+    margin-left: -600px;
 }
 .userMenu:after
 {
@@ -257,16 +277,30 @@ button.disabled:hover
     z-index: 1;
     min-height: 100%;
 }
-.dashboard
-{
+.wrapper.w1200 {
+    width: 1200px;
+    padding: 55px 7px 15px 7px;
+}
+.dashboard.left {
     width: 320px;
     position: fixed;
     top: 55px;
+}
+.dashboard.right {
+    width: 320px;
+    position: fixed;
+    top: 55px;
+    margin-left: 864px;
 }
 .module
 {
     border: solid 1px rgba( 69, 71, 77, .1 );
     background: #fff;
+}
+.options .module
+{
+    margin: 5px;
+    padding: 5px;
 }
 .messages-qtd
 {
@@ -419,16 +453,19 @@ button.disabled:hover
 }
 .profile-data
 {
+
     border-left: none;
     border-right: none;
     height: 60px;
+    display: table;
+    width: 100%;
 }
 .profile-data li
 {
     border-right: solid 1px rgba( 69, 71, 77, .1 );
     padding: 10px 15px 2px 10px;
-    float: left;
     height: 100%;
+    display: table-cell;
 }
 .profile-data li:last-child
 {
@@ -506,6 +543,28 @@ button.disabled:hover
 {
     text-decoration: none;
 }
+.who-follow
+{
+    height: auto;
+    background-color: rgba(69, 71, 77, 0.1);
+    overflow: hidden;
+    font-size: 12px;
+}
+.show-more-followers {
+    color: #f11;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+}
+.mini-follower-link
+{
+    display: inline-block;
+    margin-right: 10px;
+}
+.mini-follower-link:before
+{
+    content: " \2027";
+}
 /***********************************
 ********************* POST AREA ****
 ***********************************/
@@ -518,6 +577,10 @@ button.disabled:hover
     width: 445px;
     display: block;
     transition: all .3s linear;
+    -webkit-transition: height 0.3s linear;
+    -moz-transition: height 0.3s linear;
+    -o-transition: height 0.3s linear;
+    -ms-transition: height 0.3s linear;
     height: 28px;
     border-radius: 3px;
     border: solid 1px rgba(0, 0, 0, .3 );
@@ -541,6 +604,17 @@ button.disabled:hover
     border: solid 1px rgba( 227, 79, 66, .5 );
     box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
 }
+textarea.splited-post {
+    box-shadow: none!important;
+    height: 28px;
+}
+.splited-post-counter {
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+.splited-post-counter:before {
+    content: '\2026';
+}
 .post-area-extras
 {
     overflow: hidden;
@@ -557,7 +631,11 @@ button.disabled:hover
     display: inline-block;
     margin-top: 4px;
 }
-.post-area-new.open textarea + .post-area-extras
+.undo-unicode
+{
+    font-family: sans-serif, Symbola;
+}
+.post-area-new.open > .post-area-extras
 {
     height: 35px;
     transition: all .6s linear;
@@ -570,12 +648,22 @@ button.disabled:hover
 {
     color: #ff0000;
 }
+.post .show-more {
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 60px;
+    color: rgba(0, 0, 0, 0.5);
+}
+.post .show-more:before {
+    content: '💭';
+}
 /***********************************
 ********************* WHO TO FOLLOW
 ***********************************/
 .who-to-follow
 {
     padding: 10px;
+    margin-bottom: 10px;
 }
 .who-to-follow h3
 {
@@ -641,8 +729,7 @@ button.disabled:hover
     display: inline-block;
     letter-spacing: 0px;
 }
-.twister-user-remove
-{
+.twister-user-remove{
     float: right;
     font-size: 12px;
     margin: 5px;
@@ -650,15 +737,18 @@ button.disabled:hover
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 120%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 120%;
+    display: none;
 }
-.twister-user-remove:hover
-{
-    opacity: 1;
+.twister-user:hover .twister-user-remove{
+    display: inline-block;
     text-decoration: none;
+}
+.twister-user-remove:hover{
+    opacity: 1;
 }
 .follow
 {
@@ -677,9 +767,23 @@ button.disabled:hover
     color: #e34f42;
     cursor: pointer;
     font-size: 12px;
-    border-left: solid 1px rgba( 69, 71, 77, .1 );
-    padding-left: 8px;
 }
+
+/***********************************
+**********TOP TRENDS****************
+***********************************/
+ol.toptrends-list {
+    margin: 0% 5% 5% 5%;
+    padding: 5px;
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
+    border-top: solid 1px rgba( 69, 71, 77, .1 );
+}
+
+.toptrends h3
+{
+    margin: 5% 5% 2% 5%;
+}
+
 /***********************************
 ********************* POST BOARD ***
 ***********************************/
@@ -690,6 +794,10 @@ button.disabled:hover
     background: rgba( 255, 255, 255, .5 );
     border: solid 1px rgba( 69, 71, 77, .05 );
     padding: 10px;
+}
+.w1200 .postboard {
+    margin-left: 327px;
+    width: 530px;
 }
 .postboard h2
 {
@@ -705,8 +813,6 @@ button.disabled:hover
 }
 .postboard h2.fixed
 {
-    position: fixed;
-    top: 40px;
     z-index: 2;
     border-top: solid 4px #fbf9f6;
 }
@@ -771,7 +877,7 @@ button.disabled:hover
 .postboard-posts > .post.open:after
 {
     width: 5px;
-    right: -5px;
+    /*right: -5px;*/
 }
 .post:hover,
 .post .post
@@ -953,6 +1059,21 @@ button.disabled:hover
     display: none;
     padding: 5px 5px 0 5px;
 }
+.image-preview
+{
+    max-height: 500px;
+    max-width: 495px;
+    width: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+.preview-container
+{
+    max-height: 500px;
+    width: 100%;
+    text-align: center;
+    overflow-y: auto;
+}
 .post-stats
 {
     margin: 0 10px 0 55px;
@@ -1016,6 +1137,10 @@ button.disabled:hover
 .post-stats a:hover .user-name-tooltip
 {
     display: inline-block;
+}
+.post-replies .sub-replies {
+    border-left: solid 3px #E34F42;
+    margin-left: 2px;
 }
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***
@@ -1156,6 +1281,24 @@ button.disabled:hover
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
 }
+.modal-back,
+.mark-all-as-read {
+    position: absolute;
+    right: 30px;
+    top: 0;
+    padding: 3px 10px;
+    cursor: pointer;
+    color: rgba( 255, 255, 255, .7 );
+    font-weight: bold;
+    border-left: solid 1px rgba( 255, 255, 255, .3 );
+    transition: all .1s linear;
+    display: none;  
+}
+.modal-back:hover,
+.mark-all-as-read:hover {
+    color: #fff;
+    background: rgba( 0, 0, 0, .1 );
+}
 .modal-buttons
 {
     padding: 10px;
@@ -1287,6 +1430,12 @@ button.disabled:hover
     right: -65px;
     left: auto;
 }
+.mark-all-as-read {
+    right: 60px;
+}
+.mark-all-as-read:before {
+    content: '\2714';
+}
 /*************************************
 ****************** NEW USER MODAL
 **************************************/
@@ -1345,6 +1494,31 @@ button.disabled:hover
     margin-left: 0;
 }
 /*************************************
+****************** CONVERSATION MODAL
+**************************************/
+.conversation-modal .modal-wrapper
+{
+    position: absolute;
+    width: 560px;
+    height: 80%;
+    top: 10%;
+    margin: 0 0 0 -330px;
+    overflow: hidden;
+}
+.conversation-modal .modal-content
+{
+    overflow-y: auto;
+    height: 90%;
+}
+.conversation-modal .modal-buttons
+{
+    display: none;
+}
+.conversation-modal .postboard
+{
+    margin-left: 0;
+}
+/*************************************
 ****************** FOLLOWING MODAL
 **************************************/
 .following-modal .modal-wrapper
@@ -1357,6 +1531,7 @@ button.disabled:hover
 .following-modal .modal-content
 {
     padding: 15px;
+    height: 400px;
     overflow-y: auto;
 }
 .following-modal .modal-buttons
@@ -1382,6 +1557,56 @@ button.disabled:hover
 .following-modal .open-profile-modal span:hover
 {
     text-decoration: underline;
+}
+/*************************************
+******************* WHO TO FOLLOW MODAL
+**************************************/
+.who-to-follow-modal .modal-wrapper
+{
+    width: 560px;
+    height: 470px;
+    margin: -200px 0 0 -280px;
+    overflow-x: hidden;
+}
+.who-to-follow-modal .modal-content
+{
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+}
+.who-to-follow-modal .modal-buttons
+{
+    display: none;
+}
+.who-to-follow-modal ol
+{
+    margin: 5px;
+}
+.who-to-follow-modal .open-profile-modal:hover
+{
+    text-decoration: none;
+}
+.who-to-follow-modal .open-profile-modal span
+{
+    vertical-align: middle;
+}
+.who-to-follow-modal .open-profile-modal span:hover
+{
+    text-decoration: underline;
+}
+.who-to-follow-modal .follow
+{
+    float: right;
+    margin: -30px 10px 0 10px;
+}
+.who-to-follow-modal .twister-user-info span
+{
+    vertical-align: bottom;
+}
+.who-to-follow-modal .bio
+{
+    font-size: 12px;
+    color: rgba( 0, 0, 0, .6 );
 }
 /*************************************
 ****************** LOADER ************
@@ -1499,4 +1724,71 @@ button.disabled:hover
     right: 60px;
     left: 2px;
   }
+}
+
+/* Options */
+#playerVol {
+    float: right;
+    margin-right: 20px;
+}
+.volValue {
+    float: right;
+    margin-right: -163px;
+    font: 12px "Open Sans", sans-serif;
+}
+#notifyForm p, #choseLanguage p, #keysOpt p {
+    margin-top: 15px;
+}
+.suboptions {
+    margin: 5px 30px;
+    border: double 2px rgba( 69, 71, 77, .1 );
+    height: 0px;
+    overflow: hidden;
+    transition: height 1s linear;
+    -webkit-transition: height 1s linear;
+    -moz-transition: height 1s linear;
+    -o-transition: height 1s linear;
+    -ms-transition: height 1s linear;
+}
+
+/* Autocomplite*/
+.textcomplete-wrapper textarea {
+    display: inline;
+}
+ul.dropdown-menu {
+    position: absolute;
+    top: 23px;
+    left: 170px;
+    z-index: 100;
+    display: block;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0, .2);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0, .2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0, .2);
+    box-shadow: 0 5px 10px rgba(0,0,0, .2);
+
+}
+ul.dropdown-menu li {
+    line-height: 20px;
+
+}
+ul.dropdown-menu > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font: 13px/20px "Open Sans", sans-serif;
+    white-space: nowrap;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
 }

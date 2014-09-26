@@ -2,29 +2,31 @@
   <head>
     <meta charset="utf-8">
     <title>Edit profile</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="stylesheet" href="css/profile.css" type="text/css">
-    <script src="jquery.min.js"></script>
-    <script src="jQueryPlugins.js"></script>
-    <script src="jquery.json-2.4.js"></script>
-    <script src="jquery.jsonrpcclient.js"></script>
-    <script src="jquery.storageapi.js"></script>
-    <script src="mobile_abstract.js"></script>
-    <script src="twister_io.js"></script>
-    <script src="polyglot.min.js"></script>
-    <script src="interface_localization.js"></script>
-    <script src="twister_user.js"></script>
-    <script src="twister_network.js"></script>
-    <script src="twister_following.js"></script>
-    <script src="twister_newmsgs.js"></script>
-    <script src="interface_common.js"></script>
-    <script src="interface_profile-edit.js"></script>
+    <link id="stylecss" rel="stylesheet" href="css/style.css" type="text/css">
+    <link id="profilecss" rel="stylesheet" href="css/profile.css" type="text/css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jQueryPlugins.js"></script>
+    <script src="js/jquery.json-2.4.js"></script>
+    <script src="js/jquery.jsonrpcclient.js"></script>
+    <script src="js/jquery.storageapi.js"></script>
+    <script src="js/options.js"></script>
+    <script src="js/mobile_abstract.js"></script>
+    <script src="js/twister_io.js"></script>
+    <script src="js/polyglot.min.js"></script>
+    <script src="js/interface_localization.js"></script>
+    <script src="js/twister_user.js"></script>
+    <script src="js/twister_network.js"></script>
+    <script src="js/twister_following.js"></script>
+    <script src="js/twister_newmsgs.js"></script>
+    <script src="js/interface_common.js"></script>
+    <script src="js/interface_profile-edit.js"></script>
 
     <script>
         $(document).ready(function()
         {
            initProfileEdit();
         });
+        changeStyle()
     </script>
 
     <link rel="icon" type="image/png" href="img/twister_mini.png" />
@@ -35,35 +37,29 @@
   <!-- MENU SUPERIOR INIT --> 
   <nav class="userMenu">
     <ul>
-      <li class="userMenu-home"><a href="home.html">Home</a></li>
-      <li class="userMenu-network"><a href="network.html">Network</a></li>
-      <li class="userMenu-profile current"><a href="profile-edit.html">Profile</a></li>
-      <li class="userMenu-config">
+      <li class="userMenu-home"><a href="home.html">
+        <span class="selectable_theme theme_original label">Home</span>
+        <span class="menu-news"></span>
+      </a></li>
+      <li class="userMenu-network selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
+      <li class="userMenu-profile selectable_theme theme_original theme_nin"><a class="label" href="profile-edit.html">Profile</a></li>
+      <li class="userMenu-config current">
         <a class="userMenu-config-dropdown" href="#">
           <div class="config-menu dialog-modal">
-            <div class="mini-profile-info">
+            <div class="mini-profile-info selectable_theme theme_original">
               <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
               <a href="#" class="mini-profile-name">Fulano da Silva</a>
               <span class="mini-profile-view">View</span>
             </div>
+            <a class="dropdown-menu-item" href="options.html">Options</a>
             <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
             <a class="dropdown-menu-item" href="following.html">Following users</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
             <a class="dropdown-menu-item" href="login.html">Change user</a>
-            <a class="direct-messages" href="#">Direct Messages</a>
           </div>
         </a>
       </li>
-      <li class="userMenu-connections">
-        <a href="#">
-          <span class="messages-qtd" style="display:none;">12</span>
-        </a>
-      </li>
-      <li class="userMenu-messages">
-        <a href="#">
-          <span class="messages-qtd" style="display:none;">12</span>
-        </a>
-      </li>
+      <li class="userMenu-dhtindicator selectable_theme theme_calm"><a href="network.html"></a></li>
       <li class="userMenu-search">
         <input type="text" class="userMenu-search-field" placeholder="search">
       </li>
@@ -73,7 +69,6 @@
 
 
   <div class="wrapper">
-
   <!-- ÁREA DE PROFILE PHOTO INIT --> 
     <div class="profile-card forEdition">
       <!-- Coloquei a imagem de fundo do card do usuário como background da div abaixo inline na tag para poder ser alterada dinamicamente -->
@@ -84,6 +79,8 @@
         <input type="text" class="input-description" placeholder="Describe yourself"/>
         <input type="text" class="input-city" placeholder="Location"/>
         <input type="text" class="input-website" placeholder="website"/>
+        <input type="text" class="input-tox" placeholder="Tox address"/>
+        <input type="text" class="input-bitmessage" placeholder="Bitmessage address"/>
       </div>
       <div class="profile-edition-buttons">
           <button class="toggle-priv-key" style="float: left" href="#">Secret Key</button>
