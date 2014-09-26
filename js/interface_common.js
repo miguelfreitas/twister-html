@@ -1232,8 +1232,8 @@ function changeStyle() {
     }
     $('#stylecss').attr('href', style);
     $('#profilecss').attr('href', profile);
-    $("<style type='text/css'> .selectable_theme{display:none!important;}\n" +
-       ".theme_" + theme + "{display:block!important;}</style>").appendTo("head");
+    $("<style type='text/css'> .selectable_theme:not(.theme_" + theme + ")" +
+      "{display:none!important;}\n</style>").appendTo("head");
     setTimeout(function(){$(menu).removeAttr('style')}, 0);
 }
 
