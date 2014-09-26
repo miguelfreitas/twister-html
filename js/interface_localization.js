@@ -1552,7 +1552,7 @@ if(preferredLanguage == "ja"){
       "post": "投稿する", // verb - button to post a message
       "Post to promote:": "プロモートメッセージ: ",
       "Posts": "投稿",
-      "propagating_nickname": "ユーザネーム%{username}をネットワークへ普及しています…",
+      "propagating_nickname": "ユーザネーム%{username}をネットワークに配信しています…",
       "Public": "公開",
       "Refresh": "リフレッシュ",
       "retransmit_this": "この投稿をリトランスミットしますか？",
