@@ -113,11 +113,28 @@ function directMsgSubmit(e)
 
 function newDirectMsg(msg,  dm_screenname) {
     if( lastPostId != undefined ) {
-        var params = [defaultScreenName, lastPostId + 1, dm_screenname, msg]
-        twisterRpc("newdirectmsg", params,
-                   function(arg, ret) { incLastPostId(); }, null,
-                   function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
-                                        alert("Ajax error: " + msg); }, null);
+        var paramsOrig = [defaultScreenName, lastPostId + 1, dm_screenname, msg]
+        var paramsOpt = paramsOrig
+        var copySelf = ($.Options.getDMCopySelfOpt() === 'enable')
+        if( copySelf ) {
+            paramsOpt = paramsOrig.concat(true)
+        }
+
+        twisterRpc("newdirectmsg", paramsOpt,
+                   function(arg, ret) { 
+                        incLastPostId();
+                        if( arg.copySelf ) incLastPostId();
+                    }, {copySelf:copySelf},
+                   function(arg, ret) { 
+                        // fallback for older twisterd (error: no copy_self parameter)
+                        twisterRpc("newdirectmsg", arg.paramsOrig,
+                                   function(arg, ret) { incLastPostId(); }, null,
+                                   function(arg, ret) {
+                                       var msg = ("message" in ret) ? ret.message : ret;
+                                       alert("Ajax error: " + msg);
+                                   }, null);
+                    }, {paramsOrig:paramsOrig}
+        );
     } else {
         alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }

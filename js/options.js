@@ -323,6 +323,18 @@ var TwisterOptions = function()
         });
     };
 
+    this.getDMCopySelfOpt = function() {
+        return $.Options.getOption('dmCopySelf',"enable");
+    }
+    
+    this.setDMCopySelfOpt = function () {
+        $('#dmCopySelfOpt select')[0].value = this.getDMCopySelfOpt();
+
+        $('#dmCopySelfOpt select').on('change', function(){
+            $.Options.setOption(this.id, this.value);
+        });
+    }
+
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
@@ -343,6 +355,7 @@ var TwisterOptions = function()
         this.setHideCloseRTsHourOpt();
         this.setHideCloseRTsOpt();
         this.setIsFollowingMeOpt();
+        this.setDMCopySelfOpt();
     }
 }
 
