@@ -978,16 +978,16 @@ if(preferredLanguage == "fr"){
       "days": "%{smart_count} jour |||| %{smart_count} jours",
       "Detailed information": "Informations détaillées",
       "DHT network down.": "Panne du réseau DHT.",
-      "Direct Messages": "Messages directs",
+      "Direct Messages": "Messages privés",
       "Disable": "Désactiver",
       "Display mentions to @": "Afficher les mentions pour @",
       "Display retransmissions": "Afficher les retransmissions",
-      "DNS to obtain list of peers:": "DNS pour obtenir la liste des pairs:",
-      "downloading_block_chain": "Téléchargement de la chaîne de blocs, s'il vous plaît attendre avant de continuer (la chaîne de blocs a %{days} jours de retard).",
+      "DNS to obtain list of peers:": "DNS où obtenir une liste des pairs:",
+      "downloading_block_chain": "Téléchargement de la chaîne de blocs, veuillez patienter avant de continuer (la chaîne de blocs a %{days} jours de retard).",
       "download_posts_status": "%{portion} billets téléchargés", // Downloaded 10/30 posts
       "Enable": "Activer",
       "error": "Erreur: %{error}",
-      "error_connecting_to_daemon": "Erreur de connection, impossible de joindre le démon Twister.",
+      "error_connecting_to_daemon": "Erreur de connexion, impossible de se connecter au démon Twister.",
       "Error in 'createwalletuser' RPC.": "Erreur RPC dans 'createwalletuser'.",
       "Error in 'importprivkey'": "Erreur RPC dans 'importprivkey': %{rpc}",
       "Error in 'sendnewusertransaction' RPC.": "Error RPC dans 'sendnewusertransaction'.",
@@ -997,42 +997,42 @@ if(preferredLanguage == "fr"){
       "Follow": "Suivre",
       "Followed by": "Suivi par",
       "followed_by": "Suivi par %{username}",
-      "Followers": "Followers",
-      "Following": "Following",
+      "Followers": "Abonnés",
+      "Following": "Abonnements",
       "Following users": "Following users",
       "Force connection to peer:": "Forcer la connection à un pair:",
       "General information": "Informations générales",
       "Generate blocks (send promoted messages)": "Produire des blocs (envoyer des messages promus)",
-      "Home": "Début", // homepage
+      "Home": "Accueil", // homepage
       "hours": "%{smart_count} heure |||| %{smart_count} heures",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Erreur interne: lastPostId inconnu",
       "Known peers:": "Pairs connus: ",
-      "Last block is ahead of your computer time, check your clock.": "Le dernier bloc est en avance sur le l'heure de votre machine, vérifiez votre horloge.",
+      "Last block is ahead of your computer time, check your clock.": "Le dernier bloc est en avance par rapport à l'heure de votre machine, vérifiez votre horloge.",
       "mentions_at": "Mentions @%{user}",
       "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
       "Must be 16 characters or less.": "Doit contenir de 16 caractères ou moins.", // username
       "Network": "Réseau",
       "Network config": "Configuration réseau",
-      "Network status": "Etat du réseau",
-      "New direct message...": "Nouveau message direct...",
-      "New Post...": "Nouveau billet...",
+      "Network status": "État du réseau",
+      "New direct message...": "Nouveau message privé...",
+      "New Post...": "Nouveau billets...",
       "new_posts": "%{smart_count} nouveau billet |||| %{smart_count} nouveaux billets",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Non disponible", // username is not available
       "Number of blocks in block chain:": "Nombre de blocs dans la chaîne de blocs: ",
       "Number of CPUs to use": "Nombre de processeurs à utiliser",
-      "Only alphanumeric and underscore allowed.": "Seulement les caractères alphanumérique et la barre de soulignement sont permis.",
+      "Only alphanumeric and underscore allowed.": "Seuls les caractères alphanumériques et la barre de soulignement sont permis.",
       "peer address": "adresse des pairs",
       "Private": "Privé",
       "Profile": "Profil",
-      "Postboard": "Billets",
+      "Postboard": "Fil",
       "post": "envoyer", // verb - button to post a message
       "Post to promote:": "Billet à promouvoir: ",
-      "Posts": "Posts",
-      "propagating_nickname": "Multiplication de votre pseudo %{username} sur le réseau...",
+      "Posts": "Billets",
+      "propagating_nickname": "Propagation de votre pseudo %{username} sur le réseau...",
       "Public": "Public",
       "Refresh": "Actualiser",
-      "retransmit_this": "Retransmettre ce billet à tes followers?",
+      "retransmit_this": "Retransmettre ce billet à vos abonnés ?",
       "Reply": "Répondre",
       "Reply...": "Répondre...",
       "reply_to": "Répondre à %{fullname}",
@@ -1043,29 +1043,29 @@ if(preferredLanguage == "fr"){
       "seconds": "%{smart_count} seconde |||| %{smart_count} secondes",
       "send": "envoyer",
       "Send post with username": "Envoyer le billet avec le pseudo",
-      "Sent Direct Message": "Message direct envoyé",
-      "Sent Post to @": "Envoyé un billet à @",
+      "Sent Direct Message": "Message privé envoyé",
+      "Sent Post to @": "Envoyer un billet à @",
       "Setup account": "Configuration du compte",
       "switch_to_network": "Le démon local n'est pas connecté au réseau ou\n" +
                 "la chaîne de blocs n'est pas à jour. Si vous restez dans cette page\n" +
-                "vos actions peuvent ne pas fonctionner.\n" +
-                "Voulez-vous consulter la page d'état du réseau au lieu?",
+                "vos actions peuvent ne pas être prises en compte.\n" +
+                "Voulez-vous consulter la page d'état du réseau à la place ?",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
       "Type message here": "Tapez votre message ici",
-      "Unfollow": "Unfollow",
+      "Unfollow": "Se désabonner",
       "Update": "Mettre à jour",
       "Updating status...": "Mise à jour du statut...", // status of block chain
       "user_not_yet_accepted": "Les autres pairs n'ont pas encore accepté ce nouvel utilisateur.\n" +
                 "Malheureusement, il n'est pas possible d'enregistrer le profil\n" +
-                "ou envoyer des billets dans cet état.\n\n" +
-                "S'il vous plaît attendre quelques minutes avant de continuer.\n\n" +
-                "L'action 'enregistrer' sera automatiquement activé\n" +
+                "ou envoyer des billets pour le moment.\n\n" +
+                "Veuillez attendre quelques minutes avant de continuer.\n\n" +
+                "Le bouton 'enregistrer' s'affichera automatiquement\n" +
                 "lorsque le processus sera terminé. (Je vous promets que\n"+
                 "c'est la dernière fois que vous devrez attendre avant d'utiliser\n" +
                 "Twister).\n\n" +
-                "Astuce: choisissez votre avatar entre temps!",
+                "Astuce: pendant ce temps, choisissez votre avatar !",
       "users_mentions": "Mentions de @%{username}",
       "users_profile": "Profil de %{username}",
       "username_undefined": "Nom d'utilisateur indéfini, login requis.",
@@ -1073,26 +1073,26 @@ if(preferredLanguage == "fr"){
       "View All": "Voir tous",
       "Who to Follow": "Qui suivre",
       "Your message was sent!": "Votre message a été envoyé!",
-      "twister login": "twister login",
-      "Existing local users": "Existing local users",
-      "Or...": "Or...",
-      "Create a new user": "Create a new user",
-      "Login": "Login",
-      "Check availability": "Check availability",
-      "Create this nickname": "Create this nickname",
-      "Type nickname here": "Type nickname here",
-      "Import secret key": "Import secret key",
-      "52-characters secret": "52-characters secret",
-      "With nickname": "With nickname",
-      "Import key": "Import key",
-      "Client Version:": "Client Version:",
-      "Mining difficulty:": "Mining difficulty:",
-      "Block generation status": "Block generation status",
+      "twister login": "Nom d'utilisateur Twister",
+      "Existing local users": "Utilisateurs locaux existants",
+      "Or...": "Ou...",
+      "Create a new user": "Créer un nouvel utilisateur",
+      "Login": "Se connecter",
+      "Check availability": "Vérifier la disponibilité",
+      "Create this nickname": "Créer cet utilisateur",
+      "Type nickname here": "Tapez votre nom d'utilisateur ici",
+      "Import secret key": "Importer une clef secrète",
+      "52-characters secret": "Clef secrète de 52 caractères",
+      "With nickname": "Avec le nom d'utilisateur",
+      "Import key": "Importer la clef secrète",
+      "Client Version:": "Version du client:",
+      "Mining difficulty:": "Difficulté du minage:",
+      "Block generation status": "Statut de la production de blocs",
       "Current hash rate:": "Current hash rate:",
-      "Terminate Daemon:": "Terminate Daemon:",
-      "Exit": "Exit",
-      "Save Changes": "Save Changes",
-      "Secret key:": "Secret key:"
+      "Terminate Daemon:": "Tuer le démon:",
+      "Exit": "Quitter",
+      "Save Changes": "Sauvegarder les changements",
+      "Secret key:": "Clef secrète:"
     };
 }
 
@@ -1485,8 +1485,8 @@ if(preferredLanguage == "ja"){
       "Active DHT nodes:": "アクティブなDHTノード: ",
       "Add DNS": "DNSを追加",
       "Add peer": "ピアを追加",
-      "ajax_error": "Ajax error: %{error}", // JavaScript error
-      "All users publicly followed by": "All users publicly followed by",
+      "ajax_error": "AJAXエラー: %{error}", // JavaScript error
+      "All users publicly followed by": "このユーザがフォローを公開している",
       "Available": "Available", // username is available
       "Block chain information": "ブロックチェイン",
       "Block chain is up-to-date, twister is ready to use!": "ブロックチェインは最新の状態です。",
@@ -1497,29 +1497,29 @@ if(preferredLanguage == "ja"){
       "Collapse": "閉じる", // smaller view of a post
       "Configure block generation": "ブロック生成の設定",
       "Connections:": "接続数: ", // to network
-      "Connection lost.": "Connection lost.",
-      "days": "%{smart_count} day |||| %{smart_count} days",
+      "Connection lost.": "切断されました。",
+      "days": "%{smart_count}日 |||| %{smart_count}日",
       "Detailed information": "詳細",
       "DHT network down.": "DHTネットワークがダウンしています",
       "Direct Messages": "ダイレクトメッセージ",
       "Disable": "停止",
       "Display mentions to @": "メンションを表示する",
       "Display retransmissions": "リトランスミットを表示する",
-      "DNS to obtain list of peers:": "ピア取得のためのDNS:",
-      "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。(block chain is %{days} days old).",
+      "DNS to obtain list of peers:": "ピア取得用のDNS:",
+      "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。（ブロックチェーンは%{days}日送れています）",
       "download_posts_status": "ダウンロード済みの投稿 %{portion}", // Downloaded 10/30 posts
       "Enable": "有効",
       "error": "Error: %{error}",
-      "error_connecting_to_daemon": "Error connecting to local twister daemon.",
-      "Error in 'createwalletuser' RPC.": "Error in 'createwalletuser' RPC.",
-      "Error in 'importprivkey'": "Error in 'importprivkey' RPC: %{rpc}",
-      "Error in 'sendnewusertransaction' RPC.": "Error in 'sendnewusertransaction' RPC.",
+      "error_connecting_to_daemon": "ロカールtwisterデーモンに接続したが、エラーが発生しました。",
+      "Error in 'createwalletuser' RPC.": "'createwalletuser' RPCにエラー発生",
+      "Error in 'importprivkey'": "'importprivkey' RPC: %{rpc}にエラー発生",
+      "Error in 'sendnewusertransaction' RPC.": "'sendnewusertransaction' RPCにエラー発生",
       "Expand": "開く", // larger view of a post
       "Favorite": "お気に入り",
       "File APIs not supported in this browser.": "利用しているブラウザはファイルAPIをサポートしていません。",
       "Follow": "フォロー",
-      "Followed by": "Followed by",
-      "followed_by": "Followed by %{username}",
+      "Followed by": "フォローされている",
+      "followed_by": "%{username}にフォローされている",
       "Followers": "フォロワー",
       "Following": "フォロー",
       "Following users": "フォローしているユーザー",
@@ -1527,32 +1527,32 @@ if(preferredLanguage == "ja"){
       "General information": "概略",
       "Generate blocks (send promoted messages)": "ブロックチェインを生成する (プロモートメッセージを送信する)",
       "Home": "ホーム", // homepage
-      "hours": "%{smart_count} hour |||| %{smart_count} hours",
-      "Internal error: lastPostId unknown (following yourself may fix!)": "Internal error: lastPostId unknown (following yourself may fix!)",
+      "hours": "%{smart_count}時間 |||| %{smart_count}時間",
+      "Internal error: lastPostId unknown (following yourself may fix!)": "内部エラー: lastPostId不明（自分をフォローすれば解決するかもしれません）",
       "Known peers:": "ネットワーク全体のピア: ",
-      "Last block is ahead of your computer time, check your clock.": "Last block is ahead of your computer time, check your clock.",
+      "Last block is ahead of your computer time, check your clock.": "最新ブロックはあなたのコンピューター時間より進んでいます。日付設定を確認してください。",
       "mentions_at": "@%{user}へのメンション",
-      "minutes": "%{smart_count} minute |||| %{smart_count} minutes",
-      "Must be 16 characters or less.": "Must be 16 characters or less.", // username
+      "minutes": "%{smart_count}分 |||| %{smart_count}分",
+      "Must be 16 characters or less.": "16字以下を入力してください。", // username
       "Network": "ネットワーク",
       "Network config": "ネットワーク設定",
       "Network status": "ネットワークステータス",
       "New direct message...": "ダイレクトメッセージ...",
       "New Post...": "投稿する",
-      "new_posts": "%{smart_count} new post |||| %{smart_count} new posts",
-      "nobody": "nobody", // used to promote a post without attaching the user
-      "Not available": "Not available", // username is not available
+      "new_posts": "%{smart_count} 新投稿 |||| %{smart_count} 新投稿",
+      "nobody": "ナナシ", // used to promote a post without attaching the user
+      "Not available": "使用中", // username is not available
       "Number of blocks in block chain:": "全ブロック数: ",
       "Number of CPUs to use": "利用するCPUの数",
       "Only alphanumeric and underscore allowed.": "アルファベットとアンダースコア(_)が利用可能です",
       "peer address": "ピア・アドレス",
       "Private": "プライベート",
       "Profile": "プロフィール",
-      "Postboard": "Postboard",
+      "Postboard": "投稿ボード",
       "post": "投稿する", // verb - button to post a message
       "Post to promote:": "プロモートメッセージ: ",
       "Posts": "投稿",
-      "propagating_nickname": "Propagating nickname %{username} to the network...",
+      "propagating_nickname": "ユーザネーム%{username}をネットワークに配信しています…",
       "Public": "公開",
       "Refresh": "リフレッシュ",
       "retransmit_this": "この投稿をリトランスミットしますか？",
@@ -1561,34 +1561,31 @@ if(preferredLanguage == "ja"){
       "reply_to": "%{fullname}への返信",
       "Retransmit": "リトランスミット",
       "Retransmits": "リトランスミット",
-      "Retransmitted by": "Retransmitted by",
+      "Retransmitted by": "リトランスミットしたユーザー",
       "search": "検索",
-      "seconds": "%{smart_count} second |||| %{smart_count} seconds",
+      "seconds": "%{smart_count} 秒 |||| %{smart_count} 秒",
       "send": "送信",
       "Send post with username": "プロモートメッセージの送信元",
       "Sent Direct Message": "ダイレクトメッセージを送る",
       "Sent Post to @": "メンションを投稿する",
       "Setup account": "アカウント設定",
-      "switch_to_network": "Local daemon is not connected to the network or\n" +
-                "block chain is outdated. If you stay in this page\n" +
-                "your actions may not work.\n" +
-                "Do you want to check Network Status page instead?",
-      "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
-      "time_ago": "%{time} ago", // 5 minutes ago
+      "switch_to_network": "ローカルデーモンが切断しているか、\n" +
+                "ブロックチェーンが最新状態ではない。このページを使用しつづければ、\n" +
+                "あなたの変更が適用されないおそれがあります。\n" +
+                "ネットワーク状態ページへ移動して確認しますか？",
+      "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
+      "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
       "Type message here": "ここにメッセージを書いてね",
       "Unfollow": "解除",
       "Update": "アップデート",
-      "Updating status...": "Updating status...", // status of block chain
-      "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
-                "Unfortunately it is not possible to save profile\n" +
-                "or send any posts in this state.\n\n" +
-                "Please wait a few minutes to continue.\n\n" +
-                "The 'Save Changes' will be automatically enabled\n" +
-                "when the process completes. (I promise this is\n"+
-                "the last time you will have to wait before using\n" +
-                "twister).\n\n" +
-                "Tip: choose your avatar in the meantime!",
+      "Updating status...": "ブロックチェーンを更新中…", // status of block chain
+      "user_not_yet_accepted": "この新ユーザーが他のピアーにまだ認証されていない。\n" +
+                "なので、プロファイルの保存やメッセージの投稿は現在不可能です。\n" +
+                "しばらくしてから続行してください。\n\n" +
+                "処理が終了したら、「保存」ボタンは有効化されます。\n" +
+                "twisterを使用するあいだ、待たされることはこれが最後です。\n\n"+
+                "待っている間、アバターを選択したら？",
       "users_mentions": "@%{username}へのメンション",
       "users_profile": "%{username}のプロフィール",
       "username_undefined": "ログインしてください。",
