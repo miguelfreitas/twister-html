@@ -167,6 +167,8 @@ function htmlFormatMsg( msg, output, mentions ) {
     var strSplitCounterR = "\\(\\d{1,2}\\/\\d{1,2}\\)$";
     var reAll = new RegExp("(?:^|[ \\n\\t.,:\\/?!])(#|@|" + strUrlRegexp + "|" + strEmailRegexp + "|" + strSplitCounterR + ")");
     var reHttp = new RegExp(strUrlRegexp);
+    var reLutim = new RegExp("https://lut.im/[a-zA-Z0-9]+(/[a-zA-Z0-9]+)?([^a-zA-Z0-9]t)?$");
+    var reLutim2 = new RegExp("https://lut.im/(about|stats)");
     var reEmail = new RegExp(strEmailRegexp);
     var reSplitCounter = new RegExp(strSplitCounterR);
     
@@ -222,8 +224,17 @@ function htmlFormatMsg( msg, output, mentions ) {
                         extLinkTemplate.attr("href",url);
                     }
 
-                    extLinkTemplate.text(url);
                     extLinkTemplate.attr("title",url);
+                    if (reLutim.exec(url) && ! reLutim2.exec(url)) {
+                        var re = new RegExp("[^a-zA-Z0-9]t$");
+                        if (re.exec(url)) {
+                            url = url.replace(re, '');
+                        }
+                        url = '<img src="'+url+'" style="max-width:100%">';
+                        extLinkTemplate.html(url);
+                    } else {
+                        extLinkTemplate.text(url);
+                    }
                     output.append(extLinkTemplate);
                     continue;
                 }
