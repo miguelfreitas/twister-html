@@ -251,6 +251,7 @@ if(preferredLanguage == "en"){
       "Language": "Language",
       "Sound": "Sound",
       "Users": "Users",
+      "Direct Message's copy to self": "Direct Message's copy to self",
     };
 }
 if(preferredLanguage == "es"){
@@ -2186,6 +2187,7 @@ if(preferredLanguage == "cs"){
       "Language": "Jazyk",
       "Sound": "Zvuky",
       "Users": "Uživatelé",
+      "Direct Message's copy to self": "Posílat kopie přímých zpráv sám sobě",
     };
 }
 
