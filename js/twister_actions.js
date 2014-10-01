@@ -318,7 +318,7 @@ function processHashtag(postboard, hashtag, data) {
             }
         }
         
-        if(!postboard.children().length&&!_hashtagPendingPosts.length)
+        if(!postboard.children().length && !_hashtagPendingPosts.length && hashtag != defaultScreenName)
             postboard.closest("div").find(".no-posts-found-message").show();
 
         if( _hashtagPendingPosts.length ) {
