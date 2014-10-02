@@ -6,6 +6,8 @@ To use it, clone this repo under ~/.twister/html like this:
 
     git clone https://github.com/miguelfreitas/twister-html.git ~/.twister/html
     
+**If you'r on MAC OS X - clone to ${HOME}/Library/Application\ Support/Twister/html instead of ~/.twister/html**
+
 Localisation
 ------------
 
