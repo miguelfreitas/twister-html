@@ -1125,7 +1125,7 @@ if(preferredLanguage == "ru"){
        "Block chain information": "Информация цепочки блоков",
        "Block chain is up-to-date, twister is ready to use!": "Цепочка блоков обновлена, twister готов к использованию!",
        "Block generation": "Майнинг блоков ",
-       "Cancel": "Отменить",
+       "Cancel": "Отмена",
        "Change user": "Сменить пользователя",
        "Checking...": "Проверка...", // checking if username is available
        "Collapse": "Свернуть", // smaller view of a post
@@ -1174,7 +1174,7 @@ if(preferredLanguage == "ru"){
        "New direct message...": "Новое личное сообщение...",
        "New Post...": "Новый пост...",
        "new_posts": "%{smart_count} новый пост |||| %{smart_count} новых постов",
-       "nobody": "Никто", // used to promote a post without attaching the user
+       "nobody": "Анонимно", // used to promote a post without attaching the user
        "Not available": "Недоступно", // username is not available
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",
        "Number of CPUs to use": "Сколько использовать ядер процессора",
@@ -1211,7 +1211,7 @@ if(preferredLanguage == "ru"){
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
-       "Type message here": "Введите ваше сообщение тут",
+       "Type message here": "Сообщение...",
        "Unfollow": "Отписаться",
        "Update": "Обновить",
        "Updating status...": "Обновление информации...", // status of block chain
@@ -1256,10 +1256,10 @@ if(preferredLanguage == "ru"){
        "You have to log in to retransmit messages.": "Войдите, чтобы репостить сообщения.",
        "You have to log in to use direct messages.": "Войдите, чтобы использовать личные сообщения.",
        "You have to log in to follow users.": "Войдите, чтобы подписываться на пользователей.",
-       "You are not following anyone because you are not logged in.": "Вы ни на кого не подписаны, так как не вошли.",
-       "You don't have any followers because you are not logged in.": "На вас никто не подписан, так как вы не вошли.",
-       "No one can mention you because you are not logged in.": "Нет упоминаний, так как вы не вошли.",
-       "You don't have any profile because you are not logged in.": "Нет профиля, так как вы не вошли.",
+       "You are not following anyone because you are not logged in.": "Войдите, чтобы посмотреть на кого Вы подписаны.",
+       "You don't have any followers because you are not logged in.": "Войдите, чтобы посмотреть кто на Вас подписан.",
+       "No one can mention you because you are not logged in.": "Войдите, чтобы посмотреть упоминания о Вас.",
+       "You don't have any profile because you are not logged in.": "Войдите, чтобы посмотреть профиль.",
        "Options": "Настройки",
        "Switch to Promoted posts": "Отображать только рекламные сообщения",
        "Switch to Normal posts": "Отображать сообщения пользователей",
@@ -1284,8 +1284,8 @@ if(preferredLanguage == "ru"){
        "Convert common signs to unicode": "Преобразовывать популярные знаки в unicode",
        "Convert fractions to unicode": "Преобразовывать дроби в unicode",
        "Convert all": "Преобразовывать все",
-       "Auto": "Автоматический выбор",
-       "Original": "Исходная",
+       "Auto": "Автоматически",
+       "Original": "По умолчанию",
        "none": "none",
        "Custom": "Выборочно",
        "Mentions": "Упоминания",
@@ -1315,7 +1315,20 @@ if(preferredLanguage == "ru"){
        "hide": "скрыть",
        "Show more in this conversation...": "Показать дальше в этой беседе...",
        "conversation_title": "Беседа @%{username}",
-       "copy_to_clipboard": "Нажмите Ctrl/Cmd+C для копирования и Enter для закрытия"
+       "copy_to_clipboard": "Нажмите Ctrl/Cmd+C для копирования и Enter для закрытия",
+       "Top Trends": "Топ Трендов",
+       "Secret Key": "Секретный ключ",
+       "Full name here": "Укажите Ваше имя",
+       "Describe yourself": "Ваша подпись",
+       "Location": "Где вы живёте",
+       "website": "Веб-сайт",
+       "Tox address": "Tox адрес",
+       "Bitmessage address": "Bitmessage адрес",
+       "none": "нет",
+       "Direct Message's copy to self": "Сохранять копию сообщения, отправленного напрямую",
+       "Terminate Daemon": "Выключить twister демон",
+       "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Вы уверены, что хотите "+
+                "выключить демон?\nTwister клиент перестанет работать."
     };
 }
 
