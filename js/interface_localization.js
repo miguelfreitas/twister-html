@@ -177,7 +177,7 @@ if(preferredLanguage == "en"){
       "You don't have any profile because you are not logged in.": "You don't have any profile because you are not logged in.",
       "Options": "Options",
       "Switch to Promoted posts": "Switch to Promoted posts",
-      "Switch to Normal posts": "Switch to Promoted posts",
+      "Switch to Normal posts": "Switch to Normal posts",
       "Use language": "Use language",
       "Ignore": "Ignore",
       "Theme": "Theme",
