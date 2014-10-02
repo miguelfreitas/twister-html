@@ -1097,20 +1097,7 @@ if(preferredLanguage == "fr"){
     };
 }
 
-// translators: sample adding a language
 if(preferredLanguage == "ru"){
-    // polyglot.locale() is used to support plurals
-    // locales currently known by Polyglot.js:
-    /*
-      chinese:   ['id', 'ja', 'ko', 'ms', 'th', 'tr', 'zh'],
-      german:    ['da', 'de', 'en', 'es', 'fi', 'el', 'he', 'hu', 'it', 'nl', 'no', 'pt', 'sv'],
-      french:    ['fr', 'tl'],
-      russian:   ['hr', 'ru'],
-      czech:     ['cs'],
-      polish:    ['pl'],
-      icelandic: ['is']
-    */
-
     polyglot.locale("ru");
 
     // list of the English words and translations
@@ -1121,16 +1108,16 @@ if(preferredLanguage == "ru"){
        "Add peer": "Добавить пира",
        "ajax_error": "Ajax ошибка: %{error}", // JavaScript error
        "All users publicly followed by": "Все публичные пользователи на которых подписан",
-       "Available": "Доступно", // username is available
+       "Available": "Доступно",
        "Block chain information": "Информация цепочки блоков",
        "Block chain is up-to-date, twister is ready to use!": "Цепочка блоков обновлена, twister готов к использованию!",
        "Block generation": "Майнинг блоков ",
        "Cancel": "Отмена",
        "Change user": "Сменить пользователя",
-       "Checking...": "Проверка...", // checking if username is available
-       "Collapse": "Свернуть", // smaller view of a post
+       "Checking...": "Проверка...",
+       "Collapse": "Свернуть",
        "Configure block generation": "Настройка майнинга",
-       "Connections:": "Соединений: ", // to network
+       "Connections:": "Соединений: ",
        "Connection lost.": "Соединение с сетью было потеряно.",
        "days": "%{smart_count} день |||| %{smart_count} дней",
        "Detailed information": "Подробная информация",
@@ -1148,7 +1135,7 @@ if(preferredLanguage == "ru"){
        "Error in 'createwalletuser' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'createwalletuser'.",
        "Error in 'importprivkey'": "Ошибка при обращении к RPC - при попытке выполнить 'importprivkey' %{rpc}",
        "Error in 'sendnewusertransaction' RPC.": "Ошибка при обращении к RPC - при попытке выполнить 'sendnewusertransaction'",
-       "Expand": "Развернуть", // larger view of a post
+       "Expand": "Развернуть",
        "Favorite": "Избранное",
        "File APIs not supported in this browser.": "Ваш браузер не поддерживает File APIs.",
        "Follow": "Подписаться",
@@ -1167,7 +1154,7 @@ if(preferredLanguage == "ru"){
        "Last block is ahead of your computer time, check your clock.": "Последний полученный блок опережает время вашего компьютера, проверьте правильно ли работают часы.",
        "mentions_at": "Упоминания @%{user}",
        "minutes": "%{smart_count} минута |||| %{smart_count} минут",
-       "Must be 16 characters or less.": "Должно быть не более 16 знаков.", // username
+       "Must be 16 characters or less.": "Должно быть не более 16 знаков.",
        "Network": "Сеть",
        "Network config": "Настройка сети",
        "Network status": "Состояние сети",
@@ -1175,7 +1162,7 @@ if(preferredLanguage == "ru"){
        "New Post...": "Новый пост...",
        "new_posts": "%{smart_count} новый пост |||| %{smart_count} новых постов",
        "nobody": "Анонимно", // used to promote a post without attaching the user
-       "Not available": "Недоступно", // username is not available
+       "Not available": "Недоступно",
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",
        "Number of CPUs to use": "Сколько использовать ядер процессора",
        "Only alphanumeric and underscore allowed.": "Разрешены только латинские буквы, цифры и подчеркивания.",
@@ -1203,7 +1190,6 @@ if(preferredLanguage == "ru"){
        "Sent Direct Message": "Отправить личное сообщение",
        "Sent Post to @": "Отправить сообщение для @",      
        "Setup account": "Настроить аккаунт",
-       "Switch to Promoted posts": "Отображать только рекламные сообщения",
        "switch_to_network": "Локальный демон не подключен к сети или\n" +
                  "цепочка блоков устарела. Если вы останетесь на этой странице\n" +
                  "ваши действия могут быть не выполнены.\n" +
@@ -1286,7 +1272,7 @@ if(preferredLanguage == "ru"){
        "Convert all": "Преобразовывать все",
        "Auto": "Автоматически",
        "Original": "По умолчанию",
-       "none": "none",
+       "none": "нет",
        "Custom": "Выборочно",
        "Mentions": "Упоминания",
        "Use proxy for image preview only": "Использовать proxy только для просмотра изображений",
@@ -1316,19 +1302,29 @@ if(preferredLanguage == "ru"){
        "Show more in this conversation...": "Показать дальше в этой беседе...",
        "conversation_title": "Беседа @%{username}",
        "copy_to_clipboard": "Нажмите Ctrl/Cmd+C для копирования и Enter для закрытия",
+       "Normal posts": "Сообщения пользователей",
+       "Promoted posts": "Рекламные сообщения",
+       "Messages": "Сообщения",
+       "Edit profile": "Изменить профиль",
        "Top Trends": "Топ Трендов",
+       "twisted again by": "twisted again by",
+       "undo": "отменить",
+       "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Вы уверены, что хотите "+
+                "выключить демон?\nTwister клиент перестанет работать.",
+       "Daemon exited...": "Демон twister выключен...",
        "Secret Key": "Секретный ключ",
+       "Copy to clipboard": "Копировать в буфер обмена",
        "Full name here": "Укажите Ваше имя",
-       "Describe yourself": "Ваша подпись",
+       "Describe yourself": "Расскажите о себе",
        "Location": "Где вы живёте",
        "website": "Веб-сайт",
        "Tox address": "Tox адрес",
        "Bitmessage address": "Bitmessage адрес",
-       "none": "нет",
-       "Direct Message's copy to self": "Сохранять копию сообщения, отправленного напрямую",
+       "Language": "Язык",
+       "Sound": "Звук",
+       "Users": "Пользователи",
+       "Direct Message's copy to self": "Синхронизировать отправленные личные сообщения",
        "Terminate Daemon": "Выключить twister демон",
-       "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Вы уверены, что хотите "+
-                "выключить демон?\nTwister клиент перестанет работать."
     };
 }
 
