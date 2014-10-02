@@ -6,24 +6,14 @@ To use it, clone this repo under ~/.twister/html like this:
 
     git clone https://github.com/miguelfreitas/twister-html.git ~/.twister/html
     
-**If you'r on MAC OS X - clone to ${HOME}/Library/Application\ Support/Twister/html instead of ~/.twister/html**
+If you'r on **Mac OS X** - clone to ${HOME}/Library/Application\ Support/Twister/html instead of ~/.twister/html
 
-Localisation
-------------
-
-If you want a localised interface (currently available only for NL, IT, FR, DE and RU),
-use the experimental `i18n` branch:
-
-    git checkout i18n
-   
-If you want to translate it in your own language, check [these instructions](#translations)
-   
 Contribute
 ----------
 
 Feel free to fork and send pull requests!
-To make it easier for us to accept your patches, please follow the conventional
-GitHub workflow:
+
+To make it easier for us to accept your patches, please follow the conventional GitHub workflow:
 
      # after forking, clone your repo
      rm -rf ~/.twister/html
@@ -41,18 +31,16 @@ GitHub workflow:
      git checkout master
      git merge upstream/master # you should get a fast-forward message here
      git push
-     
+
 Translations
 ------------
 
 If you want to add your own translation, edit `interface_localization.js` like this:
 
-1. fork the repo, checkout `i18n` and create a new branch
-
+1. fork the repo and create a new branch
 
         git clone git@github.com:yournickname/twister-html.git ~/.twister/html
         cd ~/.twister/html
-        git checkout i18n
         git checkout -b Klingon
 
 2. add your language to the list of available choices. You should use your ISO code here,
@@ -86,5 +74,4 @@ For multi-region languages, if you want to catch them all, use only the first ha
         git commit -m "Klingon translation"
         git push   
  
-3. When opening the pull request on github, make sure you're pointing to `miguelfreitas:i18n`
-as the base, so we can merge it straight away in the right place. For any help, ping @toyg.
+3. When opening the pull request on github. For any help, ping @toyg.
