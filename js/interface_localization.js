@@ -2247,7 +2247,10 @@ var fixedLabels = [
   ".login input",
 
   //options page
-  "option"
+  "option",
+
+  //page titles
+  "title"
 ];
 $(document).ready(function(){
   for(var i=0;i<fixedLabels.length;i++){
@@ -2256,8 +2259,8 @@ $(document).ready(function(){
       var content = $.trim($(elems[e]).text());
       if(wordset[content]){
         $(elems[e]).text( polyglot.t(content) );
-      }
-      else{
+
+      }else{
         // uncomment to see translations not found
         //console.log(content);
       }
