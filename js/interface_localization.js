@@ -1307,7 +1307,7 @@ if(preferredLanguage == "ru"){
        "Messages": "Сообщения",
        "Edit profile": "Изменить профиль",
        "Top Trends": "Топ Трендов",
-       "twisted again by": "twisted again by",
+       "twisted again by": "Репостнуто от",
        "undo": "отменить",
        "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Вы уверены, что хотите "+
                 "выключить демон?\nTwister клиент перестанет работать.",
