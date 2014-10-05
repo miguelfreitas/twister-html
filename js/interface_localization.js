@@ -1307,7 +1307,7 @@ if(preferredLanguage == "ru"){
        "Messages": "Сообщения",
        "Edit profile": "Изменить профиль",
        "Top Trends": "Топ Трендов",
-       "twisted again by": "twisted again by",
+       "twisted again by": "Репостнуто от",
        "undo": "отменить",
        "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Вы уверены, что хотите "+
                 "выключить демон?\nTwister клиент перестанет работать.",
@@ -2247,7 +2247,10 @@ var fixedLabels = [
   ".login input",
 
   //options page
-  "option"
+  "option",
+
+  //page titles
+  "title"
 ];
 $(document).ready(function(){
   for(var i=0;i<fixedLabels.length;i++){
@@ -2256,8 +2259,8 @@ $(document).ready(function(){
       var content = $.trim($(elems[e]).text());
       if(wordset[content]){
         $(elems[e]).text( polyglot.t(content) );
-      }
-      else{
+
+      }else{
         // uncomment to see translations not found
         //console.log(content);
       }
