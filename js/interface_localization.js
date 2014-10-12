@@ -252,6 +252,10 @@ if(preferredLanguage == "en"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Terminate Daemon": "Terminate Daemon",
+      "New post": "New post",
+      "Search": "Search",
+      "Direct Msg": "Direct Msg"
     };
 }
 if(preferredLanguage == "es"){
@@ -1699,7 +1703,7 @@ if(preferredLanguage == "ru"){
        "Retransmit": "Перепостить",
        "Retransmits": "Репосты",
        "Retransmitted by": "Перепощено ",
-       "search": "поиск",
+       "search": "найти",
        "seconds": "%{smart_count} секунда |||| %{smart_count} секунд",
        "send": "отправить",
        "Send post with username": "Отправить сообщение от имени",
@@ -1841,6 +1845,9 @@ if(preferredLanguage == "ru"){
        "Users": "Пользователи",
        "Direct Message's copy to self": "Синхронизировать отправленные личные сообщения",
        "Terminate Daemon": "Выключить twister демон",
+       "New post": "Новый пост",
+       "Search": "Поиск",
+       "Direct Msg": "ЛС",
     };
 }
 
@@ -2987,6 +2994,9 @@ polyglot.extend(wordset);
 // Text from HTML and not JavaScript is selected and translated at $(document).ready
 // Add selectors here to translate the text and placeholders inside new UI
 var fixedLabels = [
+  // page titles
+  "title",
+
   // An easy way to include new items in translation is to add the "label" class
   ".label",
 
@@ -3023,27 +3033,41 @@ var fixedLabels = [
   ".login-local-username",
   ".login input",
 
-  //options page
+  // options page
   "option",
 
-  //page titles
-  "title"
-];
-$(document).ready(function(){
-  for(var i=0;i<fixedLabels.length;i++){
-    var elems = $(fixedLabels[i]);
-    for(var e=0;e<elems.length;e++){
-      var content = $.trim($(elems[e]).text());
-      if(wordset[content]){
-        $(elems[e]).text( polyglot.t(content) );
+  // mobile version //
 
-      }else{
-        // uncomment to see translations not found
-        //console.log(content);
-      }
-      if(typeof $(elems[e]).attr("placeholder") != "undefined" && wordset[ $(elems[e]).attr("placeholder")]){
-        $(elems[e]).attr("placeholder", polyglot.t( $(elems[e]).attr("placeholder") ) );
+  ".ui-btn-text",
+  ".ui-title",
+  ".ui-input-text"
+];
+
+$(document).ready(function(){
+  $(document).bind('pagecreate', function (){
+    var elems,content,i,e,LenElem,elem;
+    var LenLabels = fixedLabels.length;
+
+    for( i=0; i < LenLabels; i++ ){
+      elems = $(fixedLabels[i]);
+      LenElem = elems.length;
+      for( e=0; e < LenElem; e++ ){
+        elem = $(elems[e]);
+        content = $.trim(elem.text());
+        if(wordset[content]){
+          elem.text( polyglot.t(content) );
+        }else{
+          // uncomment to see translations not found
+          //console.log(content);
+        }
+        elemplacehold = elem.attr("placeholder");
+        if(typeof elemplacehold != "undefined" && wordset[elemplacehold]){
+          elem.attr("placeholder", polyglot.t( elemplacehold ) );
+        }
       }
     }
-  }
+  });
+
+  if(!$.mobile)
+    $(document).trigger('pagecreate');
 });
