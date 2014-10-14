@@ -1705,7 +1705,7 @@ if(preferredLanguage == "ru"){
        "Retransmitted by": "Перепощено ",
        "search": "найти",
        "seconds": "%{smart_count} секунда |||| %{smart_count} секунд",
-       "send": "отправить",
+       "send": "Отправить",
        "Send post with username": "Отправить сообщение от имени",
        "Sent Direct Message": "Отправить личное сообщение",
        "Sent Post to @": "Отправить сообщение для @",      
@@ -3043,7 +3043,7 @@ var fixedLabels = [
   ".ui-input-text"
 ];
 
-$(document).ready(function(){
+$(function(){
   $(document).bind('pagecreate', function (){
     var elems,content,i,e,LenElem,elem;
     var LenLabels = fixedLabels.length;
