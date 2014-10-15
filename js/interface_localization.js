@@ -255,7 +255,9 @@ if(preferredLanguage == "en"){
       "Terminate Daemon": "Terminate Daemon",
       "New post": "New post",
       "Search": "Search",
-      "Direct Msg": "Direct Msg"
+      "Direct Msg": "Direct Msg",
+      "Search users": "Search users",
+      "Type partial username here":"Type partial username here"
     };
 }
 if(preferredLanguage == "es"){
@@ -1848,6 +1850,8 @@ if(preferredLanguage == "ru"){
        "New post": "Новый пост",
        "Search": "Поиск",
        "Direct Msg": "ЛС",
+       "Search users": "Поиск пользователей",
+       "Type partial username here":"Введите имя пользователя"
     };
 }
 
@@ -2994,16 +2998,11 @@ polyglot.extend(wordset);
 // Text from HTML and not JavaScript is selected and translated at $(document).ready
 // Add selectors here to translate the text and placeholders inside new UI
 var fixedLabels = [
-  // page titles
-  "title",
-
   // An easy way to include new items in translation is to add the "label" class
   ".label",
 
   // navbar and home
-  "button",
   ".postboard-news",
-  ".post-area-new textarea",
   ".refresh-users, .view-all-users",
   ".who-to-follow h3",
   ".userMenu-search-field",
@@ -3023,7 +3022,6 @@ var fixedLabels = [
   ".network ul li span",
   ".network ul li label",
   ".network label",
-  ".network textarea, .network input, .network option",
 
   // login page
   ".login h2, .login h3",
@@ -3031,43 +3029,47 @@ var fixedLabels = [
   ".module span",
   ".login span",
   ".login-local-username",
-  ".login input",
 
-  // options page
+  // tags contain text
+  "title",
   "option",
+  "input",
+  "button",
+  "textarea",
 
   // mobile version //
 
-  ".ui-btn-text",
+  ".ui-btn",
   ".ui-title",
-  ".ui-input-text"
+
 ];
 
-$(function(){
-  $(document).bind('pagecreate', function (){
-    var elems,content,i,e,LenElem,elem;
-    var LenLabels = fixedLabels.length;
+// jquery.mobile page ready
+$(document).bind('pagecreate', function (){
+  var elems,content,i,e,LenElem,elem;
+  var LenLabels = fixedLabels.length;
 
-    for( i=0; i < LenLabels; i++ ){
-      elems = $(fixedLabels[i]);
-      LenElem = elems.length;
-      for( e=0; e < LenElem; e++ ){
-        elem = $(elems[e]);
-        content = $.trim(elem.text());
-        if(wordset[content]){
-          elem.text( polyglot.t(content) );
-        }else{
-          // uncomment to see translations not found
-          //console.log(content);
-        }
-        elemplacehold = elem.attr("placeholder");
-        if(typeof elemplacehold != "undefined" && wordset[elemplacehold]){
-          elem.attr("placeholder", polyglot.t( elemplacehold ) );
-        }
+  for( i=0; i < LenLabels; i++ ){
+    elems = $(fixedLabels[i]);
+    LenElem = elems.length;
+    for( e=0; e < LenElem; e++ ){
+      elem = $(elems[e]);
+      content = $.trim(elem.text());
+      if(wordset[content]){
+        elem.text( polyglot.t(content) );
+      }else{
+        // uncomment to see translations not found
+        //console.log(content);
+      }
+      elemplacehold = elem.attr("placeholder");
+      if(typeof elemplacehold != "undefined" && wordset[elemplacehold]){
+        elem.attr("placeholder", polyglot.t( elemplacehold ) );
       }
     }
-  });
+  }
+});
 
-  if(!$.mobile)
-    $(document).trigger('pagecreate');
+$(function(){
+  // if not jquery.mobile
+  if(!$.mobile) $(document).trigger('pagecreate');
 });

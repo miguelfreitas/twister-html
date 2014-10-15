@@ -328,20 +328,20 @@ var MAL = function()
     }
 
     this.enableButton = function( $button ) {
-         if( $.hasOwnProperty("mobile") ) {
+         if( $button.data( "mobile-button" ) !== undefined ) {
              $button.button("enable");
          } else {
-             $button.removeClass("disabled");
-             $button.removeAttr("disabled");
+             $button.removeClass("ui-disabled")
+             .prop("disabled",false);
          }
     }
 
     this.disableButton = function( $button ) {
-         if( $.hasOwnProperty("mobile") ) {
+         if( $button.data( "mobile-button" ) !== undefined ) {
              $button.button("disable");
          } else {
-             $button.addClass("disabled");
-             $button.attr("disabled","true");
+             $button.addClass("ui-disabled")
+             .prop("disabled",true);
          }
      }
 

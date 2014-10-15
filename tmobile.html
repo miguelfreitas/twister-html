@@ -1,15 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+<!DOCTYPE html>
 <html> 
-<head> 
+<head>
   <meta charset="utf-8" /> 
-
   <title>twister mobile</title>
-  
   <meta name="viewport" content="width=device-width, user-scalable=no"/>
-
-  <link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />
+  <link rel="icon" type="image/png" href="img/twister_mini.png" />
+  <link rel="stylesheet" href="css/jquery.mobile-1.4.4.min.css" />
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery.mobile.router.min.js"></script>
   <script>
@@ -21,30 +17,28 @@
       $.mobile.defaultPageTransition = 'none';
     });
   </script>
-  <script src="js/jquery.mobile-1.3.2.min.js"></script>
+  <script src="js/jquery.mobile-1.4.4.min.js"></script>
 
-    <script src="js/jQueryPlugins.js"></script>
-    <script src="js/jquery.json.min.js"></script>
-    <script src="js/jquery.jsonrpcclient.js"></script>
-    <script src="js/jquery.storageapi.js"></script>
-    <script src="js/options.js?vr=10"></script>
-    <script src="js/mobile_abstract.js?vr=10"></script>
-    <script src="js/twister_io.js?vr=10"></script>
-    <script src="js/polyglot.min.js?vr=10"></script>
-    <script src="js/interface_localization.js?vr=10"></script>
-    <script src="js/twister_network.js?vr=10"></script>
-    <script src="js/twister_user.js?vr=10"></script>
-    <script src="js/twister_formatpost.js?vr=10"></script>
-    <script src="js/twister_following.js?vr=10"></script>
-    <script src="js/twister_timeline.js?vr=10"></script>
-    <script src="js/twister_newmsgs.js?vr=10"></script>
-    <script src="js/twister_actions.js?vr=10"></script>
-    <script src="js/twister_directmsg.js?vr=10"></script>
-    <script src="js/interface_common.js?vr=10"></script>
-    <script src="js/tmobile.js?vr=10"></script>
-    <script src="js/jpeg_encoder_basic.js"></script>
-
-  <link rel="icon" type="image/png" href="img/twister_mini.png" />
+  <script src="js/jQueryPlugins.js"></script>
+  <script src="js/jquery.json.min.js"></script>
+  <script src="js/jquery.jsonrpcclient.js"></script>
+  <script src="js/jquery.storageapi.js"></script>
+  <script src="js/options.js?vr=10"></script>
+  <script src="js/mobile_abstract.js?vr=10"></script>
+  <script src="js/twister_io.js?vr=10"></script>
+  <script src="js/polyglot.min.js?vr=10"></script>
+  <script src="js/interface_localization.js?vr=10"></script>
+  <script src="js/twister_network.js?vr=10"></script>
+  <script src="js/twister_user.js?vr=10"></script>
+  <script src="js/twister_formatpost.js?vr=10"></script>
+  <script src="js/twister_following.js?vr=10"></script>
+  <script src="js/twister_timeline.js?vr=10"></script>
+  <script src="js/twister_newmsgs.js?vr=10"></script>
+  <script src="js/twister_actions.js?vr=10"></script>
+  <script src="js/twister_directmsg.js?vr=10"></script>
+  <script src="js/interface_common.js?vr=10"></script>
+  <script src="js/tmobile.js?vr=10"></script>
+  <script src="js/jpeg_encoder_basic.js"></script>
 </head> 
 <body> 
 
@@ -52,8 +46,6 @@
   .ui-li-heading { margin: 0em 0 0.6em 0; }
   .ui-li-desc {  margin: -.5em 0 .6em; text-overflow: ellipsis; overflow: visible; white-space: pre-line; }
   .ui-li-thumb, .ui-li-icon { top: 13px; }
-
-  .ui-input-search { width: 50% !important;}
 
   .ui-btn-icon-right .ui-icon { position: absolute; top: 30%; margin-top: -9px; }
 
@@ -68,7 +60,7 @@
   }
   img.size24 {width: 24px; height: 24px;}
   #profile-edit img.avatar {display:block; margin-left: auto; margin-right: auto; width: 64px; height: 64px;}
- 
+
   .ui-listview .post a{ color: #0030ff; }
   
   #post li.original { background: #fff; /*top:5px; border-width:5px !important;*/}
@@ -78,7 +70,8 @@
   #new-user-modal .emphasis { font-size: 18px; text-align: center; }
   #new-user-modal .secret-key { font-weight: bold; word-break:break-all; }
   #profile-edit .secret-key { word-break:break-all; }
-  
+  .profile-card-main{padding: 10px;}
+
   .header {position:fixed;z-index:10;top:0;width:100%}
   .content {padding:15px 20px 20px 20px;}
   .footer {position:fixed;z-index:10;bottom:0;width:100%}
@@ -121,12 +114,12 @@
       <div class="module">
         <span> Create a new user </span>
         <div>
-            <input class="new-username" type="textbox" placeholder="Type nickname here" cols="16" rows="1"></input>
+            <input class="new-username" type="text" placeholder="Type nickname here"></input>
             <button class="check-availability">Check availability</button>
             <span class="availability"></span>
         </div>
         <div>
-            <button class="create-user disabled" disabled="disabled">Create this nickname</button>
+            <button class="create-user" disabled>Create this nickname</button>
         </div>
       </div>
 
@@ -136,14 +129,14 @@
       <div class="module">
         <div>
             <span> Import secret key </span>
-            <input class="secret-key-import" type="textbox" placeholder="52-characters secret" size="52" rows="1"></input>
+            <input class="secret-key-import" type="text" placeholder="52-characters secret" size="52" rows="1"></input>
         </div>
         <div>
             <span> With nickname </span>
-            <input class="username-import" type="textbox" placeholder="Type nickname here" size="16" rows="1"></input>
+            <input class="username-import" type="text" placeholder="Type nickname here" size="16" rows="1"></input>
         </div>
         <div>
-            <button class="import-secret-key disabled" disabled="disabled">Import key</button>
+            <button class="import-secret-key" disabled>Import key</button>
         </div>
       </div>
 
@@ -160,7 +153,7 @@
 </div>
 
 <div id="home" data-role="page">
-    
+
   <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal">
     <a data-role="button" data-icon="refresh" class="timeline-refresh" rel="external">
@@ -171,7 +164,7 @@
         @
     </a>
     </div>
-    
+
     <h1 class="rtitle"></h1>
 
     <a href="#newmsg" class="ui-btn-right" style="">New post</a>
@@ -256,8 +249,6 @@
   </div>
 </div>
 
-
-
 <div id="newmsg" data-role="page">
     
   <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -265,20 +256,17 @@
   </div>
 
   <div class="content" data-role="content">
-  
-    <div class="tbox" style="">
-      <div style="padding-left:5px; width:300px; margin-bottom: 30px;">
-      
-        <form class="post-area-new open">
-          <textarea placeholder="New Post..." style="height:85px; width:270px;"></textarea>
-          <div class="post-area-extras">
-            <span class="post-area-remaining">140</span>
-            <button class="post-submit disabled" disabled="disabled"
-                    style="float:right; height:44px; font-weight: bold; font-size: 115%%; margin-bottom: 5px; margin-right: 5px;">
-              send</button>
-          </div>
-        </form>
-      </div>
+    <div class="tbox">
+      <form class="post-area-new open">
+        <textarea placeholder="New Post..."></textarea>
+        <div class="post-area-extras">
+          <span class="post-area-remaining">140</span>
+          <button class="post-submit" disabled
+                  style="float:right; height:44px; font-weight: bold; font-size: 115%%; margin-bottom: 5px; margin-right: 5px;">
+            send</button>
+        </div>
+      </form>
+      <br>
       <hr/>
       <ul class="reply-original-post" data-role="listview">
       </ul>
@@ -388,14 +376,15 @@
       <div class="profile-card-main" style="background: url(img/img.png) no-repeat center center #b43e34;">
         <img class="profile-card-photo forEdition avatar" src="img/genericPerson.png"/>
         <input type="text" class="input-name" placeholder="Full name here"/>
-        <h2></h2>
-        <input type="text" class="input-description" placeholder="Describe yourself"/>
-        <input type="text" class="input-city" placeholder="Location"/>
-        <input type="text" class="input-website" placeholder="website"/>
+        <p>
+          <input type="text" class="input-description" placeholder="Describe yourself"/>
+          <input type="text" class="input-city" placeholder="Location"/>
+          <input type="text" class="input-website" placeholder="website"/>
+        </p>
       </div>
-      <div class="profile-edition-buttons">
-          <button class="cancel-changes" href="#">Cancel</button>
-          <button class="submit-changes" href="#">Save Changes</button>
+      <div class="profile-edition-buttons ui-grid-a ui-responsive">
+        <div class="ui-block-a"><button class="cancel-changes" href="#">Cancel</button></div>
+        <div class="ui-block-b"><button class="submit-changes" href="#">Save Changes</button></div>
       </div>
 
       <div style="font-size:80%;text-align: center;">
@@ -485,37 +474,37 @@
         
         <h3> Detailed information </h3>
         <ul>
-          <li class="connections">
+          <li class="connections ui-field-contain">
               <label>Connections: </label>
               <span class="connection-count">1</span>
           </li>
-          <li>
+          <li class="ui-field-contain">
               <label>Known peers: </label>
               <span class="known-peers">6</span>
-          </li>
-          <li>
+          </li class="ui-field-contain">
+          <li class="ui-field-contain">
               <label>Active DHT nodes: </label>
               <span class="dht-nodes">0</span>
           </li>
           <li>
               <label>Force connection to peer:</label>
-              <input class="new-peer-addr" type="textbox" placeholder="peer address" size="20"/>
-              <button class="add-peer disabled" disabled="disabled">Add peer</button>
+              <input class="new-peer-addr" type="text" placeholder="peer address"/>
+              <button class="add-peer" disabled>Add peer</button>
           </li>
           <li>
               <label>DNS to obtain list of peers:</label>
-              <input class="new-dns-addr" type="textbox" placeholder="dns address" size="20"/>
-              <button class="add-dns disabled" disabled="disabled">Add DNS</button>
+                <input class="new-dns-addr" type="text" placeholder="dns address"/>
+                <button class="add-dns" disabled>Add DNS</button>
           </li>
         </ul>
 
         <h3> Block chain information </h3>
         <ul>
-          <li>
+          <li class="ui-field-contain">
               <label>Number of blocks in block chain:</label>
               <span class="blocks">2813</span>
           </li>
-          <li>
+          <li class="ui-field-contain">
               <label>Time of the last block:</label>
               <span class="last-block-time">Fri Nov 08 2013 08:32:48 </span>
           </li>
@@ -536,7 +525,7 @@
           </li>
           <li>
               <label> Number of CPUs to use </label>
-              <input class="genproclimit" type="textbox" value="1" size="3"/>
+              <input class="genproclimit" type="number" value="1"/>
           </li>
           <li>
               <label> Post to promote: </label>
@@ -598,7 +587,7 @@
         <textarea placeholder="New direct message..."></textarea>
         <div class="post-area-extras">
           <span class="post-area-remaining">140</span>
-          <button class="dm-submit disabled" disabled="disabled">send</button>
+          <button class="dm-submit" disabled>send</button>
         </div>
       </form>
     </div>
@@ -620,7 +609,7 @@
 
   <div class="content" data-role="content">
     <div>
-      <input type="text" class="userMenu-search-field" placeholder="Type partial username here"/>
+      <input type="search" class="userMenu-search-field" placeholder="Type partial username here"/>
     </div>
     <div>&nbsp;</div>
     <div>
@@ -800,7 +789,6 @@
     </li>
     
 </div> <!-- templates -->
-
 
 </body> 
 </html> 
