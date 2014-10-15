@@ -1734,7 +1734,7 @@ if(preferredLanguage == "ru"){
                  "twister'a).\n\n" +
                  "Примечание: Сейчас вы можете выбрать аватар!",
        "users_mentions": "Ответ от @%{username}",
-       "users_profile": "%{username}'s профиль",
+       "users_profile": "Профиль %{username}",
        "username_undefined": "Имя пользователя не определено, требуется войти.",
        "View": "Просмотреть",
        "View All": "Просмотреть Всё",

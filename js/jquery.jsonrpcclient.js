@@ -112,12 +112,17 @@
       throw 'JsonRpcClient.call used with no websocket and no http endpoint.';
     }
 
+    // add Authorization header
+    if(this.options.username != null  && this.options.username != undefined ) {
+      this.options.headers.Authorization = "Basic " + btoa(this.options.username + ":" + this.options.password);
+    }
+
     var self = this;
 
     var deferred = $.ajax({
       type       : 'POST',
       url        : this.options.ajaxUrl,
-      contentType: 'application/json',
+      contentType: 'application/json; charset=utf-8',
       data       : this.JSON.stringify(request),
       dataType   : 'json',
       cache      : false,

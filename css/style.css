@@ -164,23 +164,17 @@ button.disabled:hover
 {
     text-decoration: none;
     opacity: 1;
+    background-color: rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.current > a
 {
     color: #fff;
     opacity: 1;
+    background-color: #b43e34 !important;
 }
 .userMenu li.userMenu-home > a
 {
     background: url(../img/home.png) no-repeat 5px center;
-}
-.userMenu li.userMenu-home:hover > a
-{
-    background: url(../img/home.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-home.current > a
-{
-    background: url(../img/home.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-connections > a
 {
@@ -188,25 +182,13 @@ button.disabled:hover
     padding: 0 30px 0 20px;
     opacity: 1;
 }
-.userMenu li.userMenu-connections:hover > a
-{
-    background: url(../img/connections.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-connections.current > a
-{
-    background: url(../img/connections.png) no-repeat 5px center #b43e34;
-}
 .userMenu li.userMenu-network > a
 {
     background: url(../img/network.png) no-repeat 5px center;
 }
-.userMenu li.userMenu-network:hover > a
+.userMenu li.userMenu-options > a
 {
-    background: url(../img/network.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-network.current > a
-{
-    background: url(../img/network.png) no-repeat 5px center #b43e34;
+    background: url(../img/config.png) no-repeat 5px center;
 }
 .userMenu li.userMenu-messages > a
 {
@@ -214,25 +196,9 @@ button.disabled:hover
     padding: 0 25px 0 35px;
     opacity: 1;
 }
-.userMenu li.userMenu-messages:hover > a
-{
-    background: url(../img/messages.png) no-repeat center center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-messages.current > a
-{
-    background: url(../img/messages.png) no-repeat center center #b43e34;
-}
 .userMenu li.userMenu-profile > a
 {
     background: url(../img/profile.png) no-repeat 5px center;
-}
-.userMenu li.userMenu-profile:hover > a
-{
-    background: url(../img/profile.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-profile.current > a
-{
-    background: url(../img/profile.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-config
 {
@@ -347,7 +313,6 @@ button.disabled:hover
     right: auto;
     left: 80px;
 }
-.direct-messages,
 .dropdown-menu-item
 {
     display: block;
@@ -356,7 +321,11 @@ button.disabled:hover
     border-top: solid 1px rgba( 69, 71, 77, .1 );
     color: rgba( 0, 0, 0, .7 );
 }
-.direct-messages:hover,
+.dropdown-menu-item:hover
+{
+  text-decoration: none;
+}
+.dropdown-menu-item:hover,
 .userMenu-search-sugestions a:hover,
 .userMenu-search-profiles li:hover a
 {
