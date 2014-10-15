@@ -87,16 +87,16 @@ var router=new $.mobile.Router(
         { "#new-user-modal": {handler: "newusermodal", events: "bs" } },
     ],{
         index: function(type,match,ui) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 //$.MAL.goHome();
             });
         },
         home: function(type,match,ui) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 if( !$("#home .posts").children().length ) {
-                    $.mobile.showPageLoadingMsg();
+                    $.mobile.loading('show');
                     getFullname( defaultScreenName, $("#home .rtitle"));
                     $.MAL.setPostTemplate( $("#post-template-home") );
                     requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers);
@@ -106,7 +106,7 @@ var router=new $.mobile.Router(
         profile: function(type,match,ui) {
             var params=router.getParams(match[1]);
             clearProfilePage();
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 var user;
                 if( params && params.hasOwnProperty("user") ) {
@@ -121,13 +121,13 @@ var router=new $.mobile.Router(
                     $newmsgLink.hide();
                 }
 
-                $.mobile.showPageLoadingMsg();
+                $.mobile.loading('show');
                 $.MAL.setPostTemplate( $("#post-template-home") );
                 updateProfileData( $("#profile"), user);
             });
         },
         profileedit: function(type,match,ui) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 loadAvatarForEdit();
                 loadProfileForEdit();
@@ -139,7 +139,7 @@ var router=new $.mobile.Router(
         following: function(type,match,ui) {
             var params=router.getParams(match[1]);
             clearProfilePage();
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 var user;
                 if( params && params.hasOwnProperty("user") ) {
@@ -153,7 +153,7 @@ var router=new $.mobile.Router(
                 if( params && params.hasOwnProperty("unfollow") ) {
                     unfollow(params.unfollow);
                 }
-                $.mobile.showPageLoadingMsg();
+                $.mobile.loading('show');
                 $("#following a.ui-btn").removeClass("ui-btn-active");
                 showFollowingUsers();
             });
@@ -216,7 +216,7 @@ var router=new $.mobile.Router(
         },
         mentions: function(type,match,ui) {
             var params=router.getParams(match[1]);
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 var user;
                 var $newmsgLink = $("a.mention-newmsg");
@@ -235,7 +235,7 @@ var router=new $.mobile.Router(
         },
         hashtag: function(type,match,ui) {
             var params=router.getParams(match[1]);
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 $("#hashtag .rtitle").text("#" + params.hashtag);
                 $("a.hashtag-newmsg").attr("href",$.MAL.newPostHashtagToUrl(params.hashtag));
@@ -244,33 +244,33 @@ var router=new $.mobile.Router(
             });
         },
         login: function(type,match,ui) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, false, function() {
-                $.mobile.hidePageLoadingMsg();
+                $.mobile.loading('hide');
                 $("select.local-usernames.login-user").selectmenu("refresh", true);
                 installCreateUserClick();
             });
         },
         network: function(type,match,ui) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( false, false, function() {
-                $.mobile.hidePageLoadingMsg();
+                $.mobile.loading('hide');
                 $("select.local-usernames.spam-user").selectmenu("refresh", true);
                 getSpamMsg();
                 getGenerate();
             });
         },
         directmsg: function(type,match,ui) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 var $dmThreadList = $("#directmsg ul.direct-messages-thread");
-                $.mobile.showPageLoadingMsg();
+                $.mobile.loading('show');
                 requestDMsnippetList($dmThreadList);
             });
         },
         dmchat: function(type,match,ui) {
             var params=router.getParams(match[1]);
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             initializeTwister( true, true, function() {
                 var user = params.user;
                 var dmConvo = $("#dmchat ul.direct-messages-list");
@@ -279,7 +279,7 @@ var router=new $.mobile.Router(
                 dmConvo.html("");
                 installDMSendClick();
                 
-                $.mobile.showPageLoadingMsg();
+                $.mobile.loading('show');
                 dmChatUser = user;
                 requestDmConversation(dmConvo,user);
             });
@@ -315,7 +315,7 @@ function installPostboardClick() {
         e.preventDefault();
         var userpost = $(this).attr("data-userpost");
         var url = "#post?userpost=" + encodeURIComponent(userpost);
-        $.mobile.showPageLoadingMsg();
+        $.mobile.loading('show');
         $.mobile.navigate( url );
     });
     
@@ -325,7 +325,7 @@ function installPostboardClick() {
         // stopPropagation is supposed to be enough, but in Android the 
         // default action is not called so we reimplement it here as a hack.
         e.preventDefault();
-        $.mobile.showPageLoadingMsg();
+        $.mobile.loading('show');
         $.mobile.navigate( $(this).attr("href") );
     });
 }
@@ -341,7 +341,7 @@ function installReplyClick() {
         var replyTo = $postData.attr("data-reply-to");
         var url = "#newmsg?replyto=" + encodeURIComponent(replyTo) +
                   "&userpost=" + encodeURIComponent(userpost);
-        $.mobile.showPageLoadingMsg();
+        $.mobile.loading('show');
         $.mobile.navigate( url );
     });
 }
@@ -355,7 +355,7 @@ function installRetransmitClick() {
         var $postData = $(this).closest(".post-data");
         var userpost = $postData.attr("data-userpost");
         var url = "#rt?userpost=" + encodeURIComponent(userpost);
-        $.mobile.showPageLoadingMsg();
+        $.mobile.loading('show');
         $.mobile.navigate( url );
     });
 }
@@ -407,7 +407,7 @@ function installRetransmitConfirmClick() {
 
         var $postOrig = $("#rt .rt-original-post .post-data");
 
-        $.mobile.showPageLoadingMsg();
+        $.mobile.loading('show');
         newRtMsg($postOrig);
         $.MAL.goHome();
     });
@@ -529,7 +529,7 @@ function setupHashtagOrMention( ulElem, tag, res) {
     hashtag_res = res;
     hashtag_elem.text("");
     $.MAL.setPostTemplate( $("#post-template-home") );
-    $.mobile.showPageLoadingMsg();
+    $.mobile.loading('show');
     clearHashtagProcessed();
     if( tag == defaultScreenName && res == "mention" ) {
         // obtain already cached mention posts from twister_newmsgs.js

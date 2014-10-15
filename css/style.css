@@ -1727,17 +1727,16 @@ ol.toptrends-list {
 }
 
 /* Options */
-#playerVol {
-    float: right;
-    margin-right: 20px;
+
+.playervol{
+  width: 220px;
 }
 .volValue {
-    float: right;
-    margin-right: -163px;
-    font: 12px "Open Sans", sans-serif;
+  float:right;
+  font: 12px "Open Sans", sans-serif;
 }
 #notifyForm p, #choseLanguage p, #keysOpt p {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 .suboptions {
     margin: 5px 30px;

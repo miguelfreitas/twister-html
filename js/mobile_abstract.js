@@ -8,10 +8,10 @@ var MAL = function()
 {
     this.postboardLoading = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             /*
             setTimeout(function(){
-              $.mobile.hidePageLoadingMsg();
+              $.mobile.loading('hide');
             }, 10 * 1000);
             */
         } else {
@@ -21,7 +21,7 @@ var MAL = function()
 
     this.postboardLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var curPage = $.mobile.activePage.attr("id");
             $( '#'+curPage+' .content ul.posts').listview('refresh');
             
@@ -33,7 +33,7 @@ var MAL = function()
     
     this.dmThreadListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var $dmThreadList = $("#directmsg ul.direct-messages-thread");
             $dmThreadList.listview('refresh');
         } else {
@@ -42,7 +42,7 @@ var MAL = function()
 
     this.dmChatListLoaded = function(dmConvo) {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var $dmChatList = $("#dmchat ul.direct-messages-list");
             $dmChatList.listview('refresh');
             $.mobile.silentScroll( $(".dm-form").offset().top );
@@ -55,7 +55,7 @@ var MAL = function()
 
     this.relatedPostLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var curPage = $.mobile.activePage.attr("id");
             $( '#'+curPage+' .content ul.posts').listview('refresh');
         } else {
@@ -66,7 +66,7 @@ var MAL = function()
 
     this.followingListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             $(".following-list").listview('refresh');
         } else {
             $(".postboard-loading").hide();
@@ -75,7 +75,7 @@ var MAL = function()
 
     this.searchUserListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             $(".userMenu-search-profiles").listview('refresh');
         } else {
             var $searchResultsModal = $( ".search-results" );

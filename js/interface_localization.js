@@ -257,7 +257,8 @@ if(preferredLanguage == "en"){
       "Search": "Search",
       "Direct Msg": "Direct Msg",
       "Search users": "Search users",
-      "Type partial username here":"Type partial username here"
+      "Type partial username here":"Type partial username here",
+      "Sound volume":"Sound volume"
     };
 }
 if(preferredLanguage == "es"){
@@ -1851,7 +1852,8 @@ if(preferredLanguage == "ru"){
        "Search": "Поиск",
        "Direct Msg": "ЛС",
        "Search users": "Поиск пользователей",
-       "Type partial username here":"Введите имя пользователя"
+       "Type partial username here":"Введите имя пользователя",
+       "Sound volume":"Громкость звуков"
     };
 }
 
