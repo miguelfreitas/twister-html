@@ -125,7 +125,8 @@
       xhrFields  : this.options.xhrFields,
 
       success    : function(data) {
-        if ('error' in data) {
+        // fix for twister rpc
+        if ('error' in data && data.error != null) {
           errorCb(data.error);
         } else {
           successCb(data.result);
