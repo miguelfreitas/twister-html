@@ -53,14 +53,17 @@
                 white-space: normal !important; }
   .text-center{text-align: center}
 
+  .ui-listview > .ui-li-has-thumb > .ui-btn{min-height: 0;}
   .ui-listview .ui-li-has-thumb img.avatar {
     -webkit-border-radius: 10px;
     -mox-border-radius:10px;
     border-radius: 10px;
     width: 50px; height: 50px;
-    top:50%; margin-top: -25px;
+    top:50% !important; margin-top: -25px;
     margin-left: 1%;
   }
+  .ui-listview .ui-li-has-thumb img.avatar.size24 {width: 24px; height: 24px; margin-top: -12px;border-radius:0;}
+
   img.size24 {width: 24px; height: 24px;}
   #profile-edit img.avatar {display:block; margin-left: auto; margin-right: auto; width: 64px; height: 64px;}
 
@@ -637,7 +640,7 @@
         <ul class="userMenu-search-profiles" data-role="listview">
           <li id="search-profile-template" style="display: none;">
             <a class="mini-profile-info open-profile-modal" data-screen-name="">
-              <img class="mini-profile-photo avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+              <img class="mini-profile-photo avatar size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
               <span class="mini-screen-name">@<b></b></span>
               <span class="mini-profile-name"></span>
               <!-- <button class="follow">Follow</button> -->
