@@ -30,7 +30,7 @@ function openModal( modalClass )
 
 //fecha o modal removendo o conteúdo por detach
 function closeModal($this)
-{   
+{
     var $body = $( "body" );
     var $modalWindows = $( "body" ).children( ".modal-blackout" );
 
@@ -103,7 +103,12 @@ function openProfileModal(e)
 
     var $this = $( this );
     var username = $.MAL.urlToUser( $this.attr("href") );
-    
+    openProfileModalWithUsername(username);
+}
+
+
+function openProfileModalWithUsername(username)
+{
     if(!username)
     {
 	alert(polyglot.t("You don't have any profile because you are not logged in."));
@@ -118,14 +123,14 @@ function openProfileModal(e)
 
     //título do modal
     $( "."+profileModalClass + " h3" ).text( polyglot.t("users_profile", { username: username }) );
-    
+
     //hed//add dinamic follow button in profile modal window
     if(followingUsers.indexOf(username) != -1){
         $('.profile-card button.followButton').first().removeClass('follow').addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
             unfollow(username);
         });
     };
-    
+
     $(".tox-ctc").attr("title", polyglot.t("Copy to clipboard"));
     $(".bitmessage-ctc").attr("title", polyglot.t("Copy to clipboard"));
 }
@@ -354,6 +359,17 @@ function openConversationModal(e)
     $( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': postLi.find('.post-data').attr('data-screen-name')}) );
 }
 
+
+function watchHashChange(e){
+    if(/user=(.+)/.test(window.location.hash))
+    {
+        var username = location.hash.match(/user=(.+)/);
+        if(username[1] != undefined)
+            openProfileModalWithUsername(username[1]);
+    }
+}
+
+
 //
 // Post actions, submit, count characters
 // --------------------------------------
@@ -366,7 +382,7 @@ var reTwistPopup = function( e )
 	alert(polyglot.t("You have to log in to retransmit messages."));
 	return;
     }
-    
+
     var reTwistClass = "reTwist";
     openModal( reTwistClass );
 
@@ -439,7 +455,7 @@ var postExpandFunction = function( e, postLi )
     var $postsRelated = postLi.find(".related");
 
     var openClass = "open";
-    
+
     if( !postLi.hasClass( openClass ) ) {
         originalPost.detach();
         postLi.empty();
@@ -451,7 +467,7 @@ var postExpandFunction = function( e, postLi )
         originalLi.append(originalPost);
 
         $postExpandedContent.slideDown( "fast" );
-        
+
         if ($.Options.getShowPreviewOpt() == 'enable'){
             var previewContainer=$postExpandedContent.find(".preview-container")[0];
             /* was the preview added before... */
@@ -683,7 +699,7 @@ function replyTextKeypress(e) {
             }
         }else if( !$.Options.keyEnterToSend() ){
             if (e.keyCode === 13 && (e.metaKey || e.ctrlKey)) {
-                
+
                 $this.val($this.val().trim());
                 if( !tweetAction.hasClass("disabled") ) {
                     tweetAction.click();
@@ -960,15 +976,15 @@ var unicodeConversionList = {
 function getRangesForUnicodeConversion(msg)
 {
     if(!msg) return;
-                    
+
     var tempMsg = msg;
     var results = [];
     var regexHttpStart = /http[s]?:\/\//;
     var regexHttpEnd = /[ \n\t]/;
     var start=0, end, position, rep = true;
-    
+
     position = tempMsg.search(regexHttpStart);
-    
+
     while(position!=-1)
     {
         end = start + position;
@@ -979,7 +995,7 @@ function getRangesForUnicodeConversion(msg)
         rep = !rep;
         start = end;
         tempMsg = tempMsg.substring(position, tempMsg.length);
-      
+
         if(rep == true)
             position = tempMsg.search(regexHttpStart);
         else
@@ -988,15 +1004,15 @@ function getRangesForUnicodeConversion(msg)
     end = msg.length;
     if(end > start)
         results.push({start: start, end: end, replace: rep});
-                                                           
-    return results; 
+
+    return results;
 }
 
 function getUnicodeReplacement(msg, list, ranges, ta)
 {
    if(!msg || !list || !ranges) return;
    if(ranges.length===0) return "";
-                    
+
    var position, substrings = [];
    for (var j=0; j<ranges.length; j++)
    {
@@ -1010,7 +1026,7 @@ function getUnicodeReplacement(msg, list, ranges, ta)
               {
                   var oldSubstring = substrings[j];
                   substrings[j] = substrings[j].replace(list[i].k, list[i].u);
-                  
+
                   var len = oldSubstring.length - substrings[j].length + list[i].u.length;
                   ta.data("unicodeConversionStack").unshift({
                       "k": oldSubstring.substr(position, len),
@@ -1036,7 +1052,7 @@ function convert2Unicodes(s, ta)
     if(!ta.data("disabledUnicodeRules"))        // A list of conversion rules that are temporarily disabled
         ta.data("disabledUnicodeRules", []);
     var ranges = getRangesForUnicodeConversion(s);
-    var list; 
+    var list;
     if ($.Options.getUnicodeConversionOpt() === "enable" || $.Options.getConvertPunctuationsOpt())
     {
         list = unicodeConversionList.punctuation;
@@ -1057,7 +1073,7 @@ function convert2Unicodes(s, ta)
         list = unicodeConversionList.fractions;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
-    
+
     if (ta.data("unicodeConversionStack").length > 0)
     {
         var ub = ta.closest(".post-area-new").find(".undo-unicode");
@@ -1083,7 +1099,7 @@ function undoLastUnicode(e) {
     var uc = $ta.data("unicodeConversionStack").shift();
 
     var pt = $ta.val();
-    
+
     // If the text was shifted, and character is no longer at the saved position, this function
     // searches for it to the right. If it is not there, it searches in the oposite direction.
     // if it's not there either, it means it was deleted, so it is skipped.
@@ -1282,7 +1298,7 @@ function replaceDashboards() {
 }
 
 function initInterfaceCommon() {
-    $( "body" ).on( "click", function(event) { 
+    $( "body" ).on( "click", function(event) {
         if($(event.target).hasClass('cancel')) closeModal($(this));
     });
     $(".cancel").on('click', function(event){
