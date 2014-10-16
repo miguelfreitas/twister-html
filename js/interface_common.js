@@ -353,18 +353,36 @@ function openConversationModal(e)
 }
 
 
-function watchHashChange(e){
-    var hashdata = window.location.hash.match(/(hashtag|profile)\?(?:user|hashtag)=(.+)/);
+function watchHashChange(e)
+{
+    var hashstring = window.location.hash
+    hashstring = decodeURIComponent(hashstring);
+
+    var hashdata = hashstring.split(':');
+    if (hashdata[0] != '#web+twister') {
+        hashdata = hashstring.match(/(hashtag|profile)\?(?:user|hashtag)=(.+)/);
+    }
 
     if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined)
     {
-        if(hashdata[1] == 'profile')
-        {
+        if(hashdata[1] == 'profile') {
             openProfileModalWithUsername(hashdata[2]);
-        }else if (hashdata[2] == 'hashtag'){
-            openHashtagModalFromSearch(username[2]);
+        }else if (hashdata[1] == 'hashtag') {
+            openHashtagModalFromSearch(hashdata[2]);
         }
     }
+}
+
+
+function initHashWatching()
+{
+    // Register custom protocol handler
+    var local_twister_url = window.location.protocol + '//' + window.location.host + '/home.html#%s';
+    window.navigator.registerProtocolHandler('web+twister', local_twister_url, 'Twister');
+
+    // Register hash spy and launch it once
+    window.addEventListener('hashchange', watchHashChange, false);
+    watchHashChange(null);
 }
 
 

@@ -52,6 +52,7 @@ var InterfaceFunctions = function()
         initInterfaceDirectMsg();
 
         initUser(initHome);
+        initHashWatching();
     };
 
     function initHome(cbFunc, cbArg) {
@@ -163,7 +164,6 @@ var InterfaceFunctions = function()
 var interfaceFunctions = new InterfaceFunctions;
 $( document ).ready( interfaceFunctions.init );
 $( window ).resize(replaceDashboards);
-window.addEventListener('hashchange', watchHashChange, false);
 
 //função no window que fixa o header das postagens
 function fixDiv()
