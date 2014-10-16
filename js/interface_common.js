@@ -133,6 +133,7 @@ function openProfileModalWithUsername(username)
 
     $(".tox-ctc").attr("title", polyglot.t("Copy to clipboard"));
     $(".bitmessage-ctc").attr("title", polyglot.t("Copy to clipboard"));
+    window.location.hash = '#profile?user=' + username;
 }
 
 function newHashtagModal(hashtag) {
@@ -155,16 +156,7 @@ function openHashtagModal(e)
 
     var $this = $( this );
     var hashtag = $this.text().substring(1).toLowerCase();
-
-    var hashtagModalClass = "hashtag-modal";
-    openModal( hashtagModalClass );
-    $( "."+hashtagModalClass ).attr("data-resource","hashtag");
-
-    var hashtagModalContent = newHashtagModal( hashtag );
-    hashtagModalContent.appendTo("." +hashtagModalClass + " .modal-content");
-
-    //título do modal
-    $( "."+hashtagModalClass + " h3" ).text( "#" + hashtag );
+    openHashtagModalFromSearch(hashtag);
 }
 
 function openHashtagModalFromSearch(hashtag)
@@ -178,6 +170,7 @@ function openHashtagModalFromSearch(hashtag)
 
     //título do modal
     $( "."+hashtagModalClass + " h3" ).text( "#" + hashtag );
+    window.location.hash = '#hashtag?hashtag=' + hashtag;
 }
 
 function updateHashtagModal(postboard,hashtag) {
@@ -361,11 +354,16 @@ function openConversationModal(e)
 
 
 function watchHashChange(e){
-    if(/user=(.+)/.test(window.location.hash))
+    var hashdata = window.location.hash.match(/(hashtag|profile)\?(?:user|hashtag)=(.+)/);
+
+    if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined)
     {
-        var username = location.hash.match(/user=(.+)/);
-        if(username[1] != undefined)
-            openProfileModalWithUsername(username[1]);
+        if(hashdata[1] == 'profile')
+        {
+            openProfileModalWithUsername(hashdata[2]);
+        }else if (hashdata[2] == 'hashtag'){
+            openHashtagModalFromSearch(username[2]);
+        }
     }
 }
 
