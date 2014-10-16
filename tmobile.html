@@ -53,11 +53,13 @@
                 white-space: normal !important; }
   .text-center{text-align: center}
 
-  img.avatar {
+  .ui-listview .ui-li-has-thumb img.avatar {
     -webkit-border-radius: 10px;
     -mox-border-radius:10px;
     border-radius: 10px;
     width: 50px; height: 50px;
+    top:50%; margin-top: -25px;
+    margin-left: 1%;
   }
   img.size24 {width: 24px; height: 24px;}
   #profile-edit img.avatar {display:block; margin-left: auto; margin-right: auto; width: 64px; height: 64px;}
@@ -175,7 +177,7 @@
 
   <div class="ui-content" role="main">
     <div class="timeline">
-       <ul class="posts" data-role="listview"></ul>
+       <ul class="posts" data-theme="a" data-split-theme="b" data-role="listview"></ul>
     </div>
   </div>
 
@@ -268,9 +270,7 @@
         <textarea placeholder="New Post..."></textarea>
         <div class="post-area-extras">
           <span class="post-area-remaining">140</span>
-          <button class="post-submit" disabled
-                  style="float:right; height:44px; font-weight: bold; font-size: 115%%; margin-bottom: 5px; margin-right: 5px;">
-            send</button>
+          <button class="post-submit" disabled>send</button>
         </div>
       </form>
       <br>
@@ -291,7 +291,7 @@
 
 <div id="rt" data-role="page">
 
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-add-back-btn="true">
     <h1 class="rtitle">Retransmit</h1>
   </div>
 
@@ -579,8 +579,7 @@
   </div>
 
   <div class="ui-content" role="main">
-    <ul class="direct-messages-thread" data-role="listview">
-    </ul>
+    <ul class="direct-messages-thread" data-role="listview"></ul>
   </div>
 
   <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -718,7 +717,7 @@
 <div id="anywhere"></div>
 
 <div id="templates" style="display:none;">
-    <li id="post-template-home" class="post-li module post" data-time="">
+    <li id="post-template-home" class="post-li module post ui-btn" data-time="">
         <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
         <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""
              data-screen-name="" data-id="" data-text="" data-text-mentions="">

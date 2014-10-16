@@ -440,7 +440,7 @@ function installCreateUserClick() {
 function installUserSearchHandler() {
     var $userSearchField = $( ".userMenu-search-field" );
     $(document)
-    .on( 'keyup', $userSearchField, function(){alert(123)})
+    .on( 'keyup', $userSearchField, userSearchKeypress )
     .on( 'click', $userSearchField, userSearchKeypress );
 }
 
