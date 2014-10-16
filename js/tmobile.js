@@ -6,17 +6,28 @@
 var twisterInitialized = false;
 var handlersInstalled = false;
 function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
+
     if( !handlersInstalled ) {
         interfaceNetworkHandlers();
         interfaceCommonLoginHandlers();
         installUserSearchHandler();
         installProfileEditHandlers();
+
         // install scrollbottom handler to load more posts as needed
-        $(window).scroll(function(){
-            if  ($(window).scrollTop() >= $(document).height() - $(window).height() - 20){
-              reachedScrollBottom();
-            }
+        $(document).on("scrollstop", function (e) {
+          var activePage = $('body').pagecontainer("getActivePage"),
+              scrolltop = $(window).scrollTop(),
+              screenHeight = $.mobile.getScreenHeight(),
+              contentHeight = $(".ui-content", activePage).outerHeight(),
+              /* header and footer height within active page. -2 for fixed position */
+              borders = $(".ui-header", activePage).outerHeight() + $(".ui-footer", activePage).outerHeight() - 2,
+              scrollEnd = contentHeight - screenHeight + borders;
+
+          if(activePage[0].id == "home" && scrolltop >= scrollEnd) {
+            reachedScrollBottom();
+          }
         });
+
         // home screen timeline refresh button
         $( ".timeline-refresh").click(function(e) {
             $.MAL.setPostTemplate( $("#post-template-home") );
@@ -26,7 +37,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
         // reply text counter both newmsg and dmchat
         var $replyText = $( ".post-area-new textarea" );
         $replyText.unbind('keyup').keyup( replyTextKeypress );
-        
+
         setInterval("tmobileTick()", 2000);
         handlersInstalled = true;
     }
@@ -53,7 +64,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
                         initMentionsCount();
                         initDMsCount();
                         twisterFollowingO = TwisterFollowing(defaultScreenName);
-                    
+
                         twisterInitialized = true;
                         if( cbFunc )
                             cbFunc(cbArg);
@@ -166,7 +177,7 @@ var router=new $.mobile.Router(
                 $.MAL.setPostTemplate( $("#post-template-post") );
                 var originalLi = postToElem($.evalJSON(params.userpost), "original");
                 $ulPost.append(originalLi);
-                $ulPost.find(".post-interactions").trigger('create');
+                $ulPost.find(".post-interactions").enhanceWithin();
                 $ulPost.listview('refresh');
                 installReplyClick();
                 installRetransmitClick();
@@ -278,7 +289,7 @@ var router=new $.mobile.Router(
                 $("#dmchat textarea").val("");
                 dmConvo.html("");
                 installDMSendClick();
-                
+
                 $.mobile.loading('show');
                 dmChatUser = user;
                 requestDmConversation(dmConvo,user);
@@ -298,7 +309,7 @@ var router=new $.mobile.Router(
         },
     }, {
         defaultHandler: function(type, ui, page) {
-            console.log("Default handler called due to unknown route (" 
+            console.log("Default handler called due to unknown route ("
                         + type + ", " + ui + ", " + page + ")" );
             console.log(ui);
             console.log(page);
@@ -318,11 +329,11 @@ function installPostboardClick() {
         $.mobile.loading('show');
         $.mobile.navigate( url );
     });
-    
+
     $(".post a").unbind('click').click(function(e) {
         e.stopPropagation();
-        
-        // stopPropagation is supposed to be enough, but in Android the 
+
+        // stopPropagation is supposed to be enough, but in Android the
         // default action is not called so we reimplement it here as a hack.
         e.preventDefault();
         $.mobile.loading('show');
@@ -415,7 +426,7 @@ function installRetransmitConfirmClick() {
 
 function installCreateUserClick() {
     $( ".create-user").unbind('click').click( function(e) {
-        createUserClick( function(username, secretKey) { 
+        createUserClick( function(username, secretKey) {
             defaultScreenName = username;
             if(defaultScreenName) {
                 saveScreenName();
@@ -428,14 +439,15 @@ function installCreateUserClick() {
 
 function installUserSearchHandler() {
     var $userSearchField = $( ".userMenu-search-field" );
-    $userSearchField.unbind('keyup').keyup( userSearchKeypress );
-    $userSearchField.unbind('click').bind( "click", userSearchKeypress );
+    $(document)
+    .on( 'keyup', $userSearchField, function(){alert(123)})
+    .on( 'click', $userSearchField, userSearchKeypress );
 }
 
 function installProfileEditHandlers() {
     $(".profile-card-photo.forEdition").click( function() { $('#avatar-file').click(); } );
     $("#avatar-file").bind( "change", handleAvatarFileSelectMobile);
-    $(".submit-changes").click( function() { 
+    $(".submit-changes").click( function() {
         saveProfile();
         setTimeout( function() {$.MAL.goHome();}, 1000);
     } );
@@ -497,13 +509,10 @@ function clearProfilePage() {
 
 // handler of scroll bottom to request older posts
 function reachedScrollBottom() {
-    var curPage = $.mobile.activePage.attr("id");
-    if( curPage == "home" ) {
-        if( timelineLoaded ) {
-            $.MAL.setPostTemplate( $("#post-template-home") );
-            requestTimelineUpdate("older", postsPerRefresh, followingUsers);
-        }
-    }
+  if( timelineLoaded ) {
+    $.MAL.setPostTemplate( $("#post-template-home") );
+    requestTimelineUpdate("older", postsPerRefresh, followingUsers);
+  }
 }
 
 function encode_utf8(s) {
@@ -511,7 +520,7 @@ function encode_utf8(s) {
     var ua = navigator.userAgent;
     if( ua.indexOf("Android") >= 0 )
     {
-        var androidversion = parseFloat(ua.slice(ua.indexOf("Android")+8)); 
+        var androidversion = parseFloat(ua.slice(ua.indexOf("Android")+8));
         if (androidversion < 3.0)
         {
             return unescape(encodeURIComponent(s));
@@ -540,7 +549,7 @@ function setupHashtagOrMention( ulElem, tag, res) {
 
 // every 2 seconds do something page specific.
 function tmobileTick() {
-    var curPage = $.mobile.activePage.attr("id");
+    var curPage = $('body').pagecontainer('getActivePage').attr("id");
     if( curPage == "network" ) {
         networkUpdate();
     }

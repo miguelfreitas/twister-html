@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html> 
+<html>
 <head>
-  <meta charset="utf-8" /> 
+  <meta charset="utf-8" />
   <title>twister mobile</title>
   <meta name="viewport" content="width=device-width, user-scalable=no"/>
   <link rel="icon" type="image/png" href="img/twister_mini.png" />
@@ -39,8 +39,8 @@
   <script src="js/interface_common.js?vr=10"></script>
   <script src="js/tmobile.js?vr=10"></script>
   <script src="js/jpeg_encoder_basic.js"></script>
-</head> 
-<body> 
+</head>
+<body>
 
 <style>
   .ui-li-heading { margin: 0em 0 0.6em 0; }
@@ -51,6 +51,7 @@
 
   .no-ellipsis {text-overflow: initial !important; overflow: visible !important;
                 white-space: normal !important; }
+  .text-center{text-align: center}
 
   img.avatar {
     -webkit-border-radius: 10px;
@@ -62,10 +63,10 @@
   #profile-edit img.avatar {display:block; margin-left: auto; margin-right: auto; width: 64px; height: 64px;}
 
   .ui-listview .post a{ color: #0030ff; }
-  
+
   #post li.original { background: #fff; /*top:5px; border-width:5px !important;*/}
   #post li.related .post-interactions { display:none; }
-  
+
   #new-user-modal .text { margin: 0 0 15px 0; }
   #new-user-modal .emphasis { font-size: 18px; text-align: center; }
   #new-user-modal .secret-key { font-weight: bold; word-break:break-all; }
@@ -73,14 +74,14 @@
   .profile-card-main{padding: 10px;}
 
   .header {position:fixed;z-index:10;top:0;width:100%}
-  .content {padding:15px 20px 20px 20px;}
+  .ui-content {padding:15px 20px 20px 20px;}
   .footer {position:fixed;z-index:10;bottom:0;width:100%}
 }
-  
+
 </style>
 
 <div id="index" data-role="page">
-  <div class="content" data-role="content" style="">
+  <div class="ui-content" role="main" style="">
     <div>twister mobile</div>
     <a href="#login">login</a>
     <a href="#network">network</a>
@@ -90,11 +91,11 @@
 
 
 <div id="login" data-role="page">
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <h1 class="rtitle">twister login</h1>
   </div>
 
-  <div class="content" data-role="content" style="">  
+  <div class="ui-content" role="main" style="">
     <div class="login">
       <div class="module">
         <span> Existing local users </span>
@@ -143,18 +144,20 @@
     </div>
 
   </div>
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="home" data-role="page">
 
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal">
     <a data-role="button" data-icon="refresh" class="timeline-refresh" rel="external">
         Refresh
@@ -165,97 +168,101 @@
     </a>
     </div>
 
-    <h1 class="rtitle"></h1>
+    <h1 class="rtitle">Home</h1>
 
     <a href="#newmsg" class="ui-btn-right" style="">New post</a>
   </div>
 
-  <div class="content" data-role="content">  
+  <div class="ui-content" role="main">
     <div class="timeline">
-       <ul class="posts" data-role="listview">
-       </ul>
+       <ul class="posts" data-role="listview"></ul>
     </div>
   </div>
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#login" data-role="button">Login</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#login" data-role="button">Login</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="post" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <a href="#search" class="ui-btn-left" style="">Search</a>
     <h1 class="rtitle">twister</h1>
     <a href="#newmsg" class="ui-btn-right" style="">New post</a>
   </div>
 
-  <div class="content" data-role="content">
-    <ul class="posts" data-role="listview">
-    </ul>
+  <div class="ui-content" role="main">
+    <ul class="posts" data-role="listview"></ul>
   </div>
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 
 <div id="mentions" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <a href="#search" class="ui-btn-left" style="">Search</a>
-    <h1 class="rtitle"></h1>
+    <h1 class="rtitle">Mentions</h1>
     <a href="#newmsg" class="mention-newmsg ui-btn-right" style="">New post</a>
   </div>
 
-  <div class="content" data-role="content">
-    <ul class="posts" data-role="listview">
-    </ul>
+  <div class="ui-content" role="main">
+    <ul class="posts" data-role="listview"></ul>
   </div>
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="hashtag" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <a href="#search" class="ui-btn-left" style="">Search</a>
-    <h1 class="rtitle"></h1>
+    <h1 class="rtitle">hashtag</h1>
     <a href="#newmsg" class="hashtag-newmsg ui-btn-right" style="">New post</a>
   </div>
 
-  <div class="content" data-role="content">
-    <ul class="posts" data-role="listview">
-    </ul>
+  <div class="ui-content" role="main">
+    <ul class="posts" data-role="listview"></ul>
   </div>
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="newmsg" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <h1 class="rtitle">New post</h1>
   </div>
 
-  <div class="content" data-role="content">
+  <div class="ui-content" role="main">
     <div class="tbox">
       <form class="post-area-new open">
         <textarea placeholder="New Post..."></textarea>
@@ -268,26 +275,27 @@
       </form>
       <br>
       <hr/>
-      <ul class="reply-original-post" data-role="listview">
-      </ul>
+      <ul class="reply-original-post" data-role="listview"></ul>
     </div>
   </div>
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="rt" data-role="page">
 
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <h1 class="rtitle">Retransmit</h1>
   </div>
 
-  <div class="content" data-role="content">
+  <div class="ui-content" role="main">
     <div>
         <h3>Retransmit this post to your followers? </h3>
     </div>
@@ -302,25 +310,27 @@
 
   </div>
 
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 
 <div id="profile" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a href="#search" class="ui-btn-left" style="">Search</a>
     <h1 class="rtitle">Profile</h1>
     <a href="#newmsg" class="profile-newmsg ui-btn-right" style="">New post</a>
   </div>
 
-  <div class="content" data-role="content">
-  
+  <div class="ui-content" role="main">
+
      <div class="profile-card" data-screen-name="">
        <!-- Coloquei a imagem de fundo do card do usuário como background da div
             abaixo inline na tag para poder ser alterada dinamicamente
@@ -346,30 +356,32 @@
        <a data-role="button" data-mini="true" class="mentions-from-user" href="#mentions">Mentions</a>
        <div>&nbsp;</div>
     </div>
-    
+
     <div>
         <ul class="posts postboard-posts" data-role="listview">
         </ul>
     </div>
   </div>
 
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="profile-edit" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a href="#login" class="ui-btn-left" style="">Login</a>
     <h1 class="rtitle">Edit profile</h1>
     <a href="#following" class="ui-btn-right" style="">Following</a>
   </div>
 
-  <div class="content" data-role="content">
+  <div class="ui-content" role="main">
       <input type="file" id="avatar-file" name="avatar_files"/>
       <div class="profile-card forEdition">
       <!-- Coloquei a imagem de fundo do card do usuário como background da div abaixo inline na tag para poder ser alterada dinamicamente -->
@@ -393,23 +405,25 @@
     </div>
   </div>
 
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 
 <div id="following" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a href="#search" class="ui-btn-left" style="">Search</a>
     <h1 class="rtitle">Following</h1>
   </div>
 
-  <div class="content" data-role="content">
+  <div class="ui-content" role="main">
       <ul class="following-list" data-role="listview">
         <li id="following-user-template" style="display: none;">
             <div class="mini-profile-info" data-screen-name="">
@@ -441,23 +455,25 @@
       </div>
   </div>
 
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 
 <div id="network" data-role="page">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a href="#login" class="ui-btn-left" style="">Login</a>
     <h1 class="rtitle">twister</h1>
   </div>
 
-  <div class="content" data-role="content">
+  <div class="ui-content" role="main">
     <div class="network singleBlock">
       <h2> Network status </h2>
 
@@ -471,7 +487,7 @@
            <div>&nbsp;</div>
         </ul>
         <button class="terminate-daemon">Terminate Daemon</button>
-        
+
         <h3> Detailed information </h3>
         <ul>
           <li class="connections ui-field-contain">
@@ -546,42 +562,46 @@
     </div>
 
   </div>
-    
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="directmsg" data-role="page">
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <h1 class="rtitle">Direct Messages</h1>
   </div>
 
-  <div class="content" data-role="content">  
+  <div class="ui-content" role="main">
     <ul class="direct-messages-thread" data-role="listview">
     </ul>
   </div>
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="dmchat" data-role="page">
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <h1 class="rtitle">Chat with</h1>
   </div>
 
-  <div class="content" data-role="content">
+  <div class="ui-content" role="main">
     <ul class="direct-messages-list" data-role="listview">
     </ul>
-    
+
     <div class="dm-form" style="padding:15px 20px 20px 20px;">
       <form class="post-area-new open">
         <textarea placeholder="New direct message..."></textarea>
@@ -592,22 +612,24 @@
       </form>
     </div>
   </div>
-  
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
 <div id="search" data-role="page">
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
     <h1 class="rtitle">Search users</h1>
   </div>
 
-  <div class="content" data-role="content">
+  <div class="ui-content" role="main">
     <div>
       <input type="search" class="userMenu-search-field" placeholder="Type partial username here"/>
     </div>
@@ -625,13 +647,14 @@
         </ul>
     </div>
   </div>
-  
-  
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#home" data-role="button">Home</a>
-    <a href="#network" data-role="button">Network</a>
-    <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
-    <a href="#profile-edit" data-role="button">Profile</a>
+
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="controlgroup" data-type="horizontal" class="text-center">
+      <a href="#home" data-role="button">Home</a>
+      <a href="#network" data-role="button">Network</a>
+      <a href="#directmsg" data-role="button" class="newdms-count">Direct Msg</a>
+      <a href="#profile-edit" data-role="button">Profile</a>
+    </div>
   </div>
 </div>
 
@@ -646,7 +669,7 @@
             Please do not close this window, this might take a few minutes.
         </div>
         <div class="text emphasis">
-            Your secret key is: 
+            Your secret key is:
             <div class="secret-key"></div>
         </div>
         <div class="text">
@@ -670,27 +693,26 @@
 </div>
 
 
-
 <div id="dialog_page" data-role="page" style="background:gray;">
-    
-  <div class="myheader" data-role="header" data-position="fixed" data-tap-toggle="false">
+
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a class="back-btn" href="#home" data-icon="arrow-l" data-rel="back">Back</a>
-    
+
     <h1 class="page-title"></h1>
   </div>
 
-  <div class="content" data-role="content" style="">
-  
+  <div class="ui-content" role="main">
+
     <div class="ui-body-c" style="padding:10px; border-radius: 10px;">
       <div class="dialog-title" style="font-size: 105%; font-weight:bold; margin-bottom:10px; text-align:center;"></div>
       <div class="dialog-description" style="width:100%; margin-bottom:20px; text-align:center;"></div>
-    
+
       <div class="dialog-buttons" style="width:100%;"></div>
     </div>
   </div>
-  <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <a href="#" data-role="button" class="logoutButton">Logout</a>    
-  </div>  
+  <div class="footer" data-theme="b" data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <a href="#" data-role="button" class="logoutButton">Logout</a>
+  </div>
 </div>
 
 <div id="anywhere"></div>
@@ -713,7 +735,7 @@
             </div>
         </div>
     </li> <!-- post-template -->
-    
+
     <li id="post-template-post" class="module post" data-time="">
         <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
         <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""
@@ -730,7 +752,7 @@
                 <a style="font-size:60%;" class="post-retransmited-by open-profile-modal" href=""></a>
             </div>
             <!-- elementos de interação com o post que são exibidos no hover -->
-            <fieldset class="post-interactions ui-grid-a" data-role="fieldcontain">
+            <fieldset class="post-interactions ui-grid-a ui-field-contain">
                 <div class="ui-block-a">
                     <button class="post-reply" data-mini="true">Reply</button>
                 </div>
@@ -751,20 +773,20 @@
             </div> <!-- expanded-content -->
         </div> <!-- post-data -->
     </li> <!-- post-template -->
-    
-    
+
+
     <!-- template for user links in message (open profile modal) -->
     <a id="msg-user-link-template" class="open-profile-modal"></a>
     <!-- template for user links in message (open profile modal) -->
     <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
     <!-- template for user links in message (open profile modal) -->
     <a id="hashtag-link-template" class="open-hashtag-modal"></a>
-    
+
     <!-- template para ir dentro de avatar-row -->
     <a id="avatar-row-template" class="open-profile-modal" href="">
        <img class="avatar size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
     </a>
-    
+
     <!-- template for dm-snippet (dm threads list)  -->
     <li id="dm-snippet-template" class="module post message" data-icon="arrow-r">
       <a class="dm-chat-link post-photo" href="#dmchat">
@@ -778,7 +800,7 @@
         <p class="post-text"></p>
       </a>
     </li>
-    
+
     <!-- template for each dm (chat window) -->
     <li id="dm-chat-template" class="module post message">
       <h4 class="post-photo">
@@ -787,8 +809,8 @@
       </h4>
       <p class="post-text no-ellipsis"></p>
     </li>
-    
+
 </div> <!-- templates -->
 
-</body> 
-</html> 
+</body>
+</html>

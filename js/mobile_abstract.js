@@ -22,15 +22,15 @@ var MAL = function()
     this.postboardLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
             $.mobile.loading('hide');
-            var curPage = $.mobile.activePage.attr("id");
-            $( '#'+curPage+' .content ul.posts').listview('refresh');
-            
+            var curPage = $('body').pagecontainer('getActivePage').attr("id");
+            $( '#'+curPage+' .ui-content ul.posts').listview('refresh');
+
             installPostboardClick();
         } else {
             $(".postboard-loading").hide();
         }
     }
-    
+
     this.dmThreadListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
             $.mobile.loading('hide');
@@ -52,17 +52,15 @@ var MAL = function()
         }
     }
 
-
     this.relatedPostLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
             $.mobile.loading('hide');
-            var curPage = $.mobile.activePage.attr("id");
-            $( '#'+curPage+' .content ul.posts').listview('refresh');
+            var curPage = $('body').pagecontainer('getActivePage').attr("id");
+            $( '#'+curPage+' .ui-content ul.posts').listview('refresh');
         } else {
             $(".postboard-loading").hide();
         }
     }
-
 
     this.followingListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
@@ -111,7 +109,7 @@ var MAL = function()
             }
         }
     }
-    
+
     this.getStreamPostsParent = function() {
         if( $.hasOwnProperty("mobile") ) {
             return $( '.timeline ul');
@@ -177,7 +175,7 @@ var MAL = function()
             return "#hashtag?hashtag=" + h;
         }
     }
-    
+
     this.dmchatUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#dmchat?user=" + username;
@@ -193,7 +191,7 @@ var MAL = function()
             return "#following?user=" + username;
         }
     }
-    
+
     this.followUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#following?follow=" + username;
@@ -226,7 +224,7 @@ var MAL = function()
         }
     }
 
-    
+
     this.updateNewMentionsUI = function(newMentions) {
         if( $.hasOwnProperty("mobile") ) {
             var $mentionsCounterBtnText = $(".mentions-count .ui-btn-text");
@@ -356,7 +354,7 @@ var MAL = function()
             window.location.href = "home.html";
         }
     }
-    
+
     this.soundNotifyMentions = function() {
          if( $.hasOwnProperty("mobile") ) {
          } else {
