@@ -362,9 +362,9 @@ var reTwistPopup = function( e )
 {
     if(!defaultScreenName)
     {
-	e.stopPropagation();
-	alert(polyglot.t("You have to log in to retransmit messages."));
-	return;
+      e.stopPropagation();
+      alert(polyglot.t("You have to log in to retransmit messages."));
+      return;
     }
     
     var reTwistClass = "reTwist";
@@ -1183,7 +1183,6 @@ var postSubmit = function(e, oldLastPostId)
     var tweetForm = $this.parents("form");
     var remainingCount = tweetForm.find(".post-area-remaining");
     remainingCount.text(140);
-    $replyText.attr("placeholder", "Your message was sent!");
     closeModal($this);
     if($this.closest('.post-area,.post-reply-content')){
         $('.post-area-new').removeClass('open').find('textarea').blur();
@@ -1281,6 +1280,33 @@ function replaceDashboards() {
     $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
 }
 
+function textLimitIndicate(event)
+{
+  var $this     = $(this),
+      count     = 140 - $this.val().length,
+      btnSend   = $this.data('btn-send'),
+      indicator = $this.data('limit-indicator');
+
+  if(btnSend === undefined && event.data.btnSend){
+    btnSend = event.data.btnSend;
+  }
+
+  if(indicator === undefined && event.data.indicator){
+    indicator = event.data.indicator;
+  }
+
+  if(btnSend){
+    if(count < 0){
+      $('.'+btnSend).prop('disabled',true).addClass('disabled');
+    }else{
+      $('.'+btnSend).prop('disabled',false).removeClass('disabled');
+    }
+  }
+  if(indicator){
+    $('.'+indicator).text(count);
+  }
+}
+
 function initInterfaceCommon() {
     $( "body" ).on( "click", function(event) { 
         if($(event.target).hasClass('cancel')) closeModal($(this));
@@ -1299,7 +1325,7 @@ function initInterfaceCommon() {
     $('.dropdown-menu').on('keydown', function(e){
             e = event || window.event;
             e.stopPropagation();
-    })
+    });
     $('.post-text').on('click', 'a', function(e){
             e.stopPropagation();
     });
@@ -1337,4 +1363,8 @@ function initInterfaceCommon() {
     $('.bitmessage-ctc').on('click', function(){
         window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
     });
+
+    $('.network textarea')
+    .on('keyup',{btnSend:'update-spam-msg'},textLimitIndicate)
+    .on('click',{btnSend:'update-spam-msg'},textLimitIndicate);
 }

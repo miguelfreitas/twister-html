@@ -14,7 +14,9 @@
     padding: 10px;
     text-align: center;
     position: relative;
+    background: #b43e34;
     transition: all .2s linear;
+
 }
 .profile-card-main:before
 {

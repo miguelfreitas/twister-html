@@ -1,5 +1,5 @@
-$(function(){ 
-    
+$(function(){
+
 	$('#closeModal').html('');
     $('.profile-card-main').attr('style', '');
     $('img[src$="img/tornado_avatar.png"]').attr("src","theme_nin/img/tornado_avatar.png");
@@ -11,19 +11,18 @@ $(function(){
 	});
 
 
-	$( '.userMenu-home.current a' ).on( 'click', function() { 
-        $('html, body').animate({scrollTop:0},300);
-        return false
-    });
+	$( '.userMenu-home.current a' ).on( 'click', function() {
+    $('html, body').animate({scrollTop:0},300);
+    return false
+  });
 
-    $(window).scroll(function(){
-        posScroll = $(document).scrollTop();
-        if(posScroll >= 250)
-            $('.left .post-area-new').slideDown(300);
-        else 
-            $('.left .post-area-new').slideUp(150);
-    }); 
-
+  $(window).scroll(function(){
+    posScroll = $(document).scrollTop();
+    if(posScroll >= 250)
+        $('.left .post-area-new').slideDown(300);
+    else
+        $('.left .post-area-new').slideUp(150);
+  });
 
 });
 

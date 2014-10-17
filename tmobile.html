@@ -76,7 +76,7 @@
   #new-user-modal .emphasis { font-size: 18px; text-align: center; }
   #new-user-modal .secret-key { font-weight: bold; word-break:break-all; }
   #profile-edit .secret-key { word-break:break-all; }
-  .profile-card-main{padding: 10px;}
+  .profile-card-main{padding: 10px;background: #b43e34;}
 
   .header {position:fixed;z-index:10;top:0;width:100%}
   .ui-content {padding:15px 20px 20px 20px;}
@@ -96,7 +96,7 @@
 
 
 <div id="login" data-role="page">
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <h1 class="rtitle">twister login</h1>
   </div>
 
@@ -162,7 +162,7 @@
 
 <div id="home" data-role="page">
 
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <div class="ui-btn-left" data-role="controlgroup" data-type="horizontal">
     <a data-role="button" data-icon="refresh" class="timeline-refresh" rel="external">
         Refresh
@@ -196,7 +196,7 @@
 
 <div id="post" data-role="page">
 
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a href="#search" class="ui-btn-left" style="">Search</a>
     <h1 class="rtitle">twister</h1>
     <a href="#newmsg" class="ui-btn-right" style="">New post</a>
@@ -219,7 +219,7 @@
 
 <div id="mentions" data-role="page">
 
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a href="#search" class="ui-btn-left" style="">Search</a>
     <h1 class="rtitle">Mentions</h1>
     <a href="#newmsg" class="mention-newmsg ui-btn-right" style="">New post</a>
@@ -241,7 +241,7 @@
 
 <div id="hashtag" data-role="page">
 
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <a href="#search" class="ui-btn-left" style="">Search</a>
     <h1 class="rtitle">hashtag</h1>
     <a href="#newmsg" class="hashtag-newmsg ui-btn-right" style="">New post</a>
@@ -276,8 +276,7 @@
           <button class="post-submit" disabled>send</button>
         </div>
       </form>
-      <br>
-      <hr/>
+      <br><br>
       <ul class="reply-original-post" data-role="listview"></ul>
     </div>
   </div>
@@ -294,7 +293,7 @@
 
 <div id="rt" data-role="page">
 
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-add-back-btn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <h1 class="rtitle">Retransmit</h1>
   </div>
 
@@ -388,7 +387,7 @@
       <input type="file" id="avatar-file" name="avatar_files"/>
       <div class="profile-card forEdition">
       <!-- Coloquei a imagem de fundo do card do usuário como background da div abaixo inline na tag para poder ser alterada dinamicamente -->
-      <div class="profile-card-main" style="background: url(img/img.png) no-repeat center center #b43e34;">
+      <div class="profile-card-main">
         <img class="profile-card-photo forEdition avatar" src="img/genericPerson.png"/>
         <input type="text" class="input-name" placeholder="Full name here"/>
         <p>
@@ -577,7 +576,7 @@
 </div>
 
 <div id="directmsg" data-role="page">
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <h1 class="rtitle">Direct Messages</h1>
   </div>
 
@@ -596,7 +595,7 @@
 </div>
 
 <div id="dmchat" data-role="page">
-  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false" data-nobackbtn="true">
+  <div class="myheader ui-header" data-theme="b" data-role="header" data-position="fixed" data-tap-toggle="false">
     <h1 class="rtitle">Chat with</h1>
   </div>
 

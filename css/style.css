@@ -44,6 +44,7 @@ textarea, input
 ol, ul, li
 {
     list-style: none;
+    margin-left: 0;
 }
 a
 {
@@ -1141,13 +1142,11 @@ ol.toptrends-list {
 .network.singleBlock ul
 {
     padding-left: 20px;
-    margin-left: 20px;
 }
 .network.singleBlock ul li
 {
     line-height: 36px;
     font-size: 13px;
-    list-style: circle;
 }
 .network.singleBlock button
 {
@@ -1171,13 +1170,11 @@ ol.toptrends-list {
     box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
     line-height: 20px;
     position: relative;
-    margin-left: -20px;
     margin-bottom: 10px;
 }
 .highlight {
     background: rgba(255, 230, 0, 0.5);
     padding: 3px 5px;
-    margin: -3px -5px;
     line-height: 1.7;
     border-radius: 3px;
     display:inline-block;
