@@ -1820,7 +1820,7 @@ if(preferredLanguage == "ru"){
        "follows you": "ваш подписчик",
        "Show conversation": "Показать беседу",
        "Mark all as read": "Отметить все как прочитанные",
-       "show_more_count": "ещё %{count}...",
+       "show_more_count": "ещё %{smart_count}...",
        "hide": "скрыть",
        "Show more in this conversation...": "Показать дальше в этой беседе...",
        "conversation_title": "Беседа @%{username}",

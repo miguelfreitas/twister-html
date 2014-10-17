@@ -106,8 +106,8 @@ function openProfileModal(e)
     
     if(!username)
     {
-	alert(polyglot.t("You don't have any profile because you are not logged in."));
-	return;
+      alert(polyglot.t("You don't have any profile because you are not logged in."));
+      return;
     }
 
     var profileModalClass = "profile-modal";
@@ -124,7 +124,7 @@ function openProfileModal(e)
         $('.profile-card button.followButton').first().removeClass('follow').addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
             unfollow(username);
         });
-    };
+    }
     
     $(".tox-ctc").attr("title", polyglot.t("Copy to clipboard"));
     $(".bitmessage-ctc").attr("title", polyglot.t("Copy to clipboard"));
