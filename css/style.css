@@ -23,8 +23,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video, textarea
 {
@@ -44,6 +44,7 @@ textarea, input
 ol, ul, li
 {
     list-style: none;
+    margin-left: 0;
 }
 a
 {
@@ -164,23 +165,17 @@ button.disabled:hover
 {
     text-decoration: none;
     opacity: 1;
+    background-color: rgba( 0, 0, 0 , .4 );
 }
 .userMenu li.current > a
 {
     color: #fff;
     opacity: 1;
+    background-color: #b43e34 !important;
 }
 .userMenu li.userMenu-home > a
 {
     background: url(../img/home.png) no-repeat 5px center;
-}
-.userMenu li.userMenu-home:hover > a
-{
-    background: url(../img/home.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-home.current > a
-{
-    background: url(../img/home.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-connections > a
 {
@@ -188,25 +183,13 @@ button.disabled:hover
     padding: 0 30px 0 20px;
     opacity: 1;
 }
-.userMenu li.userMenu-connections:hover > a
-{
-    background: url(../img/connections.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-connections.current > a
-{
-    background: url(../img/connections.png) no-repeat 5px center #b43e34;
-}
 .userMenu li.userMenu-network > a
 {
     background: url(../img/network.png) no-repeat 5px center;
 }
-.userMenu li.userMenu-network:hover > a
+.userMenu li.userMenu-options > a
 {
-    background: url(../img/network.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-network.current > a
-{
-    background: url(../img/network.png) no-repeat 5px center #b43e34;
+    background: url(../img/config.png) no-repeat 5px center;
 }
 .userMenu li.userMenu-messages > a
 {
@@ -214,25 +197,9 @@ button.disabled:hover
     padding: 0 25px 0 35px;
     opacity: 1;
 }
-.userMenu li.userMenu-messages:hover > a
-{
-    background: url(../img/messages.png) no-repeat center center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-messages.current > a
-{
-    background: url(../img/messages.png) no-repeat center center #b43e34;
-}
 .userMenu li.userMenu-profile > a
 {
     background: url(../img/profile.png) no-repeat 5px center;
-}
-.userMenu li.userMenu-profile:hover > a
-{
-    background: url(../img/profile.png) no-repeat 5px center rgba( 0, 0, 0 , .4 );
-}
-.userMenu li.userMenu-profile.current > a
-{
-    background: url(../img/profile.png) no-repeat 5px center #b43e34;
 }
 .userMenu li.userMenu-config
 {
@@ -347,7 +314,6 @@ button.disabled:hover
     right: auto;
     left: 80px;
 }
-.direct-messages,
 .dropdown-menu-item
 {
     display: block;
@@ -356,7 +322,11 @@ button.disabled:hover
     border-top: solid 1px rgba( 69, 71, 77, .1 );
     color: rgba( 0, 0, 0, .7 );
 }
-.direct-messages:hover,
+.dropdown-menu-item:hover
+{
+  text-decoration: none;
+}
+.dropdown-menu-item:hover,
 .userMenu-search-sugestions a:hover,
 .userMenu-search-profiles li:hover a
 {
@@ -365,7 +335,7 @@ button.disabled:hover
 }
 .userMenu-search-profiles li:hover span
 {
-    color: #fff;    
+    color: #fff;
 }
 .userMenu-search-profiles button
 {
@@ -385,11 +355,11 @@ button.disabled:hover
 }
 .userMenu-search-sugestions
 {
-    border-bottom: solid 1px rgba( 69, 71, 77, .1 );    
+    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
 }
 .userMenu-search-sugestions a
 {
-    color: rgba( 0, 0, 0, .7 ); 
+    color: rgba( 0, 0, 0, .7 );
     padding: 5px 20px;
     font-size: 12px;
     display: block;
@@ -415,7 +385,7 @@ button.disabled:hover
 {
     font-size: 12px;
     font-weight: bold;
-    color: rgba( 0, 0, 0, .7 ); 
+    color: rgba( 0, 0, 0, .7 );
     padding: 0 75px 0 15px;
 }
 /***********************************
@@ -449,7 +419,7 @@ button.disabled:hover
 }
 .following-list .mini-profile-name
 {
-    padding: 5px 5px 5px 5px;   
+    padding: 5px 5px 5px 5px;
 }
 .profile-data
 {
@@ -532,12 +502,12 @@ button.disabled:hover
 }
 .mini-profile-actions ul li + li
 {
-    margin: 0 2px;  
+    margin: 0 2px;
 }
 .mini-profile-actions:hover ul li:hover
 {
     background: rgba( 0, 0, 0, .7 );
-    color: #fff;    
+    color: #fff;
 }
 .mini-profile-info a:hover
 {
@@ -865,7 +835,7 @@ ol.toptrends-list {
 }
 .postboard-posts > .post:after
 {
-    content: "";    
+    content: "";
     position: absolute;
     right: 0;
     top: 0;
@@ -1172,13 +1142,11 @@ ol.toptrends-list {
 .network.singleBlock ul
 {
     padding-left: 20px;
-    margin-left: 20px;
 }
 .network.singleBlock ul li
 {
     line-height: 36px;
     font-size: 13px;
-    list-style: circle;
 }
 .network.singleBlock button
 {
@@ -1202,13 +1170,11 @@ ol.toptrends-list {
     box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
     line-height: 20px;
     position: relative;
-    margin-left: -20px;
     margin-bottom: 10px;
 }
 .highlight {
     background: rgba(255, 230, 0, 0.5);
     padding: 3px 5px;
-    margin: -3px -5px;
     line-height: 1.7;
     border-radius: 3px;
     display:inline-block;
@@ -1243,7 +1209,7 @@ ol.toptrends-list {
 .modal-blackout.reply .post
 {
     background: #ececed;
-    padding: 10px 15px; 
+    padding: 10px 15px;
 }
 .modal-wrapper
 {
@@ -1274,7 +1240,7 @@ ol.toptrends-list {
     color: rgba( 255, 255, 255, .7 );
     font-weight: bold;
     border-left: solid 1px rgba( 255, 255, 255, .3 );
-    transition: all .1s linear; 
+    transition: all .1s linear;
 }
 .modal-close:hover
 {
@@ -1292,7 +1258,7 @@ ol.toptrends-list {
     font-weight: bold;
     border-left: solid 1px rgba( 255, 255, 255, .3 );
     transition: all .1s linear;
-    display: none;  
+    display: none;
 }
 .modal-back:hover,
 .mark-all-as-read:hover {
@@ -1650,7 +1616,7 @@ ol.toptrends-list {
     -moz-animation-iteration-count: infinite;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
-@keyframes slide 
+@keyframes slide
 {
   0% {
     right: 60px;
@@ -1727,17 +1693,16 @@ ol.toptrends-list {
 }
 
 /* Options */
-#playerVol {
-    float: right;
-    margin-right: 20px;
+
+.playervol{
+  width: 220px;
 }
 .volValue {
-    float: right;
-    margin-right: -163px;
-    font: 12px "Open Sans", sans-serif;
+  float:right;
+  font: 12px "Open Sans", sans-serif;
 }
 #notifyForm p, #choseLanguage p, #keysOpt p {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 .suboptions {
     margin: 5px 30px;

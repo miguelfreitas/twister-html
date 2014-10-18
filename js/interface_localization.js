@@ -255,7 +255,11 @@ if(preferredLanguage == "en"){
       "Terminate Daemon": "Terminate Daemon",
       "New post": "New post",
       "Search": "Search",
-      "Direct Msg": "Direct Msg"
+      "Direct Msg": "Direct Msg",
+      "Search users": "Search users",
+      "Type partial username here": "Type partial username here",
+      "Sound volume": "Sound volume",
+      "Direct messages with": "Direct messages with"
     };
 }
 if(preferredLanguage == "es"){
@@ -1668,12 +1672,12 @@ if(preferredLanguage == "ru"){
        "General information": "Основное",
        "Generate blocks (send promoted messages)": "Майнинг (отправка рекламных сообщений)",
        "Home": "Главная", // homepage
-       "hours": "%{smart_count} час |||| %{smart_count} часов",
+       "hours": "%{smart_count} час |||| %{smart_count} часа |||| %{smart_count} часов",
        "Internal error: lastPostId unknown (following yourself may fix!)": "Внутренняя ошибка: lastPostId неизвестен (Попробуйте подписаться сами на себя, это должно помочь!)",
        "Known peers:": "Известные пиры: ",
        "Last block is ahead of your computer time, check your clock.": "Последний полученный блок опережает время вашего компьютера, проверьте правильно ли работают часы.",
        "mentions_at": "Упоминания @%{user}",
-       "minutes": "%{smart_count} минута |||| %{smart_count} минут",
+       "minutes": "%{smart_count} минута |||| %{smart_count} минуты |||| %{smart_count} минут",
        "Must be 16 characters or less.": "Должно быть не более 16 знаков.",
        "Network": "Сеть",
        "Network config": "Настройка сети",
@@ -1693,7 +1697,7 @@ if(preferredLanguage == "ru"){
        "post": "отправить", // verb - button to post a message
        "Post to promote:": "Рекламное сообщение: ",
        "Posts": "Посты",
-       "propagating_nickname": "Распространяю информацию о регистрации %{username} в сеть...",
+       "propagating_nickname": "Информация о регистрации %{username} в сети...",
        "Public": "Публичный",
        "Refresh": "Обновить",
        "retransmit_this": "Перепостить данное сообщение своим подписчикам?",
@@ -1705,7 +1709,7 @@ if(preferredLanguage == "ru"){
        "Retransmitted by": "Перепощено ",
        "search": "найти",
        "seconds": "%{smart_count} секунда |||| %{smart_count} секунд",
-       "send": "отправить",
+       "send": "Отправить",
        "Send post with username": "Отправить сообщение от имени",
        "Sent Direct Message": "Отправить личное сообщение",
        "Sent Post to @": "Отправить сообщение для @",      
@@ -1726,12 +1730,12 @@ if(preferredLanguage == "ru"){
                  "или отправлять сообщение.\n\n" +
                  "Пожалуйста подождите пару минут.\n\n" +
                  "Кнопка 'Сохранить' будет доступна автоматически после того,\n" +
-                 "как процес регистрации завершится. (Я обещаю, это\n"+
-                 "последний раз, когда вы ждете перед использованием\n" +
+                 "как процесс регистрации завершится. (Я обещаю, это\n"+
+                 "последний раз, когда вы чего-то ждете от\n" +
                  "twister'a).\n\n" +
-                 "Хозяйке на заметку: Сейчас вы можете выбрать аватар!",
+                 "Примечание: Сейчас вы можете выбрать аватар!",
        "users_mentions": "Ответ от @%{username}",
-       "users_profile": "%{username}'s профиль",
+       "users_profile": "Профиль %{username}",
        "username_undefined": "Имя пользователя не определено, требуется войти.",
        "View": "Просмотреть",
        "View All": "Просмотреть Всё",
@@ -1817,7 +1821,7 @@ if(preferredLanguage == "ru"){
        "follows you": "ваш подписчик",
        "Show conversation": "Показать беседу",
        "Mark all as read": "Отметить все как прочитанные",
-       "show_more_count": "ещё %{count}...",
+       "show_more_count": "ещё %{smart_count}...",
        "hide": "скрыть",
        "Show more in this conversation...": "Показать дальше в этой беседе...",
        "conversation_title": "Беседа @%{username}",
@@ -1848,6 +1852,10 @@ if(preferredLanguage == "ru"){
        "New post": "Новый пост",
        "Search": "Поиск",
        "Direct Msg": "ЛС",
+       "Search users": "Поиск пользователей",
+       "Type partial username here":"Введите имя пользователя",
+       "Sound volume":"Громкость звуков",
+       "Direct messages with": "Личная переписка с"
     };
 }
 
@@ -2994,16 +3002,11 @@ polyglot.extend(wordset);
 // Text from HTML and not JavaScript is selected and translated at $(document).ready
 // Add selectors here to translate the text and placeholders inside new UI
 var fixedLabels = [
-  // page titles
-  "title",
-
   // An easy way to include new items in translation is to add the "label" class
   ".label",
 
   // navbar and home
-  "button",
   ".postboard-news",
-  ".post-area-new textarea",
   ".refresh-users, .view-all-users",
   ".who-to-follow h3",
   ".userMenu-search-field",
@@ -3023,7 +3026,6 @@ var fixedLabels = [
   ".network ul li span",
   ".network ul li label",
   ".network label",
-  ".network textarea, .network input, .network option",
 
   // login page
   ".login h2, .login h3",
@@ -3031,43 +3033,47 @@ var fixedLabels = [
   ".module span",
   ".login span",
   ".login-local-username",
-  ".login input",
 
-  // options page
+  // tags contain text
+  "title",
   "option",
+  "input",
+  "button",
+  "textarea",
 
   // mobile version //
 
-  ".ui-btn-text",
+  ".ui-btn",
   ".ui-title",
-  ".ui-input-text"
+
 ];
 
-$(document).ready(function(){
-  $(document).bind('pagecreate', function (){
-    var elems,content,i,e,LenElem,elem;
-    var LenLabels = fixedLabels.length;
+// jquery.mobile page ready
+$(document).bind('pagecreate', function (){
+  var elems,content,i,e,LenElem,elem;
+  var LenLabels = fixedLabels.length;
 
-    for( i=0; i < LenLabels; i++ ){
-      elems = $(fixedLabels[i]);
-      LenElem = elems.length;
-      for( e=0; e < LenElem; e++ ){
-        elem = $(elems[e]);
-        content = $.trim(elem.text());
-        if(wordset[content]){
-          elem.text( polyglot.t(content) );
-        }else{
-          // uncomment to see translations not found
-          //console.log(content);
-        }
-        elemplacehold = elem.attr("placeholder");
-        if(typeof elemplacehold != "undefined" && wordset[elemplacehold]){
-          elem.attr("placeholder", polyglot.t( elemplacehold ) );
-        }
+  for( i=0; i < LenLabels; i++ ){
+    elems = $(fixedLabels[i]);
+    LenElem = elems.length;
+    for( e=0; e < LenElem; e++ ){
+      elem = $(elems[e]);
+      content = $.trim(elem.text());
+      if(wordset[content]){
+        elem.text( polyglot.t(content) );
+      }else{
+        // uncomment to see translations not found
+        //console.log(content);
+      }
+      elemplacehold = elem.attr("placeholder");
+      if(typeof elemplacehold != "undefined" && wordset[elemplacehold]){
+        elem.attr("placeholder", polyglot.t( elemplacehold ) );
       }
     }
-  });
+  }
+});
 
-  if(!$.mobile)
-    $(document).trigger('pagecreate');
+$(function(){
+  // if not jquery.mobile
+  if(!$.mobile) $(document).trigger('pagecreate');
 });

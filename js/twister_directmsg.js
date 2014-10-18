@@ -141,8 +141,11 @@ function newDirectMsg(msg,  dm_screenname) {
 }
 
 //dispara o modal de direct messages
-function directMessagesPopup()
+function directMessagesPopup(e)
 {
+    e.stopPropagation();
+    e.preventDefault();
+
     if(!defaultScreenName)
     {
       alert(polyglot.t("You have to log in to use direct messages."));
@@ -208,7 +211,7 @@ function openDmWithUserModal(dm_screenname)
     $( retweetContent ).clone().appendTo( ".directMessages .modal-content" ).hide().fadeIn( "fast" );
 
     var dmTitle = $( ".directMessages h3" );
-    dmTitle.html("Direct messages with <span></span>");
+    dmTitle.html(polyglot.t("Direct messages with")+" <span></span>");
     dmTitle = dmTitle.find("span");
     var dmConversation = $(".directMessages");
     openDmConversation(dm_screenname, dmTitle, dmConversation);

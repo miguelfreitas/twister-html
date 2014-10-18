@@ -8,10 +8,10 @@ var MAL = function()
 {
     this.postboardLoading = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             /*
             setTimeout(function(){
-              $.mobile.hidePageLoadingMsg();
+              $.mobile.loading('hide');
             }, 10 * 1000);
             */
         } else {
@@ -21,19 +21,19 @@ var MAL = function()
 
     this.postboardLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
-            var curPage = $.mobile.activePage.attr("id");
-            $( '#'+curPage+' .content ul.posts').listview('refresh');
-            
+            $.mobile.loading('hide');
+            var curPage = $('body').pagecontainer('getActivePage').attr("id");
+            $( '#'+curPage+' .ui-content ul.posts').listview('refresh');
+
             installPostboardClick();
         } else {
             $(".postboard-loading").hide();
         }
     }
-    
+
     this.dmThreadListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var $dmThreadList = $("#directmsg ul.direct-messages-thread");
             $dmThreadList.listview('refresh');
         } else {
@@ -42,7 +42,7 @@ var MAL = function()
 
     this.dmChatListLoaded = function(dmConvo) {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var $dmChatList = $("#dmchat ul.direct-messages-list");
             $dmChatList.listview('refresh');
             $.mobile.silentScroll( $(".dm-form").offset().top );
@@ -52,21 +52,19 @@ var MAL = function()
         }
     }
 
-
     this.relatedPostLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
-            var curPage = $.mobile.activePage.attr("id");
-            $( '#'+curPage+' .content ul.posts').listview('refresh');
+            $.mobile.loading('hide');
+            var curPage = $('body').pagecontainer('getActivePage').attr("id");
+            $( '#'+curPage+' .ui-content ul.posts').listview('refresh');
         } else {
             $(".postboard-loading").hide();
         }
     }
 
-
     this.followingListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             $(".following-list").listview('refresh');
         } else {
             $(".postboard-loading").hide();
@@ -75,7 +73,7 @@ var MAL = function()
 
     this.searchUserListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             $(".userMenu-search-profiles").listview('refresh');
         } else {
             var $searchResultsModal = $( ".search-results" );
@@ -111,7 +109,7 @@ var MAL = function()
             }
         }
     }
-    
+
     this.getStreamPostsParent = function() {
         if( $.hasOwnProperty("mobile") ) {
             return $( '.timeline ul');
@@ -177,7 +175,7 @@ var MAL = function()
             return "#hashtag?hashtag=" + h;
         }
     }
-    
+
     this.dmchatUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#dmchat?user=" + username;
@@ -193,7 +191,7 @@ var MAL = function()
             return "#following?user=" + username;
         }
     }
-    
+
     this.followUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#following?follow=" + username;
@@ -226,7 +224,7 @@ var MAL = function()
         }
     }
 
-    
+
     this.updateNewMentionsUI = function(newMentions) {
         if( $.hasOwnProperty("mobile") ) {
             var $mentionsCounterBtnText = $(".mentions-count .ui-btn-text");
@@ -328,20 +326,20 @@ var MAL = function()
     }
 
     this.enableButton = function( $button ) {
-         if( $.hasOwnProperty("mobile") ) {
+         if( $button.data( "mobile-button" ) !== undefined ) {
              $button.button("enable");
          } else {
-             $button.removeClass("disabled");
-             $button.removeAttr("disabled");
+             $button.removeClass("ui-disabled")
+             .prop("disabled",false);
          }
     }
 
     this.disableButton = function( $button ) {
-         if( $.hasOwnProperty("mobile") ) {
+         if( $button.data( "mobile-button" ) !== undefined ) {
              $button.button("disable");
          } else {
-             $button.addClass("disabled");
-             $button.attr("disabled","true");
+             $button.addClass("ui-disabled")
+             .prop("disabled",true);
          }
      }
 
@@ -356,7 +354,7 @@ var MAL = function()
             window.location.href = "home.html";
         }
     }
-    
+
     this.soundNotifyMentions = function() {
          if( $.hasOwnProperty("mobile") ) {
          } else {

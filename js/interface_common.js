@@ -106,8 +106,8 @@ function openProfileModal(e)
     
     if(!username)
     {
-	alert(polyglot.t("You don't have any profile because you are not logged in."));
-	return;
+      alert(polyglot.t("You don't have any profile because you are not logged in."));
+      return;
     }
 
     var profileModalClass = "profile-modal";
@@ -124,7 +124,7 @@ function openProfileModal(e)
         $('.profile-card button.followButton').first().removeClass('follow').addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
             unfollow(username);
         });
-    };
+    }
     
     $(".tox-ctc").attr("title", polyglot.t("Copy to clipboard"));
     $(".bitmessage-ctc").attr("title", polyglot.t("Copy to clipboard"));
@@ -193,8 +193,8 @@ function openMentionsModal(e)
 
     if(!defaultScreenName)
     {
-	alert(polyglot.t("No one can mention you because you are not logged in."));
-	return;
+      alert(polyglot.t("No one can mention you because you are not logged in."));
+      return;
     }
     // reuse the same hashtag modal to show mentions
     var hashtagModalClass = "hashtag-modal";
@@ -362,9 +362,9 @@ var reTwistPopup = function( e )
 {
     if(!defaultScreenName)
     {
-	e.stopPropagation();
-	alert(polyglot.t("You have to log in to retransmit messages."));
-	return;
+      e.stopPropagation();
+      alert(polyglot.t("You have to log in to retransmit messages."));
+      return;
     }
     
     var reTwistClass = "reTwist";
@@ -418,6 +418,7 @@ var dropDownMenu = function( e )
 {
     var $configMenu = $( ".config-menu" );
     $configMenu.slideToggle( "fast" );
+    e.preventDefault();
     e.stopPropagation();
 }
 
@@ -1183,7 +1184,6 @@ var postSubmit = function(e, oldLastPostId)
     var tweetForm = $this.parents("form");
     var remainingCount = tweetForm.find(".post-area-remaining");
     remainingCount.text(140);
-    $replyText.attr("placeholder", "Your message was sent!");
     closeModal($this);
     if($this.closest('.post-area,.post-reply-content')){
         $('.post-area-new').removeClass('open').find('textarea').blur();
@@ -1281,6 +1281,33 @@ function replaceDashboards() {
     $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
 }
 
+function textLimitIndicate(event)
+{
+  var $this     = $(this),
+      count     = 140 - $this.val().length,
+      btnSend   = $this.data('btn-send'),
+      indicator = $this.data('limit-indicator');
+
+  if(btnSend === undefined && event.data.btnSend){
+    btnSend = event.data.btnSend;
+  }
+
+  if(indicator === undefined && event.data.indicator){
+    indicator = event.data.indicator;
+  }
+
+  if(btnSend){
+    if(count < 0){
+      $('.'+btnSend).prop('disabled',true).addClass('disabled');
+    }else{
+      $('.'+btnSend).prop('disabled',false).removeClass('disabled');
+    }
+  }
+  if(indicator){
+    $('.'+indicator).text(count);
+  }
+}
+
 function initInterfaceCommon() {
     $( "body" ).on( "click", function(event) { 
         if($(event.target).hasClass('cancel')) closeModal($(this));
@@ -1299,7 +1326,7 @@ function initInterfaceCommon() {
     $('.dropdown-menu').on('keydown', function(e){
             e = event || window.event;
             e.stopPropagation();
-    })
+    });
     $('.post-text').on('click', 'a', function(e){
             e.stopPropagation();
     });
@@ -1337,4 +1364,8 @@ function initInterfaceCommon() {
     $('.bitmessage-ctc').on('click', function(){
         window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
     });
+
+    $('.network textarea')
+    .on('keyup',{btnSend:'update-spam-msg'},textLimitIndicate)
+    .on('click',{btnSend:'update-spam-msg'},textLimitIndicate);
 }

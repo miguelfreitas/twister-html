@@ -199,12 +199,11 @@ function processReceivedPosts(req, posts)
     }
     req.doneReportProcessing(posts.length);
 
-    //if the count of posts less then 5....
+    //if the count of posts more then 5...
     if( req.mode == "done" && p2a > 5) {
         timelineLoaded = true;
         $.MAL.postboardLoaded();
         _refreshInProgress = false;
-        $(window).scroll();
     } else {
         //we will request more older post...
         req.count += postsPerRefresh;

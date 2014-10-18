@@ -10,11 +10,11 @@
 }
 .profile-card-main
 {
-    width: 540px;
-    padding: 10px;
-    text-align: center;
-    position: relative;
-    transition: all .2s linear;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  background: #b43e34;
+  transition: all .2s linear;
 }
 .profile-card-main:before
 {
@@ -38,14 +38,10 @@
     width: 74px;
     height: 74px;
     border: solid 6px #45474d;
-    border-radius: 40%;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 0;
+    border-radius: 40% 0 40% 0;
     box-sizing: content-box;
     float:left;
-    top: 50%;
     background-color: #a12a28;
-
 }
 .profile-card-main h1
 {
@@ -55,44 +51,50 @@
 }
 .profile-card-main h2
 {
-    color: #fff;    
+  color: #fff;
 }
-.profile-card .direct-messages,
-.profile-card .direct-messages-with-user,
-.profile-card .follow,
-.profile-card .profileUnfollow
+.profile-modal .twister-user-info
 {
-    display: block;
-    position: absolute;
-    bottom: 20px;
-    right: 10px;
+  float: left;
+  width: 100%;
+  border-top: 1px solid rgba(69, 71, 77, 0.1);
+}
+.profile-modal .profile-data{
+  width: auto;
+  float: left;
+  border-top: 0;
+  border-bottom: 0;
+}
+.profile-modal .action-btns
+{
+  float: right;
+  margin: 8px 10px 0 0;
+}
+.profile-modal .action-btns button
+{
     padding: 10px;
     font-size: 12px;
-    width: 120px;
     text-align: center;
     color: rgba( 0, 0, 0, .7 );
     background: rgba( 0, 0, 0, .1 );
     border: none;
     transition: all .2s linear;
 }
-.profile-card .follow,
-.profile-card .profileUnfollow
-{
-    right: 135px;
-}
-.profile-card .profileUnfollow
-{
-    background-color: rgba( 0, 0, 0, .3 );
-}
-.profile-card .direct-messages:hover,
-.profile-card .direct-messages-with-user:hover,
-.profile-card .follow:hover
+.profile-modal .action-btns button:hover
 {
     background: rgba( 0, 0, 0, .3 );
 }
-.profile-card .profileUnfollow:hover
+.profile-modal .action-btns .profileUnfollow
 {
-    background: rgba( 0, 0, 0, .1 );
+    background-color: rgba( 0, 0, 0, .3 );
+}
+.profile-modal .action-btns .profileUnfollow:hover
+{
+  background: rgba( 0, 0, 0, .1 );
+}
+.profile-modal .who-follow
+{
+  padding: 3px 5px 2px;
 }
 .profile-card.forEdition
 {
@@ -143,7 +145,7 @@
 .forEdition .profile-card-main input:focus,
 .forEdition .profile-card-photo:hover
 {
-    background: rgba( 0, 0, 0, .3 );    
+    background: rgba( 0, 0, 0, .3 );
 }
 .input-description
 {
@@ -258,12 +260,6 @@
 .profile-modal .profile-bitmessage {
     background: #e3e5ea url(../img/bm.png) center no-repeat;
 }
-.profile-modal .profile-data
-{
-    display: inline-block;
-    margin-left: -4px;
-    border-bottom: 0;
-}
 .profile-modal .postboard
 {
     margin-left: 0;
@@ -284,7 +280,7 @@
 {
     background: #45474d;
     color: white;
-    width:100%;
+    width: 100%;
 }
 .profile-modal .profile-card-main a {
     color: #8bb9e0;
@@ -301,19 +297,6 @@
 {
     margin: 0;
     padding: 0;
-}
-/*
-.profile-card-main
-{
-    height: 200px;
-}
-*/
-.profile-modal .direct-messages,
-.profile-modal .direct-messages-with-user,
-.profile-modal .follow,
-.profile-modal .profileUnfollow
-{
-    bottom: 10px;
 }
 
 h1.profile-name {
