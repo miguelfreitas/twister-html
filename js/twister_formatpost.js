@@ -83,8 +83,20 @@ function postToElem( post, kind, promoted ) {
     getFullname( n, postInfoName );
     elem.find(".post-info-tag").text = "@" + n;
     getAvatar( n, elem.find(".avatar") );
-    elem.find(".post-info-time").text(timeGmtToText(t));
-    elem.find(".post-info-time").attr("title",timeSincePost(t));
+
+    var d = new Date(0);
+    d.setUTCSeconds(t);
+    var now = new Date();
+    var t_delta = Math.ceil((now - d) / 1000);
+
+    if(t_delta < 10 * 60 * 60){
+      elem.find(".post-info-time").text(timeSincePost(t));
+      elem.find(".post-info-time").attr("title",timeGmtToText(t));
+    }
+    else{
+      elem.find(".post-info-time").text(timeGmtToText(t));
+      elem.find(".post-info-time").attr("title",timeSincePost(t));
+    }
 
     var mentions = [];
     htmlFormatMsg( msg, elem.find(".post-text"), mentions);

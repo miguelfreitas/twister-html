@@ -257,8 +257,9 @@ if(preferredLanguage == "en"){
       "Search": "Search",
       "Direct Msg": "Direct Msg",
       "Search users": "Search users",
-      "Type partial username here":"Type partial username here",
-      "Sound volume":"Sound volume"
+      "Type partial username here": "Type partial username here",
+      "Sound volume": "Sound volume",
+      "Direct messages with": "Direct messages with"
     };
 }
 if(preferredLanguage == "es"){
@@ -1671,12 +1672,12 @@ if(preferredLanguage == "ru"){
        "General information": "Основное",
        "Generate blocks (send promoted messages)": "Майнинг (отправка рекламных сообщений)",
        "Home": "Главная", // homepage
-       "hours": "%{smart_count} час |||| %{smart_count} часов",
+       "hours": "%{smart_count} час |||| %{smart_count} часа |||| %{smart_count} часов",
        "Internal error: lastPostId unknown (following yourself may fix!)": "Внутренняя ошибка: lastPostId неизвестен (Попробуйте подписаться сами на себя, это должно помочь!)",
        "Known peers:": "Известные пиры: ",
        "Last block is ahead of your computer time, check your clock.": "Последний полученный блок опережает время вашего компьютера, проверьте правильно ли работают часы.",
        "mentions_at": "Упоминания @%{user}",
-       "minutes": "%{smart_count} минута |||| %{smart_count} минут",
+       "minutes": "%{smart_count} минута |||| %{smart_count} минуты |||| %{smart_count} минут",
        "Must be 16 characters or less.": "Должно быть не более 16 знаков.",
        "Network": "Сеть",
        "Network config": "Настройка сети",
@@ -1853,7 +1854,8 @@ if(preferredLanguage == "ru"){
        "Direct Msg": "ЛС",
        "Search users": "Поиск пользователей",
        "Type partial username here":"Введите имя пользователя",
-       "Sound volume":"Громкость звуков"
+       "Sound volume":"Громкость звуков",
+       "Direct messages with": "Личная переписка с"
     };
 }
 

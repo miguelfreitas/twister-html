@@ -193,8 +193,8 @@ function openMentionsModal(e)
 
     if(!defaultScreenName)
     {
-	alert(polyglot.t("No one can mention you because you are not logged in."));
-	return;
+      alert(polyglot.t("No one can mention you because you are not logged in."));
+      return;
     }
     // reuse the same hashtag modal to show mentions
     var hashtagModalClass = "hashtag-modal";
@@ -418,6 +418,7 @@ var dropDownMenu = function( e )
 {
     var $configMenu = $( ".config-menu" );
     $configMenu.slideToggle( "fast" );
+    e.preventDefault();
     e.stopPropagation();
 }
 

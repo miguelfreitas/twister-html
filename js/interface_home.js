@@ -14,7 +14,8 @@ var InterfaceFunctions = function()
     this.init = function()
     {
         $( ".wrapper .postboard-news").click(function() {
-            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
+        });
 
 
         /*$( ".promoted-posts-only").click(function() {
@@ -28,10 +29,13 @@ var InterfaceFunctions = function()
 
         // Add refresh posts for home link in menu
         $( ".userMenu-home.current a").click(function() {
-            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
+        });
 
         // modified the way promoted posts are shown
-        $( ".promoted-posts-only").click(function() { 
+        $( ".promoted-posts-only").click(function(e) {
+            e.preventDefault();
+
             promotedPostsOnly = !promotedPostsOnly;
             //active promoted posts tab
             $(this).children('.promoted-posts').addClass(promotedPostsOnly ? "active" : "disabled");
@@ -168,8 +172,8 @@ $( window ).resize(replaceDashboards);
 function fixDiv()
 {
   var $cache = $('.postboard h2');
-  if ($(window).scrollTop() > 26) 
-    $cache.addClass( "fixed" ); 
+  if ($(window).scrollTop() > 26)
+    $cache.addClass( "fixed" );
   else
     $cache.removeClass( "fixed" );
 }
