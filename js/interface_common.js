@@ -377,8 +377,10 @@ function watchHashChange(e)
 function initHashWatching()
 {
     // Register custom protocol handler
-    var local_twister_url = window.location.protocol + '//' + window.location.host + '/home.html#%s';
-    window.navigator.registerProtocolHandler('web+twister', local_twister_url, 'Twister');
+    if (window.navigator && window.navigator.registerProtocolHandler){
+        var local_twister_url = window.location.protocol + '//' + window.location.host + '/home.html#%s';
+        window.navigator.registerProtocolHandler('web+twister', local_twister_url, 'Twister');
+    }
 
     // Register hash spy and launch it once
     window.addEventListener('hashchange', watchHashChange, false);
