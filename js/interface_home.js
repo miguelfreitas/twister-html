@@ -22,12 +22,12 @@ var InterfaceFunctions = function()
         $( ".userMenu-home.current a").click(function() {
             requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
 
-		$( ".promoted-posts-only").click(function() {
+        $( ".promoted-posts-only").click(function() {
             promotedPostsOnly = !promotedPostsOnly;
 
             if(theme == 'nin')
             {
-			// modify the way promoted posts are shown
+            // modify the way promoted posts are shown
                 //active promoted posts tab
                 $(this).children('.promoted-posts').addClass(promotedPostsOnly ? "active" : "disabled");
                 $(this).children('.normal-posts').addClass(promotedPostsOnly ? "disabled" : "active");
