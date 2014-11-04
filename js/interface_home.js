@@ -13,8 +13,6 @@ var InterfaceFunctions = function()
     //faço os binds no init
     this.init = function()
     {
-        var theme = $.Options.getTheme();
-
         $( ".wrapper .postboard-news").click(function() {
             requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
 
@@ -24,21 +22,6 @@ var InterfaceFunctions = function()
 
         $( ".promoted-posts-only").click(function() {
             promotedPostsOnly = !promotedPostsOnly;
-
-            if(theme == 'nin')
-            {
-            // modify the way promoted posts are shown
-                //active promoted posts tab
-                $(this).children('.promoted-posts').addClass(promotedPostsOnly ? "active" : "disabled");
-                $(this).children('.normal-posts').addClass(promotedPostsOnly ? "disabled" : "active");
-                $('#postboard-top').removeClass(promotedPostsOnly ? "show" : "hide");
-                //active normal posts
-                $(this).children('.promoted-posts').removeClass(promotedPostsOnly ? "disabled" : "active");
-                $(this).children('.normal-posts').removeClass(promotedPostsOnly ? "active" : "disabled");
-                $('#postboard-top').addClass(promotedPostsOnly ? "hide" : "show");
-            } else {
-                $(this).text( promotedPostsOnly ? polyglot.t('Switch to Normal posts') : polyglot.t('Switch to Promoted posts') );
-            }
 
             timelineChangedUser();
             $.MAL.getStreamPostsParent().empty();
