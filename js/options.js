@@ -44,7 +44,7 @@ var TwisterOptions = function()
     
     this.volumeControl = function() {
         var playerVol = $('#playerVol');
-        playerVol[0].value = $.Options.getOption(playerVol[0].id, 100);
+        playerVol[0].value = $.Options.getOption(playerVol[0].id, 1);
         $('.volValue').text((playerVol[0].value * 100).toFixed());
 
         playerVol.on('change',function(){
@@ -67,14 +67,14 @@ var TwisterOptions = function()
             player.attr('type', 'audio/ogg');
             player.attr('src', 'sound/'+sndDM+'.ogg');
         }
-        player[0].volume = $.Options.getOption('playerVol',100);
+        player[0].volume = $.Options.getOption('playerVol',1);
         player[0].play();
     }
 
     this.mensNotif = function() {
         var sndMention = $.Options.getOption('sndMention', "false");
         if(sndMention == "false") return;
-        var player = $('#player');
+        var player = $('#playerSec');
         $('#playerSec').empty();
 
         if (player[0].canPlayType('audio/mpeg;')) {
@@ -84,7 +84,7 @@ var TwisterOptions = function()
             player.attr('type', 'audio/ogg');
             player.attr('src', 'sound/'+sndMention+'.ogg');
         }
-        player[0].volume = $.Options.getOption('playerVol',100);
+        player[0].volume = $.Options.getOption('playerVol',1);
         player[0].play();
     }
 
