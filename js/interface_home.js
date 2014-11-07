@@ -31,7 +31,7 @@ var InterfaceFunctions = function()
             requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
 
         // modified the way promoted posts are shown
-        $( ".promoted-posts-only").click(function() { 
+        $( ".promoted-posts-only").click(function() {
             promotedPostsOnly = !promotedPostsOnly;
             //active promoted posts tab
             $(this).children('.promoted-posts').addClass(promotedPostsOnly ? "active" : "disabled");
@@ -52,6 +52,7 @@ var InterfaceFunctions = function()
         initInterfaceDirectMsg();
 
         initUser(initHome);
+        initHashWatching();
     };
 
     function initHome(cbFunc, cbArg) {
@@ -168,10 +169,9 @@ $( window ).resize(replaceDashboards);
 function fixDiv()
 {
   var $cache = $('.postboard h2');
-  if ($(window).scrollTop() > 26) 
-    $cache.addClass( "fixed" ); 
+  if ($(window).scrollTop() > 26)
+    $cache.addClass( "fixed" );
   else
     $cache.removeClass( "fixed" );
 }
 $(window).scroll(fixDiv);
-
