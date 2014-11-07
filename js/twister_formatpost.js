@@ -56,6 +56,9 @@ function postToElem( post, kind, promoted ) {
     elem.addClass(kind);
     elem.attr('data-time', t);
 
+    if( post["isNew"] )
+        elem.addClass('new');
+
     var postData = elem.find(".post-data");
     postData.addClass(kind);
     postData.attr('data-userpost', postJson);

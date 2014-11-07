@@ -24,7 +24,8 @@ function processMention(user, mentionTime, data) {
             if( mentionTime + 3600 * 24 * 3 > _lastMentionTime ) {
                 _newMentions++;
                 newMentionsUpdated = true;
-                _lastMentionTime = mentionTime;
+                _lastMentionTime = Math.max(mentionTime,_lastMentionTime);
+                data["isNew"] = true;
             }
             _knownMentions[key] = {mentionTime:mentionTime, data:data};
             purgeOldMentions();
@@ -80,6 +81,11 @@ function requestMentionsCount() {
 
 function resetMentionsCount() {
     _newMentions = 0;
+    for( var key in _knownMentions ) {
+        if( _knownMentions.hasOwnProperty(key) && _knownMentions[key].data ) {
+            delete _knownMentions[key].data["isNew"]
+        }
+    }
     saveMentionsToStorage();
     $.MAL.updateNewMentionsUI(_newMentions);
 }
