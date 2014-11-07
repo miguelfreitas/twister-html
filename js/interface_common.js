@@ -31,6 +31,12 @@ function openModal( modalClass )
 //fecha o modal removendo o conteúdo por detach
 function closeModal($this)
 {
+    closeModalHandler($this);
+    window.location.hash = '';
+}
+
+function closeModalHandler($this)
+{
     var $body = $( "body" );
     var $modalWindows = $( "body" ).children( ".modal-blackout" );
 
@@ -370,6 +376,8 @@ function watchHashChange(e)
         }else if (hashdata[1] == 'hashtag') {
             openHashtagModalFromSearch(hashdata[2]);
         }
+    } else {
+        closeModalHandler();
     }
 }
 
