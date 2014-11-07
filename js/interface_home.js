@@ -16,31 +16,12 @@ var InterfaceFunctions = function()
         $( ".wrapper .postboard-news").click(function() {
             requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
 
-
-        /*$( ".promoted-posts-only").click(function() {
-            promotedPostsOnly = !promotedPostsOnly;
-            $(this).text( promotedPostsOnly ? "Switch to Normal posts" : "Switch to Promoted posts" );
-            timelineChangedUser();
-            $.MAL.getStreamPostsParent().empty();
-            requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
-            });*/
-
-
         // Add refresh posts for home link in menu
         $( ".userMenu-home.current a").click(function() {
             requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
 
-        // modified the way promoted posts are shown
         $( ".promoted-posts-only").click(function() {
             promotedPostsOnly = !promotedPostsOnly;
-            //active promoted posts tab
-            $(this).children('.promoted-posts').addClass(promotedPostsOnly ? "active" : "disabled");
-            $(this).children('.normal-posts').addClass(promotedPostsOnly ? "disabled" : "active");
-            $('#postboard-top').removeClass(promotedPostsOnly ? "show" : "hide");
-            //active normal posts
-            $(this).children('.promoted-posts').removeClass(promotedPostsOnly ? "disabled" : "active");
-            $(this).children('.normal-posts').removeClass(promotedPostsOnly ? "active" : "disabled");
-            $('#postboard-top').addClass(promotedPostsOnly ? "hide" : "show");
 
             timelineChangedUser();
             $.MAL.getStreamPostsParent().empty();

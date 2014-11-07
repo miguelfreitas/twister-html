@@ -1271,7 +1271,9 @@ function changeStyle() {
     {
         style = 'css/style.css';
         profile = 'css/profile.css';
+        $.getScript('theme_original/js/theme_option.js');
     }
+
     $('#stylecss').attr('href', style);
     $('#profilecss').attr('href', profile);
     $("<style type='text/css'> .selectable_theme:not(.theme_" + theme + ")" +
