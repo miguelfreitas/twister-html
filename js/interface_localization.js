@@ -1731,7 +1731,7 @@ if(preferredLanguage == "ru"){
                  "twister'a).\n\n" +
                  "Хозяйке на заметку: Сейчас вы можете выбрать аватар!",
        "users_mentions": "Ответ от @%{username}",
-       "users_profile": "%{username}'s профиль",
+       "users_profile": "Профиль @%{username}",
        "username_undefined": "Имя пользователя не определено, требуется войти.",
        "View": "Просмотреть",
        "View All": "Просмотреть Всё",
@@ -1817,7 +1817,7 @@ if(preferredLanguage == "ru"){
        "follows you": "ваш подписчик",
        "Show conversation": "Показать беседу",
        "Mark all as read": "Отметить все как прочитанные",
-       "show_more_count": "ещё %{count}...",
+       "show_more_count": "ещё %{smart_count}...",
        "hide": "скрыть",
        "Show more in this conversation...": "Показать дальше в этой беседе...",
        "conversation_title": "Беседа @%{username}",
@@ -1827,7 +1827,7 @@ if(preferredLanguage == "ru"){
        "Messages": "Сообщения",
        "Edit profile": "Изменить профиль",
        "Top Trends": "Топ Трендов",
-       "twisted again by": "Репостнуто от",
+       "twisted again by": "Перепостил",
        "undo": "отменить",
        "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Вы уверены, что хотите "+
                 "выключить демон?\nTwister клиент перестанет работать.",
