@@ -307,7 +307,7 @@ function requestHashtag(postboard,hashtag,resource, timeoutArgs) {
 }
 
 function processHashtag(postboard, hashtag, data) {
-    if( data ) {
+    if( data && window.location.hash.indexOf(hashtag) != -1 ) {
         for( var i = data.length-1; i >= 0; i-- ) {
             var userpost = data[i]["userpost"];
             var key = userpost["n"] + ";" + userpost["time"];
