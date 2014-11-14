@@ -112,15 +112,18 @@ function openProfileModal(e)
     openProfileModalWithUsername(username);
 }
 
-
 function openProfileModalWithUsername(username)
 {
     if(!username)
     {
-	alert(polyglot.t("You don't have any profile because you are not logged in."));
-	return;
+        alert(polyglot.t("You don't have any profile because you are not logged in."));
+        return;
     }
+    window.location.hash = '#profile?user=' + username;
+}
 
+function openProfileModalWithUsernameHandler(username)
+{
     var profileModalClass = "profile-modal";
     openModal( profileModalClass );
 
@@ -139,7 +142,6 @@ function openProfileModalWithUsername(username)
 
     $(".tox-ctc").attr("title", polyglot.t("Copy to clipboard"));
     $(".bitmessage-ctc").attr("title", polyglot.t("Copy to clipboard"));
-    window.location.hash = '#profile?user=' + username;
 }
 
 function newHashtagModal(hashtag) {
@@ -167,6 +169,11 @@ function openHashtagModal(e)
 
 function openHashtagModalFromSearch(hashtag)
 {
+    window.location.hash = '#hashtag?hashtag=' + hashtag;
+}
+
+function openHashtagModalFromSearchHandler(hashtag)
+{
     var hashtagModalClass = "hashtag-modal";
     openModal( hashtagModalClass );
     $( "."+hashtagModalClass ).attr("data-resource","hashtag");
@@ -176,7 +183,6 @@ function openHashtagModalFromSearch(hashtag)
 
     //título do modal
     $( "."+hashtagModalClass + " h3" ).text( "#" + hashtag );
-    window.location.hash = '#hashtag?hashtag=' + hashtag;
 }
 
 function updateHashtagModal(postboard,hashtag) {
@@ -372,9 +378,9 @@ function watchHashChange(e)
     if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined)
     {
         if(hashdata[1] == 'profile') {
-            openProfileModalWithUsername(hashdata[2]);
+            openProfileModalWithUsernameHandler(hashdata[2]);
         }else if (hashdata[1] == 'hashtag') {
-            openHashtagModalFromSearch(hashdata[2]);
+            openHashtagModalFromSearchHandler(hashdata[2]);
         }
     } else {
         closeModalHandler();
