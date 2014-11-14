@@ -185,15 +185,18 @@ function openHashtagModalFromSearchHandler(hashtag)
     $( "."+hashtagModalClass + " h3" ).text( "#" + hashtag );
 }
 
-function updateHashtagModal(postboard,hashtag) {
+function updateHashtagModal(postboard,hashtag,timeoutArgs) {
     var $hashtagModalClass = $(".hashtag-modal");
     if( !$hashtagModalClass.length || $hashtagModalClass.css("display") == 'none' )
         return;
 
     var resource = $hashtagModalClass.attr("data-resource");
 
-    requestHashtag(postboard,hashtag,resource);
-    setTimeout( function() {updateHashtagModal(postboard,hashtag);}, 5000);
+    requestHashtag(postboard,hashtag,resource,timeoutArgs);
+    // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
+    // our first query above should be faster (with default timeoutArgs of twisterd),
+    // then we may possibly collect more posts on our second try by waiting more.
+    setTimeout( function() {updateHashtagModal(postboard,hashtag,[10000,2000,3]);}, 5000);
 }
 
 function openMentionsModal(e)

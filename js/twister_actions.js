@@ -298,12 +298,12 @@ function clearHashtagProcessed() {
     _hashtagPendingPosts = [];
 }
 
-function requestHashtag(postboard,hashtag,resource) {
+function requestHashtag(postboard,hashtag,resource, timeoutArgs) {
     dhtget( hashtag, resource, "m",
            function(args, data) {
                processHashtag(args.postboard, args.hashtag, data);
            }, {postboard:postboard,hashtag:hashtag}, 
-           [10000,2000,3]); // use extended timeout parameters (requires twister_core >= 0.9.14)
+           timeoutArgs);
 }
 
 function processHashtag(postboard, hashtag, data) {
