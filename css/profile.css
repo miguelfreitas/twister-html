@@ -59,16 +59,17 @@
 }
 .profile-card .direct-messages,
 .profile-card .direct-messages-with-user,
+.profile-card .mentions-from-user,
 .profile-card .follow,
 .profile-card .profileUnfollow
 {
     display: block;
     position: absolute;
     bottom: 20px;
-    right: 10px;
+    right: 125px;
     padding: 10px;
     font-size: 12px;
-    width: 120px;
+    width: 110px;
     text-align: center;
     color: rgba( 0, 0, 0, .7 );
     background: rgba( 0, 0, 0, .1 );
@@ -78,7 +79,11 @@
 .profile-card .follow,
 .profile-card .profileUnfollow
 {
-    right: 135px;
+    right: 240px;
+}
+.profile-card .mentions-from-user
+{
+    right: 10px;
 }
 .profile-card .profileUnfollow
 {
@@ -86,6 +91,7 @@
 }
 .profile-card .direct-messages:hover,
 .profile-card .direct-messages-with-user:hover,
+.profile-card .mentions-from-user:hover,
 .profile-card .follow:hover
 {
     background: rgba( 0, 0, 0, .3 );
@@ -310,6 +316,7 @@
 */
 .profile-modal .direct-messages,
 .profile-modal .direct-messages-with-user,
+.profile-modal .mentions-from-user,
 .profile-modal .follow,
 .profile-modal .profileUnfollow
 {

@@ -209,10 +209,6 @@ function openMentionsModal(e)
 	alert(polyglot.t("No one can mention you because you are not logged in."));
 	return;
     }
-    // reuse the same hashtag modal to show mentions
-    var hashtagModalClass = "hashtag-modal";
-    openModal( hashtagModalClass );
-    $( "."+hashtagModalClass ).attr("data-resource","mention");
 
     var username;
     var $userInfo = $(this).closest("[data-screen-name]");
@@ -221,15 +217,27 @@ function openMentionsModal(e)
     else
         username = defaultScreenName;
 
+    window.location.hash = '#mentions?user=' + username;
+}
+
+function openMentionsModalHandler(username)
+{
+    // reuse the same hashtag modal to show mentions
+    var hashtagModalClass = "hashtag-modal";
+    openModal( hashtagModalClass );
+    $( "."+hashtagModalClass ).attr("data-resource","mention");
+
     var hashtagModalContent = newHashtagModal( username );
     hashtagModalContent.appendTo("." +hashtagModalClass + " .modal-content");
 
     //título do modal
     $( "."+hashtagModalClass + " h3" ).text( polyglot.t("users_mentions", { username: username }) );
 
-    // obtain already cached mention posts from twister_newmsgs.js
-    processHashtag(hashtagModalContent.find(".postboard-posts"), defaultScreenName, getMentionsData() );
-    resetMentionsCount();
+    if( username == defaultScreenName ) {
+        // obtain already cached mention posts from twister_newmsgs.js
+        processHashtag(hashtagModalContent.find(".postboard-posts"), defaultScreenName, getMentionsData() );
+        resetMentionsCount();
+    }
 }
 
 function newFollowingModal(username) {
@@ -375,7 +383,7 @@ function watchHashChange(e)
 
     var hashdata = hashstring.split(':');
     if (hashdata[0] != '#web+twister') {
-        hashdata = hashstring.match(/(hashtag|profile)\?(?:user|hashtag)=(.+)/);
+        hashdata = hashstring.match(/(hashtag|profile|mentions)\?(?:user|hashtag)=(.+)/);
     }
 
     if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined)
@@ -384,6 +392,8 @@ function watchHashChange(e)
             openProfileModalWithUsernameHandler(hashdata[2]);
         }else if (hashdata[1] == 'hashtag') {
             openHashtagModalFromSearchHandler(hashdata[2]);
+        }else if (hashdata[1] == 'mentions') {
+            openMentionsModalHandler(hashdata[2]);
         }
     } else {
         closeModalHandler();
@@ -1381,6 +1391,7 @@ function initInterfaceCommon() {
     $( ".open-hashtag-modal").bind( "click", openHashtagModal );
     $( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
+    $( ".mentions-from-user").bind( "click", openMentionsModal );
 
     replaceDashboards();
 
