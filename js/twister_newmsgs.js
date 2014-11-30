@@ -9,6 +9,7 @@
 var _knownMentions = {}
 var _lastMentionTime = 0;
 var _newMentions = 0;
+var _lastLocalMentionId = -1;
 var PURGE_OLD_MENTIONS_TIMEOUT = 3600 * 24 * 30; // one month
 
 // process a mention received to check if it is really new
@@ -53,6 +54,7 @@ function saveMentionsToStorage() {
     ns.localStorage.set("knownMentions", _knownMentions);
     ns.localStorage.set("lastMentionTime", _lastMentionTime);
     ns.localStorage.set("newMentions", _newMentions);
+    ns.localStorage.set("lastLocalMentionId",_lastLocalMentionId);
 }
 
 function loadMentionsFromStorage() {
@@ -63,9 +65,26 @@ function loadMentionsFromStorage() {
         _lastMentionTime = ns.localStorage.get("lastMentionTime");
     if( ns.localStorage.isSet("newMentions") )
         _newMentions = ns.localStorage.get("newMentions");
+    if( ns.localStorage.isSet("lastLocalMentionId") )
+        _lastLocalMentionId = ns.localStorage.get("lastLocalMentionId");
 }
 
 function requestMentionsCount() {
+    // first: getmentions from torrents we follow
+    twisterRpc("getmentions", [defaultScreenName, 100, {"since_id":_lastLocalMentionId}],
+           function(args, data) {
+               if( data ) {
+                   for( var i = 0; i < data.length; i++ ) {
+                       _lastLocalMentionId = Math.max(_lastLocalMentionId, data[i]["id"]);
+                       var userpost = data[i]["userpost"];
+                       processMention( userpost["n"], userpost["time"], data[i]);
+                   }
+                   $.MAL.updateNewMentionsUI(_newMentions);
+               }
+           }, null,
+           function(req, ret) {console.log("getmentions API requires twister-core > 0.9.27");}, null);
+
+    // second: get mentions from dht (not-following)
     dhtget( defaultScreenName, "mention", "m",
            function(args, data) {
                if( data ) {
