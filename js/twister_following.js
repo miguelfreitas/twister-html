@@ -710,6 +710,8 @@ function initUserSearch() {
     $(".following-config-method-buttons .public-following").bind( "click", setFollowingMethod );
     $(".following-config-method-buttons .public-following").click( function() {
         closeModal($(this));
+        // delay reload so dhtput may do it's job
+        window.setTimeout("location.reload();",500);
     });
 }
 
@@ -755,10 +757,7 @@ function setFollowingMethod(e) {
     }
 
     //console.log("start following @" +username +" by method "+method);
-    follow(username, method, function() {
-        // delay reload so dhtput may do it's job
-        window.setTimeout("location.reload();",500);
-    });
+    follow(username, method);
 }
 
 
