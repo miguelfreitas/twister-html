@@ -404,9 +404,12 @@ function watchHashChange(e)
 function initHashWatching()
 {
     // Register custom protocol handler
-    if (window.navigator && window.navigator.registerProtocolHandler){
+    already_registered = _getResourceFromStorage("twister_protocol_registered");
+    
+    if (window.navigator && window.navigator.registerProtocolHandler && !already_registered){
         var local_twister_url = window.location.protocol + '//' + window.location.host + '/home.html#%s';
         window.navigator.registerProtocolHandler('web+twister', local_twister_url, 'Twister');
+	_putResourceIntoStorage("twister_protocol_registered", true);
     }
 
     // Register hash spy and launch it once
