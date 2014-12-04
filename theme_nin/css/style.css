@@ -593,6 +593,14 @@ ol.toptrends-list a:hover { background: white; color: #66686b; }
 
 .modal-buttons { padding: 10px; text-align: right; }
 
+/******** FOLLOWING-CONFIG MODAL ********/
+.following-config-modal .modal-wrapper { top: 43%; left: 25%; width: 50%; }
+.following-config-modal .modal-content { padding: 10px; text-align: center; background-color: white; }
+.following-config-modal .modal-buttons { display: none; }
+.following-config-method-buttons { padding: 10px; }
+.following-config-method-buttons .public-following { background-color: #B4C669 }
+.following-config-modal h2 { text-transform: none; }
+
 /*********** RETWIST POSTS MODAL ********* */
 .reTwist .modal-wrapper { width: 520px; top: 20%; margin: 0 0 0 -260px; }
 .reTwist .post-expand, .reTwist .post-interactions { display: none; }
