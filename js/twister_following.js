@@ -732,17 +732,17 @@ function followingListPublicCheckbox(e) {
 
     var $this = $(this);
     var username = $this.closest(".mini-profile-info").attr("data-screen-name");
-    var method = false;
+    var publicFollow = false;
     $this.toggleClass( "private" );
     if( $this.hasClass( "private" ) ) {
         $this.text( polyglot.t("Private") );
     } else {
         $this.text( polyglot.t("Public") );
-        method = true;
+        publicFollow = true;
     }
 
-    //console.log("set following method of @" +username +" for "+method);
-    follow(username, method);
+    //console.log("set following method of @" +username +" for "+publicFollow);
+    follow(username, publicFollow);
 }
 
 function setFollowingMethod(e) {
@@ -750,14 +750,14 @@ function setFollowingMethod(e) {
 
     var $this = $(this);
     var username = $this.closest(".following-config-modal-content").attr("data-screen-name");
-    var method = false;
+    var publicFollow = false;
 
     if( !$this.hasClass("private") ) {
-        method = true;
+        publicFollow = true;
     }
 
-    //console.log("start following @" +username +" by method "+method);
-    follow(username, method);
+    //console.log("start following @" +username +" by method "+publicFollow);
+    follow(username, publicFollow);
 }
 
 
