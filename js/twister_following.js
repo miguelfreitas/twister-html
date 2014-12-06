@@ -388,10 +388,13 @@ function isPublicFollowing(user) {
     if( followingUsers.indexOf(user) < 0 ) {
         return false;
     }
-    if( (user in _isFollowPublic) && _isFollowPublic[user] == true )
+    if( (user in _isFollowPublic) && _isFollowPublic[user] == true ) {
+        //console.log("isPublicFollowing( " +user +" ) = "+true);
         return true;
-    else
+    } else {
+        //console.log("isPublicFollowing( " +user +" ) = "+false);
         return false;
+    }
 }
 
 // check if following list is empty
@@ -521,7 +524,11 @@ function showFollowingUsers(){
         resItem.find("a.open-profile-modal").attr("href",$.MAL.userUrl(followingUsers[i]));
         resItem.find("a.unfollow").attr("href",$.MAL.unfollowUrl(followingUsers[i]));
         resItem.find("a.direct-messages-with-user").attr("href", $.MAL.dmchatUrl(followingUsers[i]));
-        resItem.find(".public-following").prop("checked",isPublicFollowing(followingUsers[i]));
+        if (isPublicFollowing(followingUsers[i])) {
+            resItem.find(".public-following").text(polyglot.t("Public"));
+        } else {
+            resItem.find(".public-following").text(polyglot.t("Private")).addClass( "private" );
+        }
         getAvatar(followingUsers[i],resItem.find(".mini-profile-photo"));
         getFullname(followingUsers[i],resItem.find(".mini-profile-name"));
         if( followingUsers[i] == defaultScreenName ) {
@@ -658,6 +665,16 @@ function processDropdownUserResults(partialName, results){
     _searchingPartialUsers = "";
 }
 
+function newFollowingConfigModal(username) {
+    var FollowingConfigContent = $("#following-config-modal-template").children().clone(true);
+
+    FollowingConfigContent.closest(".following-config-modal-content").attr("data-screen-name", username)
+    FollowingConfigContent.find(".following-config-method-message").text(polyglot.t("Which way do you want to follow"))
+    FollowingConfigContent.find(".following-screen-name b").text(username);
+
+    return FollowingConfigContent;
+}
+
 function userClickFollow(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -672,10 +689,14 @@ function userClickFollow(e) {
       return;
     }
 
-    follow(username, true, function() {
-        // delay reload so dhtput may do it's job
-        window.setTimeout("location.reload();",500);
-    });
+    var FollowingConfigClass = "following-config-modal";
+    openModal( FollowingConfigClass );
+
+    var FollowingConfigContent = newFollowingConfigModal(username);
+    FollowingConfigContent.appendTo("." +FollowingConfigClass +" .modal-content");
+
+    //título do modal
+    $("." +FollowingConfigClass +" h3").text(polyglot.t("Following config"));
 }
 
 function initUserSearch() {
@@ -685,6 +706,13 @@ function initUserSearch() {
     $userSearchField.clickoutside( closeSearchDialog );
 
     $("button.follow").bind( "click", userClickFollow );
+
+    $(".following-config-method-buttons .public-following").bind( "click", setFollowingMethod );
+    $(".following-config-method-buttons .public-following").click( function() {
+        closeModal($(this));
+        // delay reload so dhtput may do it's job
+        window.setTimeout("location.reload();",500);
+    });
 }
 
 function followingListUnfollow(e) {
@@ -704,16 +732,32 @@ function followingListPublicCheckbox(e) {
 
     var $this = $(this);
     var username = $this.closest(".mini-profile-info").attr("data-screen-name");
-    var public = false;
+    var method = false;
     $this.toggleClass( "private" );
     if( $this.hasClass( "private" ) ) {
         $this.text( polyglot.t("Private") );
     } else {
         $this.text( polyglot.t("Public") );
-        public = true;
+        method = true;
     }
 
-    follow(username, public);
+    //console.log("set following method of @" +username +" for "+method);
+    follow(username, method);
+}
+
+function setFollowingMethod(e) {
+    e.stopPropagation();
+
+    var $this = $(this);
+    var username = $this.closest(".following-config-modal-content").attr("data-screen-name");
+    var method = false;
+
+    if( !$this.hasClass("private") ) {
+        method = true;
+    }
+
+    //console.log("start following @" +username +" by method "+method);
+    follow(username, method);
 }
 
 
@@ -764,7 +808,7 @@ function initInterfaceFollowing() {
     initInterfaceDirectMsg();
 
     $("button.unfollow").bind( "click", followingListUnfollow );
-    $(".public-following").bind( "click", followingListPublicCheckbox );
+    $(".mini-profile-info .public-following").bind( "click", followingListPublicCheckbox );
 
     $(".mentions-from-user").bind( "click", openMentionsModal );
 

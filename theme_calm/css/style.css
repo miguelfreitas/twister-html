@@ -1730,6 +1730,28 @@ textarea.splited-post {
     padding: 5px 20px;
 }
 /*************************************
+*************** FOLLOWING-CONFIG MODAL
+**************************************/
+.following-config-modal .modal-wrapper
+{
+    top: 43%;
+    left: 25%;
+    width: 50%;
+}
+.following-config-modal .modal-content
+{
+    padding: 10px;
+    text-align: center;
+}
+.following-config-modal .modal-buttons
+{
+    display: none;
+}
+.following-config-method-buttons
+{
+    padding: 10px;
+}
+/*************************************
 ****************** RETWIST POSTS MODAL
 **************************************/
 .reTwist .modal-wrapper
