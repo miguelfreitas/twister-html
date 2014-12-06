@@ -98,6 +98,7 @@ var router=new $.mobile.Router(
                 if( !$("#home .posts").children().length ) {
                     $.mobile.showPageLoadingMsg();
                     getFullname( defaultScreenName, $("#home .rtitle"));
+                    $(".mentions-count").attr("href","#mentions?user="+defaultScreenName );
                     $.MAL.setPostTemplate( $("#post-template-home") );
                     requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers);
                 }
