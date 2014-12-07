@@ -174,7 +174,7 @@ function openHashtagModal(e)
 
 function openHashtagModalFromSearch(hashtag)
 {
-    window.location.hash = '#hashtag?hashtag=' + hashtag;
+    window.location.hash = '#hashtag?hashtag=' + encodeURIComponent(hashtag);
 }
 
 function openHashtagModalFromSearchHandler(hashtag)
