@@ -7,7 +7,7 @@ $modal-gut: 15px
 $modal-postboard-height: $modal-height - 3*$modal-gut
 $modal-left-col: 400px
 $modal-right-col: ($modal-width - 2*$modal-gut) - $modal-left-col - $modal-gut
-
+$modal-postboard-post-height: $modal-height - 45px
 
 /*************************************
  ******************* PROFILE MODAL
@@ -20,7 +20,7 @@ $modal-right-col: ($modal-width - 2*$modal-gut) - $modal-left-col - $modal-gut
     position: absolute
     top: 50%
     +box-sizing(border-box)
-    height: $modal-height 
+    height: $modal-height
     margin: 0-($modal-height/2) 0 0 0-($modal-width/2)
     h3
       display: none
@@ -46,22 +46,24 @@ $modal-right-col: ($modal-width - 2*$modal-gut) - $modal-left-col - $modal-gut
   .modal-content
     height: 100%
     overflow: hidden
-    padding: 0 $modal-gut 0 0
+    padding: 0
+    position: relative
     #profile-posts
       padding: 0
 
     .postboard
       margin-left: 0
-      height: $modal-postboard-height
+      height: 100%
       bottom: 0
       position: relative
       float: right
       width: $modal-right-col!important
-      overflow: auto
+      
 
     .postboard-posts
       display: block
-
+      height: $modal-postboard-post-height
+      overflow: auto
     .postboard-posts .post
       padding: 0
     .post-interactions
@@ -263,4 +265,3 @@ $modal-right-col: ($modal-width - 2*$modal-gut) - $modal-left-col - $modal-gut
 
 .selectable_theme.theme_calm
   display: none
-
