@@ -13,6 +13,23 @@ var twisterdConnectedAndUptodate = false;
 
 // ---
 
+function formatDecimal(value) {
+    if (!value) return '0';
+    var exponent = Math.floor(Math.log(value) / Math.LN10),
+        scale = (exponent < 2) ? Math.pow(10, 2 - exponent) : 1;
+    return Math.round(value * scale) / scale;
+}
+function formatSize(value) {
+    if (value<1024) return value + ' b';
+    if (value<1024*1024) return formatDecimal(value/1024) + ' Kb';
+    if (value<1024*1024*1024) return formatDecimal(value/(1024*1024)) + ' Mb';
+    if (value<1024*1024*1024*1024) return formatDecimal(value/(1024*1024*1024)) + ' Gb';
+    return formatDecimal(value/(1024*1024*1024*1024)) + ' Tb';
+}
+function formatSpeed(total, rate) {
+    return formatSize(total) + ' @ ' + formatSize(rate) + '/s'
+}
+
 function requestNetInfo(cbFunc, cbArg) {
     twisterRpc("getinfo", [],
                function(args, ret) {
@@ -32,6 +49,20 @@ function requestNetInfo(cbFunc, cbArg) {
                    $(".dht-nodes").text(twisterDhtNodes);
                    $(".userMenu-dhtindicator a").text(twisterDhtNodes);
                    $(".version").text(twisterDisplayVersion);
+
+                   $(".dht-torrents").text(ret.dht_torrents);
+                   $(".num-peers").text(ret.num_peers);
+                   $(".peerlist-size").text(ret.peerlist_size);
+                   $(".num-active-requests").text(ret.num_active_requests);
+
+                   $(".download-rate").text(formatSpeed(ret.total_download, ret.download_rate));
+                   $(".upload-rate").text(formatSpeed(ret.total_upload, ret.upload_rate));
+                   $(".dht-download-rate").text(formatSpeed(ret.total_dht_download, ret.dht_download_rate));
+                   $(".dht-upload-rate").text(formatSpeed(ret.total_dht_upload, ret.dht_upload_rate));
+                   $(".ip-overhead-download-rate").text(formatSpeed(ret.total_ip_overhead_download, ret.ip_overhead_download_rate));
+                   $(".ip-overhead-upload-rate").text(formatSpeed(ret.total_ip_overhead_upload, ret.ip_overhead_upload_rate));
+                   $(".payload-download-rate").text(formatSpeed(ret.total_payload_download, ret.payload_download_rate));
+                   $(".payload-upload-rate").text(formatSpeed(ret.total_payload_upload, ret.payload_upload_rate));
 
                    if( !twisterdConnections ) {
                        $.MAL.setNetworkStatusMsg(polyglot.t("Connection lost."), false);
