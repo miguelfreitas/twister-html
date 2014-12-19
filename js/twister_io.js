@@ -23,6 +23,7 @@ var _dhtgetPendingMap = {};
 // memory cache for profile and avatar
 var _profileMap = {};
 var _avatarMap = {};
+var _pubkeyMap = {};
 
 // number of dhtgets in progress (requests to the daemon)
 var _dhtgetsInProgress = 0;
@@ -405,13 +406,21 @@ function checkPubkeyExists(username, cbFunc, cbArg) {
 // cbFunc is called as cbFunc(cbArg, pubkey)
 // if user doesn't exist then pubkey.length == 0
 function dumpPubkey(username, cbFunc, cbArg) {
-    twisterRpc("dumppubkey", [username],
-               function(args, ret) {
-                   args.cbFunc(args.cbArg, ret);
-               }, {cbFunc:cbFunc, cbArg:cbArg},
-               function(args, ret) {
-                   alert(polyglot.t("error_connecting_to_daemon"));
-               }, {cbFunc:cbFunc, cbArg:cbArg});
+    if( username in _pubkeyMap ) {
+        if( cbFunc )
+            cbFunc(cbArg, _pubkeyMap[username]);
+    } else {
+        twisterRpc("dumppubkey", [username],
+                   function(args, ret) {
+                       if( ret.length > 0 ) {
+                            _pubkeyMap[username] = ret;
+                       }
+                       args.cbFunc(args.cbArg, ret);
+                   }, {cbFunc:cbFunc, cbArg:cbArg},
+                   function(args, ret) {
+                       alert(polyglot.t("error_connecting_to_daemon"));
+                   }, {cbFunc:cbFunc, cbArg:cbArg});
+    }
 }
 
 // privkey is obtained from wallet db
