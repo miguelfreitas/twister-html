@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>twister crypto test</title>
+<script src="js/twister-crypto-bundle.js"></script>
+
+<body>
+<textarea id="myTextarea" name="something" rows="20" cols="80">running javascript tests...</textarea>
+
+<script language="javascript" type="text/javascript">
+
+var testvector =
+{
+    "secret" : "KxQfV51HeY7dsML7jZonw1KxoEWrQ4f93QaQua2RZFNHc4d1VpkL",
+    "pubkey" : "02f3cfac52291c219fd42a6b842b9d2db99a81f6207118a9635029cef8984d7beb",
+    "hashMagic" : "9a3d46c1351cc70a0d89a2c2a4192913cc1bc4fce631b451e56c5239afc8f470",
+    "plaintext" : "The quick brown fox jumps over the lazy dog",
+    "hash" : "c9c558d851bc50b6f81bc6275ab4afb4f3fa3681b6182c2cba9a9cf187317d6a",
+    "sign" : "1f4b552cb138f761bf6567c13f16575d5a43e295d0cc494e1bf189a2f10c26ffee58a9db245481a4f69d154239f6cadad16272d76c9b91c50fbb4513415dcfaa26",
+    "sec" : {
+        "ecies_key_derivation" : "910d1b7dff1ce8373af697b0d0586a8f0934143127fec00d502e6fbbd86b8a02",
+        "aes_key" : "fba95549c948b84fb6e338626eaa6e2db7c963533b87d2da65e7b751413e055f3a599f8541aff2e2134508de8ca207be16890fb35e520b90d85f37bc1027da56",
+        "key" : "0337cf4c9db7e37943fab38c5e700c9c96c33a14bbe493f2bf3f49d8d9f5d7ef99",
+        "mac" : "811fcddf475b9aecf6f6cc2930024372dfad48ac731e347ac7fc0670ba51404fd39df704b7a32b4b69a05e781e58f88fd24cee111eba2bff2e8cb6b40de037f1",
+        "orig" : 43,
+        "body" : "2a1d32be3c58f869c92ef3cb784d0439b65892929f43b2995d26a391f3e1baaf5ded64662d80a1d43babeeab5eb93649"
+    }
+}
+
+var signedpost =
+{
+    "sig_userpost":"1fb7922b8d6283168037d578cc4bed6c0af4e76d26db154bc5df881c5db3cfc74f969e90c3f76ee2cebc1ddd9b09ddf4b1e97040f9fe4dad749fcab6eb6fb5e984",
+    "userpost":
+    {
+       "height":66495,
+       "k":442,
+       "lastk":441,
+       "msg":"sucessfully decrypted my first ECIES testvector in javascript! \\o/",
+       "n":"mfreitas",
+       "time":1418265500
+    }
+}
+
+var signedpost_user_pubkey = "03bc75d34b1cb18646591567c441a4b7c35cf3fe37fd4cd8e6699b0c12ee11b9b4"
+
+function log(msg)
+{
+  document.getElementById('myTextarea').value += "\n" + msg;
+}
+
+var newKey = TwisterCrypto.PrivKey.makeRandom()
+if( !newKey.pub.messageVerify(testvector["plaintext"], 
+     newKey.messageSign(testvector["plaintext"])) ) {
+  log("ERROR: New key self test signature failure");
+}
+
+var key = TwisterCrypto.PrivKey.fromWIF(testvector["secret"]);
+var pubkeyhex = key.pub.toHex()
+if( pubkeyhex != testvector["pubkey"] ) {
+  log("ERROR: pubkey error: " + pubkeyhex);
+}
+
+var sig = key.messageSign(testvector["plaintext"]);
+if( !key.pub.messageVerify(testvector["plaintext"], sig) ) {
+  log("ERROR: Provided key self test signature failure");
+}
+
+var sigRef = testvector["sign"]
+if( !key.pub.messageVerify(testvector["plaintext"], sigRef) ) {
+  log("ERROR: Testvector signature failure");
+}
+
+msg = key.decrypt( testvector["sec"] );
+if( msg ) {
+  log(msg.toString());
+  if( msg != testvector.plaintext ) {
+    log("ERROR: Testvector ECIES decrypt result != plaintext");
+  }
+} else {
+  log("ERROR: Testvector ECIES decrypt failed");
+}
+
+enc = undefined
+while(true) {
+  sec = key.pub.encrypt(testvector.plaintext, enc)
+  if( !enc && !Buffer.isBuffer(sec.body) ) {
+      log("ERROR: encrypt not producing Buffer outputs");
+  }
+  if( enc && Buffer.isBuffer(sec.body) ) {
+      log("ERROR: encrypt not producing hex outputs");
+  }
+  msg = key.decrypt(sec);
+  if( msg != testvector.plaintext ) {
+      log("ERROR: Testvector ECIES encrypt result != plaintext (enc=", enc, ")");
+  }
+  if( enc )
+      break
+  else
+      enc = "hex"
+}
+
+userpost = Bencode.encode(signedpost["userpost"])
+if( key.pub.messageVerify(userpost, signedpost["sig_userpost"]) ) {
+  log("ERROR: false positive verify for userpost")
+}
+
+userPubKey = TwisterCrypto.PubKey.fromHex(signedpost_user_pubkey)
+if( !userPubKey.messageVerify(userpost, signedpost["sig_userpost"]) ) {
+  log("ERROR: verify for userpost failed with the expected pubkey")
+}
+
+//sighex = new Buffer(sig).toString("hex")
+
+log("test vector complete");
+</script>
+</body>
+</html> 
