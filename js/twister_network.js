@@ -163,7 +163,8 @@ function networkUpdate(cbFunc, cbArg) {
                 } else {
                     var daysOld = (curTime - twisterdLastBlockTime) / (3600*24);
                     $.MAL.setNetworkStatusMsg(polyglot.t("downloading_block_chain", { days: daysOld.toFixed(2) }), false);
-                    twisterdConnectedAndUptodate = false;
+                    // don't alarm user if blockchain is just a little bit behind
+                    twisterdConnectedAndUptodate = (daysOld < 2);
                 }
             }
             if( args.cbFunc )
