@@ -281,6 +281,7 @@ function interfaceNetworkHandlers() {
     $( ".add-peer").bind( "click", addPeerClick );
     $( ".add-dns").bind( "click", addDNSClick );
     $( "select.genblock").change( setGenerate );
+    $( ".genproclimit").change( setGenerate );
     $( ".update-spam-msg").bind( "click", setSpamMsg );
     $( ".terminate-daemon").bind( "click", exitDaemon )
 }
