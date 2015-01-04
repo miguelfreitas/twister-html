@@ -10,6 +10,7 @@ var twisterDhtNodes = 0;
 var twisterdBlocks = 0;
 var twisterdLastBlockTime = 0;
 var twisterdConnectedAndUptodate = false;
+var genproclimit = 1;
 
 // ---
 
@@ -178,6 +179,7 @@ function getMiningInfo(cbFunc, cbArg) {
                function(args, ret) {
                    miningDifficulty    = ret.difficulty;
                    miningHashRate      = ret.hashespersec;
+                   genproclimit        = ret.genproclimit;
 
                    $(".mining-difficulty").text(miningDifficulty);
                    $(".mining-hashrate").text(miningHashRate);
@@ -307,7 +309,9 @@ function initInterfaceNetwork() {
     networkUpdate();
     setInterval("networkUpdate()", 2000);
 
-    miningUpdate();
+    miningUpdate( function() {
+        $(".genproclimit").val(genproclimit);
+    });
     setInterval("miningUpdate()", 2000);
 
     getGenerate();
