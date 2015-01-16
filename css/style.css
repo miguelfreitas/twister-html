@@ -382,6 +382,8 @@ button.disabled:hover
     margin: 9px 20px 0 0;
     border-radius: 10px;
     border: none;
+    height: 16px;
+    font-size: 13px;
 }
 .userMenu-search-sugestions
 {
