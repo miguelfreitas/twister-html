@@ -162,23 +162,6 @@ function newHashtagModal(hashtag) {
     return hashtagModalContent;
 }
 
-/*
-function openHashtagModal(e)
-{
-    e.stopPropagation();
-    e.preventDefault();
-
-    var $this = $( this );
-    var hashtag = $this.text().substring(1).toLowerCase();
-    openHashtagModalFromSearch(hashtag);
-}
-
-function openHashtagModalFromSearch(hashtag)
-{
-    window.location.hash = '#hashtag?hashtag=' + encodeURIComponent(hashtag);
-}
-*/
-
 function openHashtagModalFromSearchHandler(hashtag)
 {
     var hashtagModalClass = "hashtag-modal";
@@ -257,11 +240,6 @@ function newFollowingModal(username) {
 
 function openFollowingModal(username)
 {
-    //e.stopPropagation();
-    //e.preventDefault();
-
-    //var $this = $( this );
-    //var username = $.MAL.followingUrlToUser( $this.attr("href") );
 
     var followingModalClass = "following-modal";
     openModal( followingModalClass );
@@ -389,14 +367,8 @@ function watchHashChange(e)
     hashstring = decodeURIComponent(hashstring);
 
     if(e!=null){ 
-        //console.log(e.oldURL); 
         var prevhashstring = e.oldURL.split('#');
-        prevhashstring=prevhashstring[1];
-        //console.log(prevhashstring);
-        //var prevhashdata = prevhashstring.match(/(hashtag|profile|mentions)\?(?:user|hashtag)=(.+)/);
-        //console.log(prevhashdata);
-
-        
+        prevhashstring=prevhashstring[1];        
         if(prevhashstring.length>0 && prevhashstring!=undefined){
             $('.modal-back').css('display','inline');
             $('.modal-back').on('click', function(){
@@ -410,7 +382,6 @@ function watchHashChange(e)
     if (hashdata[0] != '#web+twister') {
         hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following)\?(?:user|hashtag)=(.+)/);
     }
-            //console.log(hashdata);
 
     if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined) {
         if(hashdata[1] == 'profile') {
