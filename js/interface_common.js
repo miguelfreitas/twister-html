@@ -386,21 +386,44 @@ function watchHashChange(e)
     var hashstring = window.location.hash
     hashstring = decodeURIComponent(hashstring);
 
-    var hashdata = hashstring.split(':');
-    if (hashdata[0] != '#web+twister') {
-        hashdata = hashstring.match(/(hashtag|profile|mentions)\?(?:user|hashtag)=(.+)/);
+    if(e!=null){ 
+        //console.log(e.oldURL); 
+        var prevhashstring = e.oldURL.split('#');
+        prevhashstring=prevhashstring[1];
+        //console.log(prevhashstring);
+        //var prevhashdata = prevhashstring.match(/(hashtag|profile|mentions)\?(?:user|hashtag)=(.+)/);
+        //console.log(prevhashdata);
+
+        
+        if(prevhashstring.length>0){
+            $('.modal-back').css('display','inline');
+            $('.modal-back').on('click', function(){
+                window.location.hash = '#' + prevhashstring;
+            });
+        }
+        
     }
 
-    if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined)
-    {
+    var hashdata = hashstring.split(':');
+    if (hashdata[0] != '#web+twister') {
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages)\?(?:user|hashtag)=(.+)/);
+    }
+            //console.log(hashdata);
+
+    if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined) {
         if(hashdata[1] == 'profile') {
             openProfileModalWithUsernameHandler(hashdata[2]);
         }else if (hashdata[1] == 'hashtag') {
             openHashtagModalFromSearchHandler(hashdata[2]);
         }else if (hashdata[1] == 'mentions') {
             openMentionsModalHandler(hashdata[2]);
+        }else if (hashdata[1] == 'directmessages') {
+            openDmWithUserModal(hashdata[2]);
         }
+    } else if (hashstring == '#directmessages') {
+        directMessagesPopup();
     } else {
+        console.log(hashstring);
         closeModalHandler();
     }
 }
@@ -1362,11 +1385,15 @@ function initInterfaceCommon() {
         $('.modal-back').css('display', 'none');
         $('.mark-all-as-read').css('display', 'none');
     });
+
+    /*
     $('.modal-back').on('click', function(){
         if($('.modal-content .direct-messages-list')[0]) return;
         directMessagesPopup();
         $(".modal-content").removeAttr("style");
     });
+    */
+
     $('.dropdown-menu').on('keydown', function(e){
             e = event || window.event;
             e.stopPropagation();
