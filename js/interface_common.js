@@ -253,13 +253,13 @@ function newFollowingModal(username) {
     return followingModalContent;
 }
 
-function openFollowingModal(e)
+function openFollowingModal(username)
 {
-    e.stopPropagation();
-    e.preventDefault();
+    //e.stopPropagation();
+    //e.preventDefault();
 
-    var $this = $( this );
-    var username = $.MAL.followingUrlToUser( $this.attr("href") );
+    //var $this = $( this );
+    //var username = $.MAL.followingUrlToUser( $this.attr("href") );
 
     var followingModalClass = "following-modal";
     openModal( followingModalClass );
@@ -406,7 +406,7 @@ function watchHashChange(e)
 
     var hashdata = hashstring.split(':');
     if (hashdata[0] != '#web+twister') {
-        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages)\?(?:user|hashtag)=(.+)/);
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following)\?(?:user|hashtag)=(.+)/);
     }
             //console.log(hashdata);
 
@@ -419,6 +419,8 @@ function watchHashChange(e)
             openMentionsModalHandler(hashdata[2]);
         }else if (hashdata[1] == 'directmessages') {
             openDmWithUserModal(hashdata[2]);
+        }else if (hashdata[1] == 'following') {
+            openFollowingModal(hashdata[2]);
         }
     } else if (hashstring == '#directmessages') {
         directMessagesPopup();
@@ -1424,7 +1426,7 @@ function initInterfaceCommon() {
 
     $( ".open-profile-modal").bind( "click", openProfileModal );
     $( ".open-hashtag-modal").bind( "click", openHashtagModal );
-    $( ".open-following-modal").bind( "click", openFollowingModal );
+    //$( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
     $( ".mentions-from-user").bind( "click", openMentionsModal );
 
