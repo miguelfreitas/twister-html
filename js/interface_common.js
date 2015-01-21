@@ -162,6 +162,7 @@ function newHashtagModal(hashtag) {
     return hashtagModalContent;
 }
 
+/*
 function openHashtagModal(e)
 {
     e.stopPropagation();
@@ -176,6 +177,7 @@ function openHashtagModalFromSearch(hashtag)
 {
     window.location.hash = '#hashtag?hashtag=' + encodeURIComponent(hashtag);
 }
+*/
 
 function openHashtagModalFromSearchHandler(hashtag)
 {
@@ -395,7 +397,7 @@ function watchHashChange(e)
         //console.log(prevhashdata);
 
         
-        if(prevhashstring.length>0){
+        if(prevhashstring.length>0 && prevhashstring!=undefined){
             $('.modal-back').css('display','inline');
             $('.modal-back').on('click', function(){
                 window.location.hash = '#' + prevhashstring;
@@ -1425,7 +1427,7 @@ function initInterfaceCommon() {
     $replyText.on("keyup", replyTextKeypress );
 
     $( ".open-profile-modal").bind( "click", openProfileModal );
-    $( ".open-hashtag-modal").bind( "click", openHashtagModal );
+    //$( ".open-hashtag-modal").bind( "click", openHashtagModal );
     //$( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
     $( ".mentions-from-user").bind( "click", openMentionsModal );
