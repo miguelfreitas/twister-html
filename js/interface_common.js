@@ -404,8 +404,6 @@ function openConversationModal(e)
 
 function watchHashChange(e)
 {
-    var hashstring = window.location.hash
-    hashstring = decodeURIComponent(hashstring);
 
     if(e!=null){ 
         var prevurlsplit = e.oldURL.split('#');
@@ -426,6 +424,14 @@ function watchHashChange(e)
         }
         
     }
+
+    loadModalFromHash();
+}
+
+function loadModalFromHash(){
+
+    var hashstring = window.location.hash
+    hashstring = decodeURIComponent(hashstring);
 
     var hashdata = hashstring.split(':');
     if (hashdata[0] != '#web+twister') {
@@ -451,8 +457,8 @@ function watchHashChange(e)
     } else{
         closeModalHandler();
     }
-}
 
+}
 
 function initHashWatching()
 {
