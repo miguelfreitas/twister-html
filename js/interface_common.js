@@ -141,6 +141,8 @@ function newProfileModal(username) {
     return profileModalContent;
 }
 
+/*
+
 function openProfileModal(e)
 {
     e.stopPropagation();
@@ -160,6 +162,8 @@ function openProfileModalWithUsername(username)
     }
     window.location.hash = '#profile?user=' + username;
 }
+
+*/
 
 function openProfileModalWithUsernameHandler(username)
 {
@@ -404,13 +408,18 @@ function watchHashChange(e)
     hashstring = decodeURIComponent(hashstring);
 
     if(e!=null){ 
-        var prevhashstring = e.oldURL.split('#');
-        prevhashstring=prevhashstring[1];        
-        if(prevhashstring.length>0 && prevhashstring!=undefined){
+        var prevurlsplit = e.oldURL.split('#');
+        var newurlsplit = e.newURL.split('#');
+        prevhashstring=prevurlsplit[1];     
+        if(prevurlsplit[0]==newurlsplit[0] && prevhashstring.length>0 && prevhashstring!=undefined){
             $('.modal-back').css('display','inline');
             $('.modal-back').on('click', function(e){
+                e.stopPropagation();
                 e.preventDefault();
+                //window.location.hash = '#' + prevhashstring;
+                
                 history.back(1);
+                
             });
         } else {
             $('.modal-back').css('display','none');
@@ -1451,10 +1460,10 @@ function initInterfaceCommon() {
     var $replyText = $( ".post-area-new textarea" );
     $replyText.on("keyup", replyTextKeypress );
 
-    //$( ".open-profile-modal").bind( "click", openProfileModal );
+    $( ".open-profile-modal").bind( "click", function(e){ e.stopPropagation(); } );
     //$( ".open-hashtag-modal").bind( "click", openHashtagModal );
     //$( ".open-following-modal").bind( "click", openFollowingModal );
-    //$( ".userMenu-connections a").bind( "click", openMentionsModal );
+    $( ".userMenu-connections a").bind( "click", openMentionsModal );
     $( ".mentions-from-user").bind( "click", openMentionsModal );
 
     replaceDashboards();
