@@ -449,7 +449,6 @@ function watchHashChange(e)
     } else if (hashstring == '#whotofollow'){
         openWhoToFollowModal();
     } else{
-        console.log(hashstring);
         closeModalHandler();
     }
 }

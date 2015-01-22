@@ -1,6 +1,7 @@
 $(function(){ 
     
-    $('#closeModal').html('');
+    $('.modal-close').html('');
+    $('.twister-user-remove').html('');
     $('.profile-card-main').attr('style', '');
     $('img[src$="img/tornado_avatar.png"]').attr("src","theme_nin/img/tornado_avatar.png");
     $('.userMenu-search-profiles button').html('').attr('title',polyglot.t('Follow'));

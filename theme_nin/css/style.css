@@ -56,7 +56,7 @@
   font-style: normal;
 }
 /* line 64, ../sass/_fonts.sass */
-[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, ul.userMenu-search-profiles .modal-back:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, ul.userMenu-search-profiles .modal-back:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-users:before, .prompt-close:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -115,7 +115,7 @@
 
 /* '' */
 /* line 115, ../sass/_fonts.sass */
-.icon-cancel:before, .twister-user-remove:before, .modal-close:before {
+.icon-cancel:before, .twister-user-remove:before, .prompt-close:before, .modal-close:before {
   content: "";
 }
 
@@ -306,7 +306,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   width: 1180px;
   max-width: 100%;
   margin: auto;
-  background: url('/img/twister_logo.png?1421423397') no-repeat 50% 50%;
+  background: url('/theme_nin/img/twister_logo.png?1421423397') no-repeat 50% 50%;
   background-size: 20px;
 }
 /* line 18, ../sass/_menu.sass */
@@ -2386,8 +2386,40 @@ ol.toptrends-list a:hover {
   color: #66686B;
 }
 
-/*********** POPUP MODAL************ */
-/* line 561, ../sass/style.sass */
+/*********** POPUP PROMPT ************ */
+/* line 558, ../sass/style.sass */
+.prompt-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: white;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  z-index: 5;
+  width: 600px;
+  margin-left: -300px;
+}
+
+/* line 568, ../sass/style.sass */
+.prompt-close {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  font-size: 14px;
+  line-height: 40px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+}
+/* line 578, ../sass/style.sass */
+.prompt-close:hover {
+  color: white;
+}
+/* line 580, ../sass/style.sass */
+.prompt-close b {
+  display: none;
+}
+
+/*********** POPUP MODAL ************* */
+/* line 584, ../sass/style.sass */
 .modal-blackout {
   position: fixed;
   width: 100%;
@@ -2399,24 +2431,24 @@ ol.toptrends-list a:hover {
   z-index: 3;
 }
 
-/* line 571, ../sass/style.sass */
+/* line 594, ../sass/style.sass */
 .modal-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   overflow: hidden;
 }
-/* line 576, ../sass/style.sass */
+/* line 599, ../sass/style.sass */
 .modal-wrapper .post-area-new {
   padding: 10px;
 }
 
-/* line 579, ../sass/style.sass */
+/* line 602, ../sass/style.sass */
 .modal-content {
   background: #f3f2f1;
   padding: 20px;
 }
-/* line 583, ../sass/style.sass */
+/* line 606, ../sass/style.sass */
 .modal-content .postboard h2 {
   position: fixed;
   z-index: 2;
@@ -2425,11 +2457,11 @@ ol.toptrends-list a:hover {
   width: 100px;
   width: 520px;
 }
-/* line 590, ../sass/style.sass */
+/* line 613, ../sass/style.sass */
 .modal-content .postboard h2 span {
   display: none;
 }
-/* line 592, ../sass/style.sass */
+/* line 615, ../sass/style.sass */
 .modal-content .postboard-news {
   line-height: 30px;
   position: absolute;
@@ -2443,7 +2475,7 @@ ol.toptrends-list a:hover {
   background: #B4C669;
 }
 
-/* line 605, ../sass/style.sass */
+/* line 628, ../sass/style.sass */
 .modal-header {
   position: relative;
   background: #66686B;
@@ -2452,7 +2484,7 @@ ol.toptrends-list a:hover {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 611, ../sass/style.sass */
+/* line 634, ../sass/style.sass */
 .modal-header h3 {
   font-size: 0.8em;
   line-height: 40px;
@@ -2463,7 +2495,7 @@ ol.toptrends-list a:hover {
   display: block !important;
 }
 
-/* line 620, ../sass/style.sass */
+/* line 643, ../sass/style.sass */
 .modal-close {
   position: absolute;
   right: 10px;
@@ -2473,16 +2505,16 @@ ol.toptrends-list a:hover {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.7);
 }
-/* line 630, ../sass/style.sass */
+/* line 653, ../sass/style.sass */
 .modal-close:hover {
   color: white;
 }
-/* line 632, ../sass/style.sass */
+/* line 655, ../sass/style.sass */
 .modal-close b {
   display: none;
 }
 
-/* line 635, ../sass/style.sass */
+/* line 658, ../sass/style.sass */
 .mark-all-as-read {
   float: left;
   cursor: pointer;
@@ -2494,12 +2526,12 @@ ol.toptrends-list a:hover {
   display: none;
 }
 
-/* line 645, ../sass/style.sass */
+/* line 668, ../sass/style.sass */
 .modal-back:hover, .mark-all-as-read:hover {
   color: #B4C669;
 }
 
-/* line 653, ../sass/style.sass */
+/* line 676, ../sass/style.sass */
 .modal-back {
   margin: 0;
   background: #B4C669;
@@ -2507,80 +2539,80 @@ ol.toptrends-list a:hover {
   float: left;
 }
 
-/* line 662, ../sass/style.sass */
+/* line 685, ../sass/style.sass */
 .modal-buttons {
   padding: 10px;
   text-align: right;
 }
 
 /************ FOLLOWING-CONFIG MODAL ********* */
-/* line 670, ../sass/style.sass */
+/* line 693, ../sass/style.sass */
 .following-config-modal h2 {
   text-transform: none;
 }
-/* line 672, ../sass/style.sass */
+/* line 695, ../sass/style.sass */
 .following-config-modal .modal-wrapper {
   top: 43%;
   left: 25%;
   width: 50%;
 }
-/* line 676, ../sass/style.sass */
+/* line 699, ../sass/style.sass */
 .following-config-modal .modal-content {
   padding: 10px;
   text-align: center;
   background-color: white;
 }
-/* line 680, ../sass/style.sass */
+/* line 703, ../sass/style.sass */
 .following-config-modal .modal-buttons {
   display: none;
 }
 
-/* line 682, ../sass/style.sass */
+/* line 705, ../sass/style.sass */
 .following-config-method-buttons {
   padding: 10px;
 }
-/* line 684, ../sass/style.sass */
+/* line 707, ../sass/style.sass */
 .following-config-method-buttons .public-following {
   background-color: #B4C669;
 }
 
 /************ RETWIST POSTS MODAL ********* */
-/* line 690, ../sass/style.sass */
+/* line 713, ../sass/style.sass */
 .reTwist .modal-wrapper {
   width: 520px;
   top: 20%;
   margin: 0 0 0 -260px;
 }
-/* line 694, ../sass/style.sass */
+/* line 717, ../sass/style.sass */
 .reTwist .post-expand, .reTwist .post-interactions {
   display: none;
 }
 
 /********* REPLY POSTS MODAL************** */
-/* line 700, ../sass/style.sass */
+/* line 723, ../sass/style.sass */
 .reply .modal-wrapper {
   width: 520px;
   top: 20%;
   margin: 0 0 0 -260px;
 }
-/* line 704, ../sass/style.sass */
+/* line 727, ../sass/style.sass */
 .reply .modal-buttons, .reply .post-expand, .reply .post-interactions {
   display: none;
 }
 
 /****** DIRECT MESSAGES MODAL********* */
-/* line 710, ../sass/style.sass */
+/* line 733, ../sass/style.sass */
 .directMessages .post-area-new {
   display: none;
   padding: 20px;
   z-index: 5;
   background: #E2E1DE;
 }
-/* line 717, ../sass/style.sass */
+/* line 740, ../sass/style.sass */
 .directMessages .post-area-new .modal-header h3 span {
   display: inline !important;
 }
-/* line 719, ../sass/style.sass */
+/* line 742, ../sass/style.sass */
 .directMessages .modal-wrapper {
   width: 520px;
   height: 490px;
@@ -2588,7 +2620,7 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow-x: hidden;
 }
-/* line 726, ../sass/style.sass */
+/* line 749, ../sass/style.sass */
 .directMessages .modal-content {
   overflow-y: auto;
   height: 300px;
@@ -2597,25 +2629,25 @@ ol.toptrends-list a:hover {
   box-sizing: border-box;
   width: 520px;
 }
-/* line 733, ../sass/style.sass */
+/* line 756, ../sass/style.sass */
 .directMessages .modal-buttons {
   display: none;
 }
-/* line 735, ../sass/style.sass */
+/* line 758, ../sass/style.sass */
 .directMessages .post-photo {
   height: 48px;
   width: 48px;
 }
-/* line 738, ../sass/style.sass */
+/* line 761, ../sass/style.sass */
 .directMessages .post-text {
   margin-left: 58px;
   font-size: 0.9em;
 }
-/* line 741, ../sass/style.sass */
+/* line 764, ../sass/style.sass */
 .directMessages .post-info-name {
   float: none;
 }
-/* line 743, ../sass/style.sass */
+/* line 766, ../sass/style.sass */
 .directMessages .post-info-tag {
   line-height: 1em;
   padding: 0;
@@ -2624,12 +2656,12 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 1em;
 }
 
-/* line 750, ../sass/style.sass */
+/* line 773, ../sass/style.sass */
 .direct-messages-list .post {
   padding: 10px 30px 10px 15px;
   cursor: pointer;
 }
-/* line 753, ../sass/style.sass */
+/* line 776, ../sass/style.sass */
 .direct-messages-list .post:after {
   content: "";
   font-family: "fontello";
@@ -2642,19 +2674,19 @@ ol.toptrends-list a:hover {
   display: none;
 }
 
-/* line 765, ../sass/style.sass */
+/* line 788, ../sass/style.sass */
 .direct-messages-list .post:hover:after {
   display: block;
 }
 
-/* line 770, ../sass/style.sass */
+/* line 793, ../sass/style.sass */
 .direct-messages-thread .post {
   background: none;
   left: 0;
   margin: 0px 10px 20px 10px;
   cursor: default;
 }
-/* line 776, ../sass/style.sass */
+/* line 799, ../sass/style.sass */
 .direct-messages-thread .post .post-info-time {
   float: none;
   display: block;
@@ -2663,11 +2695,11 @@ ol.toptrends-list a:hover {
   margin: 10px 0;
   cursor: default;
 }
-/* line 783, ../sass/style.sass */
+/* line 806, ../sass/style.sass */
 .direct-messages-thread .post .post-info-time:hover {
   color: #aaa;
 }
-/* line 787, ../sass/style.sass */
+/* line 810, ../sass/style.sass */
 .direct-messages-thread .post .post-text:after, .direct-messages-thread .post .post-text:nth-child(2n):after {
   content: "";
   width: 1px;
@@ -2676,14 +2708,14 @@ ol.toptrends-list a:hover {
   top: 10px;
   white-space: normal;
 }
-/* line 795, ../sass/style.sass */
+/* line 818, ../sass/style.sass */
 .direct-messages-thread .post .post-text:after {
   border-top: solid 7px transparent;
   border-bottom: solid 7px transparent;
   border-right: solid 7px white;
   left: -7px;
 }
-/* line 801, ../sass/style.sass */
+/* line 824, ../sass/style.sass */
 .direct-messages-thread .post .post-text {
   background: white;
   margin-right: 60px;
@@ -2699,13 +2731,13 @@ ol.toptrends-list a:hover {
   max-width: 60%;
   min-height: 15px;
 }
-/* line 816, ../sass/style.sass */
+/* line 839, ../sass/style.sass */
 .direct-messages-thread .post .post-photo {
   position: absolute;
   left: 0;
   top: 10px;
 }
-/* line 825, ../sass/style.sass */
+/* line 848, ../sass/style.sass */
 .direct-messages-thread .post.sent .post-text:after {
   border-top: solid 7px transparent;
   border-bottom: solid 7px transparent;
@@ -2714,11 +2746,11 @@ ol.toptrends-list a:hover {
   right: -7px;
   left: auto;
 }
-/* line 832, ../sass/style.sass */
+/* line 855, ../sass/style.sass */
 .direct-messages-thread .post.sent .post-text {
   float: right;
 }
-/* line 834, ../sass/style.sass */
+/* line 857, ../sass/style.sass */
 .direct-messages-thread .post.sent .post-photo {
   position: absolute;
   right: 0;
@@ -2726,7 +2758,7 @@ ol.toptrends-list a:hover {
 }
 
 /********* NEW USER MODAL************* */
-/* line 844, ../sass/style.sass */
+/* line 867, ../sass/style.sass */
 .new-user .modal-wrapper {
   width: 520px;
   height: 600px;
@@ -2735,31 +2767,31 @@ ol.toptrends-list a:hover {
   overflow-x: hidden;
   overflow-y: hidden;
 }
-/* line 851, ../sass/style.sass */
+/* line 874, ../sass/style.sass */
 .new-user .modal-content {
   margin: 10px 10px 10px 10px;
 }
-/* line 853, ../sass/style.sass */
+/* line 876, ../sass/style.sass */
 .new-user .modal-buttons, .new-user .modal-close {
   display: none;
 }
-/* line 855, ../sass/style.sass */
+/* line 878, ../sass/style.sass */
 .new-user .text {
   margin: 0 0 15px 0;
 }
-/* line 857, ../sass/style.sass */
+/* line 880, ../sass/style.sass */
 .new-user .emphasis {
   font-size: 18px;
   text-align: center;
 }
-/* line 860, ../sass/style.sass */
+/* line 883, ../sass/style.sass */
 .new-user .secret-key {
   color: black;
   font-weight: bold;
 }
 
 /******** HASHTAG MODAL********** */
-/* line 867, ../sass/style.sass */
+/* line 890, ../sass/style.sass */
 .hashtag-modal .modal-wrapper {
   width: 520px;
   height: 600px;
@@ -2767,22 +2799,22 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow: hidden;
 }
-/* line 873, ../sass/style.sass */
+/* line 896, ../sass/style.sass */
 .hashtag-modal .modal-content {
   overflow-y: auto;
   height: 500px;
 }
-/* line 876, ../sass/style.sass */
+/* line 899, ../sass/style.sass */
 .hashtag-modal .modal-buttons {
   display: none;
 }
-/* line 878, ../sass/style.sass */
+/* line 901, ../sass/style.sass */
 .hashtag-modal .postboard {
   padding: 0;
 }
 
 /****** CONVERSATION MODAL********** */
-/* line 884, ../sass/style.sass */
+/* line 907, ../sass/style.sass */
 .conversation-modal .modal-wrapper {
   position: absolute;
   width: 520px;
@@ -2792,22 +2824,22 @@ ol.toptrends-list a:hover {
   overflow: hidden;
   background: white;
 }
-/* line 892, ../sass/style.sass */
+/* line 915, ../sass/style.sass */
 .conversation-modal .modal-content {
   overflow-y: auto;
   height: 90%;
 }
-/* line 895, ../sass/style.sass */
+/* line 918, ../sass/style.sass */
 .conversation-modal .modal-buttons {
   display: none;
 }
-/* line 897, ../sass/style.sass */
+/* line 920, ../sass/style.sass */
 .conversation-modal .postboard {
   padding: 0;
 }
 
 /****** FOLLOWING MODAL****** */
-/* line 903, ../sass/style.sass */
+/* line 926, ../sass/style.sass */
 .following-modal .modal-wrapper {
   width: 520px;
   top: 10%;
@@ -2815,27 +2847,27 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow-x: hidden;
 }
-/* line 909, ../sass/style.sass */
+/* line 932, ../sass/style.sass */
 .following-modal .modal-content {
   height: 300px;
   overflow-y: auto;
   padding: 0;
 }
-/* line 913, ../sass/style.sass */
+/* line 936, ../sass/style.sass */
 .following-modal .modal-buttons {
   display: none;
 }
-/* line 915, ../sass/style.sass */
+/* line 938, ../sass/style.sass */
 .following-modal ol {
   margin: 5px;
 }
-/* line 918, ../sass/style.sass */
+/* line 941, ../sass/style.sass */
 .following-modal .open-profile-modal:hover {
   text-decoration: none;
 }
 
 /******* WHO TO FOLLOW MODAL****** */
-/* line 926, ../sass/style.sass */
+/* line 949, ../sass/style.sass */
 .who-to-follow-modal .modal-wrapper {
   width: 520px;
   top: 10%;
@@ -2843,54 +2875,54 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow-x: hidden;
 }
-/* line 932, ../sass/style.sass */
+/* line 955, ../sass/style.sass */
 .who-to-follow-modal .modal-content {
   padding: 15px;
   height: 400px;
   overflow-y: auto;
 }
-/* line 936, ../sass/style.sass */
+/* line 959, ../sass/style.sass */
 .who-to-follow-modal .modal-buttons {
   display: none;
 }
-/* line 938, ../sass/style.sass */
+/* line 961, ../sass/style.sass */
 .who-to-follow-modal ol {
   margin: 5px;
 }
-/* line 941, ../sass/style.sass */
+/* line 964, ../sass/style.sass */
 .who-to-follow-modal .open-profile-modal:hover {
   text-decoration: none;
 }
-/* line 943, ../sass/style.sass */
+/* line 966, ../sass/style.sass */
 .who-to-follow-modal .twister-user {
   position: relative;
   padding: 5px;
 }
-/* line 946, ../sass/style.sass */
+/* line 969, ../sass/style.sass */
 .who-to-follow-modal .twister-user-photo {
   position: relative;
   left: 0;
   float: left;
   display: block;
 }
-/* line 951, ../sass/style.sass */
+/* line 974, ../sass/style.sass */
 .who-to-follow-modal .twister-user-info {
   position: relative;
   padding-left: 70px;
   width: auto;
 }
-/* line 955, ../sass/style.sass */
+/* line 978, ../sass/style.sass */
 .who-to-follow-modal .bio {
   color: rgba(0, 0, 0, 0.6);
   font-style: italic;
 }
 
 /******* LOADER ************ */
-/* line 961, ../sass/style.sass */
+/* line 984, ../sass/style.sass */
 .postboard-loading {
   text-align: center;
 }
-/* line 963, ../sass/style.sass */
+/* line 986, ../sass/style.sass */
 .postboard-loading div {
   display: inline-block;
   width: 120px;
@@ -2899,7 +2931,7 @@ ol.toptrends-list a:hover {
   position: relative;
   margin: 10px 0 0 0;
 }
-/* line 970, ../sass/style.sass */
+/* line 993, ../sass/style.sass */
 .postboard-loading div:after {
   content: "";
   position: absolute;
@@ -2983,7 +3015,7 @@ ol.toptrends-list a:hover {
   }
 }
 /* Options */
-/* line 1045, ../sass/style.sass */
+/* line 1068, ../sass/style.sass */
 .suboptions {
   margin: 5px 30px;
   border: double 2px rgba(69, 71, 77, 0.1);
@@ -3000,22 +3032,22 @@ ol.toptrends-list a:hover {
   line-height: 0.9em;
   font-style: italic;
 }
-/* line 1060, ../sass/style.sass */
+/* line 1083, ../sass/style.sass */
 .suboptions div {
   float: none !important;
 }
-/* line 1062, ../sass/style.sass */
+/* line 1085, ../sass/style.sass */
 .suboptions span {
   font-style: normal;
 }
 
 /* Autocomplite */
-/* line 1067, ../sass/style.sass */
+/* line 1090, ../sass/style.sass */
 .textcomplete-wrapper textarea {
   display: inline;
 }
 
-/* line 1070, ../sass/style.sass */
+/* line 1093, ../sass/style.sass */
 ul.dropdown-menu {
   position: absolute;
   top: 23px;
@@ -3033,11 +3065,11 @@ ul.dropdown-menu {
   -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-/* line 1086, ../sass/style.sass */
+/* line 1109, ../sass/style.sass */
 ul.dropdown-menu li {
   line-height: 20px;
 }
-/* line 1088, ../sass/style.sass */
+/* line 1111, ../sass/style.sass */
 ul.dropdown-menu > li > a {
   display: block;
   padding: 3px 20px;
