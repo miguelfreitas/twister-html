@@ -1277,7 +1277,7 @@ ol.toptrends-list {
 }
 .modal-header h3
 {
-    padding: 5px;
+    padding: 5px 10px;
     font-weight: bold;
     background: #e34f42;
     color: #fff;
@@ -1553,6 +1553,10 @@ ol.toptrends-list {
     margin-left:-300px;
 }
 
+.prompt-wrapper .modal-header h3{
+    background: #45474D;
+}
+
 /*************************************
 *************** FOLLOWING-CONFIG PROMPT
 **************************************/
@@ -1582,6 +1586,11 @@ ol.toptrends-list {
 {
     display: none;
 }
+.reTwist .post {
+    margin: 10px;
+    padding: 5px;
+    min-height: 68px;
+}
 /*************************************
 ****************** REPLY POSTS PROMPT
 **************************************/
@@ -1594,6 +1603,21 @@ ol.toptrends-list {
 .reply .post-interactions
 {
     display: none;
+}
+
+.reply .textcomplete-wrapper{
+    padding-top: 10px;
+}
+
+.reply .textcomplete-wrapper textarea{
+    margin: 10px;
+    width: 580px;
+}
+
+.reply .post {
+    margin: 10px;
+    padding: 5px;
+    min-height: 68px;
 }
 
 /*************************************
