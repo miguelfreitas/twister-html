@@ -56,7 +56,7 @@
   font-style: normal;
 }
 /* line 64, ../sass/_fonts.sass */
-[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, ul.userMenu-search-profiles .modal-back:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-users:before, .prompt-close:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -115,13 +115,13 @@
 
 /* '' */
 /* line 115, ../sass/_fonts.sass */
-.icon-cancel:before, .twister-user-remove:before, .prompt-close:before, .modal-close:before {
+.icon-cancel:before, .twister-user-remove:before, .modal-close:before {
   content: "";
 }
 
 /* '' */
 /* line 120, ../sass/_fonts.sass */
-.icon-plus:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, ul.userMenu-search-profiles .modal-back:before {
+.icon-plus:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before {
   content: "";
 }
 
@@ -1196,16 +1196,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 /* line 52, ../sass/_following.sass */
-.following button, .following .mini-profile-actions span, .mini-profile-actions .following span, .following .modal-back {
+.following button, .following .mini-profile-actions span, .mini-profile-actions .following span {
   display: inline-block;
   margin: 5px 0;
 }
 /* line 55, ../sass/_following.sass */
-.following button.unfollow, .following .mini-profile-actions span.unfollow, .mini-profile-actions .following span.unfollow, .following .unfollow.modal-back {
+.following button.unfollow, .following .mini-profile-actions span.unfollow, .mini-profile-actions .following span.unfollow {
   background-color: #aaa;
 }
 /* line 57, ../sass/_following.sass */
-.following button.public-following, .following .mini-profile-actions span.public-following, .mini-profile-actions .following span.public-following, .following .public-following.modal-back {
+.following button.public-following, .following .mini-profile-actions span.public-following, .mini-profile-actions .following span.public-following {
   background-color: #B4C669;
 }
 
@@ -1613,7 +1613,7 @@ h3 .isFollowing:after {
 
 /************** BUTTONS *********** */
 /* line 65, ../sass/_commons.sass */
-button, .mini-profile-actions span, .modal-back, a.button {
+button, .mini-profile-actions span, a.button {
   padding: 6px 8px;
   font-size: 13px;
   display: inline-block;
@@ -1640,17 +1640,17 @@ button, .mini-profile-actions span, .modal-back, a.button {
   cursor: pointer;
 }
 /* line 82, ../sass/_commons.sass */
-button:hover, .mini-profile-actions span:hover, .modal-back:hover, a.button:hover {
+button:hover, .mini-profile-actions span:hover, a.button:hover {
   background: #aaa;
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 /* line 85, ../sass/_commons.sass */
-button.disabled, .mini-profile-actions span.disabled, .disabled.modal-back, a.button.disabled {
+button.disabled, .mini-profile-actions span.disabled, a.button.disabled {
   opacity: 0.5;
   background-color: #999;
 }
 /* line 88, ../sass/_commons.sass */
-button.disabled:hover, .mini-profile-actions span.disabled:hover, .disabled.modal-back:hover, a.button.disabled:hover {
+button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disabled:hover {
   color: white;
 }
 
@@ -1850,12 +1850,12 @@ ul.userMenu-search-profiles .mini-profile-info {
   float: none;
 }
 /* line 119, ../sass/style.sass */
-ul.userMenu-search-profiles button, ul.userMenu-search-profiles .mini-profile-actions span, .mini-profile-actions ul.userMenu-search-profiles span, ul.userMenu-search-profiles .modal-back {
+ul.userMenu-search-profiles button, ul.userMenu-search-profiles .mini-profile-actions span, .mini-profile-actions ul.userMenu-search-profiles span {
   background-color: #66686B;
   padding: 3px;
 }
 /* line 124, ../sass/style.sass */
-ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-profile-actions span:after, .mini-profile-actions ul.userMenu-search-profiles span:after, ul.userMenu-search-profiles .modal-back:after {
+ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-profile-actions span:after, .mini-profile-actions ul.userMenu-search-profiles span:after {
   content: "";
   font-family: "fontello";
 }
@@ -2311,14 +2311,14 @@ textarea.splited-post {
 }
 
 /* line 491, ../sass/style.sass */
-button.follow, .mini-profile-actions span.follow, .follow.modal-back {
+button.follow, .mini-profile-actions span.follow {
   position: absolute;
   bottom: 10px;
   right: 10px;
   background: #B4C669;
 }
 /* line 496, ../sass/style.sass */
-button.follow:hover, .mini-profile-actions span.follow:hover, .follow.modal-back:hover {
+button.follow:hover, .mini-profile-actions span.follow:hover {
   background: #aaa;
 }
 
@@ -2399,27 +2399,8 @@ ol.toptrends-list a:hover {
   margin-left: -300px;
 }
 
-/* line 568, ../sass/style.sass */
-.prompt-close {
-  position: absolute;
-  right: 10px;
-  top: 0;
-  font-size: 14px;
-  line-height: 40px;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.7);
-}
-/* line 578, ../sass/style.sass */
-.prompt-close:hover {
-  color: white;
-}
-/* line 580, ../sass/style.sass */
-.prompt-close b {
-  display: none;
-}
-
 /*********** POPUP MODAL ************* */
-/* line 584, ../sass/style.sass */
+/* line 570, ../sass/style.sass */
 .modal-blackout {
   position: fixed;
   width: 100%;
@@ -2431,24 +2412,24 @@ ol.toptrends-list a:hover {
   z-index: 3;
 }
 
-/* line 594, ../sass/style.sass */
+/* line 580, ../sass/style.sass */
 .modal-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   overflow: hidden;
 }
-/* line 599, ../sass/style.sass */
+/* line 585, ../sass/style.sass */
 .modal-wrapper .post-area-new {
   padding: 10px;
 }
 
-/* line 602, ../sass/style.sass */
+/* line 588, ../sass/style.sass */
 .modal-content {
   background: #f3f2f1;
   padding: 20px;
 }
-/* line 606, ../sass/style.sass */
+/* line 592, ../sass/style.sass */
 .modal-content .postboard h2 {
   position: fixed;
   z-index: 2;
@@ -2457,11 +2438,11 @@ ol.toptrends-list a:hover {
   width: 100px;
   width: 520px;
 }
-/* line 613, ../sass/style.sass */
+/* line 599, ../sass/style.sass */
 .modal-content .postboard h2 span {
   display: none;
 }
-/* line 615, ../sass/style.sass */
+/* line 601, ../sass/style.sass */
 .modal-content .postboard-news {
   line-height: 30px;
   position: absolute;
@@ -2475,7 +2456,7 @@ ol.toptrends-list a:hover {
   background: #B4C669;
 }
 
-/* line 628, ../sass/style.sass */
+/* line 614, ../sass/style.sass */
 .modal-header {
   position: relative;
   background: #66686B;
@@ -2484,7 +2465,7 @@ ol.toptrends-list a:hover {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 634, ../sass/style.sass */
+/* line 620, ../sass/style.sass */
 .modal-header h3 {
   font-size: 0.8em;
   line-height: 40px;
@@ -2495,7 +2476,7 @@ ol.toptrends-list a:hover {
   display: block !important;
 }
 
-/* line 643, ../sass/style.sass */
+/* line 629, ../sass/style.sass */
 .modal-close {
   position: absolute;
   right: 10px;
@@ -2505,16 +2486,16 @@ ol.toptrends-list a:hover {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.7);
 }
-/* line 653, ../sass/style.sass */
+/* line 639, ../sass/style.sass */
 .modal-close:hover {
   color: white;
 }
-/* line 655, ../sass/style.sass */
+/* line 641, ../sass/style.sass */
 .modal-close b {
   display: none;
 }
 
-/* line 658, ../sass/style.sass */
+/* line 644, ../sass/style.sass */
 .mark-all-as-read {
   float: left;
   cursor: pointer;
@@ -2526,93 +2507,104 @@ ol.toptrends-list a:hover {
   display: none;
 }
 
-/* line 668, ../sass/style.sass */
+/* line 654, ../sass/style.sass */
 .modal-back:hover, .mark-all-as-read:hover {
   color: #B4C669;
 }
 
-/* line 676, ../sass/style.sass */
+/* line 662, ../sass/style.sass */
 .modal-back {
-  margin: 0;
-  background: #B4C669;
-  display: none !important;
-  float: left;
+  position: absolute;
+  right: 35px;
+  top: 0;
+  font-size: 14px;
+  line-height: 40px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+}
+/* line 672, ../sass/style.sass */
+.modal-back:hover {
+  color: white;
+}
+/* line 674, ../sass/style.sass */
+.modal-back b {
+  display: none;
 }
 
-/* line 685, ../sass/style.sass */
+/* line 677, ../sass/style.sass */
 .modal-buttons {
   padding: 10px;
   text-align: right;
 }
 
 /************ FOLLOWING-CONFIG MODAL ********* */
-/* line 693, ../sass/style.sass */
+/* line 685, ../sass/style.sass */
 .following-config-modal h2 {
   text-transform: none;
 }
-/* line 695, ../sass/style.sass */
+/* line 687, ../sass/style.sass */
 .following-config-modal .modal-wrapper {
   top: 43%;
   left: 25%;
   width: 50%;
 }
-/* line 699, ../sass/style.sass */
+/* line 691, ../sass/style.sass */
 .following-config-modal .modal-content {
   padding: 10px;
   text-align: center;
   background-color: white;
 }
-/* line 703, ../sass/style.sass */
+/* line 695, ../sass/style.sass */
 .following-config-modal .modal-buttons {
   display: none;
 }
 
-/* line 705, ../sass/style.sass */
+/* line 697, ../sass/style.sass */
 .following-config-method-buttons {
   padding: 10px;
 }
-/* line 707, ../sass/style.sass */
+/* line 699, ../sass/style.sass */
 .following-config-method-buttons .public-following {
   background-color: #B4C669;
 }
 
 /************ RETWIST POSTS MODAL ********* */
-/* line 713, ../sass/style.sass */
+/* line 705, ../sass/style.sass */
 .reTwist .modal-wrapper {
   width: 520px;
   top: 20%;
   margin: 0 0 0 -260px;
 }
-/* line 717, ../sass/style.sass */
+/* line 709, ../sass/style.sass */
 .reTwist .post-expand, .reTwist .post-interactions {
   display: none;
 }
 
 /********* REPLY POSTS MODAL************** */
-/* line 723, ../sass/style.sass */
+/* line 715, ../sass/style.sass */
 .reply .modal-wrapper {
   width: 520px;
   top: 20%;
   margin: 0 0 0 -260px;
 }
-/* line 727, ../sass/style.sass */
+/* line 719, ../sass/style.sass */
 .reply .modal-buttons, .reply .post-expand, .reply .post-interactions {
   display: none;
 }
 
 /****** DIRECT MESSAGES MODAL********* */
-/* line 733, ../sass/style.sass */
+/* line 725, ../sass/style.sass */
 .directMessages .post-area-new {
   display: none;
   padding: 20px;
   z-index: 5;
   background: #E2E1DE;
 }
-/* line 740, ../sass/style.sass */
+/* line 732, ../sass/style.sass */
 .directMessages .post-area-new .modal-header h3 span {
   display: inline !important;
 }
-/* line 742, ../sass/style.sass */
+/* line 734, ../sass/style.sass */
 .directMessages .modal-wrapper {
   width: 520px;
   height: 490px;
@@ -2620,7 +2612,7 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow-x: hidden;
 }
-/* line 749, ../sass/style.sass */
+/* line 741, ../sass/style.sass */
 .directMessages .modal-content {
   overflow-y: auto;
   height: 300px;
@@ -2629,25 +2621,25 @@ ol.toptrends-list a:hover {
   box-sizing: border-box;
   width: 520px;
 }
-/* line 756, ../sass/style.sass */
+/* line 748, ../sass/style.sass */
 .directMessages .modal-buttons {
   display: none;
 }
-/* line 758, ../sass/style.sass */
+/* line 750, ../sass/style.sass */
 .directMessages .post-photo {
   height: 48px;
   width: 48px;
 }
-/* line 761, ../sass/style.sass */
+/* line 753, ../sass/style.sass */
 .directMessages .post-text {
   margin-left: 58px;
   font-size: 0.9em;
 }
-/* line 764, ../sass/style.sass */
+/* line 756, ../sass/style.sass */
 .directMessages .post-info-name {
   float: none;
 }
-/* line 766, ../sass/style.sass */
+/* line 758, ../sass/style.sass */
 .directMessages .post-info-tag {
   line-height: 1em;
   padding: 0;
@@ -2656,12 +2648,12 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 1em;
 }
 
-/* line 773, ../sass/style.sass */
+/* line 765, ../sass/style.sass */
 .direct-messages-list .post {
   padding: 10px 30px 10px 15px;
   cursor: pointer;
 }
-/* line 776, ../sass/style.sass */
+/* line 768, ../sass/style.sass */
 .direct-messages-list .post:after {
   content: "";
   font-family: "fontello";
@@ -2674,19 +2666,19 @@ ol.toptrends-list a:hover {
   display: none;
 }
 
-/* line 788, ../sass/style.sass */
+/* line 780, ../sass/style.sass */
 .direct-messages-list .post:hover:after {
   display: block;
 }
 
-/* line 793, ../sass/style.sass */
+/* line 785, ../sass/style.sass */
 .direct-messages-thread .post {
   background: none;
   left: 0;
   margin: 0px 10px 20px 10px;
   cursor: default;
 }
-/* line 799, ../sass/style.sass */
+/* line 791, ../sass/style.sass */
 .direct-messages-thread .post .post-info-time {
   float: none;
   display: block;
@@ -2695,11 +2687,11 @@ ol.toptrends-list a:hover {
   margin: 10px 0;
   cursor: default;
 }
-/* line 806, ../sass/style.sass */
+/* line 798, ../sass/style.sass */
 .direct-messages-thread .post .post-info-time:hover {
   color: #aaa;
 }
-/* line 810, ../sass/style.sass */
+/* line 802, ../sass/style.sass */
 .direct-messages-thread .post .post-text:after, .direct-messages-thread .post .post-text:nth-child(2n):after {
   content: "";
   width: 1px;
@@ -2708,14 +2700,14 @@ ol.toptrends-list a:hover {
   top: 10px;
   white-space: normal;
 }
-/* line 818, ../sass/style.sass */
+/* line 810, ../sass/style.sass */
 .direct-messages-thread .post .post-text:after {
   border-top: solid 7px transparent;
   border-bottom: solid 7px transparent;
   border-right: solid 7px white;
   left: -7px;
 }
-/* line 824, ../sass/style.sass */
+/* line 816, ../sass/style.sass */
 .direct-messages-thread .post .post-text {
   background: white;
   margin-right: 60px;
@@ -2731,13 +2723,13 @@ ol.toptrends-list a:hover {
   max-width: 60%;
   min-height: 15px;
 }
-/* line 839, ../sass/style.sass */
+/* line 831, ../sass/style.sass */
 .direct-messages-thread .post .post-photo {
   position: absolute;
   left: 0;
   top: 10px;
 }
-/* line 848, ../sass/style.sass */
+/* line 840, ../sass/style.sass */
 .direct-messages-thread .post.sent .post-text:after {
   border-top: solid 7px transparent;
   border-bottom: solid 7px transparent;
@@ -2746,11 +2738,11 @@ ol.toptrends-list a:hover {
   right: -7px;
   left: auto;
 }
-/* line 855, ../sass/style.sass */
+/* line 847, ../sass/style.sass */
 .direct-messages-thread .post.sent .post-text {
   float: right;
 }
-/* line 857, ../sass/style.sass */
+/* line 849, ../sass/style.sass */
 .direct-messages-thread .post.sent .post-photo {
   position: absolute;
   right: 0;
@@ -2758,7 +2750,7 @@ ol.toptrends-list a:hover {
 }
 
 /********* NEW USER MODAL************* */
-/* line 867, ../sass/style.sass */
+/* line 859, ../sass/style.sass */
 .new-user .modal-wrapper {
   width: 520px;
   height: 600px;
@@ -2767,31 +2759,31 @@ ol.toptrends-list a:hover {
   overflow-x: hidden;
   overflow-y: hidden;
 }
-/* line 874, ../sass/style.sass */
+/* line 866, ../sass/style.sass */
 .new-user .modal-content {
   margin: 10px 10px 10px 10px;
 }
-/* line 876, ../sass/style.sass */
+/* line 868, ../sass/style.sass */
 .new-user .modal-buttons, .new-user .modal-close {
   display: none;
 }
-/* line 878, ../sass/style.sass */
+/* line 870, ../sass/style.sass */
 .new-user .text {
   margin: 0 0 15px 0;
 }
-/* line 880, ../sass/style.sass */
+/* line 872, ../sass/style.sass */
 .new-user .emphasis {
   font-size: 18px;
   text-align: center;
 }
-/* line 883, ../sass/style.sass */
+/* line 875, ../sass/style.sass */
 .new-user .secret-key {
   color: black;
   font-weight: bold;
 }
 
 /******** HASHTAG MODAL********** */
-/* line 890, ../sass/style.sass */
+/* line 882, ../sass/style.sass */
 .hashtag-modal .modal-wrapper {
   width: 520px;
   height: 600px;
@@ -2799,22 +2791,22 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow: hidden;
 }
-/* line 896, ../sass/style.sass */
+/* line 888, ../sass/style.sass */
 .hashtag-modal .modal-content {
   overflow-y: auto;
   height: 500px;
 }
-/* line 899, ../sass/style.sass */
+/* line 891, ../sass/style.sass */
 .hashtag-modal .modal-buttons {
   display: none;
 }
-/* line 901, ../sass/style.sass */
+/* line 893, ../sass/style.sass */
 .hashtag-modal .postboard {
   padding: 0;
 }
 
 /****** CONVERSATION MODAL********** */
-/* line 907, ../sass/style.sass */
+/* line 899, ../sass/style.sass */
 .conversation-modal .modal-wrapper {
   position: absolute;
   width: 520px;
@@ -2824,22 +2816,22 @@ ol.toptrends-list a:hover {
   overflow: hidden;
   background: white;
 }
-/* line 915, ../sass/style.sass */
+/* line 907, ../sass/style.sass */
 .conversation-modal .modal-content {
   overflow-y: auto;
   height: 90%;
 }
-/* line 918, ../sass/style.sass */
+/* line 910, ../sass/style.sass */
 .conversation-modal .modal-buttons {
   display: none;
 }
-/* line 920, ../sass/style.sass */
+/* line 912, ../sass/style.sass */
 .conversation-modal .postboard {
   padding: 0;
 }
 
 /****** FOLLOWING MODAL****** */
-/* line 926, ../sass/style.sass */
+/* line 918, ../sass/style.sass */
 .following-modal .modal-wrapper {
   width: 520px;
   top: 10%;
@@ -2847,27 +2839,27 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow-x: hidden;
 }
-/* line 932, ../sass/style.sass */
+/* line 924, ../sass/style.sass */
 .following-modal .modal-content {
   height: 300px;
   overflow-y: auto;
   padding: 0;
 }
-/* line 936, ../sass/style.sass */
+/* line 928, ../sass/style.sass */
 .following-modal .modal-buttons {
   display: none;
 }
-/* line 938, ../sass/style.sass */
+/* line 930, ../sass/style.sass */
 .following-modal ol {
   margin: 5px;
 }
-/* line 941, ../sass/style.sass */
+/* line 933, ../sass/style.sass */
 .following-modal .open-profile-modal:hover {
   text-decoration: none;
 }
 
 /******* WHO TO FOLLOW MODAL****** */
-/* line 949, ../sass/style.sass */
+/* line 941, ../sass/style.sass */
 .who-to-follow-modal .modal-wrapper {
   width: 520px;
   top: 10%;
@@ -2875,54 +2867,54 @@ ol.toptrends-list a:hover {
   margin: 0 0 0 -260px;
   overflow-x: hidden;
 }
-/* line 955, ../sass/style.sass */
+/* line 947, ../sass/style.sass */
 .who-to-follow-modal .modal-content {
   padding: 15px;
   height: 400px;
   overflow-y: auto;
 }
-/* line 959, ../sass/style.sass */
+/* line 951, ../sass/style.sass */
 .who-to-follow-modal .modal-buttons {
   display: none;
 }
-/* line 961, ../sass/style.sass */
+/* line 953, ../sass/style.sass */
 .who-to-follow-modal ol {
   margin: 5px;
 }
-/* line 964, ../sass/style.sass */
+/* line 956, ../sass/style.sass */
 .who-to-follow-modal .open-profile-modal:hover {
   text-decoration: none;
 }
-/* line 966, ../sass/style.sass */
+/* line 958, ../sass/style.sass */
 .who-to-follow-modal .twister-user {
   position: relative;
   padding: 5px;
 }
-/* line 969, ../sass/style.sass */
+/* line 961, ../sass/style.sass */
 .who-to-follow-modal .twister-user-photo {
   position: relative;
   left: 0;
   float: left;
   display: block;
 }
-/* line 974, ../sass/style.sass */
+/* line 966, ../sass/style.sass */
 .who-to-follow-modal .twister-user-info {
   position: relative;
   padding-left: 70px;
   width: auto;
 }
-/* line 978, ../sass/style.sass */
+/* line 970, ../sass/style.sass */
 .who-to-follow-modal .bio {
   color: rgba(0, 0, 0, 0.6);
   font-style: italic;
 }
 
 /******* LOADER ************ */
-/* line 984, ../sass/style.sass */
+/* line 976, ../sass/style.sass */
 .postboard-loading {
   text-align: center;
 }
-/* line 986, ../sass/style.sass */
+/* line 978, ../sass/style.sass */
 .postboard-loading div {
   display: inline-block;
   width: 120px;
@@ -2931,7 +2923,7 @@ ol.toptrends-list a:hover {
   position: relative;
   margin: 10px 0 0 0;
 }
-/* line 993, ../sass/style.sass */
+/* line 985, ../sass/style.sass */
 .postboard-loading div:after {
   content: "";
   position: absolute;
@@ -3015,7 +3007,7 @@ ol.toptrends-list a:hover {
   }
 }
 /* Options */
-/* line 1068, ../sass/style.sass */
+/* line 1060, ../sass/style.sass */
 .suboptions {
   margin: 5px 30px;
   border: double 2px rgba(69, 71, 77, 0.1);
@@ -3032,22 +3024,22 @@ ol.toptrends-list a:hover {
   line-height: 0.9em;
   font-style: italic;
 }
-/* line 1083, ../sass/style.sass */
+/* line 1075, ../sass/style.sass */
 .suboptions div {
   float: none !important;
 }
-/* line 1085, ../sass/style.sass */
+/* line 1077, ../sass/style.sass */
 .suboptions span {
   font-style: normal;
 }
 
 /* Autocomplite */
-/* line 1090, ../sass/style.sass */
+/* line 1082, ../sass/style.sass */
 .textcomplete-wrapper textarea {
   display: inline;
 }
 
-/* line 1093, ../sass/style.sass */
+/* line 1085, ../sass/style.sass */
 ul.dropdown-menu {
   position: absolute;
   top: 23px;
@@ -3065,11 +3057,11 @@ ul.dropdown-menu {
   -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-/* line 1109, ../sass/style.sass */
+/* line 1101, ../sass/style.sass */
 ul.dropdown-menu li {
   line-height: 20px;
 }
-/* line 1111, ../sass/style.sass */
+/* line 1103, ../sass/style.sass */
 ul.dropdown-menu > li > a {
   display: block;
   padding: 3px 20px;

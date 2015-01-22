@@ -662,11 +662,17 @@ ol.toptrends-list
 .modal-back
   @extend .extend-icon
   @extend .icon-left
-  @extend button
-  margin: 0
-  background: $main-color-color
-  display: none!important
-  float: left
+  position: absolute
+  right: 35px
+  top: 0
+  font-size: 14px
+  line-height: 40px
+  cursor: pointer
+  color:  rgba(white, 0.7)
+  &:hover
+    color: white
+  b 
+    display: none
 
 .modal-buttons
   padding: 10px

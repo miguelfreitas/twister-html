@@ -413,14 +413,14 @@ function watchHashChange(e)
         var prevhashstring=prevurlsplit[1];     
         if(prevurlsplit[0]==newurlsplit[0] && prevhashstring!=undefined && prevhashstring.length>0 ){
             $('.modal-back').css('display','inline');
-            $('.modal-back').on('click', function(e){
-                e.stopPropagation();
-                e.preventDefault();
+            //$('.modal-back').on('click', function(e){
+                //e.stopPropagation();
+                //e.preventDefault();
                 //window.location.hash = '#' + prevhashstring;
                 
-                history.back(1);
+                //window.history.go(-1);
                 
-            });
+            //});
         } else {
             $('.modal-back').css('display','none');
         }

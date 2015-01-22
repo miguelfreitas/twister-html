@@ -1,6 +1,7 @@
 $(function(){ 
     
     $('.modal-close').html('');
+    $('.modal-back').html('');
     $('.twister-user-remove').html('');
     $('.profile-card-main').attr('style', '');
     $('img[src$="img/tornado_avatar.png"]').attr("src","theme_nin/img/tornado_avatar.png");
