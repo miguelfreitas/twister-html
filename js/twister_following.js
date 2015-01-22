@@ -690,7 +690,7 @@ function userClickFollow(e) {
     }
 
     var FollowingConfigClass = "following-config-modal";
-    openModal( FollowingConfigClass );
+    openPrompt( FollowingConfigClass );
 
     var FollowingConfigContent = newFollowingConfigModal(username);
     FollowingConfigContent.appendTo("." +FollowingConfigClass +" .modal-content");
@@ -709,7 +709,7 @@ function initUserSearch() {
 
     $(".following-config-method-buttons .public-following").bind( "click", setFollowingMethod );
     $(".following-config-method-buttons .public-following").click( function() {
-        closeModal($(this));
+        closePrompt();
         // delay reload so dhtput may do it's job
         window.setTimeout("location.reload();",500);
     });

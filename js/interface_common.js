@@ -32,7 +32,7 @@ function openModal( modalClass )
 function closeModal($this)
 {
     closeModalHandler($this);
-    window.location.hash = '';
+    window.location.hash = '#';
 }
 
 function closeModalHandler($this)
@@ -49,6 +49,45 @@ function closeModalHandler($this)
         "margin-right": "0"
     });
 }
+
+
+
+function openPrompt( modalClass )
+{
+    var $oldModal = $("body").children(".prompt-wrapper");
+    var $template = $( "#templates" );
+    var $templateModal = $template.find( ".prompt-wrapper" ).clone(true);
+
+    $templateModal.addClass( modalClass );
+    if( $oldModal.length ) {
+        $templateModal.show();
+        $oldModal.replaceWith($templateModal);
+    } else {
+        $templateModal.prependTo( "body" ).fadeIn( "fast" );
+    }
+
+    //escondo o overflow da tela
+    var $body = $( "body" );
+    $body.css({
+        "overflow": "hidden"
+    });
+}
+
+function closePrompt()
+{
+    var $body = $( "body" );
+    var $modalWindows = $( "body" ).children( ".prompt-wrapper" );
+
+    $modalWindows.fadeOut( "fast", function()
+    {
+        $modalWindows.detach();
+    });
+    $body.css({
+        "overflow": "auto",
+        "margin-right": "0"
+    });
+}
+
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
     networkUpdate(function(args) {
@@ -305,9 +344,7 @@ function fillWhoToFollowModal(list, hlist, start) {
     return true;
 }
 
-function openWhoToFollowModal(e) {
-    e.stopPropagation();
-    e.preventDefault();
+function openWhoToFollowModal() {
 
     var whoToFollowModalClass = "who-to-follow-modal";
     openModal( whoToFollowModalClass );
@@ -371,9 +408,12 @@ function watchHashChange(e)
         prevhashstring=prevhashstring[1];        
         if(prevhashstring.length>0 && prevhashstring!=undefined){
             $('.modal-back').css('display','inline');
-            $('.modal-back').on('click', function(){
-                window.location.hash = '#' + prevhashstring;
+            $('.modal-back').on('click', function(e){
+                e.preventDefault();
+                history.back(1);
             });
+        } else {
+            $('.modal-back').css('display','none');
         }
         
     }
@@ -397,7 +437,9 @@ function watchHashChange(e)
         }
     } else if (hashstring == '#directmessages') {
         directMessagesPopup();
-    } else {
+    } else if (hashstring == '#whotofollow'){
+        openWhoToFollowModal();
+    } else{
         console.log(hashstring);
         closeModalHandler();
     }
@@ -417,7 +459,8 @@ function initHashWatching()
 
     // Register hash spy and launch it once
     window.addEventListener('hashchange', watchHashChange, false);
-    watchHashChange(null);
+    //watchHashChange(null);
+    window.location.hash="#";
 }
 
 
@@ -435,7 +478,7 @@ var reTwistPopup = function( e )
     }
 
     var reTwistClass = "reTwist";
-    openModal( reTwistClass );
+    openPrompt( reTwistClass );
 
     //título do modal
     $( ".reTwist h3" ).text( polyglot.t("retransmit_this") );
@@ -451,7 +494,7 @@ var reTwistPopup = function( e )
 var replyInitPopup = function(e, post)
 {
     var replyClass = "reply";
-    openModal( replyClass );
+    openPrompt( replyClass );
 
     //título do modal
     var fullname = post.find(".post-info-name").text();
@@ -1251,7 +1294,13 @@ var postSubmit = function(e, oldLastPostId)
     var remainingCount = tweetForm.find(".post-area-remaining");
     remainingCount.text(140);
     $replyText.attr("placeholder", "Your message was sent!");
-    closeModal($this);
+    
+    if ($this.parents('.modal-wrapper').length) {
+        closeModal($this);
+    } else if ($this.parents('.prompt-wrapper').length) {
+        closePrompt();
+    }    
+
     if($this.closest('.post-area,.post-reply-content')){
         $('.post-area-new').removeClass('open').find('textarea').blur();
     };
@@ -1267,11 +1316,11 @@ var retweetSubmit = function(e)
     e.preventDefault();
     var $this = $( this );
 
-    var $postOrig = $this.closest(".modal-wrapper").find(".post-data");
+    var $postOrig = $this.closest(".prompt-wrapper").find(".post-data");
 
     newRtMsg($postOrig);
 
-    closeModal($this);
+    closePrompt();
 }
 
 function changeStyle() {
@@ -1347,18 +1396,23 @@ function replaceDashboards() {
     }
 
     $( ".who-to-follow .refresh-users" ).bind( "click", refreshWhoToFollow );
-    $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
+    //$( ".who-to-follow .view-all-users" ).bind( "click", function(){window.location.hash = "#whotofollow"} );
 }
 
 function initInterfaceCommon() {
     $( "body" ).on( "click", function(event) {
         if($(event.target).hasClass('cancel')) closeModal($(this));
     });
+
     $(".cancel").on('click', function(event){
         if(!$(event.target).hasClass("cancel")) return;
         if($(".modal-content").attr("style") != undefined){$(".modal-content").removeAttr("style")};
         $('.modal-back').css('display', 'none');
         $('.mark-all-as-read').css('display', 'none');
+    });
+
+    $(".prompt-close").on('click', function(event){
+        closePrompt();
     });
 
     /*
@@ -1397,10 +1451,10 @@ function initInterfaceCommon() {
     var $replyText = $( ".post-area-new textarea" );
     $replyText.on("keyup", replyTextKeypress );
 
-    $( ".open-profile-modal").bind( "click", openProfileModal );
+    //$( ".open-profile-modal").bind( "click", openProfileModal );
     //$( ".open-hashtag-modal").bind( "click", openHashtagModal );
     //$( ".open-following-modal").bind( "click", openFollowingModal );
-    $( ".userMenu-connections a").bind( "click", openMentionsModal );
+    //$( ".userMenu-connections a").bind( "click", openMentionsModal );
     $( ".mentions-from-user").bind( "click", openMentionsModal );
 
     replaceDashboards();

@@ -157,7 +157,7 @@
         <small>.</small>
         <a class="refresh-users">Refresh</a>
         <small>.</small>
-        <a class="view-all-users">View All</a>
+        <a class="view-all-users" href="#whotofollow">View All</a>
         <ol class="follow-suggestions">
           <!-- use "follow-suggestion-template" here -->
         </ol>
@@ -341,6 +341,20 @@
       </div>
     </div>
     <!-- TEMPLATE DO MODAL GENÉRICO END -->
+
+    <!-- TEMPLATE GENERAL PROMPT -->
+    <div class="prompt-wrapper" style="position: absolute; top: 50%; left: 50%; background: rgba( 255, 255,255, 1.0 ); box-shadow: 0 0 30px rgba( 0, 0, 0, .6 ); z-index: 5; width: 600px; margin-left:-300px;">
+      <div class="modal-header">
+        <h3></h3>
+        <span class="modal-close prompt-close">&times;</span>
+      </div>
+      <div class="modal-content"></div>
+        <div class="modal-buttons">
+        <button class="modal-cancel prompt-close">Cancel</button>
+        <button class="modal-propagate">Retransmit</button>
+        </div>
+    </div>
+    <!-- TEMPLATE GENERAL PROMPT END-->
 
     <!-- MODAL DE RETWEET INIT -->
     <!-- MODAL DE RETWEET END -->
