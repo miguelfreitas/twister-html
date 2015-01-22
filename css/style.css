@@ -1543,7 +1543,7 @@ ol.toptrends-list {
 
 .prompt-wrapper
 {
-    position: absolute; 
+    position: fixed; 
     top: 50%; 
     left: 50%; 
     background: rgba( 255, 255,255, 1.0 ); 
