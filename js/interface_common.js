@@ -410,8 +410,8 @@ function watchHashChange(e)
     if(e!=null){ 
         var prevurlsplit = e.oldURL.split('#');
         var newurlsplit = e.newURL.split('#');
-        prevhashstring=prevurlsplit[1];     
-        if(prevurlsplit[0]==newurlsplit[0] && prevhashstring.length>0 && prevhashstring!=undefined){
+        var prevhashstring=prevurlsplit[1];     
+        if(prevurlsplit[0]==newurlsplit[0] && prevhashstring!=undefined && prevhashstring.length>0 ){
             $('.modal-back').css('display','inline');
             $('.modal-back').on('click', function(e){
                 e.stopPropagation();
