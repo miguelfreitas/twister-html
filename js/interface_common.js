@@ -376,10 +376,9 @@ function newConversationModal(username,resource) {
     
     requestPost(hashtagModalContent.find(".postboard-posts"),username,resource,
         function(args){
-            getTopPostOfConversation(args.hashtagModalContent.find(".postboard-posts").first(), 
-                null, 
-                args.hashtagModalContent.find(".postboard-posts")
-            );
+            postLi=args.hashtagModalContent.find(".postboard-posts").children().first();
+            postLi.css('display','none');
+            getTopPostOfConversation(postLi,null,args.hashtagModalContent.find(".postboard-posts"));
         },{ hashtagModalContent:hashtagModalContent }
         );
 
@@ -391,25 +390,32 @@ function newConversationModal(username,resource) {
     return hashtagModalContent;
 }
 
+function openConversationClick(e){
+
+    e.stopPropagation();
+    e.preventDefault();
+
+    var $this = $( this );
+    var postLi = $this.parents(".module.post.original.open").find('.module.post.original');
+
+    var username=postLi.find('.post-data').attr('data-screen-name');
+    var resource='post'+postLi.find('.post-data').attr('data-id');
+
+    window.location.hash="#conversation?post="+username+':'+resource;
+
+}
+
 function openConversationModal(username,resource)
 {
-    //e.stopPropagation();
-    //e.preventDefault();
-
-    //var $this = $( this );
-    //var postLi = $this.parents(".module.post.original.open").find('.module.post.original');
 
     var conversationModalClass = "conversation-modal";
-    openModal( conversationModalClass );
-    //$( "." + threadingModalClass ).attr("data-resource","hashtag");
-
-    
+    openModal( conversationModalClass );    
 
     var conversationModalContent = newConversationModal(username,resource);
     conversationModalContent.appendTo("." + conversationModalClass + " .modal-content");
 
     //título do modal
-    //$( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': postLi.find('.post-data').attr('data-screen-name')}) );
+    $( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': username} ) );
 }
 
 
@@ -1470,7 +1476,7 @@ function initInterfaceCommon() {
     $( ".post-area-new" ).clickoutside( unfocusThis );
     $( ".post-submit").click( postSubmit );
     $( ".modal-propagate").click( retweetSubmit );
-    $( ".expanded-content .show-more").bind('click', openConversationModal);
+    $( ".expanded-content .show-more").bind('click', openConversationClick);
 
     if ($.Options.getUnicodeConversionOpt() === "disable")
         $( ".undo-unicode" ).click( undoLastUnicode ).css("display", "none");
