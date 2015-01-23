@@ -93,6 +93,7 @@ function _dhtgetAbortPending(locator)
 // the value ["v"] is extracted from response and returned to callback
 // null is passed to callback in case of an error
 function dhtget( username, resource, multi, cbFunc, cbArg, timeoutArgs ) {
+    //console.log('dhtget '+username+' '+resource+' '+multi);
     var locator = _dhtgetLocator(username, resource, multi);
     if( locator in _dhtgetPendingMap) {
         _dhtgetAddPending(locator, cbFunc, cbArg);

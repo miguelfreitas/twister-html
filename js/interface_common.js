@@ -370,35 +370,46 @@ function openWhoToFollowModal() {
     $( "." + whoToFollowModalClass + " h3" ).text( polyglot.t("Who to Follow") );
 }
 
-function newConversationModal(postLi) {
+function newConversationModal(username,resource) {
+
     var hashtagModalContent = $( "#hashtag-modal-template" ).children().clone(true);
+    
+    requestPost(hashtagModalContent.find(".postboard-posts"),username,resource,
+        function(args){
+            getTopPostOfConversation(args.hashtagModalContent.find(".postboard-posts").first(), 
+                null, 
+                args.hashtagModalContent.find(".postboard-posts")
+            );
+        },{ hashtagModalContent:hashtagModalContent }
+        );
+
     hashtagModalContent.find( ".postboard-news").click(function (){
         $(this).hide();
         displayHashtagPending($(".conversation-modal .postboard-posts"));
     });
 
-    getTopPostOfConversation(postLi, null, hashtagModalContent.find(".postboard-posts"));
-
     return hashtagModalContent;
 }
 
-function openConversationModal(e)
+function openConversationModal(username,resource)
 {
-    e.stopPropagation();
-    e.preventDefault();
+    //e.stopPropagation();
+    //e.preventDefault();
 
-    var $this = $( this );
-    var postLi = $this.parents(".module.post.original.open").find('.module.post.original');
+    //var $this = $( this );
+    //var postLi = $this.parents(".module.post.original.open").find('.module.post.original');
 
     var conversationModalClass = "conversation-modal";
     openModal( conversationModalClass );
     //$( "." + threadingModalClass ).attr("data-resource","hashtag");
 
-    var hashtagModalContent = newConversationModal( postLi );
-    hashtagModalContent.appendTo("." + conversationModalClass + " .modal-content");
+    
+
+    var conversationModalContent = newConversationModal(username,resource);
+    conversationModalContent.appendTo("." + conversationModalClass + " .modal-content");
 
     //título do modal
-    $( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': postLi.find('.post-data').attr('data-screen-name')}) );
+    //$( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': postLi.find('.post-data').attr('data-screen-name')}) );
 }
 
 
@@ -435,7 +446,7 @@ function loadModalFromHash(){
 
     var hashdata = hashstring.split(':');
     if (hashdata[0] != '#web+twister') {
-        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following)\?(?:user|hashtag)=(.+)/);
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following|conversation)\?(?:user|hashtag|post)=(.+)/);
     }
 
     if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined) {
@@ -449,6 +460,10 @@ function loadModalFromHash(){
             openDmWithUserModal(hashdata[2]);
         }else if (hashdata[1] == 'following') {
             openFollowingModal(hashdata[2]);
+        }else if (hashdata[1] == 'conversation') {
+            splithashdata2=hashdata[2].split(':')    
+            //console.log('username='+splithashdata2[0]+'   resource='+splithashdata2[1]);
+            openConversationModal(splithashdata2[0],splithashdata2[1]);
         }
     } else if (hashstring == '#directmessages') {
         directMessagesPopup();
