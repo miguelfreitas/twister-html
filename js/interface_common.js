@@ -141,30 +141,6 @@ function newProfileModal(username) {
     return profileModalContent;
 }
 
-/*
-
-function openProfileModal(e)
-{
-    e.stopPropagation();
-    e.preventDefault();
-
-    var $this = $( this );
-    var username = $.MAL.urlToUser( $this.attr("href") );
-    openProfileModalWithUsername(username);
-}
-
-function openProfileModalWithUsername(username)
-{
-    if(!username)
-    {
-        alert(polyglot.t("You don't have any profile because you are not logged in."));
-        return;
-    }
-    window.location.hash = '#profile?user=' + username;
-}
-
-*/
-
 function openProfileModalWithUsernameHandler(username)
 {
     var profileModalClass = "profile-modal";
@@ -180,9 +156,7 @@ function openProfileModalWithUsernameHandler(username)
     if(followingUsers.indexOf(username) != -1){
         $('.profile-card button.dinamicFollowButton').first().addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
             unfollow(username);
-            closeModal($(this));
-            // delay reload so dhtput may do it's job
-            window.setTimeout("location.reload();",500);
+	        window.setTimeout("loadModalFromHash();",500);
         });
     } else {
         $('.profile-card button.dinamicFollowButton').first().addClass('follow').text(polyglot.t('Follow')).on('click', userClickFollow );

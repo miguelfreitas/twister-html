@@ -710,7 +710,7 @@ function initUserSearch() {
     $(".following-config-method-buttons .public-following").click( function() {
         closePrompt();
         // delay reload so dhtput may do it's job
-        window.setTimeout("location.reload();",500);
+	window.setTimeout("loadModalFromHash();",500);
     });
 }
 
