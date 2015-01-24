@@ -158,7 +158,6 @@ function directMessagesPopup()
     $( ".directMessages h3" ).text( polyglot.t("Direct Messages") );
 
     requestDMsnippetList($(".directMessages").find(".direct-messages-list"));
-    $('.modal-back').css('display','inline');
     $('.mark-all-as-read').css('display', 'inline');
     $('.mark-all-as-read').attr('title', polyglot.t("Mark all as read"));
 
@@ -171,35 +170,13 @@ function directMessagesPopup()
     });
 }
 
-
-//exibe a thread de mensagens individual
-function hideDmSnippetShowDmThread()
-{
-    var $this = $( this );
-
-    //escondo a listagem de mensagens diretas...
-    var containerToAnimate = $this.parents( ".direct-messages-list" );
-    containerToAnimate.hide();
-
-    var dm_screenname = $this.attr("data-dm-screen-name");
-    openDmWithUserModal(dm_screenname);
-}
-
-
-function directMessagesWithUserPopup()
-{
-    if(!defaultScreenName)
-    {
-      alert(polyglot.t("You have to log in to use direct messages."));
-      return;
-    }
-    var $userInfo = $(this).closest("[data-screen-name]");
-    var dm_screenname = $userInfo.attr("data-screen-name");
-    openDmWithUserModal( dm_screenname );
-}
-
 function openDmWithUserModal(dm_screenname)
 {
+    if(!defaultScreenName){
+        alert(polyglot.t("You have to log in to use direct messages."));
+        return;
+    }
+
     var directMessagesClass = "directMessages";
     openModal( directMessagesClass );
 
@@ -220,10 +197,18 @@ function openDmWithUserModal(dm_screenname)
 
 
 function initInterfaceDirectMsg() {
-    $( ".direct-messages" ).bind( "click", directMessagesPopup );
-    $( "#dm-snippet-template" ).bind( "click", hideDmSnippetShowDmThread );
+
+    $( ".direct-messages" ).attr("href","#directmessages");
+    $( ".userMenu-messages a" ).attr("href","#directmessages");
+
+    $( "#dm-snippet-template" ).bind( "click", function(){
+        window.location.hash='#directmessages?user='+$(this).attr("data-dm-screen-name");    
+    } );
+
     $( ".dm-submit").click( directMsgSubmit );
-    $( ".userMenu-messages a" ).bind( "click", directMessagesPopup );
-    $( ".direct-messages-with-user" ).bind( "click", directMessagesWithUserPopup );
+    $( ".direct-messages-with-user" ).bind( "click", function() {
+        window.location.hash='#directmessages?user='+$(this).closest("[data-screen-name]").attr("data-screen-name");
+    } );
+
 }
 

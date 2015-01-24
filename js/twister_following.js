@@ -464,7 +464,6 @@ function fillWhoFollows(list, item, offset, size) {
         follower_link.attr("data-screen-name", list[i]);
         follower_link.attr("href", $.MAL.userUrl(list[i]));
         follower_link.text(list[i]);
-        follower_link.on("click", openProfileModal);
         getFullname( list[i], follower_link );
 
         item.append( follower_link );
@@ -690,7 +689,7 @@ function userClickFollow(e) {
     }
 
     var FollowingConfigClass = "following-config-modal";
-    openModal( FollowingConfigClass );
+    openPrompt( FollowingConfigClass );
 
     var FollowingConfigContent = newFollowingConfigModal(username);
     FollowingConfigContent.appendTo("." +FollowingConfigClass +" .modal-content");
@@ -709,9 +708,9 @@ function initUserSearch() {
 
     $(".following-config-method-buttons .public-following").bind( "click", setFollowingMethod );
     $(".following-config-method-buttons .public-following").click( function() {
-        closeModal($(this));
+        closePrompt();
         // delay reload so dhtput may do it's job
-        window.setTimeout("location.reload();",500);
+	window.setTimeout("loadModalFromHash();",500);
     });
 }
 

@@ -177,7 +177,7 @@
 }
 /*************************************
 ****************** PROFILE MODAL
-**************************************/
+*************************************
 .profile-modal .modal-wrapper
 {
     width: 580px;
@@ -186,13 +186,13 @@
     position: absolute;
     top:10%;
     height: 80%;
-    margin-left: -300px;
+    margin-left: -290px;
 
-}
+}*/
 .profile-modal .modal-content
 {
     padding: 3px;
-    height: 90%;
+    height: 100%;
 }
 #msngrswr {
     display: none;

@@ -554,9 +554,18 @@ ol.toptrends-list
 
 
 
+/*********** POPUP PROMPT *************/
+.prompt-wrapper
+  position: fixed
+  top: 50%
+  left: 50%
+  background: rgba( 255, 255,255, 1.0 )
+  box-shadow: 0 0 30px rgba( 0, 0, 0, .6 )
+  z-index: 5
+  width: 600px
+  margin-left: -300px
 
-
-/*********** POPUP MODAL*************/
+/*********** POPUP MODAL **************/
 
 .modal-blackout
   position: fixed
@@ -653,11 +662,17 @@ ol.toptrends-list
 .modal-back
   @extend .extend-icon
   @extend .icon-left
-  @extend button
-  margin: 0
-  background: $main-color-color
-  display: none!important
-  float: left
+  position: absolute
+  right: 35px
+  top: 0
+  font-size: 14px
+  line-height: 40px
+  cursor: pointer
+  color:  rgba(white, 0.7)
+  &:hover
+    color: white
+  b 
+    display: none
 
 .modal-buttons
   padding: 10px
@@ -703,6 +718,8 @@ ol.toptrends-list
     margin: 0 0 0 0-($postboard-modal-width/2)
   .modal-buttons, .post-expand, .post-interactions
     display: none
+  .post-area
+    padding-bottom: 6px
 
 /****** DIRECT MESSAGES MODAL**********/
 

@@ -32,7 +32,7 @@ function openModal( modalClass )
 function closeModal($this)
 {
     closeModalHandler($this);
-    window.location.hash = '';
+    window.location.hash = '#';
 }
 
 function closeModalHandler($this)
@@ -49,6 +49,45 @@ function closeModalHandler($this)
         "margin-right": "0"
     });
 }
+
+
+
+function openPrompt( modalClass )
+{
+    var $oldModal = $("body").children(".prompt-wrapper");
+    var $template = $( "#templates" );
+    var $templateModal = $template.find( ".prompt-wrapper" ).clone(true);
+
+    $templateModal.addClass( modalClass );
+    if( $oldModal.length ) {
+        $templateModal.show();
+        $oldModal.replaceWith($templateModal);
+    } else {
+        $templateModal.prependTo( "body" ).fadeIn( "fast" );
+    }
+
+    //escondo o overflow da tela
+    var $body = $( "body" );
+    $body.css({
+        "overflow": "hidden"
+    });
+}
+
+function closePrompt()
+{
+    var $body = $( "body" );
+    var $modalWindows = $( "body" ).children( ".prompt-wrapper" );
+
+    $modalWindows.fadeOut( "fast", function()
+    {
+        $modalWindows.detach();
+    });
+    $body.css({
+        "overflow": "auto",
+        "margin-right": "0"
+    });
+}
+
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
     networkUpdate(function(args) {
@@ -102,26 +141,6 @@ function newProfileModal(username) {
     return profileModalContent;
 }
 
-function openProfileModal(e)
-{
-    e.stopPropagation();
-    e.preventDefault();
-
-    var $this = $( this );
-    var username = $.MAL.urlToUser( $this.attr("href") );
-    openProfileModalWithUsername(username);
-}
-
-function openProfileModalWithUsername(username)
-{
-    if(!username)
-    {
-        alert(polyglot.t("You don't have any profile because you are not logged in."));
-        return;
-    }
-    window.location.hash = '#profile?user=' + username;
-}
-
 function openProfileModalWithUsernameHandler(username)
 {
     var profileModalClass = "profile-modal";
@@ -137,9 +156,7 @@ function openProfileModalWithUsernameHandler(username)
     if(followingUsers.indexOf(username) != -1){
         $('.profile-card button.dinamicFollowButton').first().addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
             unfollow(username);
-            closeModal($(this));
-            // delay reload so dhtput may do it's job
-            window.setTimeout("location.reload();",500);
+	        window.setTimeout("loadModalFromHash();",500);
         });
     } else {
         $('.profile-card button.dinamicFollowButton').first().addClass('follow').text(polyglot.t('Follow')).on('click', userClickFollow );
@@ -160,21 +177,6 @@ function newHashtagModal(hashtag) {
     updateHashtagModal( hashtagModalContent.find(".postboard-posts"), hashtag );
 
     return hashtagModalContent;
-}
-
-function openHashtagModal(e)
-{
-    e.stopPropagation();
-    e.preventDefault();
-
-    var $this = $( this );
-    var hashtag = $this.text().substring(1).toLowerCase();
-    openHashtagModalFromSearch(hashtag);
-}
-
-function openHashtagModalFromSearch(hashtag)
-{
-    window.location.hash = '#hashtag?hashtag=' + encodeURIComponent(hashtag);
 }
 
 function openHashtagModalFromSearchHandler(hashtag)
@@ -253,13 +255,8 @@ function newFollowingModal(username) {
     return followingModalContent;
 }
 
-function openFollowingModal(e)
+function openFollowingModal(username)
 {
-    e.stopPropagation();
-    e.preventDefault();
-
-    var $this = $( this );
-    var username = $.MAL.followingUrlToUser( $this.attr("href") );
 
     var followingModalClass = "following-modal";
     openModal( followingModalClass );
@@ -325,9 +322,7 @@ function fillWhoToFollowModal(list, hlist, start) {
     return true;
 }
 
-function openWhoToFollowModal(e) {
-    e.stopPropagation();
-    e.preventDefault();
+function openWhoToFollowModal() {
 
     var whoToFollowModalClass = "who-to-follow-modal";
     openModal( whoToFollowModalClass );
@@ -349,62 +344,113 @@ function openWhoToFollowModal(e) {
     $( "." + whoToFollowModalClass + " h3" ).text( polyglot.t("Who to Follow") );
 }
 
-function newConversationModal(postLi) {
+function newConversationModal(username,resource) {
+
     var hashtagModalContent = $( "#hashtag-modal-template" ).children().clone(true);
+    
+    requestPost(hashtagModalContent.find(".postboard-posts"),username,resource,
+        function(args){
+            postLi=args.hashtagModalContent.find(".postboard-posts").children().first();
+            postLi.css('display','none');
+            getTopPostOfConversation(postLi,null,args.hashtagModalContent.find(".postboard-posts"));
+        },{ hashtagModalContent:hashtagModalContent }
+        );
+
     hashtagModalContent.find( ".postboard-news").click(function (){
         $(this).hide();
         displayHashtagPending($(".conversation-modal .postboard-posts"));
     });
 
-    getTopPostOfConversation(postLi, null, hashtagModalContent.find(".postboard-posts"));
-
     return hashtagModalContent;
 }
 
-function openConversationModal(e)
-{
+function openConversationClick(e){
+
     e.stopPropagation();
     e.preventDefault();
 
     var $this = $( this );
     var postLi = $this.parents(".module.post.original.open").find('.module.post.original');
 
-    var conversationModalClass = "conversation-modal";
-    openModal( conversationModalClass );
-    //$( "." + threadingModalClass ).attr("data-resource","hashtag");
+    var username=postLi.find('.post-data').attr('data-screen-name');
+    var resource='post'+postLi.find('.post-data').attr('data-id');
 
-    var hashtagModalContent = newConversationModal( postLi );
-    hashtagModalContent.appendTo("." + conversationModalClass + " .modal-content");
+    window.location.hash="#conversation?post="+username+':'+resource;
+
+}
+
+function openConversationModal(username,resource)
+{
+
+    var conversationModalClass = "conversation-modal";
+    openModal( conversationModalClass );    
+
+    var conversationModalContent = newConversationModal(username,resource);
+    conversationModalContent.appendTo("." + conversationModalClass + " .modal-content");
 
     //título do modal
-    $( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': postLi.find('.post-data').attr('data-screen-name')}) );
+    $( "." + conversationModalClass + " h3" ).text( polyglot.t('conversation_title', {'username': username} ) );
 }
 
 
 function watchHashChange(e)
 {
+
+    if(e!=null){ 
+
+        var prevurlsplit = e.oldURL.split('#');
+        var prevhashstring=prevurlsplit[1];  
+
+        var notFirstModalView=(prevhashstring!=undefined && prevhashstring.length>0 );
+        var notNavigatedBackToFirstModalView=(window.history.state==null || ( window.history.state!=null && window.history.state.showCloseButton!=false ) )
+   
+        if(notFirstModalView && notNavigatedBackToFirstModalView ) ){
+            $('.modal-back').css('display','inline');
+        } else {
+            window.history.pushState({showCloseButton:false},null,null);
+            $('.modal-back').css('display','none');
+        }
+        
+    }
+
+    loadModalFromHash();
+}
+
+function loadModalFromHash(){
+
     var hashstring = window.location.hash
     hashstring = decodeURIComponent(hashstring);
 
     var hashdata = hashstring.split(':');
     if (hashdata[0] != '#web+twister') {
-        hashdata = hashstring.match(/(hashtag|profile|mentions)\?(?:user|hashtag)=(.+)/);
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following|conversation)\?(?:user|hashtag|post)=(.+)/);
     }
 
-    if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined)
-    {
+    if (hashdata && hashdata[1] != undefined && hashdata[2] != undefined) {
         if(hashdata[1] == 'profile') {
             openProfileModalWithUsernameHandler(hashdata[2]);
         }else if (hashdata[1] == 'hashtag') {
             openHashtagModalFromSearchHandler(hashdata[2]);
         }else if (hashdata[1] == 'mentions') {
             openMentionsModalHandler(hashdata[2]);
+        }else if (hashdata[1] == 'directmessages') {
+            openDmWithUserModal(hashdata[2]);
+        }else if (hashdata[1] == 'following') {
+            openFollowingModal(hashdata[2]);
+        }else if (hashdata[1] == 'conversation') {
+            splithashdata2=hashdata[2].split(':')    
+            //console.log('username='+splithashdata2[0]+'   resource='+splithashdata2[1]);
+            openConversationModal(splithashdata2[0],splithashdata2[1]);
         }
-    } else {
+    } else if (hashstring == '#directmessages') {
+        directMessagesPopup();
+    } else if (hashstring == '#whotofollow'){
+        openWhoToFollowModal();
+    } else{
         closeModalHandler();
     }
-}
 
+}
 
 function initHashWatching()
 {
@@ -419,7 +465,8 @@ function initHashWatching()
 
     // Register hash spy and launch it once
     window.addEventListener('hashchange', watchHashChange, false);
-    watchHashChange(null);
+    //watchHashChange(null);
+    window.location.hash="#";
 }
 
 
@@ -437,7 +484,7 @@ var reTwistPopup = function( e )
     }
 
     var reTwistClass = "reTwist";
-    openModal( reTwistClass );
+    openPrompt( reTwistClass );
 
     //título do modal
     $( ".reTwist h3" ).text( polyglot.t("retransmit_this") );
@@ -453,7 +500,7 @@ var reTwistPopup = function( e )
 var replyInitPopup = function(e, post)
 {
     var replyClass = "reply";
-    openModal( replyClass );
+    openPrompt( replyClass );
 
     //título do modal
     var fullname = post.find(".post-info-name").text();
@@ -1253,7 +1300,13 @@ var postSubmit = function(e, oldLastPostId)
     var remainingCount = tweetForm.find(".post-area-remaining");
     remainingCount.text(140);
     $replyText.attr("placeholder", "Your message was sent!");
-    closeModal($this);
+    
+    if ($this.parents('.modal-wrapper').length) {
+        closeModal($this);
+    } else if ($this.parents('.prompt-wrapper').length) {
+        closePrompt();
+    }    
+
     if($this.closest('.post-area,.post-reply-content')){
         $('.post-area-new').removeClass('open').find('textarea').blur();
     };
@@ -1269,11 +1322,11 @@ var retweetSubmit = function(e)
     e.preventDefault();
     var $this = $( this );
 
-    var $postOrig = $this.closest(".modal-wrapper").find(".post-data");
+    var $postOrig = $this.closest(".prompt-wrapper").find(".post-data");
 
     newRtMsg($postOrig);
 
-    closeModal($this);
+    closePrompt();
 }
 
 function changeStyle() {
@@ -1349,24 +1402,33 @@ function replaceDashboards() {
     }
 
     $( ".who-to-follow .refresh-users" ).bind( "click", refreshWhoToFollow );
-    $( ".who-to-follow .view-all-users" ).bind( "click", openWhoToFollowModal );
+    //$( ".who-to-follow .view-all-users" ).bind( "click", function(){window.location.hash = "#whotofollow"} );
 }
 
 function initInterfaceCommon() {
     $( "body" ).on( "click", function(event) {
         if($(event.target).hasClass('cancel')) closeModal($(this));
     });
+
     $(".cancel").on('click', function(event){
         if(!$(event.target).hasClass("cancel")) return;
         if($(".modal-content").attr("style") != undefined){$(".modal-content").removeAttr("style")};
         $('.modal-back').css('display', 'none');
         $('.mark-all-as-read').css('display', 'none');
     });
+
+    $(".prompt-close").on('click', function(event){
+        closePrompt();
+    });
+
+    /*
     $('.modal-back').on('click', function(){
         if($('.modal-content .direct-messages-list')[0]) return;
         directMessagesPopup();
         $(".modal-content").removeAttr("style");
     });
+    */
+
     $('.dropdown-menu').on('keydown', function(e){
             e = event || window.event;
             e.stopPropagation();
@@ -1385,7 +1447,7 @@ function initInterfaceCommon() {
     $( ".post-area-new" ).clickoutside( unfocusThis );
     $( ".post-submit").click( postSubmit );
     $( ".modal-propagate").click( retweetSubmit );
-    $( ".expanded-content .show-more").bind('click', openConversationModal);
+    $( ".expanded-content .show-more").bind('click', openConversationClick);
 
     if ($.Options.getUnicodeConversionOpt() === "disable")
         $( ".undo-unicode" ).click( undoLastUnicode ).css("display", "none");
@@ -1395,9 +1457,9 @@ function initInterfaceCommon() {
     var $replyText = $( ".post-area-new textarea" );
     $replyText.on("keyup", replyTextKeypress );
 
-    $( ".open-profile-modal").bind( "click", openProfileModal );
-    $( ".open-hashtag-modal").bind( "click", openHashtagModal );
-    $( ".open-following-modal").bind( "click", openFollowingModal );
+    $( ".open-profile-modal").bind( "click", function(e){ e.stopPropagation(); } );
+    //$( ".open-hashtag-modal").bind( "click", openHashtagModal );
+    //$( ".open-following-modal").bind( "click", openFollowingModal );
     $( ".userMenu-connections a").bind( "click", openMentionsModal );
     $( ".mentions-from-user").bind( "click", openMentionsModal );
 

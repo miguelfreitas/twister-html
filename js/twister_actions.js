@@ -147,6 +147,27 @@ function appendPostToContainer(postFromJson, containerToAppend)
 
 var profilePostsLoading = false;
 
+function requestPost(containerToAppend,username,resource,cbFunc,cbArgs){
+
+    console.log('dhtget '+username+' '+resource);
+
+    dhtget( username, resource, "s",
+        function(args, postFromJson) {
+            if( postFromJson ) {
+
+            console.log(postFromJson);
+
+            appendPostToContainer(postFromJson,args.containerToAppend);
+                
+            if(args.cbFunc!=undefined) args.cbFunc(args.cbArgs);
+               
+            } 
+        }, 
+        {containerToAppend:containerToAppend,cbFunc:cbFunc,cbArgs:cbArgs} 
+    );
+
+}
+
 function requestPostRecursively(containerToAppend,username,resource,count,useGetposts)
 {
     var max_id = -1;

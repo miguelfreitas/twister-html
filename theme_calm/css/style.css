@@ -1645,6 +1645,26 @@ textarea.splited-post {
 .login .module input::-ms-input-placeholder {
     color: #fff;
 }
+
+/*************************************
+****************** POPUP PROMPT ******
+**************************************/
+
+.prompt-wrapper
+{
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    background: rgba( 255, 255,255, 1.0 ); 
+    box-shadow: 0 0 30px rgba( 0, 0, 0, .6 ); 
+    z-index: 5; 
+    width: 600px; 
+    margin-left:-300px;
+}
+
+
+
+
 /*************************************
 **************************** POPUP MODAL
 **************************************/
