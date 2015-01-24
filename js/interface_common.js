@@ -397,20 +397,17 @@ function watchHashChange(e)
 {
 
     if(e!=null){ 
+
         var prevurlsplit = e.oldURL.split('#');
-        var newurlsplit = e.newURL.split('#');
-        var prevhashstring=prevurlsplit[1];     
-        if(prevurlsplit[0]==newurlsplit[0] && prevhashstring!=undefined && prevhashstring.length>0 ){
+        var prevhashstring=prevurlsplit[1];  
+
+        var notFirstModalView=(prevhashstring!=undefined && prevhashstring.length>0 );
+        var notNavigatedBackToFirstModalView=(window.history.state==null || ( window.history.state!=null && window.history.state.showCloseButton!=false ) )
+   
+        if(notFirstModalView && notNavigatedBackToFirstModalView ) ){
             $('.modal-back').css('display','inline');
-            //$('.modal-back').on('click', function(e){
-                //e.stopPropagation();
-                //e.preventDefault();
-                //window.location.hash = '#' + prevhashstring;
-                
-                //window.history.go(-1);
-                
-            //});
         } else {
+            window.history.pushState({showCloseButton:false},null,null);
             $('.modal-back').css('display','none');
         }
         
