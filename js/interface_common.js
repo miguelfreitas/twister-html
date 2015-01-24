@@ -404,7 +404,7 @@ function watchHashChange(e)
         var notFirstModalView=(prevhashstring!=undefined && prevhashstring.length>0 );
         var notNavigatedBackToFirstModalView=(window.history.state==null || ( window.history.state!=null && window.history.state.showCloseButton!=false ) )
    
-        if(notFirstModalView && notNavigatedBackToFirstModalView ) ){
+        if(notFirstModalView && notNavigatedBackToFirstModalView ){
             $('.modal-back').css('display','inline');
         } else {
             window.history.pushState({showCloseButton:false},null,null);
