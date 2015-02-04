@@ -1418,9 +1418,10 @@ ol.toptrends-list {
 **************************************/
 .new-user .modal-wrapper
 {
+    top: 50%;
     width: 720px;
     height: 400px;
-    margin: -200px 0 0 -280px;
+    margin: -200px 0 0 -360px;
     overflow-x: hidden;
     overflow-y: hidden;
 }
