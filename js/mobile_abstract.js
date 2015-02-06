@@ -102,6 +102,17 @@ var MAL = function()
                 newTweetsBar.fadeIn("slow");
                 newTweetsBarMenu.text(String(newPosts));
                 newTweetsBarMenu.addClass("show");
+
+                var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
+                    body: 'You got '+polyglot.t("new_posts", newPosts)+' in postboard.',
+                    icon: '../img/twister_mini.png',
+                    tag: 'twister_notification_new_postboard',
+                    timeout: _desktopNotificationTimeout,
+                    notifyClick: function() {
+                        requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
+                    }
+                });
+                    desktopNotification.show();
             } else {
                 newTweetsBar.hide();
                 newTweetsBar.text("");

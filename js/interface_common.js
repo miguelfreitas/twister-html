@@ -200,6 +200,23 @@ function updateHashtagModal(postboard,hashtag,timeoutArgs) {
     var resource = $hashtagModalClass.attr("data-resource");
 
     requestHashtag(postboard,hashtag,resource,timeoutArgs);
+
+    if( _hashtagPendingPostsUpdated ) {
+        var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
+            body: 'You got '+polyglot.t("new_posts", _hashtagPendingPostsUpdated)+' in search result.',
+            icon: '../img/twister_mini.png',
+            tag: 'twister_notification_new_posts_modal',
+            timeout: _desktopNotificationTimeout,
+            notifyClick: function() {
+                $(".postboard-news").hide();
+                displayHashtagPending($(".hashtag-modal .postboard-posts"));
+            }
+        });
+            desktopNotification.show();
+
+        _hashtagPendingPostsUpdated = 0;
+    }
+
     // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
     // our first query above should be faster (with default timeoutArgs of twisterd),
     // then we may possibly collect more posts on our second try by waiting more.
