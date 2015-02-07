@@ -115,18 +115,21 @@ function requestMentionsCount() {
     if( _newDMsUpdated ) {
         _newDMsUpdated = false;
 
-        $.MAL.soundNotifyDM();
+        var newDMs = getNewDMsCount();
+        if ( newDMs ) {
+            $.MAL.soundNotifyDM();
 
-        var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
-            body: 'You got '+polyglot.t('new_direct_messages', getNewDMsCount())+'.',
-            icon: '../img/twister_mini.png',
-            tag: 'twister_notification_new_DMs',
-            timeout: _desktopNotificationTimeout,
-            notifyClick: function() {
-                window.location.hash = '#directmessages';
-            }
-        });
-            desktopNotification.show();
+            var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
+                body: 'You got '+polyglot.t('new_direct_messages', newDMs)+'.',
+                icon: '../img/twister_mini.png',
+                tag: 'twister_notification_new_DMs',
+                timeout: _desktopNotificationTimeout,
+                notifyClick: function() {
+                    window.location.hash = '#directmessages';
+                }
+            });
+                desktopNotification.show();
+        }
     }
 }
 

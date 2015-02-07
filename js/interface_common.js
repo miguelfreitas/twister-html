@@ -1316,8 +1316,7 @@ var postSubmit = function(e, oldLastPostId)
     var tweetForm = $this.parents("form");
     var remainingCount = tweetForm.find(".post-area-remaining");
     remainingCount.text(140);
-    $replyText.attr("placeholder", "Your message was sent!");
-    
+
     if ($this.parents('.modal-wrapper').length) {
         closeModal($this);
     } else if ($this.parents('.prompt-wrapper').length) {

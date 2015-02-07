@@ -586,7 +586,7 @@ function userSearchKeypress(event) {
             searchResults.slideUp( "fast" );
 
         if ( event.which == 13 )
-            openHashtagModalFromSearch(partialName.substr(1));
+            window.location.hash = '#hashtag?hashtag=' + encodeURIComponent(partialName.substr(1));
 
         return;
     }
