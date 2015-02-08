@@ -2,7 +2,7 @@ $(function() {
 	
 });
 
-var _desktopNotificationTimeout = 4; // it should be an option
+var _desktopNotificationTimeout = 40; // it should be an option
 
 var TwisterOptions = function()
 {
@@ -97,10 +97,13 @@ var TwisterOptions = function()
                 icon: '../img/twister_mini.png',
                 tag: 'twister_notification_test',
                 timeout: _desktopNotificationTimeout,
-                notifyError: function() { alert(polyglot.t('notify_desktop_error')); },
-                permissionDenied: function() { alert(polyglot.t('notify_desktop_perm_denied')); }
+                notifyError: function() { alert(polyglot.t('notify_desktop_error')); }
             });
+            if (Notify.permissionLevel === 'denied') {
+                alert(polyglot.t('notify_desktop_perm_denied'));
+            } else {
                 desktopNotification.show();
+            }
         })
     }
 

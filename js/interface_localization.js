@@ -96,8 +96,8 @@ if(preferredLanguage == "en"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Not available", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Number of blocks in block chain: ",
@@ -334,8 +334,8 @@ if(preferredLanguage == "es"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "Nadie", // used to promote a post without attaching the user
       "Not available": "No disponible", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Número de bloques en la cadena de bloques: ",
@@ -570,8 +570,8 @@ if(preferredLanguage == "uk"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Не доступне", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Кількість блоків у ланцюгу: ",
@@ -804,8 +804,8 @@ if(preferredLanguage == "zh"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "用户名不可用", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "块链中的块数：",
@@ -1038,8 +1038,8 @@ if(preferredLanguage == "nl"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Niet beschikbaar", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Aantal blocks in block chain: ",
@@ -1273,8 +1273,8 @@ if(preferredLanguage == "it"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nessuno", // used to promote a post without attaching the user
       "Not available": "Non disponibile", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Numero di blocchi nella catena: ",
@@ -1506,8 +1506,8 @@ if(preferredLanguage == "fr"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Non disponible", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Nombre de blocs dans la chaîne de blocs: ",
@@ -1745,8 +1745,8 @@ if(preferredLanguage == "ru"){
        "new_direct_messages": "%{smart_count} новое личное сообщение |||| %{smart_count} новых личных сообщений",
        "nobody": "Анонимно", // used to promote a post without attaching the user
        "Not available": "Недоступно",
-       "notify_desktop_error": "Твистер не может выполнить уведомление: произошла неизвестная ошибка. Попробуйте изменить предпочтения браузера для уведомлений рабочего стола.",
-       "notify_desktop_perm_denied": "Твистер не может выполниь уведомление: разрешение не получено. Убедитесь, что в браузере разрешены уведомления для этого домена.",
+       "notify_desktop_error": "Твистер не может выполнить уведомление: произошла неизвестная ошибка.",
+       "notify_desktop_perm_denied": "Твистер не может выполниь уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для этого домена в настройках вашего браузера.",
        "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
        "notify_desktop_title": "Watch out, it's twister over here!",
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",
@@ -1985,8 +1985,8 @@ if(preferredLanguage == "de"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Nicht verfügbar", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Anzahl der Blöcke in der Block-Chain: ",
@@ -2221,8 +2221,8 @@ if(preferredLanguage == "ja"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "ナナシ", // used to promote a post without attaching the user
       "Not available": "使用中", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "全ブロック数: ",
@@ -2454,8 +2454,8 @@ if(preferredLanguage == "pt-BR"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Indisponível", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Número de blocos: ",
@@ -2691,8 +2691,8 @@ if(preferredLanguage == "tr"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "hiçkimse", // used to promote a post without attaching the user
       "Not available": "Kullanılamaz", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Blok zincirindeki blok sayısı: ",
@@ -2925,8 +2925,8 @@ if(preferredLanguage == "cs"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nikdo", // used to promote a post without attaching the user
       "Not available": "Tuto přezdívku již někdo používá", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured. Try to change browser permissions for this domain.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied. Check out browser's policy for this domain.",
+      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist. Now you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Počet bloků v blockchainu: ",
