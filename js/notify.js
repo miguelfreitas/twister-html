@@ -41,8 +41,6 @@
             notifyClose: null,
             notifyClick: null,
             notifyError: null,
-            permissionGranted: null,
-            permissionDenied: null,
             timeout: null
         };
 
@@ -79,16 +77,6 @@
             //callback when notification throws error
             if (isFunction(this.options.notifyError)) {
                 this.onErrorCallback = this.options.notifyError;
-            }
-
-            //callback when permission granted after request
-            if (isFunction(this.options.permissionGranted)) {
-                this.onPermissionGrantedCallback = this.options.permissionGranted;
-            }
-
-            //callback when permission denied after request
-            if (isFunction(this.options.permissionDenied)) {
-                this.onPermissionDeniedCallback = this.options.permissionDenied;
             }
         }
     }
@@ -128,14 +116,6 @@
     Notify.prototype.show = function () {
 
         if (!Notify.isSupported) {
-            return;
-        }
-
-        if (Notify.permissionLevel === 'default' ) {
-            Notify.requestPermission(this.onPermissionGrantedCallback, this.onPermissionDeniedCallback);
-        }
-
-        if (Notify.needsPermission) {
             return;
         }
 

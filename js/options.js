@@ -2,7 +2,7 @@ $(function() {
 	
 });
 
-var _desktopNotificationTimeout = 40; // it should be an option
+var _desktopNotificationTimeout = 10; // it should be an option
 
 var TwisterOptions = function()
 {
@@ -91,19 +91,8 @@ var TwisterOptions = function()
     }
 
     this.notificationDesktopTest = function() {
-        $('#notifications-desktop-test').on('click', function(){
-            var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
-                body: polyglot.t('notify_desktop_test'),
-                icon: '../img/twister_mini.png',
-                tag: 'twister_notification_test',
-                timeout: _desktopNotificationTimeout,
-                notifyError: function() { alert(polyglot.t('notify_desktop_error')); }
-            });
-            if (Notify.permissionLevel === 'denied') {
-                alert(polyglot.t('notify_desktop_perm_denied'));
-            } else {
-                desktopNotification.show();
-            }
+        $('#notifications-desktop-test').on('click', function() {
+            showDesktopNotification(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, function() { alert(polyglot.t('notify_desktop_perm_denied')) })
         })
     }
 

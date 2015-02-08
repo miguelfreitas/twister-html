@@ -103,16 +103,9 @@ var MAL = function()
                 newTweetsBarMenu.text(String(newPosts));
                 newTweetsBarMenu.addClass("show");
 
-                var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
-                    body: 'You got '+polyglot.t("new_posts", newPosts)+' in postboard.',
-                    icon: '../img/twister_mini.png',
-                    tag: 'twister_notification_new_postboard',
-                    timeout: _desktopNotificationTimeout,
-                    notifyClick: function() {
+                showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t("new_posts", newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', function() {
                         requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
-                    }
-                });
-                    desktopNotification.show();
+                    }, false)
             } else {
                 newTweetsBar.hide();
                 newTweetsBar.text("");

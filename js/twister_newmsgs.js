@@ -100,14 +100,7 @@ function requestMentionsCount() {
 
         $.MAL.soundNotifyMentions();
 
-        var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
-            body: 'You got '+polyglot.t('new_mentions', _newMentions)+'.',
-            icon: '../img/twister_mini.png',
-            tag: 'twister_notification_new_mentions',
-            timeout: _desktopNotificationTimeout,
-            notifyClick: openMentionsModal
-        });
-            desktopNotification.show();
+        showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t('new_mentions', _newMentions)+'.', false,'twister_notification_new_mentions', openMentionsModal, false)
     }
 
     // was moved here from requestDMsCount() because that is not ticking right
@@ -119,16 +112,9 @@ function requestMentionsCount() {
         if ( newDMs ) {
             $.MAL.soundNotifyDM();
 
-            var desktopNotification = new Notify(polyglot.t('notify_desktop_title'), {
-                body: 'You got '+polyglot.t('new_direct_messages', newDMs)+'.',
-                icon: '../img/twister_mini.png',
-                tag: 'twister_notification_new_DMs',
-                timeout: _desktopNotificationTimeout,
-                notifyClick: function() {
+            showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t('new_direct_messages', newDMs)+'.', false, 'twister_notification_new_DMs', function() {
                     window.location.hash = '#directmessages';
-                }
-            });
-                desktopNotification.show();
+                }, false)
         }
     }
 }
