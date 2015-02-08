@@ -279,13 +279,13 @@ function processLastHave(userHaves)
 function processNewPostsConfirmation(expected, posts)
 {
     //we don't want to produce alert for the posts that won't be displayed
-    var p2h = 0;
+    var pnp = 0;
     for( var i = posts.length-1; i >= 0; i-- ) {
-        if (willBeHidden(posts[i])) {
-            p2h++;
+        if (willBeHidden(posts[i]) || posts[i]['userpost']['n'] === defaultScreenName) {
+            pnp++;
         }
     }
-    _newPostsPending += posts.length - p2h;
+    _newPostsPending += posts.length - pnp;
     if( _newPostsPending ) {
         $.MAL.reportNewPosts(_newPostsPending);
     }

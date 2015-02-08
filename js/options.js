@@ -2,6 +2,8 @@ $(function() {
 	
 });
 
+var _desktopNotificationTimeout = 10; // it should be an option
+
 var TwisterOptions = function()
 {
     this.getOption = function(optionName, defaultValue) {
@@ -86,6 +88,12 @@ var TwisterOptions = function()
         }
         player[0].volume = $.Options.getOption('playerVol',1);
         player[0].play();
+    }
+
+    this.notificationDesktopTest = function() {
+        $('#notifications-desktop-test').on('click', function() {
+            showDesktopNotification(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, function() { alert(polyglot.t('notify_desktop_perm_denied')) })
+        })
     }
 
     this.keysSendDefault = "ctrlenter";
@@ -338,6 +346,7 @@ var TwisterOptions = function()
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
+        this.notificationDesktopTest();
         this.keysSend();
         this.setLang();
         this.setTheme();
@@ -365,7 +374,7 @@ function localizeLabels()
 {
     $("label[for=tab_language]").text(polyglot.t("Language"));
     $("label[for=t-2]").text(polyglot.t("Theme"));
-    $("label[for=t-3]").text(polyglot.t("Sound"));
+    $("label[for=t-3]").text(polyglot.t("Notifications"));
     $("label[for=t-4]").text(polyglot.t("Keys"));
     $("label[for=t-5]").text(polyglot.t("Postboard"));
     $("label[for=t-6]").text(polyglot.t("Users"));

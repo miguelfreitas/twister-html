@@ -200,6 +200,16 @@ function updateHashtagModal(postboard,hashtag,timeoutArgs) {
     var resource = $hashtagModalClass.attr("data-resource");
 
     requestHashtag(postboard,hashtag,resource,timeoutArgs);
+
+    if( _hashtagPendingPostsUpdated ) {
+        showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t("new_posts", _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', function() {
+                $(".postboard-news").hide();
+                displayHashtagPending($(".hashtag-modal .postboard-posts"));
+            }, false)
+
+        _hashtagPendingPostsUpdated = 0;
+    }
+
     // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
     // our first query above should be faster (with default timeoutArgs of twisterd),
     // then we may possibly collect more posts on our second try by waiting more.
@@ -809,6 +819,36 @@ function replyTextKeypress(e) {
     }
 }
 
+function showDesktopNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, actionOnClick, actionOnPermDenied) {
+    function doNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, actionOnClick) {
+        if (!notifyTitle) {
+            notifyTitle = polyglot.t('notify_desktop_title');
+        }
+        if (!notifyIcon) {
+            notifyIcon = '../img/twister_mini.png';
+        }
+        if (!notifyTag) {
+            notifyTag = 'twister_notification';
+        }
+
+        var desktopNotification = new Notify(notifyTitle, {
+            body: notifyBody,
+            icon: notifyIcon,
+            tag: notifyTag,
+            timeout: _desktopNotificationTimeout,
+            notifyClick: actionOnClick,
+            notifyError: function() { alert(polyglot.t('notify_desktop_error')) }
+        });
+        desktopNotification.show();
+    }
+
+    if (Notify.needsPermission) {
+        Notify.requestPermission(false, actionOnPermDenied);
+    } else {
+        doNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, actionOnClick);
+    }
+}
+
 /*
  *  unicode convertion list
  *  k: original string to be replaced
@@ -1299,8 +1339,7 @@ var postSubmit = function(e, oldLastPostId)
     var tweetForm = $this.parents("form");
     var remainingCount = tweetForm.find(".post-area-remaining");
     remainingCount.text(140);
-    $replyText.attr("placeholder", "Your message was sent!");
-    
+
     if ($this.parents('.modal-wrapper').length) {
         closeModal($this);
     } else if ($this.parents('.prompt-wrapper').length) {

@@ -11,6 +11,8 @@ var _lastMentionTime = 0;
 var _newMentions = 0;
 var _lastLocalMentionId = -1;
 var PURGE_OLD_MENTIONS_TIMEOUT = 3600 * 24 * 30; // one month
+var _newMentionsUpdated = false;
+var _newDMsUpdated = false;
 
 // process a mention received to check if it is really new
 function processMention(user, mentionTime, data) {
@@ -19,21 +21,17 @@ function processMention(user, mentionTime, data) {
     if( mentionTime > curTime + 3600 * 2 ) {
         console.log("mention from the future will be ignored");
     } else {
-        var newMentionsUpdated = false;
         if( !(key in _knownMentions) ) {
             // mention must be somewhat recent compared to last known one to be considered new
             if( mentionTime + 3600 * 24 * 3 > _lastMentionTime ) {
                 _newMentions++;
-                newMentionsUpdated = true;
+                _newMentionsUpdated = true;
                 _lastMentionTime = Math.max(mentionTime,_lastMentionTime);
                 data["isNew"] = true;
             }
             _knownMentions[key] = {mentionTime:mentionTime, data:data};
             purgeOldMentions();
             saveMentionsToStorage();
-        }
-        if( newMentionsUpdated ) {
-            $.MAL.soundNotifyMentions();
         }
     }
 }
@@ -96,6 +94,29 @@ function requestMentionsCount() {
                }
            }, {},
            [10000,2000,3]); // use extended timeout parameters (requires twister_core >= 0.9.14)
+
+    if( _newMentionsUpdated ) {
+        _newMentionsUpdated = false;
+
+        $.MAL.soundNotifyMentions();
+
+        showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t('new_mentions', _newMentions)+'.', false,'twister_notification_new_mentions', openMentionsModal, false)
+    }
+
+    // was moved here from requestDMsCount() because that is not ticking right
+    // we would place it with other notifications into separate notification center
+    if( _newDMsUpdated ) {
+        _newDMsUpdated = false;
+
+        var newDMs = getNewDMsCount();
+        if ( newDMs ) {
+            $.MAL.soundNotifyDM();
+
+            showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t('new_direct_messages', newDMs)+'.', false, 'twister_notification_new_DMs', function() {
+                    window.location.hash = '#directmessages';
+                }, false)
+        }
+    }
 }
 
 function resetMentionsCount() {
@@ -154,23 +175,22 @@ function requestDMsCount() {
 
     twisterRpc("getdirectmsgs", [defaultScreenName, 1, followList],
            function(req, dmUsers) {
-               var updated = false;
                for( var u in dmUsers ) {
                    if( dmUsers.hasOwnProperty(u) ) {
                        var dmData = dmUsers[u][0];
                        if( (u in _lastDMIdPerUser) && (u in _newDMsPerUser) ) {
                            if( dmData.id != _lastDMIdPerUser[u] ) {
                                _newDMsPerUser[u] += (dmData.id - _lastDMIdPerUser[u]);
-                               updated = true;
+                               _newDMsUpdated = true;
                            }
                        } else {
                            _newDMsPerUser[u] = dmData.id+1;
-                           updated = true;
+                           _newDMsUpdated = true;
                        }
                        _lastDMIdPerUser[u] = dmData.id;
                    }
                }
-               if( updated ) {
+               if( _newDMsUpdated ) {
                  saveDMsToStorage();
                  $.MAL.updateNewDMsUI(getNewDMsCount());
                }

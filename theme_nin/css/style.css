@@ -1704,7 +1704,7 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   visibility: hidden;
 }
 /* line 39, ../sass/_tabs.sass */
-.options input#tab_language:checked ~ .tab-content .language, .options input#t-2:checked ~ .tab-content .theme, .options input#t-3:checked ~ .tab-content .sounds, .options input#t-4:checked ~ .tab-content .keys, .options input#t-5:checked ~ .tab-content .postboard-display, .options input#t-6:checked ~ .tab-content .users {
+.options input#tab_language:checked ~ .tab-content .language, .options input#t-2:checked ~ .tab-content .theme, .options input#t-3:checked ~ .tab-content .notifications, .options input#t-4:checked ~ .tab-content .keys, .options input#t-5:checked ~ .tab-content .postboard-display, .options input#t-6:checked ~ .tab-content .users {
   position: relative;
   z-index: 10;
   opacity: 1;

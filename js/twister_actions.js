@@ -14,6 +14,7 @@ var maxExpandPost = 8;
 var maxExpandPostTop = 4;
 var _hashtagProcessedMap = {};
 var _hashtagPendingPosts = [];
+var _hashtagPendingPostsUpdated = 0;
 var autoUpdateHashtag = false;
 
 // ----------------
@@ -335,6 +336,7 @@ function processHashtag(postboard, hashtag, data) {
             if( !(key in _hashtagProcessedMap) ) {
                 _hashtagProcessedMap[key] = true;
                 _hashtagPendingPosts.push(data[i]);
+                _hashtagPendingPostsUpdated++;
             }
         }
         

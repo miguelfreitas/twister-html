@@ -102,6 +102,10 @@ var MAL = function()
                 newTweetsBar.fadeIn("slow");
                 newTweetsBarMenu.text(String(newPosts));
                 newTweetsBarMenu.addClass("show");
+
+                showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t("new_posts", newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', function() {
+                        requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
+                    }, false)
             } else {
                 newTweetsBar.hide();
                 newTweetsBar.text("");
