@@ -1330,6 +1330,14 @@ ol.toptrends-list {
 /*************************************
 ****************** DIRECT MESSAGES MODAL
 **************************************/
+.directMessages .modal-wrapper
+{
+    overflow-y: auto;
+}
+.directMessages .modal-content
+{
+    height: auto;
+}
 .directMessages .modal-buttons
 {
     display: none;
@@ -1582,20 +1590,29 @@ ol.toptrends-list {
 ****************** RETWIST POSTS PROMPT
 **************************************/
 
+.reTwist
+{
+    margin-top: -100px;
+}
 .reTwist .post-expand,
 .reTwist .post-interactions
 {
     display: none;
 }
 .reTwist .post {
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     min-height: 68px;
 }
+
 /*************************************
 ****************** REPLY POSTS PROMPT
 **************************************/
 
+.reply
+{
+    margin-top: -140px;
+}
 .reply .modal-buttons
 {
     display: none;
@@ -1613,6 +1630,11 @@ ol.toptrends-list {
 .reply .textcomplete-wrapper textarea{
     margin: 10px;
     width: 580px;
+}
+
+.reply .post-area-extras
+{
+    margin-right: 10px;
 }
 
 .reply .post {
