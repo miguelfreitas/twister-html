@@ -1772,25 +1772,31 @@ textarea.splited-post {
     padding: 10px;
 }
 /*************************************
-****************** RETWIST POSTS MODAL
+****************** RETWIST POSTS PROMPT
 **************************************/
-.reTwist .modal-wrapper
+
+.reTwist
 {
-    width: 520px;
-    margin: -100px 0 0 -260px;
+    margin-top: -100px;
 }
 .reTwist .post-expand,
 .reTwist .post-interactions
 {
     display: none;
 }
+.reTwist .post {
+    margin: 5px;
+    padding: 5px;
+    min-height: 68px;
+}
+
 /*************************************
-****************** REPLY POSTS MODAL
+****************** REPLY POSTS PROMPT
 **************************************/
-.reply .modal-wrapper
+
+.reply
 {
-    width: 520px;
-    margin: -100px 0 0 -260px;
+    margin-top: -140px;
 }
 .reply .modal-buttons
 {
@@ -1801,6 +1807,27 @@ textarea.splited-post {
 {
     display: none;
 }
+
+.reply .textcomplete-wrapper{
+    padding-top: 10px;
+}
+
+.reply .textcomplete-wrapper textarea{
+    margin: 10px;
+    width: 580px;
+}
+
+.reply .post-area-extras
+{
+    margin-right: 10px;
+}
+
+.reply .post {
+    margin: 10px;
+    padding: 5px;
+    min-height: 68px;
+}
+
 /*************************************
 ****************** DIRECT MESSAGES MODAL
 **************************************/
