@@ -67,10 +67,9 @@
       <div class="tab-content">
 
         <div class="language">
-
           <div class="module">
-            <p class="label"> Use language </p>
-            <div>
+            <p class="label label-h"> Use language </p>
+            <div class="container">
               <form action="" id="selectLanguage">
                 <select name="" id="language">
                   <option value="auto">Auto</option>
@@ -94,8 +93,8 @@
 
         <div class="theme">
           <div class="module">
-            <p class="label"> Theme </p>
-            <div>
+            <p class="label label-h"> Theme </p>
+            <div class="container">
               <form action="" id="selectTheme">
                 <select name="" id="theme">
                   <option value="original">Original</option>
@@ -112,12 +111,12 @@
 
         <div class="notifications">
           <div class="module">
-            <p class="label"> Sound notifications </p>
-            <div>
+            <p class="label label-h"> Sound notifications </p>
+            <div class="container">
               <form action="" id="notifyForm">
                 <div>
                   <p class="label">Mentions</p>
-                  <select name="" id="sndMention" class="sndOpt">
+                  <select name="" id="sndMention" class="sndOpt container">
                     <option value="false">none</option>
                     <option value="1">beat</option>
                     <option value="2">pip</option>
@@ -128,7 +127,7 @@
                 </div>
                 <div>
                   <p class="label">Direct Messages</p>
-                  <select name="" id="sndDM" class="sndOpt">
+                  <select name="" id="sndDM" class="sndOpt container">
                     <option value="false">none</option>
                     <option value="1">beat</option>
                     <option value="2">pip</option>
@@ -137,26 +136,77 @@
                     <option value="5">click</option>
                   </select>
                 </div>
-                <input type="range" name="playerVol" id="playerVol" min="0" max="1" step="0.01"><span class="volValue">0</span>
+                <div>
+                  <p class="label">Volume</p>
+                <input type="range" name="playerVol" id="playerVol" class="container" min="0" max="1" step="0.01"><span class="volValue container">0</span>
+                </div>
               </form>
               <audio id="player"></audio>
             </div>
           </div>
           <div class="module">
-            <p class="label"> Desktop notifications </p>
-            <div>
-                <button id="notifications-desktop-test">Test</button>
+            <p class="label label-h"> Desktop notifications </p>
+            <div class="container">
+              <form action="" id="optionsShowDesktopNotif">
+                <div>
+                  <p class="label">Mentions</p>
+                  <select id="showDesktopNotifMentions" class="container">
+                      <option value="enable">Enable</option>
+                      <option value="disable">Disable</option>
+                  </select>
+                  <div id="showDesktopNotifMentionsDesc" class="container">
+                    <input name="" id="showDesktopNotifMentionsTimer" maxlength="3" size="1"/> <span class="label">second(s)</span>
+                  </div>
+                </div>
+                <div>
+                  <p class="label">Direct Messages</p>
+                  <select id="showDesktopNotifDMs" class="container">
+                      <option value="enable">Enable</option>
+                      <option value="disable">Disable</option>
+                  </select>
+                  <div id="showDesktopNotifDMsDesc" class="container">
+                    <input name="" id="showDesktopNotifDMsTimer" maxlength="3" size="1"/> <span class="label">second(s)</span>
+                  </div>
+                </div>
+                <div>
+                  <p class="label">Posts</p>
+                  <div class="container">
+                    <span class="label">in postboard</span>
+                    <select id="showDesktopNotifPosts">
+                        <option value="enable">Enable</option>
+                        <option value="disable">Disable</option>
+                    </select>
+                    <div id="showDesktopNotifPostsDesc" class="container">
+                      <input name="" id="showDesktopNotifPostsTimer" maxlength="3" size="1"/> <span class="label">second(s)</span>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <span class="label">in search result</span>
+                    <select id="showDesktopNotifPostsModal">
+                        <option value="enable">Enable</option>
+                        <option value="disable">Disable</option>
+                    </select>
+                    <div id="showDesktopNotifPostsModalDesc" class="container">
+                      <input name="" id="showDesktopNotifPostsModalTimer" maxlength="3" size="1"/> <span class="label">second(s)</span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="container">
+                <p class="label">Test</p>
+                <button id="testDesktopNotif" class="container">notify_desktop_title</button>
             </div>
           </div>
         </div>
 
         <div class="keys">
           <div class="module">
-            <p class="label"> Keys </p>
-            <div>
+            <p class="label label-h"> Keys </p>
+            <div class="container">
               <form action="" id="keysOpt">
                 <p class="label">Send key</p>
-                <select name="" id="keysSend">
+                <select name="" id="keysSend" class="container">
                   <option value="enter">Enter</option>
                   <option value="ctrlenter">Ctrl/Cmd+Enter</option>
                 </select>
@@ -167,128 +217,126 @@
 
         <div class="postboard-display">
           <div class="module">
-            <p class="label"> Postboard displays </p>
-            <div>
+            <p class="label label-h"> Postboard displays </p>
+            <div class="container">
               <form action="" id="hideRepliesOpt">
                 <p class="label">Posts that begin with mention</p>
-                <select name="" id="hideReplies">
+                <select name="" id="hideReplies" class="container">
                   <option value="disable">Show all</option>
                   <option value="only-me">Show only if I am in</option>
                   <option value="following">Show if it's between users I follow</option>
                 </select>
               </form>
             </div>
-            <div>
+            <div class="container">
               <form action="" id="hideCloseRTsOpt">
                 <p class="label">RTs those are close to original twist</p>
-                <select name="" id="hideCloseRTs">
+                <select name="" id="hideCloseRTs" class="container">
                   <option value="disable">Show all</option>
                   <option value="show-if">Show if the original is older than</option>
                 </select>
-                <div id="hideCloseRTsDesc">
-                  <input name="" id="hideCloseRtsHour" maxlength="2" size="3"/> <span class="label">hour(s)</span>
-                </div>
+                <p id="hideCloseRTsDesc">
+                  <input name="" id="hideCloseRtsHour" class="container" maxlength="2" size="1"/> <span class="label">hour(s)</span>
+                </p>
               </form>
             </div>
           </div>
           <div class="module">
-            <p class="label"> Posts display </p>
-            <div>
+            <p class="label label-h"> Posts display </p>
+            <div class="container">
               <form action="" id="lineFeedsOpt">
                 <p class="label">Line feeds</p>
-                <select name="" id="displayLineFeeds">
+                <select name="" id="displayLineFeeds" class="container">
                   <option value="disable">Ignore</option>
                   <option value="enable">Display</option>
                 </select>
               </form>
             </div>
-            <div>
-            <form action="" id="showPreviewOpt">
-              <p class="label">Inline image preview</p>
-              <select name="" id="displayPreview">
-                <option value="disable">Ignore</option>
-                <option value="enable">Display</option>
-              </select>
-            </form>
+            <div class="container">
+              <form action="" id="showPreviewOpt">
+                <p class="label">Inline image preview</p>
+                <select name="" id="displayPreview" class="container">
+                  <option value="disable">Ignore</option>
+                  <option value="enable">Display</option>
+                </select>
+              </form>
+            </div>
+            <div class="container">
+              <form action="" id="useProxyOpt">
+                <p class="label">Use external links behind a proxy</p>
+                <select name="" id="useProxy" class="container">
+                  <option value="disable">none</option>
+                  <option value="ssl-proxy-my-addr">ssl-proxy.my-addr.org</option>
+                  <option value="anonymouse">anonymouse.org</option>
+                </select>
+                <input name="" id="useProxyForImgOnly" class="container" type="checkbox" /> <span class="label">Use proxy for image preview only</span>
+              </form>
+            </div>
           </div>
-          <div>
-            <form action="" id="useProxyOpt">
-              <p class="label">Use external links behind a proxy</p>
-              <select name="" id="useProxy">
-                <option value="disable">none</option>
-                <option value="ssl-proxy-my-addr">ssl-proxy.my-addr.org</option>
-                <option value="anonymouse">anonymouse.org</option>
-              </select>
-              <input name="" id="useProxyForImgOnly" type="checkbox" /> <span class="label">Use proxy for image preview only</span>
-            </form>
-          </div>
-        </div>
+
         <div class="post-editor">
           <div class="module">
-            <p class="label"> Post editor</p>
-            <div>
+            <p class="label label-h"> Post editor </p>
+            <div class="container">
               <form action="" id="unicodeConversionOpt">
                 <p class="label">Automatic unicode conversion options</p>
-                <select name="" id="unicodeConversion">
+                <select name="" id="unicodeConversion" class="container">
                   <option value="disable">Ignore</option>
                   <option value="enable">Convert all</option>
                   <option value="custom">Custom</option>
                 </select>
                 <div class="suboptions unicode-suboptions">
                   <input name="" id="convertPunctuationsOpt" type="checkbox" /> <span class="label">Convert punctuations to unicode</span><br/>
-                  <div>
-                    <label class="label">Supported punctuations: </label>
+                  <div class="container">
+                    <label>Supported punctuations: </label>
                     <span>‥ … ⁇ ⁈ ⁉ ‼ — ⁓</span>
                   </div> 
                   <input name="" id="convertEmotionsOpt" type="checkbox" /> <span class="label">Convert emotions codes to unicode symbols</span>
-                  <div>
-                    <label class="label">Supported emotions: </label>
+                  <div class="container">
+                    <label>Supported emotions: </label>
                     <span>😃 😇 🍺 😈 ❤ 😕 😢 😞 😎 😊 😊 😗 😆 😛 😉 😉 😮 😱 😐</span>
                   </div>
                   <input name="" id="convertSignsOpt" type="checkbox" /> <span class="label">Convert common signs to unicode</span><br/>
-                  <div>
-                    <label class="label">Supported signs:</label>
+                  <div class="container">
+                    <label>Supported signs:</label>
                     <span>℡ ℻</span>
                   </div>
                   <input name="" id="convertFractionsOpt" type="checkbox" /> <span class="label">Convert fractions to unicode</span><br/>
-                  <div>
-                    <label class="label">Supported fractions:</label>
+                  <div class="container">
+                    <label>Supported fractions:</label>
                     <span>½ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅐ ⅛ ⅜ ⅝ ⅞ ⅑ ⅒</span>
                   </div>
                 </div>
               </form>
-              </div>
-
-              <div>
+            </div>
+            <div class="container">
               <form action="" id="splitPostsOpt">
                 <p class="label">Split long posts</p>
-                <select name="" id="splitPosts">
+                <select name="" id="splitPosts" class="container">
                   <option value="disable">Don't split</option>
                   <option value="enable">Split all</option>
                   <option value="only-new">Split only new post</option>
                 </select>
-                </form>
-              </div>
-
-              <div>
-                <form action="" id="dmCopySelfOpt">
-                  <p class="label">Direct Message's copy to self</p>
-                  <select name="" id="dmCopySelf">
-                    <option value="disable">Disable</option>
-                    <option value="enable">Enable</option>
-                  </select>
-                </form>
-              </div>
-
+              </form>
+            </div>
+            <div class="container">
+              <form action="" id="dmCopySelfOpt">
+                <p class="label">Direct Message's copy to self</p>
+                <select name="" id="dmCopySelf" class="container">
+                  <option value="disable">Disable</option>
+                  <option value="enable">Enable</option>
+                </select>
+              </form>
             </div>
           </div>
+        </div>
         </div>
 
         <div class="users">
           <div class="module">
             <form action="" id="isFollowingMeOpt">
-              <p class="label">Show if a user follows me</p>
-              <select name="" id="isFollowingMe">
+              <p class="label label-h">Show if a user follows me</p>
+              <select name="" id="isFollowingMe" class="container">
                 <option value="in-profile">Show at profile modal only</option>
                 <option value="everywhere">Show with every user name</option>
               </select>

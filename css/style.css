@@ -297,11 +297,7 @@ button.disabled:hover
     border: solid 1px rgba( 69, 71, 77, .1 );
     background: #fff;
 }
-.options .module
-{
-    margin: 5px;
-    padding: 5px;
-}
+
 .messages-qtd
 {
     position: absolute;
@@ -1761,19 +1757,34 @@ ol.toptrends-list {
   }
 }
 
-/* Options */
-#playerVol {
-    float: right;
-    margin-right: 20px;
+/*************************************
+****************** OPTIONS ***********
+**************************************/
+
+.options .module
+{
+    margin: 5px;
+    padding: 15px;
 }
-.volValue {
-    float: right;
-    margin-right: -163px;
+
+.options .container
+{
+    margin: 5px 0px 5px 10px;
+}
+
+.options .label-h {
+  font-weight: 700;
+}
+
+.options .module label {
     font: 12px "Open Sans", sans-serif;
 }
-#notifyForm p, #choseLanguage p, #keysOpt p {
-    margin-top: 15px;
+
+.volValue {
+    vertical-align: top;
+    font: 12px "Open Sans", sans-serif;
 }
+
 .suboptions {
     margin: 5px 30px;
     border: double 2px rgba( 69, 71, 77, .1 );

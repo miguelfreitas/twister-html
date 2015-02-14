@@ -1659,12 +1659,17 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   position: relative;
 }
 /* line 4, ../sass/_tabs.sass */
-.options .label {
+.options .label-h {
   font-weight: 700;
 }
 /* line 7, ../sass/_tabs.sass */
 .options label {
   cursor: pointer;
+}
+/* line 14, ../sass/_tabs.sass */
+.options .container
+{
+    margin: 5px 0px 5px 10px;
 }
 /* line 9, ../sass/_tabs.sass */
 .options input[type=radio] {
@@ -1672,27 +1677,27 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   visibility: hidden;
   opacity: 0;
 }
-/* line 14, ../sass/_tabs.sass */
+/* line 17, ../sass/_tabs.sass */
 .options .postboard-display div {
   clear: both;
 }
-/* line 16, ../sass/_tabs.sass */
+/* line 19, ../sass/_tabs.sass */
 .options .postboard-display div div {
   float: left;
   clear: none;
   padding: 10px;
 }
-/* line 20, ../sass/_tabs.sass */
+/* line 23, ../sass/_tabs.sass */
 .options .postboard-display div div .label {
   font-weight: 400;
 }
-/* line 24, ../sass/_tabs.sass */
+/* line 27, ../sass/_tabs.sass */
 .options .tab-content {
   background: white;
   position: relative;
   padding: 20px;
 }
-/* line 29, ../sass/_tabs.sass */
+/* line 32, ../sass/_tabs.sass */
 .options .tab-content > div {
   position: absolute;
   top: 0;
@@ -1703,14 +1708,14 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   opacity: 0;
   visibility: hidden;
 }
-/* line 39, ../sass/_tabs.sass */
+/* line 42, ../sass/_tabs.sass */
 .options input#tab_language:checked ~ .tab-content .language, .options input#t-2:checked ~ .tab-content .theme, .options input#t-3:checked ~ .tab-content .notifications, .options input#t-4:checked ~ .tab-content .keys, .options input#t-5:checked ~ .tab-content .postboard-display, .options input#t-6:checked ~ .tab-content .users {
   position: relative;
   z-index: 10;
   opacity: 1;
   visibility: visible;
 }
-/* line 50, ../sass/_tabs.sass */
+/* line 53, ../sass/_tabs.sass */
 .options label.tabs {
   text-align: center;
   width: auto;
@@ -1720,11 +1725,11 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   color: #aaa;
   background: #f3f2f1;
 }
-/* line 51, ../sass/_tabs.sass */
+/* line 54, ../sass/_tabs.sass */
 .options label.tabs:hover {
   color: #66686B;
 }
-/* line 61, ../sass/_tabs.sass */
+/* line 64, ../sass/_tabs.sass */
 .options input:checked + label.tabs {
   background: white;
   color: #66686B;

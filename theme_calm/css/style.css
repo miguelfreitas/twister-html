@@ -415,10 +415,6 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
 .dashboard .module {
     border-radius: 6px;
 }
-.options .module {
-    margin: 5px;
-    padding: 5px;
-}
 .messages-qtd
 {
     position: absolute;
@@ -2226,24 +2222,35 @@ textarea.splited-post {
     left: 2px;
   }
 }
-/* Options */
-#playerVol {
-    float: right;
-    margin-right: 30px;
+
+/*************************************
+****************** OPTIONS ***********
+**************************************/
+
+.options .module
+{
+    margin: 5px;
+    padding: 15px;
 }
-.volValue {
-    float: right;
-    margin-right: -160px;
+
+.options .container
+{
+    margin: 5px 0px 5px 10px;
+}
+
+.options .label-h {
+  font-weight: 700;
+}
+
+.options .module label {
     font: 12px "Open Sans", sans-serif;
 }
-.optionsPage .module h1 {
-    font-size: 14px;
-    margin-bottom: 5px;
+
+.volValue {
+    vertical-align: top;
+    font: 12px "Open Sans", sans-serif;
 }
-.optionsPage .module h2 {
-    margin-top: 10px;
-    font-size: 12px;
-}
+
 .suboptions {
     margin: 5px 30px;
     border: double 2px rgba( 69, 71, 77, .1 );
@@ -2255,6 +2262,7 @@ textarea.splited-post {
     -o-transition: height 1s linear;
     -ms-transition: height 1s linear;
 }
+
 /* Following page */
 .following ol.following-list > li{
     display: inline-block;
@@ -2292,11 +2300,6 @@ textarea.splited-post {
 .gifCheckBox {
     float: right;
     vertical-align: middle;
-}
-.optionsPage .module label {
-    font: 12px "Open Sans", sans-serif;
-    display: block;
-    float: right;
 }
 
 /* Autocomplite*/

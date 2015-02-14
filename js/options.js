@@ -43,7 +43,7 @@ var TwisterOptions = function()
             player[0].play();
         });
     }
-    
+
     this.volumeControl = function() {
         var playerVol = $('#playerVol');
         playerVol[0].value = $.Options.getOption(playerVol[0].id, 1);
@@ -90,9 +90,129 @@ var TwisterOptions = function()
         player[0].play();
     }
 
-    this.notificationDesktopTest = function() {
-        $('#notifications-desktop-test').on('click', function() {
-            showDesktopNotification(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, function() { alert(polyglot.t('notify_desktop_perm_denied')) })
+    this.getShowDesktopNotifPostsOpt = function() {
+        return $.Options.getOption('showDesktopNotifPosts','enable');
+    }
+
+    this.setShowDesktopNotifPostsOpt = function () {
+        function showDesktopNotifPostsDesc() {
+            if ($.Options.getShowDesktopNotifPostsOpt() === 'enable') {
+                $('#showDesktopNotifPostsDesc')[0].style.display= 'inline';
+            } else {
+                $('#showDesktopNotifPostsDesc')[0].style.display= 'none';
+            }
+        }
+        $('#showDesktopNotifPosts').val(this.getShowDesktopNotifPostsOpt());
+        showDesktopNotifPostsDesc();
+        $('#showDesktopNotifPosts').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            showDesktopNotifPostsDesc();
+        });
+    }
+
+    this.getShowDesktopNotifPostsTimerOpt = function () {
+        return parseInt($.Options.getOption('showDesktopNotifPostsTimer', '6'));
+    }
+
+    this.setShowDesktopNotifPostsTimerOpt = function () {
+        $('#showDesktopNotifPostsTimer')[0].value = this.getShowDesktopNotifPostsTimerOpt().toString();
+
+        $('#showDesktopNotifPostsTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+    }
+
+    this.getShowDesktopNotifPostsModalOpt = function() {
+        return $.Options.getOption('showDesktopNotifPostsModal','enable');
+    }
+
+    this.setShowDesktopNotifPostsModalOpt = function () {
+        function showDesktopNotifPostsModalDesc() {
+            if ($.Options.getShowDesktopNotifPostsModalOpt() === 'enable') {
+                $('#showDesktopNotifPostsModalDesc')[0].style.display= 'inline';
+            } else {
+                $('#showDesktopNotifPostsModalDesc')[0].style.display= 'none';
+            }
+        }
+        $('#showDesktopNotifPostsModal').val(this.getShowDesktopNotifPostsModalOpt());
+        showDesktopNotifPostsModalDesc();
+        $('#showDesktopNotifPostsModal').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            showDesktopNotifPostsModalDesc();
+        });
+    }
+
+    this.getShowDesktopNotifPostsModalTimerOpt = function () {
+        return parseInt($.Options.getOption('showDesktopNotifPostsModalTimer', '6'));
+    }
+
+    this.setShowDesktopNotifPostsModalTimerOpt = function () {
+        $('#showDesktopNotifPostsModalTimer')[0].value = this.getShowDesktopNotifPostsModalTimerOpt().toString();
+
+        $('#showDesktopNotifPostsModalTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+    }
+
+    this.getShowDesktopNotifMentionsOpt = function() {
+        return $.Options.getOption('showDesktopNotifMentions','enable');
+    }
+
+    this.setShowDesktopNotifMentionsOpt = function () {
+        function showDesktopNotifMentionsDesc() {
+            if ($.Options.getShowDesktopNotifMentionsOpt() === 'enable') {
+                $('#showDesktopNotifMentionsDesc')[0].style.display= 'inline';
+            } else {
+                $('#showDesktopNotifMentionsDesc')[0].style.display= 'none';
+            }
+        }
+        $('#showDesktopNotifMentions').val(this.getShowDesktopNotifMentionsOpt());
+        showDesktopNotifMentionsDesc();
+        $('#showDesktopNotifMentions').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            showDesktopNotifMentionsDesc();
+        });
+    }
+
+    this.getShowDesktopNotifMentionsTimerOpt = function () {
+        return parseInt($.Options.getOption('showDesktopNotifMentionsTimer', '60'));
+    }
+
+    this.setShowDesktopNotifMentionsTimerOpt = function () {
+        $('#showDesktopNotifMentionsTimer')[0].value = this.getShowDesktopNotifMentionsTimerOpt().toString();
+
+        $('#showDesktopNotifMentionsTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+    }
+
+    this.getShowDesktopNotifDMsOpt = function() {
+        return $.Options.getOption('showDesktopNotifDMs','enable');
+    }
+
+    this.setShowDesktopNotifDMsOpt = function () {
+        function showDesktopNotifDMsDesc() {
+            if ($.Options.getShowDesktopNotifDMsOpt() === 'enable') {
+                $('#showDesktopNotifDMsDesc')[0].style.display= 'inline';
+            } else {
+                $('#showDesktopNotifDMsDesc')[0].style.display= 'none';
+            }
+        }
+        $('#showDesktopNotifDMs').val(this.getShowDesktopNotifDMsOpt());
+        showDesktopNotifDMsDesc();
+        $('#showDesktopNotifDMs').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            showDesktopNotifDMsDesc();
+        });
+    }
+
+    this.getShowDesktopNotifDMsTimerOpt = function () {
+        return parseInt($.Options.getOption('showDesktopNotifDMsTimer', '60'));
+    }
+
+    this.setShowDesktopNotifDMsTimerOpt = function () {
+        $('#showDesktopNotifDMsTimer')[0].value = this.getShowDesktopNotifDMsTimerOpt().toString();
+
+        $('#showDesktopNotifDMsTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+    }
+
+    this.setTestDesktopNotif = function() {
+        $('#testDesktopNotif').on('click', function() {
+            $.MAL.showDesktopNotif(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, function() { alert(polyglot.t('notify_desktop_perm_denied')) })
         })
     }
 
@@ -104,7 +224,7 @@ var TwisterOptions = function()
             $.Options.setOption(this.id, this.value);
         })
     }
-    
+
     this.keyEnterToSend = function() {
         return $.Options.getOption('keysSend',this.keysSendDefault) == "enter";
     }
@@ -116,7 +236,7 @@ var TwisterOptions = function()
             location.reload();
         })
     }
-    
+
     this.getTheme = function() {
         return $.Options.getOption('theme','original');
     }
@@ -128,11 +248,11 @@ var TwisterOptions = function()
             location.reload();
         });
     }
-    
+
     this.getLineFeedsOpt = function() {
         return $.Options.getOption('displayLineFeeds',"disable");
     }
-    
+
     this.setLineFeedsOpt = function() {
         $('#lineFeedsOpt select')[0].value = this.getLineFeedsOpt();
 
@@ -140,11 +260,11 @@ var TwisterOptions = function()
             $.Options.setOption(this.id, this.value);
         })
     }
-    
+
     this.getShowPreviewOpt = function() {
         return $.Options.getOption('displayPreview',"disable");
     }
-    
+
     this.setShowPreviewOpt = function () {
         $('#showPreviewOpt select')[0].value = this.getShowPreviewOpt();
 
@@ -175,7 +295,7 @@ var TwisterOptions = function()
     this.getConvertPunctuationsOpt = function() {
         return $.Options.getOption('convertPunctuationsOpt', false);
     }
-    
+
     this.setConvertPunctuationsOpt = function () {
         $('#convertPunctuationsOpt')[0].checked = this.getConvertPunctuationsOpt();
 
@@ -187,7 +307,7 @@ var TwisterOptions = function()
     this.getConvertEmotionsOpt = function() {
         return $.Options.getOption('convertEmotionsOpt', false);
     }
-    
+
     this.setConvertEmotionsOpt = function () {
         $('#convertEmotionsOpt')[0].checked = this.getConvertEmotionsOpt();
 
@@ -199,7 +319,7 @@ var TwisterOptions = function()
     this.getConvertSignsOpt = function() {
         return $.Options.getOption('convertSignsOpt', false);
     }
-    
+
     this.setConvertSignsOpt = function () {
         $('#convertSignsOpt')[0].checked = this.getConvertSignsOpt();
 
@@ -211,7 +331,7 @@ var TwisterOptions = function()
     this.getConvertFractionsOpt = function() {
         return $.Options.getOption('convertFractionsOpt', false);
     }
-    
+
     this.setConvertFractionsOpt = function () {
         $('#convertFractionsOpt')[0].checked = this.getConvertFractionsOpt();
 
@@ -307,16 +427,7 @@ var TwisterOptions = function()
     this.setHideCloseRTsHourOpt = function () {
         $('#hideCloseRtsHour')[0].value = this.getHideCloseRTsHourOpt().toString();
 
-        $('#hideCloseRtsHour').on('keyup', function () {
-            if (/^\d+$/.test(this.value)) {
-                this.style.backgroundColor = '';
-                $.Options.setOption(this.id, this.value);
-                $(this).next('span').text(polyglot.t('hour(s)'));
-            } else {
-                this.style.backgroundColor = '#f00';
-                $(this).next('span').text(polyglot.t('only numbers are allowed!'));
-            }
-        });
+        $('#hideCloseRtsHour').on('keyup', function () {setElemValNumeric(this, polyglot.t('hour(s)'));});
     };
 
     this.getIsFollowingMeOpt = function () {
@@ -346,10 +457,18 @@ var TwisterOptions = function()
     this.InitOptions = function() {
         this.soundNotifOptions();
         this.volumeControl();
-        this.notificationDesktopTest();
         this.keysSend();
         this.setLang();
         this.setTheme();
+        this.setShowDesktopNotifPostsOpt();
+        this.setShowDesktopNotifPostsTimerOpt();
+        this.setShowDesktopNotifPostsModalOpt();
+        this.setShowDesktopNotifPostsModalTimerOpt();
+        this.setShowDesktopNotifMentionsOpt();
+        this.setShowDesktopNotifMentionsTimerOpt();
+        this.setShowDesktopNotifDMsOpt();
+        this.setShowDesktopNotifDMsTimerOpt();
+        this.setTestDesktopNotif();
         this.setLineFeedsOpt();
         this.setShowPreviewOpt();
         this.setUnicodeConversionOpt();
@@ -366,6 +485,18 @@ var TwisterOptions = function()
         this.setIsFollowingMeOpt();
         this.setDMCopySelfOpt();
     }
+
+    function setElemValNumeric(elem, mes) {
+        //var elem = $(elem_nm);
+        if (/^\d+$/.test(elem.value)) {
+            elem.style.backgroundColor = '';
+            $.Options.setOption(elem.id, elem.value);
+            $(elem).next('span').text(mes);
+        } else {
+            elem.style.backgroundColor = '#f00';
+            $(elem).next('span').text(polyglot.t('only numbers are allowed!'));
+        }
+    };
 }
 
 jQuery.Options = new TwisterOptions;
