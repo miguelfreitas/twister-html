@@ -212,7 +212,7 @@ var TwisterOptions = function()
 
     this.setTestDesktopNotif = function() {
         $('#testDesktopNotif').on('click', function() {
-            $.MAL.showDesktopNotif(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, function() { alert(polyglot.t('notify_desktop_perm_denied')) })
+            $.MAL.showDesktopNotif(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, false, function() { alert(polyglot.t('notify_desktop_perm_denied')) })
         })
     }
 

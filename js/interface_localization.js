@@ -1782,7 +1782,7 @@ if(preferredLanguage == "ru"){
        "Network status": "Состояние сети",
        "New direct message...": "Новое личное сообщение...",
        "New Post...": "Новый пост...",
-       "You got": "А у вас там",
+       "You got": "У вас",
        "in postboard": "в ленте",
        "in search result": "в результатах поиска",
        "new_posts": "%{smart_count} новый пост |||| %{smart_count} новых постов",
@@ -1791,7 +1791,7 @@ if(preferredLanguage == "ru"){
        "nobody": "Анонимно", // used to promote a post without attaching the user
        "Not available": "Недоступно",
        "notify_desktop_error": "Твистер не может выполнить уведомление: произошла неизвестная ошибка.",
-       "notify_desktop_perm_denied": "Твистер не может выполниь уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для этого домена в настройках вашего браузера.",
+       "notify_desktop_perm_denied": "Твистер не может выполнить уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для этого домена в настройках вашего браузера.",
        "notify_desktop_test": "Одна лягушка сказала:\n'если не буду квакать — лопну'.\nВы нужны нам, берегите себя.",
        "notify_desktop_title": "Watch out, it's twister over here!",
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",

@@ -202,7 +202,7 @@ function updateHashtagModal(postboard,hashtag,timeoutArgs) {
     requestHashtag(postboard,hashtag,resource,timeoutArgs);
 
     if( _hashtagPendingPostsUpdated ) {
-        if ($.Options.getShowDesktopNotifPostsModalOpt() === 'enable') {
+        if (resource != 'mention' && $.Options.getShowDesktopNotifPostsModalOpt() === 'enable') {
             $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t("new_posts", _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', $.Options.getShowDesktopNotifPostsModalTimerOpt(), function() {
                     $(".postboard-news").hide();
                     displayHashtagPending($(".hashtag-modal .postboard-posts"));

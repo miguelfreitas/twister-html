@@ -378,7 +378,7 @@ var MAL = function()
     }
 
     this.showDesktopNotif = function(notifyTitle, notifyBody, notifyIcon, notifyTag, notifyTimer, actionOnClick, actionOnPermDenied) {
-        function doNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, notifyTimer, actionOnClick) {
+        function doNotification() {
             if (!notifyTitle) {
                 notifyTitle = polyglot.t('notify_desktop_title');
             }
@@ -391,13 +391,20 @@ var MAL = function()
             if (!notifyTimer) {
                 notifyTimer = 3600 * 24 * 30; // one month
             }
+            var doActionOnClick = false;
+            if (typeof actionOnClick === 'function') {
+                doActionOnClick = function() {
+                    actionOnClick();
+                    window.focus();
+                }
+            }
 
             var desktopNotification = new Notify(notifyTitle, {
                 body: notifyBody,
                 icon: notifyIcon,
                 tag: notifyTag,
                 timeout: notifyTimer,
-                notifyClick: actionOnClick,
+                notifyClick: doActionOnClick,
                 notifyError: function() { alert(polyglot.t('notify_desktop_error')) }
             });
             desktopNotification.show();
@@ -406,7 +413,7 @@ var MAL = function()
         if (Notify.needsPermission) {
             Notify.requestPermission(false, actionOnPermDenied);
         } else {
-            doNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, notifyTimer, actionOnClick);
+            doNotification();
         }
     }
 
