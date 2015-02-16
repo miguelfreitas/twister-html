@@ -220,8 +220,10 @@ function updateHashtagModal(postboard,hashtag,timeoutArgs) {
 
 function openMentionsModal(e)
 {
-    e.stopPropagation();
-    e.preventDefault();
+    if (e && e.stopPropagation) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
 
     if(!defaultScreenName)
     {
