@@ -10,7 +10,7 @@
 function twisterRpc(method, params, resultFunc, resultArg, errorFunc, errorArg) {
     // removing hardcoded username from javascript: please use url http://user:pwd@localhost:28332 instead
     //var foo = new $.JsonRpcClient({ ajaxUrl: '/', username: 'user', password: 'pwd'});
-    var foo = new $.JsonRpcClient({ ajaxUrl: '/' });
+    var foo = new $.JsonRpcClient({ ajaxUrl: window.location.pathname.replace(/[^\/]*$/, '') });
     foo.call(method, params,
         function(ret) { resultFunc(resultArg, ret); },
         function(ret) { if(ret != null) errorFunc(errorArg, ret); }
