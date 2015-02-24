@@ -103,9 +103,11 @@ var MAL = function()
                 newTweetsBarMenu.text(String(newPosts));
                 newTweetsBarMenu.addClass("show");
 
-                showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t("new_posts", newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', function() {
-                        requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
-                    }, false)
+                if ($.Options.getShowDesktopNotifPostsOpt() === 'enable') {
+                    this.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t("new_posts", newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', $.Options.getShowDesktopNotifPostsTimerOpt(), function() {
+                            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
+                        }, false)
+                }
             } else {
                 newTweetsBar.hide();
                 newTweetsBar.text("");
@@ -373,6 +375,46 @@ var MAL = function()
          } else {
              $.Options.DMsNotif();
          }
+    }
+
+    this.showDesktopNotif = function(notifyTitle, notifyBody, notifyIcon, notifyTag, notifyTimer, actionOnClick, actionOnPermDenied) {
+        function doNotification() {
+            if (!notifyTitle) {
+                notifyTitle = polyglot.t('notify_desktop_title');
+            }
+            if (!notifyIcon) {
+                notifyIcon = '../img/twister_mini.png';
+            }
+            if (!notifyTag) {
+                notifyTag = 'twister_notification';
+            }
+            if (!notifyTimer) {
+                notifyTimer = 3600 * 24 * 30; // one month
+            }
+            var doActionOnClick = false;
+            if (typeof actionOnClick === 'function') {
+                doActionOnClick = function() {
+                    actionOnClick();
+                    window.focus();
+                }
+            }
+
+            var desktopNotification = new Notify(notifyTitle, {
+                body: notifyBody,
+                icon: notifyIcon,
+                tag: notifyTag,
+                timeout: notifyTimer,
+                notifyClick: doActionOnClick,
+                notifyError: function() { alert(polyglot.t('notify_desktop_error')) }
+            });
+            desktopNotification.show();
+        }
+
+        if (Notify.needsPermission) {
+            Notify.requestPermission(false, actionOnPermDenied);
+        } else {
+            doNotification();
+        }
     }
 
     this.reqRepAfterCB = function(postLi, postsFromJson) {

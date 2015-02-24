@@ -202,10 +202,12 @@ function updateHashtagModal(postboard,hashtag,timeoutArgs) {
     requestHashtag(postboard,hashtag,resource,timeoutArgs);
 
     if( _hashtagPendingPostsUpdated ) {
-        showDesktopNotification(false, polyglot.t('You got')+' '+polyglot.t("new_posts", _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', function() {
-                $(".postboard-news").hide();
-                displayHashtagPending($(".hashtag-modal .postboard-posts"));
-            }, false)
+        if (resource != 'mention' && $.Options.getShowDesktopNotifPostsModalOpt() === 'enable') {
+            $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t("new_posts", _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', $.Options.getShowDesktopNotifPostsModalTimerOpt(), function() {
+                    $(".postboard-news").hide();
+                    displayHashtagPending($(".hashtag-modal .postboard-posts"));
+                }, false)
+        }
 
         _hashtagPendingPostsUpdated = 0;
     }
@@ -218,8 +220,10 @@ function updateHashtagModal(postboard,hashtag,timeoutArgs) {
 
 function openMentionsModal(e)
 {
-    e.stopPropagation();
-    e.preventDefault();
+    if (e && e.stopPropagation) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
 
     if(!defaultScreenName)
     {
@@ -816,36 +820,6 @@ function replyTextKeypress(e) {
                 }
             }
         }
-    }
-}
-
-function showDesktopNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, actionOnClick, actionOnPermDenied) {
-    function doNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, actionOnClick) {
-        if (!notifyTitle) {
-            notifyTitle = polyglot.t('notify_desktop_title');
-        }
-        if (!notifyIcon) {
-            notifyIcon = '../img/twister_mini.png';
-        }
-        if (!notifyTag) {
-            notifyTag = 'twister_notification';
-        }
-
-        var desktopNotification = new Notify(notifyTitle, {
-            body: notifyBody,
-            icon: notifyIcon,
-            tag: notifyTag,
-            timeout: _desktopNotificationTimeout,
-            notifyClick: actionOnClick,
-            notifyError: function() { alert(polyglot.t('notify_desktop_error')) }
-        });
-        desktopNotification.show();
-    }
-
-    if (Notify.needsPermission) {
-        Notify.requestPermission(false, actionOnPermDenied);
-    } else {
-        doNotification(notifyTitle, notifyBody, notifyIcon, notifyTag, actionOnClick);
     }
 }
 
