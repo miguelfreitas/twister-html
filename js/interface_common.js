@@ -5,8 +5,11 @@
 // Profile, mentions and hashtag modal
 // Post actions: submit, count characters
 
+var window_scrollY = 0;
+
 //dispara o modal genérico
 //o modalClass me permite fazer tratamentos específicos de CSS para cada modal
+
 function openModal( modalClass )
 {
     var $oldModal = $("body").children(".modal-blackout");
@@ -26,6 +29,8 @@ function openModal( modalClass )
     $body.css({
         "overflow": "hidden"
     });
+
+    window_scrollY = window.pageYOffset;
 }
 
 //fecha o modal removendo o conteúdo por detach
@@ -33,6 +38,7 @@ function closeModal($this)
 {
     closeModalHandler($this);
     window.location.hash = '#';
+    window.scroll(window.pageXOffset, window_scrollY);
 }
 
 function closeModalHandler($this)
@@ -479,8 +485,7 @@ function initHashWatching()
 
     // Register hash spy and launch it once
     window.addEventListener('hashchange', watchHashChange, false);
-    //watchHashChange(null);
-    window.location.hash="#";
+    setTimeout(function(){ watchHashChange() }, 1000);
 }
 
 
@@ -1454,7 +1459,8 @@ function initInterfaceCommon() {
     $( ".userMenu-config-dropdown" ).bind( "click", dropDownMenu );
     $( ".config-menu" ).clickoutside( closeThis );
     $( ".module.post" ).bind( "click", function(e) {
-        if(window.getSelection() == 0)postExpandFunction(e,$(this)); });
+        if(e.button === 0 && window.getSelection() == 0) postExpandFunction(e,$(this));
+    });
     $( ".post-area-new" ).bind( "click", function(e) {
         composeNewPost(e,$(this));} );
     $( ".post-area-new" ).clickoutside( unfocusThis );
