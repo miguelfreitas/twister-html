@@ -353,6 +353,9 @@ function updateFollowing(cbFunc, cbArg) {
 function follow(user, publicFollow, cbFunc, cbArg) {
     if( followingUsers.indexOf(user) < 0 ) {
         followingUsers.push(user);
+        twisterFollowingO.update(user);
+        $(".following-count").text(followingUsers.length-1);
+        setTimeout('requestTimelineUpdate("latest",postsPerRefresh,["'+user+'"],promotedPostsOnly)', 1000);
     }
     if( publicFollow == undefined || publicFollow )
         _isFollowPublic[user] = true;
@@ -367,6 +370,7 @@ function unfollow(user, cbFunc, cbArg) {
     if( i >= 0 ) {
         followingUsers.splice(i,1);
         twisterFollowingO.update(user);
+        $(".following-count").text(followingUsers.length-1);
     }
     delete _isFollowPublic[user];
     saveFollowing();
@@ -570,8 +574,7 @@ function processSuggestion(arg, suggestion, followedBy) {
 
 function closeSearchDialog()
 {
-    var $this = $(".userMenu-search-field");//$( this );
-    $( this ).siblings().slideUp( "fast" );
+    $(".userMenu-search-field").siblings().slideUp( "fast" );
     removeUsersFromDhtgetQueue( _lastSearchUsersResults );
     _lastSearchUsersResults = [];
 }
@@ -654,6 +657,8 @@ function processDropdownUserResults(partialName, results){
             resItem.find("a.open-profile-modal").attr("href",$.MAL.userUrl(results[i]));
             getAvatar(results[i],resItem.find(".mini-profile-photo"));
             getFullname(results[i],resItem.find(".mini-profile-name"));
+            if (followingUsers.indexOf(results[i]) >= 0)
+                toggleFollowButton(resItem.find(".follow"), results[i]);
             resItem.appendTo(typeaheadAccounts);
         }
 
@@ -677,11 +682,12 @@ function newFollowingConfigModal(username) {
 function userClickFollow(e) {
     e.stopPropagation();
     e.preventDefault();
+    $(e.target).addClass("followingInitiator");
 
     var $this = $(this);
     var $userInfo = $this.closest("[data-screen-name]");
     var username = $userInfo.attr("data-screen-name");
-    
+
     if(!defaultScreenName)
     {
       alert(polyglot.t("You have to log in to follow users."));
@@ -702,7 +708,7 @@ function initUserSearch() {
     var $userSearchField = $( ".userMenu-search-field" );
     $userSearchField.keyup( userSearchKeypress );
     $userSearchField.bind( "click", userSearchKeypress );
-    $userSearchField.clickoutside( closeSearchDialog );
+    $(".userMenu-search").clickoutside( closeSearchDialog );
 
     $("button.follow").bind( "click", userClickFollow );
 
@@ -710,7 +716,7 @@ function initUserSearch() {
     $(".following-config-method-buttons .public-following").click( function() {
         closePrompt();
         // delay reload so dhtput may do it's job
-	window.setTimeout("loadModalFromHash();",500);
+        window.setTimeout("loadModalFromHash();",500);
     });
 }
 
@@ -754,9 +760,14 @@ function setFollowingMethod(e) {
     if( !$this.hasClass("private") ) {
         publicFollow = true;
     }
-
     //console.log("start following @" +username +" by method "+publicFollow);
-    follow(username, publicFollow);
+    follow(username, publicFollow,
+        (function() {
+            var followingInitiator = $(".followingInitiator");
+            if (followingInitiator)
+                toggleFollowButton(followingInitiator, this);
+        }).bind(username)
+    );
 }
 
 

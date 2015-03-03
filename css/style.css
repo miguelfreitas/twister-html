@@ -748,17 +748,18 @@ textarea.splited-post {
 .twister-user-remove:hover{
     opacity: 1;
 }
-.follow
-{
+
+.follow, .unfollow {
     background: none;
     border: solid 1px rgba( 0, 0, 0 ,.2 );
     padding: 3px 15px;
     color: rgba( 0, 0, 0 ,.4 );
 }
-.follow:hover
-{
+
+.follow:hover, .unfollow:hover {
     color: rgba( 0, 0, 0 ,.7 );
 }
+
 .refresh-users,
 .view-all-users
 {

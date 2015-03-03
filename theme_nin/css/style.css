@@ -121,13 +121,13 @@
 
 /* '' */
 /* line 120, ../sass/_fonts.sass */
-.icon-plus:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before {
+.icon-plus:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button.follow:before {
   content: "";
 }
 
 /* '' */
 /* line 125, ../sass/_fonts.sass */
-.icon-minus:before {
+.icon-minus:before, ul.userMenu-search-profiles button.unfollow:before {
   content: "";
 }
 
@@ -1855,8 +1855,11 @@ ul.userMenu-search-profiles .mini-profile-info {
   float: none;
 }
 /* line 119, ../sass/style.sass */
-ul.userMenu-search-profiles button, ul.userMenu-search-profiles .mini-profile-actions span, .mini-profile-actions ul.userMenu-search-profiles span {
+ul.userMenu-search-profiles button.unfollow, ul.userMenu-search-profiles .mini-profile-actions span, .mini-profile-actions ul.userMenu-search-profiles span {
   background-color: #66686B;
+  padding: 3px;
+}
+ul.userMenu-search-profiles button {
   padding: 3px;
 }
 /* line 124, ../sass/style.sass */
@@ -2316,14 +2319,14 @@ textarea.splited-post {
 }
 
 /* line 491, ../sass/style.sass */
-button.follow, .mini-profile-actions span.follow {
+button.follow, .mini-profile-actions span.follow, button.unfollow, .mini-profile-actions span.unfollow {
   position: absolute;
   bottom: 10px;
   right: 10px;
   background: #B4C669;
 }
 /* line 496, ../sass/style.sass */
-button.follow:hover, .mini-profile-actions span.follow:hover {
+button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .mini-profile-actions span.unfollow {
   background: #aaa;
 }
 

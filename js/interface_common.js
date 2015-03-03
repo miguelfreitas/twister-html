@@ -549,18 +549,49 @@ var replyInitPopup = function(e, post)
 }
 
 //abre o menu dropdown de configurações
-var dropDownMenu = function( e )
-{
-    var $configMenu = $( ".config-menu" );
-    $configMenu.slideToggle( "fast" );
-    e.stopPropagation();
+function dropDownMenu() {
+    $( ".config-menu" ).slideToggle( "fast" );
 }
 
 //fecha o config menu ao clicar em qualquer lugar da tela
-var closeThis = function()
-{
+function closeThis() {
     $( this ).slideUp( "fast" );
-};
+}
+
+function toggleFollowButton(button, followingUser) {
+    if (!button || !followingUser)
+        return;
+
+    button
+        .removeClass("follow")
+        .addClass("unfollow")
+        .unbind("click")
+        .bind("click",
+            (function(e) {
+                unfollow(this.toString(),
+                    (function() {
+                        this
+                            .removeClass("unfollow")
+                            .addClass("follow")
+                            .unbind("click")
+                            .bind("click", userClickFollow);
+
+                        if ($.Options.getTheme() === 'nin') {
+                            this.attr('title', polyglot.t('Follow'));
+                        } else {
+                            this.text(polyglot.t('Follow'));
+                        }
+                    }).bind($(e.target))
+                );
+            }).bind(followingUser)
+        );
+
+    if ($.Options.getTheme() === 'nin') {
+        button.attr('title', polyglot.t('Unfollow'));
+    } else {
+        button.text(polyglot.t('Unfollow'));
+    }
+}
 
 var postExpandFunction = function( e, postLi )
 {
@@ -1435,7 +1466,8 @@ function initInterfaceCommon() {
         $('.mark-all-as-read').css('display', 'none');
     });
 
-    $(".prompt-close").on('click', function(event){
+    $(".prompt-close").on('click', function(e){
+        e.stopPropagation();
         closePrompt();
     });
 
@@ -1456,8 +1488,8 @@ function initInterfaceCommon() {
     });
     $( ".post-reply" ).bind( "click", postReplyClick );
     $( ".post-propagate" ).bind( "click", reTwistPopup );
-    $( ".userMenu-config-dropdown" ).bind( "click", dropDownMenu );
-    $( ".config-menu" ).clickoutside( closeThis );
+    $( ".userMenu-config" ).clickoutside( closeThis.bind($( ".config-menu" )) );
+    $( ".userMenu-config-dropdown" ).click( dropDownMenu );
     $( ".module.post" ).bind( "click", function(e) {
         if(e.button === 0 && window.getSelection() == 0) postExpandFunction(e,$(this));
     });
