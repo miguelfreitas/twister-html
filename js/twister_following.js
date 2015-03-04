@@ -682,6 +682,10 @@ function newFollowingConfigModal(username) {
 function userClickFollow(e) {
     e.stopPropagation();
     e.preventDefault();
+
+    var followingInitiator = $(".followingInitiator");
+    if (followingInitiator)
+        followingInitiator.removeClass("followingInitiator");
     $(e.target).addClass("followingInitiator");
 
     var $this = $(this);
