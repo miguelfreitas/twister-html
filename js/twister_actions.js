@@ -176,7 +176,7 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
         if( streamItems.length != 0 ) {
             var lastItem = streamItems.eq(streamItems.length-1);
             resource = "post" + lastItem.find(".post-data").attr("data-lastk");
-            max_id = parseInt(lastItem.find(".post-data").attr("data-id"))-1;
+            max_id = parseInt(lastItem.find(".post-data").attr("data-lastk"));
         }
     }
 
