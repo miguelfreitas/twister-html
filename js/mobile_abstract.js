@@ -188,7 +188,7 @@ var MAL = function()
         if( $.hasOwnProperty("mobile") ) {
             return "#dmchat?user=" + username;
         } else {
-            return "#dmchat?user=" + username;
+            return "#directmessages?user=" + username;
         }
     }
 
@@ -312,6 +312,42 @@ var MAL = function()
             $.mobile.navigate( "#profile-edit" );
         } else {
             window.location.href = "profile-edit.html";
+        }
+    }
+
+    this.showMentions = function(username) {
+        if( $.hasOwnProperty("mobile") ) {
+            $.mobile.navigate( this.mentionsUrl(username) );
+        } else {
+            if ($(".postboard").length) {
+                openMentionsModal();
+            } else {
+                window.location.href = 'home.html'+this.mentionsUrl(username);
+            }
+        }
+    }
+
+    this.showDMchat = function(username) {
+        if (username) {
+            if( $.hasOwnProperty("mobile") ) {
+                $.mobile.navigate( this.dmchatUrl(username) );
+            } else {
+                if ($(".postboard").length) {
+                    window.location.hash = this.dmchatUrl(username);
+                } else {
+                    window.location.href = 'home.html'+this.dmchatUrl(username);
+                }
+            }
+        } else {
+            if( $.hasOwnProperty("mobile") ) {
+                $.mobile.navigate( '#directmsg' );
+            } else {
+                if ($(".postboard").length) {
+                    window.location.hash = '#directmessages';
+                } else {
+                    window.location.href = 'home.html#directmessages';
+                }
+            }
         }
     }
 

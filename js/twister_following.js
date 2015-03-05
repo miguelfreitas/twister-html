@@ -354,8 +354,7 @@ function follow(user, publicFollow, cbFunc, cbArg) {
     if( followingUsers.indexOf(user) < 0 ) {
         followingUsers.push(user);
         twisterFollowingO.update(user);
-        $(".following-count").text(followingUsers.length-1);
-        setTimeout('requestTimelineUpdate("latest",postsPerRefresh,["'+user+'"],promotedPostsOnly)', 1000);
+        $(window).trigger("eventFollow", user)
     }
     if( publicFollow == undefined || publicFollow )
         _isFollowPublic[user] = true;
@@ -370,7 +369,7 @@ function unfollow(user, cbFunc, cbArg) {
     if( i >= 0 ) {
         followingUsers.splice(i,1);
         twisterFollowingO.update(user);
-        $(".following-count").text(followingUsers.length-1);
+        $(window).trigger("eventUnfollow", user)
     }
     delete _isFollowPublic[user];
     saveFollowing();
@@ -731,9 +730,7 @@ function followingListUnfollow(e) {
     var $this = $(this);
     var username = $this.closest(".mini-profile-info").attr("data-screen-name");
 
-    unfollow(username, function() {
-        showFollowingUsers();
-    });
+    unfollow(username);
 }
 
 function followingListPublicCheckbox(e) {
@@ -844,6 +841,16 @@ function initInterfaceFollowing() {
         initMentionsCount();
         initDMsCount();
     });
+
+    $(window)
+        .on("eventFollow", function(e, user) {
+            $(".following-count").text(followingUsers.length-1);
+            showFollowingUsers();
+        })
+        .on("eventUnfollow", function(e, user) {
+            $(".following-count").text(followingUsers.length-1);
+            showFollowingUsers();
+        });
 }
 
 

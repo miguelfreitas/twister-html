@@ -132,9 +132,14 @@ var InterfaceFunctions = function()
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});
 
-
-
-
+            $(window)
+                .on("eventFollow", function(e, user) {
+                    $(".following-count").text(followingUsers.length-1);
+                    setTimeout('requestTimelineUpdate("latest",postsPerRefresh,["'+user+'"],promotedPostsOnly)', 1000);
+                })
+                .on("eventUnfollow", function(e, user) {
+                    $(".following-count").text(followingUsers.length-1);
+                });
         }
     }
 };

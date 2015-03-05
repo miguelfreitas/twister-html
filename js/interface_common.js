@@ -574,23 +574,15 @@ function toggleFollowButton(button, followingUser) {
                             .removeClass("unfollow")
                             .addClass("follow")
                             .unbind("click")
-                            .bind("click", userClickFollow);
-
-                        if ($.Options.getTheme() === 'nin') {
-                            this.attr('title', polyglot.t('Follow'));
-                        } else {
-                            this.text(polyglot.t('Follow'));
-                        }
+                            .bind("click", userClickFollow)
+                            .text(polyglot.t('Follow'))
+                            .trigger("toggleFollow");
                     }).bind($(e.target))
                 );
             }).bind(followingUser)
-        );
-
-    if ($.Options.getTheme() === 'nin') {
-        button.attr('title', polyglot.t('Unfollow'));
-    } else {
-        button.text(polyglot.t('Unfollow'));
-    }
+        )
+        .text(polyglot.t('Unfollow'))
+        .trigger("toggleUnfollow");
 }
 
 var postExpandFunction = function( e, postLi )

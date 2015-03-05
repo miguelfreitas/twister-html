@@ -2318,13 +2318,21 @@ textarea.splited-post {
   opacity: 1;
 }
 
-/* line 491, ../sass/style.sass */
-button.follow, .mini-profile-actions span.follow, button.unfollow, .mini-profile-actions span.unfollow {
+/* line 127, ../sass/style.sass */
+ul.userMenu-search-profiles .follow, ul.userMenu-search-profiles .unfollow, .follow-suggestions .follow, .follow-suggestions .unfollow {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+ul.userMenu-search-profiles .follow, .follow-suggestions .follow {
   background: #B4C669;
 }
+
+ul.userMenu-search-profiles .unfollow, .follow-suggestions .unfollow {
+  background-color: #66686B;
+}
+
 /* line 496, ../sass/style.sass */
 button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .mini-profile-actions span.unfollow {
   background: #aaa;
