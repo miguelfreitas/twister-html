@@ -1549,7 +1549,7 @@ ol.toptrends-list {
 
 .prompt-wrapper
 {
-    position: fixed; 
+    position: fixed;
     top: 50%; 
     left: 50%; 
     background: rgba( 255, 255,255, 1.0 ); 
@@ -1560,7 +1560,7 @@ ol.toptrends-list {
 }
 
 .prompt-wrapper .modal-header h3{
-    background: #45474D;
+    background: #E34F42;
 }
 
 /*************************************

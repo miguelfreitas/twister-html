@@ -1649,7 +1649,7 @@ textarea.splited-post {
 
 .prompt-wrapper
 {
-    position: absolute; 
+    position: fixed;
     top: 50%; 
     left: 50%; 
     background: rgba( 255, 255,255, 1.0 ); 
@@ -1659,8 +1659,9 @@ textarea.splited-post {
     margin-left:-300px;
 }
 
-
-
+.prompt-wrapper .modal-header h3{
+    background: #7691CE;
+}
 
 /*************************************
 **************************** POPUP MODAL
@@ -1699,7 +1700,7 @@ textarea.splited-post {
 {
     padding: 5px;
     font-weight: bold;
-    background: #43464d;
+    background: #7691CE;
     color: #fff;
 }
 .modal-close
