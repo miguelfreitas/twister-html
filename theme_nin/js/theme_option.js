@@ -1,5 +1,5 @@
-$(function(){ 
-    
+$(function(){
+
     $('.modal-close').html('');
     $('.modal-back').html('');
     $('.twister-user-remove').html('');
@@ -13,7 +13,7 @@ $(function(){
     });
 
 
-    $( '.userMenu-home.current a' ).on( 'click', function() { 
+    $( '.userMenu-home.current a' ).on( 'click', function() {
         $('html, body').animate({scrollTop:0},300);
         return false
     });
@@ -34,10 +34,17 @@ $(function(){
         posScroll = $(document).scrollTop();
         if(posScroll >= 250)
             $('.left .post-area-new').slideDown(300);
-        else 
+        else
             $('.left .post-area-new').slideUp(150);
-    }); 
+    });
 
+    $(".userMenu-search-profiles .follow")
+        .on("toggleFollow", function() {
+            $(this).text('').attr('title', polyglot.t('Follow'));
+        })
+        .on("toggleUnfollow", function() {
+            $(this).text('').attr('title', polyglot.t('Unfollow'));
+        });
 
 });
 

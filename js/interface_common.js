@@ -5,8 +5,11 @@
 // Profile, mentions and hashtag modal
 // Post actions: submit, count characters
 
+var window_scrollY = 0;
+
 //dispara o modal genérico
 //o modalClass me permite fazer tratamentos específicos de CSS para cada modal
+
 function openModal( modalClass )
 {
     var $oldModal = $("body").children(".modal-blackout");
@@ -26,6 +29,8 @@ function openModal( modalClass )
     $body.css({
         "overflow": "hidden"
     });
+
+    window_scrollY = window.pageYOffset;
 }
 
 //fecha o modal removendo o conteúdo por detach
@@ -33,6 +38,7 @@ function closeModal($this)
 {
     closeModalHandler($this);
     window.location.hash = '#';
+    window.scroll(window.pageXOffset, window_scrollY);
 }
 
 function closeModalHandler($this)
@@ -479,8 +485,7 @@ function initHashWatching()
 
     // Register hash spy and launch it once
     window.addEventListener('hashchange', watchHashChange, false);
-    //watchHashChange(null);
-    window.location.hash="#";
+    setTimeout(function(){ watchHashChange() }, 1000);
 }
 
 
@@ -544,18 +549,41 @@ var replyInitPopup = function(e, post)
 }
 
 //abre o menu dropdown de configurações
-var dropDownMenu = function( e )
-{
-    var $configMenu = $( ".config-menu" );
-    $configMenu.slideToggle( "fast" );
-    e.stopPropagation();
+function dropDownMenu() {
+    $( ".config-menu" ).slideToggle( "fast" );
 }
 
 //fecha o config menu ao clicar em qualquer lugar da tela
-var closeThis = function()
-{
+function closeThis() {
     $( this ).slideUp( "fast" );
-};
+}
+
+function toggleFollowButton(button, followingUser) {
+    if (!button || !followingUser)
+        return;
+
+    button
+        .removeClass("follow")
+        .addClass("unfollow")
+        .unbind("click")
+        .bind("click",
+            (function(e) {
+                unfollow(this.toString(),
+                    (function() {
+                        this
+                            .removeClass("unfollow")
+                            .addClass("follow")
+                            .unbind("click")
+                            .bind("click", userClickFollow)
+                            .text(polyglot.t('Follow'))
+                            .trigger("toggleFollow");
+                    }).bind($(e.target))
+                );
+            }).bind(followingUser)
+        )
+        .text(polyglot.t('Unfollow'))
+        .trigger("toggleUnfollow");
+}
 
 var postExpandFunction = function( e, postLi )
 {
@@ -1430,7 +1458,8 @@ function initInterfaceCommon() {
         $('.mark-all-as-read').css('display', 'none');
     });
 
-    $(".prompt-close").on('click', function(event){
+    $(".prompt-close").on('click', function(e){
+        e.stopPropagation();
         closePrompt();
     });
 
@@ -1451,10 +1480,11 @@ function initInterfaceCommon() {
     });
     $( ".post-reply" ).bind( "click", postReplyClick );
     $( ".post-propagate" ).bind( "click", reTwistPopup );
-    $( ".userMenu-config-dropdown" ).bind( "click", dropDownMenu );
-    $( ".config-menu" ).clickoutside( closeThis );
+    $( ".userMenu-config" ).clickoutside( closeThis.bind($( ".config-menu" )) );
+    $( ".userMenu-config-dropdown" ).click( dropDownMenu );
     $( ".module.post" ).bind( "click", function(e) {
-        if(window.getSelection() == 0)postExpandFunction(e,$(this)); });
+        if(e.button === 0 && window.getSelection() == 0) postExpandFunction(e,$(this));
+    });
     $( ".post-area-new" ).bind( "click", function(e) {
         composeNewPost(e,$(this));} );
     $( ".post-area-new" ).clickoutside( unfocusThis );

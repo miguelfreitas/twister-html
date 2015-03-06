@@ -117,13 +117,23 @@ ul.userMenu-search-profiles
     float: none
 
   button
-    background-color: $main-color-dark
     padding: 3px
     @extend .extend-icon
-    @extend .icon-plus
     &:after
       content: ''
       font-family: $symbol-font-family
+    .follow .unfollow
+      position: absolute
+      bottom: 10px
+      right: 10px
+      &:hover
+        background-color: $main-color-light
+    .follow
+      background-color: $main-color-color
+      @extend .icon-plus
+    .unfollow
+      background-color: $main-color-dark
+      @extend .icon-minus
 
 
 .userMenu-search input[type="text"]
@@ -140,6 +150,19 @@ ul.userMenu-search-profiles
   display: block
   clear: both
 
+
+.follow-suggestions
+  button
+    .follow .unfollow
+      position: absolute
+      bottom: 10px
+      right: 10px
+      &:hover
+        background-color: $main-color-light
+    .follow
+      background-color: $main-color-color
+    .unfollow
+      background-color: $main-color-dark
 
 
 /***************** MINI PROFILE *******************************/
@@ -487,14 +510,6 @@ textarea.splited-post
 
 .twister-user-remove:hover
   opacity: 1
-
-button.follow
-  position: absolute
-  bottom: 10px
-  right: 10px
-  background: $main-color-color
-  &:hover
-    background: $main-color-light
 
 .refresh-users
   @extend .icon-arrows
