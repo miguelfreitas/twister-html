@@ -61,36 +61,37 @@
     top: 19%;
     color: #f8f8f8;
 }
-.profile-card .direct-messages,
-.profile-card .direct-messages-with-user,
-.profile-card .follow,
-.profile-card .profileUnfollow
+
+.profile-card-buttons
 {
-    display: block;
     position: absolute;
-    bottom: 20px;
-    right: 3px;
-    padding: 10px 3px;
+    bottom: 30px;
+    right: 0;
+}
+
+.profile-card-buttons .direct-messages-with-user,
+.profile-card-buttons .mentions-from-user,
+.profile-card-buttons .follow,
+.profile-card-buttons .unfollow
+{
+    display: inline;
+    padding: 4px 12px;
     font-size: 12px;
-    width: 120px;
+    width: auto;
     text-align: center;
     color: rgba( 0, 0, 0, .7 );
     background: rgba( 0, 0, 0, .1 );
     border: none;
     transition: all .2s linear;
 }
-.profile-card .follow,
-.profile-card .profileUnfollow
+
+.profile-card-buttons .direct-messages-with-user:hover,
+.profile-card-buttons .mentions-from-user:hover
 {
-    right: 128px;
+    color: #fff;
+    background: #b2d67b;
 }
-.profile-card .direct-messages:hover,
-.profile-card .direct-messages-with-user:hover,
-.profile-card .follow:hover,
-.profile-card .profileUnfollow:hover
-{
-    background: rgba( 0, 0, 0, .3 );
-}
+
 .profile-card.forEdition
 {
     margin: 0 auto;
@@ -217,9 +218,11 @@
 .secret-key-container .secret-key {
     color: #d2dbf1;
 }
+
 /*************************************
-****************** PROFILE MODAL
+************ PROFILE MODAL ***********
 **************************************/
+
 .profile-modal .modal-wrapper
 {
     width: 580px;
@@ -228,7 +231,7 @@
     position: absolute;
     top:5%;
     height: 90%;
-    margin-left: -300px;
+    margin-left: -290px;
 
 }
 .profile-modal .modal-header, .profile-modal .profile-card {
@@ -328,32 +331,11 @@
     margin-left: -4px;
     border-bottom: 0;
 }
-button.follow:hover {
-    background: #b2d67b;
-    color: #fff;
-}
-.profile-modal button.follow:hover {
-    background: #b2d67b;
-    color: #fff;
-}
-.profile-card .profileUnfollow:hover {
-    background: #e18882;
-    color: #fff;
-}
-.profile-modal button.direct-messages-with-user:hover {
-    background: #b2d67b;
-    color: #fff;
-}
-.profile-modal .separator {
-    height: 10px;
-    width: 100%;
-    background-color: #000;
-}
 .profile-modal .postboard
 {
     margin-left: 0;
     padding: 5px 0 5px 0;
-    height: 60%;
+    height: 73%;
 }
 .profile-modal .postboard h2 {
     width: auto;
@@ -367,17 +349,6 @@ button.follow:hover {
 .profile-modal .postboard h2 span {
     font: 18px/40px 'Open Sans Condensed', sans-serif;
     padding-left: 10px;
-}
-.profile-modal .postboard-posts-wrapper
-{
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 99%;
-    box-sizing: border-box;
-    border-top: 292px solid transparent;
-    overflow: auto;
-    z-index: 0;
 }
 .profile-modal .profile-card-main
 {
@@ -408,13 +379,6 @@ button.follow:hover {
     height: 200px;
 }
 */
-.profile-modal .direct-messages,
-.profile-modal .direct-messages-with-user,
-.profile-modal .follow,
-.profile-card .profileUnfollow
-{
-    bottom: 10px;
-}
 
 h1.profile-name {
     display: inline;

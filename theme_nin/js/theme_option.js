@@ -39,10 +39,10 @@ $(function(){
     });
 
     $(".userMenu-search-profiles .follow")
-        .on("toggleFollow", function() {
+        .on("eventToggleFollow", function() {
             $(this).text('').attr('title', polyglot.t('Follow'));
         })
-        .on("toggleUnfollow", function() {
+        .on("eventToggleUnfollow", function() {
             $(this).text('').attr('title', polyglot.t('Unfollow'));
         });
 

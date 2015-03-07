@@ -556,7 +556,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 15px;
 }
 /* line 146, ../sass/_profile.sass */
-.profile-card .direct-messages-with-user, .profile-card .follow, .profile-card .profileUnfollow, .profile-card .follow {
+.profile-card .direct-messages-with-user, .profile-card .follow, .profile-card .unfollow {
   display: inline-block;
   position: static;
 }
@@ -566,7 +566,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   position: absolute;
 }
 /* line 154, ../sass/_profile.sass */
-.profile-card .profileUnfollow {
+.profile-card .unfollow {
   background: #aaa;
 }
 /* line 157, ../sass/_profile.sass */
@@ -2579,17 +2579,45 @@ ol.toptrends-list a:hover {
 .following-config-method-buttons {
   padding: 10px;
 }
+
+/****** FOLLOWING-CONFIG PROMPT ***** */
 /* line 699, ../sass/style.sass */
+.following-config-modal
+{
+  margin-top: -100px;
+}
+.following-config-modal .modal-content
+{
+  padding: 10px;
+  text-align: center;
+}
+.following-config-modal .modal-buttons
+{
+  display: none;
+}
 .following-config-method-buttons .public-following {
   background-color: #B4C669;
+  margin: 0px 2px;
+  padding: 6px 16px;
 }
 
-/************ RETWIST POSTS MODAL ********* */
+/********** RETWIST POSTS PROMPT ********* */
 /* line 705, ../sass/style.sass */
+.reTwist {
+  margin-top: -110px;
+}
 .reTwist .modal-wrapper {
   width: 520px;
   top: 20%;
   margin: 0 0 0 -260px;
+}
+.reTwist .modal-content
+{
+  padding: 20px 15px;
+}
+.reTwist button.modal-propagate
+{
+  background-color: #B4C669;
 }
 /* line 709, ../sass/style.sass */
 .reTwist .post-expand, .reTwist .post-interactions {

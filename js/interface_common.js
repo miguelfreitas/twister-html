@@ -158,14 +158,14 @@ function openProfileModalWithUsernameHandler(username)
     //título do modal
     $( "."+profileModalClass + " h3" ).text( polyglot.t("users_profile", { username: username }) );
 
-    //hed//add dinamic follow button in profile modal window
-    if(followingUsers.indexOf(username) != -1){
-        $('.profile-card button.dinamicFollowButton').first().addClass('profileUnfollow').text(polyglot.t('Unfollow')).on('click', function(){
-            unfollow(username);
-	        window.setTimeout("loadModalFromHash();",500);
-        });
-    } else {
-        $('.profile-card button.dinamicFollowButton').first().addClass('follow').text(polyglot.t('Follow')).on('click', userClickFollow );
+    //setup follow button in profile modal window
+    var button = $('.profile-card-buttons .follow');
+    if (button) {
+        if(followingUsers.indexOf(username) !== -1){
+            toggleFollowButton(username, true, function(){ window.setTimeout("loadModalFromHash();", 500);});
+        } else {
+            button.on('click', userClickFollow);
+        };
     };
 
     $(".tox-ctc").attr("title", polyglot.t("Copy to clipboard"));
@@ -558,31 +558,47 @@ function closeThis() {
     $( this ).slideUp( "fast" );
 }
 
-function toggleFollowButton(button, followingUser) {
-    if (!button || !followingUser)
+function toggleFollowButton(username, toggleUnfollow, bindFunc) {
+    if (!username)
         return;
 
-    button
-        .removeClass("follow")
-        .addClass("unfollow")
-        .unbind("click")
-        .bind("click",
-            (function(e) {
-                unfollow(this.toString(),
-                    (function() {
-                        this
-                            .removeClass("unfollow")
-                            .addClass("follow")
-                            .unbind("click")
-                            .bind("click", userClickFollow)
-                            .text(polyglot.t('Follow'))
-                            .trigger("toggleFollow");
-                    }).bind($(e.target))
-                );
-            }).bind(followingUser)
-        )
-        .text(polyglot.t('Unfollow'))
-        .trigger("toggleUnfollow");
+    if (toggleUnfollow) {
+        $("[data-screen-name='"+username+"']").find(".follow")
+            .removeClass("follow")
+            .addClass("unfollow")
+            .unbind("click")
+            .bind("click",
+                (function(e) {
+                    e.stopPropagation();
+
+                    unfollow(this.username.toString(),
+                        (function() {
+                            toggleFollowButton(this.username);
+
+                            if (this.bindFunc)
+                                this.bindFunc;
+                        }).bind({username: this.username, bindFunc: this.bindFunc})
+                    );
+                }).bind({username: username, bindFunc: bindFunc})
+            )
+            .text(polyglot.t('Unfollow'))
+            .trigger("eventToggleUnfollow");
+    } else {
+        $("[data-screen-name='"+username+"']").find(".unfollow")
+            .removeClass("unfollow")
+            .addClass("follow")
+            .unbind("click")
+            .bind("click",
+                (function(e) {
+                    userClickFollow;
+
+                    if (this.bindFunc)
+                        this.bindFunc;
+                }).bind({bindFunc: bindFunc})
+            )
+            .text(polyglot.t('Follow'))
+            .trigger("eventToggleFollow");
+    }
 }
 
 var postExpandFunction = function( e, postLi )
