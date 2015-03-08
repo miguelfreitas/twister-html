@@ -524,7 +524,6 @@ function showFollowingUsers(){
         resItem.find(".mini-profile-info").attr("data-screen-name", followingUsers[i]);
         resItem.find(".following-screen-name").text(followingUsers[i]);
         resItem.find("a.open-profile-modal").attr("href",$.MAL.userUrl(followingUsers[i]));
-        resItem.find("a.unfollow").attr("href",$.MAL.unfollowUrl(followingUsers[i]));
         resItem.find("a.direct-messages-with-user").attr("href", $.MAL.dmchatUrl(followingUsers[i]));
         if (isPublicFollowing(followingUsers[i])) {
             resItem.find(".public-following").text(polyglot.t("Public"));
@@ -538,10 +537,10 @@ function showFollowingUsers(){
         }
         
         resItem.prependTo($followingList);
+        toggleFollowButton(followingUsers[i], true)
     }
     $.MAL.followingListLoaded();
 }
-
 
 function processSuggestion(arg, suggestion, followedBy) {
     var dashboard = $(".follow-suggestions");
@@ -656,9 +655,9 @@ function processDropdownUserResults(partialName, results){
             resItem.find("a.open-profile-modal").attr("href",$.MAL.userUrl(results[i]));
             getAvatar(results[i],resItem.find(".mini-profile-photo"));
             getFullname(results[i],resItem.find(".mini-profile-name"));
-            if (followingUsers.indexOf(results[i]) >= 0)
-                toggleFollowButton(resItem.find(".follow"), results[i]);
             resItem.appendTo(typeaheadAccounts);
+            if (followingUsers.indexOf(results[i]) >= 0)
+                toggleFollowButton(results[i], true);
         }
 
         $.MAL.searchUserListLoaded();
@@ -681,11 +680,6 @@ function newFollowingConfigModal(username) {
 function userClickFollow(e) {
     e.stopPropagation();
     e.preventDefault();
-
-    var followingInitiator = $(".followingInitiator");
-    if (followingInitiator)
-        followingInitiator.removeClass("followingInitiator");
-    $(e.target).addClass("followingInitiator");
 
     var $this = $(this);
     var $userInfo = $this.closest("[data-screen-name]");
@@ -723,16 +717,6 @@ function initUserSearch() {
     });
 }
 
-function followingListUnfollow(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    var $this = $(this);
-    var username = $this.closest(".mini-profile-info").attr("data-screen-name");
-
-    unfollow(username);
-}
-
 function followingListPublicCheckbox(e) {
     e.stopPropagation();
 
@@ -764,9 +748,7 @@ function setFollowingMethod(e) {
     //console.log("start following @" +username +" by method "+publicFollow);
     follow(username, publicFollow,
         (function() {
-            var followingInitiator = $(".followingInitiator");
-            if (followingInitiator)
-                toggleFollowButton(followingInitiator, this);
+            toggleFollowButton(this, true);
         }).bind(username)
     );
 }
@@ -818,7 +800,6 @@ function initInterfaceFollowing() {
     initUserSearch();
     initInterfaceDirectMsg();
 
-    $("button.unfollow").bind( "click", followingListUnfollow );
     $(".mini-profile-info .public-following").bind( "click", followingListPublicCheckbox );
 
     $(".mentions-from-user").bind( "click", openMentionsModal );

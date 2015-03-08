@@ -176,8 +176,10 @@
                             <li>Display retransmissions</li>
                         </ul>
                     </div>
-                    <button class="unfollow">Unfollow</button>
-                    <button class="public-following">Public</button>
+                    <div class="following-config">
+                        <button class="follow">Follow</button>
+                        <button class="public-following">Public</button>
+                    </div>
                 </div>
                 <div>
                     <span class="swarm-status" style="display: none;"></span>
@@ -427,8 +429,11 @@
                         <li><a href="#"><span class="followers-count">&nbsp;</span><span class="label">Followers</span></a></li>
                     </ul>
                 </div>
-                <button class="dinamicFollowButton" href="#">Follow</button>
+              <div class="profile-card-buttons">
+                <button class="follow" href="#">Follow</button>
                 <button class="direct-messages-with-user" href="#">Direct Messages</button>
+                <button class="mentions-from-user" href="#">Mentions</button>
+              </div>
             </div>
             <div class="who-follow"></div>
           </div>
@@ -514,6 +519,8 @@
 
   </div>
   <!-- TEMPLATES END -->
-    
+
+  <audio id="player"></audio>
+  <audio id="playerSec"></audio>
   </body>
 </html>

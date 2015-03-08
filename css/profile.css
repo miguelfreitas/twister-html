@@ -57,49 +57,37 @@
 {
     color: #fff;    
 }
-.profile-card .direct-messages,
-.profile-card .direct-messages-with-user,
-.profile-card .mentions-from-user,
-.profile-card .follow,
-.profile-card .profileUnfollow
+
+.profile-card-buttons
 {
-    display: block;
     position: absolute;
-    bottom: 20px;
-    right: 125px;
-    padding: 10px;
+    bottom: 30px;
+    right: 0;
+}
+
+.profile-card-buttons .direct-messages-with-user,
+.profile-card-buttons .mentions-from-user,
+.profile-card-buttons .follow,
+.profile-card-buttons .unfollow
+{
+    display: inline;
+    padding: 4px 12px;
     font-size: 12px;
-    width: 110px;
+    width: auto;
     text-align: center;
     color: rgba( 0, 0, 0, .7 );
     background: rgba( 0, 0, 0, .1 );
     border: none;
     transition: all .2s linear;
 }
-.profile-card .follow,
-.profile-card .profileUnfollow
+
+.profile-card-buttons .direct-messages-with-user:hover,
+.profile-card-buttons .mentions-from-user:hover
 {
-    right: 240px;
+    color: #fff;
+    background: #45474d;
 }
-.profile-card .mentions-from-user
-{
-    right: 10px;
-}
-.profile-card .profileUnfollow
-{
-    background-color: rgba( 0, 0, 0, .3 );
-}
-.profile-card .direct-messages:hover,
-.profile-card .direct-messages-with-user:hover,
-.profile-card .mentions-from-user:hover,
-.profile-card .follow:hover
-{
-    background: rgba( 0, 0, 0, .3 );
-}
-.profile-card .profileUnfollow:hover
-{
-    background: rgba( 0, 0, 0, .1 );
-}
+
 .profile-card.forEdition
 {
     margin: 0 auto;
@@ -175,24 +163,27 @@
     padding: 10px;
     text-align: right;
 }
+
 /*************************************
-****************** PROFILE MODAL
-*************************************
+************ PROFILE MODAL ***********
+**************************************/
+
 .profile-modal .modal-wrapper
 {
     width: 580px;
     border-radius: 5px;
     overflow: hidden;
     position: absolute;
-    top:10%;
-    height: 80%;
+    top:5%;
+    height: 90%;
     margin-left: -290px;
 
-}*/
+}
 .profile-modal .modal-content
 {
     padding: 3px;
     height: 100%;
+    overflow-y: hidden;
 }
 #msngrswr {
     display: none;
@@ -274,7 +265,7 @@
 {
     margin-left: 0;
     padding: 5px 0 5px 0;
-    height: 75%;
+    height: 73%;
 }
 .profile-modal .postboard h2
 {
@@ -314,20 +305,13 @@
     height: 200px;
 }
 */
-.profile-modal .direct-messages,
-.profile-modal .direct-messages-with-user,
-.profile-modal .mentions-from-user,
-.profile-modal .follow,
-.profile-modal .profileUnfollow
-{
-    bottom: 10px;
-}
 
 h1.profile-name {
     display: inline;
 }
+
 h2.profile-screen-name {
-    display: inline;
+    display: block;
 }
 
 .profile-modal .modal-buttons {
