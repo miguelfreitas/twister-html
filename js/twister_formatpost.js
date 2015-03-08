@@ -208,7 +208,7 @@ function htmlFormatMsg( msg, output, mentions ) {
                 if( space != -1 ) url = tmp.substring(0,space); else url = tmp;
                 if( url.length ) {
                     msg = tmp.substr(String(url).length);
-                    url = url.replace(/&amp;/g, '&');
+                    url = reverseHtmlEntities(url);
                     var extLinkTemplate = $("#external-page-link-template").clone(true);
                     extLinkTemplate.removeAttr("id");
 
@@ -342,10 +342,10 @@ function escapeHtmlEntities(str) {
 
 function reverseHtmlEntities(str) {
     return str
-                .replace(/&amp;/g, '&')
                 .replace(/&lt;/g, '<')
                 .replace(/&gt;/g, '>')
                 .replace(/&quot;/g, '"')
-                .replace(/&apos;/g, "'");
+                .replace(/&apos;/g, "'")
+                .replace(/&amp;/g, '&');
 }
 
