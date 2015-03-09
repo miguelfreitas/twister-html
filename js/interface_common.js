@@ -48,7 +48,7 @@ function closeModalHandler($this)
 
     $modalWindows.fadeOut( "fast", function()
     {
-        $modalWindows.detach();
+        $modalWindows.remove();
     });
     $body.css({
         "overflow": "auto",
@@ -86,7 +86,7 @@ function closePrompt()
 
     $modalWindows.fadeOut( "fast", function()
     {
-        $modalWindows.detach();
+        $modalWindows.remove();
     });
     $body.css({
         "overflow": "auto",
@@ -1448,13 +1448,13 @@ function replaceDashboards() {
         $('.wrapper').addClass('w1200');
         $('.userMenu').addClass('w1200');
         var wf = $('.module.who-to-follow');
-        wf.remove();
+        wf.detach();
         wf.appendTo($('.dashboard.right'));
     } else if ($(window).width() < 1200 && $('.wrapper').hasClass('w1200')) {
         $('.wrapper').removeClass('w1200');
         $('.userMenu').removeClass('w1200');
         var wf = $('.module.who-to-follow');
-        wf.remove();
+        wf.detach();
         $('.module.mini-profile').after(wf);
     }
 
@@ -1523,6 +1523,7 @@ function initInterfaceCommon() {
     $( ".mentions-from-user").bind( "click", openMentionsModal );
 
     replaceDashboards();
+    $( window ).resize(replaceDashboards);
 
     $('.tox-ctc').on('click', function(){
         window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
