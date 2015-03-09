@@ -86,11 +86,17 @@ TwisterFollowing.prototype = {
             //activate updating for only one user...
             i = followingUsers.indexOf(username);
 
-            if (i > -1)
+            if (i > -1) {
                 oneshot = true;
-            else if (typeof(this.followingsFollowings[username]) !== 'undefined') {
-                delete this.followingsFollowings[username];
-                this.save();
+            } else {
+                if (typeof(this.followingsFollowings[username]) !== 'undefined') {
+                    delete this.followingsFollowings[username];
+                    this.save();
+                }
+                if (username in _idTrackerMap)
+                   delete _idTrackerMap[username];
+                if (username in _lastHaveMap)
+                   delete _lastHaveMap[username];
                 return;
             }
         }
@@ -104,6 +110,15 @@ TwisterFollowing.prototype = {
         }
         if (updated)
             this.save();
+
+        for (var user in _idTrackerMap) {
+            if (followingUsers.indexOf(user) < 0)
+                delete _idTrackerMap[user];
+        }
+        for (var user in _lastHaveMap) {
+            if (followingUsers.indexOf(user) < 0)
+                delete _lastHaveMap[user];
+        }
 
         for (; i < followingUsers.length; i++) {
             var ctime = new Date().getTime() / 1000;
