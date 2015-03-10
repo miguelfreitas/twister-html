@@ -93,9 +93,9 @@ TwisterFollowing.prototype = {
                     delete this.followingsFollowings[username];
                     this.save();
                 }
-                if (username in _idTrackerMap)
+                if (typeof _idTrackerMap !== 'undefined' && username in _idTrackerMap)
                    delete _idTrackerMap[username];
-                if (username in _lastHaveMap)
+                if (typeof _lastHaveMap !== 'undefined' && username in _lastHaveMap)
                    delete _lastHaveMap[username];
                 return;
             }
@@ -111,14 +111,16 @@ TwisterFollowing.prototype = {
         if (updated)
             this.save();
 
-        for (var user in _idTrackerMap) {
-            if (followingUsers.indexOf(user) < 0)
-                delete _idTrackerMap[user];
-        }
-        for (var user in _lastHaveMap) {
-            if (followingUsers.indexOf(user) < 0)
-                delete _lastHaveMap[user];
-        }
+        if (typeof _idTrackerMap !== 'undefined')
+            for (var user in _idTrackerMap) {
+                if (followingUsers.indexOf(user) < 0)
+                    delete _idTrackerMap[user];
+            }
+        if (typeof _lastHaveMap !== 'undefined')
+            for (var user in _lastHaveMap) {
+                if (followingUsers.indexOf(user) < 0)
+                    delete _lastHaveMap[user];
+            }
 
         for (; i < followingUsers.length; i++) {
             var ctime = new Date().getTime() / 1000;
