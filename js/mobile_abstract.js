@@ -104,9 +104,9 @@ var MAL = function()
                 newTweetsBarMenu.addClass("show");
 
                 if ($.Options.getShowDesktopNotifPostsOpt() === 'enable') {
-                    this.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t("new_posts", newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', $.Options.getShowDesktopNotifPostsTimerOpt(), function() {
-                            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);
-                        }, false)
+                    this.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_posts', newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', $.Options.getShowDesktopNotifPostsTimerOpt(), (function() {
+                            requestTimelineUpdate('latest',this,followingUsers,promotedPostsOnly);
+                        }).bind(newPosts), false)
                 }
             } else {
                 newTweetsBar.hide();

@@ -366,6 +366,7 @@ function updateFollowing(cbFunc, cbArg) {
 // it is safe to call this even if username is already in followingUsers.
 // may also be used to set/clear publicFollow.
 function follow(user, publicFollow, cbFunc, cbArg) {
+    //console.log('we are following @'+user);
     if( followingUsers.indexOf(user) < 0 ) {
         followingUsers.push(user);
         twisterFollowingO.update(user);
@@ -380,6 +381,7 @@ function follow(user, publicFollow, cbFunc, cbArg) {
 
 // unfollow a single user
 function unfollow(user, cbFunc, cbArg) {
+    //console.log('we are not following @'+user+' anymore');
     var i = followingUsers.indexOf(user);
     if( i >= 0 ) {
         followingUsers.splice(i,1);
@@ -696,8 +698,7 @@ function userClickFollow(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    var $this = $(this);
-    var $userInfo = $this.closest("[data-screen-name]");
+    var $userInfo = $(e.target).closest("[data-screen-name]");
     var username = $userInfo.attr("data-screen-name");
 
     if(!defaultScreenName)

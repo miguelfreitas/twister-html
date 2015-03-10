@@ -224,7 +224,6 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
     }
 }
 
-
 function newPostMsg(msg, $postOrig) {
     if( lastPostId != undefined ) {
         var params = [defaultScreenName, lastPostId + 1, msg]
@@ -236,6 +235,7 @@ function newPostMsg(msg, $postOrig) {
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                         alert(polyglot.t("ajax_error", { error: msg })); }, null);
+        setTimeout('requestTimelineUpdate("latest",1,["'+defaultScreenName+'"],promotedPostsOnly)', 1000);
     } else {
         alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }
@@ -256,7 +256,7 @@ function newRtMsg($postOrig) {
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                         alert(polyglot.t("ajax_error", { error: msg })); }, null);
-        setTimeout('requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly)', 1000);
+        setTimeout('requestTimelineUpdate("latest",1,["'+defaultScreenName+'"],promotedPostsOnly)', 1000);
     } else {
         alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }

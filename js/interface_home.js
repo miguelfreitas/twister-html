@@ -14,11 +14,19 @@ var InterfaceFunctions = function()
     this.init = function()
     {
         $( ".wrapper .postboard-news").click(function() {
-            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+            var newPosts = parseInt($(".userMenu .menu-news").text());
+            if (!newPosts)
+                newPosts = postsPerRefresh;
+            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+        });
 
         // Add refresh posts for home link in menu
         $( ".userMenu-home.current a").click(function() {
-            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+            var newPosts = parseInt($(".userMenu .menu-news").text());
+            if (!newPosts)
+                newPosts = postsPerRefresh;
+            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+        });
 
         $( ".promoted-posts-only").click(function() {
             promotedPostsOnly = !promotedPostsOnly;

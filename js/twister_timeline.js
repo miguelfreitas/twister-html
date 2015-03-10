@@ -79,6 +79,7 @@ function requestObj(users, mode, count, getspam)
     this.mode = mode; // 'latest', 'latestFirstTime' or 'older'
     this.count = count;
     this.getspam = getspam;
+    this.updateReportNewPosts = (users.toString() === defaultScreenName || mode === 'older') ? false : true;
 
     // getRequest method returns the list parameter expected by getposts rpc
     this.getRequest = function() {
@@ -111,10 +112,17 @@ function requestObj(users, mode, count, getspam)
     // doneReportProcessing is called after an getposts response is processed
     // mode changing may require a new request (to fill gaps)
     this.doneReportProcessing = function(receivedCount) {
-        if( this.mode == 'latest') this.mode = 'fillgap';
-        if( this.mode == 'latestFirstTime') this.mode = 'done';
-        if( this.mode == 'older') this.mode = 'done';
-        if( receivedCount < this.count ) this.mode = 'done';
+        if (receivedCount === this.count) {
+            this.mode = 'done';
+        } else {
+            if (this.mode === 'latest' || this.mode === 'latestFirstTime') {
+                this.mode = 'fillgap';
+            } else if (this.mode === 'fillgap') {
+                this.mode = 'older';
+            } else if (this.mode === 'older')
+                this.mode = 'done';
+        }
+        //console.log('we got '+receivedCount+' posts from requested '+this.count+', status of processing is "'+this.mode+'"');
     }
 }
 
@@ -197,25 +205,36 @@ function processReceivedPosts(req, posts)
         }
         req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
     }
-    req.doneReportProcessing(posts.length);
+    req.doneReportProcessing(p2a);
 
-    //if the count of posts less then 5....
-    if( req.mode == "done" && p2a > 5) {
+    if (req.updateReportNewPosts) {
+        _newPostsPending = 0; // FIXME maybe we need updating here instead this zeroing
+        $.MAL.reportNewPosts(_newPostsPending);
+    }
+
+    //if the count of recieved posts less then or equals to requested...
+    if (req.mode === 'done') {
         timelineLoaded = true;
         $.MAL.postboardLoaded();
         _refreshInProgress = false;
-        $(window).scroll();
     } else {
         //we will request more older post...
-        req.count += postsPerRefresh;
-        req.mode = 'older';
-        requestGetposts(req);
+        req.count -= p2a;
+        if (req.count > 0) {
+            //console.log('we are requesting '+req.count+' more posts...');
+            requestGetposts(req);
+        } else {
+            timelineLoaded = true;
+            $.MAL.postboardLoaded();
+            _refreshInProgress = false;
+        }
     }
 }
 
 // request timeline update for a given list of users
 function requestTimelineUpdate(mode, count, timelineUsers, getspam)
 {
+    //console.log(mode+' timeline update request: '+count+' posts for following users - '+timelineUsers);
     if( _refreshInProgress || !defaultScreenName)
         return;
     $.MAL.postboardLoading();
@@ -225,10 +244,6 @@ function requestTimelineUpdate(mode, count, timelineUsers, getspam)
         requestGetposts(req);
     } else {
         console.log("requestTimelineUpdate: not following any users");
-    }
-    if( mode == "latest" || mode == "latestFirstTime" ) {
-        _newPostsPending = 0;
-        $.MAL.reportNewPosts(0);
     }
 }
 

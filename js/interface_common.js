@@ -590,7 +590,7 @@ function toggleFollowButton(username, toggleUnfollow, bindFunc) {
             .unbind("click")
             .bind("click",
                 (function(e) {
-                    userClickFollow;
+                    userClickFollow(e);
 
                     if (this.bindFunc)
                         this.bindFunc;
@@ -855,9 +855,8 @@ function replyTextKeypress(e) {
                     tweetAction.click();
                 }
             }
-        }else if( !$.Options.keyEnterToSend() ){
+        } else if( !$.Options.keyEnterToSend() ){
             if (e.keyCode === 13 && (e.metaKey || e.ctrlKey)) {
-
                 $this.val($this.val().trim());
                 if( !tweetAction.hasClass("disabled") ) {
                     tweetAction.click();
@@ -1367,7 +1366,6 @@ var postSubmit = function(e, oldLastPostId)
     if($this.closest('.post-area,.post-reply-content')){
         $('.post-area-new').removeClass('open').find('textarea').blur();
     };
-    setTimeout('requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly)', 1000);
     $replyText.data("unicodeConversionStack", []);
     $replyText.data("disabledUnicodeRules", []);
 }
