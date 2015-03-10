@@ -148,8 +148,8 @@ var InterfaceFunctions = function()
                 .on("eventUnfollow", function(e, user) {
                     $(".following-count").text(followingUsers.length-1);
                     $('.wrapper .postboard .post').each( function() {
-                        if ($(this).find('[data-screen-name="'+user+'"]').length
-                        && (!$(this).find(".post-retransmited-by").text() || $(this).find(".post-retransmited-by").text() == '@'+user))
+                        if (($(this).find('[data-screen-name="'+user+'"]').length && !$(this).find(".post-retransmited-by").text())
+                        || $(this).find(".post-retransmited-by").text() == '@'+user)
                             $( this ).remove();
                     });
                 });
