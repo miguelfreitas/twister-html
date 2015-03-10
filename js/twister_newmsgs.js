@@ -98,10 +98,12 @@ function requestMentionsCount() {
     if( _newMentionsUpdated ) {
         _newMentionsUpdated = false;
 
-        $.MAL.soundNotifyMentions();
+        if ( _newMentions ) {
+            $.MAL.soundNotifyMentions();
 
-        if ($.Options.getShowDesktopNotifMentionsOpt() === 'enable') {
-            $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_mentions', _newMentions)+'.', false,'twister_notification_new_mentions', $.Options.getShowDesktopNotifMentionsTimerOpt(), function(){$.MAL.showMentions(defaultScreenName)}, false)
+            if ($.Options.getShowDesktopNotifMentionsOpt() === 'enable') {
+                $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_mentions', _newMentions)+'.', false,'twister_notification_new_mentions', $.Options.getShowDesktopNotifMentionsTimerOpt(), function(){$.MAL.showMentions(defaultScreenName)}, false)
+            }
         }
     }
 
