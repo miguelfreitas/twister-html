@@ -526,9 +526,8 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
 {
     color: #e34f42;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
-    width: 70px;
     transition: all .2s linear;
 }
 .mini-profile-actions ul
@@ -1251,9 +1250,74 @@ ol.toptrends-list {
     float: right;
     margin-right: 18px;
 }
+
 /*************************************
-**************************** POPUP MODAL
+************* LOGIN PAGE *************
 **************************************/
+
+.login .module {
+    display: block;
+    width: 720px;
+    padding: 32px 40px;
+    margin: 8px auto;
+}
+
+.login .module p {
+    margin-bottom: 5px;
+}
+
+.login .module input {
+    padding: 5px 10px;
+    background: #f3f3f3;
+    border: solid 1px #dcdcdc;
+    transition: box-shadow 0.3s, border 0.3s;
+    font-size: 14px;
+}
+
+.login .module input:focus, .login .module select:focus {
+    background: #fff;
+    transition: background-color 100ms linear;
+    border: solid 1px rgba( 227, 79, 66, .5 );
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
+}
+
+.login .module select {
+    height: 30px;
+    padding: 3px 30px 3px 10px;
+    margin: 0;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.login .module span.availability {
+    margin-left: 10px;
+    color: #45474d;
+}
+
+.with-nickname, .import-secret-key, .create-user {
+    margin-top: 10px;
+}
+
+.login .module:nth-child(2) div ,
+.login .module:nth-child(3) div:nth-child(2),
+.login .secret-key-import,
+.login .username-import {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 16px;
+}
+
+.login .create-user,
+.login .import-secret-key {
+    display: block;
+    margin-left: auto;
+    margin-right: 16px;
+}
+
+/*************************************
+************* POPUP MODAL ************
+**************************************/
+
 .modal-blackout
 {
     position: fixed;
@@ -1831,11 +1895,11 @@ ol.toptrends-list {
 
 .following ol.following-list > li{
     width: 425px;
-    height: 150px;
+    height: 160px;
     margin: 5px;
     padding: 8px;
     float: left;
-    border: 0;
+    border: solid 1px rgba( 69, 71, 77, .1 );
     background: #fff;
 }
 
@@ -1844,21 +1908,32 @@ ol.toptrends-list {
 }
 
 .following ol.following-list > li:hover{
-    background: #fefef1;
+    border: solid 1px rgba( 227, 79, 66, .5 );
+}
+
+.following-list .mini-screen-name {
+    position: absolute;
+    top: 32px;
 }
 
 .following-list .following-config
 {
+    width: 100%;
     position: absolute;
-    left: 30%;
-    top: 69px;
+    top: 64px;
+    text-align: center;
+}
+
+.following-list .following-config button
+{
+    display: inline-block;
 }
 
 .following-list .mini-profile-actions
 {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 8px;
     z-index: 10;
 }
 
@@ -1867,8 +1942,8 @@ ol.toptrends-list {
     font: 12px "Open Sans", sans-serif;
     display: block;
     position: absolute;
-    top: 110px;
-    right: 10px;
+    top: 120px;
+    right: 8px;
 }
 
 /* Autocomplite*/
