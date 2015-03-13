@@ -14,11 +14,19 @@ var InterfaceFunctions = function()
     this.init = function()
     {
         $( ".wrapper .postboard-news").click(function() {
-            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+            var newPosts = parseInt($(".userMenu .menu-news").text());
+            if (!newPosts)
+                newPosts = postsPerRefresh;
+            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+        });
 
         // Add refresh posts for home link in menu
         $( ".userMenu-home.current a").click(function() {
-            requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly);});
+            var newPosts = parseInt($(".userMenu .menu-news").text());
+            if (!newPosts)
+                newPosts = postsPerRefresh;
+            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+        });
 
         $( ".promoted-posts-only").click(function() {
             promotedPostsOnly = !promotedPostsOnly;
@@ -139,6 +147,11 @@ var InterfaceFunctions = function()
                 })
                 .on("eventUnfollow", function(e, user) {
                     $(".following-count").text(followingUsers.length-1);
+                    $('.wrapper .postboard .post').each( function() {
+                        if (($(this).find('[data-screen-name="'+user+'"]').length && !$(this).find(".post-retransmited-by").text())
+                        || $(this).find(".post-retransmited-by").text() == '@'+user)
+                            $( this ).remove();
+                    });
                 });
         }
     }
@@ -149,7 +162,6 @@ var InterfaceFunctions = function()
 //***********************************************
 var interfaceFunctions = new InterfaceFunctions;
 $( document ).ready( interfaceFunctions.init );
-$( window ).resize(replaceDashboards);
 
 //função no window que fixa o header das postagens
 function fixDiv()

@@ -48,7 +48,7 @@ function closeModalHandler($this)
 
     $modalWindows.fadeOut( "fast", function()
     {
-        $modalWindows.detach();
+        $modalWindows.remove();
     });
     $body.css({
         "overflow": "auto",
@@ -86,7 +86,7 @@ function closePrompt()
 
     $modalWindows.fadeOut( "fast", function()
     {
-        $modalWindows.detach();
+        $modalWindows.remove();
     });
     $body.css({
         "overflow": "auto",
@@ -590,7 +590,7 @@ function toggleFollowButton(username, toggleUnfollow, bindFunc) {
             .unbind("click")
             .bind("click",
                 (function(e) {
-                    userClickFollow;
+                    userClickFollow(e);
 
                     if (this.bindFunc)
                         this.bindFunc;
@@ -855,9 +855,8 @@ function replyTextKeypress(e) {
                     tweetAction.click();
                 }
             }
-        }else if( !$.Options.keyEnterToSend() ){
+        } else if( !$.Options.keyEnterToSend() ){
             if (e.keyCode === 13 && (e.metaKey || e.ctrlKey)) {
-
                 $this.val($this.val().trim());
                 if( !tweetAction.hasClass("disabled") ) {
                     tweetAction.click();
@@ -1367,7 +1366,6 @@ var postSubmit = function(e, oldLastPostId)
     if($this.closest('.post-area,.post-reply-content')){
         $('.post-area-new').removeClass('open').find('textarea').blur();
     };
-    setTimeout('requestTimelineUpdate("latest",postsPerRefresh,followingUsers,promotedPostsOnly)', 1000);
     $replyText.data("unicodeConversionStack", []);
     $replyText.data("disabledUnicodeRules", []);
 }
@@ -1448,13 +1446,13 @@ function replaceDashboards() {
         $('.wrapper').addClass('w1200');
         $('.userMenu').addClass('w1200');
         var wf = $('.module.who-to-follow');
-        wf.remove();
+        wf.detach();
         wf.appendTo($('.dashboard.right'));
     } else if ($(window).width() < 1200 && $('.wrapper').hasClass('w1200')) {
         $('.wrapper').removeClass('w1200');
         $('.userMenu').removeClass('w1200');
         var wf = $('.module.who-to-follow');
-        wf.remove();
+        wf.detach();
         $('.module.mini-profile').after(wf);
     }
 
@@ -1523,6 +1521,7 @@ function initInterfaceCommon() {
     $( ".mentions-from-user").bind( "click", openMentionsModal );
 
     replaceDashboards();
+    $( window ).resize(replaceDashboards);
 
     $('.tox-ctc').on('click', function(){
         window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))

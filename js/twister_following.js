@@ -86,11 +86,17 @@ TwisterFollowing.prototype = {
             //activate updating for only one user...
             i = followingUsers.indexOf(username);
 
-            if (i > -1)
+            if (i > -1) {
                 oneshot = true;
-            else if (typeof(this.followingsFollowings[username]) !== 'undefined') {
-                delete this.followingsFollowings[username];
-                this.save();
+            } else {
+                if (typeof(this.followingsFollowings[username]) !== 'undefined') {
+                    delete this.followingsFollowings[username];
+                    this.save();
+                }
+                if (typeof _idTrackerMap !== 'undefined' && username in _idTrackerMap)
+                   delete _idTrackerMap[username];
+                if (typeof _lastHaveMap !== 'undefined' && username in _lastHaveMap)
+                   delete _lastHaveMap[username];
                 return;
             }
         }
@@ -104,6 +110,17 @@ TwisterFollowing.prototype = {
         }
         if (updated)
             this.save();
+
+        if (typeof _idTrackerMap !== 'undefined')
+            for (var user in _idTrackerMap) {
+                if (followingUsers.indexOf(user) < 0)
+                    delete _idTrackerMap[user];
+            }
+        if (typeof _lastHaveMap !== 'undefined')
+            for (var user in _lastHaveMap) {
+                if (followingUsers.indexOf(user) < 0)
+                    delete _lastHaveMap[user];
+            }
 
         for (; i < followingUsers.length; i++) {
             var ctime = new Date().getTime() / 1000;
@@ -351,6 +368,7 @@ function updateFollowing(cbFunc, cbArg) {
 // it is safe to call this even if username is already in followingUsers.
 // may also be used to set/clear publicFollow.
 function follow(user, publicFollow, cbFunc, cbArg) {
+    //console.log('we are following @'+user);
     if( followingUsers.indexOf(user) < 0 ) {
         followingUsers.push(user);
         twisterFollowingO.update(user);
@@ -365,6 +383,7 @@ function follow(user, publicFollow, cbFunc, cbArg) {
 
 // unfollow a single user
 function unfollow(user, cbFunc, cbArg) {
+    //console.log('we are not following @'+user+' anymore');
     var i = followingUsers.indexOf(user);
     if( i >= 0 ) {
         followingUsers.splice(i,1);
@@ -681,8 +700,7 @@ function userClickFollow(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    var $this = $(this);
-    var $userInfo = $this.closest("[data-screen-name]");
+    var $userInfo = $(e.target).closest("[data-screen-name]");
     var username = $userInfo.attr("data-screen-name");
 
     if(!defaultScreenName)

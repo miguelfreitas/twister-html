@@ -124,10 +124,12 @@ button.follow, button.unfollow, .following-list button.private {
     background: none;
     border: solid 1px rgba( 0, 0, 0, .2 );
     padding: 3px 15px;
+    font-size: 12px;
 }
 
 .following-list .public-following {
     padding: 4px 16px;
+    font-size: 12px;
 }
 
 .following-list .public-following:hover {
@@ -143,9 +145,9 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
 }
 
 .follow-suggestions .follow, .follow-suggestions .unfollow {
-    display: block;
-    position: relative;
-    left: 50%;
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
 }
 
 /*************************************
@@ -524,9 +526,8 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
 {
     color: #e34f42;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
-    width: 70px;
     transition: all .2s linear;
 }
 .mini-profile-actions ul
@@ -700,7 +701,8 @@ textarea.splited-post {
 .twister-user
 {
     clear: both;
-    padding-bottom: 10px;
+    overflow: hidden;
+    padding-bottom: 4px;
     margin-top: 4px;
     border-bottom: solid 1px rgba( 69, 71, 77, .1 );
     border-top: solid 1px rgba( 69, 71, 77, .1 );
@@ -1173,14 +1175,14 @@ ol.toptrends-list {
     border: solid 1px rgba( 69, 71, 77, .05 );
     padding: 10px;
 }
-.singleBlock h2
+.singleBlock h2, .header-bold
 {
     font-weight: bold;
     line-height: 40px;
     color: rgba( 255, 255, 255, 1 );
     font-variant: small-caps;
     border-bottom: solid 1px rgba( 69, 71, 77, .1 );
-    margin: 15px 0 0 0;
+    margin: 0px 0px 12px 0px;
     padding-left: 5px;
     background: #e34f42;
 }
@@ -1248,9 +1250,81 @@ ol.toptrends-list {
     float: right;
     margin-right: 18px;
 }
+
 /*************************************
-**************************** POPUP MODAL
+************* LOGIN PAGE *************
 **************************************/
+
+.login .header-bold {
+    display: block;
+    width: 720px;
+    margin: 0px auto 12px auto;
+}
+
+.login .module {
+    display: block;
+    width: 720px;
+    padding: 32px 40px;
+    margin: 8px auto;
+    background: #fff;
+}
+
+.login .module p {
+    margin-bottom: 5px;
+}
+
+.login .module input {
+    padding: 5px 10px;
+    background: #f3f3f3;
+    border: solid 1px #dcdcdc;
+    transition: box-shadow 0.3s, border 0.3s;
+    font-size: 14px;
+}
+
+.login .module input:focus, .login .module select:focus {
+    background: #fff;
+    transition: background-color 100ms linear;
+    border: solid 1px rgba( 227, 79, 66, .5 );
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
+}
+
+.login .module select {
+    height: 30px;
+    padding: 3px 30px 3px 10px;
+    margin: 0;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.login .module span.availability {
+    margin-left: 10px;
+    color: #45474d;
+}
+
+.with-nickname, .import-secret-key, .create-user {
+    margin-top: 10px;
+}
+
+.login .module:nth-child(2) div ,
+.login .module:nth-child(3) div:nth-child(2),
+.login .secret-key-import,
+.login .username-import {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 16px;
+}
+
+.login .create-user,
+.login .import-secret-key {
+    display: block;
+    margin-left: auto;
+    margin-right: 16px;
+}
+
+/*************************************
+************* POPUP MODAL ************
+**************************************/
+
 .modal-blackout
 {
     position: fixed;
@@ -1303,7 +1377,7 @@ ol.toptrends-list {
     position: absolute;
     right: 0;
     top: 0;
-    padding: 3px 10px;
+    padding: 1px 10px;
     cursor: pointer;
     color: rgba( 255, 255, 255, .7 );
     font-weight: bold;
@@ -1320,7 +1394,7 @@ ol.toptrends-list {
     position: absolute;
     right: 30px;
     top: 0;
-    padding: 3px 10px;
+    padding: 1px 10px;
     cursor: pointer;
     color: rgba( 255, 255, 255, .7 );
     font-weight: bold;
@@ -1662,8 +1736,9 @@ ol.toptrends-list {
 }
 
 /*************************************
-****************** LOADER ************
+**************** LOADER **************
 **************************************/
+
 .postboard-loading
 {
     text-align: right;
@@ -1780,26 +1855,47 @@ ol.toptrends-list {
 }
 
 /*************************************
-****************** OPTIONS ***********
+**************** OPTIONS *************
 **************************************/
 
 .options .module
 {
-    margin: 5px;
-    padding: 15px;
+    display: block;
+    width: 720px;
+    padding: 32px 40px;
+    margin: 8px auto;
+    background: #fff;
 }
 
 .options .container
 {
-    margin: 5px 0px 5px 10px;
+    margin: 8px 0px 8px 16px;
+}
+
+.options .label {
+    font-size: 13px;
 }
 
 .options .label-h {
-  font-weight: 700;
+    font-weight: bold;
+    font-size: 14px;
 }
 
-.options .module label {
-    font: 12px "Open Sans", sans-serif;
+.options button, .options input, .options select {
+    font-size: 13px;
+}
+
+.options .module input, .options .module select {
+    background: #f3f3f3;
+    border: solid 1px #ccc;
+    transition: box-shadow 0.3s, border 0.3s;
+}
+
+.options .module input:focus, .options .module select:focus {
+    background: #fff;
+    transition: background-color 100ms linear;
+    border: solid 1px rgba( 227, 79, 66, .5 );
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
 }
 
 .volValue {
@@ -1819,7 +1915,20 @@ ol.toptrends-list {
     -ms-transition: height 1s linear;
 }
 
-/* Following page */
+/*************************************
+*********** FOLLOWING PAGE ***********
+**************************************/
+
+.following .postboard-loading
+{
+    text-align: center;
+}
+
+.following .header-bold {
+    display: block;
+    width: 100%;
+    margin: 0px auto 12px auto;
+}
 
 .following-list
 {
@@ -1828,11 +1937,11 @@ ol.toptrends-list {
 
 .following ol.following-list > li{
     width: 425px;
-    height: 150px;
+    height: 160px;
     margin: 5px;
     padding: 8px;
     float: left;
-    border: 0;
+    border: solid 1px rgba( 69, 71, 77, .1 );
     background: #fff;
 }
 
@@ -1841,21 +1950,32 @@ ol.toptrends-list {
 }
 
 .following ol.following-list > li:hover{
-    background: #fefef1;
+    border: solid 1px rgba( 227, 79, 66, .5 );
+}
+
+.following-list .mini-screen-name {
+    position: absolute;
+    top: 32px;
 }
 
 .following-list .following-config
 {
+    width: 100%;
     position: absolute;
-    left: 30%;
-    top: 69px;
+    top: 64px;
+    text-align: center;
+}
+
+.following-list .following-config button
+{
+    display: inline-block;
 }
 
 .following-list .mini-profile-actions
 {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 8px;
     z-index: 10;
 }
 
@@ -1864,8 +1984,8 @@ ol.toptrends-list {
     font: 12px "Open Sans", sans-serif;
     display: block;
     position: absolute;
-    top: 110px;
-    right: 10px;
+    top: 120px;
+    right: 8px;
 }
 
 /* Autocomplite*/
