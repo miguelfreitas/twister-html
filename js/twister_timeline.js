@@ -159,6 +159,8 @@ function processReceivedPosts(req, posts)
 
         var streamPost = postToElem(post, "original", req.getspam);
         var timePost = post["userpost"]["time"];
+        var now = new Date().getTime();
+        if(timePost*1000>now)continue;
         streamPost.attr("data-time",timePost);
 
         // post will only be shown if appended to the stream list
