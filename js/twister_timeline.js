@@ -12,7 +12,8 @@ var _idTrackerMap = {};
 var _idTrackerSpam = new idTrackerObj();
 var _lastHaveMap = {};
 var _refreshInProgress = false;
-var _newPostsPending = 0;
+var _newPostsPending = [];
+var _sendedPostIDs = [];
 var timelineLoaded = false;
 
 /* object to keep tracking of post ids for a given user, that is, which
@@ -79,7 +80,6 @@ function requestObj(users, mode, count, getspam)
     this.mode = mode; // 'latest', 'latestFirstTime' or 'older'
     this.count = count;
     this.getspam = getspam;
-    this.updateReportNewPosts = (users.toString() === defaultScreenName || mode === 'older') ? false : true;
 
     // getRequest method returns the list parameter expected by getposts rpc
     this.getRequest = function() {
@@ -149,77 +149,23 @@ function requestGetposts(req)
 function processReceivedPosts(req, posts)
 {
     //hiding posts can cause empty postboard, so we have to track the count...
-    var p2a = posts.length;
     for( var i = 0; i < posts.length; i++ ) {
-        var post = posts[i];
-        if (willBeHidden(post)) {
-            p2a--;
-            continue;
+        if (willBeHidden(posts[i])) {
+            posts.splice(i, 1);
+            i--;
         }
-
-        var streamPost = postToElem(post, "original", req.getspam);
-        var timePost = post["userpost"]["time"];
-        streamPost.attr("data-time",timePost);
-
-        // post will only be shown if appended to the stream list
-        var streamPostAppended = false;
-
-        // insert the post in timeline ordered by (you guessed) time
-        // FIXME: lame! searching everything everytime. please optimize!
-        var streamItemsParent = $.MAL.getStreamPostsParent();
-        var streamItems = streamItemsParent.children();
-        if( streamItems.length == 0) {
-            // timeline is empty
-            streamItemsParent.append( streamPost );
-            streamPostAppended = true;
-        } else {
-            var j = 0;
-            for( j = 0; j < streamItems.length; j++) {
-                var streamItem = streamItems.eq(j);
-                var timeItem = streamItem.attr("data-time");
-                if( timeItem == undefined ||
-                    timePost > parseInt(timeItem) ) {
-                    // this post in stream is older, so post must be inserted above
-                    streamItem.before(streamPost);
-                    streamPostAppended = true;
-                    break;
-                }
-            }
-            if( j == streamItems.length ) {
-                // no older posts in stream, so post is to be inserted below
-                if( req.mode == "older" || req.mode == "latestFirstTime" ) {
-                    // note: when filling gaps, the post must be discarded (not
-                    // shown) since it can never be older than what we already
-                    // have on timeline. this is a problem due to requesting from
-                    // several users at the same time, as some older posts might
-                    // be included to complete the <count> in getposts because
-                    // other users may have already been excluded by since_id.
-                    streamItemsParent.append( streamPost );
-                    streamPostAppended = true;
-                }
-            }
-        }
-
-        if( streamPostAppended ) {
-            streamPost.show();
-        }
-        req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
     }
-    req.doneReportProcessing(p2a);
+    showPosts(req, posts);
+    req.doneReportProcessing(posts.length);
 
-    if (req.updateReportNewPosts) {
-        _newPostsPending = 0; // FIXME maybe we need updating here instead this zeroing
-        $.MAL.reportNewPosts(_newPostsPending);
-    }
-
-    //if the count of recieved posts less then or equals to requested...
+    //if the count of recieved posts less or equals to requested then...
     if (req.mode === 'done') {
         timelineLoaded = true;
         $.MAL.postboardLoaded();
         _refreshInProgress = false;
     } else {
         //we will request more older post...
-        req.count -= p2a;
+        req.count -= posts.length;
         if (req.count > 0) {
             //console.log('we are requesting '+req.count+' more posts...');
             requestGetposts(req);
@@ -227,6 +173,64 @@ function processReceivedPosts(req, posts)
             timelineLoaded = true;
             $.MAL.postboardLoaded();
             _refreshInProgress = false;
+        }
+    }
+}
+
+function showPosts(req, posts)
+{
+    var streamItemsParent = $.MAL.getStreamPostsParent();
+
+    for( var i = 0; i < posts.length; i++ ) {
+        if ( req.users.indexOf(posts[i]['userpost']['n']) > -1 ) {
+            var post = posts[i];
+
+            var streamPost = postToElem(post, "original", req.getspam);
+            var timePost = post["userpost"]["time"];
+            streamPost.attr("data-time",timePost);
+
+            // post will only be shown if appended to the stream list
+            var streamPostAppended = false;
+
+            // insert the post in timeline ordered by (you guessed) time
+            // FIXME: lame! searching everything everytime. please optimize!
+            var streamItems = streamItemsParent.children();
+            if( streamItems.length == 0) {
+                // timeline is empty
+                streamItemsParent.append( streamPost );
+                streamPostAppended = true;
+            } else {
+                var j = 0;
+                for( j = 0; j < streamItems.length; j++) {
+                    var streamItem = streamItems.eq(j);
+                    var timeItem = streamItem.attr("data-time");
+                    if( timeItem == undefined ||
+                        timePost > parseInt(timeItem) ) {
+                        // this post in stream is older, so post must be inserted above
+                        streamItem.before(streamPost);
+                        streamPostAppended = true;
+                        break;
+                    }
+                }
+                if( j == streamItems.length ) {
+                    // no older posts in stream, so post is to be inserted below
+                    if( req.mode == "older" || req.mode == "latestFirstTime" ) {
+                        // note: when filling gaps, the post must be discarded (not
+                        // shown) since it can never be older than what we already
+                        // have on timeline. this is a problem due to requesting from
+                        // several users at the same time, as some older posts might
+                        // be included to complete the <count> in getposts because
+                        // other users may have already been excluded by since_id.
+                        streamItemsParent.append( streamPost );
+                        streamPostAppended = true;
+                    }
+                }
+            }
+
+            if( streamPostAppended ) {
+                streamPost.show();
+            }
+            req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
         }
     }
 }
@@ -241,7 +245,16 @@ function requestTimelineUpdate(mode, count, timelineUsers, getspam)
     _refreshInProgress = true;
     if( timelineUsers.length ) {
         var req = new requestObj(timelineUsers, mode, count, getspam);
-        requestGetposts(req);
+        if (mode === 'pending') {
+            req.mode = 'latest';
+            showPosts(req, _newPostsPending);
+            _newPostsPending = [];
+            $.MAL.reportNewPosts(_newPostsPending.length);
+            $.MAL.postboardLoaded();
+            _refreshInProgress = false;
+        } else {
+            requestGetposts(req);
+        }
     } else {
         console.log("requestTimelineUpdate: not following any users");
     }
@@ -293,24 +306,35 @@ function processLastHave(userHaves)
 // callback for getposts to update the number of new pending posts not shown in timeline
 function processNewPostsConfirmation(expected, posts)
 {
-    //we don't want to produce alert for the posts that won't be displayed
-    var pnp = 0;
+    //console.log('we got '+posts.length+' posts from expected '+expected+' for confirmation');
+    //console.log(posts);
+    // we want to report about new posts that would be displayed
+    var rnp = 0;
+    // we want to display sended posts immediately
+    var sendedPostsPending = [];
     for( var i = posts.length-1; i >= 0; i-- ) {
-        if (willBeHidden(posts[i]) || posts[i]['userpost']['n'] === defaultScreenName) {
-            pnp++;
+        if ( !willBeHidden(posts[i]) ) {
+            if ( _sendedPostIDs.indexOf(posts[i]['userpost']['k']) > -1 ) {
+                sendedPostsPending.push(posts[i]);
+            } else {
+                _newPostsPending.push(posts[i]);
+                rnp++;
+            }
         }
     }
-    _newPostsPending += posts.length - pnp;
-    if( _newPostsPending ) {
-        $.MAL.reportNewPosts(_newPostsPending);
+    if ( rnp > 0 ) {
+        $.MAL.reportNewPosts(_newPostsPending.length);
     }
+    if ( sendedPostsPending.length > 0 ) {
+        var req = new requestObj([defaultScreenName],'latest',sendedPostsPending.length,promotedPostsOnly);
+        showPosts(req, sendedPostsPending);
+    }
+
     if( posts.length < expected ) {
         // new DMs have probably been produced by users we follow.
         // check with getdirectmsgs
         requestDMsCount();
     }
-
-    // TODO: possibly cache this response
 }
 
 function timelineChangedUser()
@@ -319,7 +343,8 @@ function timelineChangedUser()
     _idTrackerSpam = new idTrackerObj();
     _lastHaveMap = {};
     _refreshInProgress = false;
-    _newPostsPending = 0;
+    _newPostsPending = [];
+    _sendedPostIDs = [];
     timelineLoaded = false;
 }
 

@@ -226,6 +226,9 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
 
 function newPostMsg(msg, $postOrig) {
     if( lastPostId != undefined ) {
+        if ( typeof _sendedPostIDs !== 'undefined' )
+            _sendedPostIDs.push(lastPostId + 1);
+
         var params = [defaultScreenName, lastPostId + 1, msg]
         if( $postOrig.length ) {
             params.push($postOrig.attr('data-screen-name'));
@@ -235,7 +238,6 @@ function newPostMsg(msg, $postOrig) {
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                         alert(polyglot.t("ajax_error", { error: msg })); }, null);
-        setTimeout('requestTimelineUpdate("latest",1,["'+defaultScreenName+'"],promotedPostsOnly)', 1000);
     } else {
         alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }
@@ -250,13 +252,15 @@ function newRtMsg($postOrig) {
     var rtObj = { sig_userpost :sig_userpost, userpost : userpost };
 
     if( lastPostId != undefined ) {
+        if ( typeof _sendedPostIDs !== 'undefined' )
+            _sendedPostIDs.push(lastPostId + 1);
+
         var params = [defaultScreenName, lastPostId+1, rtObj]
 
         twisterRpc("newrtmsg", params,
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                         alert(polyglot.t("ajax_error", { error: msg })); }, null);
-        setTimeout('requestTimelineUpdate("latest",1,["'+defaultScreenName+'"],promotedPostsOnly)', 1000);
     } else {
         alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }

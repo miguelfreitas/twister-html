@@ -105,7 +105,7 @@ var MAL = function()
 
                 if ($.Options.getShowDesktopNotifPostsOpt() === 'enable') {
                     this.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_posts', newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', $.Options.getShowDesktopNotifPostsTimerOpt(), (function() {
-                            requestTimelineUpdate('latest',this,followingUsers,promotedPostsOnly);
+                            requestTimelineUpdate('pending',this,followingUsers,promotedPostsOnly);
                         }).bind(newPosts), false)
                 }
             } else {

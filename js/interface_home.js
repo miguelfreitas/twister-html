@@ -17,7 +17,7 @@ var InterfaceFunctions = function()
             var newPosts = parseInt($(".userMenu .menu-news").text());
             if (!newPosts)
                 newPosts = postsPerRefresh;
-            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+            requestTimelineUpdate('pending',newPosts,followingUsers,promotedPostsOnly);
         });
 
         // Add refresh posts for home link in menu
@@ -25,7 +25,7 @@ var InterfaceFunctions = function()
             var newPosts = parseInt($(".userMenu .menu-news").text());
             if (!newPosts)
                 newPosts = postsPerRefresh;
-            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+            requestTimelineUpdate('pending',newPosts,followingUsers,promotedPostsOnly);
         });
 
         $( ".promoted-posts-only").click(function() {
