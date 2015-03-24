@@ -488,3 +488,51 @@ var MAL = function()
 
 jQuery.MAL = new MAL;
 
+function filterLangPost(post) {
+    if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangListOpt().length > 0) {
+        var langFilterAccuracy = $.Options.getFilterLangAccuracyOpt();
+        var langFilterList = $.Options.getFilterLangListOpt();
+        var langFilterSubj = '';
+        var langFilterProb = [];
+        var langFilterPass = ($.Options.getFilterLangOpt() === 'whitelist') ? false : true;
+        var langFilterReason = 'language isn\'t in '+$.Options.getFilterLangOpt();
+
+        if (typeof(post['userpost']['rt']) !== 'undefined') {
+            langFilterSubj = post['userpost']['rt']['msg'].replace(/\@\S\w*|https?:\/\/\S*|\#/g, '').replace(/\s+/g, ' ');
+        } else {
+            langFilterSubj = post['userpost']['msg'].replace(/\@\S\w*|https?:\/\/\S*|\#/g, '').replace(/\s+/g, ' ');
+        }
+        langFilterProb = franc.all(langFilterSubj, {'minLength': 5}); // FIXME minLength may be optional sometimes
+        for (var i = 0; i < langFilterProb.length; i++) {
+            if (langFilterProb[i][1] > langFilterAccuracy) {
+                if (langFilterProb[i][0] === 'und') { // FIXME maybe there's should be an option for whitelist mode to allow this
+                    langFilterPass = true;
+                    langFilterReason = 'it\'s undefined language';
+                    break;
+                } else if (langFilterProb[i][0] === 'cmn') {
+                    langFilterPass = true;
+                    langFilterReason = 'it\'s common language';
+                    break;
+                } else if (langFilterList.indexOf(langFilterProb[i][0]) > -1) {
+                    if ($.Options.getFilterLangOpt() === 'whitelist') {
+                        langFilterPass = true;
+                        langFilterReason = 'it\'s '+langFilterProb[i][0]+', whitelisted';
+                        break;
+                    } else {
+                        langFilterPass = false;
+                        langFilterReason = 'it\'s '+langFilterProb[i][0]+', blacklisted';
+                        break;
+                    }
+                }
+            }
+        }
+        post['langFilter'] = {};
+        post['langFilter']['subj'] = langFilterSubj;
+        post['langFilter']['prob'] = langFilterProb;
+        post['langFilter']['pass'] = langFilterPass;
+        post['langFilter']['reason'] = langFilterReason;
+
+        return ($.Options.getFilterLangSimulateOpt()) ? true : langFilterPass;
+    }
+}
+

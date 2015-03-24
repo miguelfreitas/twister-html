@@ -112,23 +112,24 @@ function requestObj(users, mode, count, getspam)
     // doneReportProcessing is called after an getposts response is processed
     // mode changing may require a new request (to fill gaps)
     this.doneReportProcessing = function(receivedCount) {
-        if (receivedCount === this.count) {
+        if (receivedCount >= this.count) {
             this.mode = 'done';
         } else {
             if (this.mode === 'latest' || this.mode === 'latestFirstTime') {
                 this.mode = 'fillgap';
             } else if (this.mode === 'fillgap') {
                 this.mode = 'older';
-            } else if (this.mode === 'older')
-                this.mode = 'done';
+            }
         }
-        //console.log('we got '+receivedCount+' posts from requested '+this.count+', status of processing is "'+this.mode+'"');
+        //console.log('we got '+receivedCount+' posts from requested '+this.count+', status of processing: '+this.mode);
     }
 }
 
 // json rpc with requestObj as parameter
 function requestGetposts(req)
 {
+    //console.log('requestGetposts');
+    //console.log(req);
     var r = req.getRequest();
     if( !req.getspam ) {
         if( r.length ) {
@@ -148,9 +149,12 @@ function requestGetposts(req)
 // request if needed
 function processReceivedPosts(req, posts)
 {
+    //console.log('processReceivedPosts:');
+    //console.log(posts);
     //hiding posts can cause empty postboard, so we have to track the count...
     for( var i = 0; i < posts.length; i++ ) {
         if (willBeHidden(posts[i])) {
+            req.reportProcessedPost(posts[i]["userpost"]["n"],posts[i]["userpost"]["k"], true)
             posts.splice(i, 1);
             i--;
         }
@@ -168,7 +172,7 @@ function processReceivedPosts(req, posts)
         req.count -= posts.length;
         if (req.count > 0) {
             //console.log('we are requesting '+req.count+' more posts...');
-            requestGetposts(req);
+            setTimeout((function (){requestGetposts(this)}).bind(req), 1000);
         } else {
             timelineLoaded = true;
             $.MAL.postboardLoaded();
@@ -179,12 +183,15 @@ function processReceivedPosts(req, posts)
 
 function showPosts(req, posts)
 {
+    //console.log('showPosts:');
+    //console.log(req);
+    //console.log(posts);
     var streamItemsParent = $.MAL.getStreamPostsParent();
 
     for( var i = 0; i < posts.length; i++ ) {
         if ( req.users.indexOf(posts[i]['userpost']['n']) > -1 ) {
             var post = posts[i];
-
+            //console.log(post);
             var streamPost = postToElem(post, "original", req.getspam);
             var timePost = post["userpost"]["time"];
             streamPost.attr("data-time",timePost);
@@ -228,6 +235,15 @@ function showPosts(req, posts)
             }
 
             if( streamPostAppended ) {
+                if ($.Options.getFilterLangSimulateOpt()) {
+                    // FIXME it's should be stuff from template actually
+                    if (typeof(post['langFilter']) !== 'undefined') {
+                        streamPost.append('<div class="langFilterSimData">This post is <em>'+((post['langFilter']['pass'] === true) ? 'passed' : 'blocked')+'</em> by language filter.</div>');
+                        streamPost.append('<div class="langFilterSimData">Reason: <em>'+post['langFilter']['reason']+'</em> // Most possible language: <em>'+post['langFilter']['prob'][0].toString()+'</em></div>');
+                    } else {
+                        streamPost.append('<div class="langFilterSimData">This post is not filtered by language.</div>');
+                    }
+                }
                 streamPost.show();
             }
             req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
@@ -297,6 +313,8 @@ function processLastHave(userHaves)
 
     // now do a getposts to confirm the number of new haves with are effectively new public posts
     if( newPostsLocal ) {
+        //console.log('processLastHave(): requesting '+newPostsLocal);
+        //console.log(reqConfirmNewPosts);
         twisterRpc("getposts", [newPostsLocal, reqConfirmNewPosts],
                function(expected, posts) {processNewPostsConfirmation(expected, posts);}, newPostsLocal,
                function(req, ret) {console.log("ajax error:" + ret);}, null);
@@ -376,6 +394,11 @@ function willBeHidden(post){
             return false;
         else
             return true;
+    }
+
+    if (filterLangPost(post) === false) {
+        hidden = true;
+        console.log('post by @'+post['userpost']['n']+' was hidden because it didn\'t passed by language filter');
     }
 
     return hidden;

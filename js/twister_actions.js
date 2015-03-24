@@ -389,4 +389,3 @@ function displayHashtagPending(postboard) {
     $.MAL.postboardLoaded();
     _hashtagPendingPosts = [];
 }
-

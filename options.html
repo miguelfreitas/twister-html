@@ -10,6 +10,7 @@
     <script src="js/jquery.jsonrpcclient.js"></script>
     <script src="js/jquery.storageapi.js"></script>
     <script src="js/options.js"></script>
+    <script src="js/franc.js"></script>
     <script src="js/notify.js"></script>
     <script src="js/mobile_abstract.js"></script>
     <script src="js/twister_io.js"></script>
@@ -237,6 +238,27 @@
                 <p id="hideCloseRTsDesc">
                   <input name="" id="hideCloseRtsHour" class="container" maxlength="2" size="1"/> <span class="label">hour(s)</span>
                 </p>
+              </form>
+            </div>
+            <div class="container">
+              <form action="" id="filterLangOpt">
+                <p class="label">Language filtering</p>
+                <div class="container">
+                  <p>
+                  <select name="" id="filterLang">
+                    <option value="disable">Disable</option>
+                    <option value="blacklist">By blacklist</option>
+                    <option value="whitelist">By whitelist</option>
+                  </select>
+                  </p>
+                  <div id="filterLangListCont" class="container">
+                    <p class="label">Comma separated ISO 639-3 language codes</p>
+                    <p><input type="text" id="filterLangList" class="container" /></p>
+                    <p class="label">Accuracy</p>
+                    <p><input type="range" id="filterLangAccuracy" class="container" min="0" max="1" step="0.01"><span id="filterLangAccuracyVal" class="container"></span></p>
+                    <p><span class="label">Simulation mode</span> <input type="checkbox" id="filterLangSimulate" /></p>
+                  </div>
+                </div>
               </form>
             </div>
           </div>

@@ -434,6 +434,59 @@ var TwisterOptions = function()
         return $.Options.getOption('isFollowingMe');
     };
 
+    this.getFilterLangOpt = function() {
+        return $.Options.getOption('filterLang','disable');
+    }
+
+    this.setFilterLangOpt = function () {
+        function filterLangListCont() {
+            if ( $.Options.getFilterLangOpt() !== 'disable' ) {
+                $('#filterLangListCont')[0].style.display= 'block';
+            } else {
+                $('#filterLangListCont')[0].style.display= 'none';
+            }
+        }
+        $('#filterLang').val(this.getFilterLangOpt());
+        filterLangListCont();
+        $('#filterLang').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            filterLangListCont();
+        });
+    }
+
+    this.getFilterLangListOpt = function () {
+        return $.Options.getOption('filterLangList', '').split(/\s*,\s*/);
+    }
+
+    this.setFilterLangListOpt = function () {
+        $('#filterLangList').val(this.getFilterLangListOpt());
+
+        $('#filterLangList').on('keyup', function () {$.Options.setOption(this.id, this.value);});
+    }
+
+    this.getFilterLangAccuracyOpt = function () {
+        return parseFloat($.Options.getOption('filterLangAccuracy', '0.63'));
+    }
+
+    this.setFilterLangAccuracyOpt = function () {
+        $('#filterLangAccuracy').val(this.getFilterLangAccuracyOpt());
+        $('#filterLangAccuracyVal').text(this.getFilterLangAccuracyOpt());
+        $('#filterLangAccuracy').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+            $('#filterLangAccuracyVal').text(this.value);
+        });
+    }
+
+    this.getFilterLangSimulateOpt = function () {
+        return $.Options.getOption('filterLangSimulate', false);
+    }
+
+    this.setFilterLangSimulateOpt = function () {
+        $('#filterLangSimulate').prop('checked', $.Options.getFilterLangSimulateOpt());
+
+        $('#filterLangSimulate').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
     this.setIsFollowingMeOpt = function () {
         $('#isFollowingMe')[0].value = this.getIsFollowingMeOpt();
 
@@ -482,6 +535,10 @@ var TwisterOptions = function()
         this.setHideRepliesOpt();
         this.setHideCloseRTsHourOpt();
         this.setHideCloseRTsOpt();
+        this.setFilterLangOpt();
+        this.setFilterLangListOpt();
+        this.setFilterLangAccuracyOpt();
+        this.setFilterLangSimulateOpt();
         this.setIsFollowingMeOpt();
         this.setDMCopySelfOpt();
     }
