@@ -1929,12 +1929,13 @@ ol.toptrends-list {
 }
 
 .langFilterSimData {
+    color: rgba( 0, 0, 0, .7 );
     font: 10px "Open Sans", sans-serif;
     text-align: center;
 }
 
 .langFilterSimData em {
-    color: rgba( 227, 79, 66, .5 );
+    color: rgba( 227, 79, 66, .7 );
 }
 
 /*************************************

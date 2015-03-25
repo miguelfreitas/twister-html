@@ -238,10 +238,10 @@ function showPosts(req, posts)
                 if ($.Options.getFilterLangSimulateOpt()) {
                     // FIXME it's should be stuff from template actually
                     if (typeof(post['langFilter']) !== 'undefined') {
-                        streamPost.append('<div class="langFilterSimData">This post is <em>'+((post['langFilter']['pass'] === true) ? 'passed' : 'blocked')+'</em> by language filter.</div>');
-                        streamPost.append('<div class="langFilterSimData">Reason: <em>'+post['langFilter']['reason']+'</em> // Most possible language: <em>'+post['langFilter']['prob'][0].toString()+'</em></div>');
+                        streamPost.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+((post['langFilter']['pass'] === true) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>'})+'</div>');
+                        streamPost.append('<div class="langFilterSimData">'+polyglot.t('Reason: this', {'this': '<em>'+post['langFilter']['reason']+'</em>'})+'  //  '+polyglot.t('Most possible language: this', {'this': '<em>'+post['langFilter']['prob'][0].toString()+'</em>'})+'</div>');
                     } else {
-                        streamPost.append('<div class="langFilterSimData">This post is not filtered by language.</div>');
+                        streamPost.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+polyglot.t('not analyzed')+'</em>'})+'</div>');
                     }
                 }
                 streamPost.show();
@@ -367,39 +367,36 @@ function timelineChangedUser()
 }
 
 function willBeHidden(post){
-    var msg = post['userpost']['msg'];
-    var hidden = false;
-
     if (post['userpost']['n'] === defaultScreenName)
         return false;
 
-    if ($.Options.getHideRepliesOpt() !== 'disable' &&
-        /^\@/.test(msg) &&
-        !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|\\t|$)').test(msg)))
-    {
+    if (typeof(post['userpost']['rt']) !== 'undefined') {
+        if ($.Options.getHideCloseRTsOpt() != 'disable' &&
+            followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
+            parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.getHideCloseRTsHourOpt() * 3600)
+        {
+            return true;
+        }
+    } else {
+        var msg = post['userpost']['msg'];
+        if ($.Options.getHideRepliesOpt() !== 'disable' &&
+            /^\@/.test(msg) &&
+            !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|\\t|$)').test(msg)))
+        {
             if ($.Options.getHideRepliesOpt() === 'only-me' ||
                 ($.Options.getHideRepliesOpt() === 'following' &&
                  followingUsers.indexOf(msg.substring(1, msg.search(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n|\t|$/))) === -1 ))
             {
-                hidden = true;
+                return true;
             }
-    }
-
-    if (typeof(post['userpost']['rt']) !== 'undefined' &&
-        $.Options.getHideCloseRTsOpt() != 'disable' &&
-        followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
-        parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.getHideCloseRTsHourOpt() * 3600)
-    {
-        if (hidden)
-            return false;
-        else
-            return true;
+        }
     }
 
     if (filterLangPost(post) === false) {
-        hidden = true;
-        console.log('post by @'+post['userpost']['n']+' was hidden because it didn\'t passed by language filter');
+        // TODO maybe we need a counter of posts blocked by language filter and even caching of them and button to show?
+        //console.log('post by @'+post['userpost']['n']+' was hidden because it didn\'t passed by language filter:');
+        return true;
     }
 
-    return hidden;
+    return false;
 }

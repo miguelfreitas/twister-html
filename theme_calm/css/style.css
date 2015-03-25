@@ -2375,6 +2375,7 @@ textarea.splited-post {
 }
 
 .langFilterSimData {
+    color: rgba( 0, 0, 0, .7 );
     font: 10px "Open Sans", sans-serif;
     text-align: center;
 }

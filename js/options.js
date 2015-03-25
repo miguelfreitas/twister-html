@@ -455,7 +455,7 @@ var TwisterOptions = function()
     }
 
     this.getFilterLangListOpt = function () {
-        return $.Options.getOption('filterLangList', '').split(/\s*,\s*/);
+        return $.Options.getOption('filterLangList', '').replace(/\s+/g, '').split(/\s*,\s*/);
     }
 
     this.setFilterLangListOpt = function () {
@@ -465,7 +465,7 @@ var TwisterOptions = function()
     }
 
     this.getFilterLangAccuracyOpt = function () {
-        return parseFloat($.Options.getOption('filterLangAccuracy', '0.63'));
+        return parseFloat($.Options.getOption('filterLangAccuracy', '0.82'));
     }
 
     this.setFilterLangAccuracyOpt = function () {

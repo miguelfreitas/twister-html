@@ -495,32 +495,30 @@ function filterLangPost(post) {
         var langFilterSubj = '';
         var langFilterProb = [];
         var langFilterPass = ($.Options.getFilterLangOpt() === 'whitelist') ? false : true;
-        var langFilterReason = 'language isn\'t in '+$.Options.getFilterLangOpt();
+        var langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t($.Options.getFilterLangOpt()), 'that': polyglot.t('language of this')});
 
         if (typeof(post['userpost']['rt']) !== 'undefined') {
-            langFilterSubj = post['userpost']['rt']['msg'].replace(/\@\S\w*|https?:\/\/\S*|\#/g, '').replace(/\s+/g, ' ');
+            langFilterSubj = post['userpost']['rt']['msg'];
         } else {
-            langFilterSubj = post['userpost']['msg'].replace(/\@\S\w*|https?:\/\/\S*|\#/g, '').replace(/\s+/g, ' ');
+            langFilterSubj = post['userpost']['msg'];
         }
-        langFilterProb = franc.all(langFilterSubj, {'minLength': 5}); // FIXME minLength may be optional sometimes
+        // we cut out any mentions, links and # symbols from hashtags and clear spaces before detection attempts:
+        langFilterSubj = langFilterSubj.replace(/\@\S\w*|https?:\/\/\S*|\#/g, '').replace(/\s+/g, ' ').trim();
+        langFilterProb = franc.all(langFilterSubj, {'minLength': 4}); // FIXME minLength may become configurable option at some time
         for (var i = 0; i < langFilterProb.length; i++) {
             if (langFilterProb[i][1] > langFilterAccuracy) {
-                if (langFilterProb[i][0] === 'und') { // FIXME maybe there's should be an option for whitelist mode to allow this
+                if (langFilterProb[i][0] === 'und') { // e.g. digits-only string will be detected as undefined and thereby will be allowed
                     langFilterPass = true;
-                    langFilterReason = 'it\'s undefined language';
-                    break;
-                } else if (langFilterProb[i][0] === 'cmn') {
-                    langFilterPass = true;
-                    langFilterReason = 'it\'s common language';
+                    langFilterReason = polyglot.t('its undefined language');
                     break;
                 } else if (langFilterList.indexOf(langFilterProb[i][0]) > -1) {
                     if ($.Options.getFilterLangOpt() === 'whitelist') {
                         langFilterPass = true;
-                        langFilterReason = 'it\'s '+langFilterProb[i][0]+', whitelisted';
+                        langFilterReason = polyglot.t('its this, whitelisted', {'this': '\''+langFilterProb[i][0]+'\''});
                         break;
                     } else {
                         langFilterPass = false;
-                        langFilterReason = 'it\'s '+langFilterProb[i][0]+', blacklisted';
+                        langFilterReason = polyglot.t('its this, blacklisted', {'this': '\''+langFilterProb[i][0]+'\''});
                         break;
                     }
                 }
@@ -532,6 +530,7 @@ function filterLangPost(post) {
         post['langFilter']['pass'] = langFilterPass;
         post['langFilter']['reason'] = langFilterReason;
 
+        //console.log('langFilter | status: '+((langFilterPass === true) ? polyglot.t('passed') : polyglot.t('blocked'))+' | reason: '+langFilterReason+' | subject: \''+langFilterSubj+'\'');
         return ($.Options.getFilterLangSimulateOpt()) ? true : langFilterPass;
     }
 }
