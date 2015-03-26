@@ -340,6 +340,22 @@ function processHashtag(postboard, hashtag, data) {
             var key = userpost["n"] + ";" + userpost["time"];
             if( !(key in _hashtagProcessedMap) ) {
                 _hashtagProcessedMap[key] = true;
+
+                if ($.Options.getFilterLangForSearchingOpt()) {
+                    if (typeof(userpost['rt']) !== 'undefined') {
+                        var msg = userpost['rt']['msg'];
+                    } else {
+                        var msg = userpost['msg'];
+                    }
+                    langFilterData = filterLang(msg);
+                    if ($.Options.getFilterLangSimulateOpt()) {
+                        data[i]['langFilter'] = langFilterData;
+                    } else {
+                        if (!langFilterData['pass'])
+                            continue;
+                    }
+                }
+
                 _hashtagPendingPosts.push(data[i]);
                 _hashtagPendingPostsUpdated++;
             }
@@ -363,8 +379,11 @@ function processHashtag(postboard, hashtag, data) {
 
 function displayHashtagPending(postboard) {
     for( var i = 0; i < _hashtagPendingPosts.length; i++ ) {
-        var streamPost = postToElem(_hashtagPendingPosts[i], "original");
-        var timePost = _hashtagPendingPosts[i]["userpost"]["time"];
+        var post = _hashtagPendingPosts[i];
+        //console.log(post);
+        var streamPost = postToElem(post, "original");
+        var timePost = post["userpost"]["time"];
+        streamPost.attr("data-time",timePost);
 
         var streamItems = postboard.children();
         if( streamItems.length == 0) {

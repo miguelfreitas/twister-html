@@ -235,15 +235,6 @@ function showPosts(req, posts)
             }
 
             if( streamPostAppended ) {
-                if ($.Options.getFilterLangSimulateOpt()) {
-                    // FIXME it's should be stuff from template actually
-                    if (typeof(post['langFilter']) !== 'undefined') {
-                        streamPost.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+((post['langFilter']['pass'] === true) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>'})+'</div>');
-                        streamPost.append('<div class="langFilterSimData">'+polyglot.t('Reason: this', {'this': '<em>'+post['langFilter']['reason']+'</em>'})+'  //  '+polyglot.t('Most possible language: this', {'this': '<em>'+post['langFilter']['prob'][0].toString()+'</em>'})+'</div>');
-                    } else {
-                        streamPost.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+polyglot.t('not analyzed')+'</em>'})+'</div>');
-                    }
-                }
                 streamPost.show();
             }
             req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
@@ -371,14 +362,21 @@ function willBeHidden(post){
         return false;
 
     if (typeof(post['userpost']['rt']) !== 'undefined') {
+        // hope it is not too egocentric to overcome HideCloseRTsOpt this way
+        if (post['userpost']['rt']['n'] === defaultScreenName)
+            return false;
+
         if ($.Options.getHideCloseRTsOpt() != 'disable' &&
             followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
             parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.getHideCloseRTsHourOpt() * 3600)
         {
             return true;
         }
+
+        var msg = post['userpost']['rt']['msg'];
     } else {
         var msg = post['userpost']['msg'];
+
         if ($.Options.getHideRepliesOpt() !== 'disable' &&
             /^\@/.test(msg) &&
             !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|\\t|$)').test(msg)))
@@ -392,10 +390,13 @@ function willBeHidden(post){
         }
     }
 
-    if (filterLangPost(post) === false) {
-        // TODO maybe we need a counter of posts blocked by language filter and even caching of them and button to show?
-        //console.log('post by @'+post['userpost']['n']+' was hidden because it didn\'t passed by language filter:');
-        return true;
+    if ($.Options.getFilterLangForPostboardOpt()) {
+        post['langFilter'] = filterLang(msg);
+        if (!post['langFilter']['pass'] && !$.Options.getFilterLangSimulateOpt()) {
+            // TODO maybe we need a counter of posts blocked by language filter and even caching of them and button to show?
+            //console.log('post by @'+post['userpost']['n']+' was hidden because it didn\'t passed by language filter:');
+            return true;
+        }
     }
 
     return false;

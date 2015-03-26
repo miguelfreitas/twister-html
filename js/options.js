@@ -477,6 +477,36 @@ var TwisterOptions = function()
         });
     }
 
+    this.getFilterLangForPostboardOpt = function () {
+        return $.Options.getOption('filterLangForPostboard', true);
+    }
+
+    this.setFilterLangForPostboardOpt = function () {
+        $('#filterLangForPostboard').prop('checked', $.Options.getFilterLangForPostboardOpt());
+
+        $('#filterLangForPostboard').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
+    this.getFilterLangForSearchingOpt = function () {
+        return $.Options.getOption('filterLangForSearching', true);
+    }
+
+    this.setFilterLangForSearchingOpt = function () {
+        $('#filterLangForSearching').prop('checked', $.Options.getFilterLangForSearchingOpt());
+
+        $('#filterLangForSearching').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
+    this.getFilterLangForTopTrendsOpt = function () {
+        return $.Options.getOption('filterLangForTopTrends', true);
+    }
+
+    this.setFilterLangForTopTrendsOpt = function () {
+        $('#filterLangForTopTrends').prop('checked', $.Options.getFilterLangForTopTrendsOpt());
+
+        $('#filterLangForTopTrends').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
     this.getFilterLangSimulateOpt = function () {
         return $.Options.getOption('filterLangSimulate', false);
     }
@@ -538,6 +568,9 @@ var TwisterOptions = function()
         this.setFilterLangOpt();
         this.setFilterLangListOpt();
         this.setFilterLangAccuracyOpt();
+        this.setFilterLangForPostboardOpt();
+        this.setFilterLangForSearchingOpt();
+        this.setFilterLangForTopTrendsOpt();
         this.setFilterLangSimulateOpt();
         this.setIsFollowingMeOpt();
         this.setDMCopySelfOpt();

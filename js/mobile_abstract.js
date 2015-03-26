@@ -488,7 +488,7 @@ var MAL = function()
 
 jQuery.MAL = new MAL;
 
-function filterLangPost(post) {
+function filterLang(string) {
     if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangListOpt().length > 0) {
         var langFilterAccuracy = $.Options.getFilterLangAccuracyOpt();
         var langFilterList = $.Options.getFilterLangListOpt();
@@ -497,14 +497,18 @@ function filterLangPost(post) {
         var langFilterPass = ($.Options.getFilterLangOpt() === 'whitelist') ? false : true;
         var langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t($.Options.getFilterLangOpt()), 'that': polyglot.t('language of this')});
 
-        if (typeof(post['userpost']['rt']) !== 'undefined') {
-            langFilterSubj = post['userpost']['rt']['msg'];
-        } else {
-            langFilterSubj = post['userpost']['msg'];
-        }
-        // we cut out any mentions, links and # symbols from hashtags and clear spaces before detection attempts:
-        langFilterSubj = langFilterSubj.replace(/\@\S\w*|https?:\/\/\S*|\#/g, '').replace(/\s+/g, ' ').trim();
-        langFilterProb = franc.all(langFilterSubj, {'minLength': 4}); // FIXME minLength may become configurable option at some time
+        // before detection attempts we cut out any mentions and links, and replace _ with space
+        langFilterSubj = string.replace(/@\S\w*|https?:\/\/\S*/g, '').replace(/_+/g, ' ')
+        // replace zero-width word boundaries, such as between letters from different alphabets [or other symbols], with spaces
+              // FIXME not so good idea because 'Za pomocą białej listy' may turn into 'Za pomoc ą bia ł ej listy' for e.g.
+              // FIXME but first one was recognized as 'hrv' and second as 'pol' and you know it's 'pol' actually
+            .replace(/\b/g, ' ')
+        // cut out some more symbols
+            .replace(/[#\[\]\(\)\{\}\-\+\=\^\:\;\\\/]/g, '')
+        // clear unwanted spaces
+            .replace(/\s+/g, ' ').trim();
+
+        langFilterProb = franc.all(langFilterSubj, {'minLength': 2}); // FIXME minLength may become configurable option at some time
         for (var i = 0; i < langFilterProb.length; i++) {
             if (langFilterProb[i][1] > langFilterAccuracy) {
                 if (langFilterProb[i][0] === 'und') { // e.g. digits-only string will be detected as undefined and thereby will be allowed
@@ -524,14 +528,9 @@ function filterLangPost(post) {
                 }
             }
         }
-        post['langFilter'] = {};
-        post['langFilter']['subj'] = langFilterSubj;
-        post['langFilter']['prob'] = langFilterProb;
-        post['langFilter']['pass'] = langFilterPass;
-        post['langFilter']['reason'] = langFilterReason;
 
         //console.log('langFilter | status: '+((langFilterPass === true) ? polyglot.t('passed') : polyglot.t('blocked'))+' | reason: '+langFilterReason+' | subject: \''+langFilterSubj+'\'');
-        return ($.Options.getFilterLangSimulateOpt()) ? true : langFilterPass;
+        return {'subj': langFilterSubj, 'prob': langFilterProb, 'pass': langFilterPass, 'reason': langFilterReason};
     }
 }
 
