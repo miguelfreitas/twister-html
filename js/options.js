@@ -212,7 +212,7 @@ var TwisterOptions = function()
 
     this.setTestDesktopNotif = function() {
         $('#testDesktopNotif').on('click', function() {
-            $.MAL.showDesktopNotif(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, false, function() { alert(polyglot.t('notify_desktop_perm_denied')) })
+            $.MAL.showDesktopNotif(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, false, function() { alert(polyglot.t('notify_desktop_perm_denied', {'this_domain': document.domain})) })
         })
     }
 
@@ -372,6 +372,36 @@ var TwisterOptions = function()
         });
     }
 
+    this.getTopTrendsAutoUpdateOpt = function() {
+        return this.getOption('TopTrendsAutoUpdate', 'enable');
+    }
+
+    this.setTopTrendsAutoUpdateOpt = function () {
+        function TopTrendsAutoUpdateCfg() {
+            if ($.Options.getTopTrendsAutoUpdateOpt() === 'enable') {
+                $('#TopTrendsAutoUpdateOpt')[0].style.display= 'inline';
+            } else {
+                $('#TopTrendsAutoUpdateOpt')[0].style.display= 'none';
+            }
+        }
+        $('#TopTrendsAutoUpdate').val(this.getTopTrendsAutoUpdateOpt());
+        TopTrendsAutoUpdateCfg();
+        $('#TopTrendsAutoUpdate').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            TopTrendsAutoUpdateCfg();
+        });
+    }
+
+    this.getTopTrendsAutoUpdateTimerOpt = function () {
+        return parseInt(this.getOption('TopTrendsAutoUpdateTimer', '120'));
+    }
+
+    this.setTopTrendsAutoUpdateTimerOpt = function () {
+        $('#TopTrendsAutoUpdateTimer')[0].value = this.getTopTrendsAutoUpdateTimerOpt().toString();
+
+        $('#TopTrendsAutoUpdateTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+    }
+
     this.getSplitPostsOpt = function (){
         return $.Options.getOption('splitPosts', 'disable');
     }
@@ -434,6 +464,89 @@ var TwisterOptions = function()
         return $.Options.getOption('isFollowingMe');
     };
 
+    this.getFilterLangOpt = function() {
+        return this.getOption('filterLang','disable');
+    }
+
+    this.setFilterLangOpt = function () {
+        function filterLangListCont() {
+            if ( $.Options.getFilterLangOpt() !== 'disable' ) {
+                $('#filterLangListCont')[0].style.display= 'block';
+            } else {
+                $('#filterLangListCont')[0].style.display= 'none';
+            }
+        }
+        $('#filterLang').val(this.getFilterLangOpt());
+        filterLangListCont();
+        $('#filterLang').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            filterLangListCont();
+        });
+    }
+
+    this.getFilterLangListOpt = function () {
+        return this.getOption('filterLangList', '').replace(/\s+/g, '').split(/\s*,\s*/);
+    }
+
+    this.setFilterLangListOpt = function () {
+        $('#filterLangList').val(this.getFilterLangListOpt());
+
+        $('#filterLangList').on('keyup', function () {$.Options.setOption(this.id, this.value);});
+    }
+
+    this.getFilterLangAccuracyOpt = function () {
+        return parseFloat(this.getOption('filterLangAccuracy', '0.82'));
+    }
+
+    this.setFilterLangAccuracyOpt = function () {
+        $('#filterLangAccuracy').val(this.getFilterLangAccuracyOpt());
+        $('#filterLangAccuracyVal').text(this.getFilterLangAccuracyOpt());
+        $('#filterLangAccuracy').on('change', function () {
+            $.Options.setOption(this.id, this.value);
+            $('#filterLangAccuracyVal').text(this.value);
+        });
+    }
+
+    this.getFilterLangForPostboardOpt = function () {
+        return this.getOption('filterLangForPostboard', true);
+    }
+
+    this.setFilterLangForPostboardOpt = function () {
+        $('#filterLangForPostboard').prop('checked', this.getFilterLangForPostboardOpt());
+
+        $('#filterLangForPostboard').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
+    this.getFilterLangForSearchingOpt = function () {
+        return this.getOption('filterLangForSearching', true);
+    }
+
+    this.setFilterLangForSearchingOpt = function () {
+        $('#filterLangForSearching').prop('checked', this.getFilterLangForSearchingOpt());
+
+        $('#filterLangForSearching').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
+    this.getFilterLangForTopTrendsOpt = function () {
+        return this.getOption('filterLangForTopTrends', true);
+    }
+
+    this.setFilterLangForTopTrendsOpt = function () {
+        $('#filterLangForTopTrends').prop('checked', this.getFilterLangForTopTrendsOpt());
+
+        $('#filterLangForTopTrends').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
+    this.getFilterLangSimulateOpt = function () {
+        return this.getOption('filterLangSimulate', true);
+    }
+
+    this.setFilterLangSimulateOpt = function () {
+        $('#filterLangSimulate').prop('checked', this.getFilterLangSimulateOpt());
+
+        $('#filterLangSimulate').on('click', function () {$.Options.setOption(this.id, this.checked);});
+    }
+
     this.setIsFollowingMeOpt = function () {
         $('#isFollowingMe')[0].value = this.getIsFollowingMeOpt();
 
@@ -478,23 +591,32 @@ var TwisterOptions = function()
         this.setConvertFractionsOpt();
         this.setUseProxyOpt();
         this.setUseProxyForImgOnlyOpt();
+        this.setTopTrendsAutoUpdateOpt();
+        this.setTopTrendsAutoUpdateTimerOpt();
         this.setSplitPostsOpt();
         this.setHideRepliesOpt();
         this.setHideCloseRTsHourOpt();
         this.setHideCloseRTsOpt();
+        this.setFilterLangOpt();
+        this.setFilterLangListOpt();
+        this.setFilterLangAccuracyOpt();
+        this.setFilterLangForPostboardOpt();
+        this.setFilterLangForSearchingOpt();
+        this.setFilterLangForTopTrendsOpt();
+        this.setFilterLangSimulateOpt();
         this.setIsFollowingMeOpt();
         this.setDMCopySelfOpt();
     }
 
     function setElemValNumeric(elem, mes) {
         //var elem = $(elem_nm);
-        if (/^\d+$/.test(elem.value)) {
+        if (/^\d+$/.test(elem.value) && parseFloat(elem.value) > 0) {
             elem.style.backgroundColor = '';
             $.Options.setOption(elem.id, elem.value);
             $(elem).next('span').text(mes);
         } else {
             elem.style.backgroundColor = '#f00';
-            $(elem).next('span').text(polyglot.t('only numbers are allowed!'));
+            $(elem).next('span').text(polyglot.t('only positive numbers!'));
         }
     };
 }
@@ -507,7 +629,7 @@ function localizeLabels()
     $("label[for=t-2]").text(polyglot.t("Theme"));
     $("label[for=t-3]").text(polyglot.t("Notifications"));
     $("label[for=t-4]").text(polyglot.t("Keys"));
-    $("label[for=t-5]").text(polyglot.t("Postboard"));
+    $("label[for=t-5]").text(polyglot.t("Appearance"));
     $("label[for=t-6]").text(polyglot.t("Users"));
 }
 

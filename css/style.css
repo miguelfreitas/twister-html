@@ -1898,8 +1898,7 @@ ol.toptrends-list {
     box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
 }
 
-.volValue {
-    vertical-align: top;
+.volValue, #filterLangAccuracyVal {
     font: 12px "Open Sans", sans-serif;
 }
 
@@ -1913,6 +1912,30 @@ ol.toptrends-list {
     -moz-transition: height 1s linear;
     -o-transition: height 1s linear;
     -ms-transition: height 1s linear;
+}
+
+.options input[type='checkbox'] {
+    cursor: pointer;
+    vertical-align: sub;
+}
+
+.options input[type='range'] {
+    cursor: pointer;
+    vertical-align: -16px;
+}
+
+.options #filterLangList {
+    width: 80%;
+}
+
+.langFilterSimData {
+    color: rgba( 0, 0, 0, .7 );
+    font: 10px "Open Sans", sans-serif;
+    text-align: center;
+}
+
+.langFilterSimData em {
+    color: rgba( 227, 79, 66, .7 );
 }
 
 /*************************************

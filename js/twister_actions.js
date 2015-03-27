@@ -226,6 +226,9 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
 
 function newPostMsg(msg, $postOrig) {
     if( lastPostId != undefined ) {
+        if ( typeof _sendedPostIDs !== 'undefined' )
+            _sendedPostIDs.push(lastPostId + 1);
+
         var params = [defaultScreenName, lastPostId + 1, msg]
         if( $postOrig.length ) {
             params.push($postOrig.attr('data-screen-name'));
@@ -235,7 +238,6 @@ function newPostMsg(msg, $postOrig) {
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                         alert(polyglot.t("ajax_error", { error: msg })); }, null);
-        setTimeout('requestTimelineUpdate("latest",1,["'+defaultScreenName+'"],promotedPostsOnly)', 1000);
     } else {
         alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }
@@ -250,13 +252,15 @@ function newRtMsg($postOrig) {
     var rtObj = { sig_userpost :sig_userpost, userpost : userpost };
 
     if( lastPostId != undefined ) {
+        if ( typeof _sendedPostIDs !== 'undefined' )
+            _sendedPostIDs.push(lastPostId + 1);
+
         var params = [defaultScreenName, lastPostId+1, rtObj]
 
         twisterRpc("newrtmsg", params,
                    function(arg, ret) { incLastPostId(); }, null,
                    function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                         alert(polyglot.t("ajax_error", { error: msg })); }, null);
-        setTimeout('requestTimelineUpdate("latest",1,["'+defaultScreenName+'"],promotedPostsOnly)', 1000);
     } else {
         alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
     }
@@ -336,6 +340,22 @@ function processHashtag(postboard, hashtag, data) {
             var key = userpost["n"] + ";" + userpost["time"];
             if( !(key in _hashtagProcessedMap) ) {
                 _hashtagProcessedMap[key] = true;
+
+                if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForSearchingOpt()) {
+                    if (typeof(userpost['rt']) !== 'undefined') {
+                        var msg = userpost['rt']['msg'];
+                    } else {
+                        var msg = userpost['msg'];
+                    }
+                    langFilterData = filterLang(msg);
+                    if ($.Options.getFilterLangSimulateOpt()) {
+                        data[i]['langFilter'] = langFilterData;
+                    } else {
+                        if (!langFilterData['pass'])
+                            continue;
+                    }
+                }
+
                 _hashtagPendingPosts.push(data[i]);
                 _hashtagPendingPostsUpdated++;
             }
@@ -359,8 +379,11 @@ function processHashtag(postboard, hashtag, data) {
 
 function displayHashtagPending(postboard) {
     for( var i = 0; i < _hashtagPendingPosts.length; i++ ) {
-        var streamPost = postToElem(_hashtagPendingPosts[i], "original");
-        var timePost = _hashtagPendingPosts[i]["userpost"]["time"];
+        var post = _hashtagPendingPosts[i];
+        //console.log(post);
+        var streamPost = postToElem(post, "original");
+        var timePost = post["userpost"]["time"];
+        streamPost.attr("data-time",timePost);
 
         var streamItems = postboard.children();
         if( streamItems.length == 0) {
@@ -385,4 +408,3 @@ function displayHashtagPending(postboard) {
     $.MAL.postboardLoaded();
     _hashtagPendingPosts = [];
 }
-

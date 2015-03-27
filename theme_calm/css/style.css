@@ -2327,7 +2327,7 @@ textarea.splited-post {
 
 .options .module select {
     padding: 0px 30px 0px 10px;
-    text-align: center;
+    text-align: left;
     background: #fff url(../img/form-arrow-down-black.png) no-repeat right center;
     border: 1px solid #ccc;
     -webkit-border-radius: 4px;
@@ -2343,8 +2343,7 @@ textarea.splited-post {
 /* end */
 }
 
-.volValue {
-    vertical-align: top;
+.volValue, #filterLangAccuracyVal {
     font: 12px "Open Sans", sans-serif;
 }
 
@@ -2358,6 +2357,31 @@ textarea.splited-post {
     -moz-transition: height 1s linear;
     -o-transition: height 1s linear;
     -ms-transition: height 1s linear;
+}
+
+.options input[type='checkbox'] {
+    cursor: pointer;
+    vertical-align: sub;
+}
+
+.options input[type='range'] {
+    cursor: pointer;
+    vertical-align: -16px;
+}
+
+.options #filterLangList {
+    width: 80%;
+    text-align: left;
+}
+
+.langFilterSimData {
+    color: rgba( 0, 0, 0, .7 );
+    font: 10px "Open Sans", sans-serif;
+    text-align: center;
+}
+
+.langFilterSimData em {
+    color: #768fce;
 }
 
 /*************************************

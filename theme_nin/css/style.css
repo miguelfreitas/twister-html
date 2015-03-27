@@ -1738,8 +1738,13 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
 /* line 14, ../sass/_tabs.sass */
 .options .container
 {
-    margin: 5px 0px 5px 10px;
+    margin: 5px 0px 5px 12px;
 }
+
+.options button, .options input, .options select {
+  font-size: 13px;
+}
+
 /* line 9, ../sass/_tabs.sass */
 .options input[type=radio] {
   display: none !important;
@@ -1747,17 +1752,17 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   opacity: 0;
 }
 /* line 17, ../sass/_tabs.sass */
-.options .postboard-display div {
+.options .appearance div {
   clear: both;
 }
 /* line 19, ../sass/_tabs.sass */
-.options .postboard-display div div {
+.options .appearance div div {
   float: left;
   clear: none;
   padding: 10px;
 }
 /* line 23, ../sass/_tabs.sass */
-.options .postboard-display div div .label {
+.options .appearance div div .label {
   font-weight: 400;
 }
 /* line 27, ../sass/_tabs.sass */
@@ -1778,7 +1783,7 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   visibility: hidden;
 }
 /* line 42, ../sass/_tabs.sass */
-.options input#tab_language:checked ~ .tab-content .language, .options input#t-2:checked ~ .tab-content .theme, .options input#t-3:checked ~ .tab-content .notifications, .options input#t-4:checked ~ .tab-content .keys, .options input#t-5:checked ~ .tab-content .postboard-display, .options input#t-6:checked ~ .tab-content .users {
+.options input#tab_language:checked ~ .tab-content .language, .options input#t-2:checked ~ .tab-content .theme, .options input#t-3:checked ~ .tab-content .notifications, .options input#t-4:checked ~ .tab-content .keys, .options input#t-5:checked ~ .tab-content .appearance, .options input#t-6:checked ~ .tab-content .users {
   position: relative;
   z-index: 10;
   opacity: 1;
@@ -1803,6 +1808,36 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   background: white;
   color: #66686B;
 }
+
+.options input[type='checkbox'] {
+    cursor: pointer;
+    vertical-align: sub;
+}
+
+.options input[type='range'] {
+    cursor: pointer;
+    vertical-align: -16px;
+}
+
+.options #filterLangList {
+    width: 90%;
+}
+
+.options #filterLangListCont div,.options #TopTrendsAutoUpdateCont div {
+    float: none;
+    padding: 0px 4px;
+}
+
+.langFilterSimData {
+    color: rgba( 0, 0, 0, .7 );
+    font: 10px "Open Sans", sans-serif;
+    text-align: center;
+}
+
+.langFilterSimData em {
+    color: #B4C669;
+}
+
 
 /* line 19, ../sass/style.sass */
 .promoted-posts-only {

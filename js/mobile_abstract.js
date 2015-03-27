@@ -105,7 +105,7 @@ var MAL = function()
 
                 if ($.Options.getShowDesktopNotifPostsOpt() === 'enable') {
                     this.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_posts', newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', $.Options.getShowDesktopNotifPostsTimerOpt(), (function() {
-                            requestTimelineUpdate('latest',this,followingUsers,promotedPostsOnly);
+                            requestTimelineUpdate('pending',this,followingUsers,promotedPostsOnly);
                         }).bind(newPosts), false)
                 }
             } else {
@@ -487,4 +487,59 @@ var MAL = function()
 }
 
 jQuery.MAL = new MAL;
+
+function filterLang(string) {
+    var langFilterMode = $.Options.getFilterLangOpt();
+
+    if (langFilterMode !== 'disable') {
+        var langFilterSubj = '';
+        var langFilterProb = [];
+        var langFilterPass = true;
+        var langFilterReason = '';
+        var langFilterList = $.Options.getFilterLangListOpt();
+
+        if (langFilterList.length > 0) {
+            var langFilterAccuracy = $.Options.getFilterLangAccuracyOpt();
+            langFilterPass = (langFilterMode === 'whitelist') ? false : true;
+            langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t(langFilterMode), 'that': polyglot.t('language of this')});
+
+            // before detection attempts we cut out any mentions and links, and replace _ with space
+            langFilterSubj = string.replace(/@\S\w*|https?:\/\/\S*/g, '').replace(/_+/g, ' ')
+            // replace zero-width word boundaries, such as between letters from different alphabets [or other symbols], with spaces
+                  // FIXME not so good idea because 'Za pomocą białej listy' may turn into 'Za pomoc ą bia ł ej listy' for e.g.
+                  // FIXME but first one was recognized as 'hrv' and second as 'pol' and you know it's 'pol' actually
+                .replace(/\b/g, ' ')
+            // cut out some more symbols
+                .replace(/[#\[\]\(\)\{\}\-\+\=\^\:\;\\\/]/g, '')
+            // clear unwanted spaces
+                .replace(/\s+/g, ' ').trim();
+
+            langFilterProb = franc.all(langFilterSubj, {'minLength': 2}); // FIXME minLength may become configurable option at some time
+            for (var i = 0; i < langFilterProb.length; i++) {
+                if (langFilterProb[i][1] > langFilterAccuracy) {
+                    if (langFilterProb[i][0] === 'und') { // e.g. digits-only string will be detected as undefined and thereby will be allowed
+                        langFilterPass = true;
+                        langFilterReason = polyglot.t('its undefined language');
+                        break;
+                    } else if (langFilterList.indexOf(langFilterProb[i][0]) > -1) {
+                        if (langFilterMode === 'whitelist') {
+                            langFilterPass = true;
+                            langFilterReason = polyglot.t('its this, whitelisted', {'this': '\''+langFilterProb[i][0]+'\''});
+                            break;
+                        } else {
+                            langFilterPass = false;
+                            langFilterReason = polyglot.t('its this, blacklisted', {'this': '\''+langFilterProb[i][0]+'\''});
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            langFilterReason = polyglot.t('this is undefined', {'this': polyglot.t(langFilterMode)});
+        }
+
+        //console.log('langFilter | status: '+((langFilterPass === true) ? polyglot.t('passed') : polyglot.t('blocked'))+' | reason: '+langFilterReason+' | subject: \''+langFilterSubj+'\'');
+        return {'subj': langFilterSubj, 'prob': langFilterProb, 'pass': langFilterPass, 'reason': langFilterReason};
+    }
+}
 

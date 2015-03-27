@@ -17,7 +17,7 @@ var InterfaceFunctions = function()
             var newPosts = parseInt($(".userMenu .menu-news").text());
             if (!newPosts)
                 newPosts = postsPerRefresh;
-            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+            requestTimelineUpdate('pending',newPosts,followingUsers,promotedPostsOnly);
         });
 
         // Add refresh posts for home link in menu
@@ -25,7 +25,7 @@ var InterfaceFunctions = function()
             var newPosts = parseInt($(".userMenu .menu-news").text());
             if (!newPosts)
                 newPosts = postsPerRefresh;
-            requestTimelineUpdate("latest",newPosts,followingUsers,promotedPostsOnly);
+            requestTimelineUpdate('pending',newPosts,followingUsers,promotedPostsOnly);
         });
 
         $( ".promoted-posts-only").click(function() {
@@ -67,22 +67,6 @@ var InterfaceFunctions = function()
             $(".dropdown-menu-following").attr("href","#");
             $(".dropdown-menu-following").bind("click", function()
             { alert(polyglot.t("You are not following anyone because you are not logged in."))} );
-            twisterRpc("gettrendinghashtags", [10],
-                                function(args, ret) {
-                                    for( var i = 0; i < ret.length; i++ ) {
-
-                                       var $li = $("<li>");
-                                       var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
-                                       hashtagLinkTemplate.removeAttr("id");
-                                       hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(ret[i]));
-                                       hashtagLinkTemplate.text("#"+ret[i]);
-                                       $li.append(hashtagLinkTemplate);
-                                       $(".toptrends-list").append($li);
-                                    }
-                                }, {},
-                                function(args, ret) {
-                                   console.log("Error with gettrendinghashtags. Older twister daemon?");
-                                }, {});
         }
         else
         {
@@ -119,23 +103,6 @@ var InterfaceFunctions = function()
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
                      setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
 
-                     twisterRpc("gettrendinghashtags", [10],
-                                function(args, ret) {
-                                    for( var i = 0; i < ret.length; i++ ) {
-
-                                       var $li = $("<li>");
-                                       var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
-                                       hashtagLinkTemplate.removeAttr("id");
-                                       hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(ret[i]));
-                                       hashtagLinkTemplate.text("#"+ret[i]);
-                                       $li.append(hashtagLinkTemplate);
-                                       $(".toptrends-list").append($li);
-                                    }
-                                }, {},
-                                function(args, ret) {
-                                   console.log("Error with gettrendinghashtags. Older twister daemon?");
-                                }, {});
-
                      if( args.cbFunc )
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});
@@ -154,7 +121,46 @@ var InterfaceFunctions = function()
                     });
                 });
         }
+
+        setTimeout(updateTrendingHashtags, 1000);
+        if ($.Options.getTopTrendsAutoUpdateOpt() === 'enable' && $.Options.getTopTrendsAutoUpdateTimerOpt() > 0)
+            setInterval(updateTrendingHashtags, $.Options.getTopTrendsAutoUpdateTimerOpt()*1000);
     }
+};
+
+function updateTrendingHashtags() {
+    twisterRpc('gettrendinghashtags', [10],
+        function(args, ret) {
+            $('.toptrends-list').empty();
+            //console.log('hashtags trends: '+ret);
+            for( var i = 0; i < ret.length; i++ ) {
+                if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForTopTrendsOpt())
+                    var langFilterData = filterLang(ret[i]);
+                if (typeof(langFilterData) === 'undefined' || langFilterData['pass'] || $.Options.getFilterLangSimulateOpt()) {
+                    var $li = $('<li>');
+                    var hashtagLinkTemplate = $('#hashtag-link-template').clone(true);
+
+                    hashtagLinkTemplate.removeAttr('id');
+                    hashtagLinkTemplate.attr('href',$.MAL.hashtagUrl(ret[i]));
+                    hashtagLinkTemplate.text('#'+ret[i]);
+
+                    $li.append(hashtagLinkTemplate);
+                    if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangSimulateOpt()) {
+                        if (typeof(langFilterData) !== 'undefined') {
+                            $li.append(' <span class="langFilterSimData"><em>'+((langFilterData['pass']) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>: '+langFilterData['prob'][0].toString()+'</span>');
+                        } else {
+                            $li.append(' <span class="langFilterSimData"><em>'+polyglot.t('not analyzed')+'</em></span>');
+                        }
+                    }
+
+                    $('.toptrends-list').append($li);
+                }
+            }
+        }, {},
+        function(args, ret) {
+            console.log('Error with gettrendinghashtags. Older twister daemon?');
+        }, {}
+    );
 };
 
 //***********************************************

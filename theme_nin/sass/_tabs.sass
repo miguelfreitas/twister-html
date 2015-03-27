@@ -1,28 +1,30 @@
 .options
   position: relative
 
-  .label-h
-    font-weight: 700
+  button, input, select
+    font-size: 13px
 
   label
     cursor: pointer
+
+  .label-h
+    font-weight: 700
+
   input[type=radio]
     display: none!important
     visibility: hidden
     opacity: 0
 
-  .container
-    margin: 5px 0px 5px 10px
+  input[type='checkbox']
+    cursor: pointer
+    vertical-align: sub
 
-  .postboard-display div
-    clear: both
-    div
-      float: left
-      clear: none
-      padding: 10px
-      .label
-        font-weight: 400
-      
+  input[type='range']
+    cursor: pointer
+    vertical-align: -16px
+
+  .container
+    margin: 5px 0px 5px 12px
 
   .tab-content
     background: $bloc-background-color
@@ -43,7 +45,7 @@
     &#t-2:checked ~ .tab-content .theme,
     &#t-3:checked ~ .tab-content .notifications,
     &#t-4:checked ~ .tab-content .keys,
-    &#t-5:checked ~ .tab-content .postboard-display,
+    &#t-5:checked ~ .tab-content .appearance,
     &#t-6:checked ~ .tab-content .users
       position: relative
       z-index: 10
