@@ -123,7 +123,8 @@ var InterfaceFunctions = function()
         }
 
         setTimeout(updateTrendingHashtags, 1000);
-        setInterval(updateTrendingHashtags, 120*1000); // FIXME should be an option for this
+        if ($.Options.getTopTrendsAutoUpdateOpt() === 'enable' && $.Options.getTopTrendsAutoUpdateTimerOpt() > 0)
+            setInterval(updateTrendingHashtags, $.Options.getTopTrendsAutoUpdateTimerOpt()*1000);
     }
 };
 
@@ -133,9 +134,9 @@ function updateTrendingHashtags() {
             $('.toptrends-list').empty();
             //console.log('hashtags trends: '+ret);
             for( var i = 0; i < ret.length; i++ ) {
-                if ($.Options.getFilterLangForTopTrendsOpt())
+                if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForTopTrendsOpt())
                     var langFilterData = filterLang(ret[i]);
-                if (!$.Options.getFilterLangForTopTrendsOpt() || langFilterData['pass'] || $.Options.getFilterLangSimulateOpt()) {
+                if (typeof(langFilterData) === 'undefined' || langFilterData['pass'] || $.Options.getFilterLangSimulateOpt()) {
                     var $li = $('<li>');
                     var hashtagLinkTemplate = $('#hashtag-link-template').clone(true);
 
@@ -144,7 +145,7 @@ function updateTrendingHashtags() {
                     hashtagLinkTemplate.text('#'+ret[i]);
 
                     $li.append(hashtagLinkTemplate);
-                    if ($.Options.getFilterLangSimulateOpt()) {
+                    if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangSimulateOpt()) {
                         if (typeof(langFilterData) !== 'undefined') {
                             $li.append(' <span class="langFilterSimData"><em>'+((langFilterData['pass']) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>: '+langFilterData['prob'][0].toString()+'</span>');
                         } else {

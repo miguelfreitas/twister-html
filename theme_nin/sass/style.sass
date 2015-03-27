@@ -1081,9 +1081,22 @@ ol.toptrends-list
 
 /* Options*/
 
-      
+.options
+  .appearance div
+    clear: both
+    div
+      float: left
+      clear: none
+      padding: 10px
+      .label
+        font-weight: 400
 
+  #filterLangList
+    width: 90%
 
+  #filterLangListCont div, #TopTrendsAutoUpdateCont div
+    float: none
+    padding: 0px 4px
 
 .suboptions
   margin: 5px 30px
@@ -1138,6 +1151,16 @@ ul.dropdown-menu
     -ms-transition: all 200ms
     -o-transition: all 200ms
     transition: all 200ms
+
+/* Language filter messages */
+
+.langFilterSimData
+  color: rgba( 0, 0, 0, .7 )
+  font: 10px "Open Sans", sans-serif
+  text-align: center
+
+.langFilterSimData em
+  color: #B4C669
 
 
 @import _responsive

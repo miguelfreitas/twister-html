@@ -219,24 +219,12 @@ function showPosts(req, posts)
                         break;
                     }
                 }
-                if( j == streamItems.length ) {
-                    // no older posts in stream, so post is to be inserted below
-                    if( req.mode == "older" || req.mode == "latestFirstTime" ) {
-                        // note: when filling gaps, the post must be discarded (not
-                        // shown) since it can never be older than what we already
-                        // have on timeline. this is a problem due to requesting from
-                        // several users at the same time, as some older posts might
-                        // be included to complete the <count> in getposts because
-                        // other users may have already been excluded by since_id.
-                        streamItemsParent.append( streamPost );
-                        streamPostAppended = true;
-                    }
-                }
             }
+            if (!streamPostAppended)
+                streamItemsParent.append( streamPost );
 
-            if( streamPostAppended ) {
-                streamPost.show();
-            }
+            streamPostAppended = true;
+            streamPost.show();
             req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
         }
     }
@@ -390,7 +378,7 @@ function willBeHidden(post){
         }
     }
 
-    if ($.Options.getFilterLangForPostboardOpt()) {
+    if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForPostboardOpt()) {
         post['langFilter'] = filterLang(msg);
         if (!post['langFilter']['pass'] && !$.Options.getFilterLangSimulateOpt()) {
             // TODO maybe we need a counter of posts blocked by language filter and even caching of them and button to show?

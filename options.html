@@ -61,7 +61,7 @@
       <input id="t-4" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
       <label for="t-4" class="tabs selectable_theme theme_nin">Keys</label>
       <input id="t-5" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
-      <label for="t-5" class="tabs selectable_theme theme_nin">Postboard</label>
+      <label for="t-5" class="tabs selectable_theme theme_nin">Appearance</label>
       <input id="t-6" name="option_tab" type="radio" class="selectable_theme theme_nin" />
       <label for="t-6" class="tabs selectable_theme theme_nin">Users</label>
 
@@ -215,7 +215,7 @@
           </div>
         </div>
 
-        <div class="postboard-display">
+        <div class="appearance">
           <div class="module">
             <p class="label label-h"> Postboard displays </p>
             <div class="container">
@@ -259,9 +259,9 @@
                   <p><input type="range" id="filterLangAccuracy" class="container" min="0" max="1" step="0.005"><span id="filterLangAccuracyVal" class="container"></span></p>
                   <p><span class="label">Scope of using</span></p>
                   <div class="container">
-                    <p><span class="label">Postboard</span> <input type="checkbox" id="filterLangForPostboard" /></p>
-                    <p><span class="label">Searching</span> <input type="checkbox" id="filterLangForSearching" /></p>
-                    <p><span class="label">Top Trends</span> <input type="checkbox" id="filterLangForTopTrends" /></p>
+                    <p><span class="label">in postboard</span> <input type="checkbox" id="filterLangForPostboard" /></p>
+                    <p><span class="label">in search result</span> <input type="checkbox" id="filterLangForSearching" /></p>
+                    <p><span class="label">in top trends</span> <input type="checkbox" id="filterLangForTopTrends" /></p>
                   </div>
                   <p><span class="label">Simulation mode</span> <input type="checkbox" id="filterLangSimulate" /></p>
                 </div>
@@ -297,6 +297,21 @@
                   <option value="anonymouse">anonymouse.org</option>
                 </select>
                 <input name="" id="useProxyForImgOnly" class="container" type="checkbox" /> <span class="label">Use proxy for image preview only</span>
+              </form>
+            </div>
+          </div>
+          <div class="module">
+            <p class="label label-h"> Top Trends </p>
+            <div id="TopTrendsAutoUpdateCont" class="container">
+              <form>
+                <p class="label">Auto updating</p>
+                <select id="TopTrendsAutoUpdate" class="container">
+                  <option value="enable">Enable</option>
+                  <option value="disable">Disable</option>
+                </select>
+                <div id="TopTrendsAutoUpdateOpt" class="container">
+                  <input type="text" id="TopTrendsAutoUpdateTimer" maxlength="6" size="6"/> <span class="label">second(s)</span>
+                </div>
               </form>
             </div>
           </div>

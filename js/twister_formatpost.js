@@ -122,11 +122,16 @@ function postToElem( post, kind, promoted ) {
     if (typeof(promoted) !== 'undefined' && promoted) {
         elem.find('.post-propagate').remove();
     } else {
-        if ($.Options.getFilterLangSimulateOpt()) {
+        if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangSimulateOpt()) {
             // FIXME it's must be stuff from template actually
             if (typeof(post['langFilter']) !== 'undefined') {
+                if (typeof(post['langFilter']['prob'][0]) !== 'undefined')
+                    var mlm = '  //  '+polyglot.t('Most possible language: this', {'this': '<em>'+post['langFilter']['prob'][0].toString()+'</em>'});
+                else
+                    var mlm = '';
+
                 elem.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+((post['langFilter']['pass']) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>'})+'</div>');
-                elem.append('<div class="langFilterSimData">'+polyglot.t('Reason: this', {'this': '<em>'+post['langFilter']['reason']+'</em>'})+'  //  '+polyglot.t('Most possible language: this', {'this': '<em>'+post['langFilter']['prob'][0].toString()+'</em>'})+'</div>');
+                elem.append('<div class="langFilterSimData">'+polyglot.t('Reason: this', {'this': '<em>'+post['langFilter']['reason']+'</em>'})+mlm+'</div>');
             } else {
                 elem.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+polyglot.t('not analyzed')+'</em>'})+'</div>');
             }

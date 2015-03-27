@@ -341,7 +341,7 @@ function processHashtag(postboard, hashtag, data) {
             if( !(key in _hashtagProcessedMap) ) {
                 _hashtagProcessedMap[key] = true;
 
-                if ($.Options.getFilterLangForSearchingOpt()) {
+                if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForSearchingOpt()) {
                     if (typeof(userpost['rt']) !== 'undefined') {
                         var msg = userpost['rt']['msg'];
                     } else {

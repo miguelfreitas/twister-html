@@ -489,44 +489,53 @@ var MAL = function()
 jQuery.MAL = new MAL;
 
 function filterLang(string) {
-    if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangListOpt().length > 0) {
-        var langFilterAccuracy = $.Options.getFilterLangAccuracyOpt();
-        var langFilterList = $.Options.getFilterLangListOpt();
+    var langFilterMode = $.Options.getFilterLangOpt();
+
+    if (langFilterMode !== 'disable') {
         var langFilterSubj = '';
         var langFilterProb = [];
-        var langFilterPass = ($.Options.getFilterLangOpt() === 'whitelist') ? false : true;
-        var langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t($.Options.getFilterLangOpt()), 'that': polyglot.t('language of this')});
+        var langFilterPass = true;
+        var langFilterReason = '';
+        var langFilterList = $.Options.getFilterLangListOpt();
 
-        // before detection attempts we cut out any mentions and links, and replace _ with space
-        langFilterSubj = string.replace(/@\S\w*|https?:\/\/\S*/g, '').replace(/_+/g, ' ')
-        // replace zero-width word boundaries, such as between letters from different alphabets [or other symbols], with spaces
-              // FIXME not so good idea because 'Za pomocą białej listy' may turn into 'Za pomoc ą bia ł ej listy' for e.g.
-              // FIXME but first one was recognized as 'hrv' and second as 'pol' and you know it's 'pol' actually
-            .replace(/\b/g, ' ')
-        // cut out some more symbols
-            .replace(/[#\[\]\(\)\{\}\-\+\=\^\:\;\\\/]/g, '')
-        // clear unwanted spaces
-            .replace(/\s+/g, ' ').trim();
+        if (langFilterList.length > 0) {
+            var langFilterAccuracy = $.Options.getFilterLangAccuracyOpt();
+            langFilterPass = (langFilterMode === 'whitelist') ? false : true;
+            langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t(langFilterMode), 'that': polyglot.t('language of this')});
 
-        langFilterProb = franc.all(langFilterSubj, {'minLength': 2}); // FIXME minLength may become configurable option at some time
-        for (var i = 0; i < langFilterProb.length; i++) {
-            if (langFilterProb[i][1] > langFilterAccuracy) {
-                if (langFilterProb[i][0] === 'und') { // e.g. digits-only string will be detected as undefined and thereby will be allowed
-                    langFilterPass = true;
-                    langFilterReason = polyglot.t('its undefined language');
-                    break;
-                } else if (langFilterList.indexOf(langFilterProb[i][0]) > -1) {
-                    if ($.Options.getFilterLangOpt() === 'whitelist') {
+            // before detection attempts we cut out any mentions and links, and replace _ with space
+            langFilterSubj = string.replace(/@\S\w*|https?:\/\/\S*/g, '').replace(/_+/g, ' ')
+            // replace zero-width word boundaries, such as between letters from different alphabets [or other symbols], with spaces
+                  // FIXME not so good idea because 'Za pomocą białej listy' may turn into 'Za pomoc ą bia ł ej listy' for e.g.
+                  // FIXME but first one was recognized as 'hrv' and second as 'pol' and you know it's 'pol' actually
+                .replace(/\b/g, ' ')
+            // cut out some more symbols
+                .replace(/[#\[\]\(\)\{\}\-\+\=\^\:\;\\\/]/g, '')
+            // clear unwanted spaces
+                .replace(/\s+/g, ' ').trim();
+
+            langFilterProb = franc.all(langFilterSubj, {'minLength': 2}); // FIXME minLength may become configurable option at some time
+            for (var i = 0; i < langFilterProb.length; i++) {
+                if (langFilterProb[i][1] > langFilterAccuracy) {
+                    if (langFilterProb[i][0] === 'und') { // e.g. digits-only string will be detected as undefined and thereby will be allowed
                         langFilterPass = true;
-                        langFilterReason = polyglot.t('its this, whitelisted', {'this': '\''+langFilterProb[i][0]+'\''});
+                        langFilterReason = polyglot.t('its undefined language');
                         break;
-                    } else {
-                        langFilterPass = false;
-                        langFilterReason = polyglot.t('its this, blacklisted', {'this': '\''+langFilterProb[i][0]+'\''});
-                        break;
+                    } else if (langFilterList.indexOf(langFilterProb[i][0]) > -1) {
+                        if (langFilterMode === 'whitelist') {
+                            langFilterPass = true;
+                            langFilterReason = polyglot.t('its this, whitelisted', {'this': '\''+langFilterProb[i][0]+'\''});
+                            break;
+                        } else {
+                            langFilterPass = false;
+                            langFilterReason = polyglot.t('its this, blacklisted', {'this': '\''+langFilterProb[i][0]+'\''});
+                            break;
+                        }
                     }
                 }
             }
+        } else {
+            langFilterReason = polyglot.t('this is undefined', {'this': polyglot.t(langFilterMode)});
         }
 
         //console.log('langFilter | status: '+((langFilterPass === true) ? polyglot.t('passed') : polyglot.t('blocked'))+' | reason: '+langFilterReason+' | subject: \''+langFilterSubj+'\'');

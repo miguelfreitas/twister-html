@@ -38,6 +38,7 @@ if(preferredLanguage == "en"){
       "ajax_error": "Ajax error: %{error}", // JavaScript error
       "All users publicly followed by": "All users publicly followed by",
       "Available": "Available", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Block chain information",
       "Block chain is up-to-date, twister is ready to use!": "Block chain is up-to-date, twister is ready to use!",
       "Block generation": "Block generation ",
@@ -94,13 +95,14 @@ if(preferredLanguage == "en"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} new post |||| %{smart_count} new posts",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Not available", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Number of blocks in block chain: ",
@@ -140,6 +142,7 @@ if(preferredLanguage == "en"){
       "Type message here": "Type message here",
       "Unfollow": "Unfollow",
       "Update": "Update",
+      "Auto updating": "Automatic updating",
       "Updating status...": "Updating status...", // status of block chain
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
@@ -235,7 +238,7 @@ if(preferredLanguage == "en"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "second(s)",
-      "only numbers are allowed!": "only numbers are allowed!",
+      "only positive numbers!": "only positive numbers are allowed!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -248,6 +251,7 @@ if(preferredLanguage == "en"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -255,6 +259,7 @@ if(preferredLanguage == "en"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -303,6 +308,7 @@ if(preferredLanguage == "es"){
       "ajax_error": "Error ajax: %{error}", // JavaScript error
       "All users publicly followed by": "Todos los usuarios seguidos públicamente por",
       "Available": "Disponible", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Información de la cadena de bloques",
       "Block chain is up-to-date, twister is ready to use!": "La cadena de bloques está puesta al día, twister está listo para usar!",
       "Block generation": "Generación de bloques ",
@@ -359,13 +365,14 @@ if(preferredLanguage == "es"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} nuevo post |||| %{smart_count} nuevos posts",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "Nadie", // used to promote a post without attaching the user
       "Not available": "No disponible", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Número de bloques en la cadena de bloques: ",
@@ -405,6 +412,7 @@ if(preferredLanguage == "es"){
       "Type message here": "Escriba el mensaje aquí",
       "Unfollow": "Dejar de seguir",
       "Update": "Actualizar",
+      "Auto updating": "Auto updating",
       "Updating status...": "Actualización del estado ...", // status of block chain
       "user_not_yet_accepted": "Otros pares no han aceptado este nuevo usuario.\n" +
                 "Por desgracia, no es posible guardar el perfil\n" +
@@ -500,7 +508,7 @@ if(preferredLanguage == "es"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hora(s)",
       "second(s)": "segundo(s)",
-      "only numbers are allowed!": "only numbers are allowed!",
+      "only positive numbers!": "only positive numbers are allowed!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -513,6 +521,7 @@ if(preferredLanguage == "es"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -520,6 +529,7 @@ if(preferredLanguage == "es"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -565,6 +575,7 @@ if(preferredLanguage == "uk"){
       "ajax_error": "Помилка Ajax: %{error}", // JavaScript error
       "All users publicly followed by": "Усі публічні користувачі яких читають",
       "Available": "Доступний", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Інформація про ланцюжок блоків",
       "Block chain is up-to-date, twister is ready to use!": "Ланцюг блоків оновлено, twister готовий до використання!",
       "Block generation": "Генерація блоку ",
@@ -622,13 +633,14 @@ if(preferredLanguage == "uk"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} нове повідомлення |||| %{smart_count} нових повідомлень",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Не доступне", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Кількість блоків у ланцюгу: ",
@@ -668,6 +680,7 @@ if(preferredLanguage == "uk"){
       "Type message here": "Напишіть повідомлення тут",
       "Unfollow": "Відписатись",
       "Update": "Оновити",
+      "Auto updating": "Auto updating",
       "Updating status...": "Оновлення статусу...", // status of block chain
       "user_not_yet_accepted": "Інші піри ще не прийняли цього користувача.\n" +
                 "Нажаль, у цьому стані не можливо зберегти профіль\n" +
@@ -762,7 +775,7 @@ if(preferredLanguage == "uk"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "second(s)",
-      "only numbers are allowed!": "only numbers are allowed!",
+      "only positive numbers!": "only positive numbers are allowed!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -775,6 +788,7 @@ if(preferredLanguage == "uk"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -782,6 +796,7 @@ if(preferredLanguage == "uk"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -827,6 +842,7 @@ if(preferredLanguage == "zh"){
       "ajax_error": "Ajax错误: %{error}", // JavaScript error
       "All users publicly followed by": "所有用户均被关注",
       "Available": "可用", // username is available
+      "Appearance": "外观",
       "Block chain information": "块链信息",
       "Block chain is up-to-date, twister is ready to use!": "块链已经更新，Twister已经可以使用！",
       "Block generation": "块生成器 ",
@@ -881,15 +897,16 @@ if(preferredLanguage == "zh"){
       "New direct message...": "新的即时信息...",
       "New Post...": "新推文...",
       "You got": "You got",
-      "in postboard": "in postboard",
-      "in search result": "in search result",
+      "in postboard": "在时间线里",
+      "in search result": "在搜索结果里",
+      "in top trends": "在热词趋势里",
       "new_posts": "%{smart_count} 新推文",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "用户名不可用", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "块链中的块数：",
@@ -929,6 +946,7 @@ if(preferredLanguage == "zh"){
       "Type message here": "输入消息内容",
       "Unfollow": "取消关注",
       "Update": "更新",
+      "Auto updating": "自动更新",
       "Updating status...": "更新状态中...", // status of block chain
       "user_not_yet_accepted": "其他节点还没有接受新用户。\n" +
         "很抱歉，现在你还不能保存你的个人简介\n" +
@@ -1023,12 +1041,12 @@ if(preferredLanguage == "zh"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "second(s)",
-      "only numbers are allowed!": "只允许数字！",
+      "only positive numbers!": "只允许正数字！",
       "Language filtering": "语言过滤",
       "By blacklist": "用黑名单",
       "By whitelist": "用白名单",
       "Comma separated ISO 639-3 language codes": "英文逗号分隔的 ISO 639-3 语言代码",
-      "Accuracy": "准确度",
+      "Accuracy": "严格度",
       "Simulation mode": "模拟模式",
       "This post is treated by language filter": "这条推文被语言过滤器 %{treated} .",
       "blocked": "阻止",
@@ -1036,13 +1054,15 @@ if(preferredLanguage == "zh"){
       "not analyzed": "未被分析",
       "Reason: this": "原因: %{this}",
       "this doesnt contain that": "%{this} 不包含 %{that}",
+      "this is undefined": "%{this} 未定义",
       "blacklist": "黑名单",
       "whitelist": "白名单",
-      "language of this": "语言",
+      "language of this": "此语言",
       "its undefined language": "它是未识别语言",
       "its this, blacklisted": "它是 %{this}, 被黑名单",
       "its this, whitelisted": "它是 %{this}, 被白名单",
       "Most possible language: this": "最可能的语言: %{this}",
+      "Scope of usage": "使用范围",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -1088,6 +1108,7 @@ if(preferredLanguage == "nl"){
       "ajax_error": "Ajax error: %{error}", // JavaScript error
       "All users publicly followed by": "Alle gebruikers openbaarlijk gevolgd door",
       "Available": "Beschikbaar", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Block chain informatie",
       "Block chain is up-to-date, twister is ready to use!": "Block chain is up-to-date, twister is klaar voor gebruik!",
       "Block generation": "Block productie",
@@ -1144,13 +1165,14 @@ if(preferredLanguage == "nl"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} nieuw bericht |||| %{smart_count} nieuwe berichten",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Niet beschikbaar", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Aantal blocks in block chain: ",
@@ -1190,6 +1212,7 @@ if(preferredLanguage == "nl"){
       "Type message here": "Type bericht hier",
       "Unfollow": "Ontvolgen",
       "Update": "Update",
+      "Auto updating": "Auto updating",
       "Updating status...": "Status aan het updaten...", // status of block chain
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
@@ -1285,7 +1308,7 @@ if(preferredLanguage == "nl"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "seconde(n)",
-      "only numbers are allowed!": "only numbers are allowed!",
+      "only positive numbers!": "only positive numbers are allowed!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -1298,6 +1321,7 @@ if(preferredLanguage == "nl"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -1305,6 +1329,7 @@ if(preferredLanguage == "nl"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -1350,6 +1375,7 @@ if(preferredLanguage == "it"){
       "ajax_error": "Errore AJAX: %{error}", // JavaScript error
       "All users publicly followed by": "Utenti seguiti pubblicamente da",
       "Available": "Disponibile", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Informazioni sulla catena di blocchi",
       "Block chain is up-to-date, twister is ready to use!": "Catena di blocchi aggiornata, Twister è pronto per l'uso!",
       "Block generation": "Generatore di blocchi:",
@@ -1406,13 +1432,14 @@ if(preferredLanguage == "it"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} nuovo messaggio |||| %{smart_count} nuovi messaggi",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nessuno", // used to promote a post without attaching the user
       "Not available": "Non disponibile", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Numero di blocchi nella catena: ",
@@ -1451,6 +1478,7 @@ if(preferredLanguage == "it"){
       "Type message here": "Scrivi qui",
       "Unfollow": "Smetti di seguire",
       "Update": "Aggiorna",
+      "Auto updating": "Auto updating",
       "Updating status...": "Aggiornamento in corso...", // status of block chain
       "user_not_yet_accepted": "Gli altri nodi non hanno ancora accettato il nuovo utente.\n" +
                 "Al momento non puoi salvare il profilo o spedire messaggi.\n" +
@@ -1544,7 +1572,7 @@ if(preferredLanguage == "it"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "secondo(i)",
-      "only numbers are allowed!": "only numbers are allowed!",
+      "only positive numbers!": "only positive numbers are allowed!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -1557,6 +1585,7 @@ if(preferredLanguage == "it"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -1564,6 +1593,7 @@ if(preferredLanguage == "it"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -1610,6 +1640,7 @@ if(preferredLanguage == "fr"){
       "ajax_error": "Erreur ajax: %{error}", // JavaScript error
       "All users publicly followed by": "Tous les utilisateurs suivis publiquement par",
       "Available": "Disponible", // username is available
+      "Appearance": "Apparence",
       "Block chain information": "Informations à propos de la chaîne de blocs",
       "Block chain is up-to-date, twister is ready to use!": "La chaîne de blocs est à jour, Twister est maintenant fonctionnel!",
       "Block generation": "Production de blocs",
@@ -1663,18 +1694,19 @@ if(preferredLanguage == "fr"){
       "Network status": "État du réseau",
       "New direct message...": "Nouveau message privé...",
       "New Post...": "Nouveau billets...",
-      "You got": "You got",
-      "in postboard": "in postboard",
-      "in search result": "in search result",
+      "You got": "Tu as",
+      "in postboard": "sur le postboard",
+      "in search result": "dans les résultats de recherche",
+      "in top trends": "dans les top trends",
       "new_posts": "%{smart_count} nouveau billet |||| %{smart_count} nouveaux billets",
-      "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
-      "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
+      "new_mentions": "%{smart_count} nouvelle mention |||| %{smart_count} nouvelles mentions",
+      "new_direct_messages": "%{smart_count} nouveau message privé |||| %{smart_count} nouveaux messages privés",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Non disponible", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
-      "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
-      "notify_desktop_title": "Watch out, it's twister over here!",
+      "notify_desktop_error": "Impossible d'afficher les notifications: une erreur inconnue est survenue.",
+      "notify_desktop_perm_denied": "Impossible d'afficher les notifications: autorisation refusée.\n\nSi tu souhaites afficher les notifications, autorise le %{this_domain} dans les paramêtres de ton navigateur.",
+      "notify_desktop_test": "All the twisters gonna twist.\nBienvenue à toi!",
+      "notify_desktop_title": "Youhou! Ça bouge sur ton twister!",
       "Number of blocks in block chain:": "Nombre de blocs dans la chaîne de blocs: ",
       "Number of CPUs to use": "Nombre de processeurs à utiliser",
       "Only alphanumeric and underscore allowed.": "Seuls les caractères alphanumériques et la barre de soulignement sont permis.",
@@ -1712,6 +1744,7 @@ if(preferredLanguage == "fr"){
       "Type message here": "Tapez votre message ici",
       "Unfollow": "Se désabonner",
       "Update": "Mettre à jour",
+      "Auto updating": "Mise à jour automatique",
       "Updating status...": "Mise à jour du statut...", // status of block chain
       "user_not_yet_accepted": "Les autres pairs n'ont pas encore accepté ce nouvel utilisateur.\n" +
                 "Malheureusement, il n'est pas possible d'enregistrer le profil\n" +
@@ -1807,7 +1840,7 @@ if(preferredLanguage == "fr"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "seconde(s)",
-      "only numbers are allowed!": "Seuls les chiffres sont autorisés!",
+      "only positive numbers!": "Seuls les nombres >= 0 sont autorisés!",
       "Language filtering": "Filtre par langue",
       "By blacklist": "Par blacklist",
       "By whitelist": "Par liste blanche",
@@ -1820,6 +1853,7 @@ if(preferredLanguage == "fr"){
       "not analyzed": "non analysé",
       "Reason: this": "Raison: %{this}",
       "this doesnt contain that": "%{this} ne contient pas %{that}",
+      "this is undefined": "%{this} est indéfini",
       "blacklist": "blacklist",
       "whitelist": "liste blanche",
       "language of this": "Langue",
@@ -1827,6 +1861,7 @@ if(preferredLanguage == "fr"){
       "its this, blacklisted": "C'est %{this}, sur blacklist",
       "its this, whitelisted": "C'est %{this}, sur liste blanche",
       "Most possible language: this": "Langue la plus probable: %{this}",
+      "Scope of usage": "Champ d'application",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -1874,6 +1909,7 @@ if(preferredLanguage == "ru"){
        "ajax_error": "Ajax ошибка: %{error}", // JavaScript error
        "All users publicly followed by": "Все публичные пользователи на которых подписан",
        "Available": "Доступно",
+       "Appearance": "Отображение",
        "Block chain information": "Информация цепочки блоков",
        "Block chain is up-to-date, twister is ready to use!": "Цепочка блоков обновлена, twister готов к использованию!",
        "Block generation": "Майнинг блоков ",
@@ -1930,13 +1966,14 @@ if(preferredLanguage == "ru"){
        "You got": "У вас",
        "in postboard": "в ленте",
        "in search result": "в результатах поиска",
+       "in top trends": "в топе трендов",
        "new_posts": "%{smart_count} новый пост |||| %{smart_count} новых постов",
        "new_mentions": "%{smart_count} новое упоминание |||| %{smart_count} новых упоминаний",
        "new_direct_messages": "%{smart_count} новое личное сообщение |||| %{smart_count} новых личных сообщений",
        "nobody": "Анонимно", // used to promote a post without attaching the user
        "Not available": "Недоступно",
        "notify_desktop_error": "Твистер не может выполнить уведомление: произошла неизвестная ошибка.",
-       "notify_desktop_perm_denied": "Твистер не может выполнить уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для этого домена в настройках вашего браузера.",
+       "notify_desktop_perm_denied": "Твистер не может выполнить уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для %{this_domain} в настройках вашего браузера.",
        "notify_desktop_test": "Одна лягушка сказала:\n'если не буду квакать — лопну'.\nВы нужны нам, берегите себя.",
        "notify_desktop_title": "Watch out, it's twister over here!",
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",
@@ -1976,6 +2013,7 @@ if(preferredLanguage == "ru"){
        "Type message here": "Сообщение...",
        "Unfollow": "Отписаться",
        "Update": "Обновить",
+       "Auto updating": "Автоматическое обновление",
        "Updating status...": "Обновление информации...", // status of block chain
        "user_not_yet_accepted": "Другие участники сети еще не получили информацию о новом пользователе.\n" +
                  "К сожалению, сейчас вы не можете редактировать ваш профиль\n" +
@@ -2071,10 +2109,10 @@ if(preferredLanguage == "ru"){
        "Show if the original is older than": "Показывать если исходное сообщение старше",
        "hour(s)": "час(ов)",
        "second(s)": "секунд(а,ы)",
-       "only numbers are allowed!": "разрешены только числа!",
+       "only positive numbers!": "разрешены только положительные числа!",
        "Language filtering": "Ограничение языковым фильтром",
-       "By blacklist": "с помощью чёрного списка",
-       "By whitelist": "с помощью белого списка",
+       "By blacklist": "С помощью чёрного списка",
+       "By whitelist": "С помощью белого списка",
        "Comma separated ISO 639-3 language codes": "Соответствующие ISO 639-3 языковые коды, разделённые запятыми",
        "Accuracy": "Точность",
        "Simulation mode": "Режим симуляции",
@@ -2084,6 +2122,7 @@ if(preferredLanguage == "ru"){
        "not analyzed": "не обработан",
        "Reason: this": "Причина: %{this}",
        "this doesnt contain that": "%{this} не содержит %{that}",
+       "this is undefined": "%{this} не определён",
        "blacklist": "чёрный список",
        "whitelist": "белый список",
        "language of this": "такой язык",
@@ -2091,6 +2130,7 @@ if(preferredLanguage == "ru"){
        "its this, blacklisted": "это %{this}, есть в чёрном списке",
        "its this, whitelisted": "это %{this}, есть в белом списке",
        "Most possible language: this": "Наиболее вероятный язык: %{this}",
+       "Scope of usage": "Область применения",
        "Show with every user name": "Показывать везде около имени пользователя",
        "Show at profile modal only": "Показывать только в окне профиля",
        "Show if a user follows me": "Показывать подписан ли пользователь на меня",
@@ -2141,6 +2181,7 @@ if(preferredLanguage == "de"){
       "ajax_error": "Ajax error: %{error}", // JavaScript error
       "All users publicly followed by": "Alle öffentlich gefolgten Benutzer von",
       "Available": "Verfügbar", // username is available
+      "Appearance": "Aussehen",
       "Block chain information": "Block-Chain Informationen",
       "Block chain is up-to-date, twister is ready to use!": "Block-Chain ist aktuell, twister ist benutzbar!",
       "Block generation": "Block-Generierung ",
@@ -2194,18 +2235,19 @@ if(preferredLanguage == "de"){
       "Network status": "Netzwerkstatus",
       "New direct message...": "Neue Direktnachricht...",
       "New Post...": "Neuer Post...",
-      "You got": "You got",
-      "in postboard": "in postboard",
-      "in search result": "in search result",
+      "You got": "Du hast",
+      "in postboard": "in der Timeline",
+      "in search result": "in den Suchergebnissen",
+      "in top trends": "in den Top Trends",
       "new_posts": "%{smart_count} neuer Post |||| %{smart_count} neue Posts",
-      "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
-      "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
+      "new_mentions": "%{smart_count} neue Erwähnung |||| %{smart_count} neue Erwähnungen",
+      "new_direct_messages": "%{smart_count} neue Direktnachricht |||| %{smart_count} neue Direktnachrichten",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Nicht verfügbar", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
-      "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
-      "notify_desktop_title": "Watch out, it's twister over here!",
+      "notify_desktop_error": "Twister kann keine Desktop-Meldungen anzeigen: ein unbekannter Fehler trat auf.",
+      "notify_desktop_perm_denied": "Twister kann keine Desktop-Meldungen anzeigen: Keine Berechtigung.\n\nWenn Du Meldungen angezeigt haben möchtest, erlaube sie für %{this_domain} in den Einstellungen Deines Browsers.",
+      "notify_desktop_test": "All die Twisterer werden twisten..\nDu bist nun auch willkommen!",
+      "notify_desktop_title": "Achtung, hier ist Twister am Gange!",
       "Number of blocks in block chain:": "Anzahl der Blöcke in der Block-Chain: ",
       "Number of CPUs to use": "Anzahl der zu benutzenden CPU's ",
       "Only alphanumeric and underscore allowed.": "Nur Buchstaben, Zahlen und Unterstrich erlaubt.",
@@ -2243,6 +2285,7 @@ if(preferredLanguage == "de"){
       "Type message here": "Nachricht hier eingeben",
       "Unfollow": "Nicht mehr folgen",
       "Update": "Aktualisieren",
+      "Auto updating": "Automatsiche Aktualisierung",
       "Updating status...": "Status wird aktualisiert...", // status of block chain
       "user_not_yet_accepted": "Andere Peers haben diesen Benutzter noch nicht akzeptiert.\n" +
                 "Leider ist es nicht möglich, das Profil zu speichern\n" +
@@ -2339,7 +2382,7 @@ if(preferredLanguage == "de"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "Sekunde(n)",
-      "only numbers are allowed!": "nur Zahlen erlaubt!",
+      "only positive numbers!": "nur positive Zahlen erlaubt!",
       "Language filtering": "Sprachfilterung",
       "By blacklist": "Mittels schwarzer Liste",
       "By whitelist": "Mittels weißer Liste",
@@ -2352,6 +2395,7 @@ if(preferredLanguage == "de"){
       "not analyzed": "nicht anylysiert",
       "Reason: this": "Ursache: %{this}",
       "this doesnt contain that": "%{this} dies enthält %{that} nicht",
+      "this is undefined": "%{this} ist nicht definiert",
       "blacklist": "schwarze Liste",
       "whitelist": "weiße Liste",
       "language of this": "Die Sprache des Folgenden",
@@ -2359,6 +2403,7 @@ if(preferredLanguage == "de"){
       "its this, blacklisted": "es ist %{this}, aus der schwarzen Liste",
       "its this, whitelisted": "es ist %{this}, aus der weißen Liste",
       "Most possible language: this": "Die wahrscheinlichste Sprache: %{this}",
+      "Scope of usage": "Anwendungsbereich",
       "Show with every user name": "Zeige mit jedem Benutzernamen",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Zeige an, wenn mir ein Benutzer folgt",
@@ -2404,6 +2449,7 @@ if(preferredLanguage == "ja"){
       "ajax_error": "AJAXエラー: %{error}", // JavaScript error
       "All users publicly followed by": "このユーザがフォローを公開している",
       "Available": "Available", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "ブロックチェイン",
       "Block chain is up-to-date, twister is ready to use!": "ブロックチェインは最新の状態です。",
       "Block generation": "ブロック生成",
@@ -2460,13 +2506,14 @@ if(preferredLanguage == "ja"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} 新投稿 |||| %{smart_count} 新投稿",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "ナナシ", // used to promote a post without attaching the user
       "Not available": "使用中", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "全ブロック数: ",
@@ -2506,6 +2553,7 @@ if(preferredLanguage == "ja"){
       "Type message here": "ここにメッセージを書いてね",
       "Unfollow": "解除",
       "Update": "アップデート",
+      "Auto updating": "Auto updating",
       "Updating status...": "ブロックチェーンを更新中…", // status of block chain
       "user_not_yet_accepted": "この新ユーザーが他のピアーにまだ認証されていない。\n" +
                 "なので、プロファイルの保存やメッセージの投稿は現在不可能です。\n" +
@@ -2598,7 +2646,7 @@ if(preferredLanguage == "ja"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "second(s)",
-      "only numbers are allowed!": "only numbers are allowed!",
+      "only positive numbers!": "only positive numbers are allowed!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -2611,6 +2659,7 @@ if(preferredLanguage == "ja"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -2618,6 +2667,7 @@ if(preferredLanguage == "ja"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -2664,6 +2714,7 @@ if(preferredLanguage == "pt-BR"){
       "ajax_error": "Erro Ajax: %{error}", // JavaScript error
       "All users publicly followed by": "Todos os usuários seguidos publicamente por",
       "Available": "Disponível", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Informações da Cadeia de Blocos",
       "Block chain is up-to-date, twister is ready to use!": "A Cadeida de Blocos está sincronizada, Twister está pronto para uso!",
       "Block generation": "Geração de blocos ",
@@ -2720,13 +2771,14 @@ if(preferredLanguage == "pt-BR"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} nova postagem |||| %{smart_count} novas postagens",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Indisponível", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Número de blocos: ",
@@ -2767,6 +2819,7 @@ if(preferredLanguage == "pt-BR"){
       "Type message here": "Escreva sua mensagem aqui",
       "Unfollow": "Deixar de seguir",
       "Update": "Atualizar",
+      "Auto updating": "Auto updating",
       "Updating status...": "Atualizando estado da Cadeia de Blocos...", // status of block chain
       "user_not_yet_accepted": "Outros nós ainda não aceitaram este novo usuário.\n" +
                 "Infelizmente não é possível salvar o perfil\n" +
@@ -2863,7 +2916,7 @@ if(preferredLanguage == "pt-BR"){
       "Show if the original is older than": "Show if the original is older than",
       "hour(s)": "hour(s)",
       "second(s)": "segundo(s)",
-      "only numbers are allowed!": "only numbers are allowed!",
+      "only positive numbers!": "only positive numbers are allowed!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -2876,6 +2929,7 @@ if(preferredLanguage == "pt-BR"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -2883,6 +2937,7 @@ if(preferredLanguage == "pt-BR"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Show with every user name",
       "Show at profile modal only": "Show at profile modal only",
       "Show if a user follows me": "Show if a user follows me",
@@ -2928,6 +2983,7 @@ if(preferredLanguage == "tr"){
       "ajax_error": "Ajax hatası: %{error}", // JavaScript error
       "All users publicly followed by": "Açık olarak takip edilen tüm kullanıcılar",
       "Available": "Kullanılabilir", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Blok zincir bilgisi",
       "Block chain is up-to-date, twister is ready to use!": "Blok zinciri güncel, twister kullanıma hazır!",
       "Block generation": "Blok üretimi ",
@@ -2984,13 +3040,14 @@ if(preferredLanguage == "tr"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} yeni gönederi |||| %{smart_count} yeni gönderi",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "hiçkimse", // used to promote a post without attaching the user
       "Not available": "Kullanılamaz", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Blok zincirindeki blok sayısı: ",
@@ -3030,6 +3087,7 @@ if(preferredLanguage == "tr"){
       "Type message here": "Mesajı buraya yazınız",
       "Unfollow": "Takibi bırak",
       "Update": "Güncelle",
+      "Auto updating": "Auto updating",
       "Updating status...": "Durum güncelleniyor...", // status of block chain
       "user_not_yet_accepted": "Diğer eşler bu yeni kullanıcıyı henüz kabul etmediler.\n" +
                 "Malesef profili kaydetmek ya da bu durumda\n" +
@@ -3124,7 +3182,7 @@ if(preferredLanguage == "tr"){
       "Show if the original is older than": "Orjinali yandaki süreden daha eskiyse göster",
       "hour(s)": "saat",
       "second(s)": "saniye",
-      "only numbers are allowed!": "sadece rakam girilebilir!",
+      "only positive numbers!": "sadece rakam girilebilir!",
       "Language filtering": "Dile göre süzme",
       "By blacklist": "Kara liste ile",
       "By whitelist": "Beyaz liste ile",
@@ -3137,6 +3195,7 @@ if(preferredLanguage == "tr"){
       "not analyzed": "incelenmedi",
       "Reason: this": "Sebep: %{this}",
       "this doesnt contain that": "%{that} %{this} tarafından kapsanmıyor",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "beyaz liste",
       "whitelist": "kara liste",
       "language of this": "dili",
@@ -3144,6 +3203,7 @@ if(preferredLanguage == "tr"){
       "its this, blacklisted": "%{this}, engellendi",
       "its this, whitelisted": "%{this}, kabul edildi",
       "Most possible language: this": "Muhtemel dil: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Tüm kullanıcı adlarının yanında göster",
       "Show at profile modal only": "Sadece profilinde göster",
       "Show if a user follows me": "Bir kullanıcının beni takip edip etmediğini göster",
@@ -3189,6 +3249,7 @@ if(preferredLanguage == "cs"){
       "ajax_error": "Ajax chyba: %{error}", // JavaScript error
       "All users publicly followed by": "Všichni uživatelé, které veřejně sleduje",
       "Available": "Je volná", // username is available
+      "Appearance": "Appearance",
       "Block chain information": "Informace o blockchainu",
       "Block chain is up-to-date, twister is ready to use!": "Blockchain je aktuální, twister je připraven k použití!",
       "Block generation": "Generování bloků ",
@@ -3245,13 +3306,14 @@ if(preferredLanguage == "cs"){
       "You got": "You got",
       "in postboard": "in postboard",
       "in search result": "in search result",
+      "in top trends": "in top trends",
       "new_posts": "%{smart_count} nový příspěvek |||| %{smart_count} nové příspěvky |||| %{smart_count} nových příspěvků",
       "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "nikdo", // used to promote a post without attaching the user
       "Not available": "Tuto přezdívku již někdo používá", // username is not available
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for this domain in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Počet bloků v blockchainu: ",
@@ -3291,6 +3353,7 @@ if(preferredLanguage == "cs"){
       "Type message here": "Sem napište příspěvek",
       "Unfollow": "Přestat sledovat",
       "Update": "Aktualizovat",
+      "Auto updating": "Auto updating",
       "Updating status...": "Aktualizuji stav...", // status of block chain
       "user_not_yet_accepted": "Ostatní uzly ještě nepřijaly tohoto nového uživatele.\n" +
                 "Proto zatím není možné uložit profil nebo vkládat příspěvky.\n" +
@@ -3384,7 +3447,7 @@ if(preferredLanguage == "cs"){
       "Show if the original is older than": "Ukázat pokud je už originál starší než",
       "hour(s)": "hodin",
       "second(s)": "vteřinou(ami)",
-      "only numbers are allowed!": "povolena jsou jen čísla!",
+      "only positive numbers!": "povolena jsou jen čísla!",
       "Language filtering": "Language filtering",
       "By blacklist": "By blacklist",
       "By whitelist": "By whitelist",
@@ -3397,6 +3460,7 @@ if(preferredLanguage == "cs"){
       "not analyzed": "not analyzed",
       "Reason: this": "Reason: %{this}",
       "this doesnt contain that": "%{this} does not contain %{that}",
+      "this is undefined": "%{this} is undefined",
       "blacklist": "blacklist",
       "whitelist": "whitelist",
       "language of this": "language of this",
@@ -3404,6 +3468,7 @@ if(preferredLanguage == "cs"){
       "its this, blacklisted": "it is %{this}, blacklisted",
       "its this, whitelisted": "it is %{this}, whitelisted",
       "Most possible language: this": "Most possible language: %{this}",
+      "Scope of usage": "Scope of usage",
       "Show with every user name": "Ukázat u každé přezdívky",
       "Show at profile modal only": "Ukázat jen v okně profilu",
       "Show if a user follows me": "Ukazovat, zda mně uživatel sleduje",
