@@ -189,7 +189,7 @@ function showPosts(req, posts)
     var streamItemsParent = $.MAL.getStreamPostsParent();
 
     for( var i = 0; i < posts.length; i++ ) {
-        if ( req.users.indexOf(posts[i]['userpost']['n']) > -1 ) {
+        if (req.users.indexOf(posts[i]['userpost']['n']) > -1 || req.getspam) {  // FIXME maybe it's unecessary check but currently we got unwanted adverting posts which are coming with requested ones from 'getposts' sometimes
             var post = posts[i];
             //console.log(post);
             var streamPost = postToElem(post, "original", req.getspam);
@@ -347,6 +347,10 @@ function timelineChangedUser()
 
 function willBeHidden(post){
     if (post['userpost']['n'] === defaultScreenName)
+        return false;
+
+    // currently we don't need to filter promoted posts anyhow
+    if (typeof(post['userpost']['lastk']) === 'undefined' )
         return false;
 
     if (typeof(post['userpost']['rt']) !== 'undefined') {

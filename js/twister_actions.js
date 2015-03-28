@@ -291,7 +291,7 @@ function updateProfileData(profileModalContent, username) {
     profileModalContent.find(".following-count").parent().attr("href", $.MAL.followingUrl(username));
 
     var postsView = profileModalContent.find(".postboard-posts");
-    
+
     // try using getposts first. fallback to dht.
     twisterRpc("getposts", [1,[{username: username}]],
                        function(args, posts) {
@@ -326,6 +326,7 @@ function clearHashtagProcessed() {
 }
 
 function requestHashtag(postboard,hashtag,resource, timeoutArgs) {
+    postboard.closest("div").find(".postboard-loading").show();
     dhtget( hashtag, resource, "m",
            function(args, data) {
                processHashtag(args.postboard, args.hashtag, data);
@@ -360,9 +361,6 @@ function processHashtag(postboard, hashtag, data) {
                 _hashtagPendingPostsUpdated++;
             }
         }
-        
-        if(!postboard.children().length && !_hashtagPendingPosts.length && hashtag != defaultScreenName)
-            postboard.closest("div").find(".no-posts-found-message").show();
 
         if( _hashtagPendingPosts.length ) {
             if( !postboard.children().length || autoUpdateHashtag ) {
@@ -371,8 +369,8 @@ function processHashtag(postboard, hashtag, data) {
                 var newTweetsBar = postboard.closest("div").find(".postboard-news");
                 newTweetsBar.text(polyglot.t("new_posts", _hashtagPendingPosts.length));
                 newTweetsBar.fadeIn("slow");
+                postboard.closest("div").find(".postboard-loading").hide();
             }
-            postboard.closest("div").find(".no-posts-found-message").hide();
         }
     }
 }
