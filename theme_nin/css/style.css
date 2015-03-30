@@ -3189,45 +3189,32 @@ ol.toptrends-list a:hover {
   font-style: normal;
 }
 
-/* Autocomplite */
-/* line 1084, ../sass/style.sass */
-.textcomplete-wrapper textarea {
-  display: inline;
-}
+
+/********** AUTOCOMPLETING *********/
 
 /* line 1087, ../sass/style.sass */
 ul.dropdown-menu {
-  position: absolute;
-  top: 23px;
-  left: 155px;
-  z-index: 100;
-  display: block;
-  float: left;
   min-width: 160px;
-  padding: 5px 0;
+  padding: 5px 0 7px;
   margin: 2px 0 0;
   list-style: none;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border-bottom: solid 2px #B4C669;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-/* line 1103, ../sass/style.sass */
-ul.dropdown-menu li {
-  line-height: 20px;
-}
+
 /* line 1105, ../sass/style.sass */
 ul.dropdown-menu > li > a {
-  display: block;
   padding: 3px 20px;
-  clear: both;
   white-space: nowrap;
-  -webkit-transition: all 200ms;
-  -moz-transition: all 200ms;
-  -ms-transition: all 200ms;
-  -o-transition: all 200ms;
-  transition: all 200ms;
+  transition: all 100ms;
+}
+
+ul.dropdown-menu li:hover,
+ul.dropdown-menu .active, ul.dropdown-menu .active a {
+  color: #B4C669;
+  cursor: pointer;
 }
 
 @media (max-width: 1200px) {

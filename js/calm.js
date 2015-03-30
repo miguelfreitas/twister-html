@@ -28,8 +28,3 @@ $(function(){
 	};
 	setTimeout(dhtIndicatorBg, 300);
 	setTimeout(function() {setInterval(dhtIndicatorBg, 2000)}, 400);
-
-
-function homeIntInit () {
-	setTimeout(mensAutocomplete, 800);
-}

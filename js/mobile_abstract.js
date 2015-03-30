@@ -505,12 +505,14 @@ function filterLang(string) {
 
             // before detection attempts we cut out any mentions and links, and replace _ with space
             langFilterSubj = string.replace(/@\S\w*|https?:\/\/\S*/g, '').replace(/_+/g, ' ')
+            // cut out common frequently used words FIXME I believe there is a list of similar international stuff somewhere outside which is waiting for us, we should just find it
+                .replace(/\btwister|github|google|twitter\b/g, '')
             // replace zero-width word boundaries, such as between letters from different alphabets [or other symbols], with spaces
                   // FIXME not so good idea because 'Za pomocą białej listy' may turn into 'Za pomoc ą bia ł ej listy' for e.g.
                   // FIXME but first one was recognized as 'hrv' and second as 'pol' and you know it's 'pol' actually
                 .replace(/\b/g, ' ')
             // cut out some more symbols
-                .replace(/[#\[\]\(\)\{\}\-\+\=\^\:\;\\\/]/g, '')
+                .replace(/[#\[\]\(\)\{\}\-\+\=\^\:\;\\\/0-9]/g, '')
             // clear unwanted spaces
                 .replace(/\s+/g, ' ').trim();
 

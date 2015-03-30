@@ -798,7 +798,7 @@ function replyTextKeypress(e) {
                         $oldta.on("blur", replyTextKeypress);
                         $oldta.addClass('splited-post');
 
-                        tweetForm.find(".textcomplete-wrapper").append($newta);
+                        tweetForm.find(".textcomplete-wrapper").append($newta); // FIXME come find textcomplete-wrapper anywhere in code
                         $newta.val(cp.substr(ci));
                         $newta.focus();
                         if ($newta[0].setSelectionRange)
@@ -1393,7 +1393,6 @@ function changeStyle() {
         style = 'theme_nin/css/style.css';
         profile = 'theme_nin/css/profile.css';
         $.getScript('theme_nin/js/theme_option.js');
-
     }
 
     if(theme == 'calm')
@@ -1416,29 +1415,30 @@ function changeStyle() {
     setTimeout(function(){$(menu).removeAttr('style')}, 0);
 }
 
-function mensAutocomplete() {
-        var suggests = [];
+function getMentionsForAutoComplete() {
+    if (defaultScreenName && typeof(followingUsers) !== 'undefined') {
+        var suggests = followingUsers.slice();
 
-        for(var i = 0; i < followingUsers.length; i++){
-                if(followingUsers[i] == localStorage.defaultScreenName) continue;
-                suggests.push(followingUsers[i]);
-        }
-        suggests.reverse();
-        $('textarea').textcomplete([
-    { // html
-        mentions: suggests,
-        match: /\B@(\w*)$/,
-        search: function (term, callback) {
-            callback($.map(this.mentions, function (mention) {
-                return mention.indexOf(term) === 0 ? mention : null;
-            }));
-        },
-        index: 1,
-        replace: function (mention) {
-            return '@' + mention + ' ';
+        if (suggests.indexOf(defaultScreenName) > -1)
+            suggests.splice(suggests.indexOf(defaultScreenName), 1);
+        if (suggests.length > 0) {
+            suggests.sort();
+
+            return [{
+                mentions: suggests,
+                match: /\B@(\w*)$/,
+                search: function (term, callback) {
+                    callback($.map(this.mentions, function (mention) {
+                        return mention.indexOf(term) === 0 ? mention : null;
+                    }));
+                },
+                index: 1,
+                replace: function (mention) {
+                    return '@'+mention+' ';
+                }
+            }];
         }
     }
-])
 }
 
 function replaceDashboards() {
@@ -1485,10 +1485,6 @@ function initInterfaceCommon() {
     });
     */
 
-    $('.dropdown-menu').on('keydown', function(e){
-            e = event || window.event;
-            e.stopPropagation();
-    })
     $('.post-text').on('click', 'a', function(e){
             e.stopPropagation();
     });
@@ -1529,4 +1525,42 @@ function initInterfaceCommon() {
     $('.bitmessage-ctc').on('click', function(){
         window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
     });
+
+    if (typeof($.fn.textcomplete) === 'function') {
+        $('textarea')
+            .on('focus', function () {
+                var element = this;
+                // Cursor has not set yet. And wait 100ms to skip global click event.
+                setTimeout(function () {
+                    // Cursor is ready.
+                    $(element).textcomplete(getMentionsForAutoComplete(), {
+                        'appendTo': ($(element).parents('.dashboard').length > 0) ? $(element).parent() : $('body'),
+                        'listPosition': setTextcompleteDropdownListPos
+                    });
+                }, 100);
+            })
+            .on('focusout', function () {
+                $(this).textcomplete('destroy');
+            })
+        ;
+    }
+}
+
+
+// following workaround function is for calls from $.fn.textcomplete only
+// we need this because currently implementation of caret position detection is way too imperfect
+
+function setTextcompleteDropdownListPos(position) {
+    position = this._applyPlacement(position);
+
+    if (this.option.appendTo.parents('.dashboard').length > 0) {
+        position['position'] = 'fixed';
+        position['top'] = (parseFloat(position['top']) - window.pageYOffset).toString()+'px';
+    } else {
+        position['position'] = 'absolute';
+    }
+
+    this.$el.css(position);
+
+    return this;
 }
