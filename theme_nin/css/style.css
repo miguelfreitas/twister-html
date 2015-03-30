@@ -1911,6 +1911,8 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   right: -10px;
   width: 250px;
   overflow: hidden;
+  border-bottom: solid 2px #B4C669;
+  box-shadow: 8px 10px 15px 0px rgba(0,0,0, .3);
 }
 
 /* line 85, ../sass/style.sass */
@@ -3199,9 +3201,8 @@ ul.dropdown-menu {
   margin: 2px 0 0;
   list-style: none;
   background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
   border-bottom: solid 2px #B4C669;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 8px 10px 10px 0px rgba(0,0,0, .2);
 }
 
 /* line 1105, ../sass/style.sass */

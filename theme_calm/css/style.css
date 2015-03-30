@@ -1017,6 +1017,7 @@ textarea.splited-post {
     color: rgba( 255, 255, 255, 1 );
     border-bottom: solid 1px rgba( 69, 71, 77, .1 );
     margin: 0 0 5px 0;
+    padding-left: 10px;
     background: #7691ce;
     border-radius: 2px;
 }

@@ -619,6 +619,11 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
     padding: 4px;
     font-size: 13px;
 }
+
+.post-area-new textarea:focus {
+    border: solid 1px rgba( 227, 79, 66, .5 );
+}
+
 .mini-profile .post-area-new
 {
     padding: 9px;
@@ -631,8 +636,6 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
 .post-area-new.open textarea
 {
     height: 80px;
-    border: solid 1px rgba( 227, 79, 66, .5 );
-    box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
 }
 textarea.splited-post {
     box-shadow: none!important;
@@ -1350,7 +1353,7 @@ ol.toptrends-list {
     left: 50%; 
     height: 80%;
     margin-left: -290px;
-    box-shadow: 0 0 30px rgba( 0, 0, 0, .6 ); 
+    box-shadow: 10px 12px 18px 0px rgba(0,0,0, .3);
     background: rgba( 255, 255,255, 1.0 ); 
     z-index: 3; 
 }
@@ -1644,8 +1647,8 @@ ol.toptrends-list {
     position: fixed;
     top: 50%; 
     left: 50%; 
-    background: rgba( 255, 255,255, 1.0 ); 
-    box-shadow: 0 0 30px rgba( 0, 0, 0, .6 ); 
+    background: #fff;
+    box-shadow: 10px 12px 18px 0px rgba(0,0,0, .3);
     z-index: 5; 
     width: 600px; 
     margin-left:-300px;

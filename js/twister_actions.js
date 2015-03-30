@@ -30,14 +30,17 @@ function requestRepliedBefore(postLi)
 
     if( reply_n != undefined && reply_k != undefined ) {
         dhtget( reply_n, "post" + reply_k, "s",
-               function(postLi, postFromJson) {
-                   var newStreamPost = postToElem(postFromJson, "related");
-                   newStreamPost.hide();
-                   postLi.before(newStreamPost);
-                   newStreamPost.slideDown("fast");
-                   $.MAL.relatedPostLoaded();
-                   requestRepliedBefore(newStreamPost);
-               }, postLi);
+            function(postLi, postFromJson) {
+                if (postFromJson) {
+                    postLi.find('textarea').textcomplete('destroy'); // FIXME maybe we need to reset position instead (but curently it's cheaper)
+                    var newStreamPost = postToElem(postFromJson, "related");
+                    newStreamPost.hide();
+                    postLi.before(newStreamPost);
+                    newStreamPost.slideDown("fast");
+                    $.MAL.relatedPostLoaded();
+                    requestRepliedBefore(newStreamPost);
+                }
+            }, postLi);
     }
 }
 
@@ -150,7 +153,7 @@ var profilePostsLoading = false;
 
 function requestPost(containerToAppend,username,resource,cbFunc,cbArgs){
 
-    console.log('dhtget '+username+' '+resource);
+    //console.log('dhtget '+username+' '+resource);
 
     dhtget( username, resource, "s",
         function(args, postFromJson) {
