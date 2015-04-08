@@ -729,10 +729,11 @@ var composeNewPost = function( e, postAreaNew )
     }
 
     var textArea = postAreaNew.find("textarea");
-    textArea.focus();
     if( textArea.attr("data-reply-to") && !textArea.val().length ) {
         textArea.val(textArea.attr("data-reply-to"));
     }
+    if (!postAreaNew.find("textarea:focus").length)
+        postAreaNew.find("textarea:last").focus();
 }
 
 //Reduz Área do Novo post
@@ -786,6 +787,8 @@ function replyTextKeypress(e) {
                         $tas[i].value = $tas[i].value.substr(0, ci);
                     } else {
                         var $oldta = $($tas[i]);
+                        if (typeof($.fn.textcomplete) === 'function')
+                            $oldta.textcomplete('destroy');
                         var $newta = $($oldta).clone(true);
                         var cp = $oldta.val();
 
@@ -794,17 +797,14 @@ function replyTextKeypress(e) {
                             e.stopPropagation();
                             this.style.height = '80px';
                         });
-                        $oldta.unbind("keyup");
-                        $oldta.on("blur", replyTextKeypress);
+                        e.stopImmediatePropagation();
+                        $oldta.off('keyup');
+                        $oldta.on('focusout', function() {this.style.height = '28px';}); // FIXME move this to CSS
+                        $oldta[0].style.height = '28px'; // FIXME move this to CSS
                         $oldta.addClass('splited-post');
 
-                        tweetForm.find(".textcomplete-wrapper").append($newta); // FIXME come find textcomplete-wrapper anywhere in code
+                        $oldta.after($newta);
                         $newta.val(cp.substr(ci));
-                        $newta.focus();
-                        if ($newta[0].setSelectionRange)
-                            $newta[0].setSelectionRange($newta.val().length, $newta.val().length);
-                        else if ($newta[0].createTextRange)
-                            $newta[0].createTextRange().moveEnd('character', $newta.val().length);
 
                         $tas = tweetForm.find("textarea");
                         splitedPostsCount = $tas.length;
@@ -821,6 +821,8 @@ function replyTextKeypress(e) {
                     splitedPostsCount = $tas.length;
                 }
             }
+            if (typeof($newta) !== 'undefined' && $newta[0] !== document.activeElement)
+                $newta.focus();
 
             c = 140 - $tas[$tas.length - 1].value.length - (2 * splitedPostsCount.toString().length) - 4;
             if (typeof(reply_to) !== 'undefined' &&
