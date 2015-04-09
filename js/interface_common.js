@@ -759,12 +759,12 @@ function replyTextKeypress(e) {
     if( tweetForm != undefined ) {
         if ($.Options.getUnicodeConversionOpt() !== "disable")
             $this.val(convert2Unicodes($this.val(), $this));
-        var c = 140 - $this.val().length;
+
         if (usePostSpliting && !$this.parents('.directMessages').length) {
             var $tas = tweetForm.find("textarea");
             splitedPostsCount = $tas.length;
-            if ($this.hasClass('splited-post'))
-                $this.css('height', '28px');
+            var icurrentta = $tas.index(this); // current textarea $tas index
+            var caretPos = $this.caret();
 
             var reply_to = $this.attr('data-reply-to');
             for (var i = 0; i < $tas.length; i++) {
@@ -785,26 +785,38 @@ function replyTextKeypress(e) {
                     if (i < splitedPostsCount - 1) {
                         $tas[i + 1].value = $tas[i].value.substr(ci) + $tas[i + 1].value;
                         $tas[i].value = $tas[i].value.substr(0, ci);
+                        if (caretPos > ci) {
+                            caretPos -= ci;
+                            icurrentta += 1;
+                            var $targetta = $($tas[icurrentta]);
+                        } else if (i === icurrentta)
+                            $($tas[i]).caret(caretPos);
                     } else {
                         var $oldta = $($tas[i]);
-                        if (typeof($.fn.textcomplete) === 'function')
+                        if (typeof($.fn.textcomplete) === 'function') {
                             $oldta.textcomplete('destroy');
+                            e.stopImmediatePropagation(); // something goes wrong in $.fn.textcomplete if we don't stop this immediately
+                        }
                         var $newta = $($oldta).clone(true);
                         var cp = $oldta.val();
 
                         $oldta.val(cp.substr(0, ci));
-                        $oldta.on("click", function(e) {
-                            e.stopPropagation();
+                        $oldta.on('focus', function() {
                             this.style.height = '80px';
                         });
-                        e.stopImmediatePropagation();
-                        $oldta.off('keyup');
-                        $oldta.on('focusout', function() {this.style.height = '28px';}); // FIXME move this to CSS
-                        $oldta[0].style.height = '28px'; // FIXME move this to CSS
                         $oldta.addClass('splited-post');
+                        $oldta.on('focusout', function() {this.style.height = '28px';}); // FIXME move this to CSS
 
                         $oldta.after($newta);
                         $newta.val(cp.substr(ci));
+
+                        if (caretPos > ci) {
+                            caretPos -= ci;
+                            icurrentta += 1;
+                            var $targetta = $newta;
+                            $oldta[0].style.height = '28px'; // FIXME move this to CSS
+                        } else if (i === icurrentta)
+                            $($tas[i]).caret(caretPos);
 
                         $tas = tweetForm.find("textarea");
                         splitedPostsCount = $tas.length;
@@ -819,28 +831,19 @@ function replyTextKeypress(e) {
                     }
                     $tas = tweetForm.find("textarea");
                     splitedPostsCount = $tas.length;
+                    caretPos = -1;
+                    if (icurrentta >= i && icurrentta > 0)
+                        icurrentta -= 1;
+                    var $targetta = $($tas[icurrentta]);
                 }
             }
-            if (typeof($newta) !== 'undefined' && $newta[0] !== document.activeElement)
-                $newta.focus();
-
-            c = 140 - $tas[$tas.length - 1].value.length - (2 * splitedPostsCount.toString().length) - 4;
-            if (typeof(reply_to) !== 'undefined' &&
-                !checkPostForMentions($tas[$tas.length - 1].value, reply_to, 140 - c - reply_to.length))
-                c -=  reply_to.length;
+            if (typeof($targetta) !== 'undefined' && $targetta[0] !== document.activeElement) {
+                $targetta.focus();
+                $targetta.caret(caretPos);
+            }
         }
-        var remainingCount = tweetForm.find(".post-area-remaining");
 
-        if( c < 0 )
-            remainingCount.addClass("warn");
-        else
-            remainingCount.removeClass("warn");
-
-        if (usePostSpliting && !$this.parents('.directMessages').length)
-            remainingCount.text(splitedPostsCount.toString() + ". post: " + c.toString());
-        else
-            remainingCount.text(c.toString());
-
+        var c = replyTextCount(this);
         var tweetAction = tweetForm.find(".post-submit");
         if( !tweetAction.length ) tweetAction = tweetForm.find(".dm-submit");
         if( c >= 0 && c < 140 &&
@@ -866,6 +869,41 @@ function replyTextKeypress(e) {
             }
         }
     }
+}
+
+function replyTextUpdateRemaining() {
+    if (this === document.activeElement ) {
+        var $this = $( this );
+        var tweetForm = $this.parents('form');
+        if( tweetForm != undefined ) {
+            var remainingCount = tweetForm.find(".post-area-remaining");
+            var c = replyTextCount(this);
+
+            if (usePostSpliting && !$this.parents('.directMessages').length)
+                remainingCount.text((tweetForm.find("textarea").index(this)+1).toString() +'/' +splitedPostsCount.toString() + ":  " + c.toString());
+            else
+                remainingCount.text(c.toString());
+
+            if( c < 0 )
+                remainingCount.addClass("warn");
+            else
+                remainingCount.removeClass("warn");
+        }
+    }
+}
+
+function replyTextCount(ta) {
+    var c;
+
+    if (usePostSpliting && !$(ta).parents('.directMessages').length) {
+        c = 140 - ta.value.length - (2 * splitedPostsCount.toString().length) - 4;
+        if (typeof(reply_to) !== 'undefined' &&
+            !checkPostForMentions(ta.value, reply_to, 140 - c - reply_to.length))
+            c -=  reply_to.length;
+    } else
+        c = 140 - ta.value.length;
+
+    return c;
 }
 
 /*
@@ -1510,7 +1548,8 @@ function initInterfaceCommon() {
         $( ".undo-unicode" ).click( undoLastUnicode );
 
     var $replyText = $( ".post-area-new textarea" );
-    $replyText.on("keyup", replyTextKeypress );
+    $replyText.on('input', replyTextKeypress );
+    $replyText.on('input focus', replyTextUpdateRemaining);
 
     $( ".open-profile-modal").bind( "click", function(e){ e.stopPropagation(); } );
     //$( ".open-hashtag-modal").bind( "click", openHashtagModal );
