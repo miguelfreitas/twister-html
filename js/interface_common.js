@@ -752,7 +752,7 @@ function checkPostForMentions(post, mentions, max) {
 var splitedPostsCount = 1;
 var usePostSpliting = false;
 
-function replyTextKeypress(e) {
+function replyTextInput(e) {
     e = e || event;
     var $this = $( this );
     var tweetForm = $this.parents("form");
@@ -764,30 +764,26 @@ function replyTextKeypress(e) {
             var $tas = tweetForm.find("textarea");
             splitedPostsCount = $tas.length;
             var icurrentta = $tas.index(this); // current textarea $tas index
+            var cci = getPostSpittingCI(icurrentta);
             var caretPos = $this.caret();
-
             var reply_to = $this.attr('data-reply-to');
-            for (var i = 0; i < $tas.length; i++) {
-                var pml = 140 - (i+1).toString().length - splitedPostsCount.toString().length - 4;
-                //if mention exists, we shouldn't add it while posting.
-                if (typeof(reply_to) !== 'undefined' &&
-                    !checkPostForMentions($tas[i].value, reply_to, pml - reply_to.length)) {
-                    pml -= reply_to.length;
-                }
 
+            for (var i = 0; i < $tas.length; i++) {
+                if (splitedPostsCount > 1)
+                    var pml = getPostSplitingPML();
+                else
+                    var pml = 140;
                 if ($tas[i].value.length > pml) {
-                    var endings = $tas[i].value.match(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n|\t/g);
-                    var ci = $tas[i].value.lastIndexOf(endings[endings.length - 1]);
-                    for (var j = endings.length - 2; j >= 0 && ci > pml; j--) {
-                        ci = $tas[i].value.lastIndexOf(endings[j], ci - 1);
-                    }
-                    ci = (ci > pml ? pml : ci);
+                    if (pml === 140)
+                        pml = getPostSplitingPML();
+                    var ci = getPostSpittingCI(i);
                     if (i < splitedPostsCount - 1) {
                         $tas[i + 1].value = $tas[i].value.substr(ci) + $tas[i + 1].value;
                         $tas[i].value = $tas[i].value.substr(0, ci);
-                        if (caretPos > ci) {
+                        if (caretPos > cci) {
                             caretPos -= ci;
                             icurrentta += 1;
+                            cci = getPostSpittingCI(icurrentta);
                             var $targetta = $($tas[icurrentta]);
                         } else if (i === icurrentta)
                             $($tas[i]).caret(caretPos);
@@ -800,26 +796,31 @@ function replyTextKeypress(e) {
                         var $newta = $($oldta).clone(true);
                         var cp = $oldta.val();
 
+                        $oldta.after($newta);
+                        $newta.val(cp.substr(ci));
                         $oldta.val(cp.substr(0, ci));
+
+                        $tas = tweetForm.find("textarea");
+                        splitedPostsCount = $tas.length;
+
                         $oldta.on('focus', function() {
                             this.style.height = '80px';
                         });
                         $oldta.addClass('splited-post');
                         $oldta.on('focusout', function() {this.style.height = '28px';}); // FIXME move this to CSS
 
-                        $oldta.after($newta);
-                        $newta.val(cp.substr(ci));
-
-                        if (caretPos > ci) {
+                        if (caretPos > cci) {
                             caretPos -= ci;
                             icurrentta += 1;
+                            cci = getPostSpittingCI(icurrentta);
                             var $targetta = $newta;
                             $oldta[0].style.height = '28px'; // FIXME move this to CSS
-                        } else if (i === icurrentta)
+                        } else if (i === icurrentta) {
                             $($tas[i]).caret(caretPos);
-
-                        $tas = tweetForm.find("textarea");
-                        splitedPostsCount = $tas.length;
+                            replyTextUpdateRemaining($tas[i]);
+                            if (typeof($.fn.textcomplete) === 'function')
+                                setTextcompleteOn($tas[i]);
+                        }
                     }
 
                 } else if ($tas.length > 1 && $tas[i].value.length === 0) {
@@ -832,26 +833,108 @@ function replyTextKeypress(e) {
                     $tas = tweetForm.find("textarea");
                     splitedPostsCount = $tas.length;
                     caretPos = -1;
-                    if (icurrentta >= i && icurrentta > 0)
+                    if (icurrentta >= i && icurrentta > 0) {
                         icurrentta -= 1;
+                        cci = getPostSpittingCI(icurrentta);
+                    }
                     var $targetta = $($tas[icurrentta]);
                 }
             }
+
             if (typeof($targetta) !== 'undefined' && $targetta[0] !== document.activeElement) {
-                $targetta.focus();
-                $targetta.caret(caretPos);
+                $this = $targetta;
+                $this.focus();
+                $this.caret(caretPos);
             }
         }
+    }
 
-        var c = replyTextCount(this);
+    function getPostSplitingPML() {
+        var pml = 140 -(i+1).toString().length -splitedPostsCount.toString().length -4;
+
+        // if mention exists, we shouldn't add it while posting.
+        if (typeof(reply_to) !== 'undefined' &&
+            !checkPostForMentions($tas[i].value, reply_to, pml -reply_to.length)) {
+            pml -= reply_to.length;
+        }
+
+        return pml;
+    }
+
+    function getPostSpittingCI(ita) {
+        var ci;
+        var endings = $tas[ita].value.match(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n|\t/g);
+
+        if (endings) {
+            ci = $tas[ita].value.lastIndexOf(endings[endings.length - 1]);
+            for (var j = endings.length - 2; j >= 0 && ci > pml; j--) {
+                ci = $tas[ita].value.lastIndexOf(endings[j], ci - 1);
+            }
+        }
+        if (!(ci > 0))
+            ci = pml;
+
+        return (ci > pml) ? pml : ci;
+    }
+}
+
+function replyTextUpdateRemaining(ta) {
+    if (ta === document.activeElement ) {
+        var $this = $(ta);
+        var tweetForm = $this.closest('form');
+        if( tweetForm != undefined ) {
+            var remainingCount = tweetForm.find(".post-area-remaining");
+            var c = replyTextCountRemaining(ta);
+
+            if (usePostSpliting && !$this.parents('.directMessages').length && splitedPostsCount > 1)
+                remainingCount.text((tweetForm.find("textarea").index(ta)+1).toString() +'/' +splitedPostsCount.toString() +": " +c.toString());
+            else
+                remainingCount.text(c.toString());
+
+            var tweetAction = tweetForm.find(".post-submit");
+            if( !tweetAction.length ) tweetAction = tweetForm.find(".dm-submit");
+            var disable = false;
+            $this.closest('form').find("textarea").each(function() {
+                if (replyTextCountRemaining(this) < 0) {
+                    disable = true; // alternatively we could call replyTextInput()
+                    return false;
+                }
+            });
+            if (!disable && c >= 0 && c < 140 && $this.val() != $this.attr("data-reply-to")) {
+                remainingCount.removeClass("warn");
+                $.MAL.enableButton(tweetAction);
+            } else {
+                if (disable)
+                    remainingCount.addClass("warn");
+                $.MAL.disableButton(tweetAction);
+            }
+        }
+    }
+}
+
+function replyTextCountRemaining(ta) {
+    var $this = $(ta);
+    var c;
+
+    if (usePostSpliting && !$this.parents('.directMessages').length && splitedPostsCount > 1) {
+        c = 140 -ta.value.length -($this.closest('form').find("textarea").index(ta)+1).toString().length -splitedPostsCount.toString().length -4;
+        var reply_to = $this.attr('data-reply-to');
+        if (typeof(reply_to) !== 'undefined' &&
+            !checkPostForMentions(ta.value, reply_to, 140 -c -reply_to.length))
+            c -=  reply_to.length;
+    } else
+        c = 140 - ta.value.length;
+
+    return c;
+}
+
+function replyTextKeySend(e) {
+    e = e || event;
+    var $this = $( this );
+    var tweetForm = $this.parents('form');
+    if( tweetForm != undefined ) {
         var tweetAction = tweetForm.find(".post-submit");
         if( !tweetAction.length ) tweetAction = tweetForm.find(".dm-submit");
-        if( c >= 0 && c < 140 &&
-            $this.val() != $this.attr("data-reply-to") ) {
-            $.MAL.enableButton(tweetAction);
-        } else {
-            $.MAL.disableButton(tweetAction);
-        }
 
         if( $.Options.keyEnterToSend() && $('.dropdown-menu').css('display') == 'none'){
             if (e.keyCode === 13 && (!e.metaKey && !e.ctrlKey)) {
@@ -869,41 +952,6 @@ function replyTextKeypress(e) {
             }
         }
     }
-}
-
-function replyTextUpdateRemaining() {
-    if (this === document.activeElement ) {
-        var $this = $( this );
-        var tweetForm = $this.parents('form');
-        if( tweetForm != undefined ) {
-            var remainingCount = tweetForm.find(".post-area-remaining");
-            var c = replyTextCount(this);
-
-            if (usePostSpliting && !$this.parents('.directMessages').length)
-                remainingCount.text((tweetForm.find("textarea").index(this)+1).toString() +'/' +splitedPostsCount.toString() + ":  " + c.toString());
-            else
-                remainingCount.text(c.toString());
-
-            if( c < 0 )
-                remainingCount.addClass("warn");
-            else
-                remainingCount.removeClass("warn");
-        }
-    }
-}
-
-function replyTextCount(ta) {
-    var c;
-
-    if (usePostSpliting && !$(ta).parents('.directMessages').length) {
-        c = 140 - ta.value.length - (2 * splitedPostsCount.toString().length) - 4;
-        if (typeof(reply_to) !== 'undefined' &&
-            !checkPostForMentions(ta.value, reply_to, 140 - c - reply_to.length))
-            c -=  reply_to.length;
-    } else
-        c = 140 - ta.value.length;
-
-    return c;
 }
 
 /*
@@ -1548,8 +1596,9 @@ function initInterfaceCommon() {
         $( ".undo-unicode" ).click( undoLastUnicode );
 
     var $replyText = $( ".post-area-new textarea" );
-    $replyText.on('input', replyTextKeypress );
-    $replyText.on('input focus', replyTextUpdateRemaining);
+    $replyText.on('input', replyTextInput); // input event fires in modern browsers (IE9+) on any changes in textarea (and copypasting with mouse too)
+    $replyText.on('input focus', function() {replyTextUpdateRemaining(this);});
+    $replyText.on('keyup', replyTextKeySend);
 
     $( ".open-profile-modal").bind( "click", function(e){ e.stopPropagation(); } );
     //$( ".open-hashtag-modal").bind( "click", openHashtagModal );
@@ -1569,24 +1618,24 @@ function initInterfaceCommon() {
 
     if (typeof($.fn.textcomplete) === 'function') {
         $('textarea')
-            .on('focus', function () {
-                var element = this;
-                // Cursor has not set yet. And wait 100ms to skip global click event.
-                setTimeout(function () {
-                    // Cursor is ready.
-                    $(element).textcomplete(getMentionsForAutoComplete(), {
-                        'appendTo': ($(element).parents('.dashboard').length > 0) ? $(element).parent() : $('body'),
-                        'listPosition': setTextcompleteDropdownListPos
-                    });
-                }, 100);
-            })
-            .on('focusout', function () {
-                $(this).textcomplete('destroy');
-            })
+            .on('focus', function () { setTextcompleteOn(this); })
+            .on('focusout', function () { $(this).textcomplete('destroy'); })
         ;
     }
 }
 
+
+function setTextcompleteOn(element) {
+    var $this = $(element);
+    // Cursor has not set yet. And wait 100ms to skip global click event.
+    setTimeout(function () {
+        // Cursor is ready.
+        $this.textcomplete(getMentionsForAutoComplete(), {
+            'appendTo': ($this.parents('.dashboard').length > 0) ? $this.parent() : $('body'),
+            'listPosition': setTextcompleteDropdownListPos
+        });
+    }, 100);
+}
 
 // following workaround function is for calls from $.fn.textcomplete only
 // we need this because currently implementation of caret position detection is way too imperfect
