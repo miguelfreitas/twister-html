@@ -764,15 +764,15 @@ function replyTextInput(e) {
             var $tas = tweetForm.find("textarea");
             splitedPostsCount = $tas.length;
             var icurrentta = $tas.index(this); // current textarea $tas index
+            if (splitedPostsCount > 1)
+                var pml = getPostSplitingPML();
+            else
+                var pml = 140;
             var cci = getPostSpittingCI(icurrentta);
             var caretPos = $this.caret();
             var reply_to = $this.attr('data-reply-to');
 
             for (var i = 0; i < $tas.length; i++) {
-                if (splitedPostsCount > 1)
-                    var pml = getPostSplitingPML();
-                else
-                    var pml = 140;
                 if ($tas[i].value.length > pml) {
                     if (pml === 140)
                         pml = getPostSplitingPML();
@@ -802,6 +802,7 @@ function replyTextInput(e) {
 
                         $tas = tweetForm.find("textarea");
                         splitedPostsCount = $tas.length;
+                        pml = getPostSplitingPML();
 
                         $oldta.on('focus', function() {
                             this.style.height = '80px';
@@ -832,6 +833,10 @@ function replyTextInput(e) {
                     }
                     $tas = tweetForm.find("textarea");
                     splitedPostsCount = $tas.length;
+                    if (splitedPostsCount > 1)
+                        pml = getPostSplitingPML();
+                    else
+                        pml = 140;
                     caretPos = -1;
                     if (icurrentta >= i && icurrentta > 0) {
                         icurrentta -= 1;
