@@ -292,7 +292,7 @@ function refreshWhoToFollow(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    $('.follow-suggestions').html('');
+    $('.module.who-to-follow .follow-suggestions').empty();
 
     getRandomFollowSuggestion(processSuggestion);
     getRandomFollowSuggestion(processSuggestion);
@@ -1538,19 +1538,20 @@ function replaceDashboards() {
     if ($(window).width() >= 1200 && !$('.wrapper').hasClass('w1200')) {
         $('.wrapper').addClass('w1200');
         $('.userMenu').addClass('w1200');
-        var wf = $('.module.who-to-follow');
-        wf.detach();
-        wf.appendTo($('.dashboard.right'));
+        var wtf = $('.module.who-to-follow');
+        if (wtf.length > 0) {
+            wtf.detach();
+            wtf.appendTo($('.dashboard.right'));
+        }
     } else if ($(window).width() < 1200 && $('.wrapper').hasClass('w1200')) {
         $('.wrapper').removeClass('w1200');
         $('.userMenu').removeClass('w1200');
-        var wf = $('.module.who-to-follow');
-        wf.detach();
-        $('.module.mini-profile').after(wf);
+        var wtf = $('.module.who-to-follow');
+        if (wtf.length > 0) {
+            wtf.detach();
+            $('.module.mini-profile').after(wtf);
+        }
     }
-
-    $( ".who-to-follow .refresh-users" ).bind( "click", refreshWhoToFollow );
-    //$( ".who-to-follow .view-all-users" ).bind( "click", function(){window.location.hash = "#whotofollow"} );
 }
 
 function initInterfaceCommon() {
@@ -1614,6 +1615,11 @@ function initInterfaceCommon() {
     replaceDashboards();
     $( window ).resize(replaceDashboards);
 
+    if ($.Options.getWhoToFollowOpt() === 'enable')
+        initWhoToFollow();
+    else
+        killWhoToFollow();
+
     $('.tox-ctc').on('click', function(){
         window.prompt(polyglot.t('copy_to_clipboard'), $(this).attr('data'))
     });
@@ -1629,6 +1635,23 @@ function initInterfaceCommon() {
     }
 }
 
+
+function initWhoToFollow() {
+    var wtf = $('.module.who-to-follow');
+    if (wtf.length) {
+        wtf.html($('#who-to-follow-template').html()).show();
+        var wtfRefresh = wtf.find('.refresh-users');
+            wtfRefresh.on('click', refreshWhoToFollow);
+            setTimeout(function() { wtfRefresh.click() }, 100);
+        //wtf.find('.view-all-users').on('click', function() { window.location.hash = '#whotofollow'; });
+    }
+}
+
+function killWhoToFollow() {
+    var wtf = $('.module.who-to-follow');
+    if (wtf.length)
+        wtf.empty().hide();
+}
 
 function setTextcompleteOn(element) {
     var $this = $(element);

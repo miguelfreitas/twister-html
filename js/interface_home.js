@@ -99,10 +99,6 @@ var InterfaceFunctions = function()
 
                      twisterFollowingO = TwisterFollowing(defaultScreenName);
 
-                     setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
-                     setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
-                     setTimeout("getRandomFollowSuggestion(processSuggestion)", 1000);
-
                      if( args.cbFunc )
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});
