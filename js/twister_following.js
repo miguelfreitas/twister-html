@@ -441,7 +441,8 @@ function getRandomFollowSuggestion(cbFunc, cbArg) {
     var i = parseInt( Math.random() * followingUsers.length );
 
     if ( (i < followingUsers.length && followingUsers[i] == defaultScreenName) ||
-         typeof(twisterFollowingO.followingsFollowings[followingUsers[i]]) === 'undefined') {
+        typeof(twisterFollowingO) === 'undefined' ||
+        typeof(twisterFollowingO.followingsFollowings[followingUsers[i]]) === 'undefined') {
 
         setTimeout(function() {getRandomFollowSuggestion(cbFunc, cbArg);}, 500);
         return;
@@ -562,7 +563,7 @@ function showFollowingUsers(){
 }
 
 function processSuggestion(arg, suggestion, followedBy) {
-    var dashboard = $(".follow-suggestions");
+    var dashboard = $('.module.who-to-follow .follow-suggestions');
     if( suggestion ) {
         var item = $("#follow-suggestion-template").clone(true);
         item.removeAttr("id");

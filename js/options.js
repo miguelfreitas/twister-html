@@ -402,6 +402,15 @@ var TwisterOptions = function()
         $('#TopTrendsAutoUpdateTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
     }
 
+    this.getWhoToFollowOpt = function() {
+        return this.getOption('WhoToFollow', 'enable');
+    }
+
+    this.setWhoToFollowOpt = function () {
+        $('#WhoToFollow').val(this.getWhoToFollowOpt());
+        $('#WhoToFollow').on('change', function() { $.Options.setOption(this.id, this.value); });
+    }
+
     this.getSplitPostsOpt = function (){
         return $.Options.getOption('splitPosts', 'disable');
     }
@@ -593,6 +602,7 @@ var TwisterOptions = function()
         this.setUseProxyForImgOnlyOpt();
         this.setTopTrendsAutoUpdateOpt();
         this.setTopTrendsAutoUpdateTimerOpt();
+        this.setWhoToFollowOpt();
         this.setSplitPostsOpt();
         this.setHideRepliesOpt();
         this.setHideCloseRTsHourOpt();
