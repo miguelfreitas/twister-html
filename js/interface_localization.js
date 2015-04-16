@@ -620,8 +620,8 @@ if(preferredLanguage == "uk"){
       "Favorite": "Улюблені",
       "File APIs not supported in this browser.": "File APIs не підтримуєтся цим браузером.",
       "Follow": "Підписатись",
-      "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "Following config": "Налаштування читання",
+      "Which way do you want to follow": "У який спосіб ви бажаєте підписатися",
       "Followed by": "Підписаний на",
       "followed_by": "%{username} підписаний",
       "Followers": "Читачі",
@@ -652,7 +652,7 @@ if(preferredLanguage == "uk"){
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "ніхто", // used to promote a post without attaching the user
       "Not available": "Не доступне", // username is not available
-      "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
+      "notify_desktop_error": "Twister не може створити виринаюче повідомлення: невідома помилка.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
@@ -693,15 +693,15 @@ if(preferredLanguage == "uk"){
       "Type message here": "Напишіть повідомлення тут",
       "Unfollow": "Відписатись",
       "Update": "Оновити",
-      "Auto updating": "Auto updating",
+      "Auto updating": "Автоматичне оновлення",
       "Updating status...": "Оновлення статусу...", // status of block chain
       "user_not_yet_accepted": "Інші піри ще не прийняли цього користувача.\n" +
                 "Нажаль, у цьому стані не можливо зберегти профіль\n" +
-                "або послати якісь повідомлення.\n\n" +
-                "Будьласка, зачекайте декілька хвилин для продовження.\n\n" +
+                "або надсилати якісь повідомлення.\n\n" +
+                "Будь ласка, зачекайте декілька хвилин для продовження.\n\n" +
                 "Кнопка 'Зберегти зміни' стане доступною автоматично,\n" +
                 "коли цей процес завершится. (Я обіцяю, це останній раз,\n"+
-                "коли ви змушені чекати перед використанням twister).\n\n" +
+                "коли ви змушені чекати перед використанням Twister).\n\n" +
                 "Підказка: тим часом ви можете вибрати аватар!",
       "users_mentions": "Згадування @%{username}",
       "users_profile": "Профіль %{username}",
@@ -710,7 +710,7 @@ if(preferredLanguage == "uk"){
       "View All": "Дивитись все",
       "Who to Follow": "Кого читати",
       "Your message was sent!": "Ваше повідомлення відправлене!",
-      "twister login": "Вхід до twister",
+      "twister login": "Вхід до Twister",
       "Existing local users": "Вже зареєстровані",
       "Or...": "Або...",
       "Create a new user": "Створити нового користувача",
@@ -726,7 +726,7 @@ if(preferredLanguage == "uk"){
       "Mining difficulty:": "Складність майнінгу:",
       "Block generation status": "Статус генерації блоків",
       "Current hash rate:": "Поточна швидкість хешування:",
-      "Terminate Daemon:": "Зупинити twister:",
+      "Terminate Daemon:": "Зупинити Twister:",
       "Exit": "Вихід",
       "Save Changes": "Зберегти зміни",
       "Secret key:": "Секретний ключ:",
@@ -754,7 +754,7 @@ if(preferredLanguage == "uk"){
       "Send key": "Надсилання повідомлення",
       "Posts display": "Відображення постів",
       "Post editor": "Редактор посту",
-      "Inline image preview": "Inline image preview",
+      "Inline image preview": "Контекстний перегляд зображення",
       "Display": "Відображати",
       "Line feeds": "Line feeds",
       "Supported punctuations:": "Supported punctuations:",
@@ -772,9 +772,9 @@ if(preferredLanguage == "uk"){
       "none": "немає",
       "Custom": "Вибірково",
       "Mentions": "Mentions",
-      "Use proxy for image preview only": "Use proxy for image preview only",
+      "Use proxy for image preview only": "Використовуати Proxy тільки для попереднього перегляду зображень",
       "Use external links behind a proxy": "Use external links behind a proxy",
-      "There aren't any posts with this hashtag.": "There aren't any posts with this hashtag.",
+      "There aren't any posts with this hashtag.": "Не знайдено публікацій за цим теґом.",
       "Split only new post": "Розділяти тільки нові публікації",
       "Split all": "Поєднати усі",
       "Don't split": "Не розділювати",
@@ -811,7 +811,7 @@ if(preferredLanguage == "uk"){
       "Most possible language: this": "Найбільш вірогідні мови: %{this}",
       "Scope of usage": "Сфера використання",
       "Show with every user name": "Show with every user name",
-      "Show at profile modal only": "Show at profile modal only",
+      "Show at profile modal only": "Відображати тільки в модальному вікні профілю",
       "Show if a user follows me": "Якщо користувач підписався на мене",
       "follows you": "стежить за тобою",
       "Show conversation": "Показати бесіду",
