@@ -20,15 +20,15 @@ var TwisterOptions = function()
     }
     
     this.soundNotifOptions = function() {
-        $('#notifyForm select').each(function(){
-            this.value = $.Options.getOption(this.id, "false");
+        $('#notifyForm select').each(function() {
+            this.value = $.Options.getOption(this.id, 'false');
         });
         
         var player = $('#player');
         player[0].pause();
         $('#player').empty();
 
-        $('form#notifyForm').on('change','select',function(){
+        $('form#notifyForm').on('change', 'select', function() {
             $.Options.setOption(this.id, this.value);
             
             if(this.value == false) {player[0].pause(); return;}
@@ -46,10 +46,10 @@ var TwisterOptions = function()
 
     this.volumeControl = function() {
         var playerVol = $('#playerVol');
-        playerVol[0].value = $.Options.getOption(playerVol[0].id, 1);
+        playerVol[0].value = this.getOption(playerVol[0].id, 1);
         $('.volValue').text((playerVol[0].value * 100).toFixed());
 
-        playerVol.on('change',function(){
+        playerVol.on('change', function() {
             $.Options.setOption(this.id, this.value);
             $('#player')[0].volume = (this.value);
             $('.volValue').text((this.value * 100).toFixed());
@@ -57,8 +57,8 @@ var TwisterOptions = function()
     }
 
     this.DMsNotif = function() {
-        var sndDM = $.Options.getOption('sndDM', "false");
-        if( sndDM == "false") return;
+        var sndDM = this.getOption('sndDM', 'false');
+        if ( sndDM === 'false') return;
         var player = $('#player');
         $('#player').empty();
 
@@ -69,13 +69,13 @@ var TwisterOptions = function()
             player.attr('type', 'audio/ogg');
             player.attr('src', 'sound/'+sndDM+'.ogg');
         }
-        player[0].volume = $.Options.getOption('playerVol',1);
+        player[0].volume = this.getOption('playerVol',1);
         player[0].play();
     }
 
     this.mensNotif = function() {
-        var sndMention = $.Options.getOption('sndMention', "false");
-        if(sndMention == "false") return;
+        var sndMention = this.getOption('sndMention', 'false');
+        if (sndMention === 'false') return;
         var player = $('#playerSec');
         $('#playerSec').empty();
 
@@ -86,23 +86,22 @@ var TwisterOptions = function()
             player.attr('type', 'audio/ogg');
             player.attr('src', 'sound/'+sndMention+'.ogg');
         }
-        player[0].volume = $.Options.getOption('playerVol',1);
+        player[0].volume = this.getOption('playerVol',1);
         player[0].play();
     }
 
     this.getShowDesktopNotifPostsOpt = function() {
-        return $.Options.getOption('showDesktopNotifPosts','enable');
+        return this.getOption('showDesktopNotifPosts', 'enable');
     }
 
     this.setShowDesktopNotifPostsOpt = function () {
         function showDesktopNotifPostsDesc() {
-            if ($.Options.getShowDesktopNotifPostsOpt() === 'enable') {
-                $('#showDesktopNotifPostsDesc')[0].style.display= 'inline';
-            } else {
-                $('#showDesktopNotifPostsDesc')[0].style.display= 'none';
-            }
+            if ($.Options.getShowDesktopNotifPostsOpt() === 'enable')
+                $('#showDesktopNotifPostsDesc').css('display', 'inline');
+            else
+                $('#showDesktopNotifPostsDesc').css('display', 'none');
         }
-        $('#showDesktopNotifPosts').val(this.getShowDesktopNotifPostsOpt());
+        $('#showDesktopNotifPosts').val( this.getShowDesktopNotifPostsOpt() );
         showDesktopNotifPostsDesc();
         $('#showDesktopNotifPosts').on('change', function() {
             $.Options.setOption(this.id, this.value);
@@ -111,28 +110,26 @@ var TwisterOptions = function()
     }
 
     this.getShowDesktopNotifPostsTimerOpt = function () {
-        return parseInt($.Options.getOption('showDesktopNotifPostsTimer', '6'));
+        return parseInt(this.getOption('showDesktopNotifPostsTimer', '6'));
     }
 
     this.setShowDesktopNotifPostsTimerOpt = function () {
-        $('#showDesktopNotifPostsTimer')[0].value = this.getShowDesktopNotifPostsTimerOpt().toString();
-
-        $('#showDesktopNotifPostsTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+        $('#showDesktopNotifPostsTimer').val( this.getShowDesktopNotifPostsTimerOpt().toString() );
+        $('#showDesktopNotifPostsTimer').on('keyup', function () { setElemValNumeric(this, polyglot.t('second(s)')); });
     }
 
     this.getShowDesktopNotifPostsModalOpt = function() {
-        return $.Options.getOption('showDesktopNotifPostsModal','enable');
+        return this.getOption('showDesktopNotifPostsModal', 'enable');
     }
 
     this.setShowDesktopNotifPostsModalOpt = function () {
         function showDesktopNotifPostsModalDesc() {
-            if ($.Options.getShowDesktopNotifPostsModalOpt() === 'enable') {
-                $('#showDesktopNotifPostsModalDesc')[0].style.display= 'inline';
-            } else {
-                $('#showDesktopNotifPostsModalDesc')[0].style.display= 'none';
-            }
+            if ($.Options.getShowDesktopNotifPostsModalOpt() === 'enable')
+                $('#showDesktopNotifPostsModalDesc').css('display', 'inline');
+            else
+                $('#showDesktopNotifPostsModalDesc').css('display', 'none');
         }
-        $('#showDesktopNotifPostsModal').val(this.getShowDesktopNotifPostsModalOpt());
+        $('#showDesktopNotifPostsModal').val( this.getShowDesktopNotifPostsModalOpt() );
         showDesktopNotifPostsModalDesc();
         $('#showDesktopNotifPostsModal').on('change', function() {
             $.Options.setOption(this.id, this.value);
@@ -141,28 +138,26 @@ var TwisterOptions = function()
     }
 
     this.getShowDesktopNotifPostsModalTimerOpt = function () {
-        return parseInt($.Options.getOption('showDesktopNotifPostsModalTimer', '6'));
+        return parseInt(this.getOption('showDesktopNotifPostsModalTimer', '6'));
     }
 
     this.setShowDesktopNotifPostsModalTimerOpt = function () {
-        $('#showDesktopNotifPostsModalTimer')[0].value = this.getShowDesktopNotifPostsModalTimerOpt().toString();
-
-        $('#showDesktopNotifPostsModalTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+        $('#showDesktopNotifPostsModalTimer').val( this.getShowDesktopNotifPostsModalTimerOpt().toString() );
+        $('#showDesktopNotifPostsModalTimer').on('keyup', function () { setElemValNumeric(this, polyglot.t('second(s)')); });
     }
 
     this.getShowDesktopNotifMentionsOpt = function() {
-        return $.Options.getOption('showDesktopNotifMentions','enable');
+        return this.getOption('showDesktopNotifMentions', 'enable');
     }
 
     this.setShowDesktopNotifMentionsOpt = function () {
         function showDesktopNotifMentionsDesc() {
-            if ($.Options.getShowDesktopNotifMentionsOpt() === 'enable') {
-                $('#showDesktopNotifMentionsDesc')[0].style.display= 'inline';
-            } else {
-                $('#showDesktopNotifMentionsDesc')[0].style.display= 'none';
-            }
+            if ($.Options.getShowDesktopNotifMentionsOpt() === 'enable')
+                $('#showDesktopNotifMentionsDesc').css('display', 'inline');
+            else
+                $('#showDesktopNotifMentionsDesc').css('display', 'none');
         }
-        $('#showDesktopNotifMentions').val(this.getShowDesktopNotifMentionsOpt());
+        $('#showDesktopNotifMentions').val( this.getShowDesktopNotifMentionsOpt() );
         showDesktopNotifMentionsDesc();
         $('#showDesktopNotifMentions').on('change', function() {
             $.Options.setOption(this.id, this.value);
@@ -171,28 +166,26 @@ var TwisterOptions = function()
     }
 
     this.getShowDesktopNotifMentionsTimerOpt = function () {
-        return parseInt($.Options.getOption('showDesktopNotifMentionsTimer', '60'));
+        return parseInt(this.getOption('showDesktopNotifMentionsTimer', '60'));
     }
 
     this.setShowDesktopNotifMentionsTimerOpt = function () {
-        $('#showDesktopNotifMentionsTimer')[0].value = this.getShowDesktopNotifMentionsTimerOpt().toString();
-
+        $('#showDesktopNotifMentionsTimer').val( this.getShowDesktopNotifMentionsTimerOpt().toString() );
         $('#showDesktopNotifMentionsTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
     }
 
     this.getShowDesktopNotifDMsOpt = function() {
-        return $.Options.getOption('showDesktopNotifDMs','enable');
+        return this.getOption('showDesktopNotifDMs', 'enable');
     }
 
     this.setShowDesktopNotifDMsOpt = function () {
         function showDesktopNotifDMsDesc() {
-            if ($.Options.getShowDesktopNotifDMsOpt() === 'enable') {
-                $('#showDesktopNotifDMsDesc')[0].style.display= 'inline';
-            } else {
-                $('#showDesktopNotifDMsDesc')[0].style.display= 'none';
-            }
+            if ($.Options.getShowDesktopNotifDMsOpt() === 'enable')
+                $('#showDesktopNotifDMsDesc').css('display', 'inline');
+            else
+                $('#showDesktopNotifDMsDesc').css('display', 'none');
         }
-        $('#showDesktopNotifDMs').val(this.getShowDesktopNotifDMsOpt());
+        $('#showDesktopNotifDMs').val( this.getShowDesktopNotifDMsOpt() );
         showDesktopNotifDMsDesc();
         $('#showDesktopNotifDMs').on('change', function() {
             $.Options.setOption(this.id, this.value);
@@ -201,13 +194,12 @@ var TwisterOptions = function()
     }
 
     this.getShowDesktopNotifDMsTimerOpt = function () {
-        return parseInt($.Options.getOption('showDesktopNotifDMsTimer', '60'));
+        return parseInt(this.getOption('showDesktopNotifDMsTimer', '60'));
     }
 
     this.setShowDesktopNotifDMsTimerOpt = function () {
-        $('#showDesktopNotifDMsTimer')[0].value = this.getShowDesktopNotifDMsTimerOpt().toString();
-
-        $('#showDesktopNotifDMsTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+        $('#showDesktopNotifDMsTimer').val( this.getShowDesktopNotifDMsTimerOpt().toString() );
+        $('#showDesktopNotifDMsTimer').on('keyup', function () { setElemValNumeric(this, polyglot.t('second(s)')); });
     }
 
     this.setTestDesktopNotif = function() {
@@ -216,160 +208,135 @@ var TwisterOptions = function()
         })
     }
 
-    this.keysSendDefault = "ctrlenter";
+    this.keysSendDefault = 'ctrlenter';
     this.keysSend = function() {
-        $('#keysOpt select')[0].value = $.Options.getOption('keysSend',this.keysSendDefault);
-
-        $('#keysOpt select').on('change', function(){
-            $.Options.setOption(this.id, this.value);
-        })
+        $('#keysOpt select').val( this.getOption('keysSend',this.keysSendDefault) );
+        $('#keysOpt select').on('change', function() { $.Options.setOption(this.id, this.value); });
     }
 
     this.keyEnterToSend = function() {
-        return $.Options.getOption('keysSend',this.keysSendDefault) == "enter";
+        return this.getOption('keysSend', this.keysSendDefault) === 'enter';
     }
 
     this.setLang = function() {
-        $('#language').val($.Options.getOption('locLang','auto'))
-        $('#language').on('change', function(){
+        $('#language').val( this.getOption('locLang', 'auto') );
+        $('#language').on('change', function() {
             $.Options.setOption('locLang', $(this).val());
             location.reload();
         })
     }
 
     this.getTheme = function() {
-        return $.Options.getOption('theme','original');
+        return this.getOption('theme', 'original');
     }
 
     this.setTheme = function() {
-        $('#theme').val(this.getTheme())
-        $('#theme').on('change', function(){
+        $('#theme').val( this.getTheme() )
+        $('#theme').on('change', function() {
             $.Options.setOption('theme', $(this).val());
             location.reload();
         });
     }
 
     this.getLineFeedsOpt = function() {
-        return $.Options.getOption('displayLineFeeds',"disable");
+        return this.getOption('displayLineFeeds', 'disable');
     }
 
     this.setLineFeedsOpt = function() {
-        $('#lineFeedsOpt select')[0].value = this.getLineFeedsOpt();
-
-        $('#lineFeedsOpt select').on('change', function(){
-            $.Options.setOption(this.id, this.value);
-        })
+        $('#lineFeedsOpt select').val( this.getLineFeedsOpt() );
+        $('#lineFeedsOpt select').on('change', function() { $.Options.setOption(this.id, this.value); });
     }
 
     this.getShowPreviewOpt = function() {
-        return $.Options.getOption('displayPreview',"disable");
+        return this.getOption('displayPreview', 'disable');
     }
 
     this.setShowPreviewOpt = function () {
-        $('#showPreviewOpt select')[0].value = this.getShowPreviewOpt();
-
-        $('#showPreviewOpt select').on('change', function(){
-            $.Options.setOption(this.id, this.value);
-        });
+        $('#showPreviewOpt select').val( this.getShowPreviewOpt() );
+        $('#showPreviewOpt select').on('change', function() { $.Options.setOption(this.id, this.value); });
     }
 
     this.getUnicodeConversionOpt = function () {
-        return $.Options.getOption('unicodeConversion', "disable");
+        return this.getOption('unicodeConversion', 'disable');
     }
 
     this.setUnicodeConversionOpt = function () {
-        $("#unicodeConversion")[0].value = this.getUnicodeConversionOpt();
+        $('#unicodeConversion').val( this.getUnicodeConversionOpt() );
 
-        if (this.getUnicodeConversionOpt() === "custom")
-            $("#unicodeConversionOpt .suboptions")[0].style.height = "230px";
+        if (this.getUnicodeConversionOpt() === 'custom')
+            $('#unicodeConversionOpt .suboptions').css('height', 'auto');
 
-        $("#unicodeConversion").on('change', function () {
+        $('#unicodeConversion').on('change', function () {
             $.Options.setOption(this.id, this.value);
-            if (this.value === "custom")
-                $("#unicodeConversionOpt .suboptions")[0].style.height = "230px";
+            if (this.value === 'custom')
+                $('#unicodeConversionOpt .suboptions').css('height', 'auto');
             else
-                $("#unicodeConversionOpt .suboptions")[0].style.height = "0px";
+                $('#unicodeConversionOpt .suboptions').css('height', '0px');
         });
     }
 
     this.getConvertPunctuationsOpt = function() {
-        return $.Options.getOption('convertPunctuationsOpt', false);
+        return this.getOption('convertPunctuationsOpt', false);
     }
 
     this.setConvertPunctuationsOpt = function () {
-        $('#convertPunctuationsOpt')[0].checked = this.getConvertPunctuationsOpt();
-
-        $('#convertPunctuationsOpt').on('change', function(){
-            $.Options.setOption(this.id, this.checked);
-        });
+        $('#convertPunctuationsOpt').prop('checked', this.getConvertPunctuationsOpt());
+        $('#convertPunctuationsOpt').on('change', function() { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getConvertEmotionsOpt = function() {
-        return $.Options.getOption('convertEmotionsOpt', false);
+        return this.getOption('convertEmotionsOpt', false);
     }
 
     this.setConvertEmotionsOpt = function () {
-        $('#convertEmotionsOpt')[0].checked = this.getConvertEmotionsOpt();
-
-        $('#convertEmotionsOpt').on('change', function(){
-            $.Options.setOption(this.id, this.checked);
-        });
+        $('#convertEmotionsOpt').prop('checked', this.getConvertEmotionsOpt());
+        $('#convertEmotionsOpt').on('change', function() { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getConvertSignsOpt = function() {
-        return $.Options.getOption('convertSignsOpt', false);
+        return this.getOption('convertSignsOpt', false);
     }
 
     this.setConvertSignsOpt = function () {
-        $('#convertSignsOpt')[0].checked = this.getConvertSignsOpt();
-
-        $('#convertSignsOpt').on('change', function(){
-            $.Options.setOption(this.id, this.checked);
-        });
+        $('#convertSignsOpt').prop('checked', this.getConvertSignsOpt());
+        $('#convertSignsOpt').on('change', function() { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getConvertFractionsOpt = function() {
-        return $.Options.getOption('convertFractionsOpt', false);
+        return this.getOption('convertFractionsOpt', false);
     }
 
     this.setConvertFractionsOpt = function () {
-        $('#convertFractionsOpt')[0].checked = this.getConvertFractionsOpt();
-
-        $('#convertFractionsOpt').on('change', function(){
-            $.Options.setOption(this.id, this.checked);
-        });
+        $('#convertFractionsOpt').prop('checked', this.getConvertFractionsOpt());
+        $('#convertFractionsOpt').on('change', function() { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getUseProxyOpt = function () {
-        return $.Options.getOption('useProxy', 'disable');
+        return this.getOption('useProxy', 'disable');
     }
 
     this.setUseProxyOpt = function () {
-        $('#useProxy')[0].value = this.getUseProxyOpt();
+        $('#useProxy').val( this.getUseProxyOpt() );
 
         if (this.getUseProxyOpt() === 'disable')
-            $('#useProxyForImgOnly').attr('disabled','disabled');
+            $('#useProxyForImgOnly').attr('disabled', 'disabled');
 
         $('#useProxy').on('change', function () {
             $.Options.setOption(this.id, this.value);
-
             if (this.value === 'disable')
-                $('#useProxyForImgOnly').attr('disabled','disabled');
+                $('#useProxyForImgOnly').attr('disabled', 'disabled');
             else
                 $('#useProxyForImgOnly').removeAttr('disabled');
         });
     }
 
     this.getUseProxyForImgOnlyOpt = function () {
-        return $.Options.getOption('useProxyForImgOnly', false);
+        return this.getOption('useProxyForImgOnly', false);
     }
 
     this.setUseProxyForImgOnlyOpt = function () {
-        $('#useProxyForImgOnly')[0].checked = this.getUseProxyForImgOnlyOpt();
-
-        $('#useProxyForImgOnly').on('change', function () {
-            $.Options.setOption(this.id, this.checked);
-        });
+        $('#useProxyForImgOnly').prop('checked', this.getUseProxyForImgOnlyOpt());
+        $('#useProxyForImgOnly').on('change', function () { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getTopTrendsOpt = function() {
@@ -383,7 +350,7 @@ var TwisterOptions = function()
             else
                 $('#TopTrendsCont').hide();
         }
-        $('#TopTrends').val(this.getTopTrendsOpt());
+        $('#TopTrends').val( this.getTopTrendsOpt() );
         TopTrendsCfg();
         $('#TopTrends').on('change', function() {
             $.Options.setOption(this.id, this.value);
@@ -397,13 +364,12 @@ var TwisterOptions = function()
 
     this.setTopTrendsAutoUpdateOpt = function () {
         function TopTrendsAutoUpdateCfg() {
-            if ($.Options.getTopTrendsAutoUpdateOpt() === 'enable') {
-                $('#TopTrendsAutoUpdateOpt')[0].style.display= 'inline';
-            } else {
-                $('#TopTrendsAutoUpdateOpt')[0].style.display= 'none';
-            }
+            if ($.Options.getTopTrendsAutoUpdateOpt() === 'enable')
+                $('#TopTrendsAutoUpdateOpt').css('display', 'inline');
+            else
+                $('#TopTrendsAutoUpdateOpt').css('display', 'none');
         }
-        $('#TopTrendsAutoUpdate').val(this.getTopTrendsAutoUpdateOpt());
+        $('#TopTrendsAutoUpdate').val( this.getTopTrendsAutoUpdateOpt() );
         TopTrendsAutoUpdateCfg();
         $('#TopTrendsAutoUpdate').on('change', function() {
             $.Options.setOption(this.id, this.value);
@@ -416,9 +382,8 @@ var TwisterOptions = function()
     }
 
     this.setTopTrendsAutoUpdateTimerOpt = function () {
-        $('#TopTrendsAutoUpdateTimer')[0].value = this.getTopTrendsAutoUpdateTimerOpt().toString();
-
-        $('#TopTrendsAutoUpdateTimer').on('keyup', function () {setElemValNumeric(this, polyglot.t('second(s)'));});
+        $('#TopTrendsAutoUpdateTimer').val( this.getTopTrendsAutoUpdateTimerOpt().toString() );
+        $('#TopTrendsAutoUpdateTimer').on('keyup', function () { setElemValNumeric(this, polyglot.t('second(s)')); });
     }
 
     this.getWhoToFollowOpt = function() {
@@ -430,81 +395,64 @@ var TwisterOptions = function()
         $('#WhoToFollow').on('change', function() { $.Options.setOption(this.id, this.value); });
     }
 
-    this.getSplitPostsOpt = function (){
-        return $.Options.getOption('splitPosts', 'disable');
+    this.getSplitPostsOpt = function () {
+        return this.getOption('splitPosts', 'disable');
     }
 
     this.setSplitPostsOpt = function () {
-        $('#splitPosts')[0].value = this.getSplitPostsOpt();
-
-        $('#splitPosts').on('change', function () {
-            $.Options.setOption(this.id, this.value);
-        });
+        $('#splitPosts').val( this.getSplitPostsOpt() );
+        $('#splitPosts').on('change', function () { $.Options.setOption(this.id, this.value); });
     }
 
     this.getHideRepliesOpt = function () {
-        return $.Options.getOption('hideReplies', 'following');
+        return this.getOption('hideReplies', 'following');
     }
 
     this.setHideRepliesOpt = function () {
-        $('#hideReplies')[0].value = this.getHideRepliesOpt();
-
-        $('#hideReplies').on('change', function () {
-            $.Options.setOption(this.id, this.value);
-        });
+        $('#hideReplies').val( this.getHideRepliesOpt() );
+        $('#hideReplies').on('change', function () { $.Options.setOption(this.id, this.value); });
     }
 
     this.getHideCloseRTsOpt = function () {
-        return $.Options.getOption('hideCloseRTs', 'disable');
+        return this.getOption('hideCloseRTs', 'disable');
     };
 
     this.setHideCloseRTsOpt = function () {
-        $('#hideCloseRTs')[0].value = this.getHideCloseRTsOpt();
-
-        if (this.getHideCloseRTsOpt() === 'disable') {
-            $('#hideCloseRTsDesc')[0].style.display = 'none';
-        } else {
-            $('#hideCloseRTsDesc')[0].style.display = 'inline';
+        function hideCloseRTsCfg() {
+            if ($.Options.getHideCloseRTsOpt() === 'disable')
+                $('#hideCloseRTsDesc').css('display', 'none');
+            else
+                $('#hideCloseRTsDesc').css('display', 'inline');
         }
-
+        $('#hideCloseRTs').val( this.getHideCloseRTsOpt() );
+        hideCloseRTsCfg();
         $('#hideCloseRTs').on('change', function () {
             $.Options.setOption(this.id, this.value);
-
-            if (this.value === 'disable') {
-                $('#hideCloseRTsDesc')[0].style.display = 'none';
-            } else {
-                $('#hideCloseRTsDesc')[0].style.display = 'inline';
-            }
+            hideCloseRTsCfg();
         });
     };
 
     this.getHideCloseRTsHourOpt = function () {
-        return parseInt($.Options.getOption('hideCloseRtsHour', '1'));
+        return parseInt(this.getOption('hideCloseRtsHour', '1'));
     };
 
     this.setHideCloseRTsHourOpt = function () {
-        $('#hideCloseRtsHour')[0].value = this.getHideCloseRTsHourOpt().toString();
-
-        $('#hideCloseRtsHour').on('keyup', function () {setElemValNumeric(this, polyglot.t('hour(s)'));});
-    };
-
-    this.getIsFollowingMeOpt = function () {
-        return $.Options.getOption('isFollowingMe');
+        $('#hideCloseRtsHour').val( this.getHideCloseRTsHourOpt().toString() );
+        $('#hideCloseRtsHour').on('keyup', function () { setElemValNumeric(this, polyglot.t('hour(s)')); });
     };
 
     this.getFilterLangOpt = function() {
-        return this.getOption('filterLang','disable');
+        return this.getOption('filterLang', 'disable');
     }
 
     this.setFilterLangOpt = function () {
         function filterLangListCont() {
-            if ( $.Options.getFilterLangOpt() !== 'disable' ) {
-                $('#filterLangListCont')[0].style.display= 'block';
-            } else {
-                $('#filterLangListCont')[0].style.display= 'none';
-            }
+            if ( $.Options.getFilterLangOpt() !== 'disable' )
+                $('#filterLangListCont').css('display', 'block');
+            else
+                $('#filterLangListCont').css('display', 'none');
         }
-        $('#filterLang').val(this.getFilterLangOpt());
+        $('#filterLang').val( this.getFilterLangOpt() );
         filterLangListCont();
         $('#filterLang').on('change', function() {
             $.Options.setOption(this.id, this.value);
@@ -517,9 +465,9 @@ var TwisterOptions = function()
     }
 
     this.setFilterLangListOpt = function () {
-        $('#filterLangList').val(this.getFilterLangListOpt());
+        $('#filterLangList').val( this.getFilterLangListOpt() );
 
-        $('#filterLangList').on('keyup', function () {$.Options.setOption(this.id, this.value);});
+        $('#filterLangList').on('keyup', function () { $.Options.setOption(this.id, this.value); });
     }
 
     this.getFilterLangAccuracyOpt = function () {
@@ -527,8 +475,8 @@ var TwisterOptions = function()
     }
 
     this.setFilterLangAccuracyOpt = function () {
-        $('#filterLangAccuracy').val(this.getFilterLangAccuracyOpt());
-        $('#filterLangAccuracyVal').text(this.getFilterLangAccuracyOpt());
+        $('#filterLangAccuracy').val( this.getFilterLangAccuracyOpt() );
+        $('#filterLangAccuracyVal').text( this.getFilterLangAccuracyOpt() );
         $('#filterLangAccuracy').on('change', function () {
             $.Options.setOption(this.id, this.value);
             $('#filterLangAccuracyVal').text(this.value);
@@ -541,8 +489,7 @@ var TwisterOptions = function()
 
     this.setFilterLangForPostboardOpt = function () {
         $('#filterLangForPostboard').prop('checked', this.getFilterLangForPostboardOpt());
-
-        $('#filterLangForPostboard').on('click', function () {$.Options.setOption(this.id, this.checked);});
+        $('#filterLangForPostboard').on('click', function () { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getFilterLangForSearchingOpt = function () {
@@ -551,8 +498,7 @@ var TwisterOptions = function()
 
     this.setFilterLangForSearchingOpt = function () {
         $('#filterLangForSearching').prop('checked', this.getFilterLangForSearchingOpt());
-
-        $('#filterLangForSearching').on('click', function () {$.Options.setOption(this.id, this.checked);});
+        $('#filterLangForSearching').on('click', function () { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getFilterLangForTopTrendsOpt = function () {
@@ -561,8 +507,7 @@ var TwisterOptions = function()
 
     this.setFilterLangForTopTrendsOpt = function () {
         $('#filterLangForTopTrends').prop('checked', this.getFilterLangForTopTrendsOpt());
-
-        $('#filterLangForTopTrends').on('click', function () {$.Options.setOption(this.id, this.checked);});
+        $('#filterLangForTopTrends').on('click', function () { $.Options.setOption(this.id, this.checked); });
     }
 
     this.getFilterLangSimulateOpt = function () {
@@ -571,28 +516,25 @@ var TwisterOptions = function()
 
     this.setFilterLangSimulateOpt = function () {
         $('#filterLangSimulate').prop('checked', this.getFilterLangSimulateOpt());
-
-        $('#filterLangSimulate').on('click', function () {$.Options.setOption(this.id, this.checked);});
+        $('#filterLangSimulate').on('click', function () { $.Options.setOption(this.id, this.checked); });
     }
 
-    this.setIsFollowingMeOpt = function () {
-        $('#isFollowingMe')[0].value = this.getIsFollowingMeOpt();
+    this.getIsFollowingMeOpt = function () {
+        return this.getOption('isFollowingMe', 'in-profile');
+    };
 
-        $('#isFollowingMe').on('change', function () {
-            $.Options.setOption(this.id, this.value);
-        });
+    this.setIsFollowingMeOpt = function () {
+        $('#isFollowingMe').val( this.getIsFollowingMeOpt() );
+        $('#isFollowingMe').on('change', function () { $.Options.setOption(this.id, this.value); });
     };
 
     this.getDMCopySelfOpt = function() {
-        return $.Options.getOption('dmCopySelf',"enable");
+        return this.getOption('dmCopySelf', 'enable');
     }
     
     this.setDMCopySelfOpt = function () {
-        $('#dmCopySelfOpt select')[0].value = this.getDMCopySelfOpt();
-
-        $('#dmCopySelfOpt select').on('change', function(){
-            $.Options.setOption(this.id, this.value);
-        });
+        $('#dmCopySelfOpt select').val( this.getDMCopySelfOpt() );
+        $('#dmCopySelfOpt select').on('change', function() { $.Options.setOption(this.id, this.value); });
     }
 
     this.InitOptions = function() {
