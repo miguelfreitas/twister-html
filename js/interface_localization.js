@@ -661,7 +661,7 @@ if(preferredLanguage == "uk"){
       "Only alphanumeric and underscore allowed.": "Тільки літеро-численні сиволи та нижнє підкреслення дозволені.",
       "peer address": "адреса піру",
       "Private": "Особистий",
-      "Profile": "Проіфль",
+      "Profile": "Профіль",
       "Postboard": "Стрічка оновлень",
       "post": "надіслати", // verb - button to post a message
       "Post to promote:": "Рекламне повідомлення: ",
