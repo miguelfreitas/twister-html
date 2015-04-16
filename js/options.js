@@ -372,6 +372,25 @@ var TwisterOptions = function()
         });
     }
 
+    this.getTopTrendsOpt = function() {
+        return this.getOption('TopTrends', 'enable');
+    }
+
+    this.setTopTrendsOpt = function () {
+        function TopTrendsCfg() {
+            if ($.Options.getTopTrendsOpt() === 'enable')
+                $('#TopTrendsCont').show();
+            else
+                $('#TopTrendsCont').hide();
+        }
+        $('#TopTrends').val(this.getTopTrendsOpt());
+        TopTrendsCfg();
+        $('#TopTrends').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            TopTrendsCfg();
+        });
+    }
+
     this.getTopTrendsAutoUpdateOpt = function() {
         return this.getOption('TopTrendsAutoUpdate', 'enable');
     }
@@ -601,6 +620,7 @@ var TwisterOptions = function()
         this.setUseProxyOpt();
         this.setUseProxyForImgOnlyOpt();
         this.setTopTrendsAutoUpdateOpt();
+        this.setTopTrendsOpt();
         this.setTopTrendsAutoUpdateTimerOpt();
         this.setWhoToFollowOpt();
         this.setSplitPostsOpt();

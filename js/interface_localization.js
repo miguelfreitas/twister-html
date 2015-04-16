@@ -3570,7 +3570,7 @@ var fixedLabels = [
   "button",
   ".postboard-news",
   ".post-area-new textarea",
-  ".refresh-users, .view-all-users",
+  ".refresh-toptrends, .refresh-users, .view-all-users",
   ".who-to-follow h3",
   ".userMenu-search-field",
   "a.dropdown-menu-item, a.direct-messages",
