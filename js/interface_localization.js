@@ -604,7 +604,7 @@ if(preferredLanguage == "uk"){
       "DHT network down.": "Мережа DHT недоступна.",
       "Direct Messages": "Особисті повідомлення",
       "Disable": "Вимкнено",
-      "Display mentions to @": "Показати згадування @",
+      "Display mentions to @": "Показати події @",
       "Display retransmissions": "Показати пересилання",
       "DNS to obtain list of peers:": "DNS для отримання пірів:",
       "dns address": "адреса DNS",
@@ -629,13 +629,13 @@ if(preferredLanguage == "uk"){
       "Following users": "Підписані користувачі",
       "Force connection to peer:": "Примусове з’єднання з піром:",
       "General information": "Загальна інформація",
-      "Generate blocks (send promoted messages)": "Генерація блоків (відправка рекламних повідомень)",
+      "Generate blocks (send promoted messages)": "Генерація блоків (відправка рекламних повідомлень)",
       "Home": "Головна", // homepage
       "hours": "%{smart_count} година |||| %{smart_count} годин",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутрішня помилка: lastPostId невизначено (підписка на себе може виправити помилку!)",
       "Known peers:": "Відомі піри: ",
       "Last block is ahead of your computer time, check your clock.": "Останній блок датований майбутнім часом, перевірте свій годинник.",
-      "mentions_at": "Згадування @%{user}",
+      "mentions_at": "Події @%{user}",
       "minutes": "%{smart_count} хвилина |||| %{smart_count} хвилин",
       "Must be 16 characters or less.": "Повинно бути не більше 16 символів.", // username
       "Network": "Мережа",
@@ -648,17 +648,17 @@ if(preferredLanguage == "uk"){
       "in search result": "в пошуковому запиті",
       "in top trends": "в трендах",
       "new_posts": "%{smart_count} нове повідомлення |||| %{smart_count} нових повідомлень",
-      "new_mentions": "%{smart_count} new mention |||| %{smart_count} new mentions",
+      "new_mentions": "%{smart_count} нова подія |||| %{smart_count} нових подій",
       "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
       "nobody": "анонімно", // used to promote a post without attaching the user
       "Not available": "Не доступне", // username is not available
       "notify_desktop_error": "Twister не може створити виринаюче повідомлення: невідома помилка.",
-      "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
+      "notify_desktop_perm_denied": "Twister не може створити сповіщення на робочому столі: доступ обмежено.\n\nЯкщо ви бажаєте отримувати сповіщення, дозвольте їх виконання в налаштуваннях браузера для %{this_domain}.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
       "Number of blocks in block chain:": "Кількість блоків у ланцюгу: ",
-      "Number of CPUs to use": "Кількість CPUs до використання ",
-      "Only alphanumeric and underscore allowed.": "Тільки літеро-численні сиволи та нижнє підкреслення дозволені.",
+      "Number of CPUs to use": "Кількість CPU до використання ",
+      "Only alphanumeric and underscore allowed.": "Допустимі тільки латинські символи, числа та нижнє підкреслення.",
       "peer address": "адреса піру",
       "Private": "Особистий",
       "Profile": "Профіль",
@@ -686,8 +686,8 @@ if(preferredLanguage == "uk"){
       "switch_to_network": "Локальний сервер не підєднаний до мережі або \n" +
                 "ланцюг блоків не актуальний. Якщо ви залишитесь на цій сторінці\n" +
                 "ваші дії можуть не спрацювати.\n" +
-                "Чи бажаєта ви перевірити сторінку зі статусом мережі?",
-      "The File APIs are not fully supported in this browser.": "File APIs не повністью підтримуєтся браузером.",
+                "Чи бажаєте ви перевірити сторінку зі статусом мережі?",
+      "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
       "Type message here": "Напишіть повідомлення тут",
@@ -703,9 +703,9 @@ if(preferredLanguage == "uk"){
                 "коли цей процес завершится. (Я обіцяю, це останній раз,\n"+
                 "коли ви змушені чекати перед використанням Twister).\n\n" +
                 "Підказка: тим часом ви можете вибрати аватар!",
-      "users_mentions": "Згадування @%{username}",
+      "users_mentions": "Події @%{username}",
       "users_profile": "Профіль %{username}",
-      "username_undefined": "Користувач невизначений, потрібен логін.",
+      "username_undefined": "Користувач невизначений, необхідно вказати нік.",
       "View": "Дивитись",
       "View All": "Дивитись все",
       "Who to Follow": "Кого читати",
@@ -779,7 +779,7 @@ if(preferredLanguage == "uk"){
       "Split all": "Поєднати усі",
       "Don't split": "Не розділювати",
       "Split long posts": "Розділити довгі повідомлення",
-      "Posts that begin with mention": "Повідомлення, що починаються з",
+      "Posts that begin with mention": "Повідомлення, що починаються з події",
       "Show all": "Відображати усі",
       "Show only if I am in": "Show only if I am in",
       "Show if it's between users I follow": "Show if it's between users I follow",
