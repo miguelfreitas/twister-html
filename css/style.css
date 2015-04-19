@@ -785,6 +785,7 @@ textarea.splited-post {
     opacity: 1;
 }
 
+.refresh-toptrends,
 .refresh-users,
 .view-all-users
 {
@@ -794,8 +795,9 @@ textarea.splited-post {
 }
 
 /***********************************
-**********TOP TRENDS****************
+************ TOP TRENDS ************
 ***********************************/
+
 ol.toptrends-list {
     margin: 0% 5% 5% 5%;
     padding: 5px;
@@ -803,9 +805,9 @@ ol.toptrends-list {
     border-top: solid 1px rgba( 69, 71, 77, .1 );
 }
 
-.toptrends h3
-{
-    margin: 5% 5% 2% 5%;
+.toptrends h3 {
+    margin: 5% 0% 2% 5%;
+    display: inline;
 }
 
 /***********************************

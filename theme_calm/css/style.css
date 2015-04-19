@@ -969,6 +969,7 @@ textarea.splited-post {
     text-decoration: none;
 }
 
+.refresh-toptrends,
 .refresh-users,
 .view-all-users
 {
@@ -979,14 +980,16 @@ textarea.splited-post {
 }
 
 /***********************************
-********************* TOP TRENDS
+************ TOP TRENDS ************
 ***********************************/
+
 .module.toptrends {
     margin-top: 10px;
 }
 .module.toptrends h3 {
     margin: 5px 0 5px 10px;
     font: 14px 'Open Sans', sans-serif;
+    display: inline;
 }
 .module.toptrends ol {
     margin: 0 0 10px 10px;

@@ -29,8 +29,8 @@
   </head>
 
   <body>
-    
-  <!-- MENU SUPERIOR INIT --> 
+
+  <!-- MENU SUPERIOR INIT -->
   <nav class="userMenu">
     <ul>
     <li class="userMenu-home"><a href="home.html"><span class="selectable_theme theme_original label">Home</span></a></li>
@@ -75,7 +75,7 @@
                 <select name="" id="language">
                   <option value="auto">Auto</option>
                   <option value="pt-BR">Brazilian Portuguese</option>
-                  <option value="zh">Chinese</option>
+                  <option value="zh-CN">Chinese Simplified</option>
                   <option value="cs">Czech</option>
                   <option value="nl">Dutch</option>
                   <option value="en">English</option>
@@ -86,6 +86,7 @@
                   <option value="ru">Russian</option>
                   <option value="es">Spanish</option>
                   <option value="tr">Turkish</option>
+                  <option value="uk">Ukrainian</option>
                 </select>
               </form>
             </div>
@@ -302,16 +303,35 @@
           </div>
           <div class="module">
             <p class="label label-h"> Top Trends </p>
-            <div id="TopTrendsAutoUpdateCont" class="container">
+            <div class="container">
               <form>
-                <p class="label">Auto updating</p>
-                <select id="TopTrendsAutoUpdate" class="container">
+                <p>
+                  <select id="TopTrends">
+                    <option value="enable">Enable</option>
+                    <option value="disable">Disable</option>
+                  </select>
+                </p>
+                <div id="TopTrendsCont" class="container">
+                  <p class="label">Auto updating</p>
+                  <select id="TopTrendsAutoUpdate" class="container">
+                    <option value="enable">Enable</option>
+                    <option value="disable">Disable</option>
+                  </select>
+                  <div id="TopTrendsAutoUpdateOpt" class="container">
+                    <input type="text" id="TopTrendsAutoUpdateTimer" maxlength="6" size="6"/> <span class="label">second(s)</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="module">
+            <p class="label label-h"> Who to Follow </p>
+            <div class="container">
+              <form>
+                <select id="WhoToFollow">
                   <option value="enable">Enable</option>
                   <option value="disable">Disable</option>
                 </select>
-                <div id="TopTrendsAutoUpdateOpt" class="container">
-                  <input type="text" id="TopTrendsAutoUpdateTimer" maxlength="6" size="6"/> <span class="label">second(s)</span>
-                </div>
               </form>
             </div>
           </div>
@@ -332,7 +352,7 @@
                   <div class="container">
                     <label>Supported punctuations: </label>
                     <span>‥ … ⁇ ⁈ ⁉ ‼ — ⁓</span>
-                  </div> 
+                  </div>
                   <input name="" id="convertEmotionsOpt" type="checkbox" /> <span class="label">Convert emotions codes to unicode symbols</span>
                   <div class="container">
                     <label>Supported emotions: </label>

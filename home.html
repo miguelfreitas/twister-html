@@ -114,7 +114,7 @@
   <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
     <div class="dashboard left">
       
-      <!-- PROFILE MODULE INIT -->
+      <!-- PROFILE MODULE -->
       <div class="module mini-profile">
         <div class="mini-profile-info">
           <!-- THEME NIN added sub-menu (mentions, messages and edit profile) -->
@@ -151,29 +151,12 @@
           </form>
         </div>
       </div>
-      <!-- PROFILE MODULE INIT -->
 
-      <!-- WHO TO FOLLOW MODULE INIT -->
-      <div class="module who-to-follow">
-        <h3>Who to Follow</h3>
-        <small>.</small>
-        <a class="refresh-users">Refresh</a>
-        <small>.</small>
-        <a class="view-all-users" href="#whotofollow">View All</a>
-        <ol class="follow-suggestions">
-          <!-- use "follow-suggestion-template" here -->
-        </ol>
-      </div>
-      <!-- WHO TO FOLLOW MODULE END -->
+      <!-- WHO TO FOLLOW MODULE -->
+      <div class="module who-to-follow"></div>
 
-      <!-- WHO TO FOLLOW MODULE INIT -->
-      <div class="module toptrends">
-        <h3><span>Top Trends</span></h3>
-        <ol class="toptrends-list">
-          <!-- use "follow-suggestion-template" here -->
-        </ol>
-      </div>
-      <!-- WHO TO FOLLOW MODULE END -->
+      <!-- TOP TRENDS MODULE -->
+      <div class="module toptrends"></div>
 
     </div>
   <!-- LADO ESQUERDO DE MÓDULOS END -->
@@ -224,6 +207,28 @@
 
   <!-- TEMPLATES INIT -->
   <div id="templates" style="display:none;">
+
+    <!-- TEMPLATE DE WHO-TO-FOLLOW MODULE -->
+    <div id="who-to-follow-template">
+        <h3 class="label">Who to Follow</h3>
+        <small>.</small>
+        <a class="refresh-users">Refresh</a>
+        <small>.</small>
+        <a class="view-all-users" href="#whotofollow">View All</a>
+        <ol class="follow-suggestions">
+          <!-- use "follow-suggestion-template" here -->
+        </ol>
+    </div>
+
+    <!-- TEMPLATE DE TOP TRENDS MODULE -->
+    <div id="toptrends-template">
+        <h3 class="label">Top Trends</h3>
+        <small>.</small>
+        <a class="refresh-toptrends">Refresh</a>
+        <ol class="toptrends-list">
+          <!-- use "follow-suggestion-template" here -->
+        </ol>
+    </div>
 
     <!-- TEMPLATE DE WHO-TO-FOLLOW SUGGESTION -->
     <li id="follow-suggestion-template" class="twister-user">

@@ -56,7 +56,7 @@
   font-style: normal;
 }
 /* line 64, ../sass/_fonts.sass */
-[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-toptrends:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -198,7 +198,7 @@
 
 /* '' */
 /* line 183, ../sass/_fonts.sass */
-.icon-arrows:before, .refresh-users:before {
+.icon-arrows:before, .refresh-toptrends:before, .refresh-users:before {
   content: "";
 }
 
@@ -1823,7 +1823,7 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
     width: 90%;
 }
 
-.options #filterLangListCont div,.options #TopTrendsAutoUpdateCont div {
+.options #filterLangListCont div,.options #TopTrendsCont div {
     float: none;
     padding: 0px 4px;
 }
@@ -2449,7 +2449,7 @@ button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .
 }
 
 /* line 499, ../sass/style.sass */
-.refresh-users {
+.refresh-toptrends, .refresh-users {
   color: #66686B;
   cursor: pointer;
   font-size: 11px;
@@ -2479,13 +2479,16 @@ button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .
 }
 
 /* line 527, ../sass/style.sass */
-.refresh-users:hover, .view-all-users:hover {
+.refresh-toptrends:hover, .refresh-users:hover, .view-all-users:hover {
   color: #B4C669;
   text-decoration: none;
   background-color: transparent;
 }
 
 /***********TOP TRENDS************** */
+.toptrends h3 {
+  float: left;
+}
 /* line 534, ../sass/style.sass */
 ol.toptrends-list {
   margin: 0;
