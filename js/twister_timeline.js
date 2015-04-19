@@ -189,44 +189,42 @@ function showPosts(req, posts)
     var streamItemsParent = $.MAL.getStreamPostsParent();
 
     for( var i = 0; i < posts.length; i++ ) {
-        if (req.users.indexOf(posts[i]['userpost']['n']) > -1 || req.getspam) {  // FIXME maybe it's unecessary check but currently we got unwanted adverting posts which are coming with requested ones from 'getposts' sometimes
-            var post = posts[i];
-            //console.log(post);
-            var streamPost = postToElem(post, "original", req.getspam);
-            var timePost = post["userpost"]["time"];
-            streamPost.attr("data-time",timePost);
+        var post = posts[i];
+        //console.log(post);
+        var streamPost = postToElem(post, "original", req.getspam);
+        var timePost = post["userpost"]["time"];
+        streamPost.attr("data-time",timePost);
 
-            // post will only be shown if appended to the stream list
-            var streamPostAppended = false;
+        // post will only be shown if appended to the stream list
+        var streamPostAppended = false;
 
-            // insert the post in timeline ordered by (you guessed) time
-            // FIXME: lame! searching everything everytime. please optimize!
-            var streamItems = streamItemsParent.children();
-            if( streamItems.length == 0) {
-                // timeline is empty
-                streamItemsParent.append( streamPost );
-                streamPostAppended = true;
-            } else {
-                var j = 0;
-                for( j = 0; j < streamItems.length; j++) {
-                    var streamItem = streamItems.eq(j);
-                    var timeItem = streamItem.attr("data-time");
-                    if( timeItem == undefined ||
-                        timePost > parseInt(timeItem) ) {
-                        // this post in stream is older, so post must be inserted above
-                        streamItem.before(streamPost);
-                        streamPostAppended = true;
-                        break;
-                    }
+        // insert the post in timeline ordered by (you guessed) time
+        // FIXME: lame! searching everything everytime. please optimize!
+        var streamItems = streamItemsParent.children();
+        if( streamItems.length == 0) {
+            // timeline is empty
+            streamItemsParent.append( streamPost );
+            streamPostAppended = true;
+        } else {
+            var j = 0;
+            for( j = 0; j < streamItems.length; j++) {
+                var streamItem = streamItems.eq(j);
+                var timeItem = streamItem.attr("data-time");
+                if( timeItem == undefined ||
+                    timePost > parseInt(timeItem) ) {
+                    // this post in stream is older, so post must be inserted above
+                    streamItem.before(streamPost);
+                    streamPostAppended = true;
+                    break;
                 }
             }
-            if (!streamPostAppended)
-                streamItemsParent.append( streamPost );
-
-            streamPostAppended = true;
-            streamPost.show();
-            req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
         }
+        if (!streamPostAppended)
+            streamItemsParent.append( streamPost );
+
+        streamPostAppended = true;
+        streamPost.show();
+        req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
     }
 }
 
