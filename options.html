@@ -335,6 +335,37 @@
               </form>
             </div>
           </div>
+          <div class="module">
+            <p class="label label-h"> Twistday Reminder </p>
+            <div class="container">
+              <form>
+                <p>
+                  <select id="TwistdayReminder">
+                    <option value="enable">Enable</option>
+                    <option value="disable">Disable</option>
+                  </select>
+                </p>
+                <div id="TwistdayReminderCont" class="container">
+                  <p class="label">Auto updating</p>
+                  <select id="TwistdayReminderAutoUpdate" class="container">
+                    <option value="enable">Enable</option>
+                    <option value="disable">Disable</option>
+                  </select>
+                  <div id="TwistdayReminderAutoUpdateOpt" class="container">
+                    <input type="text" id="TwistdayReminderAutoUpdateTimer" maxlength="6" size="6"/> <span class="label">second(s)</span>
+                  </div>
+                  <p class="label">Show upcoming in next hours</p>
+                  <select id="TwistdayReminderShowUpcoming" class="container">
+                    <option value="enable">Enable</option>
+                    <option value="disable">Disable</option>
+                  </select>
+                  <div id="TwistdayReminderShowUpcomingOpt" class="container">
+                    <input type="text" id="TwistdayReminderShowUpcomingTimer" maxlength="4" size="6"/> <span class="label">hour(s)</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
 
         <div class="post-editor">
           <div class="module">

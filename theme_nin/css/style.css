@@ -56,7 +56,7 @@
   font-style: normal;
 }
 /* line 64, ../sass/_fonts.sass */
-[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-toptrends:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -198,7 +198,7 @@
 
 /* '' */
 /* line 183, ../sass/_fonts.sass */
-.icon-arrows:before, .refresh-toptrends:before, .refresh-users:before {
+.icon-arrows:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before {
   content: "";
 }
 
@@ -282,7 +282,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 /* FONTS */
 /* line 2, ../sass/_utils.sass */
-.clear-fix:after, .userMenu ul:after, .profile-modal .profile-data:after, .profile-card .twister-user-info:after, .forEdition.profile-card:after, .postboard:after, .following:after, .expanded-content:after, .following-list li:after, .mini-following-info:after, .network.singleBlock:after, .options .tab-content:after, .promoted-posts-only:after, .dashboard.right:after, ul.userMenu-search-profiles li:after, .mini-profile .post-area:after, .mini-profile-indicators:after, .profile-data:after, #postboard-top:after, #postboard-top .post-area:after, .who-to-follow ol:after, .twister-user:after, .modal-content:after, .modal-header:after, .direct-messages-thread .post:after {
+.clear-fix:after, .userMenu ul:after, .profile-modal .profile-data:after, .profile-card .twister-user-info:after, .forEdition.profile-card:after, .postboard:after, .following:after, .expanded-content:after, .following-list li:after, .twistday-reminder li:after, .mini-following-info:after, .network.singleBlock:after, .options .tab-content:after, .promoted-posts-only:after, .dashboard.right:after, ul.userMenu-search-profiles li:after, .mini-profile .post-area:after, .mini-profile-indicators:after, .profile-data:after, #postboard-top:after, #postboard-top .post-area:after, .who-to-follow ol:after, .twistday-reminder ol:after, .twister-user:after, .modal-content:after, .modal-header:after, .direct-messages-thread .post:after {
   content: "";
   display: table;
   clear: both;
@@ -1901,6 +1901,10 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
   height: 100%;
 }
 
+.dashboard .module {
+    margin: 0 0 3%;
+}
+
 /********** CONFIG SUBMENU & SEARCH RESULTS *********** */
 /* line 76, ../sass/style.sass */
 .dialog-modal {
@@ -2449,7 +2453,7 @@ button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .
 }
 
 /* line 499, ../sass/style.sass */
-.refresh-toptrends, .refresh-users {
+.refresh-toptrends, .twistday-reminder .refresh, .refresh-users {
   color: #66686B;
   cursor: pointer;
   font-size: 11px;
@@ -2479,13 +2483,18 @@ button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .
 }
 
 /* line 527, ../sass/style.sass */
-.refresh-toptrends:hover, .refresh-users:hover, .view-all-users:hover {
+.refresh-toptrends:hover, .twistday-reminder .refresh, .refresh-users:hover, .view-all-users:hover {
   color: #B4C669;
   text-decoration: none;
   background-color: transparent;
 }
 
 /***********TOP TRENDS************** */
+
+.module.toptrends {
+  padding: 8px 4px;
+}
+
 .toptrends h3 {
   float: left;
 }
@@ -2513,6 +2522,59 @@ ol.toptrends-list a {
 ol.toptrends-list a:hover {
   background: white;
   color: #66686B;
+}
+
+/********* TWISTDAY REMINDER *******/
+
+.module.twistday-reminder {
+  padding: 8px 4px;
+  top: 30%;
+}
+
+.twistday-reminder {
+  width: inherit;
+}
+
+.twistday-reminder small {
+  display: none;
+}
+
+.twistday-reminder ol {
+  clear: both;
+}
+
+.twistday-reminder h3 {
+  margin: 5% 0% 2% 5%;
+  display: inline;
+  float: left;
+}
+
+.twistday-reminder h4 {
+  margin: 1% 1% 1% 16%;
+  font-size: 90%;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.twistday-reminder a:hover {
+  text-decoration: none;
+}
+
+.twistday-reminder .list {
+  width: 300px;
+  margin: 0% 5% 5% 5%;
+  padding: 5px;
+}
+
+.twistday-reminder .twister-user-tag,
+.twistday-reminder .twister-user-full {
+  display: block;
+  margin: 0;
+  text-align: center;
+}
+
+.twistday-reminder .twisterday {
+  font-size: 80%;
+  margin: 0 11%;
 }
 
 /*********** POPUP PROMPT ************ */
@@ -3243,7 +3305,7 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
   }
 
   /* line 14, ../sass/_responsive.sass */
-  .following-list li {
+  .following-list li, .twistday-reminder li {
     width: 47%;
     float: left;
     margin: 0 2% 2% 0;
@@ -3271,7 +3333,7 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
   }
 
   /* line 32, ../sass/_responsive.sass */
-  .who-to-follow, .toptrends {
+  .who-to-follow, .toptrends, .twistday-reminder {
     display: none;
   }
 
@@ -3281,7 +3343,7 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
   }
 
   /* line 37, ../sass/_responsive.sass */
-  .following-list li {
+  .following-list li, .twistday-reminder li {
     width: 98%;
     float: none;
     margin: 2% 1%;

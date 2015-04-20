@@ -158,6 +158,9 @@
       <!-- TOP TRENDS MODULE -->
       <div class="module toptrends"></div>
 
+      <!-- TWISTDAY REMINDER MODULE -->
+      <div class="module twistday-reminder"></div>
+
     </div>
   <!-- LADO ESQUERDO DE MÓDULOS END -->
 
@@ -225,10 +228,45 @@
         <h3 class="label">Top Trends</h3>
         <small>.</small>
         <a class="refresh-toptrends">Refresh</a>
-        <ol class="toptrends-list">
-          <!-- use "follow-suggestion-template" here -->
-        </ol>
+        <ol class="toptrends-list"></ol>
     </div>
+
+    <!-- TEMPLATE DE TWISTDAY REMINDER MODULE -->
+    <div id="twistday-reminder-template">
+        <h3 class="label">Twistday Reminder</h3>
+        <small>.</small>
+        <a class="refresh">Refresh</a>
+        <div class="current">
+            <h4>Today's luckies:</h4>
+            <ol class="list">
+                <!-- use "twistday-reminder-suggestion-template" here -->
+            </ol>
+        </div>
+        <div class="upcoming">
+            <h4>Upcoming ones:</h4>
+            <ol class="list">
+                <!-- use "twistday-reminder-suggestion-template" here -->
+            </ol>
+        </div>
+    </div>
+
+    <!-- TEMPLATE DE TWISTDAY REMINDER SUGGESTION -->
+    <li id="twistday-reminder-suggestion-template" class="twister-user">
+      <div class="twister-user-photo">
+        <a href="#" class="twister-user-name open-profile-modal">
+          <img class="twister-user-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+        </a>
+      </div>
+      <div class="twister-user-info" data-screen-name="">
+        <a href="#" class="twister-user-name open-profile-modal">
+          <div class="twister-user-full"></div>
+          <div class="twister-user-tag"></div>
+        </a>
+      </div>
+      <div>
+        <span class="twisterday"></span>
+      </div>
+    </li>
 
     <!-- TEMPLATE DE WHO-TO-FOLLOW SUGGESTION -->
     <li id="follow-suggestion-template" class="twister-user">
