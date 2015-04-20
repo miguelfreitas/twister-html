@@ -72,7 +72,7 @@ function requestDmConversation(dmConvo,dm_screenname) {
     if( since_id != undefined ) userDmReq[0].since_id = since_id;
     var count = 100;
     twisterRpc("getdirectmsgs", [defaultScreenName,count,userDmReq],
-               function(args, ret) { processDmConversation(args.dmConvo, args.dmUser, ret); }, 
+               function(args, ret) { processDmConversation(args.dmConvo, args.dmUser, ret); },
                                    {dmConvo:dmConvo,dmUser:dm_screenname},
                function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
                                     alert(polyglot.t("ajax_error", { error: msg })); }, null);
@@ -121,11 +121,11 @@ function newDirectMsg(msg,  dm_screenname) {
         }
 
         twisterRpc("newdirectmsg", paramsOpt,
-                   function(arg, ret) { 
+                   function(arg, ret) {
                         incLastPostId();
                         if( arg.copySelf ) incLastPostId();
                     }, {copySelf:copySelf},
-                   function(arg, ret) { 
+                   function(arg, ret) {
                         // fallback for older twisterd (error: no copy_self parameter)
                         twisterRpc("newdirectmsg", arg.paramsOrig,
                                    function(arg, ret) { incLastPostId(); }, null,
@@ -185,7 +185,7 @@ function openDmWithUserModal(dm_screenname)
     $( retweetContent ).clone().appendTo( ".directMessages .modal-content" ).hide().fadeIn( "fast" );
 
     var dmTitle = $( ".directMessages h3" );
-    dmTitle.html("Direct messages with <span></span>");
+    dmTitle.html(polyglot.t("Direct messages with") + " <span></span>");
     dmTitle = dmTitle.find("span");
     var dmConversation = $(".directMessages");
     openDmConversation(dm_screenname, dmTitle, dmConversation);
@@ -202,7 +202,7 @@ function initInterfaceDirectMsg() {
     $( ".userMenu-messages a" ).attr("href","#directmessages");
 
     $( "#dm-snippet-template" ).bind( "click", function(){
-        window.location.hash='#directmessages?user='+$(this).attr("data-dm-screen-name");    
+        window.location.hash='#directmessages?user='+$(this).attr("data-dm-screen-name");
     } );
 
     $( ".dm-submit").click( directMsgSubmit );
