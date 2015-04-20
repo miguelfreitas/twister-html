@@ -3560,18 +3560,25 @@ polyglot.extend(wordset);
 // Text from HTML and not JavaScript is selected and translated at $(document).ready
 // Add selectors here to translate the text and placeholders inside new UI
 var fixedLabels = [
-  // page titles
+
+  // common text containers
   "title",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "button",
+  "option",
+  "textarea",
 
   // An easy way to include new items in translation is to add the "label" class
   ".label",
 
   // navbar and home
-  "button",
   ".postboard-news",
-  ".post-area-new textarea",
   ".refresh-toptrends, .refresh-users, .view-all-users",
-  ".who-to-follow h3",
   ".userMenu-search-field",
   "a.dropdown-menu-item, a.direct-messages",
   ".post-interactions span",
@@ -3581,26 +3588,20 @@ var fixedLabels = [
   ".postboard span",
 
   // following page
-  ".following h2",
   ".mini-profile-actions span, .mini-profile-actions li",
 
   // network page
-  ".network h2, .network h3",
   ".network ul li span",
   ".network ul li label",
   ".network label",
-  ".network textarea, .network input, .network option",
+  ".network input",
 
   // login page
-  ".login h2, .login h3",
   ".login ul li span",
   ".module span",
   ".login span",
   ".login-local-username",
   ".login input",
-
-  // options page
-  "option",
 
   // mobile version //
 
