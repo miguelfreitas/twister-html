@@ -222,6 +222,9 @@ var TwisterOptions = function()
         $('#language').val( this.getOption('locLang', 'auto') );
         $('#language').on('change', function() {
             $.Options.setOption('locLang', $(this).val());
+            if($(this).val() != 'auto') {
+                twisterRpc("setpreferredspamlang", [$(this).val()]);
+            }
             location.reload();
         })
     }
