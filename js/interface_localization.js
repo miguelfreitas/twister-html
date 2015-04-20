@@ -629,7 +629,7 @@ if(preferredLanguage == "uk"){
       "Following users": "Підписані користувачі",
       "Force connection to peer:": "Примусове з’єднання з піром:",
       "General information": "Загальна інформація",
-      "Generate blocks (send promoted messages)": "Відправка рекламних твітів за кожен згенерований блок",
+      "Generate blocks (send promoted messages)": "Відправка рекламних твістів за кожен згенерований блок",
       "Home": "Головна", // homepage
       "hours": "%{smart_count} година |||| %{smart_count} годин",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутрішня помилка: lastPostId невизначено (підписка на себе може виправити помилку!)",
@@ -647,7 +647,7 @@ if(preferredLanguage == "uk"){
       "in postboard": "в стрічці",
       "in search result": "в пошуковому запиті",
       "in top trends": "в трендах",
-      "new_posts": "%{smart_count} новий твіт |||| %{smart_count} нових твітів",
+      "new_posts": "%{smart_count} новий твіст |||| %{smart_count} нових твістів",
       "new_mentions": "%{smart_count} нове сповіщення |||| %{smart_count} нових сповіщень",
       "new_direct_messages": "%{smart_count} нове повідомлення |||| %{smart_count} нові повідомлення",
       "nobody": "анонім", // used to promote a post without attaching the user
