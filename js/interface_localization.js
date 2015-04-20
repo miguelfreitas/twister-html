@@ -840,7 +840,7 @@ if(preferredLanguage == "uk"){
       "Users": "Користувачі",
       "Direct Message's copy to self": "Повідомлення скопійовано самому собі",
       "Traffic information": "Статистика трафіку",
-      "Direct messages with": "Приватна бесіда з",
+      "Direct messages with": "Співбесіда з",
     };
 }
 
