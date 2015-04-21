@@ -140,11 +140,14 @@ function initTopTrends() {
 }
 
 function updateTrendingHashtags() {
-    var $ttl = $('.module.toptrends .toptrends-list');
-    if ($ttl.length) {
+    var $module = $('.module.toptrends');
+    var $list = $module.find('.toptrends-list');
+    if ($list.length) {
+        $list.empty().hide();
+        $module.find('.refresh-toptrends').hide();
+        $module.find('.loading-roller').show();
         twisterRpc('gettrendinghashtags', [10],
             function(args, ret) {
-                $ttl.empty();
                 //console.log('hashtags trends: '+ret);
                 for( var i = 0; i < ret.length; i++ ) {
                     if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForTopTrendsOpt())
@@ -166,15 +169,20 @@ function updateTrendingHashtags() {
                             }
                         }
 
-                        $ttl.append($li);
+                        $list.append($li);
                     }
                 }
+
+                if ($list.children().length)
+                    $list.show();
+                $module.find('.refresh-toptrends').show();
+                $module.find('.loading-roller').hide();
             }, {},
             function(args, ret) {
                 console.log('Error with gettrendinghashtags. Older twister daemon?');
             }, {}
         );
-        if ($.Options.getTopTrendsAutoUpdateOpt() === 'enable' && $.Options.getTopTrendsAutoUpdateTimerOpt() > 0)
+        if ($list.children().length && $.Options.getTopTrendsAutoUpdateOpt() === 'enable' && $.Options.getTopTrendsAutoUpdateTimerOpt() > 0)
             setTimeout(updateTrendingHashtags, $.Options.getTopTrendsAutoUpdateTimerOpt()*1000);
     }
 };
@@ -191,8 +199,11 @@ function initTwistdayReminder() {
 }
 
 function refreshTwistdayReminder() {
-    var $list = $('.module.twistday-reminder .list');
+    var $module = $('.module.twistday-reminder');
+    var $list = $module.find('.list');
     if ($list.length) {
+        $module.find('.refresh').hide();
+        $module.find('.loading-roller').show();
         if (defaultScreenName && typeof(followingUsers) !== 'undefined') {
             var suggests = followingUsers.slice();
             if (suggests.length > 0) {
@@ -226,8 +237,8 @@ function refreshTwistdayReminder() {
                         }
 
                         var showUpcomingTimer = ($.Options.getTwistdayReminderShowUpcomingOpt() === 'enable') ? $.Options.getTwistdayReminderShowUpcomingTimerOpt() *3600 : 0;
-                        var listCurrent = $('.module.twistday-reminder .current .list');
-                        var listUpcoming = $('.module.twistday-reminder .upcoming .list');
+                        var listCurrent = $module.find('.current .list');
+                        var listUpcoming = $module.find('.upcoming .list');
                         var d = new Date();
                         var todayYear = d.getUTCFullYear();
                         var todayMonth = d.getUTCMonth();
@@ -264,9 +275,11 @@ function refreshTwistdayReminder() {
                         }
 
                         if (listCurrent.children().length > 1)
-                            listCurrent.parent().show()
+                            listCurrent.parent().show();
                         if (listUpcoming.children().length > 1)
-                            listUpcoming.parent().show()
+                            listUpcoming.parent().show();
+                        $module.find('.refresh').show();
+                        $module.find('.loading-roller').hide();
                     }, null,
                     function(arg, ret) { console.log("ajax error:" + ret); }, null);
             }

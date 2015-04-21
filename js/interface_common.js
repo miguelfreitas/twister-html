@@ -288,15 +288,18 @@ function openFollowingModal(username)
     $( "."+followingModalClass + " h3" ).text( polyglot.t("followed_by", { username: username }) );
 }
 
-function refreshWhoToFollow(e) {
-    e.stopPropagation();
-    e.preventDefault();
+function refreshWhoToFollow() {
+    var $module = $('.module.who-to-follow');
+    var $list = $module.find('.follow-suggestions');
+    if ($list.length) {
+        $list.empty().hide();
+        $module.find('.refresh-users').hide();
+        $module.find('.loading-roller').show();
 
-    $('.module.who-to-follow .follow-suggestions').empty();
-
-    getRandomFollowSuggestion(processSuggestion);
-    getRandomFollowSuggestion(processSuggestion);
-    getRandomFollowSuggestion(processSuggestion);
+        getRandomFollowSuggestion(processSuggestion);
+        getRandomFollowSuggestion(processSuggestion);
+        getRandomFollowSuggestion(processSuggestion);
+    }
 }
 
 function fillWhoToFollowModal(list, hlist, start) {

@@ -563,8 +563,9 @@ function showFollowingUsers(){
 }
 
 function processSuggestion(arg, suggestion, followedBy) {
-    var dashboard = $('.module.who-to-follow .follow-suggestions');
     if( suggestion ) {
+        var $module = $('.module.who-to-follow');
+        var $list = $module.find('.follow-suggestions');
         var item = $("#follow-suggestion-template").clone(true);
         item.removeAttr("id");
 
@@ -586,8 +587,11 @@ function processSuggestion(arg, suggestion, followedBy) {
             getRandomFollowSuggestion(processSuggestion);
         });
 
-        dashboard.append(item);
-    }
+        $list.append(item).show();
+        $module.find('.refresh-users').show();
+        $module.find('.loading-roller').hide();
+    } else
+        getRandomFollowSuggestion(processSuggestion);
 }
 
 function closeSearchDialog()

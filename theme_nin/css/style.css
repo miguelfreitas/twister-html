@@ -282,7 +282,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 /* FONTS */
 /* line 2, ../sass/_utils.sass */
-.clear-fix:after, .userMenu ul:after, .profile-modal .profile-data:after, .profile-card .twister-user-info:after, .forEdition.profile-card:after, .postboard:after, .following:after, .expanded-content:after, .following-list li:after, .twistday-reminder li:after, .mini-following-info:after, .network.singleBlock:after, .options .tab-content:after, .promoted-posts-only:after, .dashboard.right:after, ul.userMenu-search-profiles li:after, .mini-profile .post-area:after, .mini-profile-indicators:after, .profile-data:after, #postboard-top:after, #postboard-top .post-area:after, .who-to-follow ol:after, .twistday-reminder ol:after, .twister-user:after, .modal-content:after, .modal-header:after, .direct-messages-thread .post:after {
+.clear-fix:after, .userMenu ul:after, .profile-modal .profile-data:after, .profile-card .twister-user-info:after, .forEdition.profile-card:after, .postboard:after, .following:after, .expanded-content:after, .following-list li:after, .twistday-reminder li:after, .mini-following-info:after, .network.singleBlock:after, .options .tab-content:after, .promoted-posts-only:after, .dashboard.right:after, ul.userMenu-search-profiles li:after, .mini-profile .post-area:after, .mini-profile-indicators:after, .profile-data:after, #postboard-top:after, #postboard-top .post-area:after, .who-to-follow ol:after, .toptrends ol:after, .twistday-reminder ol:after, .twister-user:after, .modal-content:after, .modal-header:after, .direct-messages-thread .post:after {
   content: "";
   display: table;
   clear: both;
@@ -1823,7 +1823,7 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
     width: 90%;
 }
 
-.options #filterLangListCont div,.options #TopTrendsCont div {
+.options #filterLangListCont div, .options #TopTrendsCont div, .options #TwistdayReminderCont div {
     float: none;
     padding: 0px 4px;
 }
@@ -1891,19 +1891,9 @@ button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disab
 }
 /* line 63, ../sass/style.sass */
 .dashboard.right {
-  display: block;
-  position: absolute;
-  right: 0;
-}
-/* line 67, ../sass/style.sass */
-.dashboard.right .module {
-  position: fixed;
-  height: 100%;
+  margin-left: 880px;
 }
 
-.dashboard .module {
-    margin: 0 0 3%;
-}
 
 /********** CONFIG SUBMENU & SEARCH RESULTS *********** */
 /* line 76, ../sass/style.sass */
@@ -2326,23 +2316,31 @@ textarea.splited-post {
   color: #ff0000;
 }
 
-/****** WHO TO FOLLOW ****** */
+/******** WHO TO FOLLOW ********/
+
 /* line 411, ../sass/style.sass */
-.who-to-follow {
+.who-to-follow.module {
   width: inherit;
   margin-bottom: 20px;
 }
+
 /* line 414, ../sass/style.sass */
 .who-to-follow small {
   display: none;
 }
+
 /* line 416, ../sass/style.sass */
 .who-to-follow h3 {
   float: left;
 }
+
 /* line 418, ../sass/style.sass */
 .who-to-follow ol {
   clear: both;
+}
+
+.who-to-follow .twister-user-info {
+  margin-top: 8px;
 }
 
 /* line 422, ../sass/style.sass */
@@ -2381,7 +2379,7 @@ textarea.splited-post {
 }
 /* line 450, ../sass/style.sass */
 .followers label, .followers a {
-  display: block;
+  display: inline-block;
 }
 
 /* line 453, ../sass/style.sass */
@@ -2483,7 +2481,7 @@ button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .
 }
 
 /* line 527, ../sass/style.sass */
-.refresh-toptrends:hover, .twistday-reminder .refresh, .refresh-users:hover, .view-all-users:hover {
+.refresh-toptrends:hover, .twistday-reminder .refresh:hover, .refresh-users:hover, .view-all-users:hover {
   color: #B4C669;
   text-decoration: none;
   background-color: transparent;
@@ -2492,12 +2490,17 @@ button.follow:hover, .mini-profile-actions span.follow:hover, button.unfollow, .
 /***********TOP TRENDS************** */
 
 .module.toptrends {
-  padding: 8px 4px;
+  margin-bottom: 20px;
+}
+
+.toptrends small {
+  display: none;
 }
 
 .toptrends h3 {
   float: left;
 }
+
 /* line 534, ../sass/style.sass */
 ol.toptrends-list {
   margin: 0;
@@ -2526,26 +2529,15 @@ ol.toptrends-list a:hover {
 
 /********* TWISTDAY REMINDER *******/
 
-.module.twistday-reminder {
-  padding: 8px 4px;
-  top: 30%;
-}
-
 .twistday-reminder {
-  width: inherit;
+  width: 300px;
 }
 
 .twistday-reminder small {
   display: none;
 }
 
-.twistday-reminder ol {
-  clear: both;
-}
-
 .twistday-reminder h3 {
-  margin: 5% 0% 2% 5%;
-  display: inline;
   float: left;
 }
 
@@ -2559,12 +2551,9 @@ ol.toptrends-list a:hover {
   text-decoration: none;
 }
 
-.twistday-reminder .list {
-  width: 300px;
-  margin: 0% 5% 5% 5%;
-  padding: 5px;
+.twistday-reminder .twister-user-info {
+  margin-top: 8px;
 }
-
 .twistday-reminder .twister-user-tag,
 .twistday-reminder .twister-user-full {
   display: block;
@@ -2572,9 +2561,13 @@ ol.toptrends-list a:hover {
   text-align: center;
 }
 
+.twistday-reminder img.twister-user-photo {
+  margin: 0;
+}
+
 .twistday-reminder .twisterday {
   font-size: 80%;
-  margin: 0 11%;
+  margin-left: 8%;
 }
 
 /*********** POPUP PROMPT ************ */
@@ -2778,14 +2771,10 @@ ol.toptrends-list a:hover {
 
 /********** RETWIST POSTS PROMPT ********* */
 /* line 705, ../sass/style.sass */
-.reTwist {
+.reTwist.prompt-wrapper {
   margin-top: -110px;
 }
-.reTwist .modal-wrapper {
-  width: 520px;
-  top: 20%;
-  margin: 0 0 0 -260px;
-}
+
 .reTwist .modal-content
 {
   padding: 20px 15px;
@@ -2801,10 +2790,8 @@ ol.toptrends-list a:hover {
 
 /********* REPLY POSTS MODAL************** */
 /* line 715, ../sass/style.sass */
-.reply .modal-wrapper {
-  width: 520px;
-  top: 20%;
-  margin: 0 0 0 -260px;
+.reply.prompt-wrapper {
+  margin-top: -110px;
 }
 /* line 719, ../sass/style.sass */
 .reply .modal-buttons, .reply .post-expand, .reply .post-interactions {
@@ -3085,15 +3072,15 @@ ol.toptrends-list a:hover {
 /* line 943, ../sass/style.sass */
 .who-to-follow-modal .modal-wrapper {
   width: 520px;
-  top: 10%;
-  height: 455px;
-  margin: 0 0 0 -260px;
+  top: 50%;
+  height: 555px;
+  margin: -275px 0 0 -260px;
   overflow-x: hidden;
 }
 /* line 949, ../sass/style.sass */
 .who-to-follow-modal .modal-content {
   padding: 15px;
-  height: 400px;
+  height: 480px;
   overflow-y: auto;
 }
 /* line 953, ../sass/style.sass */
@@ -3123,6 +3110,7 @@ ol.toptrends-list a:hover {
 /* line 968, ../sass/style.sass */
 .who-to-follow-modal .twister-user-info {
   position: relative;
+  margin-top: 4px;
   padding-left: 70px;
   width: auto;
 }
@@ -3134,11 +3122,12 @@ ol.toptrends-list a:hover {
 
 /******* LOADER ************ */
 /* line 978, ../sass/style.sass */
-.postboard-loading {
+.postboard-loading, .loading-roller {
+  clear: both;
   text-align: center;
 }
 /* line 980, ../sass/style.sass */
-.postboard-loading div {
+.postboard-loading div, .loading-roller div {
   display: inline-block;
   width: 120px;
   height: 10px;
@@ -3147,7 +3136,7 @@ ol.toptrends-list a:hover {
   margin: 10px 0 0 0;
 }
 /* line 987, ../sass/style.sass */
-.postboard-loading div:after {
+.postboard-loading div:after, .loading-roller div:after {
   content: "";
   position: absolute;
   background-color: white;
@@ -3306,9 +3295,7 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
 
   /* line 14, ../sass/_responsive.sass */
   .following-list li, .twistday-reminder li {
-    width: 47%;
     float: left;
-    margin: 0 2% 2% 0;
     font-size: 80%;
   }
 }
@@ -3333,7 +3320,7 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
   }
 
   /* line 32, ../sass/_responsive.sass */
-  .who-to-follow, .toptrends, .twistday-reminder {
+  .module.who-to-follow, .module.toptrends, .module.twistday-reminder {
     display: none;
   }
 

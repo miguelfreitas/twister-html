@@ -1794,12 +1794,12 @@ ol.toptrends-list {
 **************** LOADER **************
 **************************************/
 
-.postboard-loading
-{
+.postboard-loading, .loading-roller {
+    clear: both;
     text-align: center;
 }
-.postboard-loading div
-{
+
+.postboard-loading div, .loading-roller div {
     display: inline-block;
     width: 120px;
     height: 10px;
@@ -1809,8 +1809,8 @@ ol.toptrends-list {
     position: relative;
     margin: 10px 0 0 0;
 }
-.postboard-loading div:after
-{
+
+.postboard-loading div:after, .loading-roller div:after {
     border-radius: 50px;
     content: "";
     position: absolute;
@@ -1833,8 +1833,8 @@ ol.toptrends-list {
     -moz-animation-iteration-count: infinite;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
-@keyframes slide 
-{
+
+@keyframes slide {
   0% {
     right: 60px;
     left: 2px;
@@ -1858,8 +1858,8 @@ ol.toptrends-list {
     left: 2px;
   }
 }
-@-webkit-keyframes slide
-{
+
+@-webkit-keyframes slide {
   0% {
     right: 100px;
     left: 2px;
@@ -1883,8 +1883,8 @@ ol.toptrends-list {
     left: 2px;
   }
 }
-@-moz-keyframes slide
-{
+
+@-moz-keyframes slide {
   0% {
     right: 60px;
     left: 2px;
@@ -1996,11 +1996,6 @@ ol.toptrends-list {
 /*************************************
 *********** FOLLOWING PAGE ***********
 **************************************/
-
-.following .postboard-loading
-{
-    text-align: center;
-}
 
 .following .header-bold {
     display: block;

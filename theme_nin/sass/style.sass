@@ -62,12 +62,7 @@
     padding-top: 70px
     height: 100%
   &.right
-    display: block
-    position: absolute
-    right: 0
-    .module
-      position: fixed
-      height: 100%
+    margin-left: 880px;
     @extend .clear-fix
 
 
@@ -434,11 +429,12 @@ textarea.splited-post
 
 
 
-/****** WHO TO FOLLOW *******/
+/******** WHO TO FOLLOW ********/
 
 .who-to-follow
-  width: inherit
-  margin-bottom: 20px
+  &.module
+    width: inherit
+    margin-bottom: 20px
   small 
     display: none
   h3 
@@ -446,6 +442,8 @@ textarea.splited-post
   ol 
     @extend .clear-fix
     clear: both
+  .twister-user-info
+    margin-top: 8px
 
 .twister-user
   clear: both
@@ -476,7 +474,7 @@ textarea.splited-post
   font-size: 12px
   color: $dark-grey
   label, a
-    display: block
+    display: inline-block
 
 .followed-by
   color: $main-color-light
@@ -516,7 +514,7 @@ textarea.splited-post
 .twister-user-remove:hover
   opacity: 1
 
-.refresh-toptrends, .refresh-users
+.refresh-toptrends, .twistday-reminder .refresh, .refresh-users
   @extend .icon-arrows
   @extend .extend-icon
   color: $main-color-dark
@@ -544,7 +542,7 @@ textarea.splited-post
   margin: 0 0 0 15px
   position: relative
 
-.refresh-toptrends:hover, .refresh-users:hover, .view-all-users:hover
+.refresh-toptrends:hover, .twistday-reminder .refresh:hover, .refresh-users:hover, .view-all-users:hover
   color: $main-color-color
   text-decoration: none
   background-color: transparent
@@ -552,6 +550,10 @@ textarea.splited-post
 /***********TOP TRENDS***************/
 
 .toptrends
+  &.module
+    margin-bottom: 20px
+  small
+    display: none
   h3
     float: left
 
@@ -576,7 +578,31 @@ ol.toptrends-list
       background: white
       color: $main-color-dark
 
+/********* TWISTDAY REMINDER *******/
 
+.twistday-reminder
+  width: 300px
+  small
+    display: none
+  h3
+    float: left
+  h4
+    margin: 1% 1% 1% 16%
+    font-size: 90%
+    color: rgba(0, 0, 0, 0.5)
+  a:hover
+    text-decoration: none
+  .twister-user-info
+    margin-top: 8px
+  .twister-user-tag, .twister-user-full
+    display: block
+    margin: 0
+    text-align: center
+  img.twister-user-photo
+    margin: 0
+  .twisterday
+    font-size: 80%
+    margin-left: 8%
 
 /*********** POPUP PROMPT *************/
 .prompt-wrapper
@@ -728,11 +754,8 @@ ol.toptrends-list
 /************ RETWIST POSTS MODAL **********/
 
 .reTwist
-  margin-top: -110px
-  .modal-wrapper
-    width: $postboard-modal-width
-    top: 20%
-    margin: 0 0 0 0-($postboard-modal-width/2)
+  &.prompt-wrapper
+    margin-top: -110px
   .modal-content
     padding: 20px 15px
   .modal-buttons
@@ -744,10 +767,8 @@ ol.toptrends-list
 /********* REPLY POSTS MODAL***************/
 
 .reply
-  .modal-wrapper
-    width: $postboard-modal-width
-    top: 20%
-    margin: 0 0 0 0-($postboard-modal-width/2)
+  &.prompt-wrapper
+    margin-top: -110px
   .modal-buttons, .post-expand, .post-interactions
     display: none
   .post-area
@@ -974,13 +995,13 @@ ol.toptrends-list
 .who-to-follow-modal
   .modal-wrapper
     width: $postboard-modal-width
-    top: 10%
-    height: 455px
-    margin: 0 0 0 0-($postboard-modal-width/2)
+    top: 50%
+    height: 555px
+    margin: -275px 0 0 0-($postboard-modal-width/2)
     overflow-x: hidden
   .modal-content
     padding: 15px
-    height: 400px
+    height: 480px
     overflow-y: auto
   .modal-buttons
     display: none
@@ -999,6 +1020,7 @@ ol.toptrends-list
     display: block
   .twister-user-info
     position: relative
+    margin-top: 4px
     padding-left: 70px
     width: auto
   .bio
@@ -1007,7 +1029,8 @@ ol.toptrends-list
 
 /******* LOADER *************/
 
-.postboard-loading
+.postboard-loading, .loading-roller
+  clear: both
   text-align: center
   div
     display: inline-block
@@ -1100,7 +1123,7 @@ ol.toptrends-list
   #filterLangList
     width: 90%
 
-  #filterLangListCont div, #TopTrendsCont div
+  #filterLangListCont div, #TopTrendsCont div, #TwistdayReminderCont div
     float: none
     padding: 0px 4px
 
