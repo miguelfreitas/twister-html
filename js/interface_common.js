@@ -525,16 +525,15 @@ var replyInitPopup = function(e, post)
     openPrompt( replyClass );
 
     //título do modal
-    var fullname = post.find(".post-info-name").text();
-    $( ".reply h3" ).text( polyglot.t("reply_to", { fullname: fullname }) );
+    $('.reply h3').html(polyglot.t('reply_to', { 'fullname': '<span class="fullname">'+post.userpost.n+'</span>' }));
+    getFullname(post.userpost.n, $('.reply h3 .fullname'));
 
     //para poder exibir a thread selecionada...
     var replyModalContent = $(".reply .modal-content").hide();
     var retweetContent = $( "#reply-modal-template" ).children().clone(true);
     retweetContent.appendTo(replyModalContent);
 
-    var postdata = post.find(".post-data").attr("data-userpost");
-    var postElem = postToElem($.evalJSON(postdata),"");
+    var postElem = postToElem(post,"");
     postElem.appendTo(replyModalContent);
 
     var replyArea = $(".reply .post-area .post-area-new");
@@ -693,7 +692,7 @@ var postReplyClick = function( e )
     }
     var post = $(this).closest(".post");
     if( !post.hasClass( "original" ) ) {
-        replyInitPopup(e, post);
+        replyInitPopup(e, $.evalJSON(post.find(".post-data").attr("data-userpost")));
     } else {
         var postLiOpen = post.parents(".post.open");
         if( !postLiOpen.length ) {

@@ -210,23 +210,24 @@ function refreshTwistdayReminder() {
                 for (var i = 0; i < suggests.length; i++) {
                     suggests[i] = {'username': suggests[i], 'max_id': 0};
                 }
-                twisterRpc("getposts", [suggests.length + 1,suggests],
+                twisterRpc('getposts', [suggests.length + 1,suggests],
                     function(arg, posts) {
                         function addLuckyToList(list, post, time) {
                             var lucky = post.userpost.n;
                             if (list.find('[data-screen-name='+lucky+']').length < 1) {
-                                var item = $("#twistday-reminder-suggestion-template").clone(true);
-                                item.removeAttr("id");
-                                item.find(".twister-user-info").attr("data-screen-name", lucky);
-                                item.find(".twister-user-name").attr("href", $.MAL.userUrl(lucky));
-                                item.find(".twister-user-tag").text("@" +lucky);
+                                var item = $('#twistday-reminder-suggestion-template').clone(true);
+                                item.removeAttr('id');
+                                item.find('.twister-user-info').attr('data-screen-name', lucky);
+                                item.find('.twister-user-name').attr('href', $.MAL.userUrl(lucky));
+                                item.find('.twister-user-tag').text('@' +lucky);
                                 if (typeof(time) !== 'undefined')
-                                    item.find(".twisterday").text(timeGmtToText(time));
+                                    item.find('.twisterday').text(timeGmtToText(time));
                                 else
-                                    item.find(".twisterday").text(timeGmtToText(post.userpost.time));
+                                    item.find('.twisterday').text(timeGmtToText(post.userpost.time));
+                                item.find('.twisterday').bind('click', (function(e) { replyInitPopup(e, post); }).bind(post));
 
-                                getAvatar(lucky, item.find(".twister-user-photo"));
-                                getFullname(lucky, item.find(".twister-user-full"));
+                                getAvatar(lucky, item.find('.twister-user-photo'));
+                                getFullname(lucky, item.find('.twister-user-full'));
 
                                 list.append(item);
                             }
@@ -281,7 +282,7 @@ function refreshTwistdayReminder() {
                         $module.find('.refresh').show();
                         $module.find('.loading-roller').hide();
                     }, null,
-                    function(arg, ret) { console.log("ajax error:" + ret); }, null);
+                    function(arg, ret) { console.log('ajax error:' + ret); }, null);
             }
         }
         if ($.Options.getTwistdayReminderAutoUpdateOpt() === 'enable' && $.Options.getTwistdayReminderAutoUpdateTimerOpt() > 0)

@@ -858,7 +858,11 @@ ol.toptrends-list {
 
 .twistday-reminder .twisterday {
     font-size: 80%;
-    margin: 0 11%;
+    margin-left: 11%;
+}
+
+.twistday-reminder .twisterday:hover {
+    cursor: pointer;
 }
 
 /***********************************

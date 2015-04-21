@@ -2570,6 +2570,10 @@ ol.toptrends-list a:hover {
   margin-left: 8%;
 }
 
+.twistday-reminder .twisterday:hover {
+  cursor: pointer;
+}
+
 /*********** POPUP PROMPT ************ */
 /* line 558, ../sass/style.sass */
 .prompt-wrapper {
