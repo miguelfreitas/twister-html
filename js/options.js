@@ -389,6 +389,81 @@ var TwisterOptions = function()
         $('#TopTrendsAutoUpdateTimer').on('keyup', function () { setElemValNumeric(this, polyglot.t('second(s)')); });
     }
 
+    this.getTwistdayReminderOpt = function() {
+        return this.getOption('TwistdayReminder', 'enable');
+    }
+
+    this.setTwistdayReminderOpt = function () {
+        function TwistdayReminderCfg() {
+            if ($.Options.getTwistdayReminderOpt() === 'enable')
+                $('#TwistdayReminderCont').show();
+            else
+                $('#TwistdayReminderCont').hide();
+        }
+        $('#TwistdayReminder').val( this.getTwistdayReminderOpt() );
+        TwistdayReminderCfg();
+        $('#TwistdayReminder').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            TwistdayReminderCfg();
+        });
+    }
+
+    this.getTwistdayReminderAutoUpdateOpt = function() {
+        return this.getOption('TwistdayReminderAutoUpdate', 'enable');
+    }
+
+    this.setTwistdayReminderAutoUpdateOpt = function () {
+        function TwistdayReminderAutoUpdateCfg() {
+            if ($.Options.getTwistdayReminderAutoUpdateOpt() === 'enable')
+                $('#TwistdayReminderAutoUpdateOpt').css('display', 'inline');
+            else
+                $('#TwistdayReminderAutoUpdateOpt').css('display', 'none');
+        }
+        $('#TwistdayReminderAutoUpdate').val( this.getTwistdayReminderAutoUpdateOpt() );
+        TwistdayReminderAutoUpdateCfg();
+        $('#TwistdayReminderAutoUpdate').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            TwistdayReminderAutoUpdateCfg();
+        });
+    }
+
+    this.getTwistdayReminderAutoUpdateTimerOpt = function () {
+        return parseInt(this.getOption('TwistdayReminderAutoUpdateTimer', '3600'));
+    }
+
+    this.setTwistdayReminderAutoUpdateTimerOpt = function () {
+        $('#TwistdayReminderAutoUpdateTimer').val( this.getTwistdayReminderAutoUpdateTimerOpt().toString() );
+        $('#TwistdayReminderAutoUpdateTimer').on('keyup', function () { setElemValNumeric(this, polyglot.t('second(s)')); });
+    }
+
+    this.getTwistdayReminderShowUpcomingOpt = function() {
+        return this.getOption('TwistdayReminderShowUpcoming', 'enable');
+    }
+
+    this.setTwistdayReminderShowUpcomingOpt = function () {
+        function TwistdayReminderShowUpcomingCfg() {
+            if ($.Options.getTwistdayReminderShowUpcomingOpt() === 'enable')
+                $('#TwistdayReminderShowUpcomingOpt').css('display', 'inline');
+            else
+                $('#TwistdayReminderShowUpcomingOpt').css('display', 'none');
+        }
+        $('#TwistdayReminderShowUpcoming').val( this.getTwistdayReminderShowUpcomingOpt() );
+        TwistdayReminderShowUpcomingCfg();
+        $('#TwistdayReminderShowUpcoming').on('change', function() {
+            $.Options.setOption(this.id, this.value);
+            TwistdayReminderShowUpcomingCfg();
+        });
+    }
+
+    this.getTwistdayReminderShowUpcomingTimerOpt = function () {
+        return parseInt(this.getOption('TwistdayReminderShowUpcomingTimer', '72'));
+    }
+
+    this.setTwistdayReminderShowUpcomingTimerOpt = function () {
+        $('#TwistdayReminderShowUpcomingTimer').val( this.getTwistdayReminderShowUpcomingTimerOpt().toString() );
+        $('#TwistdayReminderShowUpcomingTimer').on('keyup', function () { setElemValNumeric(this, polyglot.t('hour(s)')); });
+    }
+
     this.getWhoToFollowOpt = function() {
         return this.getOption('WhoToFollow', 'enable');
     }
@@ -564,9 +639,14 @@ var TwisterOptions = function()
         this.setConvertFractionsOpt();
         this.setUseProxyOpt();
         this.setUseProxyForImgOnlyOpt();
-        this.setTopTrendsAutoUpdateOpt();
         this.setTopTrendsOpt();
+        this.setTopTrendsAutoUpdateOpt();
         this.setTopTrendsAutoUpdateTimerOpt();
+        this.setTwistdayReminderOpt();
+        this.setTwistdayReminderAutoUpdateOpt();
+        this.setTwistdayReminderAutoUpdateTimerOpt();
+        this.setTwistdayReminderShowUpcomingOpt();
+        this.setTwistdayReminderShowUpcomingTimerOpt();
         this.setWhoToFollowOpt();
         this.setSplitPostsOpt();
         this.setHideRepliesOpt();
