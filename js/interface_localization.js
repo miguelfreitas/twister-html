@@ -639,7 +639,7 @@ if(preferredLanguage == "uk"){
       "Following users": "Підписані користувачі",
       "Force connection to peer:": "Примусове з’єднання з піром:",
       "General information": "Загальна інформація",
-      "Generate blocks (send promoted messages)": "Відправка рекламних твістів за кожен згенерований блок",
+      "Generate blocks (send promoted messages)": "Відправка рекламних твістів за кожний згенерований блок",
       "Home": "Головна", // homepage
       "hours": "%{smart_count} година |||| %{smart_count} годин",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутрішня помилка: lastPostId невизначено (підписка на себе може виправити помилку!)",
