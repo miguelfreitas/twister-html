@@ -453,6 +453,7 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     top: 55px;
     margin-left: 864px;
 }
+
 .module
 {
     border: solid 1px rgba( 69, 71, 77, .1 );
@@ -460,6 +461,7 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     
 }
 .dashboard .module {
+    margin: 0 0 3%;
     border-radius: 6px;
 }
 .messages-qtd
@@ -970,6 +972,7 @@ textarea.splited-post {
 }
 
 .refresh-toptrends,
+.twistday-reminder .refresh,
 .refresh-users,
 .view-all-users
 {
@@ -984,19 +987,65 @@ textarea.splited-post {
 ***********************************/
 
 .module.toptrends {
-    margin-top: 10px;
+    padding: 8px 4px;
 }
+
 .module.toptrends h3 {
     margin: 5px 0 5px 10px;
     font: 14px 'Open Sans', sans-serif;
     display: inline;
 }
+
 .module.toptrends ol {
     margin: 0 0 10px 10px;
 }
 
 .module.toptrends ol li a {
     font: 13px 'Open Sans', sans-serif;
+}
+
+/***********************************
+********* TWISTDAY REMINDER ********
+***********************************/
+
+.module.twistday-reminder {
+    padding: 8px 4px;
+}
+
+.twistday-reminder h3 {
+    margin: 5% 0% 2% 5%;
+    display: inline;
+}
+
+.twistday-reminder h4 {
+    margin: 1% 1% 1% 16%;
+    font-size: 90%;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.twistday-reminder a:hover {
+    text-decoration: none;
+}
+
+.twistday-reminder .list {
+  margin: 0% 5% 5% 5%;
+  padding: 5px;
+}
+
+.twistday-reminder .twister-user-tag,
+.twistday-reminder .twister-user-full {
+    display: block;
+    margin: 0;
+    text-align: center;
+}
+
+.twistday-reminder .twisterday {
+    font-size: 80%;
+    margin-left: 11%;
+}
+
+.twistday-reminder .twisterday:hover {
+    cursor: pointer;
 }
 
 /***********************************
@@ -2161,12 +2210,12 @@ textarea.splited-post {
 **************** LOADER **************
 **************************************/
 
-.postboard-loading
-{
+.postboard-loading, .loading-roller {
+    clear: both;
     text-align: center;
 }
-.postboard-loading div
-{
+
+.postboard-loading div, .loading-roller div {
     display: inline-block;
     width: 120px;
     height: 10px;
@@ -2176,8 +2225,8 @@ textarea.splited-post {
     position: relative;
     margin: 10px 0 0 0;
 }
-.postboard-loading div:after
-{
+
+.postboard-loading div:after, .loading-roller div:after {
     border-radius: 50px;
     content: "";
     position: absolute;
@@ -2200,8 +2249,8 @@ textarea.splited-post {
     -moz-animation-iteration-count: infinite;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
-@keyframes slide 
-{
+
+@keyframes slide {
   0% {
     right: 60px;
     left: 2px;
@@ -2225,8 +2274,8 @@ textarea.splited-post {
     left: 2px;
   }
 }
-@-webkit-keyframes slide
-{
+
+@-webkit-keyframes slide {
   0% {
     right: 100px;
     left: 2px;
@@ -2250,8 +2299,8 @@ textarea.splited-post {
     left: 2px;
   }
 }
-@-moz-keyframes slide
-{
+
+@-moz-keyframes slide {
   0% {
     right: 60px;
     left: 2px;
@@ -2391,11 +2440,6 @@ textarea.splited-post {
 /*************************************
 *********** FOLLOWING PAGE ***********
 **************************************/
-
-.following .postboard-loading
-{
-    text-align: center;
-}
 
 .following .header-bold {
     display: block;

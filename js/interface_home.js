@@ -121,32 +121,33 @@ var InterfaceFunctions = function()
         if ($.Options.getTopTrendsOpt() === 'enable')
             initTopTrends();
         else
-            killTopTrends();
+            killInterfaceModule('toptrends');
+
+        if ($.Options.getTwistdayReminderOpt() === 'enable')
+            initTwistdayReminder();
+        else
+            killInterfaceModule('twistday-reminder');
     }
 };
 
 function initTopTrends() {
-    var $tt = $('.module.toptrends');
+    var $tt = initInterfaceModule('toptrends');
     if ($tt.length) {
-        $tt.html($('#toptrends-template').html()).show();
         var $ttRefresh = $tt.find('.refresh-toptrends');
             $ttRefresh.on('click', updateTrendingHashtags);
             setTimeout(function() { $ttRefresh.click() }, 100);
     }
 }
 
-function killTopTrends() {
-    var $tt = $('.module.toptrends');
-    if ($tt.length)
-        $tt.empty().hide();
-}
-
 function updateTrendingHashtags() {
-    var $ttl = $('.module.toptrends .toptrends-list');
-    if ($ttl.length) {
+    var $module = $('.module.toptrends');
+    var $list = $module.find('.toptrends-list');
+    if ($list.length) {
+        $list.empty().hide();
+        $module.find('.refresh-toptrends').hide();
+        $module.find('.loading-roller').show();
         twisterRpc('gettrendinghashtags', [10],
             function(args, ret) {
-                $ttl.empty();
                 //console.log('hashtags trends: '+ret);
                 for( var i = 0; i < ret.length; i++ ) {
                     if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForTopTrendsOpt())
@@ -168,18 +169,126 @@ function updateTrendingHashtags() {
                             }
                         }
 
-                        $ttl.append($li);
+                        $list.append($li);
                     }
                 }
+
+                if ($list.children().length)
+                    $list.show();
+                $module.find('.refresh-toptrends').show();
+                $module.find('.loading-roller').hide();
             }, {},
             function(args, ret) {
                 console.log('Error with gettrendinghashtags. Older twister daemon?');
             }, {}
         );
-        if ($.Options.getTopTrendsAutoUpdateOpt() === 'enable' && $.Options.getTopTrendsAutoUpdateTimerOpt() > 0)
+        if ($list.children().length && $.Options.getTopTrendsAutoUpdateOpt() === 'enable' && $.Options.getTopTrendsAutoUpdateTimerOpt() > 0)
             setTimeout(updateTrendingHashtags, $.Options.getTopTrendsAutoUpdateTimerOpt()*1000);
     }
 };
+
+function initTwistdayReminder() {
+    var $module = initInterfaceModule('twistday-reminder');
+    if ($module.length) {
+        var $moduleRefresh = $module.find('.refresh');
+            $moduleRefresh.on('click', refreshTwistdayReminder);
+            setTimeout(function() { $moduleRefresh.click() }, 100);
+        $module.find('.current').hide();
+        $module.find('.upcoming').hide();
+    }
+}
+
+function refreshTwistdayReminder() {
+    var $module = $('.module.twistday-reminder');
+    var $list = $module.find('.list');
+    if ($list.length) {
+        $module.find('.refresh').hide();
+        $module.find('.loading-roller').show();
+        if (defaultScreenName && typeof(followingUsers) !== 'undefined') {
+            var suggests = followingUsers.slice();
+            if (suggests.length > 0) {
+                for (var i = 0; i < suggests.length; i++) {
+                    suggests[i] = {'username': suggests[i], 'max_id': 0};
+                }
+                twisterRpc('getposts', [suggests.length + 1,suggests],
+                    function(arg, posts) {
+                        function addLuckyToList(list, post, time) {
+                            var lucky = post.userpost.n;
+                            if (list.find('[data-screen-name='+lucky+']').length < 1) {
+                                var item = $('#twistday-reminder-suggestion-template').clone(true);
+                                item.removeAttr('id');
+                                item.find('.twister-user-info').attr('data-screen-name', lucky);
+                                item.find('.twister-user-name').attr('href', $.MAL.userUrl(lucky));
+                                item.find('.twister-user-tag').text('@' +lucky);
+                                if (typeof(time) !== 'undefined')
+                                    item.find('.twisterday').text(timeGmtToText(time));
+                                else
+                                    item.find('.twisterday').text(timeGmtToText(post.userpost.time));
+                                item.find('.twisterday').bind('click', (function(e) { replyInitPopup(e, post); }).bind(post));
+
+                                getAvatar(lucky, item.find('.twister-user-photo'));
+                                getFullname(lucky, item.find('.twister-user-full'));
+
+                                list.append(item);
+                            }
+                        }
+                        function removeLuckyFromList(list, post) {
+                            var lucky = post.userpost.n;
+                            list.find('[data-screen-name='+lucky+']').closest('li').remove();
+                        }
+
+                        var showUpcomingTimer = ($.Options.getTwistdayReminderShowUpcomingOpt() === 'enable') ? $.Options.getTwistdayReminderShowUpcomingTimerOpt() *3600 : 0;
+                        var listCurrent = $module.find('.current .list');
+                        var listUpcoming = $module.find('.upcoming .list');
+                        var d = new Date();
+                        var todayYear = d.getUTCFullYear();
+                        var todayMonth = d.getUTCMonth();
+                        var todayDate = d.getUTCDate();
+                        var todaySec = Date.UTC(todayYear,todayMonth,todayDate,d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()) /1000;
+                        var thatSec;
+
+                        posts.sort(function(a,b) {
+                            if (parseInt(a.userpost.time) > parseInt(b.userpost.time))
+                                return 1;
+                            else
+                                return -1;
+                        });
+
+                        for (var i = 0; i < posts.length; i++) {
+                            d.setTime(0);
+                            d.setUTCSeconds(posts[i].userpost.time);
+                            if (d.getUTCMonth() === todayMonth && d.getUTCDate() === todayDate) {
+                                addLuckyToList(listCurrent, posts[i]);
+                            } else if (showUpcomingTimer > 0) {
+                                thatSec = Date.UTC(todayYear,d.getUTCMonth(),d.getUTCDate(),d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()) /1000;
+                                if (thatSec > todaySec && thatSec -todaySec <= showUpcomingTimer) {
+                                    d.setTime(0);
+                                    d.setUTCSeconds(thatSec);
+                                    addLuckyToList(listUpcoming, posts[i], d.getTime() /1000);
+                                } else {
+                                    removeLuckyFromList(listCurrent, posts[i]);
+                                    removeLuckyFromList(listUpcoming, posts[i]);
+                                }
+                            } else {
+                                removeLuckyFromList(listCurrent, posts[i]);
+                                removeLuckyFromList(listUpcoming, posts[i]);
+                            }
+                        }
+
+                        if (listCurrent.children().length > 1)
+                            listCurrent.parent().show();
+                        if (listUpcoming.children().length > 1)
+                            listUpcoming.parent().show();
+                        $module.find('.refresh').show();
+                        $module.find('.loading-roller').hide();
+                    }, null,
+                    function(arg, ret) { console.log('ajax error:' + ret); }, null);
+            }
+        }
+        if ($.Options.getTwistdayReminderAutoUpdateOpt() === 'enable' && $.Options.getTwistdayReminderAutoUpdateTimerOpt() > 0)
+            setTimeout(refreshTwistdayReminder, $.Options.getTwistdayReminderAutoUpdateTimerOpt()*1000);
+    }
+}
 
 //***********************************************
 //******************* INIT **************
