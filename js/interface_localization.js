@@ -835,7 +835,7 @@ if(preferredLanguage == "uk"){
       "Top Trends": "Тренди",
       "Twistday Reminder": "Нагадування про перший твіст",
       "Show upcoming in near future": "Відображати претендентів",
-      "Who's celebrating Twistday": "Річницю святкують",
+      "Who's celebrating Twistday": "Річницю святкує",
       "Today's luckies:": "Сьогоднішні щасливчики:",
       "Upcoming ones:": "Найближчим часом:",
       "twisted again by": "ретвіст від",
