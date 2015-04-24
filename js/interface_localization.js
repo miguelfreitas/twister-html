@@ -614,12 +614,12 @@ if(preferredLanguage == "uk"){
       "DHT network down.": "Мережа DHT недоступна.",
       "Direct Messages": "Особисті повідомлення",
       "Disable": "Вимкнено",
-      "Display mentions to @": "Показати події @",
+      "Display mentions to @": "Показати сповіщення @",
       "Display retransmissions": "Показати пересилання",
       "DNS to obtain list of peers:": "DNS для отримання пірів:",
       "dns address": "адреса DNS",
       "downloading_block_chain": "Завантаження ланцюга блоків, будь ласка, зачекайте перед продовженням (ланцюг блоків віком %{days} днів).",
-      "download_posts_status": "Завантажено %{portion} повідомлень", // Downloaded 10/30 posts
+      "download_posts_status": "Завантажено %{portion} твістів", // Downloaded 10/30 posts
       "Enable": "Включено",
       "error": "Помилка: %{error}",
       "error_connecting_to_daemon": "Помилка з’єднання з локальним сервером twister.",
@@ -632,54 +632,54 @@ if(preferredLanguage == "uk"){
       "Follow": "Читати",
       "Following config": "Налаштування читання",
       "Which way do you want to follow": "У який спосіб ви бажаєте читати",
-      "Followed by": "Читає",
+      "Followed by": "читає",
       "followed_by": "%{username} читає",
       "Followers": "Читачі",
       "Following": "Читає",
       "Following users": "Підписані користувачі",
       "Force connection to peer:": "Примусове з’єднання з піром:",
       "General information": "Загальна інформація",
-      "Generate blocks (send promoted messages)": "Генерація блоків (відправка рекламних повідомлень)",
+      "Generate blocks (send promoted messages)": "Відправка рекламних твістів за кожний згенерований блок",
       "Home": "Головна", // homepage
       "hours": "%{smart_count} година |||| %{smart_count} годин",
       "Internal error: lastPostId unknown (following yourself may fix!)": "Внутрішня помилка: lastPostId невизначено (підписка на себе може виправити помилку!)",
       "Known peers:": "Відомі піри: ",
       "Last block is ahead of your computer time, check your clock.": "Останній блок датований майбутнім часом, перевірте свій годинник.",
-      "mentions_at": "Події @%{user}",
+      "mentions_at": "Сповіщення @%{user}",
       "minutes": "%{smart_count} хвилина |||| %{smart_count} хвилин",
       "Must be 16 characters or less.": "Повинно бути не більше 16 символів.", // username
       "Network": "Мережа",
       "Network config": "Налаштування мережі",
       "Network status": "Статус мережі",
-      "New direct message...": "Нове особисте повідомлення...",
-      "New Post...": "Нове повідомлення...",
+      "New direct message...": "Нове повідомлення...",
+      "New Post...": "Що нового?",
       "You got": "Ви отримали",
       "in postboard": "в стрічці",
       "in search result": "в пошуковому запиті",
       "in top trends": "в трендах",
-      "new_posts": "%{smart_count} нове повідомлення |||| %{smart_count} нових повідомлень",
-      "new_mentions": "%{smart_count} нова подія |||| %{smart_count} нових подій",
-      "new_direct_messages": "%{smart_count} new direct message |||| %{smart_count} new direct messages",
-      "nobody": "анонімно", // used to promote a post without attaching the user
+      "new_posts": "%{smart_count} новий твіст |||| %{smart_count} нових твістів",
+      "new_mentions": "%{smart_count} нове сповіщення |||| %{smart_count} нових сповіщень",
+      "new_direct_messages": "%{smart_count} нове повідомлення |||| %{smart_count} нові повідомлення",
+      "nobody": "анонім", // used to promote a post without attaching the user
       "Not available": "Не доступне", // username is not available
-      "notify_desktop_error": "Twister не може створити виринаюче повідомлення: невідома помилка.",
+      "notify_desktop_error": "Twister не може створити сповіщення: невідома помилка.",
       "notify_desktop_perm_denied": "Twister не може створити сповіщення на робочому столі: доступ обмежено.\n\nЯкщо ви бажаєте отримувати сповіщення, дозвольте їх виконання в налаштуваннях браузера для %{this_domain}.",
-      "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
-      "notify_desktop_title": "Watch out, it's twister over here!",
+      "notify_desktop_test": "Є дещо новеньке у стрічці.",
+      "notify_desktop_title": "Погляньте сюди!",
       "Number of blocks in block chain:": "Кількість блоків у ланцюгу: ",
       "Number of CPUs to use": "Кількість CPU до використання ",
       "Only alphanumeric and underscore allowed.": "Допустимі тільки латинські символи, числа та нижнє підкреслення.",
       "peer address": "адреса піру",
       "Private": "Особистий",
       "Profile": "Профіль",
-      "Postboard": "Стрічка оновлень",
+      "Postboard": "Останні події",
       "post": "надіслати", // verb - button to post a message
-      "Post to promote:": "Рекламне повідомлення: ",
-      "Posts": "Повідомлення",
+      "Post to promote:": "Рекламний твіст: ",
+      "Posts": "Твісти",
       "propagating_nickname": "Поширення інформації шо до %{username} у мережі...",
       "Public": "Публічний",
       "Refresh": "Оновити",
-      "retransmit_this": "Переслати це повідомлення читачам?",
+      "retransmit_this": "Переслати цей твіст читачам?",
       "Reply": "Відповісти",
       "Reply...": "Відповісти...",
       "reply_to": "Відповісти %{fullname}",
@@ -691,8 +691,8 @@ if(preferredLanguage == "uk"){
       "send": "відіслати",
       "Send post with username": "Надіслати повідомлення від",
       "Sent Direct Message": "Надіслати особисте повідомлення",
-      "Sent Post to @": "Надіслати повідомлення @",
-      "Setup account": "Налаштувати акаунт",
+      "Sent Post to @": "Надіслати твіст @",
+      "Setup account": "Обліковий запис",
       "switch_to_network": "Локальний сервер не підєднаний до мережі або \n" +
                 "ланцюг блоків не актуальний. Якщо ви залишитесь на цій сторінці\n" +
                 "ваші дії можуть не спрацювати.\n" +
@@ -705,20 +705,17 @@ if(preferredLanguage == "uk"){
       "Update": "Оновити",
       "Auto updating": "Автоматичне оновлення",
       "Updating status...": "Оновлення статусу...", // status of block chain
-      "user_not_yet_accepted": "Інші піри ще не прийняли цього користувача.\n" +
-                "Нажаль, у цьому стані не можливо зберегти профіль\n" +
-                "або надсилати якісь повідомлення.\n\n" +
-                "Будь ласка, зачекайте декілька хвилин для продовження.\n\n" +
-                "Кнопка 'Зберегти зміни' стане доступною автоматично,\n" +
-                "коли цей процес завершится. (Я обіцяю, це останній раз,\n"+
-                "коли ви змушені чекати перед використанням Twister).\n\n" +
-                "Підказка: тим часом ви можете вибрати аватар!",
+      "user_not_yet_accepted": "Триває підтвердження нового користувача.\n" +
+                "У цей час не можна редагувати профіль та надсилати повідомлення.\n\n" +
+                "Будь ласка, зачекайте декілька хвилин.\n" +
+                "Кнопка 'Зберегти зміни' стане доступною автоматично коли цей процес завершится.\n\n"+
+                "Це востаннє, коли потрібно чекати перед використанням Twister",
       "users_mentions": "Події @%{username}",
       "users_profile": "Профіль %{username}",
       "username_undefined": "Користувач невизначений, необхідно вказати нік.",
       "View": "Дивитись",
       "View All": "Дивитись все",
-      "Who to Follow": "Кого читати",
+      "Who to Follow": "Знайомтесь",
       "Your message was sent!": "Ваше повідомлення відправлене!",
       "twister login": "Вхід до Twister",
       "Existing local users": "Вже зареєстровані",
@@ -740,30 +737,30 @@ if(preferredLanguage == "uk"){
       "Exit": "Вихід",
       "Save Changes": "Зберегти зміни",
       "Secret key:": "Секретний ключ:",
-      "You have to log in to post messages.": "You have to log in to post messages.",
-      "You have to log in to post replies.": "You have to log in to post replies.",
+      "You have to log in to post messages.": "Ви повинні увійти для публікації повідомлень.",
+      "You have to log in to post replies.": "Ви повинні увійти для публікації відповідей.",
       "You have to log in to retransmit messages.": "You have to log in to retransmit messages.",
-      "You have to log in to use direct messages.": "You have to log in to use direct messages.",
-      "You have to log in to follow users.": "You have to log in to follow users.",
+      "You have to log in to use direct messages.": "Ви повинні увійти для використання повідомлень.",
+      "You have to log in to follow users.": "Ви повинні увійти для читання користувачів.",
       "You are not following anyone because you are not logged in.": "You are not following anyone because you are not logged in.",
       "You don't have any followers because you are not logged in.": "You don't have any followers because you are not logged in.",
       "No one can mention you because you are not logged in.": "No one can mention you because you are not logged in.",
       "You don't have any profile because you are not logged in.": "You don't have any profile because you are not logged in.",
       "Options": "Опції",
-      "Switch to Promoted posts": "Рекламні пости",
-      "Switch to Normal posts": "Звичайні пости",
+      "Switch to Promoted posts": "Твісти від спонсорів",
+      "Switch to Normal posts": "Твісти",
       "Use language": "Використати мову",
       "Ignore": "Ігнорувати",
       "Theme": "Тема",
       "Keys": "Гарячі клавіші",
       "Notifications": "Оповіщення",
-      "Desktop notifications": "Настільні повідомлення",
+      "Desktop notifications": "Сповіщення на робочому столі",
       "Sound notifications": "Звукові сповіщення",
       "Volume": "Гучність",
       "Test": "Випроба",
-      "Send key": "Надсилання повідомлення",
-      "Posts display": "Відображення постів",
-      "Post editor": "Редактор посту",
+      "Send key": "Надсилання твістів",
+      "Posts display": "Відображення твістів",
+      "Post editor": "Редактор твістів",
       "Inline image preview": "Контекстний перегляд зображення",
       "Display": "Відображати",
       "Line feeds": "Line feeds",
@@ -781,15 +778,15 @@ if(preferredLanguage == "uk"){
       "Original": "Оригінал",
       "none": "немає",
       "Custom": "Вибірково",
-      "Mentions": "Mentions",
+      "Mentions": "Сповіщення",
       "Use proxy for image preview only": "Використовуати Proxy тільки для попереднього перегляду зображень",
       "Use external links behind a proxy": "Use external links behind a proxy",
       "There aren't any posts with this hashtag.": "Не знайдено публікацій за цим теґом.",
       "Split only new post": "Розділяти тільки нові публікації",
       "Split all": "Поєднати усі",
       "Don't split": "Не розділювати",
-      "Split long posts": "Розділити довгі повідомлення",
-      "Posts that begin with mention": "Повідомлення, що починаються з події",
+      "Split long posts": "Розділити довгі твісти",
+      "Posts that begin with mention": "Твісти, що починаються з події",
       "Show all": "Відображати усі",
       "Show only if I am in": "Show only if I am in",
       "Show if it's between users I follow": "Show if it's between users I follow",
@@ -823,32 +820,32 @@ if(preferredLanguage == "uk"){
       "Show with every user name": "Відображати поряд з кожним ніком",
       "Show at profile modal only": "Відображати тільки в модальному вікні профілю",
       "Show if a user follows me": "Якщо користувач читає мене",
-      "follows you": "стежить за тобою",
+      "follows you": "читає вас",
       "Show conversation": "Показати бесіду",
       "Mark all as read": "Позначити усі як прочитані",
-      "show_more_count": "%{smart_count} більше...",
+      "show_more_count": " та ще %{smart_count}...",
       "hide": "сховати",
       "Show more in this conversation...": "Показати більше у цій бесіді...",
       "conversation_title": "Розмова з @%{username}",
       "copy_to_clipboard": "Щоб скопіювати, натисніть Ctrl/Cmd+C а потім Enter щоб закрити",
-      "Normal posts": "Звичайні пости",
-      "Promoted posts": "Рекламні пости",
+      "Normal posts": "Твісти",
+      "Promoted posts": "Спонсори",
       "Messages": "Повідомлення",
-      "Edit profile": "Редагувати профіль",
+      "Edit profile": "Профіль",
       "Top Trends": "Тренди",
-      "Twistday Reminder": "Twistday Reminder",
-      "Show upcoming in near future": "Show upcoming in near future",
-      "Who's celebrating Twistday": "Who's celebrating Twistday",
-      "Today's luckies:": "Today's luckies:",
-      "Upcoming ones:": "Upcoming ones:",
-      "twisted again by": "twisted again by",
+      "Twistday Reminder": "Нагадування про перший твіст",
+      "Show upcoming in near future": "Відображати претендентів",
+      "Who's celebrating Twistday": "Річницю святкує",
+      "Today's luckies:": "Сьогоднішні щасливчики:",
+      "Upcoming ones:": "Найближчим часом:",
+      "twisted again by": "ретвіст від",
       "undo": "відмінити",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Ви впевнені, що бажаєте зупинити системний демон? \nУ такому разі, клієнт Twister буде зупинено допоки ви не запустите його знову.",
-      "Daemon exited...": "Системний демон припинив роботу...",
+      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Ви впевнені, що бажаєте завершити роботу? \n\nКлієнт Twister буде зупинено допоки ви не запустите його знову.",
+      "Daemon exited...": "Twister заверив роботу...",
       "Secret Key": "Секретний ключ",
       "Copy to clipboard": "Скопіювати до буферу",
       "Full name here": "Повне ім’я",
-      "Describe yourself": "Розкажи про себе",
+      "Describe yourself": "Розкажіть про себе",
       "Location": "Розташування",
       "website": "Вебсайт",
       "Tox address": "Адреса Tox",
@@ -856,7 +853,9 @@ if(preferredLanguage == "uk"){
       "Language": "Мова",
       "Sound": "Звук",
       "Users": "Користувачі",
-      "Direct Message's copy to self": "Direct Message's copy to self",
+      "Direct Message's copy to self": "Повідомлення скопійовано самому собі",
+      "Traffic information": "Статистика трафіку",
+      "Direct messages with": "Співбесіда з",
     };
 }
 
@@ -1688,7 +1687,6 @@ if(preferredLanguage == "it"){
       "Direct Message's copy to self": "Direct Message's copy to self",
     };
 }
-
 
 if(preferredLanguage == "fr"){
     polyglot.locale("fr");
@@ -3625,18 +3623,25 @@ polyglot.extend(wordset);
 // Text from HTML and not JavaScript is selected and translated at $(document).ready
 // Add selectors here to translate the text and placeholders inside new UI
 var fixedLabels = [
-  // page titles
+
+  // common text containers
   "title",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "button",
+  "option",
+  "textarea",
 
   // An easy way to include new items in translation is to add the "label" class
   ".label",
 
   // navbar and home
-  "button",
   ".postboard-news",
-  ".post-area-new textarea",
   ".refresh-toptrends, .refresh-users, .view-all-users",
-  ".who-to-follow h3",
   ".userMenu-search-field",
   "a.dropdown-menu-item, a.direct-messages",
   ".post-interactions span",
@@ -3646,26 +3651,20 @@ var fixedLabels = [
   ".postboard span",
 
   // following page
-  ".following h2",
   ".mini-profile-actions span, .mini-profile-actions li",
 
   // network page
-  ".network h2, .network h3",
   ".network ul li span",
   ".network ul li label",
   ".network label",
-  ".network textarea, .network input, .network option",
+  ".network input",
 
   // login page
-  ".login h2, .login h3",
   ".login ul li span",
   ".module span",
   ".login span",
   ".login-local-username",
   ".login input",
-
-  // options page
-  "option",
 
   // mobile version //
 
