@@ -63,7 +63,13 @@ function incLastPostId( optionalNewValue ) {
 function loadWalletlUsers(cbFunc, cbArg) {
     twisterRpc("listwalletusers", [],
                function(args, ret) {
-                   localUsernames = ret;
+                   localUsernames = [];
+                   for( var i = 0; i < ret.length; i++ ) {
+                        // filter out group aliases
+                        if( ret.length && ret[i][0] !== '*' ) {
+                            localUsernames.push(ret[i]);
+                        }
+                   }
                    args.cbFunc(args.cbArg);
                }, {cbFunc:cbFunc, cbArg:cbArg},
                function(args, ret) {
