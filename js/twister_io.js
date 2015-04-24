@@ -296,6 +296,16 @@ function getWebpage( username, item ){
                       }, {item:item} );
 }
 
+function getGroupChatName( groupalias, item ){
+    twisterRpc("getgroupinfo", [groupalias],
+               function(args, ret) {
+                   args.item.text(ret["description"]);
+               }, {item:item},
+               function(args, ret) {
+                   args.item.text("getgroupinfo error");
+               }, {item:item});
+}
+
 // we must cache avatar results to disk to lower bandwidth on
 // other peers. dht server limits udp rate so requesting too much
 // data will only cause new requests to fail.
