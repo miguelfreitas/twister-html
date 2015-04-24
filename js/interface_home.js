@@ -3,8 +3,6 @@
 //
 // Specific interface functions for home.html
 
-var promotedPostsOnly = false;
-
 //***********************************************
 //******************* DECLARATIONS **************
 //***********************************************
