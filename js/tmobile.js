@@ -25,7 +25,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
         });
         // reply text counter both newmsg and dmchat
         var $replyText = $( ".post-area-new textarea" );
-        $replyText.unbind('keyup').keyup( replyTextKeypress );
+        $replyText.unbind('keyup').keyup(replyTextInput, function() { replyTextUpdateRemaining(this); });
         
         setInterval("tmobileTick()", 2000);
         handlersInstalled = true;
