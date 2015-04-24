@@ -25,9 +25,8 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
         });
         // reply text counter both newmsg and dmchat
         var $replyText = $( ".post-area-new textarea" );
-        $replyText.unbind('keyup').keyup( replyTextKeypress );
-        
-        setInterval("tmobileTick()", 2000);
+        $replyText.off('input keyup').on('keyup', replyTextInput, function() { replyTextUpdateRemaining(this); });
+
         handlersInstalled = true;
     }
 
@@ -57,6 +56,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
                         twisterInitialized = true;
                         if( cbFunc )
                             cbFunc(cbArg);
+                        setInterval("tmobileTick()", 2000);
                     });
                 } else {
                     if( cbFunc )
@@ -319,7 +319,7 @@ function installPostboardClick() {
         $.mobile.showPageLoadingMsg();
         $.mobile.navigate( url );
     });
-    
+
     $(".post a").unbind('click').click(function(e) {
         e.stopPropagation();
         

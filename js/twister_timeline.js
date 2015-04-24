@@ -8,6 +8,7 @@
 // of those users more efficiently than iterating through dht posts.
 
 
+var promotedPostsOnly = false;
 var _idTrackerMap = {};
 var _idTrackerSpam = new idTrackerObj();
 var _lastHaveMap = {};
