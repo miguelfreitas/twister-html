@@ -3170,7 +3170,7 @@ if(preferredLanguage == "tr"){
       "Type message here": "Mesajı buraya yazınız",
       "Unfollow": "Takibi bırak",
       "Update": "Güncelle",
-      "Auto updating": "Auto updating",
+      "Auto updating": "Otomatik güncelleme",
       "Updating status...": "Durum güncelleniyor...", // status of block chain
       "user_not_yet_accepted": "Diğer eşler bu yeni kullanıcıyı henüz kabul etmediler.\n" +
                 "Malesef profili kaydetmek ya da bu durumda\n" +
