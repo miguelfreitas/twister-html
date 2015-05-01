@@ -3643,17 +3643,21 @@ var fixedLabels = [
   ".post-context span",
   ".post-stats .stat-count span",
   ".postboard span",
+  ".who-to-follow h3",
 
   // following page
+  ".following h2",
   ".mini-profile-actions span, .mini-profile-actions li",
 
   // network page
+  ".network h2, .network h3",
   ".network ul li span",
   ".network ul li label",
   ".network label",
   ".network input",
 
   // login page
+  ".login h2, .login h3",
   ".login ul li span",
   ".module span",
   ".login span",
