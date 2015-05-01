@@ -24,13 +24,13 @@ var MAL = function()
             $.mobile.hidePageLoadingMsg();
             var curPage = $.mobile.activePage.attr("id");
             $( '#'+curPage+' .content ul.posts').listview('refresh');
-            
+
             installPostboardClick();
         } else {
             $(".postboard-loading").hide();
         }
     }
-    
+
     this.dmThreadListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
             $.mobile.hidePageLoadingMsg();
@@ -90,7 +90,7 @@ var MAL = function()
                 document.title = "(" + String(newPosts) + ") twister";
                 newTweetsBar.text("(" + String(newPosts) + ")");
             } else {
-                document.title = "twister";
+                document.title = "Twister";
                 newTweetsBar.text("Refresh");
             }
         } else {
@@ -113,11 +113,11 @@ var MAL = function()
                 newTweetsBar.text("");
                 newTweetsBarMenu.text("");
                 newTweetsBarMenu.removeClass("show");
-                document.title = "twister";
+                document.title = "Twister";
             }
         }
     }
-    
+
     this.getStreamPostsParent = function() {
         if( $.hasOwnProperty("mobile") ) {
             return $( '.timeline ul');
@@ -183,7 +183,7 @@ var MAL = function()
             return "#hashtag?hashtag=" + h;
         }
     }
-    
+
     this.dmchatUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#dmchat?user=" + username;
@@ -199,7 +199,7 @@ var MAL = function()
             return "#following?user=" + username;
         }
     }
-    
+
     this.followUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#following?follow=" + username;
@@ -232,7 +232,7 @@ var MAL = function()
         }
     }
 
-    
+
     this.updateNewMentionsUI = function(newMentions) {
         if( $.hasOwnProperty("mobile") ) {
             var $mentionsCounterBtnText = $(".mentions-count .ui-btn-text");
@@ -398,7 +398,7 @@ var MAL = function()
             window.location.href = "home.html";
         }
     }
-    
+
     this.soundNotifyMentions = function() {
          if( $.hasOwnProperty("mobile") ) {
          } else {
