@@ -8,6 +8,9 @@ function requestDMsnippetList(dmThreadList) {
     for( var i = 0; i < followingUsers.length; i++ ) {
         followList.push({username:followingUsers[i]});
     }
+    for( var i = 0; i < groupChatAliases.length; i++ ) {
+        followList.push({username:groupChatAliases[i]});
+    }
 
     twisterRpc("getdirectmsgs", [defaultScreenName, 1, followList],
            function(req, ret) {processDMsnippet(ret, dmThreadList);}, dmThreadList,
@@ -43,7 +46,10 @@ function processDMsnippet(dmUsers, dmThreadList) {
 }
 
 function openDmConversation(dm_screenname, dmTitleName, dmConversation) {
-    getFullname( dm_screenname, dmTitleName );
+    if( dm_screenname.length && dm_screenname[0] === '*' )
+        getGroupChatName( dm_screenname, dmTitleName );
+    else
+        getFullname( dm_screenname, dmTitleName );
     dmConversation.attr("data-dm-screen-name", dm_screenname);
 
     var dmConvo = dmConversation.find(".direct-messages-thread");
@@ -116,7 +122,7 @@ function newDirectMsg(msg,  dm_screenname) {
         var paramsOrig = [defaultScreenName, lastPostId + 1, dm_screenname, msg]
         var paramsOpt = paramsOrig
         var copySelf = ($.Options.getDMCopySelfOpt() === 'enable')
-        if( copySelf ) {
+        if( copySelf && dm_screenname[0] !== '*' ) {
             paramsOpt = paramsOrig.concat(true)
         }
 

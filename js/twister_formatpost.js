@@ -153,7 +153,10 @@ function dmDataToSnippetItem(dmData, remoteUser) {
     dmItem.find("a.post-info-name").attr("href", $.MAL.userUrl(remoteUser));
     dmItem.find("a.dm-chat-link").attr("href", $.MAL.dmchatUrl(remoteUser));
     getAvatar( remoteUser, dmItem.find(".post-photo").find("img") );
-    getFullname( remoteUser, dmItem.find("a.post-info-name") );
+    if( remoteUser.length && remoteUser[0] === '*' )
+        getGroupChatName( remoteUser, dmItem.find("a.post-info-name") );
+    else
+        getFullname( remoteUser, dmItem.find("a.post-info-name") );
     dmItem.find(".post-text").html(escapeHtmlEntities(dmData.text));
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time));
     dmItem.find(".post-info-time").attr("title",timeSincePost(dmData.time));

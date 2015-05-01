@@ -13,6 +13,7 @@ var _lastLocalMentionId = -1;
 var PURGE_OLD_MENTIONS_TIMEOUT = 3600 * 24 * 30; // one month
 var _newMentionsUpdated = false;
 var _newDMsUpdated = false;
+var groupChatAliases = []
 
 // process a mention received to check if it is really new
 function processMention(user, mentionTime, data) {
@@ -176,6 +177,9 @@ function requestDMsCount() {
     for( var i = 0; i < followingUsers.length; i++ ) {
         followList.push({username:followingUsers[i]});
     }
+    for( var i = 0; i < groupChatAliases.length; i++ ) {
+        followList.push({username:groupChatAliases[i]});
+    }
 
     twisterRpc("getdirectmsgs", [defaultScreenName, 1, followList],
            function(req, dmUsers) {
@@ -221,10 +225,21 @@ function resetNewDMsCountForUser(user, lastId) {
     $.MAL.updateNewDMsUI(getNewDMsCount());
 }
 
+function updateGroupList() {
+    twisterRpc("listgroups", [],
+           function(req, ret) {groupChatAliases=ret;}, null,
+           function(req, ret) {console.log("twisterd >= 0.9.30 required for listgroups");}, null);
+}
+
 function initDMsCount() {
     loadDMsFromStorage();
     $.MAL.updateNewDMsUI(getNewDMsCount());
-    requestDMsCount();
+
+    //quick hack to obtain list of group chat aliases
+    updateGroupList();
+    setInterval("updateGroupList();", 60000);
+
+    setTimeout("requestDMsCount();", 200);
     //polling not needed: processNewPostsConfirmation will call requestDMsCount.
     //setInterval("requestDMsCount()", 5000);
 }

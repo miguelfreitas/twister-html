@@ -590,8 +590,11 @@ function processSuggestion(arg, suggestion, followedBy) {
         $list.append(item).show();
         $module.find('.refresh-users').show();
         $module.find('.loading-roller').hide();
-    } else
-        getRandomFollowSuggestion(processSuggestion);
+    } else {
+        setTimeout(function(){
+            getRandomFollowSuggestion(processSuggestion);
+        }, 100);
+    }
 }
 
 function closeSearchDialog()
