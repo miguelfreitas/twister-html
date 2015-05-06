@@ -2966,10 +2966,10 @@ ol.toptrends-list a:hover {
 /********* NEW USER MODAL************* */
 /* line 861, ../sass/style.sass */
 .new-user .modal-wrapper {
-  width: 520px;
+  width: 640px;
   height: 600px;
   top: 10%;
-  margin: 0 0 0 -260px;
+  margin: 0 0 0 -320px;
   overflow-x: hidden;
   overflow-y: hidden;
 }
@@ -2987,13 +2987,15 @@ ol.toptrends-list a:hover {
 }
 /* line 874, ../sass/style.sass */
 .new-user .emphasis {
-  font-size: 18px;
   text-align: center;
 }
 /* line 877, ../sass/style.sass */
 .new-user .secret-key {
+  display: block;
+  margin-top: 8px;
   color: black;
   font-weight: bold;
+  font-size: 110%;
 }
 
 /******** HASHTAG MODAL********** */
