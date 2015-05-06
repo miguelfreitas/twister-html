@@ -273,9 +273,9 @@ function refreshTwistdayReminder() {
                             }
                         }
 
-                        if (listCurrent.children().length > 1)
+                        if (listCurrent.children().length)
                             listCurrent.parent().show();
-                        if (listUpcoming.children().length > 1)
+                        if (listUpcoming.children().length)
                             listUpcoming.parent().show();
                         $module.find('.refresh').show();
                         $module.find('.loading-roller').hide();
