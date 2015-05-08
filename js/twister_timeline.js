@@ -188,6 +188,7 @@ function showPosts(req, posts)
     //console.log(req);
     //console.log(posts);
     var streamItemsParent = $.MAL.getStreamPostsParent();
+    var streamItems = streamItemsParent.children();
 
     for( var i = 0; i < posts.length; i++ ) {
         var post = posts[i];
@@ -200,31 +201,44 @@ function showPosts(req, posts)
         var streamPostAppended = false;
 
         // insert the post in timeline ordered by (you guessed) time
-        // FIXME: lame! searching everything everytime. please optimize!
-        var streamItems = streamItemsParent.children();
-        if( streamItems.length == 0) {
-            // timeline is empty
-            streamItemsParent.append( streamPost );
-            streamPostAppended = true;
-        } else {
-            var j = 0;
-            for( j = 0; j < streamItems.length; j++) {
-                var streamItem = streamItems.eq(j);
-                var timeItem = streamItem.attr("data-time");
-                if( timeItem == undefined ||
-                    timePost > parseInt(timeItem) ) {
-                    // this post in stream is older, so post must be inserted above
-                    streamItem.before(streamPost);
-                    streamPostAppended = true;
-                    break;
+        if (streamItems.length) {
+            // check for duplicate twists
+            var streamItemsSameTime = streamItemsParent.children('[data-time='+timePost+']');
+            if (streamItemsSameTime.length) {
+                var streamPostInnerHTML = streamPost[0].innerHTML;
+                for (var j = 0; j < streamItemsSameTime.length; j++) {
+                    var streamItem = streamItemsSameTime.eq(j);
+                    if (streamItem[0].innerHTML === streamPostInnerHTML) {
+                        streamPostAppended = true;
+                        console.log('appending of duplicate twist prevented');
+                        break;
+                    }
+                }
+            }
+            if (!streamPostAppended) {
+                for (var j = 0; j < streamItems.length; j++) {
+                    var streamItem = streamItems.eq(j);
+                    var timeItem = streamItem.attr("data-time");
+                    if( timeItem == undefined ||
+                        timePost > parseInt(timeItem) ) {
+                        // this post in stream is older, so post must be inserted above
+                        streamItem.before(streamPost);
+                        streamItems[streamItems.length] = streamPost[0];
+                        streamItems.length += 1;
+                        streamPostAppended = true;
+                        streamPost.show();
+                        break;
+                    }
                 }
             }
         }
-        if (!streamPostAppended)
+        if (!streamPostAppended) {
             streamItemsParent.append( streamPost );
-
-        streamPostAppended = true;
-        streamPost.show();
+            streamItems[streamItems.length] = streamPost[0];
+            streamItems.length += 1;
+            streamPostAppended = true;
+            streamPost.show();
+        }
         req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
     }
 }
