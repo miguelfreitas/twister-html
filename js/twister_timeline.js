@@ -216,19 +216,22 @@ function showPosts(req, posts)
                 }
             }
             if (!streamPostAppended) {
+                var timeClosest = 0;
                 for (var j = 0; j < streamItems.length; j++) {
                     var streamItem = streamItems.eq(j);
-                    var timeItem = streamItem.attr("data-time");
-                    if( timeItem == undefined ||
-                        timePost > parseInt(timeItem) ) {
-                        // this post in stream is older, so post must be inserted above
-                        streamItem.before(streamPost);
-                        streamItems[streamItems.length] = streamPost[0];
-                        streamItems.length += 1;
-                        streamPostAppended = true;
-                        streamPost.show();
-                        break;
+                    var timeItem = parseInt(streamItem.attr("data-time"));
+                    if (timePost > timeItem && timeItem > timeClosest) {
+                        timeClosest = timeItem;
+                        var streamItemClosest = streamItem;
                     }
+                }
+                if (timeClosest) {
+                    // this post in stream is older, so post must be inserted above
+                    streamItemClosest.before(streamPost);
+                    streamItems[streamItems.length] = streamPost[0];
+                    streamItems.length += 1;
+                    streamPostAppended = true;
+                    streamPost.show();
                 }
             }
         }
