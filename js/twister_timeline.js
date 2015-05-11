@@ -203,38 +203,29 @@ function attachPostsToStream(stream, posts, isPromoted) {
         var streamItem = streamItems.eq(i);
         streamPosts.push({item: streamItem, time: parseInt(streamItem.attr('data-time'))});
     }
-    //streamPosts.sort(byTimeInDescendingOrder); // currently there is no reason to sort it yet
+    //streamPosts.sort(byTimeInDescendingOrder); // currently here is no reason to sort it, it should be ok
 
     for (var i = 0; i < posts.length; i++) {
         //console.log(posts[i]);
         var isAttached = false;
-        var intrantPost = {item: postToElem(posts[i], 'original', isPromoted), time: posts[i]['userpost']['time']};
+        var intrantPost = {item: postToElem(posts[i], 'original', isPromoted), time: posts[i].userpost.time};
         intrantPost.item.attr('data-time', intrantPost.time);
 
         if (streamPosts.length) {
-            // check to avoid twist duplication
-            var streamItems = stream.children('[data-time='+intrantPost.time+']');
-            if (streamItems.length) {
-                for (var j = 0; j < streamItems.length; j++) {
-                    var streamItem = streamItems.eq(j);
-                    if (streamItem[0].innerHTML === intrantPost.item[0].innerHTML) {
+            // check to avoid twist duplication and insert the post in timeline ordered by (you guessed) time
+            for (var j = 0; j < streamPosts.length; j++) {
+                if (intrantPost.time === streamPosts[j].time &&
+                    intrantPost.item[0].innerHTML === streamPosts[j].item[0].innerHTML) {
                         isAttached = true;
                         console.log('appending of duplicate twist prevented');
                         break;
-                    }
-                }
-            }
-            // insert the post in timeline ordered by (you guessed) time
-            if (!isAttached) {
-                for (var j = 0; j < streamPosts.length; j++) {
-                    if (intrantPost.time > streamPosts[j].time) {
-                        // this post in stream is older, so post must be inserted above
-                        intrantPost.item.insertBefore(streamPosts[j].item).show();
-                        streamPosts.push(intrantPost);
-                        streamPosts.sort(byTimeInDescendingOrder);
-                        isAttached = true;
-                        break;
-                    }
+                } else if (intrantPost.time > streamPosts[j].time) {
+                    // this post in stream is older, so post must be inserted above
+                    intrantPost.item.insertBefore(streamPosts[j].item).show();
+                    streamPosts.push(intrantPost);
+                    streamPosts.sort(byTimeInDescendingOrder);
+                    isAttached = true;
+                    break;
                 }
             }
         }
