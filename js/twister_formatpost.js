@@ -183,60 +183,73 @@ function htmlFormatMsg(msg, mentions) {
     function htmlMention(str, pre) {
         str = str.replace(new RegExp(['^', pre, '@'].join('')), '').toLowerCase();
 
-        mentions.push(str);  // FIXME feel the scope
+        mentions.push(str);  // FIXME feel the pain of the scope chain
 
         // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
         // FIXME actually we should avoid it by dropping a template idea and construct html right here
-        return $('#msg-user-link-template')[0].outerHTML
+        html.push($('#msg-user-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, [pre, '<a href="', $.MAL.userUrl(str), '" '].join(''))  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
+            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, ['<a href="', $.MAL.userUrl(str), '" '].join(''))  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
             .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1@', str, '$2'].join(''))  // $().closest('a.open-profile-modal').text('@'+username)
-        ;
+        );
+
+        return ['>', html.length - 1, '<'].join('');
     }
 
     function htmlHashtag(str, pre) {
         str = str.replace(new RegExp(['^', pre, '#'].join('')), '');
 
-        return $('#hashtag-link-template')[0].outerHTML
+        html.push($('#hashtag-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
             .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, ['<a href="', $.MAL.hashtagUrl(str.toLowerCase()), '" '].join(''))  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
             .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1#', str, '$2'].join(''))  // $().closest('a.open-profile-modal').text('#'+hashtag)
-        ;
+        );
+
+        return ['>', html.length - 1, '<'].join('');
     }
 
     function htmlHttp(str) {
-        return $('#external-page-link-template')[0].outerHTML
+        html.push($('#external-page-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
             .replace(/<a\s+/ig, ['<a href="', proxyURL(str), '" '].join(''))  // $().closest('a').attr('href', proxyURL(url))
             .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, ['$1', str, '$2'].join(''))  // $().closest('a').text(url)
-        ;
+        );
+
+        return ['>', html.length - 1, '<'].join('');
     }
 
-    function htmlEmail(str) {
-        return $('#external-page-link-template')[0].outerHTML
+    function htmlEmail(str, pre) {
+        str = str.replace(new RegExp(['^', pre].join('')), '');
+
+        html.push($('#external-page-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
             .replace(/<a\s+/ig, ['<a href="mailto:', str.toLowerCase(), '" '].join(''))  // $().closest('a').attr('href', 'mailto:'+url)
-            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, ['$1', str, '$2'].join(''))  // $().closest('a').text(url)
-        ;
+            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1', str, '$2'].join(''))  // $().closest('a').text(url)
+        );
+
+        return ['>', html.length - 1, '<'].join('');
     }
 
     function htmlSplitCounter(str) {
-        return ['<span class="splited-post-counter">', str, '</span>'].join('');
+        html.push(['<span class="splited-post-counter">', str, '</span>'].join(''));
+
+        return ['>', html.length - 1, '<'].join('');
     }
 
-    msg = escapeHtmlEntities(msg)
-        .replace(/(^|\s|\w)@\S\w*/g, htmlMention)
-        .replace(/(^|\s|\w)#\S\w*/g, htmlHashtag)
-        .replace(/\bhttps?:\/\/\S+/ig, htmlHttp)
-        .replace(/\S+@\S+\.\S+/g, htmlEmail)
-        .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
-    ;
+    var html = [];
 
-    return _formatText(msg);
+    return _formatText(escapeHtmlEntities(msg)
+        .replace(/(^|[^\/]\B(?!\S*:\/\/\S*@))@\w+\b/g, htmlMention)
+        .replace(/(^|[^<\/]\B(?!\S*:\/\/\S*#))#[^#\\\/\.,:;\?\!\*\[\]\(\)\{\}\-\+\=\^\|%'"\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011>\s]+/g, htmlHashtag)  // unicode escaped stuff is '“”…—一。，：？！【】' for our chinese friends
+        .replace(/\bhttps?:\/\/\S[^>\s]+/ig, htmlHttp)
+        .replace(/([^<\/])\b(?!\S*:\/\/\S*@)\S+@\S+\.\S[^>\s]+/g, htmlEmail)
+        .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
+        .replace(/>(\d+)</g, function(candy, core) {return html[core]})
+    );
 }
 
 function proxyURL(url) {
