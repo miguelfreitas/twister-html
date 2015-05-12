@@ -1019,7 +1019,7 @@ textarea.splited-post {
 
 .twistday-reminder h4 {
     margin: 1% 1% 1% 16%;
-    font-size: 90%;
+    font-size: 10px;
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -1032,6 +1032,10 @@ textarea.splited-post {
   padding: 5px;
 }
 
+.twistday-reminder .twister-user-info {
+  margin: 1.2% 0 -2.8% 0;
+}
+
 .twistday-reminder .twister-user-tag,
 .twistday-reminder .twister-user-full {
     display: block;
@@ -1040,7 +1044,7 @@ textarea.splited-post {
 }
 
 .twistday-reminder .twisterday {
-    font-size: 80%;
+    font-size: 11px;
     margin-left: 11%;
 }
 

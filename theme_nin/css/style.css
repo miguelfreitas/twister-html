@@ -2538,12 +2538,13 @@ ol.toptrends-list a:hover {
 }
 
 .twistday-reminder h3 {
+  font-size: 0.98em;
   float: left;
 }
 
 .twistday-reminder h4 {
   margin: 1% 1% 1% 16%;
-  font-size: 90%;
+  font-size: 0.84em;
   color: rgba(0, 0, 0, 0.5);
 }
 
@@ -2551,9 +2552,14 @@ ol.toptrends-list a:hover {
   text-decoration: none;
 }
 
-.twistday-reminder .twister-user-info {
-  margin-top: 8px;
+.twistday-reminder .current .label, .twistday-reminder .upcoming .label {
+  margin-right: 10%;
 }
+
+.twistday-reminder .twister-user-info {
+  margin-top: 1.2%;
+}
+
 .twistday-reminder .twister-user-tag,
 .twistday-reminder .twister-user-full {
   display: block;
@@ -2566,7 +2572,7 @@ ol.toptrends-list a:hover {
 }
 
 .twistday-reminder .twisterday {
-  font-size: 80%;
+  font-size: 0.8em;
   margin-left: 8%;
 }
 

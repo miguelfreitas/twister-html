@@ -218,11 +218,12 @@ function refreshTwistdayReminder() {
                                 item.find('.twister-user-info').attr('data-screen-name', lucky);
                                 item.find('.twister-user-name').attr('href', $.MAL.userUrl(lucky));
                                 item.find('.twister-user-tag').text('@' +lucky);
+                                itemTwisterday = item.find('.twisterday');
+                                itemTwisterday.bind('click', (function(e) { replyInitPopup(e, post); }).bind(post));
                                 if (typeof(time) !== 'undefined')
-                                    item.find('.twisterday').text(timeGmtToText(time));
+                                    itemTwisterday.text(timeGmtToText(time));
                                 else
-                                    item.find('.twisterday').text(timeGmtToText(post.userpost.time));
-                                item.find('.twisterday').bind('click', (function(e) { replyInitPopup(e, post); }).bind(post));
+                                    itemTwisterday.text(timeGmtToText(post.userpost.time));
 
                                 getAvatar(lucky, item.find('.twister-user-photo'));
                                 getFullname(lucky, item.find('.twister-user-full'));
@@ -231,8 +232,7 @@ function refreshTwistdayReminder() {
                             }
                         }
                         function removeLuckyFromList(list, post) {
-                            var lucky = post.userpost.n;
-                            list.find('[data-screen-name='+lucky+']').closest('li').remove();
+                            list.find('[data-screen-name='+post.userpost.n+']').closest('li').remove();
                         }
 
                         var showUpcomingTimer = ($.Options.getTwistdayReminderShowUpcomingOpt() === 'enable') ? $.Options.getTwistdayReminderShowUpcomingTimerOpt() *3600 : 0;
@@ -246,30 +246,29 @@ function refreshTwistdayReminder() {
                         var thatSec;
 
                         posts.sort(function(a,b) {
-                            if (parseInt(a.userpost.time) > parseInt(b.userpost.time))
-                                return 1;
-                            else
-                                return -1;
+                            return (parseInt(a.userpost.time) > parseInt(b.userpost.time)) ? 1 : -1;
                         });
 
                         for (var i = 0; i < posts.length; i++) {
-                            d.setTime(0);
-                            d.setUTCSeconds(posts[i].userpost.time);
-                            if (d.getUTCMonth() === todayMonth && d.getUTCDate() === todayDate) {
-                                addLuckyToList(listCurrent, posts[i]);
-                            } else if (showUpcomingTimer > 0) {
-                                thatSec = Date.UTC(todayYear,d.getUTCMonth(),d.getUTCDate(),d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()) /1000;
-                                if (thatSec > todaySec && thatSec -todaySec <= showUpcomingTimer) {
-                                    d.setTime(0);
-                                    d.setUTCSeconds(thatSec);
-                                    addLuckyToList(listUpcoming, posts[i], d.getTime() /1000);
+                            if (followingUsers.indexOf(posts[i].userpost.n) > -1) {
+                                d.setTime(0);
+                                d.setUTCSeconds(posts[i].userpost.time);
+                                if (d.getUTCMonth() === todayMonth && d.getUTCDate() === todayDate) {
+                                    addLuckyToList(listCurrent, posts[i]);
+                                } else if (showUpcomingTimer > 0) {
+                                    thatSec = Date.UTC(todayYear,d.getUTCMonth(),d.getUTCDate(),d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()) /1000;
+                                    if (thatSec > todaySec && thatSec -todaySec <= showUpcomingTimer) {
+                                        d.setTime(0);
+                                        d.setUTCSeconds(thatSec);
+                                        addLuckyToList(listUpcoming, posts[i], d.getTime() /1000);
+                                    } else {
+                                        removeLuckyFromList(listCurrent, posts[i]);
+                                        removeLuckyFromList(listUpcoming, posts[i]);
+                                    }
                                 } else {
                                     removeLuckyFromList(listCurrent, posts[i]);
                                     removeLuckyFromList(listUpcoming, posts[i]);
                                 }
-                            } else {
-                                removeLuckyFromList(listCurrent, posts[i]);
-                                removeLuckyFromList(listUpcoming, posts[i]);
                             }
                         }
 
