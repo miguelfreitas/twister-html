@@ -244,7 +244,7 @@ function htmlFormatMsg(msg, mentions) {
 
     return _formatText(escapeHtmlEntities(msg)
         .replace(/(^|[^\/]\B(?!\S*:\/\/\S*@))@\w+\b/g, htmlMention)
-        .replace(/(^|[^<\/]\B(?!\S*:\/\/\S*#))#[^#\\\/\.,:;\?\!\*\[\]\(\)\{\}\-\+\=\^\|%'"\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011>\s]+/g, htmlHashtag)  // unicode escaped stuff is '“”…—一。，：？！【】' for our chinese friends
+        .replace(/(^|[^<\/]\B(?!\S*:\/\/\S*#))#[^#\\\/\.,:;\?\!\*\[\]\(\)\{\}\^\|%'"\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011>\s]+/g, htmlHashtag)  // unicode escaped stuff is '“”…—一。，：？！【】' for our chinese friends
         .replace(/\bhttps?:\/\/\S[^>\s]+/ig, htmlHttp)
         .replace(/([^<\/])\b(?!\S*:\/\/\S*@)\S+@\S+\.\S[^>\s]+/g, htmlEmail)
         .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
