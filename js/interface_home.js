@@ -231,8 +231,8 @@ function refreshTwistdayReminder() {
                                 list.append(item);
                             }
                         }
-                        function removeLuckyFromList(list, post) {
-                            list.find('[data-screen-name='+post.userpost.n+']').closest('li').remove();
+                        function removeLuckyFromList(list, lucky) {
+                            list.find('[data-screen-name='+lucky+']').closest('li').remove();
                         }
 
                         var showUpcomingTimer = ($.Options.getTwistdayReminderShowUpcomingOpt() === 'enable') ? $.Options.getTwistdayReminderShowUpcomingTimerOpt() *3600 : 0;
@@ -255,6 +255,7 @@ function refreshTwistdayReminder() {
                                 d.setUTCSeconds(posts[i].userpost.time);
                                 if (d.getUTCMonth() === todayMonth && d.getUTCDate() === todayDate) {
                                     addLuckyToList(listCurrent, posts[i]);
+                                    removeLuckyFromList(listUpcoming, posts[i].userpost.n);
                                 } else if (showUpcomingTimer > 0) {
                                     thatSec = Date.UTC(todayYear,d.getUTCMonth(),d.getUTCDate(),d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()) /1000;
                                     if (thatSec > todaySec && thatSec -todaySec <= showUpcomingTimer) {
@@ -262,12 +263,12 @@ function refreshTwistdayReminder() {
                                         d.setUTCSeconds(thatSec);
                                         addLuckyToList(listUpcoming, posts[i], d.getTime() /1000);
                                     } else {
-                                        removeLuckyFromList(listCurrent, posts[i]);
-                                        removeLuckyFromList(listUpcoming, posts[i]);
+                                        removeLuckyFromList(listCurrent, posts[i].userpost.n);
+                                        removeLuckyFromList(listUpcoming, posts[i].userpost.n);
                                     }
                                 } else {
-                                    removeLuckyFromList(listCurrent, posts[i]);
-                                    removeLuckyFromList(listUpcoming, posts[i]);
+                                    removeLuckyFromList(listCurrent, posts[i].userpost.n);
+                                    removeLuckyFromList(listUpcoming, posts[i].userpost.n);
                                 }
                             }
                         }
