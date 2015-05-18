@@ -379,33 +379,7 @@ function processHashtag(postboard, hashtag, data) {
 }
 
 function displayHashtagPending(postboard) {
-    for( var i = 0; i < _hashtagPendingPosts.length; i++ ) {
-        var post = _hashtagPendingPosts[i];
-        //console.log(post);
-        var streamPost = postToElem(post, "original");
-        var timePost = post["userpost"]["time"];
-        streamPost.attr("data-time",timePost);
-
-        var streamItems = postboard.children();
-        if( streamItems.length == 0) {
-            postboard.prepend( streamPost );
-        } else {
-            var j = 0;
-            for( j = 0; j < streamItems.length; j++) {
-                var streamItem = streamItems.eq(j);
-                var timeItem = streamItem.attr("data-time");
-                if( timeItem == undefined ||
-                    timePost > parseInt(timeItem) ) {
-                    // this post in stream is older, so post must be inserted above
-                    streamItem.before(streamPost);
-                    break;
-                }
-            }
-            if( j == streamItems.length ) {
-                postboard.append( streamPost );
-            }
-        }
-    }
+    attachPostsToStream(postboard, _hashtagPendingPosts, false);
     $.MAL.postboardLoaded();
     _hashtagPendingPosts = [];
 }

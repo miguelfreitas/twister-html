@@ -52,71 +52,71 @@ function postToElem( post, kind, promoted ) {
 
     // Now create the html elements
     var elem = $.MAL.getPostTemplate().clone(true);
-    elem.removeAttr('id');
-    elem.addClass(kind);
-    elem.attr('data-time', t);
+    elem.removeAttr('id')
+        .addClass(kind)
+        .attr('data-time', t)
+    ;
 
-    if( post["isNew"] )
+    if( post['isNew'] )
         elem.addClass('new');
 
-    var postData = elem.find(".post-data");
-    postData.addClass(kind);
-    postData.attr('data-userpost', postJson);
-    postData.attr('data-content_to_rt', content_to_rt);
-    postData.attr('data-content_to_sigrt', content_to_sigrt);
-    postData.attr('data-screen-name', n);
-    postData.attr('data-id', k);
-    postData.attr('data-lastk', userpost["lastk"]);
-    postData.attr('data-text', msg);
-    if( "reply" in userpost ) {
-        postData.attr('data-replied-to-screen-name', userpost["reply"]["n"]);
-        postData.attr('data-replied-to-id', userpost["reply"]["k"]);
-
-        postData.find('.post-expand').text(polyglot.t("Show conversation"));
-    } else if ( "rt" in userpost && "reply" in userpost["rt"] ) {
-        postData.attr('data-replied-to-screen-name', userpost["rt"]["reply"]["n"]);
-        postData.attr('data-replied-to-id', userpost["rt"]["reply"]["k"]);
-
-        postData.find('.post-expand').text(polyglot.t("Show conversation"));
+    var postData = elem.find('.post-data');
+    postData.addClass(kind)
+        .attr('data-userpost', postJson)
+        .attr('data-content_to_rt', content_to_rt)
+        .attr('data-content_to_sigrt', content_to_sigrt)
+        .attr('data-screen-name', n)
+        .attr('data-id', k)
+        .attr('data-lastk', userpost["lastk"])
+        .attr('data-text', msg)
+    ;
+    if( 'reply' in userpost ) {
+        postData.attr('data-replied-to-screen-name', userpost.reply.n)
+            .attr('data-replied-to-id', userpost.reply.k)
+            .find('.post-expand').text(polyglot.t('Show conversation'))
+        ;
+    } else if ( 'rt' in userpost && 'reply' in userpost.rt ) {
+        postData.attr('data-replied-to-screen-name', userpost.rt.reply.n)
+            .attr('data-replied-to-id', userpost.rt.reply.k)
+            .find('.post-expand').text(polyglot.t('Show conversation'))
+        ;
     }
 
-    var postInfoName = elem.find(".post-info-name");
-    postInfoName.attr('href',$.MAL.userUrl(n));
-    postInfoName.text(n);
+    var postInfoName = elem.find('.post-info-name');
+    postInfoName.text(n).attr('href', $.MAL.userUrl(n));
     getFullname( n, postInfoName );
-    elem.find(".post-info-tag").text = "@" + n;
-    getAvatar( n, elem.find(".avatar") );
-    elem.find(".post-info-time").text(timeGmtToText(t));
-    elem.find(".post-info-time").attr("title",timeSincePost(t));
+    //elem.find('.post-info-tag').text("@" + n);
+    getAvatar( n, elem.find('.avatar') );
+    elem.find('.post-info-time').text(timeGmtToText(t)).attr('title', timeSincePost(t));
 
     var mentions = [];
-    htmlFormatMsg( msg, elem.find(".post-text"), mentions);
+    elem.find('.post-text').html(htmlFormatMsg(msg, mentions));
     postData.attr('data-text-mentions', mentions);
 
-    var replyTo = "";
-    if( n != defaultScreenName )
-        replyTo += "@" + n + " ";
-    for( var i = 0; i < mentions.length; i++ ) {
-        if( mentions[i] != n && mentions[i] != defaultScreenName ) {
-            replyTo += "@" + mentions[i] + " ";
-        }
+    var replyTo = [];
+    if( n !== defaultScreenName )
+        replyTo.push(['@', n, ' '].join(''));
+    for (var i = 0; i < mentions.length; i++) {
+        if (mentions[i] !== n && mentions[i] !== defaultScreenName)
+            replyTo.push(['@', mentions[i], ' '].join(''));
     }
-    if(!defaultScreenName)
-    {
-	elem.find(".post-area-new textarea").attr("placeholder", polyglot.t("You have to log in to post replies."));
-    }
+    replyTo = replyTo.join('');
+
+    var postTextArea = elem.find('.post-area-new textarea');
+    postTextArea.attr('data-reply-to', replyTo);
+    if (!defaultScreenName)
+        postTextArea.attr('placeholder', polyglot.t('You have to log in to post replies.'));
     else
-    {
-	elem.find(".post-area-new textarea").attr("placeholder", polyglot.t("reply_to", { fullname: replyTo })+ "...");
-    }
-    elem.find(".post-area-new textarea").attr("data-reply-to",replyTo);
-    postData.attr("data-reply-to",replyTo);
+        postTextArea.attr('placeholder', polyglot.t('reply_to', { fullname: replyTo })+ '...');
+
+    postData.attr('data-reply-to', replyTo);
 
     if( retweeted_by != undefined ) {
-        elem.find(".post-context").show();
-        var retweetedByElem = elem.find(".post-retransmited-by");
-        retweetedByElem.attr("href", $.MAL.userUrl(retweeted_by));
-        retweetedByElem.text('@'+retweeted_by);
+        elem.find('.post-context').show();
+        elem.find('.post-retransmited-by')
+            .attr('href', $.MAL.userUrl(retweeted_by))
+            .text('@' + retweeted_by)
+        ;
     }
 
     if (typeof(promoted) !== 'undefined' && promoted) {
@@ -130,8 +130,9 @@ function postToElem( post, kind, promoted ) {
                 else
                     var mlm = '';
 
-                elem.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+((post['langFilter']['pass']) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>'})+'</div>');
-                elem.append('<div class="langFilterSimData">'+polyglot.t('Reason: this', {'this': '<em>'+post['langFilter']['reason']+'</em>'})+mlm+'</div>');
+                elem.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+((post['langFilter']['pass']) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>'})+'</div>')
+                    .append('<div class="langFilterSimData">'+polyglot.t('Reason: this', {'this': '<em>'+post['langFilter']['reason']+'</em>'})+mlm+'</div>')
+                ;
             } else {
                 elem.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+polyglot.t('not analyzed')+'</em>'})+'</div>');
             }
@@ -158,8 +159,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
     else
         getFullname( remoteUser, dmItem.find("a.post-info-name") );
     dmItem.find(".post-text").html(escapeHtmlEntities(dmData.text));
-    dmItem.find(".post-info-time").text(timeGmtToText(dmData.time));
-    dmItem.find(".post-info-time").attr("title",timeSincePost(dmData.time));
+    dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
 
     return dmItem;
 }
@@ -171,183 +171,109 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
     dmItem.removeAttr('id');
     dmItem.addClass(classDm);
     getAvatar(dmData.fromMe ? localUser : remoteUser, dmItem.find(".post-photo").find("img") );
-    dmItem.find(".post-info-time").text(timeGmtToText(dmData.time));
-    dmItem.find(".post-info-time").attr("title",timeSincePost(dmData.time));
+    dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
     var mentions = [];
-    htmlFormatMsg( dmData.text, dmItem.find(".post-text"), mentions);
+    dmItem.find('.post-text').html(htmlFormatMsg(dmData.text, mentions));
+
     return dmItem;
 }
 
 // convert message text to html, featuring @users and links formating.
-// todo: hashtags
-function htmlFormatMsg( msg, output, mentions ) {
-    var tmp;
-    var match = null;
-    var index;
-    var strUrlRegexp = "http[s]?://";
-    var strEmailRegexp = "\\S+@\\S+\\.\\S+";
-    var strSplitCounterR = "\\(\\d{1,2}\\/\\d{1,2}\\)$";
-    var reAll = new RegExp("(?:^|[ \\n\\t.,:\\/?!])(#|@|" + strUrlRegexp + "|" + strEmailRegexp + "|" + strSplitCounterR + ")");
-    var reHttp = new RegExp(strUrlRegexp);
-    var reEmail = new RegExp(strEmailRegexp);
-    var reSplitCounter = new RegExp(strSplitCounterR);
-    
-    msg = escapeHtmlEntities(msg);
+function htmlFormatMsg(msg, mentions) {
+    function htmlMention(str, pre) {
+        str = str.replace(new RegExp(['^', pre, '@'].join('')), '').toLowerCase();
 
-    while( msg != undefined && msg.length ) {
-        
-        match = reAll.exec(msg);
-        if( match ) {
-            index = (match[0] === match[1]) ? match.index : match.index + 1;
-            if( match[1] == "@" ) {
-                output.append(_formatText(msg.substr(0, index)));
-                tmp = msg.substr(index+1);
-                var username = _extractUsername(tmp);
-                if( username.length ) {
-                    if( mentions.indexOf(username) < 0 )
-                        mentions.push(username);
-                    var userLinkTemplate = $("#msg-user-link-template").clone(true);
-                    userLinkTemplate.removeAttr("id");
-                    userLinkTemplate.attr("href",$.MAL.userUrl(username));
-                    userLinkTemplate.text("@"+username);
-                    output.append(userLinkTemplate);
-                    msg = tmp.substr(String(username).length);
-                    continue;
-                }
-                output.append('@');
-                msg = tmp;
-                continue;
-            }
-    
-            if( reHttp.exec(match[1]) ) {
-                output.append(_formatText(msg.substr(0, index)));
-                tmp = msg.substring(index);
-                var space = tmp.search(/[ \n\t]/);
-                var url;
-                if( space != -1 ) url = tmp.substring(0,space); else url = tmp;
-                if( url.length ) {
-                    msg = tmp.substr(String(url).length);
-                    url = reverseHtmlEntities(url);
-                    var extLinkTemplate = $("#external-page-link-template").clone(true);
-                    extLinkTemplate.removeAttr("id");
+        mentions.push(str);  // FIXME feel the pain of the scope chain
 
-                    if ($.Options.getUseProxyOpt() !== 'disable' && !$.Options.getUseProxyForImgOnlyOpt()){
-                        //proxy alternatives may be added to options page...
-                        if ($.Options.getUseProxyOpt() === 'ssl-proxy-my-addr') {
-                            extLinkTemplate.attr('href', 'https://ssl-proxy.my-addr.org/myaddrproxy.php/' +
-                                                         url.substring(0, url.indexOf(':')) +
-                                                         url.substr(url.indexOf('/') + 1));
-                        } else if ($.Options.getUseProxyOpt() ==='anonymouse') {
-                            extLinkTemplate.attr('href', 'http://anonymouse.org/cgi-bin/anon-www.cgi/' + url);
-                        }
-                    } else {
-                        extLinkTemplate.attr("href",url);
-                    }
+        // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
+        // FIXME actually we should avoid it by dropping a template idea and construct html right here
+        html.push($('#msg-user-link-template')[0].outerHTML
+            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, ['<a href="', $.MAL.userUrl(str), '" '].join(''))  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
+            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1@', str, '$2'].join(''))  // $().closest('a.open-profile-modal').text('@'+username)
+        );
 
-                    extLinkTemplate.text(url);
-                    extLinkTemplate.attr("title",url);
-                    output.append(extLinkTemplate);
-                    continue;
-                }
-            }
-
-            if( reEmail.exec(match[1]) ) {
-                output.append(_formatText(msg.substr(0, index)));
-                tmp = msg.substring(index);
-                var space = tmp.search(/[ \n\t]/);
-                var email;
-                if( space != -1 ) email = tmp.substring(0,space); else email = tmp;
-                if( email.length ) {
-                    var extLinkTemplate = $("#external-page-link-template").clone(true);
-                    extLinkTemplate.removeAttr("id");
-                    extLinkTemplate.attr("href","mailto:" + email);
-                    extLinkTemplate.text(email);
-                    extLinkTemplate.attr("title",email);
-                    output.append(extLinkTemplate);
-                    msg = tmp.substr(String(email).length);
-                    continue;
-                }
-            }
-    
-            if( match[1] == "#" ) {
-                output.append(_formatText(msg.substr(0, index)));
-                tmp = msg.substr(index+1);
-                var hashtag = _extractHashtag(tmp);
-                if( hashtag.length ) {
-                    var hashtag_lc='';
-                    for( var i = 0; i < hashtag.length; i++ ) {
-                        var c = hashtag[i];
-                        hashtag_lc += (c >= 'A' && c <= 'Z') ? c.toLowerCase() : c;
-                    }
-                    var hashtagLinkTemplate = $("#hashtag-link-template").clone(true);
-                    hashtagLinkTemplate.removeAttr("id");
-                    hashtagLinkTemplate.attr("href",$.MAL.hashtagUrl(hashtag_lc));
-                    hashtagLinkTemplate.text("#"+hashtag);
-                    output.append(hashtagLinkTemplate);
-                    msg = tmp.substr(String(hashtag).length);
-                    continue;
-                }
-                output.append('#');
-                msg = tmp;
-                continue;
-            }
-
-            if (reSplitCounter.exec(match[1])) {
-                output.append(_formatText(msg.substr(0, index)));
-                tmp = msg.substring(index);
-                if( tmp.length ) {
-                    var splitCounter = $('<span class="splited-post-counter"></span>');
-                    splitCounter.text(tmp);
-                    output.append(splitCounter);
-                    msg = "";
-                    continue;
-                }
-            }
-        }
-
-        output.append(_formatText(msg));
-        msg = "";
+        return ['>', html.length - 1, '<'].join('');
     }
+
+    function htmlHashtag(str, pre) {
+        str = str.replace(new RegExp(['^', pre, '#'].join('')), '');
+
+        html.push($('#hashtag-link-template')[0].outerHTML
+            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, ['<a href="', $.MAL.hashtagUrl(str.toLowerCase()), '" '].join(''))  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
+            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1#', str, '$2'].join(''))  // $().closest('a.open-profile-modal').text('#'+hashtag)
+        );
+
+        return ['>', html.length - 1, '<'].join('');
+    }
+
+    function htmlHttp(str) {
+        html.push($('#external-page-link-template')[0].outerHTML
+            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+            .replace(/<a\s+/ig, ['<a href="', proxyURL(str), '" '].join(''))  // $().closest('a').attr('href', proxyURL(url))
+            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, ['$1', str, '$2'].join(''))  // $().closest('a').text(url)
+        );
+
+        return ['>', html.length - 1, '<'].join('');
+    }
+
+    function htmlEmail(str, pre) {
+        str = str.replace(new RegExp(['^', pre].join('')), '');
+
+        html.push($('#external-page-link-template')[0].outerHTML
+            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+            .replace(/<a\s+/ig, ['<a href="mailto:', str.toLowerCase(), '" '].join(''))  // $().closest('a').attr('href', 'mailto:'+url)
+            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1', str, '$2'].join(''))  // $().closest('a').text(url)
+        );
+
+        return ['>', html.length - 1, '<'].join('');
+    }
+
+    function htmlSplitCounter(str) {
+        html.push(['<span class="splited-post-counter">', str, '</span>'].join(''));
+
+        return ['>', html.length - 1, '<'].join('');
+    }
+
+    var html = [];
+
+    return _formatText(escapeHtmlEntities(msg)
+        .replace(/(^|[^\/]\B(?!\S*:\/\/\S*@))@\w+\b/g, htmlMention)
+        .replace(/(^|[^<\/]\B(?!\S*:\/\/\S*#))#[^#\\\/\.,:;\?\!\*\[\]\(\)\{\}\^\|%'"\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011>\s]+/g, htmlHashtag)  // unicode escaped stuff is '“”…—一。，：？！【】' for our chinese friends
+        .replace(/\bhttps?:\/\/\S[^>\s]+/ig, htmlHttp)
+        .replace(/([^<\/])\b(?!\S*:\/\/\S*@)\S+@\S+\.\S[^>\s]+/g, htmlEmail)
+        .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
+        .replace(/>(\d+)</g, function(candy, core) {return html[core]})
+    );
+}
+
+function proxyURL(url) {
+    var proxyOpt = $.Options.getUseProxyOpt();
+    if (proxyOpt !== 'disable' && !$.Options.getUseProxyForImgOnlyOpt()) {
+        // proxy alternatives may be added to options page
+        if (proxyOpt === 'ssl-proxy-my-addr') {
+            url = ['https://ssl-proxy.my-addr.org/myaddrproxy.php/',
+                url.substring(0, url.indexOf(':')), url.substr(url.indexOf('/') + 1)].join('');
+        } else if (proxyOpt === 'anonymouse')
+            url = ['http://anonymouse.org/cgi-bin/anon-www.cgi/', url].join('');
+    }
+
+    return url;
 }
 
 // internal function for htmlFormatMsg
-function _formatText(msg)
-{
-    // TODO: add options for emotions and linefeeds
-    //msg = $.emotions(msg);
-    if( $.Options.getLineFeedsOpt() == "enable" )
+    // TODO: add options for emotions; msg = $.emotions(msg);
+    // TODO: add at least basic markdown (optional) like *text* -> bold text and _text_ -> italic text
+function _formatText(msg) {
+    if ($.Options.getLineFeedsOpt() === 'enable')
         msg = msg.replace(/\n/g, '<br />');
+
     return msg;
-}
-
-function _extractUsername(s) {
-    var username = "";
-    for( var i = 0; i < s.length; i++ ) {
-        var c = s.charCodeAt(i);
-        if( (c >= 'a'.charCodeAt(0) && c <= 'z'.charCodeAt(0)) ||
-            (c >= 'A'.charCodeAt(0) && c <= 'Z'.charCodeAt(0)) ||
-            (c >= '0'.charCodeAt(0) && c <= '9'.charCodeAt(0)) ||
-            c == '_'.charCodeAt(0) ) {
-            username += s[i];
-        } else {
-            break;
-        }
-    }
-    return username.toLowerCase();
-}
-
-// internal function for htmlFormatMsg
-function _extractHashtag(s) {
-    var hashtag = "";
-    s = reverseHtmlEntities(s);
-    for( var i = 0; i < s.length; i++ ) {
-        if( " \n\t.,:/?!;'\"()[]{}*#".indexOf(s[i]) < 0 ) {
-            hashtag += s[i];
-        } else {
-            break;
-        }
-    }
-    return hashtag;
 }
 
 function escapeHtmlEntities(str) {

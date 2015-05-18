@@ -24,8 +24,11 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
             $.mobile.silentScroll(0);
         });
         // reply text counter both newmsg and dmchat
-        var $replyText = $( ".post-area-new textarea" );
-        $replyText.off('input keyup').on('keyup', replyTextInput, function() { replyTextUpdateRemaining(this); });
+        $('.post-area-new textarea')
+            .off('input keyup')
+            .on('keyup', replyTextInput)
+            .on('keyup', function() { replyTextUpdateRemaining(this); })
+        ;
 
         handlersInstalled = true;
     }

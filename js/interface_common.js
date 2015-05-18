@@ -636,17 +636,7 @@ var postExpandFunction = function( e, postLi )
                 /*is there any link in the post?*/
                 for (var i=0; i<link.length; i++){
                     if (/((\.jpe{0,1}g)|(\.gif)|(\.png))$/i.test(link[i].href)){
-                        var url = link[i].href;
-                        if ($.Options.getUseProxyOpt() !== 'disable' && $.Options.getUseProxyForImgOnlyOpt()){
-                            //proxy alternatives may be added to options page...
-                            if ($.Options.getUseProxyOpt() === 'ssl-proxy-my-addr') {
-                                url = 'https://ssl-proxy.my-addr.org/myaddrproxy.php/' +
-                                     url.substring(0, url.indexOf(':')) +
-                                     url.substr(url.indexOf('/') + 1);
-                            } else if ($.Options.getUseProxyOpt() ==='anonymouse') {
-                                url = 'http://anonymouse.org/cgi-bin/anon-www.cgi/' + url;
-                            }
-                        }
+                        var url = proxyURL(link[i].href);
                         $(previewContainer).append($("<img src='" + url + "' class='image-preview' />"));
                     }
                 }

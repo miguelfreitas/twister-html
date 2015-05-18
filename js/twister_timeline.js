@@ -160,7 +160,7 @@ function processReceivedPosts(req, posts)
             i--;
         }
     }
-    showPosts(req, posts);
+    updateTimeline(req, posts);
     req.doneReportProcessing(posts.length);
 
     //if the count of recieved posts less or equals to requested then...
@@ -182,50 +182,58 @@ function processReceivedPosts(req, posts)
     }
 }
 
-function showPosts(req, posts)
-{
-    //console.log('showPosts:');
-    //console.log(req);
+function updateTimeline(req, posts) {
+    attachPostsToStream($.MAL.getStreamPostsParent(), posts, req.getspam);
+    for (var i = 0; i < posts.length; i++) {
+        req.reportProcessedPost(posts[i]['userpost']['n'], posts[i]['userpost']['k'], true);
+    }
+}
+
+function attachPostsToStream(stream, posts, isPromoted) {
+    //console.log('attachPostsToStream:');
     //console.log(posts);
-    var streamItemsParent = $.MAL.getStreamPostsParent();
+    function byTimeInDescendingOrder(a, b) {
+        return (a.time > b.time) ? -1 : 1;
+    }
 
-    for( var i = 0; i < posts.length; i++ ) {
-        var post = posts[i];
-        //console.log(post);
-        var streamPost = postToElem(post, "original", req.getspam);
-        var timePost = post["userpost"]["time"];
-        streamPost.attr("data-time",timePost);
+    var streamItems = stream.children();
+    var streamPosts = [];
 
-        // post will only be shown if appended to the stream list
-        var streamPostAppended = false;
+    for (var i = 0; i < streamItems.length; i++) {
+        var streamItem = streamItems.eq(i);
+        streamPosts.push({item: streamItem, time: parseInt(streamItem.attr('data-time'))});
+    }
+    //streamPosts.sort(byTimeInDescendingOrder); // currently here is no reason to sort it, it should be ok
 
-        // insert the post in timeline ordered by (you guessed) time
-        // FIXME: lame! searching everything everytime. please optimize!
-        var streamItems = streamItemsParent.children();
-        if( streamItems.length == 0) {
-            // timeline is empty
-            streamItemsParent.append( streamPost );
-            streamPostAppended = true;
-        } else {
-            var j = 0;
-            for( j = 0; j < streamItems.length; j++) {
-                var streamItem = streamItems.eq(j);
-                var timeItem = streamItem.attr("data-time");
-                if( timeItem == undefined ||
-                    timePost > parseInt(timeItem) ) {
+    for (var i = 0; i < posts.length; i++) {
+        //console.log(posts[i]);
+        var isAttached = false;
+        var intrantPost = {item: postToElem(posts[i], 'original', isPromoted), time: posts[i].userpost.time};
+        intrantPost.item.attr('data-time', intrantPost.time);
+
+        if (streamPosts.length) {
+            // check to avoid twist duplication and insert the post in timeline ordered by (you guessed) time
+            for (var j = 0; j < streamPosts.length; j++) {
+                if (intrantPost.time === streamPosts[j].time &&
+                    intrantPost.item[0].innerHTML === streamPosts[j].item[0].innerHTML) {
+                        isAttached = true;
+                        console.log('appending of duplicate twist prevented');
+                        break;
+                } else if (intrantPost.time > streamPosts[j].time) {
                     // this post in stream is older, so post must be inserted above
-                    streamItem.before(streamPost);
-                    streamPostAppended = true;
+                    intrantPost.item.insertBefore(streamPosts[j].item).show();
+                    streamPosts.push(intrantPost);
+                    streamPosts.sort(byTimeInDescendingOrder);
+                    isAttached = true;
                     break;
                 }
             }
         }
-        if (!streamPostAppended)
-            streamItemsParent.append( streamPost );
-
-        streamPostAppended = true;
-        streamPost.show();
-        req.reportProcessedPost(post["userpost"]["n"],post["userpost"]["k"], streamPostAppended);
+        if (!isAttached) {
+            intrantPost.item.appendTo(stream).show();
+            streamPosts.push(intrantPost);
+            streamPosts.sort(byTimeInDescendingOrder);
+        }
     }
 }
 
@@ -241,7 +249,7 @@ function requestTimelineUpdate(mode, count, timelineUsers, getspam)
         var req = new requestObj(timelineUsers, mode, count, getspam);
         if (mode === 'pending') {
             req.mode = 'latest';
-            showPosts(req, _newPostsPending);
+            updateTimeline(req, _newPostsPending);
             _newPostsPending = [];
             $.MAL.reportNewPosts(_newPostsPending.length);
             $.MAL.postboardLoaded();
@@ -323,7 +331,7 @@ function processNewPostsConfirmation(expected, posts)
     }
     if ( sendedPostsPending.length > 0 ) {
         var req = new requestObj([defaultScreenName],'latest',sendedPostsPending.length,promotedPostsOnly);
-        showPosts(req, sendedPostsPending);
+        updateTimeline(req, sendedPostsPending);
     }
 
     if( posts.length < expected ) {
