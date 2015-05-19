@@ -121,7 +121,7 @@ function newDirectMsg(msg,  dm_screenname) {
     if( lastPostId != undefined ) {
         var paramsOrig = [defaultScreenName, lastPostId + 1, dm_screenname, msg]
         var paramsOpt = paramsOrig
-        var copySelf = ($.Options.getDMCopySelfOpt() === 'enable')
+        var copySelf = ($.Options.dmCopySelf.val === 'enable')
         if( copySelf && dm_screenname[0] !== '*' ) {
             paramsOpt = paramsOrig.concat(true)
         }

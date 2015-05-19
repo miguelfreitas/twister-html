@@ -162,12 +162,12 @@ function requestPost(containerToAppend,username,resource,cbFunc,cbArgs){
             console.log(postFromJson);
 
             appendPostToContainer(postFromJson,args.containerToAppend);
-                
+
             if(args.cbFunc!=undefined) args.cbFunc(args.cbArgs);
-               
-            } 
-        }, 
-        {containerToAppend:containerToAppend,cbFunc:cbFunc,cbArgs:cbArgs} 
+
+            }
+        },
+        {containerToAppend:containerToAppend,cbFunc:cbFunc,cbArgs:cbArgs}
     );
 
 }
@@ -185,7 +185,7 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
     }
 
     profilePostsLoading = true;
-    
+
     if( useGetposts ) {
         req = {username: username}
         if( max_id != -1 ) {
@@ -290,7 +290,7 @@ function updateProfileData(profileModalContent, username) {
     getFollowers( username, profileModalContent.find(".followers-count") );
     getNumFollowing( username, profileModalContent.find(".following-count") );
     getWhoFollows ( username, profileModalContent.find(".who-follow") );
-    
+
     profileModalContent.find(".following-count").parent().attr("href", $.MAL.followingUrl(username));
 
     var postsView = profileModalContent.find(".postboard-posts");
@@ -333,7 +333,7 @@ function requestHashtag(postboard,hashtag,resource, timeoutArgs) {
     dhtget( hashtag, resource, "m",
            function(args, data) {
                processHashtag(args.postboard, args.hashtag, data);
-           }, {postboard:postboard,hashtag:hashtag}, 
+           }, {postboard:postboard,hashtag:hashtag},
            timeoutArgs);
 }
 
@@ -345,14 +345,14 @@ function processHashtag(postboard, hashtag, data) {
             if( !(key in _hashtagProcessedMap) ) {
                 _hashtagProcessedMap[key] = true;
 
-                if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForSearchingOpt()) {
+                if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForSearching.val) {
                     if (typeof(userpost['rt']) !== 'undefined') {
                         var msg = userpost['rt']['msg'];
                     } else {
                         var msg = userpost['msg'];
                     }
                     langFilterData = filterLang(msg);
-                    if ($.Options.getFilterLangSimulateOpt()) {
+                    if ($.Options.filterLangSimulate.val) {
                         data[i]['langFilter'] = langFilterData;
                     } else {
                         if (!langFilterData['pass'])

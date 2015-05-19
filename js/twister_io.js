@@ -208,7 +208,7 @@ function getProfileResource( username, resource, item, cbFunc, cbArg ){
 function getFullname( username, item ){
     // Set the username first in case the profile has no fullname
     item.text(username);
-    getProfileResource( username, "fullname", undefined, 
+    getProfileResource( username, "fullname", undefined,
                        function(args, value) {
                            if( value ) {
                                value.replace(/^\s+|\s+$/g, '');
@@ -217,7 +217,7 @@ function getFullname( username, item ){
                            }
                        }, {item: item} );
     if (typeof(twisterFollowingO) !== 'undefined' &&
-        ($.Options.getIsFollowingMeOpt() === 'everywhere' || item.hasClass('profile-name'))) {
+        ($.Options.isFollowingMe.val === 'everywhere' || item.hasClass('profile-name'))) {
         if (twisterFollowingO.knownFollowers.indexOf(username) > -1) {
             item.addClass('isFollowing');
             item.attr("title", polyglot.t("follows you"));
@@ -332,10 +332,9 @@ function _putResourceIntoStorage(locator, data) {
 
 // get avatar and set it in img.attr("src")
 function getAvatar( username, img ){
-    var theme = $.Options.getTheme();
-    if( username == "nobody" ) {
-        if(theme == 'nin') {img.attr('src', "theme_nin/img/tornado_avatar.png");}
-        else {img.attr('src', "img/tornado_avatar.png");}
+    if (username === 'nobody') {
+        img.attr('src', ($.Options.theme.val === 'nin') ?
+            'theme_nin/img/tornado_avatar.png' : 'img/tornado_avatar.png');
         return;
     }
 

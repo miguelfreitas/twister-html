@@ -24,13 +24,13 @@ var MAL = function()
             $.mobile.hidePageLoadingMsg();
             var curPage = $.mobile.activePage.attr("id");
             $( '#'+curPage+' .content ul.posts').listview('refresh');
-            
+
             installPostboardClick();
         } else {
             $(".postboard-loading").hide();
         }
     }
-    
+
     this.dmThreadListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
             $.mobile.hidePageLoadingMsg();
@@ -103,8 +103,8 @@ var MAL = function()
                 newTweetsBarMenu.text(String(newPosts));
                 newTweetsBarMenu.addClass("show");
 
-                if ($.Options.getShowDesktopNotifPostsOpt() === 'enable') {
-                    this.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_posts', newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', $.Options.getShowDesktopNotifPostsTimerOpt(), (function() {
+                if ($.Options.showDesktopNotifPosts.val === 'enable') {
+                    this.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_posts', newPosts)+' '+polyglot.t('in postboard')+'.', false,'twister_notification_new_posts', $.Options.showDesktopNotifPostsTimer.val, (function() {
                             requestTimelineUpdate('pending',this,followingUsers,promotedPostsOnly);
                         }).bind(newPosts), false)
                 }
@@ -117,7 +117,7 @@ var MAL = function()
             }
         }
     }
-    
+
     this.getStreamPostsParent = function() {
         if( $.hasOwnProperty("mobile") ) {
             return $( '.timeline ul');
@@ -183,7 +183,7 @@ var MAL = function()
             return "#hashtag?hashtag=" + h;
         }
     }
-    
+
     this.dmchatUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#dmchat?user=" + username;
@@ -199,7 +199,7 @@ var MAL = function()
             return "#following?user=" + username;
         }
     }
-    
+
     this.followUrl = function(username) {
         if( $.hasOwnProperty("mobile") ) {
             return "#following?follow=" + username;
@@ -232,7 +232,7 @@ var MAL = function()
         }
     }
 
-    
+
     this.updateNewMentionsUI = function(newMentions) {
         if( $.hasOwnProperty("mobile") ) {
             var $mentionsCounterBtnText = $(".mentions-count .ui-btn-text");
@@ -398,20 +398,22 @@ var MAL = function()
             window.location.href = "home.html";
         }
     }
-    
+
     this.soundNotifyMentions = function() {
-         if( $.hasOwnProperty("mobile") ) {
-         } else {
-             $.Options.mensNotif();
-         }
-    }
+        if ($.mobile) {
+        } else {
+            if ($.Options.sndMention.val !== 'false')
+                playSound('player', $.Options.sndMention.val);
+        }
+    };
 
     this.soundNotifyDM = function() {
-         if( $.hasOwnProperty("mobile") ) {
-         } else {
-             $.Options.DMsNotif();
-         }
-    }
+        if ($.mobile) {
+        } else {
+            if ($.Options.sndDM.val !== 'false')
+                playSound('playerSec', $.Options.sndDM.val);
+        }
+    };
 
     this.showDesktopNotif = function(notifyTitle, notifyBody, notifyIcon, notifyTag, notifyTimer, actionOnClick, actionOnPermDenied) {
         function doNotification() {
@@ -451,7 +453,7 @@ var MAL = function()
         } else {
             doNotification();
         }
-    }
+    };
 
     this.reqRepAfterCB = function(postLi, postsFromJson) {
         if ($.hasOwnProperty("mobile")) {
@@ -488,18 +490,38 @@ var MAL = function()
 
 jQuery.MAL = new MAL;
 
+function playSound(player, sound) {
+    if ($.mobile) {
+    } else {
+        var player = $('#'+player);
+        if (player.length) {
+            player[0].pause();
+            //player.empty();
+
+            if (player[0].canPlayType('audio/mpeg;'))
+                player.attr({type: 'audio/mpeg', src: 'sound/' + sound + '.mp3'});
+            else
+                player.attr({type: 'audio/ogg', src: 'sound/' + sound + '.ogg'});
+
+            player[0].volume = $.Options.playerVol.val;
+            player[0].play();
+        } else
+            console.warn('cannot find player to play sound, selector: #'+player);
+    }
+}
+
 function filterLang(string) {
-    var langFilterMode = $.Options.getFilterLangOpt();
+    var langFilterMode = $.Options.filterLang.val;
 
     if (langFilterMode !== 'disable') {
         var langFilterSubj = '';
         var langFilterProb = [];
         var langFilterPass = true;
         var langFilterReason = '';
-        var langFilterList = $.Options.getFilterLangListOpt();
+        var langFilterList = $.Options.filterLangList.val;
 
         if (langFilterList.length > 0) {
-            var langFilterAccuracy = $.Options.getFilterLangAccuracyOpt();
+            var langFilterAccuracy = $.Options.filterLangAccuracy.val;
             langFilterPass = (langFilterMode === 'whitelist') ? false : true;
             langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t(langFilterMode), 'that': polyglot.t('language of this')});
 

@@ -208,8 +208,8 @@ function updateHashtagModal(postboard,hashtag,timeoutArgs) {
     requestHashtag(postboard,hashtag,resource,timeoutArgs);
 
     if( _hashtagPendingPostsUpdated ) {
-        if (resource != 'mention' && $.Options.getShowDesktopNotifPostsModalOpt() === 'enable') {
-            $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t("new_posts", _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', $.Options.getShowDesktopNotifPostsModalTimerOpt(), function() {
+        if (resource != 'mention' && $.Options.showDesktopNotifPostsModal.val === 'enable') {
+            $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t("new_posts", _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', $.Options.showDesktopNotifPostsModalTimer.val, function() {
                     $(".postboard-news").hide();
                     displayHashtagPending($(".hashtag-modal .postboard-posts"));
                 }, false)
@@ -231,10 +231,9 @@ function openMentionsModal(e)
         e.preventDefault();
     }
 
-    if(!defaultScreenName)
-    {
-	alert(polyglot.t("No one can mention you because you are not logged in."));
-	return;
+    if (!defaultScreenName) {
+        alert(polyglot.t("No one can mention you because you are not logged in."));
+        return;
     }
 
     var username;
@@ -370,7 +369,7 @@ function openWhoToFollowModal() {
 function newConversationModal(username,resource) {
 
     var hashtagModalContent = $( "#hashtag-modal-template" ).children().clone(true);
-    
+
     requestPost(hashtagModalContent.find(".postboard-posts"),username,resource,
         function(args){
             postLi=args.hashtagModalContent.find(".postboard-posts").children().first();
@@ -406,7 +405,7 @@ function openConversationModal(username,resource)
 {
 
     var conversationModalClass = "conversation-modal";
-    openModal( conversationModalClass );    
+    openModal( conversationModalClass );
 
     var conversationModalContent = newConversationModal(username,resource);
     conversationModalContent.appendTo("." + conversationModalClass + " .modal-content");
@@ -419,21 +418,21 @@ function openConversationModal(username,resource)
 function watchHashChange(e)
 {
 
-    if(e!=null){ 
+    if(e!=null){
 
         var prevurlsplit = e.oldURL.split('#');
-        var prevhashstring=prevurlsplit[1];  
+        var prevhashstring=prevurlsplit[1];
 
         var notFirstModalView=(prevhashstring!=undefined && prevhashstring.length>0 );
         var notNavigatedBackToFirstModalView=(window.history.state==null || ( window.history.state!=null && window.history.state.showCloseButton!=false ) )
-   
+
         if(notFirstModalView && notNavigatedBackToFirstModalView ){
             $('.modal-back').css('display','inline');
         } else {
             window.history.pushState({showCloseButton:false},null,null);
             $('.modal-back').css('display','none');
         }
-        
+
     }
 
     loadModalFromHash();
@@ -461,7 +460,7 @@ function loadModalFromHash(){
         }else if (hashdata[1] == 'following') {
             openFollowingModal(hashdata[2]);
         }else if (hashdata[1] == 'conversation') {
-            splithashdata2=hashdata[2].split(':')    
+            splithashdata2=hashdata[2].split(':')
             //console.log('username='+splithashdata2[0]+'   resource='+splithashdata2[1]);
             openConversationModal(splithashdata2[0],splithashdata2[1]);
         }
@@ -479,11 +478,11 @@ function initHashWatching()
 {
     // Register custom protocol handler
     already_registered = _getResourceFromStorage("twister_protocol_registered");
-    
+
     if (window.navigator && window.navigator.registerProtocolHandler && !already_registered){
         var local_twister_url = window.location.protocol + '//' + window.location.host + '/home.html#%s';
         window.navigator.registerProtocolHandler('web+twister', local_twister_url, 'Twister');
-	_putResourceIntoStorage("twister_protocol_registered", true);
+        _putResourceIntoStorage("twister_protocol_registered", true);
     }
 
     // Register hash spy and launch it once
@@ -500,9 +499,9 @@ var reTwistPopup = function( e )
 {
     if(!defaultScreenName)
     {
-	e.stopPropagation();
-	alert(polyglot.t("You have to log in to retransmit messages."));
-	return;
+        e.stopPropagation();
+        alert(polyglot.t('You have to log in to retransmit messages.'));
+        return;
     }
 
     var reTwistClass = "reTwist";
@@ -628,7 +627,7 @@ var postExpandFunction = function( e, postLi )
 
         $postExpandedContent.slideDown( "fast" );
 
-        if ($.Options.getShowPreviewOpt() == 'enable'){
+        if ($.Options.showPreview.val === 'enable') {
             var previewContainer=$postExpandedContent.find(".preview-container")[0];
             /* was the preview added before... */
             if ($(previewContainer).children().length == 0) {
@@ -676,9 +675,9 @@ var postReplyClick = function( e )
 {
     if(!defaultScreenName)
     {
-	e.stopPropagation();
-	alert(polyglot.t("You have to log in to post replies."));
-	return;
+        e.stopPropagation();
+        alert(polyglot.t('You have to log in to post replies.'));
+        return;
     }
     var post = $(this).closest(".post");
     if( !post.hasClass( "original" ) ) {
@@ -703,14 +702,13 @@ var composeNewPost = function( e, postAreaNew )
         //se o usuário clicar fora é pra fechar
         postAreaNew.clickoutside( unfocusThis );
 
-        if ($.Options.getSplitPostsOpt() === "enable")
+        if ($.Options.splitPosts.val === 'enable')
             usePostSpliting = true;
-        else if ($.Options.getSplitPostsOpt() === "only-new") {
+        else if ($.Options.splitPosts.val === 'only-new') {
             var $postOrig = postAreaNew.closest(".post-data");
 
-            if (!$postOrig.length) {
+            if (!$postOrig.length)
                 $postOrig = postAreaNew.closest(".modal-content").find(".post-data");
-            }
 
             if ($postOrig.length)
                 usePostSpliting = false;
@@ -749,7 +747,7 @@ function replyTextInput(e) {
     var $this = $( this );
     var tweetForm = $this.parents("form");
     if( tweetForm != undefined ) {
-        if ($.Options.getUnicodeConversionOpt() !== "disable")
+        if ($.Options.unicodeConversion.val !== 'disable')
             $this.val(convert2Unicodes($this.val(), $this));
 
         if (usePostSpliting && !$this.parents('.directMessages').length) {
@@ -933,14 +931,14 @@ function replyTextKeySend(e) {
         var tweetAction = tweetForm.find(".post-submit");
         if( !tweetAction.length ) tweetAction = tweetForm.find(".dm-submit");
 
-        if( $.Options.keyEnterToSend() && $('.dropdown-menu').css('display') == 'none'){
+        if ($.Options.keysSend.val === 'enter' && $('.dropdown-menu').css('display') == 'none') {
             if (e.keyCode === 13 && (!e.metaKey && !e.ctrlKey)) {
                 $this.val($this.val().trim());
                 if( !tweetAction.hasClass("disabled")) {
                     tweetAction.click();
                 }
             }
-        } else if( !$.Options.keyEnterToSend() ){
+        } else if ($.Options.keysSend.val === 'ctrlenter') {
             if (e.keyCode === 13 && (e.metaKey || e.ctrlKey)) {
                 $this.val($this.val().trim());
                 if( !tweetAction.hasClass("disabled") ) {
@@ -1295,37 +1293,29 @@ function convert2Unicodes(s, ta)
         ta.data("disabledUnicodeRules", []);
     var ranges = getRangesForUnicodeConversion(s);
     var list;
-    if ($.Options.getUnicodeConversionOpt() === "enable" || $.Options.getConvertPunctuationsOpt())
-    {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertPunctuations.val) {
         list = unicodeConversionList.punctuation;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
-    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertEmotionsOpt())
-    {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertEmotions.val) {
         list = unicodeConversionList.emotions;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
-    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertSignsOpt())
-    {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertSigns.val) {
         list = unicodeConversionList.signs;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
-    if ($.Options.getUnicodeConversionOpt() === "enable"|| $.Options.getConvertFractionsOpt())
-    {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertFractions.val) {
         list = unicodeConversionList.fractions;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
 
-    if (ta.data("unicodeConversionStack").length > 0)
-    {
+    if (ta.data("unicodeConversionStack").length > 0) {
         var ub = ta.closest(".post-area-new").find(".undo-unicode");
         ub.text(polyglot.t("undo") + ": " + ta.data("unicodeConversionStack")[0].u);
         $.MAL.enableButton(ub);
-    }
-    else
-    {
+    } else
         $.MAL.disableButton(ta.closest(".post-area-new").find(".undo-unicode"));
-    }
 
     return s;
 }
@@ -1446,7 +1436,7 @@ var postSubmit = function(e, oldLastPostId)
         closeModal($this);
     } else if ($this.parents('.prompt-wrapper').length) {
         closePrompt();
-    }    
+    }
 
     if($this.closest('.post-area,.post-reply-content')){
         $('.post-area-new').removeClass('open').find('textarea').blur();
@@ -1471,7 +1461,7 @@ var retweetSubmit = function(e)
 
 function changeStyle() {
     var style, profile, menu;
-    var theme = $.Options.getTheme();
+    var theme = $.Options.theme.val;
 
     if(theme == 'nin')
     {
@@ -1582,7 +1572,7 @@ function initInterfaceCommon() {
     $( ".modal-propagate").click( retweetSubmit );
     $( ".expanded-content .show-more").bind('click', openConversationClick);
 
-    if ($.Options.getUnicodeConversionOpt() === "disable")
+    if ($.Options.unicodeConversion.val === 'disable')
         $( ".undo-unicode" ).click( undoLastUnicode ).css("display", "none");
     else
         $( ".undo-unicode" ).click( undoLastUnicode );
@@ -1601,7 +1591,7 @@ function initInterfaceCommon() {
     replaceDashboards();
     $( window ).resize(replaceDashboards);
 
-    if ($.Options.getWhoToFollowOpt() === 'enable')
+    if ($.Options.WhoToFollow.val === 'enable')
         initWhoToFollow();
     else
         killInterfaceModule('who-to-follow');
