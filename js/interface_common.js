@@ -627,7 +627,7 @@ var postExpandFunction = function( e, postLi )
 
         $postExpandedContent.slideDown( "fast" );
 
-        if ($.Options.showPreview.val === 'enable') {
+        if ($.Options.displayPreview.val === 'enable') {
             var previewContainer=$postExpandedContent.find(".preview-container")[0];
             /* was the preview added before... */
             if ($(previewContainer).children().length == 0) {
