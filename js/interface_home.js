@@ -6,8 +6,7 @@
 //***********************************************
 //******************* DECLARATIONS **************
 //***********************************************
-var InterfaceFunctions = function()
-{
+var InterfaceFunctions = function() {
     //faço os binds no init
     this.init = function()
     {
@@ -115,18 +114,17 @@ var InterfaceFunctions = function()
                     });
                 });
         }
-
-        if ($.Options.getTopTrendsOpt() === 'enable')
+        if ($.Options.TopTrends.val === 'enable')
             initTopTrends();
         else
             killInterfaceModule('toptrends');
 
-        if ($.Options.getTwistdayReminderOpt() === 'enable')
+        if ($.Options.TwistdayReminder.val === 'enable')
             initTwistdayReminder();
         else
             killInterfaceModule('twistday-reminder');
     }
-};
+}
 
 function initTopTrends() {
     var $tt = initInterfaceModule('toptrends');
@@ -148,9 +146,9 @@ function updateTrendingHashtags() {
             function(args, ret) {
                 //console.log('hashtags trends: '+ret);
                 for( var i = 0; i < ret.length; i++ ) {
-                    if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForTopTrendsOpt())
+                    if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForTopTrends.val)
                         var langFilterData = filterLang(ret[i]);
-                    if (typeof(langFilterData) === 'undefined' || langFilterData['pass'] || $.Options.getFilterLangSimulateOpt()) {
+                    if (typeof(langFilterData) === 'undefined' || langFilterData['pass'] || $.Options.filterLangSimulate.val) {
                         var $li = $('<li>');
                         var hashtagLinkTemplate = $('#hashtag-link-template').clone(true);
 
@@ -159,7 +157,7 @@ function updateTrendingHashtags() {
                         hashtagLinkTemplate.text('#'+ret[i]);
 
                         $li.append(hashtagLinkTemplate);
-                        if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangSimulateOpt()) {
+                        if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangSimulate.val) {
                             if (typeof(langFilterData) !== 'undefined') {
                                 $li.append(' <span class="langFilterSimData"><em>'+((langFilterData['pass']) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>: '+langFilterData['prob'][0].toString()+'</span>');
                             } else {
@@ -180,10 +178,10 @@ function updateTrendingHashtags() {
                 console.log('Error with gettrendinghashtags. Older twister daemon?');
             }, {}
         );
-        if ($list.children().length && $.Options.getTopTrendsAutoUpdateOpt() === 'enable' && $.Options.getTopTrendsAutoUpdateTimerOpt() > 0)
-            setTimeout(updateTrendingHashtags, $.Options.getTopTrendsAutoUpdateTimerOpt()*1000);
+        if ($list.children().length && $.Options.TopTrendsAutoUpdate.val === 'enable' && $.Options.TopTrendsAutoUpdateTimer.val > 0)
+            setTimeout(updateTrendingHashtags, $.Options.TopTrendsAutoUpdateTimer.val * 1000);
     }
-};
+}
 
 function initTwistdayReminder() {
     var $module = initInterfaceModule('twistday-reminder');
@@ -235,7 +233,7 @@ function refreshTwistdayReminder() {
                             list.find('[data-screen-name='+lucky+']').closest('li').remove();
                         }
 
-                        var showUpcomingTimer = ($.Options.getTwistdayReminderShowUpcomingOpt() === 'enable') ? $.Options.getTwistdayReminderShowUpcomingTimerOpt() *3600 : 0;
+                        var showUpcomingTimer = ($.Options.TwistdayReminderShowUpcoming.val === 'enable') ? $.Options.TwistdayReminderShowUpcomingTimer.val * 3600 : 0;
                         var listCurrent = $module.find('.current .list');
                         var listUpcoming = $module.find('.upcoming .list');
                         var d = new Date();
@@ -283,8 +281,8 @@ function refreshTwistdayReminder() {
                     function(arg, ret) { console.log('ajax error:' + ret); }, null);
             }
         }
-        if ($.Options.getTwistdayReminderAutoUpdateOpt() === 'enable' && $.Options.getTwistdayReminderAutoUpdateTimerOpt() > 0)
-            setTimeout(refreshTwistdayReminder, $.Options.getTwistdayReminderAutoUpdateTimerOpt()*1000);
+        if ($.Options.TwistdayReminderAutoUpdate.val === 'enable' && $.Options.TwistdayReminderAutoUpdateTimer.val > 0)
+            setTimeout(refreshTwistdayReminder, $.Options.TwistdayReminderAutoUpdateTimer.val * 1000);
     }
 }
 

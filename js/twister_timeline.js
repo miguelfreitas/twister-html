@@ -365,9 +365,9 @@ function willBeHidden(post){
         if (post['userpost']['rt']['n'] === defaultScreenName)
             return false;
 
-        if ($.Options.getHideCloseRTsOpt() != 'disable' &&
+        if ($.Options.hideCloseRTs.val !== 'disable' &&
             followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
-            parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.getHideCloseRTsHourOpt() * 3600)
+            parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.hideCloseRTsHour.val * 3600)
         {
             return true;
         }
@@ -376,12 +376,11 @@ function willBeHidden(post){
     } else {
         var msg = post['userpost']['msg'];
 
-        if ($.Options.getHideRepliesOpt() !== 'disable' &&
-            /^\@/.test(msg) &&
+        if ($.Options.hideReplies.val !== 'disable' && /^\@/.test(msg) &&
             !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|\\t|$)').test(msg)))
         {
-            if ($.Options.getHideRepliesOpt() === 'only-me' ||
-                ($.Options.getHideRepliesOpt() === 'following' &&
+            if ($.Options.hideReplies.val === 'only-me' ||
+                ($.Options.hideReplies.val === 'following' &&
                  followingUsers.indexOf(msg.substring(1, msg.search(/ |,|;|\.|:|\/|\?|\!|\\|'|"|\n|\t|$/))) === -1 ))
             {
                 return true;
@@ -389,9 +388,9 @@ function willBeHidden(post){
         }
     }
 
-    if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangForPostboardOpt()) {
+    if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForPostboard.val) {
         post['langFilter'] = filterLang(msg);
-        if (!post['langFilter']['pass'] && !$.Options.getFilterLangSimulateOpt()) {
+        if (!post['langFilter']['pass'] && !$.Options.filterLangSimulate.val) {
             // TODO maybe we need a counter of posts blocked by language filter and even caching of them and button to show?
             //console.log('post by @'+post['userpost']['n']+' was hidden because it didn\'t passed by language filter:');
             return true;

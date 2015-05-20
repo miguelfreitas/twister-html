@@ -122,7 +122,7 @@ function postToElem( post, kind, promoted ) {
     if (typeof(promoted) !== 'undefined' && promoted) {
         elem.find('.post-propagate').remove();
     } else {
-        if ($.Options.getFilterLangOpt() !== 'disable' && $.Options.getFilterLangSimulateOpt()) {
+        if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangSimulate.val) {
             // FIXME it's must be stuff from template actually
             if (typeof(post['langFilter']) !== 'undefined') {
                 if (typeof(post['langFilter']['prob'][0]) !== 'undefined')
@@ -253,8 +253,8 @@ function htmlFormatMsg(msg, mentions) {
 }
 
 function proxyURL(url) {
-    var proxyOpt = $.Options.getUseProxyOpt();
-    if (proxyOpt !== 'disable' && !$.Options.getUseProxyForImgOnlyOpt()) {
+    var proxyOpt = $.Options.useProxy.val;
+    if (proxyOpt !== 'disable' && !$.Options.useProxyForImgOnly.val) {
         // proxy alternatives may be added to options page
         if (proxyOpt === 'ssl-proxy-my-addr') {
             url = ['https://ssl-proxy.my-addr.org/myaddrproxy.php/',
@@ -270,7 +270,7 @@ function proxyURL(url) {
     // TODO: add options for emotions; msg = $.emotions(msg);
     // TODO: add at least basic markdown (optional) like *text* -> bold text and _text_ -> italic text
 function _formatText(msg) {
-    if ($.Options.getLineFeedsOpt() === 'enable')
+    if ($.Options.displayLineFeeds.val === 'enable')
         msg = msg.replace(/\n/g, '<br />');
 
     return msg;

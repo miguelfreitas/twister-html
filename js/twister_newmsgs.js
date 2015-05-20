@@ -102,8 +102,8 @@ function requestMentionsCount() {
         if ( _newMentions ) {
             $.MAL.soundNotifyMentions();
 
-            if ($.Options.getShowDesktopNotifMentionsOpt() === 'enable') {
-                $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_mentions', _newMentions)+'.', false,'twister_notification_new_mentions', $.Options.getShowDesktopNotifMentionsTimerOpt(), function(){$.MAL.showMentions(defaultScreenName)}, false)
+            if ($.Options.showDesktopNotifMentions.val === 'enable') {
+                $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_mentions', _newMentions)+'.', false,'twister_notification_new_mentions', $.Options.showDesktopNotifMentionsTimer.val, function(){$.MAL.showMentions(defaultScreenName)}, false)
             }
         }
     }
@@ -117,8 +117,8 @@ function requestMentionsCount() {
         if ( newDMs ) {
             $.MAL.soundNotifyDM();
 
-            if ($.Options.getShowDesktopNotifDMsOpt() === 'enable') {
-                $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_direct_messages', newDMs)+'.', false, 'twister_notification_new_DMs', $.Options.getShowDesktopNotifDMsTimerOpt(), function(){$.MAL.showDMchat()}, false)
+            if ($.Options.showDesktopNotifDMs.val === 'enable') {
+                $.MAL.showDesktopNotif(false, polyglot.t('You got')+' '+polyglot.t('new_direct_messages', newDMs)+'.', false, 'twister_notification_new_DMs', $.Options.showDesktopNotifDMsTimer.val, function(){$.MAL.showDMchat()}, false)
             }
         }
     }
