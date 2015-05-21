@@ -1293,19 +1293,19 @@ function convert2Unicodes(s, ta)
         ta.data("disabledUnicodeRules", []);
     var ranges = getRangesForUnicodeConversion(s);
     var list;
-    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertPunctuations.val) {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertPunctuationsOpt.val) {
         list = unicodeConversionList.punctuation;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
-    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertEmotions.val) {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertEmotionsOpt.val) {
         list = unicodeConversionList.emotions;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
-    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertSigns.val) {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertSignsOpt.val) {
         list = unicodeConversionList.signs;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
-    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertFractions.val) {
+    if ($.Options.unicodeConversion.val === 'enable' || $.Options.convertFractionsOpt.val) {
         list = unicodeConversionList.fractions;
         s = getUnicodeReplacement(s, list, ranges, ta);
     }
