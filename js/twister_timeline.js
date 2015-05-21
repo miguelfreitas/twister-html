@@ -361,13 +361,13 @@ function willBeHidden(post){
         return false;
 
     if (typeof(post['userpost']['rt']) !== 'undefined') {
-        // hope it is not too egocentric to overcome HideCloseRTsOpt this way
+        // hope it is not too egocentric to overcome hideCloseRtsHour this way
         if (post['userpost']['rt']['n'] === defaultScreenName)
             return false;
 
         if ($.Options.hideCloseRTs.val !== 'disable' &&
             followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
-            parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.hideCloseRTsHour.val * 3600)
+            parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.hideCloseRtsHour.val * 3600)
         {
             return true;
         }
