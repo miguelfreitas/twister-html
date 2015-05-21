@@ -166,11 +166,14 @@ function dmDataToSnippetItem(dmData, remoteUser) {
 
 // format dmdata (returned by getdirectmsgs) to display in conversation thread
 function dmDataToConversationItem(dmData, localUser, remoteUser) {
+    var from = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0)) 
+               ? dmData.from 
+               : (dmData.fromMe ? localUser : remoteUser);
     var classDm = dmData.fromMe ? "sent" : "received";
     var dmItem = $("#dm-chat-template").clone(true);
     dmItem.removeAttr('id');
     dmItem.addClass(classDm);
-    getAvatar(dmData.fromMe ? localUser : remoteUser, dmItem.find(".post-photo").find("img") );
+    getAvatar(from, dmItem.find(".post-photo").find("img") );
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
     var mentions = [];
     dmItem.find('.post-text').html(htmlFormatMsg(dmData.text, mentions));
