@@ -385,10 +385,11 @@ function follow(user, publicFollow, cbFunc, cbArg) {
 function unfollow(user, cbFunc, cbArg) {
     //console.log('we are not following @'+user+' anymore');
     var i = followingUsers.indexOf(user);
-    if( i >= 0 ) {
-        followingUsers.splice(i,1);
+    if (i >= 0) {
+        followingUsers.splice(i, 1);
         twisterFollowingO.update(user);
-        $(window).trigger("eventUnfollow", user)
+        // FIXME also need to check list of pending posts to remove from there
+        $(window).trigger('eventUnfollow', user);
     }
     delete _isFollowPublic[user];
     saveFollowing();
@@ -816,12 +817,12 @@ function initInterfaceFollowing() {
     });
 
     $(window)
-        .on("eventFollow", function(e, user) {
-            $(".following-count").text(followingUsers.length-1);
+        .on('eventFollow', function(e, user) {
+            $('.mini-profile .following-count').text(followingUsers.length - 1);
             showFollowingUsers();
         })
-        .on("eventUnfollow", function(e, user) {
-            $(".following-count").text(followingUsers.length-1);
+        .on('eventUnfollow', function(e, user) {
+            $('.mini-profile .following-count').text(followingUsers.length - 1);
             showFollowingUsers();
         });
 }

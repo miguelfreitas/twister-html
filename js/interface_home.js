@@ -98,16 +98,17 @@ var InterfaceFunctions = function() {
                  }, {cbFunc:cbFunc, cbArg:cbArg});
 
             $(window)
-                .on("eventFollow", function(e, user) {
-                    $(".following-count").text(followingUsers.length-1);
+                .on('eventFollow', function(e, user) {
+                    $('.mini-profile .following-count').text(followingUsers.length - 1);
                     setTimeout(requestTimelineUpdate, 1000, 'latest', postsPerRefresh, [user], promotedPostsOnly);
                 })
-                .on("eventUnfollow", function(e, user) {
-                    $(".following-count").text(followingUsers.length-1);
+                .on('eventUnfollow', function(e, user) {
+                    $('.mini-profile .following-count').text(followingUsers.length - 1);
                     $('.wrapper .postboard .post').each( function() {
-                        if (($(this).find('[data-screen-name="'+user+'"]').length && !$(this).find(".post-retransmited-by").text())
-                        || $(this).find(".post-retransmited-by").text() == '@'+user)
-                            $( this ).remove();
+                        var elem = $(this);
+                        if ((elem.find('[data-screen-name="' + user + '"]').length && !elem.find(".post-retransmited-by").text())
+                        || elem.find(".post-retransmited-by").text() === '@'+user)
+                            elem.remove();
                     });
                 });
 
