@@ -45,12 +45,11 @@ function processDMsnippet(dmUsers, dmThreadList) {
     $.MAL.dmThreadListLoaded();
 }
 
-function requestDmConversationModal(dmConvo,dm_screenname) {
-    if( dmConvo.parents(".modal-wrapper").css("display") == 'none' )
-        return;
-
-    requestDmConversation(dmConvo,dm_screenname);
-    setTimeout( function() {requestDmConversationModal(dmConvo,dm_screenname);}, 1000);
+function requestDmConversationModal(postboard, dm_screenname) {
+    if (postboard.is('html *')) {
+        requestDmConversation(postboard, dm_screenname);
+        setTimeout(requestDmConversationModal, 1000, postboard, dm_screenname);
+    }
 }
 
 function requestDmConversation(dmConvo,dm_screenname) {
