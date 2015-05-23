@@ -137,7 +137,7 @@
 }
 .forEdition .profile-card-main input:hover
 {
-    background: rgba( 255, 255, 255, .7 );    
+    background: rgba( 255, 255, 255, .7 );
 }
 .forEdition .profile-card-photo:hover{
     background: #9096a5;
@@ -223,24 +223,20 @@
 ************ PROFILE MODAL ***********
 **************************************/
 
-.profile-modal .modal-wrapper
-{
+.modal-wrapper.profile-modal {
     width: 580px;
-    border-radius: 5px;
-    overflow: hidden;
-    position: absolute;
-    top:5%;
-    height: 90%;
-    margin-left: -290px;
-
+    height: 760px;
+    margin: -380px 0 0 -290px;
 }
+
+.profile-modal .modal-content {
+    height: 730px;
+    overflow-y: hidden;
+    padding: 3px;
+}
+
 .profile-modal .modal-header, .profile-modal .profile-card {
     z-index: 1;
-}
-.profile-modal .modal-content
-{
-    padding: 3px;
-    height: 100%;
 }
 .profile-modal h1.profile-name {
     color: #43464d;
@@ -325,18 +321,17 @@
 .profile-modal .profile-bitmessage {
     background: #e3e5ea url(../img/bm.png) center no-repeat;
 }
-.profile-modal .profile-data
-{
+
+.profile-modal .profile-data {
     display: inline-block;
-    margin-left: -4px;
     border-bottom: 0;
 }
-.profile-modal .postboard
-{
+
+.profile-modal .postboard {
     margin-left: 0;
     padding: 5px 0 5px 0;
-    height: 73%;
 }
+
 .profile-modal .postboard h2 {
     width: auto;
 }

@@ -350,4 +350,4 @@ function checkForNumeric(elem) {
         $(elem).next('span').text(polyglot.t('only positive numbers!'));
         return false;
     }
-};
+}

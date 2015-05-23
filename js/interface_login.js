@@ -1,27 +1,19 @@
 // interface_login.js
 // 2013 Miguel Freitas
 
-
-
 function processCreateUser(username, secretKey) {
     defaultScreenName = username;
-    if(defaultScreenName) {
+    if (defaultScreenName)
         saveScreenName();
-    }
 
-    var newUserClass = "new-user";
-    openModal( newUserClass );
+    openModal({
+        classAdd: 'new-user',
+        content: $('#new-user-modal-template').children().clone(true),
+        title: polyglot.t('propagating_nickname', {username: username})
+    })
+        .content.find('.secret-key').text(secretKey);
 
-    //título do modal
-    $( "." + newUserClass + " h3" ).text( polyglot.t("propagating_nickname", { username: username }) );
-
-    var modalContent = $("." + newUserClass + " .modal-content");
-    var templateContent = $( "#new-user-modal-template" ).children().clone(true);
-    templateContent.appendTo(modalContent);
-
-    $( "." + newUserClass + " .secret-key" ).text(secretKey);
-
-    sendNewUserTransaction( username, processSendnewusertransaction );
+    sendNewUserTransaction(username, processSendnewusertransaction);
 }
 
 function processSendnewusertransaction() {

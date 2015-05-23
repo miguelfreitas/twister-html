@@ -45,21 +45,8 @@ function processDMsnippet(dmUsers, dmThreadList) {
     $.MAL.dmThreadListLoaded();
 }
 
-function openDmConversation(dm_screenname, dmTitleName, dmConversation) {
-    if( dm_screenname.length && dm_screenname[0] === '*' )
-        getGroupChatName( dm_screenname, dmTitleName );
-    else
-        getFullname( dm_screenname, dmTitleName );
-    dmConversation.attr("data-dm-screen-name", dm_screenname);
-
-    var dmConvo = dmConversation.find(".direct-messages-thread");
-    dmConvo.empty();
-
-    requestDmConversationModal(dmConvo,dm_screenname);
-}
-
 function requestDmConversationModal(dmConvo,dm_screenname) {
-    if( dmConvo.parents(".modal-blackout").css("display") == 'none' )
+    if( dmConvo.parents(".modal-wrapper").css("display") == 'none' )
         return;
 
     requestDmConversation(dmConvo,dm_screenname);
@@ -146,59 +133,57 @@ function newDirectMsg(msg,  dm_screenname) {
     }
 }
 
-//dispara o modal de direct messages
-function directMessagesPopup()
-{
-    if(!defaultScreenName)
-    {
-      alert(polyglot.t("You have to log in to use direct messages."));
+// dispara o modal de direct messages
+function directMessagesPopup() {
+    if (!defaultScreenName) {
+      alert(polyglot.t('You have to log in to use direct messages.'));
       return;
     }
-    var directMessagesClass = "directMessages";
-    openModal( directMessagesClass );
 
-    var directMessagesContent = $( ".direct-messages-template" ).html();
-    $( directMessagesContent ).clone().appendTo( ".directMessages .modal-content" );
-
-    //título do modal
-    $( ".directMessages h3" ).text( polyglot.t("Direct Messages") );
-
-    requestDMsnippetList($(".directMessages").find(".direct-messages-list"));
-    $('.mark-all-as-read').css('display', 'inline');
-    $('.mark-all-as-read').attr('title', polyglot.t("Mark all as read"));
-
-    $('.mark-all-as-read').on('click', function() {
-        for (var k in _newDMsPerUser) {
-            _newDMsPerUser[k] = 0;
-        }
-        saveDMsToStorage();
-        $.MAL.updateNewDMsUI(getNewDMsCount());
+    modal = openModal({
+        classAdd: 'directMessages',
+        content: $('.direct-messages-template').children().clone(),
+        title: polyglot.t('Direct Messages')
     });
+
+    requestDMsnippetList(modal.content.find('.direct-messages-list'));
+
+    modal.self.find('.mark-all-as-read')
+        .css('display', 'inline')
+        .attr('title', polyglot.t('Mark all as read'))
+        .on('click', function() {
+            for (var k in _newDMsPerUser) {
+                _newDMsPerUser[k] = 0;
+            }
+            saveDMsToStorage();
+            $.MAL.updateNewDMsUI(getNewDMsCount());
+        })
+    ;
 }
 
-function openDmWithUserModal(dm_screenname)
-{
-    if(!defaultScreenName){
-        alert(polyglot.t("You have to log in to use direct messages."));
+function openDmWithUserModal(dm_screenname) {
+    if (!defaultScreenName) {
+        alert(polyglot.t('You have to log in to use direct messages.'));
         return;
     }
 
-    var directMessagesClass = "directMessages";
-    openModal( directMessagesClass );
+    modal = openModal({
+        classAdd: 'directMessages',
+        content: $('.messages-thread-template').children().clone(),
+        title: polyglot.t('direct_messages_with', {username: '<span>' + dm_screenname + '</span>'})
+    });
 
-    //para poder exibir a thread selecionada...
-    var retweetContent = $( ".messages-thread-template" ).html();
-    $( retweetContent ).clone().appendTo( ".directMessages .modal-content" ).hide().fadeIn( "fast" );
+    modal.self.attr('data-dm-screen-name', dm_screenname);
 
-    var dmTitle = $( ".directMessages h3" );
-    dmTitle.html(polyglot.t("Direct messages with") + " <span></span>");
-    dmTitle = dmTitle.find("span");
-    var dmConversation = $(".directMessages");
-    openDmConversation(dm_screenname, dmTitle, dmConversation);
+    if (dm_screenname.length && dm_screenname[0] === '*')
+        getGroupChatName(dm_screenname, modal.self.find('.modal-header h3 span'));
+    else
+        getFullname(dm_screenname, modal.self.find('.modal-header h3 span'));
 
-    var $dmForm = $( ".dm-form-template" ).children().clone(true);
-    $dmForm.addClass("open");
-    $dmForm.appendTo( ".directMessages .modal-wrapper" ).hide().fadeIn( "fast" );
+    requestDmConversationModal(modal.self.find('.direct-messages-thread').empty(), dm_screenname);
+
+    $('.dm-form-template').children().clone()
+        .addClass('open').appendTo(modal.content).fadeIn('fast');
 }
 
 

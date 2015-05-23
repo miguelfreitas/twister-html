@@ -15,14 +15,14 @@
 
 
 
- 
+
 
 .promoted-posts-only
   margin: 0 0
   @extend .clear-fix
   float: right
 
-  li 
+  li
     cursor: pointer
     display: inline-block
     margin: 0 0 0 5px
@@ -55,7 +55,7 @@
   min-height: 100%
 
 .dashboard
-  &.left, &.right 
+  &.left, &.right
     width: $column-width
     position: fixed
     top: 0
@@ -87,13 +87,13 @@
 .direct-messages, .dropdown-menu-item
   display: block
   padding: 10px
-  
+
 
 ul.userMenu-search-profiles
   width: 100%
   padding: 0
   background: white
-  li 
+  li
     float: none
     display: block
     padding: 5px 10px
@@ -108,7 +108,7 @@ ul.userMenu-search-profiles
   .mini-profile-photo
     width: 30px
     height: 30px
-    margin: 0 10px 0 0 
+    margin: 0 10px 0 0
     float: left
   .mini-profile-info
     width: 100%
@@ -170,7 +170,7 @@ ul.userMenu-search-profiles
     position: relative
     text-align: center
     background: $bloc-background-color
-  a.button 
+  a.button
     background: $main-color-light
     margin: 1em auto
   .post-area
@@ -198,7 +198,7 @@ ul.userMenu-search-profiles
     float: left
     font-size: .8em
     position: relative
-    padding: 0 
+    padding: 0
     a
       position: relative
       color: $dark-grey
@@ -208,7 +208,7 @@ ul.userMenu-search-profiles
       padding: 1em 0
       &:hover
         background-color: white
-      
+
       &:before
         font-size: 2.2em
         display: block!important
@@ -237,7 +237,7 @@ ul.userMenu-search-profiles
   font-size: .8em
   font-weight: 700
   border-radius: 2px
-  
+
 .mini-profile-view
   display: none
 
@@ -299,7 +299,7 @@ ul.userMenu-search-profiles
 .mini-profile-info a:hover
   text-decoration: none
 
-.who-follow  
+.who-follow
   display: block
   position: absolute
   bottom: 50px
@@ -309,7 +309,7 @@ ul.userMenu-search-profiles
   background: lighten($background-light, 5%)
   z-index: 10
   +transition(all .2s linear)
-  
+
 .show-more-followers
   font-weight: 700
   display: block
@@ -323,13 +323,13 @@ ul.userMenu-search-profiles
   line-height: 12px
   &.isFollowing:after
     display: none
-  &:after 
+  &:after
     content: '·'
     font-weight: 900
     color: $main-color-dark
     margin-left: 1px
 
-    
+
 
 /***************** POST AREA ***************/
 
@@ -354,7 +354,7 @@ ul.userMenu-search-profiles
     &:focus
       border-bottom: solid 2px $color-green
 
-#postboard-top 
+#postboard-top
   clear: both
   position: relative
   @extend .clear-fix
@@ -363,9 +363,9 @@ ul.userMenu-search-profiles
   padding: 10px 10px 5px 10px
   background: white
   overflow: hidden
-  &.hide 
+  &.hide
     display: none!important
-  &.show 
+  &.show
     display: block
 
   .profile-photo
@@ -375,7 +375,7 @@ ul.userMenu-search-profiles
     width: 48px
     height: 48px
     overflow: hidden
-    img 
+    img
       width: 100%
   .post-area
     overflow: hidden
@@ -423,7 +423,7 @@ textarea.splited-post
   padding-right: 3px
   &.warn
     color: #ff0000
- 
+
 
 
 
@@ -435,11 +435,11 @@ textarea.splited-post
   &.module
     width: inherit
     margin-bottom: 20px
-  small 
+  small
     display: none
-  h3 
+  h3
     float: left
-  ol 
+  ol
     @extend .clear-fix
     clear: both
   .twister-user-info
@@ -609,38 +609,28 @@ ol.toptrends-list
     &.hover
       cursor: pointer
 
-/*********** POPUP PROMPT *************/
-.prompt-wrapper
-  position: fixed
-  top: 50%
-  left: 50%
-  background: rgba( 255, 255,255, 1.0 )
-  box-shadow: 0 0 30px rgba( 0, 0, 0, .6 )
-  z-index: 5
-  width: 600px
-  margin-left: -300px
-
 /*********** POPUP MODAL **************/
 
-.modal-blackout
-  position: fixed
-  width: 100%
-  height: 100%
-  left: 0
-  top: 0
-  background:  rgba($main-color-light, 0.8)
-  display: none
-  z-index: 3
-
 .modal-wrapper
-  position: absolute
+  background: white
+  z-index: 3
+  position: fixed
   top: 50%
   left: 50%
   overflow: hidden
   .post-area-new
     padding: 10px
 
-.modal-content 
+.modal-blackout
+  background: rgba($main-color-light, 0.8)
+  z-index: -1
+  position: fixed
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+
+.modal-content
   @extend .clear-fix
   background: $background-light
   padding: 20px
@@ -651,7 +641,7 @@ ol.toptrends-list
     margin-left: -60px
     width: 100px
     width: $postboard-modal-width
-    span 
+    span
       display: none
   .postboard-news
     line-height: 30px
@@ -662,7 +652,7 @@ ol.toptrends-list
     display: block
     padding: 0 20px
     color: white
-    +text-shadow(1px 1px 1px rgba(black, .1)) 
+    +text-shadow(1px 1px 1px rgba(black, .1))
     background: $main-color-color
 
 
@@ -693,7 +683,7 @@ ol.toptrends-list
   color:  rgba(white, 0.7)
   &:hover
     color: white
-  b 
+  b
     display: none
 
 .mark-all-as-read
@@ -726,30 +716,37 @@ ol.toptrends-list
   color:  rgba(white, 0.7)
   &:hover
     color: white
-  b 
+  b
     display: none
 
-.modal-buttons
-  padding: 10px
-  text-align: right
+/*********** POPUP PROMPT *************/
 
+.prompt-wrapper
+  background: rgba( 255, 255,255, 1.0 )
+  z-index: 5
+  position: fixed
+  top: 50%
+  left: 50%
+  width: 600px
+  margin-left: -300px
+  box-shadow: 0 0 30px rgba( 0, 0, 0, .6 )
+  .modal-buttons
+    padding: 10px
+    text-align: right
+    button:last-child
+      padding: 5px 20px;
 
 /************ FOLLOWING-CONFIG MODAL **********/
 
-.following-config-modal
+.prompt-wrapper.following-config-modal
   margin-top: -100px
-  h2
-    text-transform: none
-  .modal-wrapper
-    top: 43%
-    left: 25%
-    width: 50%
   .modal-content
     padding: 10px
     text-align: center
-    background-color: white
   .modal-buttons
     display: none
+  h2
+    text-transform: none
 .following-config-method-buttons
   .public-following
     background-color: $color-green
@@ -758,7 +755,7 @@ ol.toptrends-list
 
 /************ RETWIST POSTS MODAL **********/
 
-.reTwist
+.prompt-wrapper.reTwist
   &.prompt-wrapper
     margin-top: -110px
   .modal-content
@@ -771,7 +768,7 @@ ol.toptrends-list
 
 /********* REPLY POSTS MODAL***************/
 
-.reply
+.prompt-wrapper.reply
   &.prompt-wrapper
     margin-top: -110px
   .modal-buttons, .post-expand, .post-interactions
@@ -781,9 +778,15 @@ ol.toptrends-list
 
 /****** DIRECT MESSAGES MODAL**********/
 
-.directMessages
+.modal-wrapper.directMessages
+  top: 10%
+  width: $postboard-modal-width
+  height: 490px
+  overflow-x: hidden
+  margin: 0 0 0 0-($postboard-modal-width/2)
   .post-area-new
     display: none
+    margin: 0 -20px
     padding: 20px
     z-index: 5
     background: $main-background-color
@@ -791,22 +794,14 @@ ol.toptrends-list
     .modal-header
       h3 span
         display: inline!important
-  .modal-wrapper
-    width: $postboard-modal-width
-    height: 490px
-    top: 10%
-    margin: 0 0 0 0-($postboard-modal-width/2)
-    overflow-x: hidden
-    
+
   .modal-content
     overflow-y: auto
     height: 300px
-    
+
     +box-sizing(border-box)
     width: $postboard-modal-width
 
-  .modal-buttons
-    display: none
   .post-photo
     height: 48px
     width: 48px
@@ -915,17 +910,13 @@ ol.toptrends-list
 
 /********* NEW USER MODAL**************/
 
-.new-user
-  .modal-wrapper
-    width: 640px
-    height: 600px
-    top: 10%
-    margin: 0 0 0 -320px
-    overflow-x: hidden
-    overflow-y: hidden
+.modal-wrapper.new-user
+  width: 720px
+  height: 580px
+  margin: -290px 0 0 -360px
   .modal-content
-    margin: 10px 10px 10px 10px
-  .modal-buttons, .modal-close
+    padding: 25px
+  .modal-close
     display: none
   .text
     margin: 0 0 15px 0
@@ -940,55 +931,45 @@ ol.toptrends-list
 
 /******** HASHTAG MODAL***********/
 
-.hashtag-modal
-  .modal-wrapper
-    width: $postboard-modal-width
-    height: 600px
-    top: 10%
-    margin: 0 0 0 0-($postboard-modal-width/2)
-    overflow: hidden
+.modal-wrapper.hashtag-modal
+  top: 10%
+  width: $postboard-modal-width
+  height: 600px
+  overflow: hidden
+  margin: 0 0 0 0-($postboard-modal-width/2)
   .modal-content
     overflow-y: auto
     height: 500px
-  .modal-buttons
-    display: none
   .postboard
     padding: 0
 
 /****** CONVERSATION MODAL***********/
 
-.conversation-modal
-  .modal-wrapper
-    position: absolute
-    width: $postboard-modal-width
-    height: 575px
-    top: 10%
-    margin: 0 0 0 0-($postboard-modal-width/2)
-    overflow: hidden
-    background: white
+.modal-wrapper.conversation-modal
+  background: white
+  top: 10%
+  width: $postboard-modal-width
+  height: 575px
+  overflow: hidden
+  margin: 0 0 0 0-($postboard-modal-width/2)
   .modal-content
     overflow-y: auto
     height: 90%
-  .modal-buttons
-    display: none
   .postboard
     padding: 0
 
 /****** FOLLOWING MODAL*******/
 
-.following-modal
-  .modal-wrapper
-    width: $postboard-modal-width
-    top: 10%
-    height: 400px
-    margin: 0 0 0 0-($postboard-modal-width/2)
-    overflow-x: hidden
+.modal-wrapper.following-modal
+  top: 10%
+  width: $postboard-modal-width
+  height: 400px
+  overflow-x: hidden
+  margin: 0 0 0 0-($postboard-modal-width/2)
   .modal-content
     height: 300px
     overflow-y: auto
     padding: 0
-  .modal-buttons
-    display: none
   ol
     margin: 5px
   .open-profile-modal
@@ -999,19 +980,16 @@ ol.toptrends-list
 
 /******* WHO TO FOLLOW MODAL*******/
 
-.who-to-follow-modal
-  .modal-wrapper
-    width: $postboard-modal-width
-    top: 50%
-    height: 555px
-    margin: -275px 0 0 0-($postboard-modal-width/2)
-    overflow-x: hidden
+.modal-wrapper.who-to-follow-modal
+  top: 50%
+  width: $postboard-modal-width
+  height: 555px
+  overflow-x: hidden
+  margin: -275px 0 0 0-($postboard-modal-width/2)
   .modal-content
     padding: 15px
     height: 480px
     overflow-y: auto
-  .modal-buttons
-    display: none
   ol
     margin: 5px
   .open-profile-modal

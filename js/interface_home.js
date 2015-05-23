@@ -46,8 +46,7 @@ var InterfaceFunctions = function() {
 
         //$("span.screen-name").text('@' + user);
         var $miniProfile = $(".mini-profile");
-        if(!defaultScreenName)
-        {
+        if (!defaultScreenName) {
             $(".userMenu-profile > a").text(polyglot.t("Login"));
             $(".userMenu-profile > a").attr("href","login.html");
             $(".post-area-new > textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
@@ -64,9 +63,7 @@ var InterfaceFunctions = function() {
             $(".dropdown-menu-following").attr("href","#");
             $(".dropdown-menu-following").bind("click", function()
             { alert(polyglot.t("You are not following anyone because you are not logged in."))} );
-        }
-        else
-        {
+        } else {
             $miniProfile.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
             $miniProfile.find("a.open-profile-modal").attr("href",$.MAL.userUrl(defaultScreenName));
             $miniProfile.find(".mini-profile-name").text(defaultScreenName);
@@ -103,7 +100,7 @@ var InterfaceFunctions = function() {
             $(window)
                 .on("eventFollow", function(e, user) {
                     $(".following-count").text(followingUsers.length-1);
-                    setTimeout('requestTimelineUpdate("latest",postsPerRefresh,["'+user+'"],promotedPostsOnly)', 1000);
+                    setTimeout(requestTimelineUpdate, 1000, 'latest', postsPerRefresh, [user], promotedPostsOnly);
                 })
                 .on("eventUnfollow", function(e, user) {
                     $(".following-count").text(followingUsers.length-1);
@@ -113,21 +110,27 @@ var InterfaceFunctions = function() {
                             $( this ).remove();
                     });
                 });
+
+            if ($.Options.WhoToFollow.val === 'enable')
+                initWhoToFollow();
+            else
+                killInterfaceModule('who-to-follow');
+
+            if ($.Options.TwistdayReminder.val === 'enable')
+                initTwistdayReminder();
+            else
+                killInterfaceModule('twistday-reminder');
         }
         if ($.Options.TopTrends.val === 'enable')
             initTopTrends();
         else
             killInterfaceModule('toptrends');
-
-        if ($.Options.TwistdayReminder.val === 'enable')
-            initTwistdayReminder();
-        else
-            killInterfaceModule('twistday-reminder');
     }
 }
 
 function initTopTrends() {
     var $tt = initInterfaceModule('toptrends');
+
     if ($tt.length) {
         var $ttRefresh = $tt.find('.refresh-toptrends');
             $ttRefresh.on('click', updateTrendingHashtags);
@@ -138,6 +141,7 @@ function initTopTrends() {
 function updateTrendingHashtags() {
     var $module = $('.module.toptrends');
     var $list = $module.find('.toptrends-list');
+
     if ($list.length) {
         $list.empty().hide();
         $module.find('.refresh-toptrends').hide();
@@ -183,8 +187,35 @@ function updateTrendingHashtags() {
     }
 }
 
+function initWhoToFollow() {
+    var wtf = initInterfaceModule('who-to-follow');
+
+    if (wtf.length) {
+        var wtfRefresh = wtf.find('.refresh-users');
+            wtfRefresh.on('click', refreshWhoToFollow);
+            setTimeout(function() {wtfRefresh.click();}, 100);
+        //wtf.find('.view-all-users').on('click', function() {window.location.hash = '#whotofollow';});
+    }
+}
+
+function refreshWhoToFollow() {
+    var module = $('.module.who-to-follow');
+    var list = module.find('.follow-suggestions');
+
+    if (list.length) {
+        list.empty().hide();
+        module.find('.refresh-users').hide();
+        module.find('.loading-roller').show();
+
+        getRandomFollowSuggestion();
+        getRandomFollowSuggestion();
+        getRandomFollowSuggestion();
+    }
+}
+
 function initTwistdayReminder() {
     var $module = initInterfaceModule('twistday-reminder');
+
     if ($module.length) {
         var $moduleRefresh = $module.find('.refresh');
             $moduleRefresh.on('click', refreshTwistdayReminder);
@@ -197,6 +228,7 @@ function initTwistdayReminder() {
 function refreshTwistdayReminder() {
     var $module = $('.module.twistday-reminder');
     var $list = $module.find('.list');
+
     if ($list.length) {
         $module.find('.refresh').hide();
         $module.find('.loading-roller').show();
@@ -291,14 +323,3 @@ function refreshTwistdayReminder() {
 //***********************************************
 var interfaceFunctions = new InterfaceFunctions;
 $( document ).ready( interfaceFunctions.init );
-
-//função no window que fixa o header das postagens
-function fixDiv()
-{
-  var $cache = $('.postboard h2');
-  if ($(window).scrollTop() > 26)
-    $cache.addClass( "fixed" );
-  else
-    $cache.removeClass( "fixed" );
-}
-$(window).scroll(fixDiv);

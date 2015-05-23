@@ -30,13 +30,13 @@ $(function(){
         $('#postboard-top').addClass(promotedPostsOnly ? "hide" : "show");
     });
 
-    $(window).scroll(function(){
-        posScroll = $(document).scrollTop();
-        if(posScroll >= 250)
-            $('.left .post-area-new').slideDown(300);
-        else
-            $('.left .post-area-new').slideUp(150);
-    });
+    $(window).scroll((function(){
+        if ($(document).scrollTop() >= 250) {
+            if (this.css('display') === 'none')
+                this.slideDown(300);
+        } else if (this.css('display') === 'block')
+            this.slideUp(150);
+    }).bind($('.left .post-area-new')));
 
     $(".userMenu-search-profiles .follow")
         .on("eventToggleFollow", function() {

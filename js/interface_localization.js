@@ -51,6 +51,7 @@ if(preferredLanguage == "en"){
       "Detailed information": "Detailed information",
       "DHT network down.": "DHT network down.",
       "Direct Messages": "Direct Messages",
+      "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Disable",
       "Display mentions to @": "Display mentions to @",
       "Display retransmissions": "Display retransmissions",

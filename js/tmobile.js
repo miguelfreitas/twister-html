@@ -55,7 +55,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
                         initMentionsCount();
                         initDMsCount();
                         twisterFollowingO = TwisterFollowing(defaultScreenName);
-                    
+
                         twisterInitialized = true;
                         if( cbFunc )
                             cbFunc(cbArg);
@@ -282,7 +282,7 @@ var router=new $.mobile.Router(
                 $("#dmchat textarea").val("");
                 dmConvo.html("");
                 installDMSendClick();
-                
+
                 $.mobile.showPageLoadingMsg();
                 dmChatUser = user;
                 requestDmConversation(dmConvo,user);
@@ -302,7 +302,7 @@ var router=new $.mobile.Router(
         },
     }, {
         defaultHandler: function(type, ui, page) {
-            console.log("Default handler called due to unknown route (" 
+            console.log("Default handler called due to unknown route ("
                         + type + ", " + ui + ", " + page + ")" );
             console.log(ui);
             console.log(page);
@@ -325,8 +325,8 @@ function installPostboardClick() {
 
     $(".post a").unbind('click').click(function(e) {
         e.stopPropagation();
-        
-        // stopPropagation is supposed to be enough, but in Android the 
+
+        // stopPropagation is supposed to be enough, but in Android the
         // default action is not called so we reimplement it here as a hack.
         e.preventDefault();
         $.mobile.showPageLoadingMsg();
@@ -419,7 +419,7 @@ function installRetransmitConfirmClick() {
 
 function installCreateUserClick() {
     $( ".create-user").unbind('click').click( function(e) {
-        createUserClick( function(username, secretKey) { 
+        createUserClick( function(username, secretKey) {
             defaultScreenName = username;
             if(defaultScreenName) {
                 saveScreenName();
@@ -439,7 +439,7 @@ function installUserSearchHandler() {
 function installProfileEditHandlers() {
     $(".profile-card-photo.forEdition").click( function() { $('#avatar-file').click(); } );
     $("#avatar-file").bind( "change", handleAvatarFileSelectMobile);
-    $(".submit-changes").click( function() { 
+    $(".submit-changes").click( function() {
         saveProfile();
         setTimeout( function() {$.MAL.goHome();}, 1000);
     } );
@@ -515,7 +515,7 @@ function encode_utf8(s) {
     var ua = navigator.userAgent;
     if( ua.indexOf("Android") >= 0 )
     {
-        var androidversion = parseFloat(ua.slice(ua.indexOf("Android")+8)); 
+        var androidversion = parseFloat(ua.slice(ua.indexOf("Android")+8));
         if (androidversion < 3.0)
         {
             return unescape(encodeURIComponent(s));

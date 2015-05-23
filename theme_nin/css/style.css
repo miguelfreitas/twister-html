@@ -390,22 +390,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 /*************************************
- ******************* PROFILE MODAL
- ************************************** */
+************ PROFILE MODAL ***********
+**************************************/
+
 /* line 17, ../sass/_profile.sass */
-.profile-modal .modal-wrapper {
+.modal-wrapper.profile-modal {
+  top: 50%;
   width: 980px;
   max-width: 98%;
-  position: absolute;
-  top: 50%;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   height: 550px;
   margin: -275px 0 0 -490px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 /* line 25, ../sass/_profile.sass */
-.profile-modal .modal-wrapper h3 {
+.modal-wrapper.profile-modal h3 {
   display: none;
 }
 /* line 28, ../sass/_profile.sass */
@@ -642,12 +642,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 213, ../sass/_profile.sass */
 .profile-modal .profile-tox:hover, .profile-modal .profile-bitmessage:hover {
   color: #B4C669;
-}
-
-/* line 217, ../sass/_profile.sass */
-.profile-modal .modal-buttons {
-  display: none;
-  /* EDITION PROFILE */
 }
 
 /* line 222, ../sass/_profile.sass */
@@ -1411,7 +1405,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 /* line 227, ../sass/_following.sass */
-.following-modal .modal-wrapper {
+.modal-wrapper.following-modal {
   width: 200px;
 }
 /* line 229, ../sass/_following.sass */
@@ -2580,49 +2574,41 @@ ol.toptrends-list a:hover {
   cursor: pointer;
 }
 
-/*********** POPUP PROMPT ************ */
-/* line 558, ../sass/style.sass */
-.prompt-wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  background: white;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-  z-index: 5;
-  width: 600px;
-  margin-left: -300px;
-}
-
-/*********** POPUP MODAL ************* */
-/* line 570, ../sass/style.sass */
-.modal-blackout {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: rgba(170, 170, 170, 0.8);
-  display: none;
-  z-index: 3;
-}
+/************ POPUP MODAL ************/
 
 /* line 580, ../sass/style.sass */
 .modal-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  overflow: hidden;
+    background: white;
+    clear: both;
+    z-index: 3;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
 }
+
+/* line 570, ../sass/style.sass */
+.modal-blackout {
+    background: rgba(170,170,170, 0.8);
+    z-index: -1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* line 588, ../sass/style.sass */
+.modal-content {
+    background: #f3f2f1;
+    padding: 20px;
+}
+
 /* line 585, ../sass/style.sass */
 .modal-wrapper .post-area-new {
   padding: 10px;
 }
 
-/* line 588, ../sass/style.sass */
-.modal-content {
-  background: #f3f2f1;
-  padding: 20px;
-}
 /* line 592, ../sass/style.sass */
 .modal-content .postboard h2 {
   position: fixed;
@@ -2725,80 +2711,79 @@ ol.toptrends-list a:hover {
   display: none;
 }
 
-/* line 677, ../sass/style.sass */
-.modal-buttons {
-  padding: 10px;
-  text-align: right;
+/*********** POPUP PROMPT ************/
+
+/* line 558, ../sass/style.sass */
+.prompt-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: white;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  z-index: 5;
+  width: 600px;
+  margin-left: -300px;
 }
 
-/************ FOLLOWING-CONFIG MODAL ********* */
-/* line 685, ../sass/style.sass */
-.following-config-modal h2 {
-  text-transform: none;
+.prompt-wrapper .modal-buttons {
+    padding: 10px;
+    text-align: right;
 }
-/* line 687, ../sass/style.sass */
-.following-config-modal .modal-wrapper {
-  top: 43%;
-  left: 25%;
-  width: 50%;
+
+.prompt-wrapper .modal-buttons button:last-child {
+    padding: 5px 20px;
 }
-/* line 691, ../sass/style.sass */
+
+/****** FOLLOWING-CONFIG PROMPT ******/
+
+.following-config-modal.prompt-wrapper {
+  margin-top: -100px;
+}
+
 .following-config-modal .modal-content {
   padding: 10px;
   text-align: center;
-  background-color: white;
 }
-/* line 695, ../sass/style.sass */
+
 .following-config-modal .modal-buttons {
   display: none;
 }
 
-/* line 697, ../sass/style.sass */
+.following-config-modal h2 {
+  text-transform: none;
+}
+
 .following-config-method-buttons {
   padding: 10px;
 }
 
-/****** FOLLOWING-CONFIG PROMPT ***** */
-/* line 699, ../sass/style.sass */
-.following-config-modal
-{
-  margin-top: -100px;
-}
-.following-config-modal .modal-content
-{
-  padding: 10px;
-  text-align: center;
-}
-.following-config-modal .modal-buttons
-{
-  display: none;
-}
 .following-config-method-buttons .public-following {
   background-color: #B4C669;
   margin: 0px 2px;
   padding: 6px 16px;
 }
 
-/********** RETWIST POSTS PROMPT ********* */
+/********** RETWIST POSTS PROMPT **********/
+
 /* line 705, ../sass/style.sass */
 .reTwist.prompt-wrapper {
   margin-top: -110px;
 }
 
-.reTwist .modal-content
-{
+.reTwist .modal-content {
   padding: 20px 15px;
 }
-.reTwist button.modal-propagate
-{
+
+.reTwist button.modal-propagate {
   background-color: #B4C669;
 }
+
 /* line 709, ../sass/style.sass */
 .reTwist .post-expand, .reTwist .post-interactions {
   display: none;
 }
 
-/********* REPLY POSTS MODAL************** */
+/********* REPLY POSTS PROMPT ***************/
 /* line 715, ../sass/style.sass */
 .reply.prompt-wrapper {
   margin-top: -110px;
@@ -2813,37 +2798,36 @@ ol.toptrends-list a:hover {
 }
 
 /****** DIRECT MESSAGES MODAL********* */
+/* line 736, ../sass/style.sass */
+.modal-wrapper.directMessages {
+  top: 10%;
+  width: 520px;
+  height: 600px;
+  overflow-x: hidden;
+  margin: 0 0 0 -260px;
+}
+/* line 743, ../sass/style.sass */
+.directMessages .modal-content {
+  width: 520px;
+  height: 560px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 /* line 727, ../sass/style.sass */
 .directMessages .post-area-new {
   display: none;
+  margin: 0 -20px;
   padding: 20px;
   z-index: 5;
   background: #E2E1DE;
 }
+
 /* line 734, ../sass/style.sass */
 .directMessages .post-area-new .modal-header h3 span {
   display: inline !important;
-}
-/* line 736, ../sass/style.sass */
-.directMessages .modal-wrapper {
-  width: 520px;
-  height: 490px;
-  top: 10%;
-  margin: 0 0 0 -260px;
-  overflow-x: hidden;
-}
-/* line 743, ../sass/style.sass */
-.directMessages .modal-content {
-  overflow-y: auto;
-  height: 300px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 520px;
-}
-/* line 750, ../sass/style.sass */
-.directMessages .modal-buttons {
-  display: none;
 }
 /* line 752, ../sass/style.sass */
 .directMessages .post-photo {
@@ -2970,21 +2954,19 @@ ol.toptrends-list a:hover {
 }
 
 /********* NEW USER MODAL************* */
-/* line 861, ../sass/style.sass */
-.new-user .modal-wrapper {
-  width: 640px;
-  height: 600px;
-  top: 10%;
-  margin: 0 0 0 -320px;
-  overflow-x: hidden;
-  overflow-y: hidden;
+
+.new-user.modal-wrapper {
+    width: 720px;
+    height: 580px;
+    margin: -290px 0 0 -360px;
 }
-/* line 868, ../sass/style.sass */
+
 .new-user .modal-content {
-  margin: 10px 10px 10px 10px;
+    padding: 25px;
 }
+
 /* line 870, ../sass/style.sass */
-.new-user .modal-buttons, .new-user .modal-close {
+.new-user .modal-close {
   display: none;
 }
 /* line 872, ../sass/style.sass */
@@ -3006,22 +2988,19 @@ ol.toptrends-list a:hover {
 
 /******** HASHTAG MODAL********** */
 /* line 884, ../sass/style.sass */
-.hashtag-modal .modal-wrapper {
+.modal-wrapper.hashtag-modal {
+  top: 10%;
   width: 520px;
   height: 600px;
-  top: 10%;
-  margin: 0 0 0 -260px;
   overflow: hidden;
+  margin: 0 0 0 -260px;
 }
 /* line 890, ../sass/style.sass */
 .hashtag-modal .modal-content {
   overflow-y: auto;
   height: 500px;
 }
-/* line 893, ../sass/style.sass */
-.hashtag-modal .modal-buttons {
-  display: none;
-}
+
 /* line 895, ../sass/style.sass */
 .hashtag-modal .postboard {
   padding: 0;
@@ -3029,24 +3008,20 @@ ol.toptrends-list a:hover {
 
 /****** CONVERSATION MODAL********** */
 /* line 901, ../sass/style.sass */
-.conversation-modal .modal-wrapper {
-  position: absolute;
+.modal-wrapper.conversation-modal {
+  background: white;
+  top: 10%;
   width: 520px;
   height: 575px;
-  top: 10%;
-  margin: 0 0 0 -260px;
   overflow: hidden;
-  background: white;
+  margin: 0 0 0 -260px;
 }
 /* line 909, ../sass/style.sass */
 .conversation-modal .modal-content {
   overflow-y: auto;
   height: 90%;
 }
-/* line 912, ../sass/style.sass */
-.conversation-modal .modal-buttons {
-  display: none;
-}
+
 /* line 914, ../sass/style.sass */
 .conversation-modal .postboard {
   padding: 0;
@@ -3054,12 +3029,12 @@ ol.toptrends-list a:hover {
 
 /****** FOLLOWING MODAL****** */
 /* line 920, ../sass/style.sass */
-.following-modal .modal-wrapper {
-  width: 520px;
+.modal-wrapper.following-modal {
   top: 10%;
+  width: 520px;
   height: 400px;
-  margin: 0 0 0 -260px;
   overflow-x: hidden;
+  margin: 0 0 0 -260px;
 }
 /* line 926, ../sass/style.sass */
 .following-modal .modal-content {
@@ -3067,10 +3042,7 @@ ol.toptrends-list a:hover {
   overflow-y: auto;
   padding: 0;
 }
-/* line 930, ../sass/style.sass */
-.following-modal .modal-buttons {
-  display: none;
-}
+
 /* line 932, ../sass/style.sass */
 .following-modal ol {
   margin: 5px;
@@ -3082,12 +3054,12 @@ ol.toptrends-list a:hover {
 
 /******* WHO TO FOLLOW MODAL****** */
 /* line 943, ../sass/style.sass */
-.who-to-follow-modal .modal-wrapper {
-  width: 520px;
+.modal-wrapper.who-to-follow-modal {
   top: 50%;
+  width: 520px;
   height: 555px;
-  margin: -275px 0 0 -260px;
   overflow-x: hidden;
+  margin: -275px 0 0 -260px;
 }
 /* line 949, ../sass/style.sass */
 .who-to-follow-modal .modal-content {
@@ -3095,10 +3067,7 @@ ol.toptrends-list a:hover {
   height: 480px;
   overflow-y: auto;
 }
-/* line 953, ../sass/style.sass */
-.who-to-follow-modal .modal-buttons {
-  display: none;
-}
+
 /* line 955, ../sass/style.sass */
 .who-to-follow-modal ol {
   margin: 5px;
@@ -3313,9 +3282,9 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
 }
 @media (max-width: 900px) {
   /* line 21, ../sass/_responsive.sass */
-  .profile-modal .modal-wrapper {
-    margin-left: 0;
+  .modal-wrapper.profile-modal {
     left: 1%;
+    margin-left: 0;
   }
 }
 @media (max-width: 600px) {
