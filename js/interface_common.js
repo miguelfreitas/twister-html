@@ -110,7 +110,7 @@ function openProfileModalWithUsernameHandler(username) {
     }
 
     content.find('.postboard')  // potentially dangerous fix because it's supposed for vertical oriented profile modals
-        .height(content.height() - content.find('.profile-card').outerHeight());
+        .height(content.outerHeight() - content.find('.profile-card').outerHeight());
 }
 
 function openHashtagModalFromSearchHandler(hashtag) {
