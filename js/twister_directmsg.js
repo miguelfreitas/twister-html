@@ -94,7 +94,7 @@ function directMsgSubmit(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    var replyText = $(this).closest('.post-area-new textarea');
+    var replyText = $(this).closest('.post-area-new').find('textarea');
 
     newDirectMsg(replyText.val(), $('.directMessages').attr('data-dm-screen-name'));
 
