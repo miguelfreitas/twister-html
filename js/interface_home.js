@@ -306,10 +306,8 @@ function refreshTwistdayReminder() {
                         }
                     }
 
-                    if (listCurrent.children().length)
-                        listCurrent.parent().show();
-                    if (listUpcoming.children().length)
-                        listUpcoming.parent().show();
+                    listCurrent.parent().css('display', listCurrent.children().length ? 'block' : 'none')
+                    listUpcoming.parent().css('display', listUpcoming.children().length ? 'block' : 'none')
                     module.find('.refresh').show();
                     module.find('.loading-roller').hide();
                 }, null,
