@@ -37,10 +37,8 @@
 
     <link rel="icon" type="image/png" href="img/twister_mini.png" />
   </head>
-
   <body>
-    
-  <!-- MENU SUPERIOR INIT --> 
+  <!-- MENU SUPERIOR INIT -->
   <nav class="userMenu">
     <ul>
       <li class="userMenu-home"><a href="home.html"><span class="selectable_theme theme_original label">Home</span></a></li>
@@ -78,7 +76,6 @@
       <!-- BUSCA -->
       <li class="userMenu-search">
         <input type="text" class="userMenu-search-field" placeholder="search"/>
-
         <div class="search-results dialog-modal">
           <ul class="userMenu-search-sugestions" style="display: none;">
             <li><a href="#">Fulano</a></li>
@@ -98,25 +95,17 @@
             </li>
           </ul>
         </div>
-
       </li>
-
-
     </ul>
   </nav>
   <!-- MENU SUPERIOR END -->
 
-
   <div class="wrapper">
-  <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
+  <!-- LADO ESQUERDO DE MÓDULOS INIT -->
     <div class="dashboard left">
-      
       <!-- PROFILE MODULE INIT -->
       <div class="module mini-profile selectable_theme theme_nin">
         <div class="mini-profile-info">
-
-
-
           <!-- THEME NIN added user menu (mentions, messages and edit profile) -->
           <ul class="mini-profile-indicators selectable_theme theme_nin">
             <li class="userMenu-connections">
@@ -129,8 +118,6 @@
               <a href="profile-edit.html" title="Edit profile"><span>Edit profile</span></a>
             </li>
           </ul>
-
-
           <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
           <a href="#" class="mini-profile-name open-profile-modal"></a>
           <span class="mini-profile-view">View</span>
@@ -140,13 +127,11 @@
           <li class="current"><a href="following.html" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
           <li><a href="#" class="open-followers"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
         </ul>
-      
       </div>
       <!-- PROFILE MODULE INIT -->
     </div>
 
-
-  <!-- LADO ESQUERDO DE MÓDULOS INIT --> 
+  <!-- LADO ESQUERDO DE MÓDULOS INIT -->
     <div class="following">
       <h2 class="header-bold"> Following </h2>
 
@@ -196,13 +181,10 @@
       </div>
     </div>
   <!-- LADO ESQUERDO DE MÓDULOS END -->
-
   </div>
 
   <!-- TEMPLATES INIT -->
   <div id="templates" style="display:none;">
-
-    
     <!-- TEMPLATE DE WHO-TO-FOLLOW SUGGESTION -->
     <li id="follow-suggestion-template" class="twister-user">
       <div class="">
@@ -288,33 +270,25 @@
     <!-- template for user links in message (open profile modal) -->
     <a id="hashtag-link-template" class="open-hashtag-modal"></a>
 
-
-
     <!-- template para ir dentro de avatar-row -->
     <a id="avatar-row-template" class="open-profile-modal" href="">
        <img class="size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
        <span class="user-name-tooltip"></span>
     </a>
-
     <li class="descendant module post">
     </li>
     <!-- TEMPLATE INVÓLUCRO DO POST EXPANDIDO END -->
 
     <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
-    <div class="modal-blackout cancel">
-      <div class="modal-wrapper">
+    <div class="modal-wrapper">
         <div class="modal-header">
-          <h3></h3>
-          <span id="closeModal" class="modal-close cancel">&times;</span>
-          <span class="modal-back">&lt;</span>
-          <span class="mark-all-as-read"></span>
+            <h3></h3>
+            <span id="closeModal" class="modal-close cancel">&times;</span>
+            <span class="modal-back" onClick="history.back();">&lt;</span>
+            <span class="mark-all-as-read"></span>
         </div>
         <div class="modal-content"></div>
-        <div class="modal-buttons">
-          <button class="modal-cancel cancel">Cancel</button>
-          <button class="modal-propagate">Retransmit</button>
-        </div>
-      </div>
+        <div class="modal-blackout cancel"></div>
     </div>
     <!-- TEMPLATE DO MODAL GENÉRICO END -->
 
@@ -371,7 +345,6 @@
       <p class="post-text"></p>
     </li>
 
-
     <div class="messages-thread-template">
       <ol class="direct-messages-thread">
         <!-- use "dm-chat-template" here -->
@@ -396,7 +369,6 @@
       </form>
     </div>
     <!-- MODAL DE DIRECT MESSAGES INIT -->
-
 
     <!-- MODAL DE PROFILE -->
     <div id="profile-modal-template">
@@ -457,10 +429,8 @@
     </div>
     <!-- MODAL DE PROFILE END -->
 
-
     <!-- MODAL DE HASHTAGS -->
     <div id="hashtag-modal-template">
-
         <!-- ÁREA DE POSTS INIT -->
           <div class="postboard">
             <h2>
@@ -468,10 +438,8 @@
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>
-
             <ol id="profile-posts" class="postboard-posts">
             </ol>
-
           </div>
         <!-- ÁREA DE POSTS END -->
     </div>
@@ -497,28 +465,23 @@
                 </div>
             </li>
         </ol>
-          
         <!-- ÁREA DE FOLLOWERS END -->
     </div>
     <!-- MODAL DE FOLLOWING END -->
 
     <!-- MODAL OF FOLLOWING CONFIG -->
     <div id="following-config-modal-template">
-
         <!-- ÁREA OF FOLLOWING METHOD -->
         <div class="following-config-modal-content" data-screen-name="">
           <h2><span class="following-config-method-message">Which way do you want to follow</span> <span class="following-screen-name">@<b></b></span>:</h2>
-
             <div class="following-config-method-buttons">
                 <button class="public-following">Public</button>
                 <button class="public-following private">Private</button>
             </div>
-
         </div>
         <!-- ÁREA OF FOLLOWING METHOD END -->
     </div>
     <!-- MODAL OF FOLLOWING CONFIG END -->
-
   </div>
   <!-- TEMPLATES END -->
 

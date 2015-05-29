@@ -159,7 +159,7 @@ function requestPost(containerToAppend,username,resource,cbFunc,cbArgs){
         function(args, postFromJson) {
             if( postFromJson ) {
 
-            console.log(postFromJson);
+            //console.log(postFromJson);
 
             appendPostToContainer(postFromJson,args.containerToAppend);
 
@@ -318,23 +318,18 @@ function updateProfilePosts(postsView, username, useGetposts) {
      });
 }
 
-function updateFollowingData(followingModalContent, username) {
-    followingModalContent.find(".following-screen-name b").text(username);
-    loadFollowingIntoList( username, $(followingModalContent[1]) );
-}
-
 function clearHashtagProcessed() {
     _hashtagProcessedMap = {};
     _hashtagPendingPosts = [];
 }
 
-function requestHashtag(postboard,hashtag,resource, timeoutArgs) {
+function requestHashtag(postboard, hashtag, resource, timeoutArgs) {
     postboard.closest("div").find(".postboard-loading").show();
-    dhtget( hashtag, resource, "m",
-           function(args, data) {
-               processHashtag(args.postboard, args.hashtag, data);
-           }, {postboard:postboard,hashtag:hashtag},
-           timeoutArgs);
+    dhtget(hashtag, resource, "m",
+        function(args, data) {processHashtag(args.postboard, args.hashtag, data);},
+        {postboard:postboard,hashtag:hashtag},
+        timeoutArgs
+    );
 }
 
 function processHashtag(postboard, hashtag, data) {

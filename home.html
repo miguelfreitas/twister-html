@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>Twister</title>
+    <title>twister</title>
     <link id="stylecss" rel="stylesheet" href="css/style.css" type="text/css"/>
     <link id="profilecss" rel="stylesheet" href="css/profile.css" type="text/css"/>
     <script src="js/jquery.min.js"></script>
@@ -35,9 +35,7 @@
 
     <link rel="icon" type="image/png" href="img/twister_mini.png" />
   </head>
-
   <body>
-
   <!-- MENU SUPERIOR INIT -->
   <nav class="userMenu">
     <ul>
@@ -80,7 +78,6 @@
       <!-- BUSCA -->
       <li class="userMenu-search">
         <input type="text" class="userMenu-search-field" placeholder="search"/>
-
         <div class="search-results dialog-modal">
           <ul class="userMenu-search-sugestions" style="display: none;">
             <li><a href="#">Fulano</a></li>
@@ -100,20 +97,14 @@
             </li>
           </ul>
         </div>
-
       </li>
-
-
     </ul>
   </nav>
   <!-- MENU SUPERIOR END -->
 
-
   <div class="wrapper">
-
   <!-- LADO ESQUERDO DE MÓDULOS INIT -->
     <div class="dashboard left">
-
       <!-- PROFILE MODULE -->
       <div class="module mini-profile">
         <div class="mini-profile-info">
@@ -153,14 +144,13 @@
       </div>
 
       <!-- WHO TO FOLLOW MODULE -->
-      <div class="module who-to-follow"></div>
+      <div class="module who-to-follow" style="display: none;"></div>
 
       <!-- TOP TRENDS MODULE -->
-      <div class="module toptrends"></div>
+      <div class="module toptrends" style="display: none;"></div>
 
       <!-- TWISTDAY REMINDER MODULE -->
-      <div class="module twistday-reminder"></div>
-
+      <div class="module twistday-reminder" style="display: none;"></div>
     </div>
   <!-- LADO ESQUERDO DE MÓDULOS END -->
 
@@ -193,24 +183,20 @@
       </div>
       <!-- END postboard-top -->
 
-
       <ol id="posts" class="postboard-posts">
         <!-- use "post-template" here -->
       </ol>
-
 
       <div class="postboard-loading" style="display: none;">
             <div></div>
       </div>
     </div>
   <!-- ÁREA DE POSTS END -->
-
       <div class="dashboard right"></div>
   </div>
 
   <!-- TEMPLATES INIT -->
   <div id="templates" style="display:none;">
-
     <!-- TEMPLATE DE WHO-TO-FOLLOW MODULE -->
     <div id="who-to-follow-template">
       <div>
@@ -223,7 +209,7 @@
           <!-- use "follow-suggestion-template" here -->
         </ol>
       </div>
-      <div class="loading-roller" style="display: none;">
+      <div class="loading-roller">
         <div></div>
       </div>
     </div>
@@ -236,7 +222,7 @@
         <a class="refresh-toptrends">Refresh</a>
         <ol class="toptrends-list"></ol>
       </div>
-      <div class="loading-roller" style="display: none;">
+      <div class="loading-roller">
         <div></div>
       </div>
     </div>
@@ -260,7 +246,7 @@
             </ol>
         </div>
       </div>
-      <div class="loading-roller" style="display: none;">
+      <div class="loading-roller">
         <div></div>
       </div>
     </div>
@@ -307,12 +293,12 @@
       </div>
     </li>
 
-  	<!-- TEMPLATE DA OL INVÓLUCRO DAS LIST ELEMENTS DO POST EXPANDIDO INIT -->
+    <!-- TEMPLATE DA OL INVÓLUCRO DAS LIST ELEMENTS DO POST EXPANDIDO INIT -->
     <ol class="expanded-post">
     </ol>
-  	<!-- TEMPLATE DA OL INVÓLUCRO DAS LIST ELEMENTS DO POST EXPANDIDO END -->
+    <!-- TEMPLATE DA OL INVÓLUCRO DAS LIST ELEMENTS DO POST EXPANDIDO END -->
 
-	<!-- TEMPLATE DOS 3 TIPOS DE LI DO POST EXPANDIDO INIT -->
+    <!-- TEMPLATE DOS 3 TIPOS DE LI DO POST EXPANDIDO INIT -->
     <li class="ancestor module post">
     </li>
 
@@ -372,8 +358,6 @@
     <!-- template for user links in message (open profile modal) -->
     <a id="hashtag-link-template" class="open-hashtag-modal"></a>
 
-
-
     <!-- template para ir dentro de avatar-row -->
     <a id="avatar-row-template" class="open-profile-modal" href="">
        <img class="size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
@@ -385,20 +369,15 @@
     <!-- TEMPLATE INVÓLUCRO DO POST EXPANDIDO END -->
 
     <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
-    <div class="modal-blackout cancel">
-      <div class="modal-wrapper">
+    <div class="modal-wrapper">
         <div class="modal-header">
-          <h3></h3>
-          <span id="closeModal" class="modal-close cancel">&times;</span>
-          <span class="modal-back" onClick="history.back();">&lt;</span>
-          <span class="mark-all-as-read"></span>
+            <h3></h3>
+            <span id="closeModal" class="modal-close cancel">&times;</span>
+            <span class="modal-back" onClick="history.back();">&lt;</span>
+            <span class="mark-all-as-read"></span>
         </div>
         <div class="modal-content"></div>
-        <div class="modal-buttons">
-          <button class="modal-cancel cancel">Cancel</button>
-          <button class="modal-propagate">Retransmit</button>
-        </div>
-      </div>
+        <div class="modal-blackout cancel"></div>
     </div>
     <!-- TEMPLATE DO MODAL GENÉRICO END -->
 
@@ -455,7 +434,6 @@
       <p class="post-text"></p>
     </li>
 
-
     <div class="messages-thread-template">
       <ol class="direct-messages-thread">
         <!-- use "dm-chat-template" here -->
@@ -480,7 +458,6 @@
       </form>
     </div>
     <!-- MODAL DE DIRECT MESSAGES INIT -->
-
 
     <!-- MODAL DE PROFILE -->
     <div id="profile-modal-template">
@@ -532,19 +509,15 @@
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>
-
             <ol id="profile-posts" class="postboard-posts">
             </ol>
-
           </div>
         <!-- ÁREA DE POSTS END -->
     </div>
     <!-- MODAL DE PROFILE END -->
 
-
     <!-- MODAL DE HASHTAGS -->
     <div id="hashtag-modal-template">
-
         <!-- ÁREA DE POSTS INIT -->
           <div class="postboard">
             <h2>
@@ -552,10 +525,8 @@
               <!-- o botão de novas postagens deve ser ocultado quando o usuário clicá-lo via javascript -->
               <button class="postboard-news" style="display:none;"></button>
             </h2>
-
             <ol id="profile-posts" class="postboard-posts">
             </ol>
-
             <div class="postboard-loading" style="display: none;">
                 <div></div>
             </div>
@@ -584,28 +555,23 @@
                 </div>
             </li>
         </ol>
-
         <!-- ÁREA DE FOLLOWERS END -->
     </div>
     <!-- MODAL DE FOLLOWING END -->
 
     <!-- MODAL OF FOLLOWING CONFIG -->
     <div id="following-config-modal-template">
-
         <!-- ÁREA OF FOLLOWING METHOD -->
         <div class="following-config-modal-content" data-screen-name="">
           <h2><span class="following-config-method-message">Which way do you want to follow</span> <span class="following-screen-name">@<b></b></span>:</h2>
-
             <div class="following-config-method-buttons">
                 <button class="public-following">Public</button>
                 <button class="public-following private">Private</button>
             </div>
-
         </div>
         <!-- ÁREA OF FOLLOWING METHOD END -->
     </div>
     <!-- MODAL OF FOLLOWING CONFIG END -->
-
   </div>
   <!-- TEMPLATES END -->
 

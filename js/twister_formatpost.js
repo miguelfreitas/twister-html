@@ -93,14 +93,13 @@ function postToElem( post, kind, promoted ) {
     elem.find('.post-text').html(htmlFormatMsg(msg, mentions));
     postData.attr('data-text-mentions', mentions);
 
-    var replyTo = [];
+    var replyTo = '';
     if( n !== defaultScreenName )
-        replyTo.push(['@', n, ' '].join(''));
+        replyTo += '@' + n + ' ';
     for (var i = 0; i < mentions.length; i++) {
         if (mentions[i] !== n && mentions[i] !== defaultScreenName)
-            replyTo.push(['@', mentions[i], ' '].join(''));
+            replyTo += '@' + mentions[i] + ' ';
     }
-    replyTo = replyTo.join('');
 
     var postTextArea = elem.find('.post-area-new textarea');
     postTextArea.attr('data-reply-to', replyTo);
@@ -166,8 +165,8 @@ function dmDataToSnippetItem(dmData, remoteUser) {
 
 // format dmdata (returned by getdirectmsgs) to display in conversation thread
 function dmDataToConversationItem(dmData, localUser, remoteUser) {
-    var from = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0)) 
-               ? dmData.from 
+    var from = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0))
+               ? dmData.from
                : (dmData.fromMe ? localUser : remoteUser);
     var classDm = dmData.fromMe ? "sent" : "received";
     var dmItem = $("#dm-chat-template").clone(true);
@@ -183,8 +182,8 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
 
 // convert message text to html, featuring @users and links formating.
 function htmlFormatMsg(msg, mentions) {
-    function htmlMention(str, pre) {
-        str = str.replace(new RegExp(['^', pre, '@'].join('')), '').toLowerCase();
+    function htmlMention(str) {
+        str = str.slice(1, str.length).toLowerCase();
 
         mentions.push(str);  // FIXME feel the pain of the scope chain
 
@@ -193,63 +192,61 @@ function htmlFormatMsg(msg, mentions) {
         html.push($('#msg-user-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, ['<a href="', $.MAL.userUrl(str), '" '].join(''))  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
-            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1@', str, '$2'].join(''))  // $().closest('a.open-profile-modal').text('@'+username)
+            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, '<a href="' + $.MAL.userUrl(str) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
+            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1@' + str + '$2')  // $().closest('a.open-profile-modal').text('@'+username)
         );
 
-        return ['>', html.length - 1, '<'].join('');
+        return '>' + (html.length - 1).toString() + '<';
     }
 
-    function htmlHashtag(str, pre) {
-        str = str.replace(new RegExp(['^', pre, '#'].join('')), '');
+    function htmlHashtag(str) {
+        str = str.slice(1, str.length);
 
         html.push($('#hashtag-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, ['<a href="', $.MAL.hashtagUrl(str.toLowerCase()), '" '].join(''))  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
-            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1#', str, '$2'].join(''))  // $().closest('a.open-profile-modal').text('#'+hashtag)
+            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, '<a href="' + $.MAL.hashtagUrl(str.toLowerCase()) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
+            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1#' + str + '$2')  // $().closest('a.open-profile-modal').text('#'+hashtag)
         );
 
-        return ['>', html.length - 1, '<'].join('');
+        return '>' + (html.length - 1).toString() + '<';
     }
 
     function htmlHttp(str) {
         html.push($('#external-page-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+/ig, ['<a href="', proxyURL(str), '" '].join(''))  // $().closest('a').attr('href', proxyURL(url))
-            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, ['$1', str, '$2'].join(''))  // $().closest('a').text(url)
+            .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
+            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
         );
 
-        return ['>', html.length - 1, '<'].join('');
+        return '>' + (html.length - 1).toString() + '<';
     }
 
-    function htmlEmail(str, pre) {
-        str = str.replace(new RegExp(['^', pre].join('')), '');
-
+    function htmlEmail(str) {
         html.push($('#external-page-link-template')[0].outerHTML
             .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
             //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+/ig, ['<a href="mailto:', str.toLowerCase(), '" '].join(''))  // $().closest('a').attr('href', 'mailto:'+url)
-            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, [pre, '$1', str, '$2'].join(''))  // $().closest('a').text(url)
+            .replace(/<a\s+/ig, '<a href="mailto:' + str.toLowerCase() + '" ')  // $().closest('a').attr('href', 'mailto:'+url)
+            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
         );
 
-        return ['>', html.length - 1, '<'].join('');
+        return '>' + (html.length - 1).toString() + '<';
     }
 
     function htmlSplitCounter(str) {
-        html.push(['<span class="splited-post-counter">', str, '</span>'].join(''));
+        html.push('<span class="splited-post-counter">' + str + '</span>');
 
-        return ['>', html.length - 1, '<'].join('');
+        return '>' + (html.length - 1).toString() + '<';
     }
 
     var html = [];
 
     return _formatText(escapeHtmlEntities(msg)
-        .replace(/(^|[^\/]\B(?!\S*:\/\/\S*@))@\w+\b/g, htmlMention)
-        .replace(/(^|[^<\/]\B(?!\S*:\/\/\S*#))#[^#\\\/\.,:;\?\!\*\[\]\(\)\{\}\^\|%'"\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011>\s]+/g, htmlHashtag)  // unicode escaped stuff is '“”…—一。，：？！【】' for our chinese friends
-        .replace(/\bhttps?:\/\/\S[^>\s]+/ig, htmlHttp)
-        .replace(/([^<\/])\b(?!\S*:\/\/\S*@)\S+@\S+\.\S[^>\s]+/g, htmlEmail)
+        .replace(/\bhttps?:\/\/[^>\s]+/ig, htmlHttp)
+        .replace(/[^<\s]+@\S+\.[^>\s]+/g, htmlEmail)  // should be pretty slow monstrous RegExp here to handle it in accordance with RFC but twisters just gonna avoid text_without_spaces@text_with_._but_without spaces to not get it like email address
+        .replace(/@\w+\b/g, htmlMention)
+        .replace(/#[^#\\\/\.,:;\?\!\*\[\]\(\)\{\}\^\|%'"\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011>\s]+/g, htmlHashtag)  // unicode escaped stuff is '“”…—一。，：？！【】' for our chinese friends
         .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
         .replace(/>(\d+)</g, function(candy, core) {return html[core]})
     );
@@ -258,12 +255,12 @@ function htmlFormatMsg(msg, mentions) {
 function proxyURL(url) {
     var proxyOpt = $.Options.useProxy.val;
     if (proxyOpt !== 'disable' && !$.Options.useProxyForImgOnly.val) {
-        // proxy alternatives may be added to options page
+        // proxy alternatives may be added to options page FIXME currently not; and we need more fresh proxies
         if (proxyOpt === 'ssl-proxy-my-addr') {
-            url = ['https://ssl-proxy.my-addr.org/myaddrproxy.php/',
-                url.substring(0, url.indexOf(':')), url.substr(url.indexOf('/') + 1)].join('');
+            url = 'https://ssl-proxy.my-addr.org/myaddrproxy.php/' +
+                url.substring(0, url.indexOf(':')) + url.substr(url.indexOf('/') + 1);
         } else if (proxyOpt === 'anonymouse')
-            url = ['http://anonymouse.org/cgi-bin/anon-www.cgi/', url].join('');
+            url = 'http://anonymouse.org/cgi-bin/anon-www.cgi/' + url;
     }
 
     return url;

@@ -46,8 +46,7 @@ var InterfaceFunctions = function() {
 
         //$("span.screen-name").text('@' + user);
         var $miniProfile = $(".mini-profile");
-        if(!defaultScreenName)
-        {
+        if (!defaultScreenName) {
             $(".userMenu-profile > a").text(polyglot.t("Login"));
             $(".userMenu-profile > a").attr("href","login.html");
             $(".post-area-new > textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
@@ -64,9 +63,7 @@ var InterfaceFunctions = function() {
             $(".dropdown-menu-following").attr("href","#");
             $(".dropdown-menu-following").bind("click", function()
             { alert(polyglot.t("You are not following anyone because you are not logged in."))} );
-        }
-        else
-        {
+        } else {
             $miniProfile.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
             $miniProfile.find("a.open-profile-modal").attr("href",$.MAL.userUrl(defaultScreenName));
             $miniProfile.find(".mini-profile-name").text(defaultScreenName);
@@ -80,7 +77,7 @@ var InterfaceFunctions = function() {
             loadFollowing( function(args) {
                      $(".mini-profile .following-count").text(followingUsers.length-1);
                      requestLastHave();
-                     setInterval("requestLastHave()", 1000);
+                     setInterval(requestLastHave, 1000);
                      initMentionsCount();
                      initDMsCount();
                      requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
@@ -101,33 +98,40 @@ var InterfaceFunctions = function() {
                  }, {cbFunc:cbFunc, cbArg:cbArg});
 
             $(window)
-                .on("eventFollow", function(e, user) {
-                    $(".following-count").text(followingUsers.length-1);
-                    setTimeout('requestTimelineUpdate("latest",postsPerRefresh,["'+user+'"],promotedPostsOnly)', 1000);
+                .on('eventFollow', function(e, user) {
+                    $('.mini-profile .following-count').text(followingUsers.length - 1);
+                    setTimeout(requestTimelineUpdate, 1000, 'latest', postsPerRefresh, [user], promotedPostsOnly);
                 })
-                .on("eventUnfollow", function(e, user) {
-                    $(".following-count").text(followingUsers.length-1);
+                .on('eventUnfollow', function(e, user) {
+                    $('.mini-profile .following-count').text(followingUsers.length - 1);
                     $('.wrapper .postboard .post').each( function() {
-                        if (($(this).find('[data-screen-name="'+user+'"]').length && !$(this).find(".post-retransmited-by").text())
-                        || $(this).find(".post-retransmited-by").text() == '@'+user)
-                            $( this ).remove();
+                        var elem = $(this);
+                        if ((elem.find('[data-screen-name="' + user + '"]').length && !elem.find(".post-retransmited-by").text())
+                        || elem.find(".post-retransmited-by").text() === '@'+user)
+                            elem.remove();
                     });
                 });
+
+            if ($.Options.WhoToFollow.val === 'enable')
+                initWhoToFollow();
+            else
+                killInterfaceModule('who-to-follow');
+
+            if ($.Options.TwistdayReminder.val === 'enable')
+                initTwistdayReminder();
+            else
+                killInterfaceModule('twistday-reminder');
         }
         if ($.Options.TopTrends.val === 'enable')
             initTopTrends();
         else
             killInterfaceModule('toptrends');
-
-        if ($.Options.TwistdayReminder.val === 'enable')
-            initTwistdayReminder();
-        else
-            killInterfaceModule('twistday-reminder');
     }
 }
 
 function initTopTrends() {
     var $tt = initInterfaceModule('toptrends');
+
     if ($tt.length) {
         var $ttRefresh = $tt.find('.refresh-toptrends');
             $ttRefresh.on('click', updateTrendingHashtags);
@@ -138,6 +142,7 @@ function initTopTrends() {
 function updateTrendingHashtags() {
     var $module = $('.module.toptrends');
     var $list = $module.find('.toptrends-list');
+
     if ($list.length) {
         $list.empty().hide();
         $module.find('.refresh-toptrends').hide();
@@ -183,8 +188,35 @@ function updateTrendingHashtags() {
     }
 }
 
+function initWhoToFollow() {
+    var wtf = initInterfaceModule('who-to-follow');
+
+    if (wtf.length) {
+        var wtfRefresh = wtf.find('.refresh-users');
+            wtfRefresh.on('click', refreshWhoToFollow);
+            setTimeout(function() {wtfRefresh.click();}, 100);
+        //wtf.find('.view-all-users').on('click', function() {window.location.hash = '#whotofollow';});
+    }
+}
+
+function refreshWhoToFollow() {
+    var module = $('.module.who-to-follow');
+    var list = module.find('.follow-suggestions');
+
+    if (list.length) {
+        list.empty().hide();
+        module.find('.refresh-users').hide();
+        module.find('.loading-roller').show();
+
+        getRandomFollowSuggestion();
+        getRandomFollowSuggestion();
+        getRandomFollowSuggestion();
+    }
+}
+
 function initTwistdayReminder() {
     var $module = initInterfaceModule('twistday-reminder');
+
     if ($module.length) {
         var $moduleRefresh = $module.find('.refresh');
             $moduleRefresh.on('click', refreshTwistdayReminder);
@@ -195,91 +227,92 @@ function initTwistdayReminder() {
 }
 
 function refreshTwistdayReminder() {
-    var $module = $('.module.twistday-reminder');
-    var $list = $module.find('.list');
-    if ($list.length) {
-        $module.find('.refresh').hide();
-        $module.find('.loading-roller').show();
-        if (defaultScreenName && typeof(followingUsers) !== 'undefined') {
-            var suggests = followingUsers.slice();
-            if (suggests.length > 0) {
-                for (var i = 0; i < suggests.length; i++) {
-                    suggests[i] = {'username': suggests[i], 'max_id': 0};
-                }
-                twisterRpc('getposts', [suggests.length + 1,suggests],
-                    function(arg, posts) {
-                        function addLuckyToList(list, post, time) {
-                            var lucky = post.userpost.n;
-                            if (list.find('[data-screen-name='+lucky+']').length < 1) {
-                                var item = $('#twistday-reminder-suggestion-template').clone(true);
-                                item.removeAttr('id');
-                                item.find('.twister-user-info').attr('data-screen-name', lucky);
-                                item.find('.twister-user-name').attr('href', $.MAL.userUrl(lucky));
-                                item.find('.twister-user-tag').text('@' +lucky);
-                                itemTwisterday = item.find('.twisterday');
-                                itemTwisterday.bind('click', (function(e) { replyInitPopup(e, post); }).bind(post));
-                                if (typeof(time) !== 'undefined')
-                                    itemTwisterday.text(timeGmtToText(time));
-                                else
-                                    itemTwisterday.text(timeGmtToText(post.userpost.time));
+    var module = $('.module.twistday-reminder');
+    var list = module.find('.list');
 
-                                getAvatar(lucky, item.find('.twister-user-photo'));
-                                getFullname(lucky, item.find('.twister-user-full'));
+    if (list.length) {
+        module.find('.refresh').hide();
+        module.find('.loading-roller').show();
+        if (defaultScreenName && typeof followingUsers !== 'undefined' && followingUsers.length) {
+            var suggests = [];
+            for (var i = 0; i < followingUsers.length; i++) {
+                suggests[i] = {username: followingUsers[i], max_id: 0};
+            }
+            twisterRpc('getposts', [suggests.length + 1, suggests],
+                function(arg, posts) {
+                    function addLuckyToList(list, post, time) {
+                        var lucky = post.userpost.n;
+                        if (!list.find('[data-screen-name=' + lucky + ']').length) {
+                            var item = $('#twistday-reminder-suggestion-template').clone(true)
+                                .removeAttr('id');
+                            item.find('.twister-user-info').attr('data-screen-name', lucky);
+                            item.find('.twister-user-name').attr('href', $.MAL.userUrl(lucky));
+                            item.find('.twister-user-tag').text('@' + lucky);
+                            itemTwisterday = item.find('.twisterday');
+                            itemTwisterday.on('click', (function(e) {replyInitPopup(e, post);}).bind(post));
+                            if (typeof time !== 'undefined')
+                                itemTwisterday.text(timeGmtToText(time));
+                            else
+                                itemTwisterday.text(timeGmtToText(post.userpost.time));
 
-                                list.append(item);
-                            }
+                            getAvatar(lucky, item.find('.twister-user-photo'));
+                            getFullname(lucky, item.find('.twister-user-full'));
+
+                            list.append(item);
                         }
-                        function removeLuckyFromList(list, lucky) {
-                            list.find('[data-screen-name='+lucky+']').closest('li').remove();
-                        }
+                    }
+                    function removeLuckyFromList(list, lucky) {
+                        list.find('[data-screen-name=' + lucky + ']').closest('li').remove();
+                    }
 
-                        var showUpcomingTimer = ($.Options.TwistdayReminderShowUpcoming.val === 'enable') ? $.Options.TwistdayReminderShowUpcomingTimer.val * 3600 : 0;
-                        var listCurrent = $module.find('.current .list');
-                        var listUpcoming = $module.find('.upcoming .list');
-                        var d = new Date();
-                        var todayYear = d.getUTCFullYear();
-                        var todayMonth = d.getUTCMonth();
-                        var todayDate = d.getUTCDate();
-                        var todaySec = Date.UTC(todayYear,todayMonth,todayDate,d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()) /1000;
-                        var thatSec;
+                    var showUpcomingTimer = ($.Options.TwistdayReminderShowUpcoming.val === 'enable') ?
+                        $.Options.TwistdayReminderShowUpcomingTimer.val * 3600 : 0;
+                    var listCurrent = module.find('.current .list');
+                    var listUpcoming = module.find('.upcoming .list');
+                    var d = new Date();
+                    var todayYear = d.getUTCFullYear();
+                    var todayMonth = d.getUTCMonth();
+                    var todayDate = d.getUTCDate();
+                    var todaySec = Date.UTC(todayYear, todayMonth, todayDate,
+                        d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()) /1000;
+                    var thatSec;
 
-                        posts.sort(function(a,b) {
-                            return (parseInt(a.userpost.time) > parseInt(b.userpost.time)) ? 1 : -1;
-                        });
+                    posts.sort(function(a, b) {
+                        return (parseInt(a.userpost.time) > parseInt(b.userpost.time)) ? 1 : -1;
+                    });
 
-                        for (var i = 0; i < posts.length; i++) {
-                            if (followingUsers.indexOf(posts[i].userpost.n) > -1) {
-                                d.setTime(0);
-                                d.setUTCSeconds(posts[i].userpost.time);
-                                if (d.getUTCMonth() === todayMonth && d.getUTCDate() === todayDate) {
-                                    addLuckyToList(listCurrent, posts[i]);
-                                    removeLuckyFromList(listUpcoming, posts[i].userpost.n);
-                                } else if (showUpcomingTimer > 0) {
-                                    thatSec = Date.UTC(todayYear,d.getUTCMonth(),d.getUTCDate(),d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()) /1000;
-                                    if (thatSec > todaySec && thatSec -todaySec <= showUpcomingTimer) {
-                                        d.setTime(0);
-                                        d.setUTCSeconds(thatSec);
-                                        addLuckyToList(listUpcoming, posts[i], d.getTime() /1000);
-                                    } else {
-                                        removeLuckyFromList(listCurrent, posts[i].userpost.n);
-                                        removeLuckyFromList(listUpcoming, posts[i].userpost.n);
-                                    }
+                    for (var i = 0; i < posts.length; i++) {
+                        if (followingUsers.indexOf(posts[i].userpost.n) > -1) {
+                            d.setTime(0);
+                            d.setUTCSeconds(posts[i].userpost.time);
+                            if (d.getUTCMonth() === todayMonth && d.getUTCDate() === todayDate) {
+                                addLuckyToList(listCurrent, posts[i]);
+                                removeLuckyFromList(listUpcoming, posts[i].userpost.n);
+                            } else if (showUpcomingTimer > 0) {
+                                thatSec = Date.UTC(todayYear, d.getUTCMonth(), d.getUTCDate(),
+                                    d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()) /1000;
+                                if (thatSec > todaySec && thatSec -todaySec <= showUpcomingTimer) {
+                                    d.setTime(0);
+                                    d.setUTCSeconds(thatSec);
+                                    addLuckyToList(listUpcoming, posts[i], d.getTime() /1000);
                                 } else {
                                     removeLuckyFromList(listCurrent, posts[i].userpost.n);
                                     removeLuckyFromList(listUpcoming, posts[i].userpost.n);
                                 }
+                            } else {
+                                removeLuckyFromList(listCurrent, posts[i].userpost.n);
+                                removeLuckyFromList(listUpcoming, posts[i].userpost.n);
                             }
                         }
+                    }
 
-                        if (listCurrent.children().length)
-                            listCurrent.parent().show();
-                        if (listUpcoming.children().length)
-                            listUpcoming.parent().show();
-                        $module.find('.refresh').show();
-                        $module.find('.loading-roller').hide();
-                    }, null,
-                    function(arg, ret) { console.log('ajax error:' + ret); }, null);
-            }
+                    listCurrent.parent().css('display', listCurrent.children().length ? 'block' : 'none')
+                    listUpcoming.parent().css('display', listUpcoming.children().length ? 'block' : 'none')
+                    module.find('.refresh').show();
+                    module.find('.loading-roller').hide();
+                }, null,
+                function(arg, ret) {console.log('ajax error:' + ret);}, null
+            );
         }
         if ($.Options.TwistdayReminderAutoUpdate.val === 'enable' && $.Options.TwistdayReminderAutoUpdateTimer.val > 0)
             setTimeout(refreshTwistdayReminder, $.Options.TwistdayReminderAutoUpdateTimer.val * 1000);
@@ -291,14 +324,3 @@ function refreshTwistdayReminder() {
 //***********************************************
 var interfaceFunctions = new InterfaceFunctions;
 $( document ).ready( interfaceFunctions.init );
-
-//função no window que fixa o header das postagens
-function fixDiv()
-{
-  var $cache = $('.postboard h2');
-  if ($(window).scrollTop() > 26)
-    $cache.addClass( "fixed" );
-  else
-    $cache.removeClass( "fixed" );
-}
-$(window).scroll(fixDiv);

@@ -1,3 +1,23 @@
+// following replacement of the native setTimeout() and setInterval()
+// enables the passage of the 'this' object through the JavaScript timers
+// and enables the HTML5 standard passage of arbitrary arguments to the
+// callback functions of timers in IE9 and other old browsers (like some of mobile ones).
+// see https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout#A_possible_solution
+var __nativeST__ = window.setTimeout, __nativeSI__ = window.setInterval;
+
+window.setTimeout = function (vCallback, nDelay) {  // additional arguments will be passed
+    var oThis = this, aArgs = Array.prototype.slice.call(arguments, 2);
+    return __nativeST__(vCallback instanceof Function ?
+        function () {vCallback.apply(oThis, aArgs);} : vCallback, nDelay);
+};
+
+window.setInterval = function (vCallback, nDelay) {  // additional arguments will be passed
+    var oThis = this, aArgs = Array.prototype.slice.call(arguments, 2);
+    return __nativeSI__(vCallback instanceof Function ?
+        function () {vCallback.apply(oThis, aArgs);} : vCallback, nDelay);
+};
+
+// bind callback function for event of clicking outside of element
 (function(jQuery) {
    jQuery.fn.clickoutside = function(callback) {
       var outside = 1, self = $(this);
@@ -13,10 +33,11 @@
    }
 })(jQuery);
 
+// get caret position
 (function($) {
   $.fn.caret = function(pos) {
     var target = this[0];
-	var isContentEditable = target.contentEditable === 'true';
+    var isContentEditable = target.contentEditable === 'true';
     //get
     if (arguments.length == 0) {
       //HTML5
