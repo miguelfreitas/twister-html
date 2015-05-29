@@ -20,23 +20,21 @@ function processDMsnippet(dmUsers, dmThreadList) {
     dmThreadList.empty();
 
     for (var u in dmUsers) {
-        if (dmUsers[u]) {
-            // convert snipped to html and add it to date-sorted list
-            var dmItem = dmDataToSnippetItem(dmUsers[u][0], u);
-            var timeDmItem = parseInt(dmItem.attr('data-time'));
-            var existingItems = dmThreadList.children();
-            for (var j = 0; j < existingItems.length; j++) {
-                var streamItem = existingItems.eq(j);
-                var timeExisting = streamItem.attr('data-time');
-                if (typeof timeExisting === 'undefined' || timeDmItem > parseInt(timeExisting)) {
-                    // this post in stream is older, so post must be inserted above
-                    streamItem.before(dmItem);
-                    break;
-                }
+        // convert snipped to html and add it to date-sorted list
+        var dmItem = dmDataToSnippetItem(dmUsers[u][0], u);
+        var timeDmItem = parseInt(dmItem.attr('data-time'));
+        var existingItems = dmThreadList.children();
+        for (var j = 0; j < existingItems.length; j++) {
+            var streamItem = existingItems.eq(j);
+            var timeExisting = streamItem.attr('data-time');
+            if (typeof timeExisting === 'undefined' || timeDmItem > parseInt(timeExisting)) {
+                // this post in stream is older, so post must be inserted above
+                streamItem.before(dmItem);
+                break;
             }
-            if (j === existingItems.length)
-                dmThreadList.append(dmItem);
         }
+        if (j === existingItems.length)
+            dmThreadList.append(dmItem);
     }
     $.MAL.dmThreadListLoaded();
 }
