@@ -86,6 +86,9 @@ function postToElem( post, kind, promoted ) {
     postInfoName.text(n).attr('href', $.MAL.userUrl(n));
     getFullname( n, postInfoName );
     //elem.find('.post-info-tag').text("@" + n);
+    if( n === defaultScreenName ) {
+        setPostInfoSent(n,k,elem.find('.post-info-sent'));
+    }
     getAvatar( n, elem.find('.avatar') );
     elem.find('.post-info-time').text(timeGmtToText(t)).attr('title', timeSincePost(t));
 
@@ -139,6 +142,18 @@ function postToElem( post, kind, promoted ) {
     }
 
     return elem;
+}
+
+function setPostInfoSent(n, k, item) {
+    getPostMaxAvailability(n,k, 
+        function(args,count) {
+            if( count >= 3 ) { // assume 3 peers (me + 2) is enough for "sent"
+                args.item.text("\u2713"); // check mark
+            } else {
+                args.item.text("\u231B"); // hour glass
+                setTimeout(setPostInfoSent,2000,n,k,item);
+            }
+        }, {n:n,k:k,item:item});
 }
 
 // format dmdata (returned by getdirectmsgs) to display in "snippet" per user list

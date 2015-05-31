@@ -398,6 +398,15 @@ function getPostsCount( username, item ) {
            }, {username:username,item:item} );
 }
 
+function getPostMaxAvailability(username, k, cbFunc, cbArg) {
+    twisterRpc("getpiecemaxseen", [username,k],
+               function(args, ret) {
+                   args.cbFunc(args.cbArg, ret);
+               }, {cbFunc:cbFunc, cbArg:cbArg},
+               function(args, ret) {
+                   console.log("getPostAvailability error");
+               }, {cbFunc:cbFunc, cbArg:cbArg});
+}
 
 function checkPubkeyExists(username, cbFunc, cbArg) {
     // pubkey is checked in block chain db.
