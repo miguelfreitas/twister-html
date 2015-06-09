@@ -1412,7 +1412,6 @@ ol.toptrends-list {
 
 .modal-wrapper .modal-content {
     background: #fff;
-    height: 690px;
     overflow-y: auto;
 }
 
@@ -1564,7 +1563,6 @@ ol.toptrends-list {
 }
 
 .new-user .modal-content {
-    height: 550px;
     padding: 25px;
 }
 
