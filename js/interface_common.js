@@ -28,6 +28,8 @@ function openModal(modal) {
     else
         modal.content = modal.self.find('.modal-content');
 
+    modal.self.prependTo('body').fadeIn('fast');
+
     if (modal.classBase === '.modal-wrapper') {
         modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
 
@@ -38,8 +40,6 @@ function openModal(modal) {
             modal.self.css('margin-top', - windowHeight / 2);
         }
     }
-
-    modal.self.prependTo('body').fadeIn('fast');
 
     return modal;
 }
