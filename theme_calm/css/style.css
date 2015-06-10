@@ -1772,6 +1772,7 @@ textarea.splited-post {
 
 .modal-wrapper .modal-content {
     background: #fff;
+    height: 690px;
     overflow-y: auto;
 }
 
@@ -1931,6 +1932,7 @@ textarea.splited-post {
 }
 
 .new-user .modal-content {
+    height: 550px;
     padding: 25px;
 }
 

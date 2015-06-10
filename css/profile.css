@@ -265,13 +265,12 @@
 {
     width: auto;
 }
-
-.profile-modal .postboard-posts {
+.profile-modal .postboard-posts
+{
     display: block;
-    height: 100%;
+    height: 90%;
     overflow: auto;
 }
-
 .profile-modal .profile-card-main
 {
     background: #45474d;
