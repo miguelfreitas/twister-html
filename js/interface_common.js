@@ -28,17 +28,6 @@ function openModal(modal) {
     else
         modal.content = modal.self.find('.modal-content');
 
-    if (modal.classBase === '.modal-wrapper') {
-        modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
-
-        var windowHeight = $(window).height();
-        if (modal.self.outerHeight() > windowHeight) {
-            modal.content.outerHeight(modal.content.outerHeight() - modal.self.outerHeight() + windowHeight);
-            modal.self.outerHeight(windowHeight);
-            modal.self.css('margin-top', - windowHeight / 2);
-        }
-    }
-
     modal.self.prependTo('body').fadeIn('fast');
 
     return modal;
@@ -105,14 +94,14 @@ function openProfileModalWithUsernameHandler(username) {
     content.find('.tox-ctc').attr('title', polyglot.t('Copy to clipboard'));
     content.find('.bitmessage-ctc').attr('title', polyglot.t('Copy to clipboard'));
 
-    var modal = openModal({
+    content = openModal({
         classAdd: 'profile-modal',
         content: content,
         title: polyglot.t('users_profile', {username: username})
-    });
+    }).content;
 
     // setup follow button in profile modal window
-    var button = modal.content.find('.profile-card-buttons .follow');
+    var button = content.find('.profile-card-buttons .follow');
     if (button) {
         if (followingUsers.indexOf(username) !== -1)
             toggleFollowButton(username, true, function() {setTimeout(loadModalFromHash, 500);});
@@ -120,13 +109,8 @@ function openProfileModalWithUsernameHandler(username) {
             button.on('click', userClickFollow);
     }
 
-    var postboard = modal.content.find('.postboard');
-    var postboardHeight = modal.content.outerHeight() - modal.content.find('.profile-card').outerHeight();
-    if (postboardHeight > 0) {  // FIXME actually it's here to exclude nin theme
-        postboard.outerHeight(postboardHeight)
-            .find('ol').outerHeight(postboard.outerHeight() - postboard.find('h2').outerHeight() - 20);  // FIXME 20px for margin, need to fix CSS for it
-    } else
-        postboard.outerHeight(modal.content.outerHeight());
+    content.find('.postboard')  // potentially dangerous fix because it's supposed for vertical oriented profile modals
+        .height(content.outerHeight() - content.find('.profile-card').outerHeight());
 }
 
 function openHashtagModalFromSearchHandler(hashtag) {

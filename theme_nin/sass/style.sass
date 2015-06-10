@@ -302,7 +302,7 @@ ul.userMenu-search-profiles
 .who-follow
   display: block
   position: absolute
-  bottom: 10px
+  bottom: 50px
   text-align: center
   padding: 10px
   font-size: 12px
@@ -633,13 +633,13 @@ ol.toptrends-list
 .modal-content
   @extend .clear-fix
   background: $background-light
-  overflow-y: auto
   padding: 20px
   .postboard h2
     position: fixed
     z-index: 2
     margin-top: -60px
     margin-left: -60px
+    width: 100px
     width: $postboard-modal-width
     span
       display: none
@@ -779,9 +779,11 @@ ol.toptrends-list
 /****** DIRECT MESSAGES MODAL**********/
 
 .modal-wrapper.directMessages
+  top: 10%
   width: $postboard-modal-width
-  height: 600px
-  margin: -300px 0 0 0-($postboard-modal-width/2)
+  height: 490px
+  overflow-x: hidden
+  margin: 0 0 0 0-($postboard-modal-width/2)
   .post-area-new
     display: none
     margin: 0 -20px
@@ -794,6 +796,9 @@ ol.toptrends-list
         display: inline!important
 
   .modal-content
+    overflow-y: auto
+    height: 300px
+
     +box-sizing(border-box)
     width: $postboard-modal-width
 
@@ -927,10 +932,14 @@ ol.toptrends-list
 /******** HASHTAG MODAL***********/
 
 .modal-wrapper.hashtag-modal
+  top: 10%
   width: $postboard-modal-width
   height: 600px
   overflow: hidden
-  margin: -300px 0 0 0-($postboard-modal-width/2)
+  margin: 0 0 0 0-($postboard-modal-width/2)
+  .modal-content
+    overflow-y: auto
+    height: 500px
   .postboard
     padding: 0
 
@@ -938,38 +947,49 @@ ol.toptrends-list
 
 .modal-wrapper.conversation-modal
   background: white
+  top: 10%
   width: $postboard-modal-width
-  height: 580px
-  margin: -290px 0 0 0-($postboard-modal-width/2)
+  height: 575px
+  overflow: hidden
+  margin: 0 0 0 0-($postboard-modal-width/2)
+  .modal-content
+    overflow-y: auto
+    height: 90%
   .postboard
     padding: 0
 
 /****** FOLLOWING MODAL*******/
 
 .modal-wrapper.following-modal
+  top: 10%
   width: $postboard-modal-width
   height: 400px
-  margin: -200px 0 0 0-($postboard-modal-width/2)
+  overflow-x: hidden
+  margin: 0 0 0 0-($postboard-modal-width/2)
   .modal-content
+    height: 300px
+    overflow-y: auto
     padding: 0
   ol
     margin: 5px
   .open-profile-modal
     &:hover
       text-decoration: none
-  .postboard
-    h2
-      display: none
+
 
 
 /******* WHO TO FOLLOW MODAL*******/
 
 .modal-wrapper.who-to-follow-modal
+  top: 50%
   width: $postboard-modal-width
-  height: 580px
-  margin: -290px 0 0 0-($postboard-modal-width/2)
+  height: 555px
+  overflow-x: hidden
+  margin: -275px 0 0 0-($postboard-modal-width/2)
   .modal-content
     padding: 15px
+    height: 480px
+    overflow-y: auto
   ol
     margin: 5px
   .open-profile-modal

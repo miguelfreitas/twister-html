@@ -335,13 +335,12 @@
 .profile-modal .postboard h2 {
     width: auto;
 }
-
-.profile-modal .postboard-posts {
+.profile-modal .postboard-posts
+{
     display: block;
-    height: 100%;
+    height: 90%;
     overflow: auto;
 }
-
 .profile-modal .postboard h2 span {
     font: 18px/40px 'Open Sans Condensed', sans-serif;
     padding-left: 10px;
