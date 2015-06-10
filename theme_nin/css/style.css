@@ -395,11 +395,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 /* line 17, ../sass/_profile.sass */
 .modal-wrapper.profile-modal {
-  top: 50%;
   width: 980px;
   max-width: 98%;
-  height: 550px;
-  margin: -275px 0 0 -490px;
+  height: 580px;
+  margin: -290px 0 0 -490px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -431,7 +430,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 /* line 46, ../sass/_profile.sass */
 .profile-modal .modal-content {
-  height: 100%;
   overflow: hidden;
   padding: 0;
   position: relative;
@@ -452,8 +450,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /* line 63, ../sass/_profile.sass */
 .profile-modal .modal-content .postboard-posts {
   display: block;
-  height: 505px;
-  overflow: auto;
+  height: 100%;
+  overflow-y: auto;
 }
 /* line 67, ../sass/_profile.sass */
 .profile-modal .modal-content .postboard-posts .post {
@@ -1404,15 +1402,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: none !important;
 }
 
-/* line 227, ../sass/_following.sass */
-.modal-wrapper.following-modal {
-  width: 200px;
-}
-/* line 229, ../sass/_following.sass */
-.following-modal h2 {
-  display: none;
-}
-
 /* line 232, ../sass/_following.sass */
 .mini-following-info {
   width: 45px;
@@ -2153,7 +2142,7 @@ ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-prof
 .who-follow {
   display: block;
   position: absolute;
-  bottom: 50px;
+  bottom: 10px;
   text-align: center;
   padding: 10px;
   font-size: 12px;
@@ -2601,6 +2590,7 @@ ol.toptrends-list a:hover {
 /* line 588, ../sass/style.sass */
 .modal-content {
     background: #f3f2f1;
+    overflow-y: auto;
     padding: 20px;
 }
 
@@ -2615,7 +2605,6 @@ ol.toptrends-list a:hover {
   z-index: 2;
   margin-top: -60px;
   margin-left: -60px;
-  width: 100px;
   width: 520px;
 }
 /* line 599, ../sass/style.sass */
@@ -2800,17 +2789,12 @@ ol.toptrends-list a:hover {
 /****** DIRECT MESSAGES MODAL********* */
 /* line 736, ../sass/style.sass */
 .modal-wrapper.directMessages {
-  top: 10%;
   width: 520px;
   height: 600px;
-  overflow-x: hidden;
-  margin: 0 0 0 -260px;
+  margin: -300px 0 0 -260px;
 }
 /* line 743, ../sass/style.sass */
 .directMessages .modal-content {
-  width: 520px;
-  height: 560px;
-  overflow-y: auto;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -2989,16 +2973,10 @@ ol.toptrends-list a:hover {
 /******** HASHTAG MODAL********** */
 /* line 884, ../sass/style.sass */
 .modal-wrapper.hashtag-modal {
-  top: 10%;
   width: 520px;
   height: 600px;
   overflow: hidden;
-  margin: 0 0 0 -260px;
-}
-/* line 890, ../sass/style.sass */
-.hashtag-modal .modal-content {
-  overflow-y: auto;
-  height: 500px;
+  margin: -300px 0 0 -260px;
 }
 
 /* line 895, ../sass/style.sass */
@@ -3010,16 +2988,9 @@ ol.toptrends-list a:hover {
 /* line 901, ../sass/style.sass */
 .modal-wrapper.conversation-modal {
   background: white;
-  top: 10%;
   width: 520px;
-  height: 575px;
-  overflow: hidden;
-  margin: 0 0 0 -260px;
-}
-/* line 909, ../sass/style.sass */
-.conversation-modal .modal-content {
-  overflow-y: auto;
-  height: 90%;
+  height: 580px;
+  margin: -290px 0 0 -260px;
 }
 
 /* line 914, ../sass/style.sass */
@@ -3030,17 +3001,18 @@ ol.toptrends-list a:hover {
 /****** FOLLOWING MODAL****** */
 /* line 920, ../sass/style.sass */
 .modal-wrapper.following-modal {
-  top: 10%;
   width: 520px;
   height: 400px;
-  overflow-x: hidden;
-  margin: 0 0 0 -260px;
+  margin: -200px 0 0 -260px;
 }
 /* line 926, ../sass/style.sass */
 .following-modal .modal-content {
-  height: 300px;
-  overflow-y: auto;
   padding: 0;
+}
+
+/* line 229, ../sass/_following.sass */
+.following-modal .postboard h2 {
+  display: none;
 }
 
 /* line 932, ../sass/style.sass */
@@ -3055,17 +3027,13 @@ ol.toptrends-list a:hover {
 /******* WHO TO FOLLOW MODAL****** */
 /* line 943, ../sass/style.sass */
 .modal-wrapper.who-to-follow-modal {
-  top: 50%;
   width: 520px;
-  height: 555px;
-  overflow-x: hidden;
-  margin: -275px 0 0 -260px;
+  height: 580px;
+  margin: -290px 0 0 -260px;
 }
 /* line 949, ../sass/style.sass */
 .who-to-follow-modal .modal-content {
   padding: 15px;
-  height: 480px;
-  overflow-y: auto;
 }
 
 /* line 955, ../sass/style.sass */
