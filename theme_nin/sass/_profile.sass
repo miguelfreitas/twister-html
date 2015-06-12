@@ -2,12 +2,12 @@
 // variables for width
 
 $modal-width: 980px
-$modal-height: 550px
+$modal-height: 580px
 $modal-gut: 15px
 $modal-postboard-height: $modal-height - 3*$modal-gut
 $modal-left-col: 400px
 $modal-right-col: ($modal-width - 2*$modal-gut) - $modal-left-col - $modal-gut
-$modal-postboard-post-height: $modal-height - 45px
+$modal-postboard-post-height: 100%
 
 /*************************************
  ******************* PROFILE MODAL
@@ -17,8 +17,6 @@ $modal-postboard-post-height: $modal-height - 45px
   .modal-wrapper
     width: $modal-width
     max-width: 98%
-    position: absolute
-    top: 50%
     +box-sizing(border-box)
     height: $modal-height
     margin: 0-($modal-height/2) 0 0 0-($modal-width/2)
@@ -42,9 +40,7 @@ $modal-postboard-post-height: $modal-height - 45px
             display: inline-block
             padding-right: 5px
 
-
   .modal-content
-    height: 100%
     overflow: hidden
     padding: 0
     position: relative
@@ -58,12 +54,11 @@ $modal-postboard-post-height: $modal-height - 45px
       position: relative
       float: right
       width: $modal-right-col!important
-      
 
     .postboard-posts
       display: block
       height: $modal-postboard-post-height
-      overflow: auto
+      overflow-y: auto
     .postboard-posts .post
       padding: 0
     .post-interactions
@@ -78,13 +73,13 @@ $modal-postboard-post-height: $modal-height - 45px
     letter-spacing: 0
     text-transform: none
     color: lighten($dark-grey, 30%)
-    padding:  5px 0 
+    padding:  5px 0
     margin: 0
     font-size: 13px
     line-height: 13px
 
 
-/* Profile card*/ 
+/* Profile card*/
 
 .profile-card
   height: 100%
@@ -168,7 +163,7 @@ $modal-postboard-post-height: $modal-height - 45px
     clear: both
     width: 100%
 
-   
+
 #msngrswr
   display: none
   text-align: center
@@ -190,7 +185,7 @@ $modal-postboard-post-height: $modal-height - 45px
   color: $main-color-dark
   &:hover
     color: $main-color-color
-  
+
 .bitmessage-ctc:after, .tox-ctc:after
   font-family: $symbol-font-family
   content: ''
@@ -204,7 +199,7 @@ $modal-postboard-post-height: $modal-height - 45px
   font-variant: normal
   text-transform: none
   line-height: 1em
-  
+
 .profile-modal
   .profile-tox, .profile-bitmessage
     display: inline-block
@@ -255,7 +250,7 @@ $modal-postboard-post-height: $modal-height - 45px
   .input-tox, .input-bitmessage
     width: 90%
     margin-top: 10px
-  h2 
+  h2
     text-transform: none
     font-weight: 700
     font-size: .9em
