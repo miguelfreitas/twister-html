@@ -12,7 +12,7 @@ function initProfileEdit() {
     } else {
       alert('The File APIs are not fully supported in this browser.');
     }
-    
+
     initInterfaceCommon();
 
     $(".profile-card-photo.forEdition").click( function() { $('#avatar-file').click(); } );
@@ -26,19 +26,19 @@ function initProfileEdit() {
             $.MAL.goLogin();
             return;
         }
-        checkNetworkStatusAndAskRedirect(verifyUserAlreadyInBlockchain);
+        checkNetworkStatusAndAskRedirect();
 
-        if( defaultScreenName ) {
-            loadFollowing( function() {
-                initMentionsCount();
-                initDMsCount();
-            });
-        }
+        loadFollowing(function() {
+            twisterFollowingO = TwisterFollowing(defaultScreenName);
+            verifyUserAlreadyInBlockchain();
+            initMentionsCount();
+            initDMsCount();
+        });
 
         $(".profile-card-main h2").text("@" + defaultScreenName);
         loadAvatarForEdit();
         loadProfileForEdit();
-        
+
         $(".secret-key-container").hide();
 
         $(".toggle-priv-key").click(function () {
@@ -53,7 +53,7 @@ function initProfileEdit() {
             }, {});
           }
         });
-        
+
     });
 }
 
@@ -94,7 +94,7 @@ function handleAvatarFileSelect(evt) {
 function verifyUserAlreadyInBlockchain()
 {
     $.MAL.disableButton($(".submit-changes"));
-    
+
     dumpPubkey(defaultScreenName, function(args, pubkey) {
                     //pubkey = "";
                     if( pubkey.length > 0 ) {
