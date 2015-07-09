@@ -144,7 +144,7 @@ function postToElem( post, kind, promoted ) {
 
 function setPostInfoSent(n, k, item) {
     if( n === defaultScreenName && k >= 0 ) {
-        getPostMaxAvailability(n,k, 
+        getPostMaxAvailability(n,k,
             function(args,count) {
                 if( count >= 3 ) { // assume 3 peers (me + 2) is enough for "sent"
                     args.item.text("\u2713"); // check mark
@@ -198,56 +198,33 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
 
 // convert message text to html, featuring @users and links formating.
 function htmlFormatMsg(msg, mentions) {
-    function htmlMention(str) {
-        str = str.slice(1, str.length).toLowerCase();
+    function getStrStart(str, i, stopChars) {
+        for (; i > -1; i--) {
+            if (stopChars.indexOf(str[i]) > -1)
+                return i + 1;
+        }
 
-        mentions.push(str);  // FIXME feel the pain of the scope chain
-
-        // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
-        // FIXME actually we should avoid it by dropping a template idea and construct html right here
-        html.push($('#msg-user-link-template')[0].outerHTML
-            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, '<a href="' + $.MAL.userUrl(str) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
-            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1@' + str + '$2')  // $().closest('a.open-profile-modal').text('@'+username)
-        );
-
-        return '>' + (html.length - 1).toString() + '<';
+        return 0;
     }
 
-    function htmlHashtag(str) {
-        str = str.slice(1, str.length);
+    function getStrEnd(str, i, stopChars) {
+        for (; i < str.length; i++) {
+            if (stopChars.indexOf(str[i]) > -1)
+                return i - 1;
+        }
 
-        html.push($('#hashtag-link-template')[0].outerHTML
-            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, '<a href="' + $.MAL.hashtagUrl(str.toLowerCase()) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
-            .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1#' + str + '$2')  // $().closest('a.open-profile-modal').text('#'+hashtag)
-        );
-
-        return '>' + (html.length - 1).toString() + '<';
+        return str.length;
     }
 
-    function htmlHttp(str) {
-        html.push($('#external-page-link-template')[0].outerHTML
-            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
-            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-        );
+    function extractStr(str, startPoint, endPoint, stopChars) {
+        for (var i = endPoint; i > startPoint - 1; i--) {
+            if (stopChars.indexOf(str[i]) === -1) {
+                endPoint = i;
+                break;
+            }
+        }
 
-        return '>' + (html.length - 1).toString() + '<';
-    }
-
-    function htmlEmail(str) {
-        html.push($('#external-page-link-template')[0].outerHTML
-            .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-            //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-            .replace(/<a\s+/ig, '<a href="mailto:' + str.toLowerCase() + '" ')  // $().closest('a').attr('href', 'mailto:'+url)
-            .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-        );
-
-        return '>' + (html.length - 1).toString() + '<';
+        return str.slice(startPoint, endPoint + 1);
     }
 
     function htmlSplitCounter(str) {
@@ -256,16 +233,125 @@ function htmlFormatMsg(msg, mentions) {
         return '>' + (html.length - 1).toString() + '<';
     }
 
+    var mentionsChars = 'abcdefghijklmnopqrstuvwxyz_0123456789';
+    var stopCharsTrailing = '/\\.,:;?!*%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
+    var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
+    var whiteSpaces = ' \f\n\r\t\v​\u00A0\u1680\u180E\u2000​\u2001\u2002​\u2003\u2004\u2005\u2006​\u2007\u2008​\u2009\u200A\u2028\u2029​\u202F\u205F\u3000';
+    var stopCharsRight = '>' + whiteSpaces;
+    var stopCharsLeft = '<' + whiteSpaces;
+    var j, str, strEncoded;
     var html = [];
 
-    return _formatText(escapeHtmlEntities(msg)
-        .replace(/\bhttps?:\/\/[^>\s]+/ig, htmlHttp)
-        .replace(/[^<\s]+@\S+\.[^>\s]+/g, htmlEmail)  // should be pretty slow monstrous RegExp here to handle it in accordance with RFC but twisters just gonna avoid text_without_spaces@text_with_._but_without spaces to not get it like email address
-        .replace(/@\w+\b/g, htmlMention)
-        .replace(/#[^#\\\/\.,:;\?\!\*\[\]\(\)\{\}\^\|%'"\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011>\s]+/g, htmlHashtag)  // unicode escaped stuff is '“”…—一。，：？！【】' for our chinese friends
+    msg = escapeHtmlEntities(msg);
+
+    for (var i = 0; i < msg.length - 7; i++) {
+        if (msg.slice(i, i + 4).toLowerCase() === 'http') {
+            if (msg.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg[i + 7]) === -1) {
+                str = extractStr(msg, i, getStrEnd(msg, i + 7, stopCharsRight), stopCharsTrailingUrl);
+                // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
+                // FIXME actually we should avoid it by dropping a template idea and construct html right here
+                html.push($('#external-page-link-template')[0].outerHTML
+                    .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                    //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                    .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
+                    .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
+                );
+                strEncoded = '>' + (html.length - 1).toString() + '<';
+                msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
+                i = i + strEncoded.length - 1;
+            } else if (msg.slice(i + 4, i + 8).toLowerCase() === 's://' && stopCharsRight.indexOf(msg[i + 8]) === -1) {
+                str = extractStr(msg, i, getStrEnd(msg, i + 8, stopCharsRight), stopCharsTrailingUrl);
+                html.push($('#external-page-link-template')[0].outerHTML
+                    .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                    //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                    .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
+                    .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
+                );
+                strEncoded = '>' + (html.length - 1).toString() + '<';
+                msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
+                i = i + strEncoded.length - 1;
+            }
+        }
+    }
+
+    for (var i = 1; i < msg.length - 1; i++) {
+        if (msg[i] === '@' && stopCharsLeft.indexOf(msg[i - 1]) === -1
+            && stopCharsTrailing.indexOf(msg[i - 1]) === -1 && stopCharsRight.indexOf(msg[i + 1]) === -1) {
+            j = getStrStart(msg, i, stopCharsLeft);
+            str = extractStr(msg, j, getStrEnd(msg, i + 1, stopCharsRight), stopCharsTrailing);
+            html.push($('#external-page-link-template')[0].outerHTML
+                .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                .replace(/<a\s+/ig, '<a href="mailto:' + str.toLowerCase() + '" ')  // $().closest('a').attr('href', 'mailto:'+url)
+                .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
+            );
+            strEncoded = '>' + (html.length - 1).toString() + '<';
+            msg = msg.slice(0, j) + strEncoded + msg.slice(j + str.length);
+            i = j + strEncoded.length - 1;
+        }
+    }
+
+    for (var i = 0; i < msg.length - 1; i++) {
+        if (msg[i] === '@' && mentionsChars.indexOf(msg[i + 1].toLowerCase()) > -1) {
+            for (j = i + 2; j < msg.length; j++) {
+                if (mentionsChars.indexOf(msg[j].toLowerCase()) === -1)
+                    break;
+            }
+            str = msg.slice(i + 1, j).toLowerCase();
+            mentions.push(str);  // FIXME
+            html.push($('#msg-user-link-template')[0].outerHTML
+                .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, '<a href="' + $.MAL.userUrl(str) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
+                .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1@' + str + '$2')  // $().closest('a.open-profile-modal').text('@'+username)
+            );
+            strEncoded = '>' + (html.length - 1).toString() + '<';
+            msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length + 1);
+            i = i + strEncoded.length - 1;
+        }
+    }
+
+    for (var i = 0; i < msg.length - 1; i++) {
+        j = i + 1;
+        if (msg[i] === '#' && msg[j] !== '#' && stopCharsRight.indexOf(msg[j]) === -1) {
+            str = extractStr(msg, j, getStrEnd(msg, j, '/' + stopCharsRight), stopCharsTrailing);
+            html.push($('#hashtag-link-template')[0].outerHTML
+                .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, '<a href="' + $.MAL.hashtagUrl(encodeURIComponent(str.toLowerCase())) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
+                .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1#' + str.replace(/&amp;/g, '&') + '$2')  // $().closest('a.open-profile-modal').text('#'+hashtag)
+            );
+            strEncoded = '>' + (html.length - 1).toString() + '<';
+            msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length + 1);
+            i = i + strEncoded.length - 1;
+        }
+    }
+
+    msg = msg
         .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
-        .replace(/>(\d+)</g, function(candy, core) {return html[core]})
-    );
+        .replace(/&(?!lt;|gt;|quot;|apos;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
+    ;
+
+    for (var i = 0; i < msg.length - 2; i++) {
+        if (msg[i] === '>') {
+            j = getStrEnd(msg, i + 2, '<');
+            str = html[parseInt(msg.slice(i + 1, j + 1))];
+            msg = msg.slice(0, i) + str + msg.slice(j + 2);
+            i = i + str.length - 1;
+        }
+    }
+
+    if ($.Options.displayLineFeeds.val === 'enable')
+        msg = msg.replace(/\n/g, '<br />');
+
+    // TODO: add options for emotions; msg = $.emotions(msg);
+    // TODO: add at least basic markdown (optional) with syntax like this:
+        // *text* -> bold text
+        // ~text~ -> italic text
+        // _text_ -> underlined text
+        // -text- -> strikethrough text
+
+    return msg;
 }
 
 function proxyURL(url) {
@@ -282,19 +368,9 @@ function proxyURL(url) {
     return url;
 }
 
-// internal function for htmlFormatMsg
-    // TODO: add options for emotions; msg = $.emotions(msg);
-    // TODO: add at least basic markdown (optional) like *text* -> bold text and _text_ -> italic text
-function _formatText(msg) {
-    if ($.Options.displayLineFeeds.val === 'enable')
-        msg = msg.replace(/\n/g, '<br />');
-
-    return msg;
-}
-
 function escapeHtmlEntities(str) {
     return str
-                .replace(/&/g, '&amp;')
+                //.replace(/&/g, '&amp;') we do it not here
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
