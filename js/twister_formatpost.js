@@ -198,33 +198,32 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
 
 // convert message text to html, featuring @users and links formating.
 function htmlFormatMsg(msg, mentions) {
-    function getStrStart(str, i, stopChars) {
-        for (; i > -1; i--) {
+    function getStrStart(str, startPoint, stopChars, stopCharsTrailing) {
+        for (var i = startPoint; i > -1; i--) {
             if (stopChars.indexOf(str[i]) > -1)
-                return i + 1;
-        }
-
-        return 0;
-    }
-
-    function getStrEnd(str, i, stopChars) {
-        for (; i < str.length; i++) {
-            if (stopChars.indexOf(str[i]) > -1)
-                return i - 1;
-        }
-
-        return str.length;
-    }
-
-    function extractStr(str, startPoint, endPoint, stopChars) {
-        for (var i = endPoint; i > startPoint - 1; i--) {
-            if (stopChars.indexOf(str[i]) === -1) {
-                endPoint = i;
                 break;
-            }
         }
 
-        return str.slice(startPoint, endPoint + 1);
+        for (i += 1; i < startPoint + 1; i++) {
+            if (stopCharsTrailing.indexOf(str[i]) === -1)
+                break;
+        }
+
+        return i;
+    }
+
+    function getStrEnd(str, startPoint, stopChars, stopCharsTrailing) {
+        for (var i = startPoint; i < str.length; i++) {
+            if (stopChars.indexOf(str[i]) > -1)
+                break;
+        }
+
+        for (i -= 1; i > startPoint - 1; i--) {
+            if (stopCharsTrailing.indexOf(str[i]) === -1)
+                break;
+        }
+
+        return i;
     }
 
     function htmlSplitCounter(str) {
@@ -237,8 +236,9 @@ function htmlFormatMsg(msg, mentions) {
     var stopCharsTrailing = '/\\.,:;?!*%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
     var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
     var whiteSpaces = ' \f\n\r\t\v​\u00A0\u1680\u180E\u2000​\u2001\u2002​\u2003\u2004\u2005\u2006​\u2007\u2008​\u2009\u200A\u2028\u2029​\u202F\u205F\u3000';
-    var stopCharsRight = '>' + whiteSpaces;
     var stopCharsLeft = '<' + whiteSpaces;
+    var stopCharsRight = '>' + whiteSpaces;
+    var stopCharsRightHashtags = stopCharsRight + stopCharsTrailing;
     var j, str, strEncoded;
     var html = [];
 
@@ -247,29 +247,35 @@ function htmlFormatMsg(msg, mentions) {
     for (var i = 0; i < msg.length - 7; i++) {
         if (msg.slice(i, i + 4).toLowerCase() === 'http') {
             if (msg.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg[i + 7]) === -1) {
-                str = extractStr(msg, i, getStrEnd(msg, i + 7, stopCharsRight), stopCharsTrailingUrl);
-                // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
-                // FIXME actually we should avoid it by dropping a template idea and construct html right here
-                html.push($('#external-page-link-template')[0].outerHTML
-                    .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                    //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                    .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
-                    .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                );
-                strEncoded = '>' + (html.length - 1).toString() + '<';
-                msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
-                i = i + strEncoded.length - 1;
+                j = getStrEnd(msg, i + 7, stopCharsRight, stopCharsTrailingUrl);
+                if (j > i + 6) {
+                    str = msg.slice(i, j + 1);
+                    // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
+                    // FIXME actually we should avoid it by dropping a template idea and construct html right here
+                    html.push($('#external-page-link-template')[0].outerHTML
+                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                        .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
+                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
+                    );
+                    strEncoded = '>' + (html.length - 1).toString() + '<';
+                    msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
+                    i = i + strEncoded.length - 1;
+                }
             } else if (msg.slice(i + 4, i + 8).toLowerCase() === 's://' && stopCharsRight.indexOf(msg[i + 8]) === -1) {
-                str = extractStr(msg, i, getStrEnd(msg, i + 8, stopCharsRight), stopCharsTrailingUrl);
-                html.push($('#external-page-link-template')[0].outerHTML
-                    .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                    //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                    .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
-                    .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                );
-                strEncoded = '>' + (html.length - 1).toString() + '<';
-                msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
-                i = i + strEncoded.length - 1;
+                j = getStrEnd(msg, i + 8, stopCharsRight, stopCharsTrailingUrl);
+                if (j > i + 7) {
+                    str = msg.slice(i, j + 1);
+                    html.push($('#external-page-link-template')[0].outerHTML
+                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                        .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
+                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
+                    );
+                    strEncoded = '>' + (html.length - 1).toString() + '<';
+                    msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
+                    i = i + strEncoded.length - 1;
+                }
             }
         }
     }
@@ -277,17 +283,22 @@ function htmlFormatMsg(msg, mentions) {
     for (var i = 1; i < msg.length - 1; i++) {
         if (msg[i] === '@' && stopCharsLeft.indexOf(msg[i - 1]) === -1
             && stopCharsTrailing.indexOf(msg[i - 1]) === -1 && stopCharsRight.indexOf(msg[i + 1]) === -1) {
-            j = getStrStart(msg, i, stopCharsLeft);
-            str = extractStr(msg, j, getStrEnd(msg, i + 1, stopCharsRight), stopCharsTrailing);
-            html.push($('#external-page-link-template')[0].outerHTML
-                .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                .replace(/<a\s+/ig, '<a href="mailto:' + str.toLowerCase() + '" ')  // $().closest('a').attr('href', 'mailto:'+url)
-                .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-            );
-            strEncoded = '>' + (html.length - 1).toString() + '<';
-            msg = msg.slice(0, j) + strEncoded + msg.slice(j + str.length);
-            i = j + strEncoded.length - 1;
+            j = getStrStart(msg, i - 1, stopCharsLeft, stopCharsTrailing);
+            if (j < i) {
+                var k = getStrEnd(msg, i + 1, stopCharsRight, stopCharsTrailing);
+                if (k > i) {
+                    str = msg.slice(j, k + 1);
+                    html.push($('#external-page-link-template')[0].outerHTML
+                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                        .replace(/<a\s+/ig, '<a href="mailto:' + str.toLowerCase() + '" ')  // $().closest('a').attr('href', 'mailto:'+url)
+                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
+                    );
+                    strEncoded = '>' + (html.length - 1).toString() + '<';
+                    msg = msg.slice(0, j) + strEncoded + msg.slice(j + str.length);
+                    i = j + strEncoded.length - 1;
+                }
+            }
         }
     }
 
@@ -312,31 +323,38 @@ function htmlFormatMsg(msg, mentions) {
     }
 
     for (var i = 0; i < msg.length - 1; i++) {
-        j = i + 1;
-        if (msg[i] === '#' && msg[j] !== '#' && stopCharsRight.indexOf(msg[j]) === -1) {
-            str = extractStr(msg, j, getStrEnd(msg, j, '/' + stopCharsRight), stopCharsTrailing);
-            html.push($('#hashtag-link-template')[0].outerHTML
-                .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, '<a href="' + $.MAL.hashtagUrl(encodeURIComponent(str.toLowerCase())) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
-                .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1#' + str.replace(/&amp;/g, '&') + '$2')  // $().closest('a.open-profile-modal').text('#'+hashtag)
-            );
-            strEncoded = '>' + (html.length - 1).toString() + '<';
-            msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length + 1);
-            i = i + strEncoded.length - 1;
+        if (msg[i] === '#' && msg[i + 1] !== '#' && stopCharsRight.indexOf(msg[i + 1]) === -1) {
+            j = getStrEnd(msg, i + 1, stopCharsRightHashtags, stopCharsTrailing);
+            if (j > i) {
+                str = msg.slice(i + 1, j + 1);
+                html.push($('#hashtag-link-template')[0].outerHTML
+                    .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                    //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                    .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, '<a href="' + $.MAL.hashtagUrl(encodeURIComponent(str.toLowerCase())) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
+                    .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1#' + str.replace(/&amp;/g, '&') + '$2')  // $().closest('a.open-profile-modal').text('#'+hashtag)
+                );
+                strEncoded = '>' + (html.length - 1).toString() + '<';
+                msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length + 1);
+                i = i + strEncoded.length - 1;
+            }
         }
     }
 
     msg = msg
         .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
-        .replace(/&(?!lt;|gt;|quot;|apos;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
+        .replace(/&(?!lt;|gt;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;')
     ;
 
     for (var i = 0; i < msg.length - 2; i++) {
         if (msg[i] === '>') {
-            j = getStrEnd(msg, i + 2, '<');
-            str = html[parseInt(msg.slice(i + 1, j + 1))];
-            msg = msg.slice(0, i) + str + msg.slice(j + 2);
+            for (var j = i + 2; j < msg.length; j++) {
+                if (msg[j] === '<')
+                    break;
+            }
+            str = html[parseInt(msg.slice(i + 1, j))];
+            msg = msg.slice(0, i) + str + msg.slice(j + 1);
             i = i + str.length - 1;
         }
     }
@@ -370,11 +388,12 @@ function proxyURL(url) {
 
 function escapeHtmlEntities(str) {
     return str
-                //.replace(/&/g, '&amp;') we do it not here
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&apos;');
+        //.replace(/&/g, '&amp;') we do it not here
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        //.replace(/"/g, '&quot;')
+        //.replace(/'/g, '&apos;')
+    ;
 }
 
 function reverseHtmlEntities(str) {
