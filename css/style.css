@@ -1025,12 +1025,17 @@ ol.toptrends-list {
     opacity: .5;
     text-decoration: none;
 }
-.post-text
-{
+
+.post-text {
     font-size: 13px;
     margin: 2px 10px 4px 60px;
     word-wrap: break-word;
 }
+
+.post-text samp {
+    background: #f0efcc;
+}
+
 .post-context
 {
     font-size: 11px;

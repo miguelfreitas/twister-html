@@ -878,6 +878,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0;
 }
 
+.post-text samp {
+    background: #eee;
+}
+
 /* line 138, ../sass/_postboard.sass */
 .post-context {
   font-size: 11px;

@@ -366,7 +366,7 @@ function htmlFormatMsg(msg, mentions) {
     var stopCharsLeft = '<' + whiteSpaces;
     var stopCharsRight = '>' + whiteSpaces;
     var stopCharsRightHashtags = stopCharsRight + stopCharsTrailing;
-    var stopCharsMarkDown = '~_-+=<>&' + stopCharsTrailing + whiteSpaces;
+    var stopCharsMarkDown = '~_-`+=<>&' + stopCharsTrailing + whiteSpaces;
     var j, str, strEncoded;
     var html = [];
 
@@ -485,11 +485,12 @@ function htmlFormatMsg(msg, mentions) {
         }
     }
 
-    msg = markdown(markdown(markdown(markdown(msg,
+    msg = markdown(markdown(markdown(markdown(markdown(msg,
         '*', 'b'),  // bold
         '~', 'i'),  // italic
         '_', 'u'),  // underlined
-        '-', 's')  // striketrough
+        '-', 's'),  // striketrough
+        '`', 'samp')  // kind of monospace
         .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
         .replace(/&(?!lt;|gt;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
         .replace(/"/g, '&quot;')

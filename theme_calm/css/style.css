@@ -1230,12 +1230,17 @@ textarea.splited-post {
     text-decoration: none;
     color: #43464d;
 }
-.post-text
-{
+
+.post-text {
     font-size: 13px;
     margin: 2px 10px 4px 60px;
     word-wrap: break-word;
 }
+
+.post-text samp {
+    background: #eee;
+}
+
 .post-context
 {
     font-size: 11px;
