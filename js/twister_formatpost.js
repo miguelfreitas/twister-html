@@ -360,13 +360,13 @@ function htmlFormatMsg(msg, mentions) {
     }
 
     var mentionsChars = 'abcdefghijklmnopqrstuvwxyz_0123456789';
-    var stopCharsTrailing = '/\\*.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
+    var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
     var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
     var whiteSpaces = ' \f\n\r\t\v​\u00A0\u1680\u180E\u2000​\u2001\u2002​\u2003\u2004\u2005\u2006​\u2007\u2008​\u2009\u200A\u2028\u2029​\u202F\u205F\u3000';
     var stopCharsLeft = '<' + whiteSpaces;
     var stopCharsRight = '>' + whiteSpaces;
     var stopCharsRightHashtags = stopCharsRight + stopCharsTrailing;
-    var stopCharsMarkDown = '~_-`+=<>&' + stopCharsTrailing + whiteSpaces;
+    var stopCharsMarkDown = '+=<>&' + stopCharsTrailing + whiteSpaces;
     var j, str, strEncoded;
     var html = [];
 
