@@ -237,7 +237,7 @@ function htmlFormatMsg(msg, mentions) {
             return false;
         }
 
-        var i, j, t, strEncoded;
+        var i, j, t, l, r, strEncoded;
         var w = false;
         var p = [];
 
@@ -248,39 +248,54 @@ function htmlFormatMsg(msg, mentions) {
                     if (str[j] !== chr)
                         break;
                 }
-                if (whiteSpaces.indexOf(str[i - 1]) === -1 || whiteSpaces.indexOf(str[j]) === -1) {
-                    if (whiteSpaces.indexOf(str[i - 1]) > -1 || i === 0)
-                        t = -1;
-                    else if (whiteSpaces.indexOf(str[j]) > -1 || i === str.length - 1)
-                        t = 1;
-                    else if (stopCharsMarkDown.indexOf(str[i - 1]) > -1) {
-                        if (stopCharsMarkDown.indexOf(str[j]) === -1)
-                            t = -1;
-                        else {
-                            for (t = j + 1; t < str.length; t++) {
-                                if (whiteSpaces.indexOf(str[t]) > -1) {
-                                    if ((2 * j - t) < 0 || whiteSpaces.indexOf(str[2 * j - t]) === -1) {
-                                        t = 1;
-                                        break;
-                                    }
-                                } else if (stopCharsMarkDown.indexOf(str[t]) === -1) {
-                                    if ((2 * j - t) < 0 || whiteSpaces.indexOf(str[2 * j - t]) > -1) {
-                                        t = -1;
-                                        break;
-                                    }
-                                }
+                // ***. hey *stupid*
+                if (i === 0) {
+                    p.push({i: i, k: j - i, t: -1, w: w, a: -1, p: -1});
+                    w = false;
+                } else if (j === str.length) {
+                    p.push({i: i, k: j - i, t: 1, w: w, a: -1, p: -1});
+                    w = false;
+                } else {
+                    if (stopCharsMarkDown.indexOf(str[i - 1]) > -1) {
+                        l = 1;
+                        for (t = i - 2; t > -1; t--) {
+                            if (stopCharsMarkDown.indexOf(str[t]) === -1) {
+                                l = whiteSpacesMarkDown.indexOf(str[t]);
+                                break;
                             }
-                            if (t = str.length)
-                                t = 1;
                         }
-                    } else if (stopCharsMarkDown.indexOf(str[j]) > -1)
-                        t = 1;
-                    else
-                        t = 0;
-                    p.push({i: i, k: j - i, t: t, w: w, a: -1, p: -1});
+                    } else
+                        l = whiteSpacesMarkDown.indexOf(str[i - 1]);
+                    if (stopCharsMarkDown.indexOf(str[j]) > -1) {
+                        r = 1;
+                        for (t = j + 1; t < str.length; t++) {
+                            if (stopCharsMarkDown.indexOf(str[t]) === -1) {
+                                r = whiteSpacesMarkDown.indexOf(str[t]);
+                                break;
+                            }
+                        }
+                    } else
+                        r = whiteSpacesMarkDown.indexOf(str[j]);
+                    if (l > -1) {
+                        if (r > -1) {
+                            if (j - i > 2) {
+                                l = p.push({i: i, k: j - i - 1, t: -1, w: w, a: -1, p: -1}) - 1;
+                                p[l].a = p.push({i: j - 1, k: 1, t: 1, w: false, a: l, p: -1}) - 1;
+                            }
+                            t = 10;
+                        } else
+                            t = -1;
+                    } else {
+                        if (r > -1)
+                            t = 1;
+                        else
+                            t = 0;
+                    }
+                    if (t !== 10)
+                        p.push({i: i, k: j - i, t: t, w: w, a: -1, p: -1});
                     w = false;
                 }
-                i = j;
+                i = j - 1;
             } else if (!w && whiteSpaces.indexOf(str[i]) > -1) {
                 w = true;
             }
@@ -341,10 +356,10 @@ function htmlFormatMsg(msg, mentions) {
                         html.push(t.replace(/&(?!lt;|gt;)/g, '&amp;'));
                         strEncoded = '>' + (html.length - 1).toString() + '<';
                         str = str.slice(0, p[i].i) + strEncoded + str.slice(p[j].i + p[j].k);
-                        t = strEncoded.length - p[j].i - p[j].k + p[i].i;
+                        l = strEncoded.length - p[j].i - p[j].k + p[i].i;
                         i = j;
                         for (j += 1; j < p.length; j++)
-                            p[j].i += t;
+                            p[j].i += l;
                     }
                 }
             }
@@ -364,9 +379,9 @@ function htmlFormatMsg(msg, mentions) {
                     }
                         strEncoded = '>' + (html.length - 1).toString() + '<';
                         str = str.slice(0, p[i].i) + strEncoded + str.slice(p[i].i + p[i].k);
-                        t = strEncoded.length - p[i].k;
+                        l = strEncoded.length - p[i].k;
                         for (j = i + 1; j < p.length; j++)
-                            p[j].i += t;
+                            p[j].i += l;
                 }
             }
         }
@@ -388,7 +403,8 @@ function htmlFormatMsg(msg, mentions) {
     var stopCharsRight = '>' + whiteSpaces;
     var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011'  // same as stopCharsTrailing but without '*~_-`' plus '>'
         + whiteSpaces;
-    var stopCharsMarkDown = '+=<>&' + stopCharsTrailing + whiteSpaces;
+    var whiteSpacesMarkDown = whiteSpaces + '+=&/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
+    var stopCharsMarkDown = '*~_-`';
     var i, j, k, str, strEncoded;
     var html = [];
 
