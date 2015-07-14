@@ -237,7 +237,7 @@ function htmlFormatMsg(msg, mentions) {
             return false;
         }
 
-        var i, j, t;
+        var i, j, t, strEncoded;
         var w = false;
         var p = [];
 
@@ -324,29 +324,50 @@ function htmlFormatMsg(msg, mentions) {
         }
 
         // changing the string
-        for (i = 0; i < p.length; i++) {
-            if (p[i].a > -1) {
-                if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
-                    if (p[i].k > 1)
-                        html.push('<' + tag + '>' + Array(p[i].k).join(chr));
-                    else
-                        html.push('<' + tag + '>');
-                } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
-                    if (p[i].k > 1)
-                        html.push(Array(p[i].k).join(chr) + '</' + tag + '>');
-                    else
-                        html.push('</' + tag + '>');
-                } else {
-                    if (p[i].k > 1)
-                        html.push(Array(p[i].k + 1).join(chr));
-                    else
-                        html.push(chr);
+        if (chr === '`') {
+            for (i = 0; i < p.length; i++) {
+                if (p[i].a > -1) {
+                    if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
+                        if (p[i].k > 1)
+                            t = '<' + tag + '>' + Array(p[i].k).join(chr);
+                        else
+                            t = '<' + tag + '>';
+                        j = p[i].a;
+                        t = t + str.slice(p[i].i + p[i].k, p[j].i);
+                        if (p[j].k > 1)
+                            t = t + Array(p[i].k).join(chr) + '</' + tag + '>';
+                        else
+                            t = t + '</' + tag + '>';
+                        html.push(t.replace(/&(?!lt;|gt;)/g, '&amp;'));
+                        strEncoded = '>' + (html.length - 1).toString() + '<';
+                        str = str.slice(0, p[i].i) + strEncoded + str.slice(p[j].i + p[j].k);
+                        t = strEncoded.length - p[j].i - p[j].k + p[i].i;
+                        i = j;
+                        for (j += 1; j < p.length; j++)
+                            p[j].i += t;
+                    }
                 }
-                    strEncoded = '>' + (html.length - 1).toString() + '<';
-                    str = str.slice(0, p[i].i) + strEncoded + str.slice(p[i].i + p[i].k);
-                    l = strEncoded.length - p[i].k;
-                    for (j = i + 1; j < p.length; j++)
-                        p[j].i += l;
+            }
+        } else {
+            for (i = 0; i < p.length; i++) {
+                if (p[i].a > -1) {
+                    if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
+                        if (p[i].k > 1)
+                            html.push('<' + tag + '>' + Array(p[i].k).join(chr));
+                        else
+                            html.push('<' + tag + '>');
+                    } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
+                        if (p[i].k > 1)
+                            html.push(Array(p[i].k).join(chr) + '</' + tag + '>');
+                        else
+                            html.push('</' + tag + '>');
+                    }
+                        strEncoded = '>' + (html.length - 1).toString() + '<';
+                        str = str.slice(0, p[i].i) + strEncoded + str.slice(p[i].i + p[i].k);
+                        t = strEncoded.length - p[i].k;
+                        for (j = i + 1; j < p.length; j++)
+                            p[j].i += t;
+                }
             }
         }
 
@@ -365,19 +386,21 @@ function htmlFormatMsg(msg, mentions) {
     var whiteSpaces = ' \f\n\r\t\v​\u00A0\u1680\u180E\u2000​\u2001\u2002​\u2003\u2004\u2005\u2006​\u2007\u2008​\u2009\u200A\u2028\u2029​\u202F\u205F\u3000';
     var stopCharsLeft = '<' + whiteSpaces;
     var stopCharsRight = '>' + whiteSpaces;
-    var stopCharsRightHashtags = stopCharsRight + stopCharsTrailing;
+    var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011'  // same as stopCharsTrailing but without '*~_-`' plus '>'
+        + whiteSpaces;
     var stopCharsMarkDown = '+=<>&' + stopCharsTrailing + whiteSpaces;
-    var j, str, strEncoded;
+    var i, j, k, str, strEncoded;
     var html = [];
 
-    msg = escapeHtmlEntities(msg);
+    msg = markdown(escapeHtmlEntities(msg),
+        '`', 'samp');  // kind of monospace, sequence of chars inside will be escaped from markup
 
-    for (var i = 0; i < msg.length - 7; i++) {
+    for (i = 0; i < msg.length - 7; i++) {
         if (msg.slice(i, i + 2) === '](') {
             // FIXME there can be text with [] inside [] or links with () wee need to handle it too
             j = getStrStart(msg, i - 1, '[', '');
             if (j < i) {
-                var k = getStrEnd(msg, i + 2, ')', '');
+                k = getStrEnd(msg, i + 2, ')', '');
                 if (k > i + 1) {
                     html.push($('#external-page-link-template')[0].outerHTML
                         .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
@@ -425,12 +448,12 @@ function htmlFormatMsg(msg, mentions) {
         }
     }
 
-    for (var i = 1; i < msg.length - 1; i++) {
+    for (i = 1; i < msg.length - 1; i++) {
         if (msg[i] === '@' && stopCharsLeft.indexOf(msg[i - 1]) === -1
             && stopCharsTrailing.indexOf(msg[i - 1]) === -1 && stopCharsRight.indexOf(msg[i + 1]) === -1) {
             j = getStrStart(msg, i - 1, stopCharsLeft, stopCharsTrailing);
             if (j < i) {
-                var k = getStrEnd(msg, i + 1, stopCharsRight, stopCharsTrailing);
+                k = getStrEnd(msg, i + 1, stopCharsRight, stopCharsTrailing);
                 if (k > i) {
                     str = msg.slice(j, k + 1);
                     html.push($('#external-page-link-template')[0].outerHTML
@@ -447,7 +470,7 @@ function htmlFormatMsg(msg, mentions) {
         }
     }
 
-    for (var i = 0; i < msg.length - 1; i++) {
+    for (i = 0; i < msg.length - 1; i++) {
         if (msg[i] === '@' && mentionsChars.indexOf(msg[i + 1].toLowerCase()) > -1) {
             for (j = i + 2; j < msg.length; j++) {
                 if (mentionsChars.indexOf(msg[j].toLowerCase()) === -1)
@@ -467,7 +490,7 @@ function htmlFormatMsg(msg, mentions) {
         }
     }
 
-    for (var i = 0; i < msg.length - 1; i++) {
+    for (i = 0; i < msg.length - 1; i++) {
         if (msg[i] === '#' && msg[i + 1] !== '#' && stopCharsRight.indexOf(msg[i + 1]) === -1) {
             j = getStrEnd(msg, i + 1, stopCharsRightHashtags, stopCharsTrailing);
             if (j > i) {
@@ -485,21 +508,20 @@ function htmlFormatMsg(msg, mentions) {
         }
     }
 
-    msg = markdown(markdown(markdown(markdown(markdown(msg,
+    msg = markdown(markdown(markdown(markdown(msg,
         '*', 'b'),  // bold
         '~', 'i'),  // italic
         '_', 'u'),  // underlined
-        '-', 's'),  // striketrough
-        '`', 'samp')  // kind of monospace
+        '-', 's')  // striketrough
         .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
         .replace(/&(?!lt;|gt;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&apos;')
     ;
 
-    for (var i = 0; i < msg.length - 2; i++) {
+    for (i = 0; i < msg.length - 2; i++) {
         if (msg[i] === '>') {
-            for (var j = i + 2; j < msg.length; j++) {
+            for (j = i + 2; j < msg.length; j++) {
                 if (msg[j] === '<')
                     break;
             }
@@ -514,7 +536,6 @@ function htmlFormatMsg(msg, mentions) {
 
     // TODO: add options for emotions; msg = $.emotions(msg);
     // TODO make markdown optionally mutable ?
-        // some escaping tag
 
     return msg;
 }
