@@ -373,7 +373,24 @@ function htmlFormatMsg(msg, mentions) {
     msg = escapeHtmlEntities(msg);
 
     for (var i = 0; i < msg.length - 7; i++) {
-        if (msg.slice(i, i + 4).toLowerCase() === 'http') {
+        if (msg.slice(i, i + 2) === '](') {
+            // FIXME there can be text with [] inside [] or links with () wee need to handle it too
+            j = getStrStart(msg, i - 1, '[', '');
+            if (j < i) {
+                var k = getStrEnd(msg, i + 2, ')', '');
+                if (k > i + 1) {
+                    html.push($('#external-page-link-template')[0].outerHTML
+                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                        .replace(/<a\s+/ig, '<a href="' + proxyURL(msg.slice(i + 2, k + 1)) + '" ')  // $().closest('a').attr('href', proxyURL(url))
+                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + msg.slice(j, i) + '$2')  // $().closest('a').text(url)
+                    );
+                    strEncoded = '>' + (html.length - 1).toString() + '<';
+                    msg = msg.slice(0, j - 1) + strEncoded + msg.slice(k + 2);
+                    i = j + strEncoded.length - 1;
+                }
+            }
+        } else if (msg.slice(i, i + 4).toLowerCase() === 'http') {
             if (msg.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg[i + 7]) === -1) {
                 j = getStrEnd(msg, i + 7, stopCharsRight, stopCharsTrailingUrl);
                 if (j > i + 6) {
