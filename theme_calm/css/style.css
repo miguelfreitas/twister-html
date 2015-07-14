@@ -1,30 +1,32 @@
-@font-face
-{
+@font-face {
     font-family: "Open Sans";
     src: url("OpenSans-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
 }
-@font-face
-{
+
+@font-face {
     font-family: "Open Sans";
     src: url("OpenSans-Bold.ttf");
     font-weight: bold;
 }
-@font-face
-{
+
+@font-face {
     font-family: "Open Sans";
     src: url("OpenSans-Italic.ttf");
     font-style: italic;
 }
-@font-face
-{
+
+@font-face {
     font-family: "Open Sans Condensed";
     src: url("OpenSansCondensed300.ttf");
 }
-@font-face
-{
+
+@font-face {
     font-family: "Symbola";
     src: url("/css/Symbola.ttf");
 }
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -43,7 +45,6 @@ time, mark, audio, video, textarea
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif, Symbola;
