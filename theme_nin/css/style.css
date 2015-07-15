@@ -232,7 +232,6 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font: inherit;
   font-size: 100%;
   vertical-align: baseline;
 }
@@ -877,6 +876,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   word-wrap: break-word;
   min-height: 25px;
   padding: 0;
+}
+
+.post-text samp {
+    background: #eee;
 }
 
 /* line 138, ../sass/_postboard.sass */
