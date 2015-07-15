@@ -400,6 +400,24 @@ function htmlFormatMsg(msg, mentions) {
         return '>' + (html.length - 1).toString() + '<';
     }
 
+    function unpackHtml(str) {
+        var t;
+
+        for (var i = 0; i < str.length - 2; i++) {
+            if (str[i] === '>') {
+                for (var j = i + 2; j < str.length; j++) {
+                    if (str[j] === '<')
+                        break;
+                }
+                t = html[parseInt(str.slice(i + 1, j))];
+                str = str.slice(0, i) + t + str.slice(j + 1);
+                i = i + t.length - 1;
+            }
+        }
+
+        return str;
+    }
+
     var mentionsChars = 'abcdefghijklmnopqrstuvwxyz_0123456789';
     var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
     var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
@@ -427,7 +445,16 @@ function htmlFormatMsg(msg, mentions) {
                         .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
                         //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
                         .replace(/<a\s+/ig, '<a href="' + proxyURL(msg.slice(i + 2, k + 1)) + '" ')  // $().closest('a').attr('href', proxyURL(url))
-                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + msg.slice(j, i) + '$2')  // $().closest('a').text(url)
+                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1'
+                            + unpackHtml(
+                                markdown(markdown(markdown(markdown(msg.slice(j, i),
+                                    '*', 'b'),  // bold
+                                    '~', 'i'),  // italic
+                                    '_', 'u'),  // underlined
+                                    '-', 's')  // striketrough
+                                .replace(/&(?!lt;|gt;)/g, '&amp;')
+                            )
+                            + '$2')  // $().closest('a').text(url)
                     );
                     strEncoded = '>' + (html.length - 1).toString() + '<';
                     msg = msg.slice(0, j - 1) + strEncoded + msg.slice(k + 2);
@@ -529,28 +556,17 @@ function htmlFormatMsg(msg, mentions) {
         }
     }
 
-    msg = markdown(markdown(markdown(markdown(msg,
-        '*', 'b'),  // bold
-        '~', 'i'),  // italic
-        '_', 'u'),  // underlined
-        '-', 's')  // striketrough
+    msg = unpackHtml(
+        markdown(markdown(markdown(markdown(msg,
+            '*', 'b'),  // bold
+            '~', 'i'),  // italic
+            '_', 'u'),  // underlined
+            '-', 's')  // striketrough
         .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
         .replace(/&(?!lt;|gt;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&apos;')
-    ;
-
-    for (i = 0; i < msg.length - 2; i++) {
-        if (msg[i] === '>') {
-            for (j = i + 2; j < msg.length; j++) {
-                if (msg[j] === '<')
-                    break;
-            }
-            str = html[parseInt(msg.slice(i + 1, j))];
-            msg = msg.slice(0, i) + str + msg.slice(j + 1);
-            i = i + str.length - 1;
-        }
-    }
+    );
 
     if ($.Options.displayLineFeeds.val === 'enable')
         msg = msg.replace(/\n/g, '<br />');
