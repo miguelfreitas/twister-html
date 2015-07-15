@@ -248,7 +248,6 @@ function htmlFormatMsg(msg, mentions) {
                     if (str[j] !== chr)
                         break;
                 }
-                // ***. hey *stupid*
                 if (i === 0) {
                     p.push({i: i, k: j - i, t: -1, w: w, a: -1, p: -1});
                     w = false;
