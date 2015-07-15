@@ -439,7 +439,7 @@ function htmlFormatMsg(msg, mentions) {
     msg = markdown(escapeHtmlEntities(msg),
         '`', 'samp');  // kind of monospace, sequence of chars inside will be escaped from markup
     for (i = 0; i < msg.length - 7; i++) {
-        if (msg.slice(i, i + 2) === '](') {
+        /*if (msg.slice(i, i + 2) === '](') {
             // FIXME there can be text with [] inside [] or links with () wee need to handle it too
             j = getStrStart(msg, i - 1, '[', true, '');
             if (j < i) {
@@ -457,6 +457,8 @@ function htmlFormatMsg(msg, mentions) {
                                     '_', 'u'),  // underlined
                                     '-', 's')  // striketrough
                                 .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                .replace(/"/g, '&quot;')
+                                .replace(/'/g, '&apos;')
                             )
                             + '$2')  // $().closest('a').text(url)
                     );
@@ -465,7 +467,7 @@ function htmlFormatMsg(msg, mentions) {
                     i = j + strEncoded.length - 1;
                 }
             }
-        } else if (msg.slice(i, i + 4).toLowerCase() === 'http') {
+        } else*/ if (msg.slice(i, i + 4).toLowerCase() === 'http') {
             if (msg.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg[i + 7]) === -1) {
                 j = getStrEnd(msg, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
                 if (j > i + 6) {
