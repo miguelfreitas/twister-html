@@ -268,12 +268,12 @@ function htmlFormatMsg(msg, mentions) {
                                 l = -1;
                                 break;
                             } else if (stopCharsMarkDown.indexOf(str[t]) === -1) {
-                                l = whiteSpacesMarkDown.indexOf(str[t]);
+                                l = whiteSpaces.indexOf(str[t]);
                                 break;
                             }
                         }
                     } else
-                        l = whiteSpacesMarkDown.indexOf(str[i - 1]);
+                        l = whiteSpaces.indexOf(str[i - 1]);
                     if (stopCharsMarkDown.indexOf(str[j]) > -1) {
                         r = 1;
                         for (t = j + 1; t < str.length; t++) {
@@ -281,12 +281,12 @@ function htmlFormatMsg(msg, mentions) {
                                 r = -1;
                                 break;
                             } else if (stopCharsMarkDown.indexOf(str[t]) === -1) {
-                                r = whiteSpacesMarkDown.indexOf(str[t]);
+                                r = whiteSpaces.indexOf(str[t]);
                                 break;
                             }
                         }
                     } else
-                        r = whiteSpacesMarkDown.indexOf(str[j]);
+                        r = whiteSpaces.indexOf(str[j]);
                     if (l > -1) {
                         if (r > -1) {
                             if (j - i > 2) {
@@ -432,8 +432,7 @@ function htmlFormatMsg(msg, mentions) {
     var stopCharsRight = '>' + whiteSpaces;
     var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011'  // same as stopCharsTrailing but without '*~_-`' plus '>'
         + whiteSpaces;
-    var whiteSpacesMarkDown = whiteSpaces + '+=&/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
-    var stopCharsMarkDown = '*~_-`';
+    var stopCharsMarkDown = '/\\*~_-`.,:;?!%+=&\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
     var i, j, k, str, strEncoded;
     var html = [];
 
