@@ -259,7 +259,10 @@ function htmlFormatMsg(msg, mentions) {
                     if (stopCharsMarkDown.indexOf(str[i - 1]) > -1) {
                         l = 1;
                         for (t = i - 2; t > -1; t--) {
-                            if (stopCharsMarkDown.indexOf(str[t]) === -1) {
+                            if (str[t] === chr) {
+                                l = -1;
+                                break;
+                            } else if (stopCharsMarkDown.indexOf(str[t]) === -1) {
                                 l = whiteSpacesMarkDown.indexOf(str[t]);
                                 break;
                             }
@@ -269,7 +272,10 @@ function htmlFormatMsg(msg, mentions) {
                     if (stopCharsMarkDown.indexOf(str[j]) > -1) {
                         r = 1;
                         for (t = j + 1; t < str.length; t++) {
-                            if (stopCharsMarkDown.indexOf(str[t]) === -1) {
+                            if (str[t] === chr) {
+                                r = -1;
+                                break;
+                            } else if (stopCharsMarkDown.indexOf(str[t]) === -1) {
                                 r = whiteSpacesMarkDown.indexOf(str[t]);
                                 break;
                             }
