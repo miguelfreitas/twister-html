@@ -198,30 +198,36 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
 
 // convert message text to html, featuring @users and links formating.
 function htmlFormatMsg(msg, mentions) {
-    function getStrStart(str, startPoint, stopChars, stopCharsTrailing) {
+    function getStrStart(str, startPoint, stopChars, isStopCharMustExist, stopCharsTrailing) {
         for (var i = startPoint; i > -1; i--) {
             if (stopChars.indexOf(str[i]) > -1)
                 break;
         }
 
-        for (i += 1; i < startPoint + 1; i++) {
-            if (stopCharsTrailing.indexOf(str[i]) === -1)
-                break;
-        }
+        if (i !== -1 || !isStopCharMustExist) {
+            for (i += 1; i < startPoint + 1; i++) {
+                if (stopCharsTrailing.indexOf(str[i]) === -1)
+                    break;
+            }
+        } else
+            i = startPoint + 1;
 
         return i;
     }
 
-    function getStrEnd(str, startPoint, stopChars, stopCharsTrailing) {
+    function getStrEnd(str, startPoint, stopChars, isStopCharMustExist, stopCharsTrailing) {
         for (var i = startPoint; i < str.length; i++) {
             if (stopChars.indexOf(str[i]) > -1)
                 break;
         }
 
-        for (i -= 1; i > startPoint - 1; i--) {
-            if (stopCharsTrailing.indexOf(str[i]) === -1)
-                break;
-        }
+        if (i !== str.length || !isStopCharMustExist) {
+            for (i -= 1; i > startPoint - 1; i--) {
+                if (stopCharsTrailing.indexOf(str[i]) === -1)
+                    break;
+            }
+        } else
+            i = startPoint - 1;
 
         return i;
     }
@@ -433,13 +439,12 @@ function htmlFormatMsg(msg, mentions) {
 
     msg = markdown(escapeHtmlEntities(msg),
         '`', 'samp');  // kind of monospace, sequence of chars inside will be escaped from markup
-
     for (i = 0; i < msg.length - 7; i++) {
         if (msg.slice(i, i + 2) === '](') {
             // FIXME there can be text with [] inside [] or links with () wee need to handle it too
-            j = getStrStart(msg, i - 1, '[', '');
+            j = getStrStart(msg, i - 1, '[', true, '');
             if (j < i) {
-                k = getStrEnd(msg, i + 2, ')', '');
+                k = getStrEnd(msg, i + 2, ')', true, '');
                 if (k > i + 1) {
                     html.push($('#external-page-link-template')[0].outerHTML
                         .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
@@ -463,7 +468,7 @@ function htmlFormatMsg(msg, mentions) {
             }
         } else if (msg.slice(i, i + 4).toLowerCase() === 'http') {
             if (msg.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg[i + 7]) === -1) {
-                j = getStrEnd(msg, i + 7, stopCharsRight, stopCharsTrailingUrl);
+                j = getStrEnd(msg, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
                 if (j > i + 6) {
                     str = msg.slice(i, j + 1);
                     // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
@@ -479,7 +484,7 @@ function htmlFormatMsg(msg, mentions) {
                     i = i + strEncoded.length - 1;
                 }
             } else if (msg.slice(i + 4, i + 8).toLowerCase() === 's://' && stopCharsRight.indexOf(msg[i + 8]) === -1) {
-                j = getStrEnd(msg, i + 8, stopCharsRight, stopCharsTrailingUrl);
+                j = getStrEnd(msg, i + 8, stopCharsRight, false, stopCharsTrailingUrl);
                 if (j > i + 7) {
                     str = msg.slice(i, j + 1);
                     html.push($('#external-page-link-template')[0].outerHTML
@@ -499,9 +504,9 @@ function htmlFormatMsg(msg, mentions) {
     for (i = 1; i < msg.length - 1; i++) {
         if (msg[i] === '@' && stopCharsLeft.indexOf(msg[i - 1]) === -1
             && stopCharsTrailing.indexOf(msg[i - 1]) === -1 && stopCharsRight.indexOf(msg[i + 1]) === -1) {
-            j = getStrStart(msg, i - 1, stopCharsLeft, stopCharsTrailing);
+            j = getStrStart(msg, i - 1, stopCharsLeft, false, stopCharsTrailing);
             if (j < i) {
-                k = getStrEnd(msg, i + 1, stopCharsRight, stopCharsTrailing);
+                k = getStrEnd(msg, i + 1, stopCharsRight, false, stopCharsTrailing);
                 if (k > i) {
                     str = msg.slice(j, k + 1);
                     html.push($('#external-page-link-template')[0].outerHTML
@@ -540,7 +545,7 @@ function htmlFormatMsg(msg, mentions) {
 
     for (i = 0; i < msg.length - 1; i++) {
         if (msg[i] === '#' && msg[i + 1] !== '#' && stopCharsRight.indexOf(msg[i + 1]) === -1) {
-            j = getStrEnd(msg, i + 1, stopCharsRightHashtags, stopCharsTrailing);
+            j = getStrEnd(msg, i + 1, stopCharsRightHashtags, false, stopCharsTrailing);
             if (j > i) {
                 str = msg.slice(i + 1, j + 1);
                 html.push($('#hashtag-link-template')[0].outerHTML
