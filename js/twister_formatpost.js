@@ -425,33 +425,71 @@ function htmlFormatMsg(msg, mentions) {
     }
 
     var mentionsChars = 'abcdefghijklmnopqrstuvwxyz_0123456789';
-    var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
+    var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
     var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
     var whiteSpaces = ' \f\n\r\t\v​\u00A0\u1680\u180E\u2000​\u2001\u2002​\u2003\u2004\u2005\u2006​\u2007\u2008​\u2009\u200A\u2028\u2029​\u202F\u205F\u3000';
+    var whiteSpacesUrl = '\'\"' + whiteSpaces;
     var stopCharsLeft = '<' + whiteSpaces;
     var stopCharsRight = '>' + whiteSpaces;
-    var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011'  // same as stopCharsTrailing but without '*~_-`' plus '>'
+    var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049'  // same as stopCharsTrailing but without '*~_-`' plus '>'
         + whiteSpaces;
-    var stopCharsMarkDown = '/\\*~_-`.,:;?!%+=&\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
+    var stopCharsMarkDown = '/\\*~_-`.,:;?!%+=&\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
     var i, j, k, str, strEncoded;
     var html = [];
 
     msg = markdown(escapeHtmlEntities(msg),
         '`', 'samp');  // kind of monospace, sequence of chars inside will be escaped from markup
+
     for (i = 0; i < msg.length - 7; i++) {
-        var htmlPiece = undefined;
-        var msgSliceIdx;
         if (msg.slice(i, i + 2) === '](') {
             // FIXME there can be text with [] inside [] or links with () wee need to handle it too
-            j = getStrStart(msg, i - 1, '[', true, '');
-            if (j < i) {
-                k = getStrEnd(msg, i + 2, ')', true, '');
-                if (k > i + 1) {
-                    var a = $('#external-page-link-template')[0].cloneNode();
-                    a.href = proxyURL(msg.slice(i + 2, k + 1));
-                    a.text = msg.slice(j, i);
-                    htmlPiece = a.outerHTML;
-                    msgSliceIdx = [j - 1, k + 2];
+            j = getStrStart(msg, i - 2, '[', true, '');
+            if (j < i - 1) {
+                k = getStrEnd(msg, i + 3, ')', true, whiteSpaces);
+                if (k > i + 2) {
+                    strEncoded = msg.slice(j, i);  // just temporary storage for name of possiible link
+                    for (i += 2; i < k; i++) {
+                        if (whiteSpacesUrl.indexOf(msg[i]) === -1)  // drop whitespaces and ' and "  // apostrophes and quotes to prevent injection of js events
+                            break;
+                    }
+                    if (i < k) {
+                        // check for injections like [href=(' or ")]('#' or 'javascript' or 'data')[:]  // () and [] here just to explain somehow an idea, it's not about markup syntax
+                        if (msg[i] === '#' || msg.slice(i, i + 10).toLowerCase() === 'javascript'
+                            || msg.slice(i, i + 4).toLowerCase() === 'data') {
+                            html.push('…<br><b><i>' + polyglot.t('busted_oh') + '</i> '
+                                + polyglot.t('busted_avowal') + ':</b><br><samp>'
+                                + msg.slice(i, k + 1)
+                                    .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                    .replace(/"/g, '&quot;')
+                                    .replace(/'/g, '&apos;')
+                                + '</samp><br>'
+                            );
+                        } else {
+                            if (getStrEnd(msg, i + 1, whiteSpacesUrl, false, '') < k)  // use only first word as href target, others drop silently
+                                k = getStrEnd(msg, i + 1, whiteSpacesUrl, false, '');
+                            html.push($('#external-page-link-template')[0].outerHTML
+                                .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
+                                //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
+                                .replace(/<a\s+/ig, '<a href="' + proxyURL(msg.slice(i, k + 1)) + '" ')  // $().closest('a').attr('href', proxyURL(url))
+                                .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1'
+                                    + unpackHtml(
+                                        markdown(markdown(markdown(markdown(strEncoded,  // name of link, see above
+                                            '*', 'b'),  // bold
+                                            '~', 'i'),  // italic
+                                            '_', 'u'),  // underlined
+                                            '-', 's')  // striketrough
+                                        .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                        .replace(/"/g, '&quot;')
+                                        .replace(/'/g, '&apos;')
+                                    )
+                                    + '$2')  // $().closest('a').text(url)
+                            );
+                        }
+                        strEncoded = '>' + (html.length - 1).toString() + '<';
+                        msg = msg.slice(0, j - 1) + strEncoded + msg.slice(getStrEnd(msg, k + 1, ')', true, '') + 2);
+                        i = j + strEncoded.length - 1;
+                    } // else
+                        // i =  just no
                 }
             }
         } else if (msg.slice(i, i + 4).toLowerCase() === 'http') {
@@ -461,33 +499,31 @@ function htmlFormatMsg(msg, mentions) {
                     str = msg.slice(i, j + 1);
                     // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
                     // FIXME actually we should avoid it by dropping a template idea and construct html right here
-                    htmlPiece = $('#external-page-link-template')[0].outerHTML
+                    html.push($('#external-page-link-template')[0].outerHTML
                         .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
                         //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
                         .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
                         .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                    ;
-                    msgSliceIdx = [i, i + str.length];
+                    );
+                    strEncoded = '>' + (html.length - 1).toString() + '<';
+                    msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
+                    i = i + strEncoded.length - 1;
                 }
             } else if (msg.slice(i + 4, i + 8).toLowerCase() === 's://' && stopCharsRight.indexOf(msg[i + 8]) === -1) {
                 j = getStrEnd(msg, i + 8, stopCharsRight, false, stopCharsTrailingUrl);
                 if (j > i + 7) {
                     str = msg.slice(i, j + 1);
-                    htmlPiece = $('#external-page-link-template')[0].outerHTML
+                    html.push($('#external-page-link-template')[0].outerHTML
                         .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
                         //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
                         .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
                         .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                    ;
-                    msgSliceIdx = [i, i + str.length];
+                    );
+                    strEncoded = '>' + (html.length - 1).toString() + '<';
+                    msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
+                    i = i + strEncoded.length - 1;
                 }
             }
-        }
-        if (htmlPiece) {
-            html.push(htmlPiece)
-            strEncoded = '>' + (html.length - 1).toString() + '<';
-            msg = msg.slice(0, msgSliceIdx[0]) + strEncoded + msg.slice(msgSliceIdx[1]);
-            i = i + strEncoded.length - 1;
         }
     }
 
@@ -604,4 +640,5 @@ function reverseHtmlEntities(str) {
                 .replace(/&apos;/g, "'")
                 .replace(/&amp;/g, '&');
 }
+
 
