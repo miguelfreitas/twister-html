@@ -641,4 +641,3 @@ function reverseHtmlEntities(str) {
                 .replace(/&amp;/g, '&');
 }
 
-
