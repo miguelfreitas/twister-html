@@ -40,6 +40,8 @@ if(preferredLanguage == "en"){
       "Block chain information": "Block chain information",
       "Block chain is up-to-date, twister is ready to use!": "Block chain is up-to-date, twister is ready to use!",
       "Block generation": "Block generation ",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Cancel",
       "Change user": "Change user",
       "Checking...": "Checking...", // checking if username is available
@@ -329,6 +331,8 @@ if(preferredLanguage == "es"){
       "Block chain information": "Información de la cadena de bloques",
       "Block chain is up-to-date, twister is ready to use!": "La cadena de bloques está puesta al día, twister está listo para usar!",
       "Block generation": "Generación de bloques ",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Cancelar",
       "Change user": "Cambiar de usuario",
       "Checking...": "Comprobando ...", // checking if username is available
@@ -602,6 +606,8 @@ if(preferredLanguage == "uk"){
       "Block chain information": "Інформація про ланцюжок блоків",
       "Block chain is up-to-date, twister is ready to use!": "Ланцюг блоків оновлено, twister готовий до використання!",
       "Block generation": "Генерація блоку ",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Відміна",
       "Change user": "Змінити користувача",
       "Checking...": "Перевірка...", // checking if username is available
@@ -874,6 +880,8 @@ if(preferredLanguage == "zh-CN"){
       "Block chain information": "区块链信息",
       "Block chain is up-to-date, twister is ready to use!": "区块链已经更新，Twister 已经可以使用！",
       "Block generation": "区块生成器",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "取消",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
@@ -1163,6 +1171,8 @@ if(preferredLanguage == "nl"){
       "Block chain information": "Block chain informatie",
       "Block chain is up-to-date, twister is ready to use!": "Block chain is up-to-date, twister is klaar voor gebruik!",
       "Block generation": "Block productie",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Annuleren",
       "Change user": "Gebruiker wijzigen",
       "Checking...": "Controleren...", // checking if username is available
@@ -1436,6 +1446,8 @@ if(preferredLanguage == "it"){
       "Block chain information": "Informazioni sulla catena di blocchi",
       "Block chain is up-to-date, twister is ready to use!": "Catena di blocchi aggiornata, Twister è pronto per l'uso!",
       "Block generation": "Generatore di blocchi:",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Cancella",
       "Change user": "Cambia utente",
       "Checking...": "Controllo in corso...", // checking if username is available
@@ -1706,6 +1718,8 @@ if(preferredLanguage == "fr"){
       "Block chain information": "Informations à propos de la chaîne de blocs",
       "Block chain is up-to-date, twister is ready to use!": "La chaîne de blocs est à jour, Twister est maintenant fonctionnel!",
       "Block generation": "Production de blocs",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Annuler",
       "Change user": "Changer d'utilisateur",
       "Checking...": "Vérification...", // checking if username is available
@@ -1981,6 +1995,8 @@ if(preferredLanguage == "ru"){
        "Block chain information": "Информация цепочки блоков",
        "Block chain is up-to-date, twister is ready to use!": "Цепочка блоков обновлена, twister готов к использованию!",
        "Block generation": "Майнинг блоков ",
+       "busted_oh": "о нет!",
+       "busted_avowal": "я пойман на попытке вставить вредоносный код здесь",
        "Cancel": "Отмена",
        "Change user": "Сменить пользователя",
        "Checking...": "Проверка...",
@@ -2259,6 +2275,8 @@ if(preferredLanguage == "de"){
       "Block chain information": "Block-Chain Informationen",
       "Block chain is up-to-date, twister is ready to use!": "Block-Chain ist aktuell, twister ist benutzbar!",
       "Block generation": "Block-Generierung ",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Abbrechen",
       "Change user": "Benutzer wechseln",
       "Checking...": "Überprüfe...", // checking if username is available
@@ -2533,6 +2551,8 @@ if(preferredLanguage == "ja"){
       "Block chain information": "ブロックチェイン",
       "Block chain is up-to-date, twister is ready to use!": "ブロックチェインは最新の状態です。",
       "Block generation": "ブロック生成",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "キャンセル",
       "Change user": "ユーザーを変更",
       "Checking...": "チェック...", // checking if username is available
@@ -2804,6 +2824,8 @@ if(preferredLanguage == "pt-BR"){
       "Block chain information": "Informações da Cadeia de Blocos",
       "Block chain is up-to-date, twister is ready to use!": "A Cadeida de Blocos está sincronizada, Twister está pronto para uso!",
       "Block generation": "Geração de blocos ",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Cancelar",
       "Change user": "Trocar usuário",
       "Checking...": "Verificando...", // checking if username is available
@@ -3079,6 +3101,8 @@ if(preferredLanguage == "tr"){
       "Block chain information": "Blok zincir bilgisi",
       "Block chain is up-to-date, twister is ready to use!": "Blok zinciri güncel, twister kullanıma hazır!",
       "Block generation": "Blok üretimi ",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "İptal",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
@@ -3351,6 +3375,8 @@ if(preferredLanguage == "cs"){
       "Block chain information": "Informace o blockchainu",
       "Block chain is up-to-date, twister is ready to use!": "Blockchain je aktuální, twister je připraven k použití!",
       "Block generation": "Generování bloků ",
+      "busted_oh": "oh noes!",
+      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
       "Cancel": "Zrušit",
       "Change user": "Změnit uživatele",
       "Checking...": "Ověřuji...", // checking if username is available
