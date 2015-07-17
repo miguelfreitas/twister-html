@@ -1449,3 +1449,20 @@ function setTextcompleteDropdownListPos(position) {
 
     return this;
 }
+
+$(document).ready(function()
+{
+    var path = window.location.pathname;
+    var page = path.split("/").pop();
+    if (page.indexOf("following.html") === 0) {
+        initInterfaceFollowing();
+    } else if (page.indexOf("login.html") === 0) {
+        initInterfaceLogin();
+    } else if (page.indexOf("network.html") === 0) {
+        initInterfaceNetwork();
+    } else if (page.indexOf("profile-edit.html") === 0) {
+        initProfileEdit();
+    }
+
+    changeStyle();
+});
