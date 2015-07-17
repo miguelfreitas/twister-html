@@ -439,35 +439,24 @@ function htmlFormatMsg(msg, mentions) {
     msg = markdown(escapeHtmlEntities(msg),
         '`', 'samp');  // kind of monospace, sequence of chars inside will be escaped from markup
     for (i = 0; i < msg.length - 7; i++) {
-        /*if (msg.slice(i, i + 2) === '](') {
+        if (msg.slice(i, i + 2) === '](') {
             // FIXME there can be text with [] inside [] or links with () wee need to handle it too
             j = getStrStart(msg, i - 1, '[', true, '');
             if (j < i) {
                 k = getStrEnd(msg, i + 2, ')', true, '');
                 if (k > i + 1) {
-                    html.push($('#external-page-link-template')[0].outerHTML
-                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                        .replace(/<a\s+/ig, '<a href="' + proxyURL(msg.slice(i + 2, k + 1)) + '" ')  // $().closest('a').attr('href', proxyURL(url))
-                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1'
-                            + unpackHtml(
-                                markdown(markdown(markdown(markdown(msg.slice(j, i),
-                                    '*', 'b'),  // bold
-                                    '~', 'i'),  // italic
-                                    '_', 'u'),  // underlined
-                                    '-', 's')  // striketrough
-                                .replace(/&(?!lt;|gt;)/g, '&amp;')
-                                .replace(/"/g, '&quot;')
-                                .replace(/'/g, '&apos;')
-                            )
-                            + '$2')  // $().closest('a').text(url)
-                    );
+                    var a = $('#external-page-link-template')[0].cloneNode();
+                    a.href = proxyURL(msg.slice(i + 2, k + 1));
+                    a.text = msg.slice(j, i);
+                    html.push(a.outerHTML);
+
+                    // these 3 lines are duplicated several times below, not good programming pratice.
                     strEncoded = '>' + (html.length - 1).toString() + '<';
                     msg = msg.slice(0, j - 1) + strEncoded + msg.slice(k + 2);
                     i = j + strEncoded.length - 1;
                 }
             }
-        } else*/ if (msg.slice(i, i + 4).toLowerCase() === 'http') {
+        } else if (msg.slice(i, i + 4).toLowerCase() === 'http') {
             if (msg.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg[i + 7]) === -1) {
                 j = getStrEnd(msg, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
                 if (j > i + 6) {
