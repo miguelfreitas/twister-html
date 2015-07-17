@@ -2275,8 +2275,8 @@ if(preferredLanguage == "de"){
       "Block chain information": "Block-Chain Informationen",
       "Block chain is up-to-date, twister is ready to use!": "Block-Chain ist aktuell, twister ist benutzbar!",
       "Block generation": "Block-Generierung ",
-      "busted_oh": "oh noes!",
-      "busted_avowal": "I\'m busted trying inject some malicious stuff here",
+      "busted_oh": "Oh nein!",
+      "busted_avowal": "Ich bin ertappt, habe versucht, hier Schadcode einzugeben!",
       "Cancel": "Abbrechen",
       "Change user": "Benutzer wechseln",
       "Checking...": "Überprüfe...", // checking if username is available
