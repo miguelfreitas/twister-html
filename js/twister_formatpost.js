@@ -439,6 +439,8 @@ function htmlFormatMsg(msg, mentions) {
     msg = markdown(escapeHtmlEntities(msg),
         '`', 'samp');  // kind of monospace, sequence of chars inside will be escaped from markup
     for (i = 0; i < msg.length - 7; i++) {
+        var htmlPiece = undefined;
+        var msgSliceIdx;
         if (msg.slice(i, i + 2) === '](') {
             // FIXME there can be text with [] inside [] or links with () wee need to handle it too
             j = getStrStart(msg, i - 1, '[', true, '');
@@ -448,12 +450,8 @@ function htmlFormatMsg(msg, mentions) {
                     var a = $('#external-page-link-template')[0].cloneNode();
                     a.href = proxyURL(msg.slice(i + 2, k + 1));
                     a.text = msg.slice(j, i);
-                    html.push(a.outerHTML);
-
-                    // these 3 lines are duplicated several times below, not good programming pratice.
-                    strEncoded = '>' + (html.length - 1).toString() + '<';
-                    msg = msg.slice(0, j - 1) + strEncoded + msg.slice(k + 2);
-                    i = j + strEncoded.length - 1;
+                    htmlPiece = a.outerHTML;
+                    msgSliceIdx = [j - 1, k + 2];
                 }
             }
         } else if (msg.slice(i, i + 4).toLowerCase() === 'http') {
@@ -463,31 +461,33 @@ function htmlFormatMsg(msg, mentions) {
                     str = msg.slice(i, j + 1);
                     // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
                     // FIXME actually we should avoid it by dropping a template idea and construct html right here
-                    html.push($('#external-page-link-template')[0].outerHTML
+                    htmlPiece = $('#external-page-link-template')[0].outerHTML
                         .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
                         //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
                         .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
                         .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                    );
-                    strEncoded = '>' + (html.length - 1).toString() + '<';
-                    msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
-                    i = i + strEncoded.length - 1;
+                    ;
+                    msgSliceIdx = [i, i + str.length];
                 }
             } else if (msg.slice(i + 4, i + 8).toLowerCase() === 's://' && stopCharsRight.indexOf(msg[i + 8]) === -1) {
                 j = getStrEnd(msg, i + 8, stopCharsRight, false, stopCharsTrailingUrl);
                 if (j > i + 7) {
                     str = msg.slice(i, j + 1);
-                    html.push($('#external-page-link-template')[0].outerHTML
+                    htmlPiece = $('#external-page-link-template')[0].outerHTML
                         .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
                         //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
                         .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
                         .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                    );
-                    strEncoded = '>' + (html.length - 1).toString() + '<';
-                    msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length);
-                    i = i + strEncoded.length - 1;
+                    ;
+                    msgSliceIdx = [i, i + str.length];
                 }
             }
+        }
+        if (htmlPiece) {
+            html.push(htmlPiece)
+            strEncoded = '>' + (html.length - 1).toString() + '<';
+            msg = msg.slice(0, msgSliceIdx[0]) + strEncoded + msg.slice(msgSliceIdx[1]);
+            i = i + strEncoded.length - 1;
         }
     }
 
