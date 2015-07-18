@@ -8,7 +8,7 @@ var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
 
 $(document).ready(function() {
-    // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post
+    // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post every time
     _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')[0].cloneNode();
     _htmlFormatMsgLinkTemplateExternal.removeAttribute('id');
     _htmlFormatMsgLinkTemplateUser = $('#msg-user-link-template')[0].cloneNode();
@@ -185,7 +185,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
         getGroupChatName( remoteUser, dmItem.find("a.post-info-name") );
     else
         getFullname( remoteUser, dmItem.find("a.post-info-name") );
-    dmItem.find(".post-text").html(escapeHtmlEntities(dmData.text));
+    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text));
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
 
     return dmItem;
@@ -652,4 +652,3 @@ function reverseHtmlEntities(str) {
                 .replace(/&apos;/g, "'")
                 .replace(/&amp;/g, '&');
 }
-
