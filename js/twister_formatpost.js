@@ -482,8 +482,8 @@ function htmlFormatMsg(msg, mentions) {
                     if (i < k) {
                         var x = getSubStrEnd(msg.str, i, ':', false, '') + 1;
                         // following check is NOT for real protection (we have blocking CSP rule instead), it's just to aware people
-                        if (x > i && x < k && (msg.str.slice(x - 6, x).toLowerCase() === 'script'  // other things would be added when W3C and all the people invent it
-                            || msg.str.slice(x - 4, x).toLowerCase() === 'data')) {
+                        if (msg.str[i] === '#' || (x > i && x < k && (msg.str.slice(x - 6, x).toLowerCase() === 'script'  // other things would be added when W3C and all the people invent it
+                            || msg.str.slice(x - 4, x).toLowerCase() === 'data'))) {
                             msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
                                 '…<br><b><i>' + polyglot.t('busted_oh') + '</i> '
                                 + polyglot.t('busted_avowal') + ':</b><br><samp>'
