@@ -9,12 +9,21 @@ var _htmlFormatMsgLinkTemplateHashtag;
 
 $(document).ready(function() {
     // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post every time
-    _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')[0].cloneNode();
-    _htmlFormatMsgLinkTemplateExternal.removeAttribute('id');
-    _htmlFormatMsgLinkTemplateUser = $('#msg-user-link-template')[0].cloneNode();
-    _htmlFormatMsgLinkTemplateUser.removeAttribute('id');
-    _htmlFormatMsgLinkTemplateHashtag = $('#hashtag-link-template')[0].cloneNode();
-    _htmlFormatMsgLinkTemplateHashtag.removeAttribute('id');
+    _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
+    if (_htmlFormatMsgLinkTemplateExternal.length) {
+        _htmlFormatMsgLinkTemplateExternal = _htmlFormatMsgLinkTemplateExternal[0].cloneNode();
+        _htmlFormatMsgLinkTemplateExternal.removeAttribute('id');
+    }
+    _htmlFormatMsgLinkTemplateUser = $('#msg-user-link-template')
+    if (_htmlFormatMsgLinkTemplateUser.length) {
+        _htmlFormatMsgLinkTemplateUser = _htmlFormatMsgLinkTemplateUser[0].cloneNode();
+        _htmlFormatMsgLinkTemplateUser.removeAttribute('id');
+    }
+    _htmlFormatMsgLinkTemplateHashtag = $('#hashtag-link-template')
+    if (_htmlFormatMsgLinkTemplateHashtag.length) {
+        _htmlFormatMsgLinkTemplateHashtag = _htmlFormatMsgLinkTemplateHashtag[0].cloneNode();
+        _htmlFormatMsgLinkTemplateHashtag.removeAttribute('id');
+    }
 });
 
 // format "userpost" to html element
