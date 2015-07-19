@@ -1343,6 +1343,8 @@ function initInterfaceCommon() {
         closeModal();
     });
 
+    $('.modal-back').on('click', function() {history.back();});
+
     $('.prompt-close').on('click', function(e) {
         e.stopPropagation();
         closeModalHandler('.prompt-wrapper');
@@ -1460,6 +1462,9 @@ $(document).ready(function()
         initInterfaceLogin();
     } else if (page.indexOf("network.html") === 0) {
         initInterfaceNetwork();
+    } else if (page.indexOf('options.html') === 0) {
+        initInterfaceCommon();
+        $.Options.initControls();
     } else if (page.indexOf("profile-edit.html") === 0) {
         initProfileEdit();
     }

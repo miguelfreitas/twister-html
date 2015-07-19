@@ -777,7 +777,7 @@ function processSwarmProgressFinal(lastHaves, numPieces)
             }
         }
     }
-    window.setTimeout("requestSwarmProgress();",2000);
+    window.setTimeout(requestSwarmProgress, 2000);
 }
 
 function followingChangedUser() {
