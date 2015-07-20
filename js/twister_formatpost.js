@@ -3,6 +3,28 @@
 //
 // Format JSON posts and DMs to HTML.
 
+var _htmlFormatMsgLinkTemplateExternal;
+var _htmlFormatMsgLinkTemplateUser;
+var _htmlFormatMsgLinkTemplateHashtag;
+
+$(document).ready(function() {
+    // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post every time
+    _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
+    if (_htmlFormatMsgLinkTemplateExternal.length) {
+        _htmlFormatMsgLinkTemplateExternal = _htmlFormatMsgLinkTemplateExternal[0].cloneNode();
+        _htmlFormatMsgLinkTemplateExternal.removeAttribute('id');
+    }
+    _htmlFormatMsgLinkTemplateUser = $('#msg-user-link-template')
+    if (_htmlFormatMsgLinkTemplateUser.length) {
+        _htmlFormatMsgLinkTemplateUser = _htmlFormatMsgLinkTemplateUser[0].cloneNode();
+        _htmlFormatMsgLinkTemplateUser.removeAttribute('id');
+    }
+    _htmlFormatMsgLinkTemplateHashtag = $('#hashtag-link-template')
+    if (_htmlFormatMsgLinkTemplateHashtag.length) {
+        _htmlFormatMsgLinkTemplateHashtag = _htmlFormatMsgLinkTemplateHashtag[0].cloneNode();
+        _htmlFormatMsgLinkTemplateHashtag.removeAttribute('id');
+    }
+});
 
 // format "userpost" to html element
 // kind = "original"/"ancestor"/"descendant"
@@ -172,7 +194,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
         getGroupChatName( remoteUser, dmItem.find("a.post-info-name") );
     else
         getFullname( remoteUser, dmItem.find("a.post-info-name") );
-    dmItem.find(".post-text").html(escapeHtmlEntities(dmData.text));
+    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text));
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
 
     return dmItem;
@@ -198,7 +220,10 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
 
 // convert message text to html, featuring @users and links formating.
 function htmlFormatMsg(msg, mentions) {
-    function getStrStart(str, startPoint, stopChars, isStopCharMustExist, stopCharsTrailing) {
+    // TODO: add options for emotions; msg = $.emotions(msg);
+    // TODO make markup optionally mutable ?
+
+    function getSubStrStart(str, startPoint, stopChars, isStopCharMustExist, stopCharsTrailing) {
         for (var i = startPoint; i > -1; i--) {
             if (stopChars.indexOf(str[i]) > -1)
                 break;
@@ -215,7 +240,7 @@ function htmlFormatMsg(msg, mentions) {
         return i;
     }
 
-    function getStrEnd(str, startPoint, stopChars, isStopCharMustExist, stopCharsTrailing) {
+    function getSubStrEnd(str, startPoint, stopChars, isStopCharMustExist, stopCharsTrailing) {
         for (var i = startPoint; i < str.length; i++) {
             if (stopChars.indexOf(str[i]) > -1)
                 break;
@@ -232,8 +257,8 @@ function htmlFormatMsg(msg, mentions) {
         return i;
     }
 
-    function markdown(str, chr, tag) {
-        function whiteSpace(i, j) {
+    function markout(msg, chr, tag) {
+        function isWhiteSpacesBetween(i, j) {
             j++;
             for (i += 1; i < j; i++) {
                 if (p[i].w)
@@ -243,50 +268,50 @@ function htmlFormatMsg(msg, mentions) {
             return false;
         }
 
-        var i, j, t, l, r, strEncoded;
+        var i, j, t, l, r, htmlEntityEncoded;
         var w = false;
         var p = [];
 
         // collecting chars position data
-        for (i = 0; i < str.length; i++) {
-            if (str[i] === chr) {
-                for (j = i + 1; j < str.length; j++) {
-                    if (str[j] !== chr)
+        for (i = 0; i < msg.str.length; i++) {
+            if (msg.str[i] === chr) {
+                for (j = i + 1; j < msg.str.length; j++) {
+                    if (msg.str[j] !== chr)
                         break;
                 }
                 if (i === 0) {
                     p.push({i: i, k: j - i, t: -1, w: w, a: -1, p: -1});
                     w = false;
-                } else if (j === str.length) {
+                } else if (j === msg.str.length) {
                     p.push({i: i, k: j - i, t: 1, w: w, a: -1, p: -1});
                     w = false;
                 } else {
-                    if (stopCharsMarkDown.indexOf(str[i - 1]) > -1) {
+                    if (stopCharsMarkout.indexOf(msg.str[i - 1]) > -1) {
                         l = 1;
                         for (t = i - 2; t > -1; t--) {
-                            if (str[t] === chr) {
+                            if (msg.str[t] === chr) {
                                 l = -1;
                                 break;
-                            } else if (stopCharsMarkDown.indexOf(str[t]) === -1) {
-                                l = whiteSpaces.indexOf(str[t]);
+                            } else if (stopCharsMarkout.indexOf(msg.str[t]) === -1) {
+                                l = whiteSpaces.indexOf(msg.str[t]);
                                 break;
                             }
                         }
                     } else
-                        l = whiteSpaces.indexOf(str[i - 1]);
-                    if (stopCharsMarkDown.indexOf(str[j]) > -1) {
+                        l = whiteSpaces.indexOf(msg.str[i - 1]);
+                    if (stopCharsMarkout.indexOf(msg.str[j]) > -1) {
                         r = 1;
-                        for (t = j + 1; t < str.length; t++) {
-                            if (str[t] === chr) {
+                        for (t = j + 1; t < msg.str.length; t++) {
+                            if (msg.str[t] === chr) {
                                 r = -1;
                                 break;
-                            } else if (stopCharsMarkDown.indexOf(str[t]) === -1) {
-                                r = whiteSpaces.indexOf(str[t]);
+                            } else if (stopCharsMarkout.indexOf(msg.str[t]) === -1) {
+                                r = whiteSpaces.indexOf(msg.str[t]);
                                 break;
                             }
                         }
                     } else
-                        r = whiteSpaces.indexOf(str[j]);
+                        r = whiteSpaces.indexOf(msg.str[j]);
                     if (l > -1) {
                         if (r > -1) {
                             if (j - i > 2) {
@@ -307,7 +332,7 @@ function htmlFormatMsg(msg, mentions) {
                     w = false;
                 }
                 i = j - 1;
-            } else if (!w && whiteSpaces.indexOf(str[i]) > -1) {
+            } else if (!w && whiteSpaces.indexOf(msg.str[i]) > -1) {
                 w = true;
             }
         }
@@ -317,7 +342,7 @@ function htmlFormatMsg(msg, mentions) {
             if (p[i].t < 1 && p[i].a === -1) {
                 t = i;
                 for (j = i + 1; j < p.length; j++) {
-                    if (p[i].t === 0 && whiteSpace(i, j)) {
+                    if (p[i].t === 0 && isWhiteSpacesBetween(i, j)) {
                         i = j - 1;
                         break;
                     } else if (p[j].t < 1 && p[j].a === -1) {
@@ -335,11 +360,11 @@ function htmlFormatMsg(msg, mentions) {
         for (i = 0; i < p.length; i++) {
             if (p[i].t === -1 && p[i].a === -1) {
                 for (j = p[i].p; j > -1; j = p[j].p) {
-                    if (whiteSpace(i, j)) {
+                    if (isWhiteSpacesBetween(i, j)) {
                         i = j - 1;
                         break;
                     } else if (p[j].t === 0
-                        && !(p[j].p > -1 && p[p[j].p].t === 0 && !whiteSpace(j, p[j].p))) {
+                        && !(p[j].p > -1 && p[p[j].p].t === 0 && !isWhiteSpacesBetween(j, p[j].p))) {
                         p[j].a = i;
                         p[i].a = j;
                         i = j;
@@ -359,15 +384,15 @@ function htmlFormatMsg(msg, mentions) {
                         else
                             t = '<' + tag + '>';
                         j = p[i].a;
-                        t = t + str.slice(p[i].i + p[i].k, p[j].i);
+                        t = t + msg.str.slice(p[i].i + p[i].k, p[j].i);
                         if (p[j].k > 1)
                             t = t + Array(p[i].k).join(chr) + '</' + tag + '>';
                         else
                             t = t + '</' + tag + '>';
-                        html.push(t.replace(/&(?!lt;|gt;)/g, '&amp;'));
-                        strEncoded = '>' + (html.length - 1).toString() + '<';
-                        str = str.slice(0, p[i].i) + strEncoded + str.slice(p[j].i + p[j].k);
-                        l = strEncoded.length - p[j].i - p[j].k + p[i].i;
+                        msg.htmlEntities.push(t.replace(/&(?!lt;|gt;)/g, '&amp;'));
+                        htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
+                        msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[j].i + p[j].k);
+                        l = htmlEntityEncoded.length - p[j].i - p[j].k + p[i].i;
                         i = j;
                         for (j += 1; j < p.length; j++)
                             p[j].i += l;
@@ -379,195 +404,227 @@ function htmlFormatMsg(msg, mentions) {
                 if (p[i].a > -1) {
                     if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
                         if (p[i].k > 1)
-                            html.push('<' + tag + '>' + Array(p[i].k).join(chr));
+                            msg.htmlEntities.push('<' + tag + '>' + Array(p[i].k).join(chr));
                         else
-                            html.push('<' + tag + '>');
+                            msg.htmlEntities.push('<' + tag + '>');
                     } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
                         if (p[i].k > 1)
-                            html.push(Array(p[i].k).join(chr) + '</' + tag + '>');
+                            msg.htmlEntities.push(Array(p[i].k).join(chr) + '</' + tag + '>');
                         else
-                            html.push('</' + tag + '>');
+                            msg.htmlEntities.push('</' + tag + '>');
                     }
-                        strEncoded = '>' + (html.length - 1).toString() + '<';
-                        str = str.slice(0, p[i].i) + strEncoded + str.slice(p[i].i + p[i].k);
-                        l = strEncoded.length - p[i].k;
+                        htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
+                        msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[i].i + p[i].k);
+                        l = htmlEntityEncoded.length - p[i].k;
                         for (j = i + 1; j < p.length; j++)
                             p[j].i += l;
                 }
             }
         }
 
-        return str;
+        return msg;
     }
 
-    function htmlSplitCounter(str) {
-        html.push('<span class="splited-post-counter">' + str + '</span>');
+    function newHtmlEntityLink(template, urlTarget, urlName) {
+        template.href = urlTarget;
+        template.innerHTML = urlName;  // .innerHTML instead .text to allow markup inside [] of [url name](target)
 
-        return '>' + (html.length - 1).toString() + '<';
+        return template.outerHTML;
     }
 
-    function unpackHtml(str) {
+    function msgAddHtmlEntity(msg, strSliceLeft, strSliceRigth, htmlEntity) {
+        msg.htmlEntities.push(htmlEntity);
+        var htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
+        msg.str = msg.str.slice(0, strSliceLeft) + htmlEntityEncoded + msg.str.slice(strSliceRigth);
+        msg.i = strSliceLeft + htmlEntityEncoded.length - 1;
+
+        return msg;
+    }
+
+    function applyHtml(msg) {
         var t;
 
-        for (var i = 0; i < str.length - 2; i++) {
-            if (str[i] === '>') {
-                for (var j = i + 2; j < str.length; j++) {
-                    if (str[j] === '<')
+        for (var i = 0; i < msg.str.length - 2; i++) {
+            if (msg.str[i] === '>') {
+                for (var j = i + 2; j < msg.str.length; j++) {
+                    if (msg.str[j] === '<')
                         break;
                 }
-                t = html[parseInt(str.slice(i + 1, j))];
-                str = str.slice(0, i) + t + str.slice(j + 1);
+                t = msg.htmlEntities[parseInt(msg.str.slice(i + 1, j))];
+                msg.str = msg.str.slice(0, i) + t + msg.str.slice(j + 1);
                 i = i + t.length - 1;
             }
         }
 
-        return str;
+        return msg.str;
     }
 
     var mentionsChars = 'abcdefghijklmnopqrstuvwxyz_0123456789';
-    var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
+    var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
     var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
     var whiteSpaces = ' \f\n\r\t\v​\u00A0\u1680\u180E\u2000​\u2001\u2002​\u2003\u2004\u2005\u2006​\u2007\u2008​\u2009\u200A\u2028\u2029​\u202F\u205F\u3000';
+    var whiteSpacesUrl = '\'\"' + whiteSpaces;
     var stopCharsLeft = '<' + whiteSpaces;
     var stopCharsRight = '>' + whiteSpaces;
-    var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011'  // same as stopCharsTrailing but without '*~_-`' plus '>'
+    var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049'  // same as stopCharsTrailing but without '*~_-`' plus '>'
         + whiteSpaces;
-    var stopCharsMarkDown = '/\\*~_-`.,:;?!%+=&\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011';
-    var i, j, k, str, strEncoded;
-    var html = [];
+    var stopCharsMarkout = '/\\*~_-`.,:;?!%+=&\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
+    var i, j, k, str;
 
-    msg = markdown(escapeHtmlEntities(msg),
-        '`', 'samp');  // kind of monospace, sequence of chars inside will be escaped from markup
-    for (i = 0; i < msg.length - 7; i++) {
-        var htmlPiece = undefined;
-        var msgSliceIdx;
-        if (msg.slice(i, i + 2) === '](') {
-            // FIXME there can be text with [] inside [] or links with () wee need to handle it too
-            j = getStrStart(msg, i - 1, '[', true, '');
-            if (j < i) {
-                k = getStrEnd(msg, i + 2, ')', true, '');
-                if (k > i + 1) {
-                    var a = $('#external-page-link-template')[0].cloneNode();
-                    a.href = proxyURL(msg.slice(i + 2, k + 1));
-                    a.text = msg.slice(j, i);
-                    htmlPiece = a.outerHTML;
-                    msgSliceIdx = [j - 1, k + 2];
+    msg = {str: escapeHtmlEntities(msg), htmlEntities: []};
+
+    msg = markout(msg, '`', 'samp');  // <samp> tag is kind of monospace, here sequence of chars inside it will be escaped from markup
+
+    // handling links
+    for (i = 0; i < msg.str.length - 7; i++) {
+        if (msg.str.slice(i, i + 2) === '](') {
+            // FIXME there can be text with [] inside [] or links with () we need to handle it too
+            j = getSubStrStart(msg.str, i - 2, '[', true, '');
+            if (j < i - 1) {
+                k = getSubStrEnd(msg.str, i + 3, ')', true, whiteSpaces);
+                if (k > i + 2) {
+                    var linkName = msg.str.slice(j, i);  // name of possiible link
+                    for (i += 2; i < k; i++) {
+                        if (whiteSpacesUrl.indexOf(msg.str[i]) === -1)  // drop whitespaces and ' and "  // apostrophes and quotes to prevent injection of js events
+                            break;
+                    }
+                    if (i < k) {
+                        var x = getSubStrEnd(msg.str, i, ':', false, '') + 1;
+                        // following check is NOT for real protection (we have blocking CSP rule instead), it's just to aware people
+                        if (msg.str[i] === '#' || (x > i && x < k && (msg.str.slice(x - 6, x).toLowerCase() === 'script'  // other things would be added when W3C and all the people invent it
+                            || msg.str.slice(x - 4, x).toLowerCase() === 'data'))) {
+                            msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                '…<br><b><i>' + polyglot.t('busted_oh') + '</i> '
+                                + polyglot.t('busted_avowal') + ':</b><br><samp>'
+                                + msg.str.slice(i, k + 1)
+                                    .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                    .replace(/"/g, '&quot;')
+                                    .replace(/'/g, '&apos;')
+                                + '</samp><br>'
+                            );
+                        } else {
+                            if (getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '') < k)  // use only first word as href target, others drop silently
+                                k = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '');
+                            msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                                    proxyURL(msg.str.slice(i, k + 1)),
+                                    applyHtml(  // we're trying markup inside [] of []()
+                                        markout(markout(markout(markout(
+                                            {str: linkName, htmlEntities: msg.htmlEntities},
+                                                '*', 'b'),  // bold
+                                                '~', 'i'),  // italic
+                                                '_', 'u'),  // underlined
+                                                '-', 's')  // striketrough
+                                    )
+                                        .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                )
+                            );
+                        }
+                        i = msg.i + 1;
+                    }
                 }
             }
-        } else if (msg.slice(i, i + 4).toLowerCase() === 'http') {
-            if (msg.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg[i + 7]) === -1) {
-                j = getStrEnd(msg, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
+        } else if (msg.str.slice(i, i + 4).toLowerCase() === 'http') {
+            if (msg.str.slice(i + 4, i + 7) === '://' && stopCharsRight.indexOf(msg.str[i + 7]) === -1) {
+                j = getSubStrEnd(msg.str, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
                 if (j > i + 6) {
-                    str = msg.slice(i, j + 1);
-                    // FIXME we're trying to not interact with DOM, coz' we want to run really fast [to hell of RegExps]
-                    // FIXME actually we should avoid it by dropping a template idea and construct html right here
-                    htmlPiece = $('#external-page-link-template')[0].outerHTML
-                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                        .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
-                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                    ;
-                    msgSliceIdx = [i, i + str.length];
-                }
-            } else if (msg.slice(i + 4, i + 8).toLowerCase() === 's://' && stopCharsRight.indexOf(msg[i + 8]) === -1) {
-                j = getStrEnd(msg, i + 8, stopCharsRight, false, stopCharsTrailingUrl);
-                if (j > i + 7) {
-                    str = msg.slice(i, j + 1);
-                    htmlPiece = $('#external-page-link-template')[0].outerHTML
-                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                        .replace(/<a\s+/ig, '<a href="' + proxyURL(str) + '" ')  // $().closest('a').attr('href', proxyURL(url))
-                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
-                    ;
-                    msgSliceIdx = [i, i + str.length];
-                }
-            }
-        }
-        if (htmlPiece) {
-            html.push(htmlPiece)
-            strEncoded = '>' + (html.length - 1).toString() + '<';
-            msg = msg.slice(0, msgSliceIdx[0]) + strEncoded + msg.slice(msgSliceIdx[1]);
-            i = i + strEncoded.length - 1;
-        }
-    }
-
-    for (i = 1; i < msg.length - 1; i++) {
-        if (msg[i] === '@' && stopCharsLeft.indexOf(msg[i - 1]) === -1
-            && stopCharsTrailing.indexOf(msg[i - 1]) === -1 && stopCharsRight.indexOf(msg[i + 1]) === -1) {
-            j = getStrStart(msg, i - 1, stopCharsLeft, false, stopCharsTrailing);
-            if (j < i) {
-                k = getStrEnd(msg, i + 1, stopCharsRight, false, stopCharsTrailing);
-                if (k > i) {
-                    str = msg.slice(j, k + 1);
-                    html.push($('#external-page-link-template')[0].outerHTML
-                        .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                        //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                        .replace(/<a\s+/ig, '<a href="mailto:' + str.toLowerCase() + '" ')  // $().closest('a').attr('href', 'mailto:'+url)
-                        .replace(/(<a\s+[^]*?>)[^]*?(<\/a>)/ig, '$1' + str + '$2')  // $().closest('a').text(url)
+                    str = msg.str.slice(i, j + 1);
+                    msg = msgAddHtmlEntity(msg, i, i + str.length,
+                        newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                            proxyURL(str), str)
                     );
-                    strEncoded = '>' + (html.length - 1).toString() + '<';
-                    msg = msg.slice(0, j) + strEncoded + msg.slice(j + str.length);
-                    i = j + strEncoded.length - 1;
+                    i = msg.i;
+                }
+            } else if (msg.str.slice(i + 4, i + 8).toLowerCase() === 's://' && stopCharsRight.indexOf(msg.str[i + 8]) === -1) {
+                j = getSubStrEnd(msg.str, i + 8, stopCharsRight, false, stopCharsTrailingUrl);
+                if (j > i + 7) {
+                    str = msg.str.slice(i, j + 1);
+                    msg = msgAddHtmlEntity(msg, i, i + str.length,
+                        newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                            proxyURL(str), str)
+                    );
+                    i = msg.i;
                 }
             }
         }
     }
 
-    for (i = 0; i < msg.length - 1; i++) {
-        if (msg[i] === '@' && mentionsChars.indexOf(msg[i + 1].toLowerCase()) > -1) {
-            for (j = i + 2; j < msg.length; j++) {
-                if (mentionsChars.indexOf(msg[j].toLowerCase()) === -1)
+    // handling mails
+    for (i = 1; i < msg.str.length - 1; i++) {
+        if (msg.str[i] === '@' && stopCharsLeft.indexOf(msg.str[i - 1]) === -1
+            && stopCharsTrailing.indexOf(msg.str[i - 1]) === -1 && stopCharsRight.indexOf(msg.str[i + 1]) === -1) {
+            j = getSubStrStart(msg.str, i - 1, stopCharsLeft, false, stopCharsTrailing);
+            if (j < i) {
+                k = getSubStrEnd(msg.str, i + 1, stopCharsRight, false, stopCharsTrailing);
+                if (k > i) {
+                    str = msg.str.slice(j, k + 1);
+                    msg = msgAddHtmlEntity(msg, j, j + str.length,
+                        newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                            'mailto:' + str.toLowerCase(), str)
+                    );
+                    i = msg.i;
+                }
+            }
+        }
+    }
+
+    // handling mentions
+    for (i = 0; i < msg.str.length - 1; i++) {
+        if (msg.str[i] === '@' && mentionsChars.indexOf(msg.str[i + 1].toLowerCase()) > -1) {
+            for (j = i + 2; j < msg.str.length; j++) {
+                if (mentionsChars.indexOf(msg.str[j].toLowerCase()) === -1)
                     break;
             }
-            str = msg.slice(i + 1, j).toLowerCase();
+            str = msg.str.slice(i + 1, j).toLowerCase();
             mentions.push(str);  // FIXME
-            html.push($('#msg-user-link-template')[0].outerHTML
-                .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))/ig, '<a href="' + $.MAL.userUrl(str) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.userUrl(username))
-                .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-profile-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1@' + str + '$2')  // $().closest('a.open-profile-modal').text('@'+username)
+            msg = msgAddHtmlEntity(msg, i, i + str.length + 1,
+                newHtmlEntityLink(_htmlFormatMsgLinkTemplateUser,
+                    $.MAL.userUrl(str), '@' + str)
             );
-            strEncoded = '>' + (html.length - 1).toString() + '<';
-            msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length + 1);
-            i = i + strEncoded.length - 1;
+            i = msg.i;
         }
     }
 
-    for (i = 0; i < msg.length - 1; i++) {
-        if (msg[i] === '#' && msg[i + 1] !== '#' && stopCharsRight.indexOf(msg[i + 1]) === -1) {
-            j = getStrEnd(msg, i + 1, stopCharsRightHashtags, false, stopCharsTrailing);
+    // handling hashtags
+    for (i = 0; i < msg.str.length - 1; i++) {
+        if (msg.str[i] === '#' && msg.str[i + 1] !== '#' && stopCharsRight.indexOf(msg.str[i + 1]) === -1) {
+            j = getSubStrEnd(msg.str, i + 1, stopCharsRightHashtags, false, stopCharsTrailing);
             if (j > i) {
-                str = msg.slice(i + 1, j + 1);
-                html.push($('#hashtag-link-template')[0].outerHTML
-                    .replace(/\bid\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('id')
-                    //.replace(/\bhref\s*=\s*"[^]*?"+/ig, '')  // $().removeAttr('href')
-                    .replace(/<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))/ig, '<a href="' + $.MAL.hashtagUrl(encodeURIComponent(str.toLowerCase())) + '" ')  // $().closest('a.open-profile-modal').attr('href', $.MAL.hashtagUrl(hashtag))
-                    .replace(/(<a\s+(?=[^>]*?\bclass\s*=\s*"(?=[^"]*?\bopen-hashtag-modal\b))[^]*?>)[^]*?(<\/a>)/ig, '$1#' + str.replace(/&amp;/g, '&') + '$2')  // $().closest('a.open-profile-modal').text('#'+hashtag)
+                str = msg.str.slice(i + 1, j + 1);
+                msg = msgAddHtmlEntity(msg, i, i + str.length + 1,
+                    newHtmlEntityLink(_htmlFormatMsgLinkTemplateHashtag,
+                        $.MAL.hashtagUrl(encodeURIComponent(str.toLowerCase())), '#' + str.replace(/&amp;/g, '&'))
                 );
-                strEncoded = '>' + (html.length - 1).toString() + '<';
-                msg = msg.slice(0, i) + strEncoded + msg.slice(i + str.length + 1);
-                i = i + strEncoded.length - 1;
+                i = msg.i;
             }
         }
     }
 
-    msg = unpackHtml(
-        markdown(markdown(markdown(markdown(msg,
+    // handling text style markup
+    msg = markout(markout(markout(markout(msg,
             '*', 'b'),  // bold
             '~', 'i'),  // italic
             '_', 'u'),  // underlined
             '-', 's')  // striketrough
-        .replace(/\(\d{1,2}\/\d{1,2}\)$/, htmlSplitCounter)
+    ;
+
+    // handling splitted posts numbering and escaping ampersands, qoutes and apostrophes
+    msg.str = msg.str
+        .replace(/\(\d{1,2}\/\d{1,2}\)$/, function (str) {
+            msg.htmlEntities.push('<span class="splited-post-counter">' + str + '</span>');  // FIXME
+
+            return '>' + (msg.htmlEntities.length - 1).toString() + '<';
+        })
         .replace(/&(?!lt;|gt;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&apos;')
-    );
 
+    // applying html entities to msg.str and converting msg to string back
+    msg = applyHtml(msg);
+
+    // handling linebreaks
     if ($.Options.displayLineFeeds.val === 'enable')
         msg = msg.replace(/\n/g, '<br />');
-
-    // TODO: add options for emotions; msg = $.emotions(msg);
-    // TODO make markdown optionally mutable ?
 
     return msg;
 }
@@ -604,4 +661,3 @@ function reverseHtmlEntities(str) {
                 .replace(/&apos;/g, "'")
                 .replace(/&amp;/g, '&');
 }
-
