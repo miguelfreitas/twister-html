@@ -137,6 +137,11 @@ function twisterOptions() {
         valDefault: 'enable'
     });
     this.add({
+        name: 'postsMarkout',
+        selector: '#optPostsMarkout',
+        valDefault: 'apply'
+    });
+    this.add({
         name: 'displayPreview',
         valDefault: 'disable'
     });

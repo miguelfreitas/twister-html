@@ -258,6 +258,9 @@ function htmlFormatMsg(msg, mentions) {
     }
 
     function markout(msg, chr, tag) {
+        if ($.Options.postsMarkout.val === 'ignore')
+            return msg;
+
         function isWhiteSpacesBetween(i, j) {
             j++;
             for (i += 1; i < j; i++) {
@@ -375,20 +378,19 @@ function htmlFormatMsg(msg, mentions) {
         }
 
         // changing the string
-        if (chr === '`') {
+        if (chr === '`' && $.Options.postsMarkout.val === 'apply') {  // if $.Options.postsMarkout.val === 'clear' then ` does not escapes anythyng so it needs to be handled like other tags
             for (i = 0; i < p.length; i++) {
                 if (p[i].a > -1) {
                     if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
                         if (p[i].k > 1)
-                            t = '<' + tag + '>' + Array(p[i].k).join(chr);
+                            t = Array(p[i].k).join(chr);
                         else
-                            t = '<' + tag + '>';
+                            t = '';
                         j = p[i].a;
                         t = t + msg.str.slice(p[i].i + p[i].k, p[j].i);
                         if (p[j].k > 1)
-                            t = t + Array(p[i].k).join(chr) + '</' + tag + '>';
-                        else
-                            t = t + '</' + tag + '>';
+                            t = t + Array(p[i].k).join(chr);
+                        t = '<' + tag + '>' + t + '</' + tag + '>';
                         msg.htmlEntities.push(t.replace(/&(?!lt;|gt;)/g, '&amp;'));
                         htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
                         msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[j].i + p[j].k);
@@ -400,18 +402,25 @@ function htmlFormatMsg(msg, mentions) {
                 }
             }
         } else {
+            if ($.Options.postsMarkout.val === 'apply') {
+                t = '</' + tag + '>';
+                tag = '<' + tag + '>';
+            } else {  // $.Options.postsMarkout.val === 'clear' so we're clearing markup
+                t = '';
+                tag = '';
+            }
             for (i = 0; i < p.length; i++) {
                 if (p[i].a > -1) {
                     if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
                         if (p[i].k > 1)
-                            msg.htmlEntities.push('<' + tag + '>' + Array(p[i].k).join(chr));
+                            msg.htmlEntities.push(tag + Array(p[i].k).join(chr));
                         else
-                            msg.htmlEntities.push('<' + tag + '>');
+                            msg.htmlEntities.push(tag);
                     } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
                         if (p[i].k > 1)
-                            msg.htmlEntities.push(Array(p[i].k).join(chr) + '</' + tag + '>');
+                            msg.htmlEntities.push(Array(p[i].k).join(chr) + t);
                         else
-                            msg.htmlEntities.push('</' + tag + '>');
+                            msg.htmlEntities.push(t);
                     }
                         htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
                         msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[i].i + p[i].k);
@@ -477,7 +486,7 @@ function htmlFormatMsg(msg, mentions) {
 
     // handling links
     for (i = 0; i < msg.str.length - 7; i++) {
-        if (msg.str.slice(i, i + 2) === '](') {
+        if (msg.str.slice(i, i + 2) === '](' && $.Options.postsMarkout.val !== 'ignore') {
             // FIXME there can be text with [] inside [] or links with () we need to handle it too
             j = getSubStrStart(msg.str, i - 2, '[', true, '');
             if (j < i - 1) {
@@ -505,10 +514,25 @@ function htmlFormatMsg(msg, mentions) {
                         } else {
                             if (getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '') < k)  // use only first word as href target, others drop silently
                                 k = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '');
-                            msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
-                                newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
-                                    proxyURL(msg.str.slice(i, k + 1)),
-                                    applyHtml(  // we're trying markup inside [] of []()
+                            if ($.Options.postsMarkout.val === 'apply') {
+                                msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                    newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                                        proxyURL(msg.str.slice(i, k + 1)),
+                                        applyHtml(  // we're trying markup inside [] of []()
+                                            markout(markout(markout(markout(
+                                                {str: linkName, htmlEntities: msg.htmlEntities},
+                                                    '*', 'b'),  // bold
+                                                    '~', 'i'),  // italic
+                                                    '_', 'u'),  // underlined
+                                                    '-', 's')  // striketrough
+                                        )
+                                            .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                    )
+                                );
+                            } else {  // $.Options.postsMarkout.val === 'clear' so we're clearing markup
+                                str = msg.str.slice(i, k + 1);
+                                msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                    applyHtml(  // we're trying to clear markup inside [] of []()
                                         markout(markout(markout(markout(
                                             {str: linkName, htmlEntities: msg.htmlEntities},
                                                 '*', 'b'),  // bold
@@ -517,8 +541,16 @@ function htmlFormatMsg(msg, mentions) {
                                                 '-', 's')  // striketrough
                                     )
                                         .replace(/&(?!lt;|gt;)/g, '&amp;')
-                                )
-                            );
+                                );
+                                // here we put link target as plain text to handle it usual way (search http[s]:// and so on)
+                                i = msg.i + 1
+                                msg.str = msg.str.slice(0, i) + ' ' + str + msg.str.slice(i);
+                                /* alternatively we could set up it as link itself but I suppose you don't want it
+                                msg = msgAddHtmlEntity(msg, msg.i + 1, msg.i + 1,
+                                    ' ' + newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                                        proxyURL(str), str)
+                                ); */
+                            }
                         }
                         i = msg.i + 1;
                     }
