@@ -26,6 +26,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
         // reply text counter both newmsg and dmchat
         $('.post-area-new textarea')
             .off('input keyup')
+            .on('focus', posPostPreview)
             .on('keyup', replyTextInput)
             .on('keyup', function() { replyTextUpdateRemaining(this); })
         ;

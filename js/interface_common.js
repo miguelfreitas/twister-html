@@ -578,6 +578,15 @@ function composeNewPost(e, postAreaNew) {
         postAreaNew.find('textarea:last').focus();
 }
 
+function posPostPreview(event) {
+    var textArea = $(event.target);
+    var postPreview = textArea.siblings('#post-preview');
+    if (!postPreview.length)
+        postPreview = $('#post-preview-template').children().clone();
+    postPreview.html(htmlFormatMsg(textArea[0].value, []))
+    textArea.before(postPreview);
+}
+
 // Reduz Área do Novo post
 function unfocusThis() {
     $(this).removeClass('open');
@@ -680,6 +689,8 @@ function replyTextInput(event) {
                 textArea.caret(caretPos);
             }
         }
+
+        textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, []));
     }
 
     function getPostSplitingPML() {
@@ -1372,6 +1383,7 @@ function initInterfaceCommon() {
         .clickoutside(unfocusThis)
         .children('textarea')
             .on({
+                'focus': posPostPreview,
                 'input': replyTextInput,  // input event fires in modern browsers (IE9+) on any changes in textarea (and copypasting with mouse too)
                 'input focus': replyTextUpdateRemaining,
                 'keyup': replyTextKeySend
