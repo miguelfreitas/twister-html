@@ -579,6 +579,9 @@ function composeNewPost(e, postAreaNew) {
 }
 
 function posPostPreview(event) {
+    if (!$.Options.postPreview.val)
+        return;
+
     var textArea = $(event.target);
     var postPreview = textArea.siblings('#post-preview');
     if (!postPreview.length) {
