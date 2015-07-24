@@ -573,6 +573,7 @@ function composeNewPost(e, postAreaNew) {
     var textArea = postAreaNew.find('textarea');
     if (textArea.attr('data-reply-to') && !textArea.val().length) {
         textArea.val(textArea.attr('data-reply-to'));
+        posPostPreview(e);
     }
     if (!postAreaNew.find('textarea:focus').length)
         postAreaNew.find('textarea:last').focus();
@@ -593,7 +594,10 @@ function posPostPreview(event) {
         postPreview.width(postPreview.width()  // width is not accurate if we do it with textArea.width() directly, don't know why
             - postPreview.css('padding-left') - postPreview.css('padding-right'));
     }
-    postPreview.html(htmlFormatMsg(textArea[0].value, [])).show();
+    if (textArea[0].value.length)
+        postPreview.html(htmlFormatMsg(textArea[0].value, [])).show();
+    else
+        postPreview.hide();
     textArea.before(postPreview);
 }
 
@@ -700,7 +704,10 @@ function replyTextInput(event) {
             }
         }
 
-        textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, []));
+        if (textArea[0].value.length)
+            textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
+        else
+            textAreaForm.find('#post-preview').html('').hide();
     }
 
     function getPostSplitingPML() {
