@@ -589,7 +589,8 @@ function posPostPreview(event) {
             .css('margin-left', textArea.css('margin-left'))
             .css('margin-right', textArea.css('margin-right'))
         ;
-        postPreview.css('width', textArea.css('width')
+        postPreview.width(textArea.width());
+        postPreview.width(postPreview.width()  // width is not accurate if we do it with textArea.width() directly, don't know why
             - postPreview.css('padding-left') - postPreview.css('padding-right'));
     }
     postPreview.html(htmlFormatMsg(textArea[0].value, [])).show();
