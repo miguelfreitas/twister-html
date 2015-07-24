@@ -581,9 +581,15 @@ function composeNewPost(e, postAreaNew) {
 function posPostPreview(event) {
     var textArea = $(event.target);
     var postPreview = textArea.siblings('#post-preview');
-    if (!postPreview.length)
-        postPreview = $('#post-preview-template').children().clone();
-    postPreview.html(htmlFormatMsg(textArea[0].value, []))
+    if (!postPreview.length) {
+        postPreview = $('#post-preview-template').children().clone()
+            .css('margin-left', textArea.css('margin-left'))
+            .css('margin-right', textArea.css('margin-right'))
+        ;
+        postPreview.css('width', textArea.css('width')
+            - postPreview.css('padding-left') - postPreview.css('padding-right'));
+    }
+    postPreview.html(htmlFormatMsg(textArea[0].value, [])).show();
     textArea.before(postPreview);
 }
 
@@ -1206,6 +1212,8 @@ function postSubmit(e, oldLastPostId) {
     $.MAL.disableButton($this);
 
     var $replyText = $this.closest('.post-area-new').find('textarea');
+
+    $replyText.siblings('#post-preview').hide();
 
     var $postOrig = $this.closest('.post-data');
     if (!$postOrig.length) {
