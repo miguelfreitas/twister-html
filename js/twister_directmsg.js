@@ -94,6 +94,8 @@ function directMsgSubmit(e) {
 
     var replyText = $(this).closest('.post-area-new').find('textarea');
 
+    replyText.siblings('#post-preview').hide();
+
     newDirectMsg(replyText.val(), $('.directMessages').attr('data-dm-screen-name'));
 
     replyText.val('');
