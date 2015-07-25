@@ -2460,7 +2460,7 @@ if(preferredLanguage == "de"){
       "Theme": "Theme",
       "Keys": "Keys",
       "Notifications": "Benachrichtigungen",
-      "Desktop notifications": "Desktophinweisen",
+      "Desktop notifications": "Desktophinweise",
       "Sound notifications": "Audioeinstellungen",
       "Volume": "Lautstärke",
       "Test": "Probe",
