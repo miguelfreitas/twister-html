@@ -2337,7 +2337,7 @@ if(preferredLanguage == "de"){
       "Followers": "Followers",
       "Following": "Folgt",
       "Following users": "Folgt Benutzern",
-      "Force connection to peer:": "Ertzwinge Verbindung zu Peer:",
+      "Force connection to peer:": "Erzwinge Verbindung zu Peer:",
       "General information": "Generelle Informationen",
       "Generate blocks (send promoted messages)": "Blöcke generieren (Promoted-Messages senden)",
       "Home": "Home", // homepage
@@ -2403,7 +2403,7 @@ if(preferredLanguage == "de"){
       "Type message here": "Nachricht hier eingeben",
       "Unfollow": "Nicht mehr folgen",
       "Update": "Aktualisieren",
-      "Auto updating": "Automatsiche Aktualisierung",
+      "Auto updating": "Automatische Aktualisierung",
       "Updating status...": "Status wird aktualisiert...", // status of block chain
       "user_not_yet_accepted": "Andere Peers haben diesen Benutzter noch nicht akzeptiert.\n" +
                 "Leider ist es nicht möglich, das Profil zu speichern\n" +
@@ -2500,7 +2500,7 @@ if(preferredLanguage == "de"){
       "Postboard displays": "Postboard displays",
       "RTs those are close to original twist": "RTs those are close to original twist",
       "Show if the original is older than": "Show if the original is older than",
-      "hour(s)": "hour(s)",
+      "hour(s)": "Stunde(n)",
       "second(s)": "Sekunde(n)",
       "only positive numbers!": "nur positive Zahlen erlaubt!",
       "Language filtering": "Sprachfilterung",
@@ -2540,8 +2540,8 @@ if(preferredLanguage == "de"){
       "Messages": "Messages",
       "Edit profile": "Edit profile",
       "Top Trends": "Top Trends",
-      "Twistday Reminder": "Twistday Reminder",
-      "Show upcoming in near future": "Show upcoming in near future",
+      "Twistday Reminder": "Twistday Erinnerung",
+      "Show upcoming in near future": "Zeige bevorstehende in naher Zukunft",
       "Who's celebrating Twistday": "Who's celebrating Twistday",
       "Today's luckies:": "Today's luckies:",
       "Upcoming ones:": "Upcoming ones:",
@@ -2560,7 +2560,7 @@ if(preferredLanguage == "de"){
       "Language": "Language",
       "Sound": "Sound",
       "Users": "Users",
-      "Direct Message's copy to self": "Direct Message's copy to self",
+      "Direct Message's copy to self": "Kopie der Direktnachricht an mich selbst",
     };
 }
 
