@@ -2498,7 +2498,7 @@ if(preferredLanguage == "de"){
       "Show all": "Show all",
       "Show only if I am in": "Show only if I am in",
       "Show if it's between users I follow": "Show if it's between users I follow",
-      "Postboard displays": "Postboard displays",
+      "Postboard displays": "In der Timeline anzeigen",
       "RTs those are close to original twist": "RTs those are close to original twist",
       "Show if the original is older than": "Anzeigen, wenn das Original älter ist als",
       "hour(s)": "Stunde(n)",
