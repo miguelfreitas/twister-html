@@ -2318,6 +2318,7 @@ if(preferredLanguage == "de"){
       "Display mentions to @": "Zeige Erwähnungen von @", //Ist das richtig? Ich weiß nicht, in welchem Zusammenhang das benutzt wird.
       "Display retransmissions": "Weiterleitungen anzeigen",
       "DNS to obtain list of peers:": "DNS um Peer-Liste abzurufen:",
+      "dns address": "DNS-Adresse",
       "downloading_block_chain": "Block-Chain wird heruntergeladen, bitte warten (Block-Chain ist %{days} Tage alt).",
       "download_posts_status": "%{portion} Posts heruntergeladen", // Downloaded 10/30 posts
       "Enable": "Aktivieren",
