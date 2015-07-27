@@ -108,7 +108,6 @@ function postToElem( post, kind, promoted ) {
     postInfoName.text(n).attr('href', $.MAL.userUrl(n));
     getFullname( n, postInfoName );
     //elem.find('.post-info-tag').text("@" + n);
-    setPostInfoSent(n,k,elem.find('.post-info-sent'));
     getAvatar( n, elem.find('.avatar') );
     elem.find('.post-info-time').text(timeGmtToText(t)).attr('title', timeSincePost(t));
 
@@ -143,7 +142,10 @@ function postToElem( post, kind, promoted ) {
 
     if (typeof(promoted) !== 'undefined' && promoted) {
         elem.find('.post-propagate').remove();
+        postData.attr('data-promoted', 1);
+        postData.attr('data-screen-name', '!' + n);
     } else {
+        setPostInfoSent(n,k,elem.find('.post-info-sent'));
         if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangSimulate.val) {
             // FIXME it's must be stuff from template actually
             if (typeof(post['langFilter']) !== 'undefined') {
