@@ -196,7 +196,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
         getGroupChatName( remoteUser, dmItem.find("a.post-info-name") );
     else
         getFullname( remoteUser, dmItem.find("a.post-info-name") );
-    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text));
+    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text, []));
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
 
     return dmItem;

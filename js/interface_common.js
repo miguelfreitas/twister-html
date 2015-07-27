@@ -573,9 +573,32 @@ function composeNewPost(e, postAreaNew) {
     var textArea = postAreaNew.find('textarea');
     if (textArea.attr('data-reply-to') && !textArea.val().length) {
         textArea.val(textArea.attr('data-reply-to'));
+        posPostPreview(e);
     }
     if (!postAreaNew.find('textarea:focus').length)
         postAreaNew.find('textarea:last').focus();
+}
+
+function posPostPreview(event) {
+    if (!$.Options.postPreview.val)
+        return;
+
+    var textArea = $(event.target);
+    var postPreview = textArea.siblings('#post-preview');
+    if (!postPreview.length) {
+        postPreview = $('#post-preview-template').children().clone()
+            .css('margin-left', textArea.css('margin-left'))
+            .css('margin-right', textArea.css('margin-right'))
+        ;
+        postPreview.width(textArea.width());
+        postPreview.width(postPreview.width()  // width is not accurate if we do it with textArea.width() directly, don't know why
+            - postPreview.css('padding-left') - postPreview.css('padding-right'));
+    }
+    if (textArea[0].value.length)
+        postPreview.html(htmlFormatMsg(textArea[0].value, [])).show();
+    else
+        postPreview.hide();
+    textArea.before(postPreview);
 }
 
 // Reduz Área do Novo post
@@ -680,6 +703,11 @@ function replyTextInput(event) {
                 textArea.caret(caretPos);
             }
         }
+
+        if (textArea[0].value.length)
+            textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
+        else
+            textAreaForm.find('#post-preview').html('').hide();
     }
 
     function getPostSplitingPML() {
@@ -1196,6 +1224,8 @@ function postSubmit(e, oldLastPostId) {
 
     var $replyText = $this.closest('.post-area-new').find('textarea');
 
+    $replyText.siblings('#post-preview').hide();
+
     var $postOrig = $this.closest('.post-data');
     if (!$postOrig.length) {
         $postOrig = $this.closest('.modal-content').find('.post-data');
@@ -1372,6 +1402,7 @@ function initInterfaceCommon() {
         .clickoutside(unfocusThis)
         .children('textarea')
             .on({
+                'focus': posPostPreview,
                 'input': replyTextInput,  // input event fires in modern browsers (IE9+) on any changes in textarea (and copypasting with mouse too)
                 'input focus': replyTextUpdateRemaining,
                 'keyup': replyTextKeySend

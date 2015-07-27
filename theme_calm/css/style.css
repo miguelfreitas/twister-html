@@ -776,6 +776,15 @@ textarea.splited-post {
     box-shadow: none!important;
     height: 28px;
 }
+
+#post-preview {
+    background-color: #F2FFBA;
+    border: solid 1px #B4C669;
+    font-size: 11px;
+    margin: 4px 0;
+    padding: 4px;
+}
+
 .splited-post-counter {
     color: rgba(0, 0, 0, 0.3);
     font-weight: bold;
@@ -1252,8 +1261,9 @@ textarea.splited-post {
 {
     color: #76b2ce;
 }
+
 /* external http links */
-.post-text a[href^="http"] {
+.post-text a[href^="http"], #post-preview a[href^="http"] {
     font: italic 13px "Open Sans", sans-serif;
     text-decoration: none;
     color: #b46e67;
@@ -1263,11 +1273,13 @@ textarea.splited-post {
     -o-transition: all 200ms;
     transition: all 200ms;
 }
-.post-text a[href^="http"]:hover{
+
+.post-text a[href^="http"]:hover, #post-preview a[href^="http"]:hover {
     color: #e18881;
     opacity: .8;
 }
-.post-text a[href^="http"]:after {
+
+.post-text a[href^="http"]:after, #post-preview a[href^="http"]:after {
     content: '';
     display: inline-block;
     position: relative;
@@ -1284,10 +1296,13 @@ textarea.splited-post {
     -o-transition: all 200ms;
     transition: all 200ms;
 }
-.post-text a[href^="http"]:hover:after {
+
+.post-text a[href^="http"]:hover:after, #post-preview a[href^="http"]:hover:after {
     opacity: .8;
 }
-.post-text a[href^="#profile"], .follow-suggestions a[href^="#profile"] {
+
+.post-text a[href^="#profile"], .follow-suggestions a[href^="#profile"],
+#post-preview a[href^="#profile"] {
     color: #5e8da4;
     text-decoration: none;
     -webkit-transition: all 200ms;
@@ -1296,10 +1311,18 @@ textarea.splited-post {
     -o-transition: all 200ms;
     transition: all 200ms;
 }
-.post-text a[href^="#profile"]:hover, .follow-suggestions a[href^="#profile"]:hover {
+
+.post-text a[href^="#profile"]:hover, .follow-suggestions a[href^="#profile"]:hover,
+#post-preview a[href^="#profile"]:hover {
     color: #76b2ce;
 }
-.toptrends-list a[href^="#hashtag"], .post-text a[href^="#hashtag"]{
+
+#post-preview a {
+    font-size: 11px;
+}
+
+.toptrends-list a[href^="#hashtag"], .post-text a[href^="#hashtag"],
+#post-preview a[href^="#hashtag"] {
     color: #5e72a4;
     text-decoration: none;
     -webkit-transition: all 200ms;
@@ -1308,7 +1331,9 @@ textarea.splited-post {
     -o-transition: all 200ms;
     transition: all 200ms;
 }
-.toptrends-list a[href^="#hashtag"]:hover, .post-text a[href^="#hashtag"]:hover{
+
+.toptrends-list a[href^="#hashtag"]:hover, .post-text a[href^="#hashtag"]:hover,
+#post-preview a[href^="#hashtag"]:hover {
     color: #768fce;
 }
 
@@ -1320,10 +1345,12 @@ textarea.splited-post {
     -o-transition: all 200ms;
     transition: all 200ms;
 }
+
 .post-info a[href^="#profile"]:hover, .followers a[href^="#profile"]:hover,  a[href^="#profile"].post-retransmited-by:hover {
     color: #5e8da4;
     text-decoration: none;
 }
+
 /* Inpost previw */
 .preview-container
 {

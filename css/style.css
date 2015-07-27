@@ -626,7 +626,6 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
     padding: 4px;
     font-size: 13px;
 }
-
 .post-area-new textarea:focus {
     border: solid 1px rgba( 227, 79, 66, .5 );
 }
@@ -648,6 +647,19 @@ textarea.splited-post {
     box-shadow: none!important;
     height: 28px;
 }
+
+#post-preview {
+    background-color: #F2FFBA;
+    border: solid 1px #B4C669;
+    font-size: 11px;
+    margin: 4px 0;
+    padding: 4px;
+}
+
+#post-preview a {
+    color: #E34F42;
+}
+
 .splited-post-counter {
     color: rgba(0, 0, 0, 0.3);
     font-weight: bold;
