@@ -32,7 +32,6 @@ function requestRepliedBefore(postLi)
         if (reply_n[0] !== '!') {
             dhtget(reply_n, "post" + reply_k, "s",
                 function (postLi, postFromJson) {
-                    console.log(postFromJson);
                     if (postFromJson) {
                         postLi.find('textarea').textcomplete('destroy'); // FIXME maybe we need to reset position instead (but curently it's cheaper)
                         var newStreamPost = postToElem(postFromJson, "related");
@@ -48,7 +47,6 @@ function requestRepliedBefore(postLi)
             var params = [1, parseInt(reply_k)];
             twisterRpc("getspamposts", params,
                 function (postLi, postFromJson) {
-                    console.log(postFromJson[0]);
                     if (postFromJson) {
                         postLi.find('textarea').textcomplete('destroy'); // FIXME maybe we need to reset position instead (but curently it's cheaper)
                         var newStreamPost = postToElem(postFromJson[0], "related", 1);
