@@ -661,6 +661,10 @@ textarea.splited-post {
     color: #E34F42;
 }
 
+#post-preview samp {
+    background-color: #F0EFCC;
+}
+
 .splited-post-counter {
     color: rgba(0, 0, 0, 0.3);
     font-weight: bold;
@@ -1046,7 +1050,7 @@ ol.toptrends-list {
 }
 
 .post-text samp {
-    background: #f0efcc;
+    background-color: #F0EFCC;
 }
 
 .post-context

@@ -786,6 +786,10 @@ textarea.splited-post {
     word-wrap: break-word;
 }
 
+#post-preview samp {
+    background-color: #EEE;
+}
+
 .splited-post-counter {
     color: rgba(0, 0, 0, 0.3);
     font-weight: bold;
@@ -1248,7 +1252,7 @@ textarea.splited-post {
 }
 
 .post-text samp {
-    background: #eee;
+    background: #EEE;
 }
 
 .post-context
