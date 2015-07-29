@@ -783,6 +783,11 @@ textarea.splited-post {
     font-size: 11px;
     margin: 4px 0;
     padding: 4px;
+    word-wrap: break-word;
+}
+
+#post-preview samp {
+    background-color: #EEE;
 }
 
 .splited-post-counter {
@@ -1247,7 +1252,7 @@ textarea.splited-post {
 }
 
 .post-text samp {
-    background: #eee;
+    background: #EEE;
 }
 
 .post-context

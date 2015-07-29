@@ -654,10 +654,15 @@ textarea.splited-post {
     font-size: 11px;
     margin: 4px 0;
     padding: 4px;
+    word-wrap: break-word;
 }
 
 #post-preview a {
     color: #E34F42;
+}
+
+#post-preview samp {
+    background-color: #F0EFCC;
 }
 
 .splited-post-counter {
@@ -1045,7 +1050,7 @@ ol.toptrends-list {
 }
 
 .post-text samp {
-    background: #f0efcc;
+    background-color: #F0EFCC;
 }
 
 .post-context

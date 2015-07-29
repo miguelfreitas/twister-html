@@ -879,7 +879,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 .post-text samp {
-    background: #eee;
+    background-color: #EEE;
 }
 
 /* line 138, ../sass/_postboard.sass */
@@ -2276,6 +2276,7 @@ textarea.splited-post {
     font-size: 12px;
     margin: 4px 0;
     padding: 4px;
+    word-wrap: break-word;
 }
 
 #post-preview a {
@@ -2284,6 +2285,10 @@ textarea.splited-post {
 
 #post-preview a:hover {
     color: #B4C669;
+}
+
+#post-preview samp {
+    background-color: #EEE;
 }
 
 /* line 384, ../sass/style.sass */

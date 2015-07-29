@@ -704,10 +704,12 @@ function replyTextInput(event) {
             }
         }
 
-        if (textArea[0].value.length)
-            textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
-        else
-            textAreaForm.find('#post-preview').html('').hide();
+        if ($.Options.postPreview.val) {
+            if (textArea[0].value.length)
+                textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
+            else
+                textAreaForm.find('#post-preview').html('').hide();
+        }
     }
 
     function getPostSplitingPML() {
@@ -1276,9 +1278,7 @@ function postSubmit(e, oldLastPostId) {
     var remainingCount = tweetForm.find('.post-area-remaining');
     remainingCount.text(140);
 
-    if ($this.parents('.modal-wrapper').length)
-        closeModal();
-    else if ($this.parents('.prompt-wrapper').length)
+    if ($this.parents('.prompt-wrapper').length)
         closeModalHandler('.prompt-wrapper');
 
     if ($this.closest('.post-area,.post-reply-content')) {
