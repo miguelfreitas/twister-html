@@ -1,0 +1,288 @@
+
+
+/*********** POPUP MODAL **************/
+
+
+// vars modal
+
+$header-modal-height : $menu-height
+
+
+.modal-wrapper
+	background: $bloc-background-color
+	z-index: 3000
+	width: 30%
+	position: fixed
+	+box-sizing(border-box)
+	@extend .box-shadow
+	height: 100vh
+	right: 0
+	bottom: 0
+	overflow: hidden
+	+box-shadow(0 8px 13px rgba(#111, 0.2))
+	.postboard
+		border: none
+		padding: 0
+
+	.post-area-new
+		padding: 10px
+
+.modal-blackout
+	background: rgba(0, 0, 0, 0)
+	z-index: -1
+	position: fixed
+	left: 0
+	top: 0
+	width: 0
+	height: 0
+
+.modal-content
+	@extend .clear-fix
+	overflow: hidden
+	overflow-y: auto
+	.postboard-news
+		position: fixed
+		display: block
+		right: 2px
+		top: $header-modal-height +2
+		z-index: 2000
+		@extend .color-1
+	h2 span 
+		display: none
+	background:  $bloc-background-color
+
+
+
+
+
+.modal-header
+	position: relative
+	background: darken(#64676C,12%)
+	height: $header-modal-height 
+	+box-sizing(border-box)
+	@extend .clear-fix
+
+	h3
+		padding-left: 20px
+		line-height: $header-modal-height
+		font-weight: 500 
+		font-size: 1rem
+		color: white
+	span 
+		@extend .extend-icon
+		position: absolute
+		top: 0
+		line-height: $header-modal-height
+		font-size: 1rem
+		cursor: pointer
+		color:  rgba(white , 0.7)
+		transition: color .1s linear
+		&:hover
+			color: white
+
+		b
+			display: none
+
+		&.modal-close
+			@extend .icon-cancel
+			right: 10px
+		&.mark-all-as-read
+			display: none
+			@extend .icon-ok
+			right: 70px
+		&.modal-back
+			@extend .icon-left
+			right: 35px
+
+
+
+
+
+
+/* MODAL */
+.modal-content
+	width: 100%
+	.postboard
+		padding: 0
+		clear: none!important
+		position: relative
+		width: 100%
+		margin: auto
+		background: $bloc-background-color
+
+		h2 
+			display: block
+
+
+
+
+
+/*********** POPUP PROMPT *************/
+
+.prompt-wrapper
+	background: $bloc-light-color
+	z-index: 5
+	position: fixed
+	top: 50%
+	left: 50%
+	width: 600px
+	margin-left: -300px
+	+box-shadow(0 8px 33px rgba(#000, .3))
+	.modal-buttons
+		padding: 10px
+		text-align: right
+	.modal-content
+		background: $bloc-light-color
+		padding: 10px 10px 30px 10px
+		text-align: center
+
+
+/************ FOLLOWING-CONFIG MODAL **********/
+
+.prompt-wrapper.following-config-modal
+	margin-top: -100px
+
+	.modal-buttons
+		display: none
+	h2
+		text-transform: none
+		display: inline-block!important
+		font-size: 1rem 
+		font-weight: 400
+		padding: $space
+		span
+			display: inline-block!important
+			b
+				font-weight: 400
+
+
+
+/************ RETWIST POSTS MODAL **********/
+
+.prompt-wrapper.reTwist
+	&.prompt-wrapper
+		margin-top: -110px
+	.modal-content
+		padding: 20px 15px
+
+	.post-expand, .post-interactions
+		display: none
+	.post-info-time 
+		position: static
+		float: right
+	.post-text 
+		margin-top: 10px
+		margin-bottom: 10px
+
+/********* REPLY POSTS MODAL***************/
+
+.prompt-wrapper.reply
+	&.prompt-wrapper
+		margin-top: -110px
+	.modal-buttons, .post-expand, .post-interactions
+		display: none
+	.post-area
+		padding-bottom: 6px
+
+/********* DIRECT MESSAGES MODAL ***********/ 
+
+@import '_dm'
+
+
+
+/********* NEW USER MODAL**************/
+
+.modal-wrapper.new-user
+
+	.modal-content
+		padding: 25px
+	.modal-close
+		display: none
+	.text
+		margin: 0 0 15px 0
+	.emphasis
+		text-align: center
+	.secret-key
+		display: block
+		margin-top: 8px
+		color: rgba(0.5, 0, 0, 1)
+		font-weight: bold
+		font-size: 110%
+
+/******** HASHTAG MODAL***********/
+
+.modal-wrapper.hashtag-modal
+
+	.postboard
+		padding: 0
+
+/****** CONVERSATION MODAL***********/
+
+.modal-wrapper.conversation-modal
+
+	.postboard
+		padding: 0
+
+/****** FOLLOWING MODAL*******/
+
+
+.modal-wrapper.following-modal
+	h2 
+		display: none
+.mini-following-info
+	border-bottom: 1px solid $main-background-color
+	line-height: $mini-usr-img
+
+	a 
+		display: block 
+		padding: 10px
+		width: 100%
+		@extend .clear-fix
+		color: $defaut-font-color
+		background: $bloc-light-color
+		&:hover 
+			background: white
+	.mini-profile-photo
+		width: $mini-usr-img
+		line-height: 0
+		margin: 0 $space 0 0
+		float: left
+	.mini-screen-name 
+		display: none
+
+ 
+
+
+/******* WHO TO FOLLOW MODAL*******/
+
+.modal-wrapper.who-to-follow-modal
+
+	.open-profile-modal
+		&:hover
+			text-decoration: none
+
+	a.twister-user-name 
+		color: $defaut-font-color
+		span 
+			padding-bottom: .5rem 
+			font-size: 1rem 
+			line-height: 1rem 
+			color: $defaut-font-color
+			font-weight: 500
+			opacity: 1 
+			letter-spacing: 0
+	.twister-user-info
+		text-align: left
+		font-size: .8rem
+		line-height: 1rem
+		width: 80%
+		padding-left: $mini-usr-img + 20
+	button 
+		position: absolute 
+		right: 10px
+		top: 10px
+		@extend .small	
+	.bio
+		color: rgba(0, 0, 0, 0.6)
+		font-style: italic
+		padding-bottom: .5rem

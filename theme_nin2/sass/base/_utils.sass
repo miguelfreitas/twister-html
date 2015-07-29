@@ -1,0 +1,68 @@
+
+
+
+.box-shadow 
+	+box-shadow(0 8px 13px rgba(#111, 0))
+
+
+.clear-fix
+	&:after // clearfix
+		content: ""
+		display: table 
+		clear: both
+
+
+
+/************** BUTTONS ************/
+
+button, a.button
+	padding: .6rem 1rem
+	display: inline-block
+	line-height: .75rem
+	letter-spacing: 0.07rem
+	font-size: .75rem
+	position: relative 
+	font-weight: 300
+	text-transform: uppercase
+	+transition-property(background, border-color)
+	+transition-duration(.1s)
+	color: #444
+	background: #F8F8F8 
+	border: 1px solid darken( #F8F8F8 , 5%)
+	font-family: $symbol-font-family, $main-font-family
+	cursor: pointer
+	&:hover
+		border-color: darken( #F8F8F8 , 15%)
+	&.disabled
+		opacity: .5
+		color: #999
+		background-color: $bloc-background-color
+		&:hover
+			color: #666
+			+box-shadow(1px 1px 0 rgba(#444, .3))
+	&.color-1 
+		background: #5E80A2
+		border-color: darken(#5E80A2, 5%)
+		color: white
+		font-weight: 500
+		&:hover 
+			border-color: darken(#5E80A2, 15%)
+	&.color-2
+		background: #64676C
+		border-color: darken(#64676C, 5%)
+		color: white
+		font-weight: 500
+		&:hover 
+			border-color: darken(#64676C, 15%)
+	&.small 
+		padding:  .5rem
+		font-weight: 700
+		font-size: .7rem 
+		line-height: .7rem
+	&.light 
+		background: #eee
+		border-color: darken(#eee, 5%)
+		color: $main-color-dark
+		font-weight: 500
+		&:hover 
+			border-color: darken(#eee, 25%)

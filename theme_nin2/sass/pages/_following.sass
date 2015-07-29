@@ -1,0 +1,62 @@
+
+.following 
+	width: 40%
+	margin-left: 30%
+	padding: 20px
+	h2 
+		display: none
+	.following-list li
+		border-bottom: 1px solid $main-background-color
+		line-height: 45px
+		background: $bloc-light-color
+		position: relative
+		+transition-property(background)
+		+transition-duration(.1s)
+		&:hover 
+			background: white
+
+		a 
+			display: block 
+			padding:  $space
+			width: 100%
+			@extend .clear-fix
+			color: $defaut-font-color
+
+
+	.mini-profile-photo
+		width: $mini-usr-img
+		line-height: 0
+		margin: 0 $space 0 0
+		float: left
+	.mini-profile-name 
+		font-size: 1rem 
+		font-weight: 500
+		float: left
+		display: block 
+		line-height: 1rem 
+		padding: 10px 0
+	.mini-screen-name 
+		display: block
+		float: left 
+		line-height: 1rem 
+		font-weight: 400
+		font-size: 1rem
+		padding: 10px 
+		color: #666
+		b 
+			font-weight: 400
+			padding: 0
+			color: inherit
+			font-size: inherit
+			line-height: inherit
+	.mini-profile-actions
+		display: none
+	.following-config
+		position: absolute
+		top: 0
+		right: 0
+		padding: $space
+
+	.swarm-status
+		display: none!important
+

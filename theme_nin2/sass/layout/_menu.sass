@@ -1,0 +1,98 @@
+// vars for the menu
+
+$menu-height : 50px
+$menu-font-color: white
+
+.userMenu
+	width: 100%
+	position: fixed
+	height: $menu-height
+	left: 0
+	margin: 0
+	background-color: #64676C
+	//+background-image(linear-gradient(to left , $color-green, $color-green, #5E80A2) )
+	
+	z-index: 2
+	> ul
+		@extend .clear-fix
+		+box-sizing(border-box)
+		width: 100%
+		padding: 0 30% 0 15% 
+		background: image-url("logo.png") no-repeat 50% 50%
+		background-size: 20px
+		li
+			float: left
+			margin: 0 20px 0 0
+			position: relative
+			display: block
+			> a
+				line-height: $menu-height
+				padding: 0 .5em
+				display: inline-block
+				color: rgba($menu-font-color, 0.7)!important
+				font-size: 1em
+				position: relative
+				font-weight: 500
+				+box-sizing(border-box)
+				&:hover
+					color: $menu-font-color!important
+			> a span 
+				color: rgba($menu-font-color, 0.7)!important
+			&.current  a, &.current a span
+				color: $menu-font-color!important
+				//+text-shadow(1px 1px 0 rgba(#000,.2))
+
+
+/* Menu specific entries */ 
+
+.userMenu li
+
+	&.userMenu-home 
+		a span.label
+			display: block!important
+			text-align: center
+		.menu-news
+			position: absolute
+			text-align: center
+			display: none
+			top: 6px
+			right: -6px
+			background: $main-color-color
+			color: #fff
+			width: 15px 
+			height: 15px
+			line-height: 15px
+			font-size: 10px
+			padding: 3px
+			font-weight: 900
+			+border-radius(50%)
+			+box-sizing(content-box)
+			+text-shadow(1px 1px 0 rgba(#000, .3))
+			&.show 
+				display: block
+
+	&.userMenu-dhtindicator, &.userMenu-connections, &.userMenu-messages
+		display: none!important
+
+	&.userMenu-config, &.userMenu-search
+		float: right
+		position: relative
+		margin-right: 0
+		color: $menu-font-color
+		+ a 
+			color: $main-color-dark 
+	&.userMenu-search
+		margin: 3px
+
+		> input 
+			border: 1px solid $main-color-light
+			line-height: 12px 
+			font-size: 12px
+			padding: 7px
+			&:focus 
+				border-color: $main-color-dark
+	&.userMenu-config > a
+		@extend .icon-cog
+		@extend .extend-icon
+		font-size: 1.5rem
+

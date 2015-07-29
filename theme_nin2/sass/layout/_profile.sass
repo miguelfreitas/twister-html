@@ -1,0 +1,226 @@
+
+// variables for width
+
+$modal-width: 980px
+$modal-height: 580px
+$modal-gut: 15px
+$modal-postboard-height: $modal-height - 3*$modal-gut
+$modal-left-col: 400px
+$modal-right-col: ($modal-width - 2*$modal-gut) - $modal-left-col - $modal-gut
+$modal-postboard-post-height: 100%
+
+/*************************************
+ ******************* PROFILE MODAL
+ ***************************************/
+
+.profile-modal
+
+
+	.modal-content
+		overflow: hidden
+		padding: 0
+		position: relative
+		#profile-posts
+			padding: 0
+
+		.postboard
+			width: 100%
+			height: 100%
+			position: absolute
+
+
+		.postboard-posts
+			display: block
+			height: $modal-postboard-post-height
+			overflow: auto
+
+		.postboard-posts .post
+			padding: 0
+			margin-bottom: 1px
+		.post-interactions
+			margin: 2px 10px 3px 60px
+		.profile-card
+			margin: 0
+			padding: 0
+			border-bottom: 1px solid $main-background-color
+		.profile-data 
+			background: none
+
+.profile-modal
+	h2.profile-screen-name
+		display: block
+		letter-spacing: 0
+		text-transform: none
+		color: lighten($dark-grey, 30%)
+		padding:  5px 0
+		margin: 0
+		font-size: 13px
+		line-height: 13px
+
+
+/* Profile card*/
+
+.profile-card
+	width: 100%
+	background: $bloc-light-color
+	padding: $modal-gut
+.profile-card-main
+	position: relative
+	text-align: center
+	word-wrap: break-word
+	transition: all .2s linear
+	background: none!important
+	padding: 10px
+
+
+
+	&:before
+		content: ""
+		border: solid 0px #fff
+		transition: all .2s linear
+		position: absolute
+		left: 1px
+		top: 1px
+		right: 1px
+		bottom: 1px
+		z-index: 0
+	*
+		position: relative
+		z-index: 1
+
+.profile-card-photo
+	height: auto
+	width: $usr-img
+	margin: 0 auto
+	display: block
+	float: left
+.profile-card-photo.forEdition
+	float: none
+
+.profile-bio
+	padding: 10px
+	font-style: italic
+	text-align: center
+	font-size: .8em
+
+.profile-card-buttons 
+	text-align: center
+	padding: 0 0 $space 0
+
+
+.isFollowing:after
+	font-size: 15px
+	position: absolute
+
+.follow
+	@extend .color-1
+.unfollow
+	@extend .color-2
+
+
+
+
+
+
+
+
+
+.known-followers
+	text-align: center
+	clear: both
+	width: 100%
+
+
+#msngrswr
+	display: none
+	text-align: center
+	margin: 10px 0
+
+.profile-extra-contact
+	display: none
+	margin: 0 15px 0 0
+	font-weight: 500
+	padding: 2px 8px 3px 8px
+	+border-radius(2px)
+
+
+.bitmessage-ctc, .tox-ctc
+	font-size: 13px
+	line-height: 15px
+	cursor: pointer
+	color: $main-color-dark
+	&:hover
+		color: $main-color-color
+
+.bitmessage-ctc:after, .tox-ctc:after
+	font-family: $symbol-font-family
+	content: ''
+	font-style: normal
+	font-weight: normal
+	speak: none
+	display: inline-block
+	text-decoration: inherit
+	width: 1em
+	text-align: center
+	font-variant: normal
+	text-transform: none
+	line-height: 1em
+
+.profile-modal
+	.profile-tox, .profile-bitmessage
+		display: inline-block
+		margin-right: 5px
+		font-size: 13px
+		&:hover
+			color: $main-color-color
+
+
+.profile-modal .modal-buttons
+	display: none
+
+	/* EDITION PROFILE*/
+
+.forEdition.profile-card
+	+box-sizing(border-box)
+	@extend .clear-fix
+	width: auto
+	.profile-card-main
+		margin: 0
+		width: 330px
+		+box-sizing(border-box)
+		padding: 10px
+		input
+			display: block
+			margin: 5px auto
+			background: white
+			border: 1px solid  lighten($dark-grey, 50%)
+			padding: 6px 4px
+			margin-bottom: 4px
+			text-align: center
+			transition: all .2s linear
+			&:hover, &:focus
+				background: white
+				border-color: $main-color-light
+
+.input-description
+	width: 90%
+
+.input-name
+	font-size: 20px
+
+.forEdition .profile-card-main
+	.input-website, .input-city
+		display: inline-block
+	.input-tox, .input-bitmessage
+		width: 90%
+		margin-top: 10px
+	h2
+		text-transform: none
+		font-weight: 700
+		font-size: .9em
+
+.profile-edition-buttons
+	text-align: right
+
+.selectable_theme.theme_calm
+	display: none

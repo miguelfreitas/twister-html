@@ -1,0 +1,55 @@
+.login
+
+	.header-bold
+		display: block
+		width: 720px
+		margin: 0px auto 12px auto
+
+	.module
+		background: white
+
+		padding: $space
+
+		p
+			margin-bottom: 5px
+
+		input
+			padding: 5px 10px
+			background: #f3f3f3
+			border: solid 1px #dcdcdc
+			transition: box-shadow 0.3s, border 0.3s
+			font-size: 14px
+
+		input:focus, select:focus
+			background: white
+			transition: background-color 100ms linear
+			border-bottom: solid 2px $color-green
+
+		select
+			height: 30px
+			padding: 3px 30px 3px 10px
+			margin: 0
+			border: 1px solid #ccc
+			font-size: 14px
+
+		span.availability
+			margin-left: 10px
+			color: #45474d
+
+
+
+	.module:nth-child(2) div,
+	.module:nth-child(3) div:nth-child(2),
+	.secret-key-import,
+	.username-import
+		margin-top: 20px
+		margin-bottom: 20px
+		margin-left: 16px
+
+	.create-user,
+	.import-secret-key
+		display: block
+		margin-left: auto
+		margin-right: 16px
+	.with-nickname, .import-secret-key, .create-user
+		margin-top: 10px

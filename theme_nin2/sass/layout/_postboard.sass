@@ -1,0 +1,299 @@
+/************* POST BOARD *************/
+
+
+// vars for postboard 
+
+
+
+.postboard
+	width: 55%
+	margin-left: 15%
+	padding: 7px 20px
+	h2 
+		display: none
+	.postboard-posts
+		position: relative
+		z-index: 1
+		clear: both
+	
+	.postboard-news
+		display: none
+
+	.post
+		background: $bloc-light-color
+		position: relative
+		margin-bottom: 1px
+		@extend .box-shadow
+		+transition-property(margin)
+		+transition-duration(.5s)
+		+transition-timing-function(ease-out)	
+		.post, .original.post, .post.open
+			position: relative
+
+
+.module.open
+	.post
+		color: darken($defaut-font-color, 15%)
+
+.post:hover
+	color: darken($defaut-font-color, 15%)
+
+.post-data
+	padding: $space
+
+
+.post.open
+	.original, .related
+		margin-bottom: 1px
+
+
+.postboard-posts > .post
+	+border-radius(2px)
+	&.open
+		margin-top: $space
+		margin-bottom: $space
+		+border-radius(2px)
+
+	&:after
+		content: ""
+		position: absolute
+		right: 0
+		top: 0
+		width: 0
+		height: 100%
+		transition: all .2s linear
+	&.open:after
+		width: 5px
+
+
+.post:hover
+	cursor: pointer
+
+
+.open
+	background: none!important
+	
+
+.post-photo
+	margin: 0
+	display: inline-block
+	float: left
+	vertical-align: middle
+	overflow: hidden
+	width: $mini-usr-img
+	img
+		width: 100%
+		height: auto!important
+
+.post-info-name
+	font-weight: 600
+	color: inherit
+	text-decoration: none
+	display: inline-block
+	float: left
+	margin-left: 10px
+
+
+.post-info-name:hover
+	text-decoration: none
+	color: black
+
+.post-info-tag
+	font-size: 12px
+	opacity: .6
+	margin-top: 4px
+	display: inline-block
+
+.post-info-time
+	position: absolute
+	font-size: 11px
+	line-height: 14px
+	text-decoration: none
+	top: 11px
+	right: 11px
+	color: lighten($dark-grey,30%)
+	&:hover
+		color: lighten($dark-grey,5%)
+
+.post-text
+	margin: 0 0 0 ($mini-usr-img +10)
+	word-wrap: break-word
+	min-height: $mini-usr-img - 20
+	padding: 0
+	a:hover 
+		text-decoration: underline
+
+
+.post-context
+	font-size: 11px
+	line-height: 11px
+	margin: 0 0 1em 0
+	color: lighten($dark-grey,30%)
+	span
+		@extend .icon-twistagain
+		@extend .extend-icon
+	&:before
+		display: block
+		float: left
+		background: $main-color-color
+		text-align: center
+		padding: 1px 2px 2px 2px
+		line-height: 9px
+		font-size: 9px
+		+border-radius(3px)
+		color: white
+		margin-right: .4em
+
+.mini-screen-name
+	font-size: 13px
+	color: $dark-grey
+
+.post-retransmited-icon
+	display: none
+
+.post-interactions
+	margin: 10px 0 3px 0
+	text-align: right
+	height: 12px
+	line-height: 12px
+	span
+		color: lighten($dark-grey,30%)
+		cursor: pointer
+		font-size: 12px
+		line-height: 12px
+
+.post-expand
+	color: lighten($dark-grey,30%)
+	cursor: pointer
+	font-size: 12px
+	position: absolute
+	left: 10px
+	bottom: 10px
+	&:hover
+		color: lighten($dark-grey,5%)
+
+.post-reply, .post-propagate, .post-favorite
+	@extend .extend-icon
+	padding-left: 10px
+	display: none
+	&:hover
+		color: lighten($dark-grey,5%)
+
+.post-reply
+	@extend .icon-comment
+
+.post-propagate
+	@extend .icon-twistagain
+
+.post-favorite
+	display: none!important
+	@extend .icon-star
+
+.post
+	.show-more
+		display: inline-block
+		float: right
+		font-size: 12px
+		color: lighten($dark-grey,30%)
+		@extend .extend-icon
+		@extend .icon-chat
+		&:hover
+			color: lighten($dark-grey,5%)
+
+
+.expanded-content.show-pic
+	display: block
+
+.expanded-post
+
+	.post-expand, .post-reply, .post-propagate, .post-favorite
+		color: lighten($dark-grey,30%)
+		&:hover
+			color: lighten($dark-grey,5%)
+
+.related .post-expand
+	display: none
+	margin: 0
+
+
+.post:hover, .original.open .post-interactions, .post:hover .original .post-interactions, .related.post:hover
+	.post-reply, .post-propagate, .post-favorite
+		display: inline-block
+
+.open .related
+	.post-reply, .post-propagate, .post-favorite
+		display: none!important
+	&:hover
+		.post-reply, .post-propagate/*, .post-favorite*/
+			display: inline-block!important
+
+
+
+.expanded-content
+	display: none
+	padding: 5px 5px 0 5px
+	@extend .clear-fix
+
+
+.image-preview
+	max-width: 100%
+	width: auto
+	display: block
+	margin: auto
+
+.preview-container
+	width: 100%
+	text-align: center
+	overflow-y: auto
+	background: black
+
+.post-stats
+	float: left
+	li
+		display: inline-block
+		&.stat-count
+			font-weight: 700
+			font-size: 11px
+			float: left
+			line-height: 20px
+			color: llighten($dark-grey,30%)
+			span:last-child
+				padding-right: 5px
+	a
+		position: relative
+		text-decoration: none
+		display: inline-block
+		width: 20px
+		height: 20px
+		margin: 0 1px 0 0
+		img
+			width: 20px
+			height: 20px
+
+
+.user-name-tooltip
+	display: none
+	position: absolute
+	background: lighten($main-color-dark,3%)
+	font-size: 12px
+	white-space: nowrap
+	padding: 3px 5px
+	color: #fff
+	top: -42px
+	left: 0px
+	&:after
+		content: ""
+		position: absolute
+		width: 0
+		left: 4px
+		bottom: -5px
+		border-top: solid 5px lighten($main-color-dark,3%)
+		border-left: solid 5px transparent
+		border-right: solid 5px transparent
+
+.post-stats a:hover .user-name-tooltip
+	display: inline-block
+
+.post-replies .sub-replies
+	border-left: solid 18px $main-background-color
+
