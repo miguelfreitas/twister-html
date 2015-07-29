@@ -704,10 +704,12 @@ function replyTextInput(event) {
             }
         }
 
-        if (textArea[0].value.length)
-            textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
-        else
-            textAreaForm.find('#post-preview').html('').hide();
+        if ($.Options.postPreview.val) {
+            if (textArea[0].value.length)
+                textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
+            else
+                textAreaForm.find('#post-preview').html('').hide();
+        }
     }
 
     function getPostSplitingPML() {
