@@ -1275,6 +1275,9 @@ function changeStyle() {
         style = 'theme_nin/css/style.css';
         profile = 'theme_nin/css/profile.css';
         $.getScript('theme_nin/js/theme_option.js');
+    } else if (theme === 'nin2') {
+        style = 'theme_nin2/css/style.css';
+        profile = 'theme_nin2/css/profile.css';
     } else if (theme === 'calm') {
         style = 'theme_calm/css/style.css';
         profile = 'theme_calm/css/profile.css';
