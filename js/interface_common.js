@@ -1278,9 +1278,7 @@ function postSubmit(e, oldLastPostId) {
     var remainingCount = tweetForm.find('.post-area-remaining');
     remainingCount.text(140);
 
-    if ($this.parents('.modal-wrapper').length)
-        closeModal();
-    else if ($this.parents('.prompt-wrapper').length)
+    if ($this.parents('.prompt-wrapper').length)
         closeModalHandler('.prompt-wrapper');
 
     if ($this.closest('.post-area,.post-reply-content')) {
