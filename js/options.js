@@ -142,8 +142,14 @@ function twisterOptions() {
         valDefault: 'apply'
     });
     this.add({
-        name: 'displayPreview',
+        name: 'displayPreview',  // it's inline image preview  // FIXME we need some mechanism to rename options safely
         valDefault: 'disable'
+    });
+    this.add({
+        name: 'postPreview',
+        selector: '#optPostPreview',
+        type: 'checkbox',
+        valDefault: true
     });
     this.add({
         name: 'unicodeConversion',

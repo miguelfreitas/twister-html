@@ -29,18 +29,35 @@ function requestRepliedBefore(postLi)
     var reply_k = originalPost.attr('data-replied-to-id');
 
     if( reply_n != undefined && reply_k != undefined ) {
-        dhtget( reply_n, "post" + reply_k, "s",
-            function(postLi, postFromJson) {
-                if (postFromJson) {
-                    postLi.find('textarea').textcomplete('destroy'); // FIXME maybe we need to reset position instead (but curently it's cheaper)
-                    var newStreamPost = postToElem(postFromJson, "related");
-                    newStreamPost.hide();
-                    postLi.before(newStreamPost);
-                    newStreamPost.slideDown("fast");
-                    $.MAL.relatedPostLoaded();
-                    requestRepliedBefore(newStreamPost);
-                }
-            }, postLi);
+        if (reply_n[0] !== '!') {
+            dhtget(reply_n, "post" + reply_k, "s",
+                function (postLi, postFromJson) {
+                    if (postFromJson) {
+                        postLi.find('textarea').textcomplete('destroy'); // FIXME maybe we need to reset position instead (but curently it's cheaper)
+                        var newStreamPost = postToElem(postFromJson, "related");
+                        newStreamPost.hide();
+                        postLi.before(newStreamPost);
+                        newStreamPost.slideDown("fast");
+                        $.MAL.relatedPostLoaded();
+                        requestRepliedBefore(newStreamPost);
+                    }
+                }, postLi);
+        } else {
+            //replied to a promoted post... try to get it..
+            var params = [1, parseInt(reply_k)];
+            twisterRpc("getspamposts", params,
+                function (postLi, postFromJson) {
+                    if (postFromJson) {
+                        postLi.find('textarea').textcomplete('destroy'); // FIXME maybe we need to reset position instead (but curently it's cheaper)
+                        var newStreamPost = postToElem(postFromJson[0], "related", 1);
+                        newStreamPost.hide();
+                        postLi.before(newStreamPost);
+                        newStreamPost.slideDown("fast");
+                        $.MAL.relatedPostLoaded();
+                        requestRepliedBefore(newStreamPost);
+                    }
+                }, postLi, function(arg,ret) {console.log(ret)});
+        }
     }
 }
 
