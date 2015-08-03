@@ -145,7 +145,7 @@ function postToElem( post, kind, promoted ) {
         postData.attr('data-promoted', 1);
         postData.attr('data-screen-name', '!' + n);
     } else {
-        setPostInfoSent(n,k,elem.find('.post-info-sent'));
+        setPostInfoSent(userpost["n"], userpost["k"], elem.find('.post-info-sent'));
         if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangSimulate.val) {
             // FIXME it's must be stuff from template actually
             if (typeof(post['langFilter']) !== 'undefined') {
