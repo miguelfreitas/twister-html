@@ -573,7 +573,7 @@ function composeNewPost(e, postAreaNew) {
     var textArea = postAreaNew.find('textarea');
     if (textArea.attr('data-reply-to') && !textArea.val().length) {
         textArea.val(textArea.attr('data-reply-to'));
-        posPostPreview(e);
+        posPostPreview(textArea);
     }
     if (!postAreaNew.find('textarea:focus').length)
         postAreaNew.find('textarea:last').focus();
@@ -583,7 +583,11 @@ function posPostPreview(event) {
     if (!$.Options.postPreview.val)
         return;
 
-    var textArea = $(event.target);
+    if (event.jquery) {
+        var textArea = event;
+    } else {
+        var textArea = $(event.target);
+    }
     var postPreview = textArea.siblings('#post-preview');
     if (!postPreview.length) {
         postPreview = $('#post-preview-template').children().clone()
