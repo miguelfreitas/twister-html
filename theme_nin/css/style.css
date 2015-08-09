@@ -2281,18 +2281,6 @@ textarea.splited-post {
     word-wrap: break-word;
 }
 
-#post-preview a {
-    color: #AAA;
-}
-
-#post-preview a:hover {
-    color: #B4C669;
-}
-
-#post-preview samp {
-    background-color: #EEE;
-}
-
 #opt-form-post-preview {
     width: 100%;
 }

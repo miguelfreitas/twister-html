@@ -657,14 +657,6 @@ textarea.splited-post {
     word-wrap: break-word;
 }
 
-#post-preview a {
-    color: #E34F42;
-}
-
-#post-preview samp {
-    background-color: #F0EFCC;
-}
-
 #opt-form-post-preview #post-preview {
     width: 76%;
     margin-left: 16px;
