@@ -107,6 +107,9 @@ if(preferredLanguage == "en"){
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Number of blocks in block chain: ",
       "Number of CPUs to use": "Number of CPUs to use ",
       "Only alphanumeric and underscore allowed.": "Only alphanumeric and underscore allowed.",
@@ -402,6 +405,9 @@ if(preferredLanguage == "es"){
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Número de bloques en la cadena de bloques: ",
       "Number of CPUs to use": "Número de CPUs para utilizar ",
       "Only alphanumeric and underscore allowed.": "Sólo alfanuméricos y subrayados permitido.",
@@ -682,6 +688,9 @@ if(preferredLanguage == "uk"){
       "notify_desktop_perm_denied": "Twister не може створити сповіщення на робочому столі: доступ обмежено.\n\nЯкщо ви бажаєте отримувати сповіщення, дозвольте їх виконання в налаштуваннях браузера для %{this_domain}.",
       "notify_desktop_test": "Є дещо новеньке у стрічці.",
       "notify_desktop_title": "Погляньте сюди!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Кількість блоків у ланцюгу: ",
       "Number of CPUs to use": "Кількість CPU до використання ",
       "Only alphanumeric and underscore allowed.": "Допустимі тільки латинські символи, числа та нижнє підкреслення.",
@@ -959,6 +968,9 @@ if(preferredLanguage == "zh-CN"){
       "notify_desktop_perm_denied": "Twister 无法发出桌面提醒：权限被拒绝。\n\n如果你想收到提醒，请在你的浏览器设置中允许 %{this_domain} 发出提醒。",
       "notify_desktop_test": "我们都在用 Twister。\n欢迎你的加入。",
       "notify_desktop_title": "注意，Twister 在这里！",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "区块链中的区块数：",
       "Number of CPUs to use": "使用CPU数目",
       "Only alphanumeric and underscore allowed.": "只允许字母和下划线。",
@@ -1254,6 +1266,9 @@ if(preferredLanguage == "nl"){
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Aantal blocks in block chain: ",
       "Number of CPUs to use": "Aantal CPUs om te gebruiken ",
       "Only alphanumeric and underscore allowed.": "Alleen alphanumeriek en underscore toegestaan.",
@@ -1533,6 +1548,9 @@ if(preferredLanguage == "it"){
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Numero di blocchi nella catena: ",
       "Number of CPUs to use": "Numero di processori da usare:",
       "Only alphanumeric and underscore allowed.": "Sono permessi solo caratteri alfanumerici e '_'",
@@ -1809,6 +1827,9 @@ if(preferredLanguage == "fr"){
       "notify_desktop_perm_denied": "Impossible d'afficher les notifications: autorisation refusée.\n\nSi tu souhaites afficher les notifications, autorise le %{this_domain} dans les paramêtres de ton navigateur.",
       "notify_desktop_test": "All the twisters gonna twist.\nBienvenue à toi!",
       "notify_desktop_title": "Youhou! Ça bouge sur ton twister!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Nombre de blocs dans la chaîne de blocs: ",
       "Number of CPUs to use": "Nombre de processeurs à utiliser",
       "Only alphanumeric and underscore allowed.": "Seuls les caractères alphanumériques et la barre de soulignement sont permis.",
@@ -2090,6 +2111,9 @@ if(preferredLanguage == "ru"){
        "notify_desktop_perm_denied": "Твистер не может выполнить уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для %{this_domain} в настройках вашего браузера.",
        "notify_desktop_test": "Одна лягушка сказала:\n'если не буду квакать — лопну'.\nВы нужны нам, берегите себя.",
        "notify_desktop_title": "Watch out, it's twister over here!",
+       "post_preview_dummy": 'это *полужирный*, ~курсивный~, -зачёркнутый- и _подчёркнутый_ текст.\n'
+         + 'экранированный: `*полужирный*, ~курсивный~, -зачёркнутый- и _подчёркнутый_`.\n'
+         + 'ссылки на [наш потрясный логотип](%{logo}) и наш великолепный сайт: %{site}.',
        "Number of blocks in block chain:": "Количество блоков в цепочке: ",
        "Number of CPUs to use": "Сколько использовать ядер процессора",
        "Only alphanumeric and underscore allowed.": "Разрешены только латинские буквы, цифры и подчеркивания.",
@@ -2375,6 +2399,9 @@ if(preferredLanguage == "de"){
       "notify_desktop_perm_denied": "Twister kann keine Desktop-Meldungen anzeigen: Keine Berechtigung.\n\nWenn Du Meldungen angezeigt haben möchtest, erlaube sie für %{this_domain} in den Einstellungen Deines Browsers.",
       "notify_desktop_test": "All die Twisterer werden twisten..\nDu bist nun auch willkommen!",
       "notify_desktop_title": "Achtung, hier ist Twister am Gange!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Anzahl der Blöcke in der Block-Chain: ",
       "Number of CPUs to use": "Anzahl der zu benutzenden CPU's ",
       "Only alphanumeric and underscore allowed.": "Nur Buchstaben, Zahlen und Unterstrich erlaubt.",
@@ -2655,6 +2682,9 @@ if(preferredLanguage == "ja"){
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "全ブロック数: ",
       "Number of CPUs to use": "利用するCPUの数",
       "Only alphanumeric and underscore allowed.": "アルファベットとアンダースコア(_)が利用可能です",
@@ -2932,6 +2962,9 @@ if(preferredLanguage == "pt-BR"){
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Número de blocos: ",
       "Number of CPUs to use": "Número de CPUs a serem utilizados ",
       "Only alphanumeric and underscore allowed.": "Permitido apenas caracteres alfanuméricos e underscore '_'.",
@@ -3213,6 +3246,9 @@ if(preferredLanguage == "tr"){
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
       "notify_desktop_title": "Watch out, it's twister over here!",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Blok zincirindeki blok sayısı: ",
       "Number of CPUs to use": "Kullanılacak CPU sayısı ",
       "Only alphanumeric and underscore allowed.": "Sadece harf ve alt çizgi kullanılabilir.",
@@ -3491,6 +3527,9 @@ if(preferredLanguage == "cs"){
       "notify_desktop_perm_denied": "Twisteru se nepodařilo zobrazit upozornění na ploše: přístup byl odepřen.\n\nPokud chcete používat upozornění na ploše, povolte je pro %{this_domain} v nastavení vašeho prohlížeče.",
       "notify_desktop_test": "Twister to umí pořádně roztočit.\nKaždý je tu vítán.",
       "notify_desktop_title": "Twister",
+      "post_preview_dummy": 'here is *bold*, ~italic~, -strike-trough- and _underlined_ text.\n'
+        + 'same but escaped: `*bold*, ~italic~, -strike-trough- and _underlined_`.\n'
+        + 'links to [our awesome logo](%{logo}) and our gorgeous site: %{site}.',
       "Number of blocks in block chain:": "Počet bloků v blockchainu: ",
       "Number of CPUs to use": "Kolik jader procesoru použít? ",
       "Only alphanumeric and underscore allowed.": "Povolena jsou jen písmena, čísla a podtržítko.",

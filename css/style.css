@@ -665,6 +665,12 @@ textarea.splited-post {
     background-color: #F0EFCC;
 }
 
+#opt-form-post-preview #post-preview {
+    width: 76%;
+    margin-left: 16px;
+    padding: 8px;
+}
+
 .splited-post-counter {
     color: rgba(0, 0, 0, 0.3);
     font-weight: bold;

@@ -311,6 +311,9 @@ twisterOptions.prototype.initControls = function () {
     $('#testDesktopNotif').on('click', function() {
         $.MAL.showDesktopNotif(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, false, function() { alert(polyglot.t('notify_desktop_perm_denied', {'this_domain': document.domain})) })
     });
+
+    tickOptionsPostPreview();
+    $('#opt-mod-posts-display').find('select').on('change', tickOptionsPostPreview);
 };
 
 function twisterOption(option) {
@@ -361,4 +364,9 @@ function checkForNumeric(elem) {
         $(elem).next('span').text(polyglot.t('only positive numbers!'));
         return false;
     }
+}
+
+function tickOptionsPostPreview() {
+    $('#opt-mod-posts-display #post-preview').html(htmlFormatMsg(
+        polyglot.t('post_preview_dummy', {logo: '/img/twister_mini.png', site: 'http://twister.net.co'}), []));
 }

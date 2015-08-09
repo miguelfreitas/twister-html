@@ -16,6 +16,7 @@
     <script src="js/twister_io.js"></script>
     <script src="js/twister_network.js"></script>
     <script src="js/twister_user.js"></script>
+    <script src="js/twister_formatpost.js"></script>
     <script src="js/interface_common.js"></script>
     <script src="js/interface_login.js"></script>
     <script src="js/polyglot.min.js"></script>
@@ -263,8 +264,13 @@
               </form>
             </div>
           </div>
-          <div class="module">
+          <div id="opt-mod-posts-display" class="module">
             <p class="label label-h"> Posts display </p>
+            <div id="opt-form-post-preview" class="container">
+              <p><span class="label">Post preview</span></p>
+              <div id="post-preview">
+              </div>
+            </div>
             <div class="container">
               <form action="" id="lineFeedsOpt">
                 <p class="label">Line feeds</p>
@@ -447,6 +453,15 @@
       </div><!-- /tab-content -->
     </div><!-- /options -->
   </div><!-- /options -->
+
+  <div id="templates" style="display:none;">
+    <!-- template for user links in message (open profile modal) -->
+    <a id="msg-user-link-template" class="open-profile-modal"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="hashtag-link-template" class="open-hashtag-modal"></a>
+  </div>
 
   <audio id="player"></audio>
   <audio id="playerSec"></audio>
