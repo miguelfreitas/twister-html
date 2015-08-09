@@ -2291,6 +2291,16 @@ textarea.splited-post {
     padding: 8px;
 }
 
+#opt-form-post-preview #post-preview .preview-container {
+    background-color: rgba(0, 0, 0, 0.43);
+    width: 97%;
+    margin-top: 8px;
+}
+
+#opt-form-post-preview #post-preview .image-preview {
+    width: auto;
+}
+
 /* line 384, ../sass/style.sass */
 .splited-post-counter {
   color: rgba(0, 0, 0, 0.3);

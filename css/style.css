@@ -663,6 +663,11 @@ textarea.splited-post {
     padding: 8px;
 }
 
+#opt-form-post-preview #post-preview .preview-container {
+    margin-top: 8px;
+    margin-bottom: -10px; /* to neutralize .image-preview */
+}
+
 .splited-post-counter {
     color: rgba(0, 0, 0, 0.3);
     font-weight: bold;
