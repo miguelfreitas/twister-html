@@ -1272,7 +1272,7 @@ textarea.splited-post {
 }
 
 /* external http links */
-.post-text a[href^="http"] {
+.post-text a {
     font: italic 13px "Open Sans", sans-serif;
     text-decoration: none;
     color: #b46e67;
@@ -1283,7 +1283,7 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
-.post-text a[href^="http"]:hover {
+.post-text a:hover {
     color: #e18881;
     opacity: .8;
 }
