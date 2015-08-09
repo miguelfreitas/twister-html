@@ -665,7 +665,8 @@ function htmlFormatMsg(msg, mentions) {
 
 function proxyURL(url) {
     var proxyOpt = $.Options.useProxy.val;
-    if (proxyOpt !== 'disable' && !$.Options.useProxyForImgOnly.val) {
+    if (proxyOpt !== 'disable' && !$.Options.useProxyForImgOnly.val
+        && url[0] !== '/' && url.indexOf(location.origin) !== 0) {
         // proxy alternatives may be added to options page FIXME currently not; and we need more fresh proxies
         if (proxyOpt === 'ssl-proxy-my-addr') {
             url = 'https://ssl-proxy.my-addr.org/myaddrproxy.php/' +
