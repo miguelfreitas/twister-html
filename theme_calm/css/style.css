@@ -1259,6 +1259,8 @@ textarea.splited-post {
 
 .post-text samp {
     background: #EEE;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .post-context

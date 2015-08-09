@@ -880,6 +880,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 .post-text samp {
     background-color: #EEE;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 /* line 138, ../sass/_postboard.sass */

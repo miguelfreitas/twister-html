@@ -1057,6 +1057,8 @@ ol.toptrends-list {
 
 .post-text samp {
     background-color: #F0EFCC;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .post-context
