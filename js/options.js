@@ -288,9 +288,11 @@ twisterOptions.prototype.add = function (option) {
 };
 
 twisterOptions.prototype.initControls = function () {
+    var elem;
+
     for (var option in this) {
         if (typeof this[option] === 'object') {
-            var elem = $(this[option].option.selector);
+            elem = $(this[option].option.selector);
             if (elem.length) {
                 if (elem.attr('type') && elem.attr('type').toLowerCase() === 'checkbox')
                     elem.prop('checked', /^\s*1|true\s*$/i.test(this[option].val))
@@ -367,6 +369,22 @@ function checkForNumeric(elem) {
 }
 
 function tickOptionsPostPreview() {
-    $('#opt-mod-posts-display #post-preview').html(htmlFormatMsg(
+    var elem = $('#opt-mod-posts-display #post-preview');
+    var imgPreviewCont = elem.find('.preview-container');
+
+    elem.children().first().html(htmlFormatMsg(
         polyglot.t('post_preview_dummy', {logo: '/img/twister_mini.png', site: 'http://twister.net.co'}), []));
+
+    if ($.Options.displayPreview.val === 'enable') {
+        imgPreviewCont.empty();
+        var links = elem.children().first().find('a[rel="nofollow"]');
+        if (links.length) {
+            setPostImagePreview(elem, links);
+            imgPreviewCont.show();
+        } else {
+            imgPreviewCont.hide();
+        }
+    } else {
+        imgPreviewCont.hide();
+    }
 }
