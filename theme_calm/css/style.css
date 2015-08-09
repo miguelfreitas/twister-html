@@ -1362,27 +1362,23 @@ textarea.splited-post {
 }
 
 /* Inpost previw */
-.preview-container
-{
-    height: 100px;
+.preview-container {
     width: 95%;
-    margin: 0 auto;
-    overflow: hidden;
-    display: none;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    /*line-height: 0;*/
+    text-align: center;
+    overflow-y: auto;
     margin-bottom: 3px;
-    position: relative;
 }
-.image-preview
-{
+
+.image-preview {
     max-height: 500px;
     max-width: 100%;
     margin: 0 auto;
     display: block;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
+
 /* video preview */
 
 .vimeo #imgOverlay {
