@@ -695,3 +695,19 @@ function reverseHtmlEntities(str) {
                 .replace(/&apos;/g, "'")
                 .replace(/&amp;/g, '&');
 }
+
+function setPostImagePreview(elem, links) {
+    if ($.Options.displayPreview.val === 'enable') {
+        var previewContainer = elem.find('.preview-container');
+        // was the preview added before...
+        if (!previewContainer.children().length) {
+            // is there any links to images in the post?
+            for (var i = 0; i < links.length; i++) {
+                if (/^[^?]+\.(?:jpe?g|gif|png)$/i.test(links[i].href)) {
+                    var url = proxyURL(links[i].href);
+                    previewContainer.append($('<img src="' + url + '" class="image-preview" />'));
+                }
+            }
+        }
+    }
+}

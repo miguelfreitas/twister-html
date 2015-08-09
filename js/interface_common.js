@@ -486,22 +486,10 @@ function postExpandFunction(e, postLi) {
         var originalLi = $('<li/>', {class: 'module post original'}).appendTo(itemOl)
             .append(originalPost);
 
+        setPostImagePreview(postExpandedContent, originalPost.find('a[rel="nofollow"]'));
+
         postExpandedContent.slideDown('fast');
 
-        if ($.Options.displayPreview.val === 'enable') {
-            var previewContainer = postExpandedContent.find('.preview-container')[0];
-            /* was the preview added before... */
-            if ($(previewContainer).children().length === 0) {
-                var link = originalPost.find('a[rel="nofollow"]');
-                /*is there any link in the post?*/
-                for (var i = 0; i < link.length; i++) {
-                    if (/^[^?]+\.(?:jpe?g|gif|png)$/i.test(link[i].href)) {
-                        var url = proxyURL(link[i].href);
-                        $(previewContainer).append($('<img src="' + url + '" class="image-preview" />'));
-                    }
-                }
-            }
-        }
         // insert 'reply_to' before
         requestRepliedBefore(originalLi);
         // insert replies to this post after
