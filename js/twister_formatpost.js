@@ -286,7 +286,7 @@ function htmlFormatMsg(msg, mentions) {
                 for (var j = i - 1; j > -1; j--) {
                     if (msg.str[j] === '>') {
                         if (j === 0) {
-                            return -1;
+                            return -10;
                         } else {
                             if (msg.str[j - 1] === chr) {
                                 return -1;
@@ -316,7 +316,7 @@ function htmlFormatMsg(msg, mentions) {
                 for (var j = i + 1; j < msg.str.length; j++) {
                     if (msg.str[j] === '<') {
                         if (j === msg.str.length - 1) {
-                            return -1;
+                            return -10;
                         } else {
                             if (msg.str[j + 1] === chr) {
                                 return -1;
@@ -344,15 +344,20 @@ function htmlFormatMsg(msg, mentions) {
                     if (msg.str[j] !== chr)
                         break;
                 }
-                if (i === 0) {
+
+                if (i !== 0) {
+                    l = kindOfL(i - 1);
+                }
+                if (j !== msg.str.length) {
+                    r = kindOfR(j);
+                }
+                if (i === 0 || l === -10) {
                     p.push({i: i, k: j - i, t: -1, w: w, a: -1, p: -1});
                     w = false;
-                } else if (j === msg.str.length) {
+                } else if (j === msg.str.length || r === -10) {
                     p.push({i: i, k: j - i, t: 1, w: w, a: -1, p: -1});
                     w = false;
                 } else {
-                    l = kindOfL(i - 1);
-                    r = kindOfR(j);
                     if (l > -1) {
                         if (r > -1) {
                             if (j - i > 2) {
