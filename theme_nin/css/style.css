@@ -880,6 +880,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 .post-text samp {
     background-color: #EEE;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 /* line 138, ../sass/_postboard.sass */
@@ -2279,16 +2281,24 @@ textarea.splited-post {
     word-wrap: break-word;
 }
 
-#post-preview a {
-    color: #AAA;
+#opt-form-post-preview {
+    width: 100%;
 }
 
-#post-preview a:hover {
-    color: #B4C669;
+#opt-form-post-preview #post-preview {
+    width: 76%;
+    margin-left: 16px;
+    padding: 8px;
 }
 
-#post-preview samp {
-    background-color: #EEE;
+#opt-form-post-preview #post-preview .preview-container {
+    background-color: rgba(0, 0, 0, 0.43);
+    width: 97%;
+    margin-top: 8px;
+}
+
+#opt-form-post-preview #post-preview .image-preview {
+    width: auto;
 }
 
 /* line 384, ../sass/style.sass */

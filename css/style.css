@@ -657,12 +657,15 @@ textarea.splited-post {
     word-wrap: break-word;
 }
 
-#post-preview a {
-    color: #E34F42;
+#opt-form-post-preview #post-preview {
+    width: 76%;
+    margin-left: 16px;
+    padding: 8px;
 }
 
-#post-preview samp {
-    background-color: #F0EFCC;
+#opt-form-post-preview #post-preview .preview-container {
+    margin-top: 8px;
+    margin-bottom: -10px; /* to neutralize .image-preview */
 }
 
 .splited-post-counter {
@@ -1051,6 +1054,8 @@ ol.toptrends-list {
 
 .post-text samp {
     background-color: #F0EFCC;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .post-context

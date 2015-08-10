@@ -145,7 +145,7 @@ function postToElem( post, kind, promoted ) {
         postData.attr('data-promoted', 1);
         postData.attr('data-screen-name', '!' + n);
     } else {
-        setPostInfoSent(n,k,elem.find('.post-info-sent'));
+        setPostInfoSent(userpost["n"], userpost["k"], elem.find('.post-info-sent'));
         if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangSimulate.val) {
             // FIXME it's must be stuff from template actually
             if (typeof(post['langFilter']) !== 'undefined') {
@@ -273,6 +273,66 @@ function htmlFormatMsg(msg, mentions) {
             return false;
         }
 
+        function kindOfL(i) {
+            if (stopCharsMarkout.indexOf(msg.str[i]) > -1) {
+                for (var j = i - 1; j > -1; j--) {
+                    if (msg.str[j] === chr) {
+                        return -1;
+                    } else if (stopCharsMarkout.indexOf(msg.str[j]) === -1) {
+                        return whiteSpaces.indexOf(msg.str[j]);
+                    }
+                }
+            } else if (msg.str[i] === '<') {
+                for (var j = i - 1; j > -1; j--) {
+                    if (msg.str[j] === '>') {
+                        if (j === 0) {
+                            return -10;
+                        } else {
+                            if (msg.str[j - 1] === chr) {
+                                return -1;
+                            } else {
+                                return kindOfL(j - 1);
+                            }
+                        }
+                    }
+                }
+            } else {
+                return whiteSpaces.indexOf(msg.str[i]);
+            }
+
+            return 0;
+        }
+
+        function kindOfR(i) {
+            if (stopCharsMarkout.indexOf(msg.str[i]) > -1) {
+                for (var j = i + 1; j < msg.str.length; j++) {
+                    if (msg.str[j] === chr) {
+                        return -1;
+                    } else if (stopCharsMarkout.indexOf(msg.str[j]) === -1) {
+                        return whiteSpaces.indexOf(msg.str[j]);
+                    }
+                }
+            } else if (msg.str[i] === '>') {
+                for (var j = i + 1; j < msg.str.length; j++) {
+                    if (msg.str[j] === '<') {
+                        if (j === msg.str.length - 1) {
+                            return -10;
+                        } else {
+                            if (msg.str[j + 1] === chr) {
+                                return -1;
+                            } else {
+                                return kindOfR(j + 1);
+                            }
+                        }
+                    }
+                }
+            } else {
+                return whiteSpaces.indexOf(msg.str[i]);
+            }
+
+            return 0;
+        }
+
         var i, j, t, l, r, htmlEntityEncoded;
         var w = false;
         var p = [];
@@ -284,39 +344,20 @@ function htmlFormatMsg(msg, mentions) {
                     if (msg.str[j] !== chr)
                         break;
                 }
-                if (i === 0) {
+
+                if (i !== 0) {
+                    l = kindOfL(i - 1);
+                }
+                if (j !== msg.str.length) {
+                    r = kindOfR(j);
+                }
+                if (i === 0 || l === -10) {
                     p.push({i: i, k: j - i, t: -1, w: w, a: -1, p: -1});
                     w = false;
-                } else if (j === msg.str.length) {
+                } else if (j === msg.str.length || r === -10) {
                     p.push({i: i, k: j - i, t: 1, w: w, a: -1, p: -1});
                     w = false;
                 } else {
-                    if (stopCharsMarkout.indexOf(msg.str[i - 1]) > -1) {
-                        l = 1;
-                        for (t = i - 2; t > -1; t--) {
-                            if (msg.str[t] === chr) {
-                                l = -1;
-                                break;
-                            } else if (stopCharsMarkout.indexOf(msg.str[t]) === -1) {
-                                l = whiteSpaces.indexOf(msg.str[t]);
-                                break;
-                            }
-                        }
-                    } else
-                        l = whiteSpaces.indexOf(msg.str[i - 1]);
-                    if (stopCharsMarkout.indexOf(msg.str[j]) > -1) {
-                        r = 1;
-                        for (t = j + 1; t < msg.str.length; t++) {
-                            if (msg.str[t] === chr) {
-                                r = -1;
-                                break;
-                            } else if (stopCharsMarkout.indexOf(msg.str[t]) === -1) {
-                                r = whiteSpaces.indexOf(msg.str[t]);
-                                break;
-                            }
-                        }
-                    } else
-                        r = whiteSpaces.indexOf(msg.str[j]);
                     if (l > -1) {
                         if (r > -1) {
                             if (j - i > 2) {
@@ -665,7 +706,8 @@ function htmlFormatMsg(msg, mentions) {
 
 function proxyURL(url) {
     var proxyOpt = $.Options.useProxy.val;
-    if (proxyOpt !== 'disable' && !$.Options.useProxyForImgOnly.val) {
+    if (proxyOpt !== 'disable' && !$.Options.useProxyForImgOnly.val
+        && url[0] !== '/' && url.indexOf(location.origin) !== 0) {
         // proxy alternatives may be added to options page FIXME currently not; and we need more fresh proxies
         if (proxyOpt === 'ssl-proxy-my-addr') {
             url = 'https://ssl-proxy.my-addr.org/myaddrproxy.php/' +
@@ -694,4 +736,20 @@ function reverseHtmlEntities(str) {
                 .replace(/&quot;/g, '"')
                 .replace(/&apos;/g, "'")
                 .replace(/&amp;/g, '&');
+}
+
+function setPostImagePreview(elem, links) {
+    if ($.Options.displayPreview.val === 'enable') {
+        var previewContainer = elem.find('.preview-container');
+        // was the preview added before...
+        if (!previewContainer.children().length) {
+            // is there any links to images in the post?
+            for (var i = 0; i < links.length; i++) {
+                if (/^[^?]+\.(?:jpe?g|gif|png)$/i.test(links[i].href)) {
+                    var url = proxyURL(links[i].href);
+                    previewContainer.append($('<img src="' + url + '" class="image-preview" />'));
+                }
+            }
+        }
+    }
 }
