@@ -273,6 +273,66 @@ function htmlFormatMsg(msg, mentions) {
             return false;
         }
 
+        function kindOfL(i) {
+            if (stopCharsMarkout.indexOf(msg.str[i]) > -1) {
+                for (var j = i - 1; j > -1; j--) {
+                    if (msg.str[j] === chr) {
+                        return -1;
+                    } else if (stopCharsMarkout.indexOf(msg.str[j]) === -1) {
+                        return whiteSpaces.indexOf(msg.str[j]);
+                    }
+                }
+            } else if (msg.str[i] === '<') {
+                for (var j = i - 1; j > -1; j--) {
+                    if (msg.str[j] === '>') {
+                        if (j === 0) {
+                            return -1;
+                        } else {
+                            if (msg.str[j - 1] === chr) {
+                                return -1;
+                            } else {
+                                return kindOfL(j - 1);
+                            }
+                        }
+                    }
+                }
+            } else {
+                return whiteSpaces.indexOf(msg.str[i]);
+            }
+
+            return 0;
+        }
+
+        function kindOfR(i) {
+            if (stopCharsMarkout.indexOf(msg.str[i]) > -1) {
+                for (var j = i + 1; j < msg.str.length; j++) {
+                    if (msg.str[j] === chr) {
+                        return -1;
+                    } else if (stopCharsMarkout.indexOf(msg.str[j]) === -1) {
+                        return whiteSpaces.indexOf(msg.str[j]);
+                    }
+                }
+            } else if (msg.str[i] === '>') {
+                for (var j = i + 1; j < msg.str.length; j++) {
+                    if (msg.str[j] === '<') {
+                        if (j === msg.str.length - 1) {
+                            return -1;
+                        } else {
+                            if (msg.str[j + 1] === chr) {
+                                return -1;
+                            } else {
+                                return kindOfR(j + 1);
+                            }
+                        }
+                    }
+                }
+            } else {
+                return whiteSpaces.indexOf(msg.str[i]);
+            }
+
+            return 0;
+        }
+
         var i, j, t, l, r, htmlEntityEncoded;
         var w = false;
         var p = [];
@@ -291,32 +351,8 @@ function htmlFormatMsg(msg, mentions) {
                     p.push({i: i, k: j - i, t: 1, w: w, a: -1, p: -1});
                     w = false;
                 } else {
-                    if (stopCharsMarkout.indexOf(msg.str[i - 1]) > -1) {
-                        l = 1;
-                        for (t = i - 2; t > -1; t--) {
-                            if (msg.str[t] === chr) {
-                                l = -1;
-                                break;
-                            } else if (stopCharsMarkout.indexOf(msg.str[t]) === -1) {
-                                l = whiteSpaces.indexOf(msg.str[t]);
-                                break;
-                            }
-                        }
-                    } else
-                        l = whiteSpaces.indexOf(msg.str[i - 1]);
-                    if (stopCharsMarkout.indexOf(msg.str[j]) > -1) {
-                        r = 1;
-                        for (t = j + 1; t < msg.str.length; t++) {
-                            if (msg.str[t] === chr) {
-                                r = -1;
-                                break;
-                            } else if (stopCharsMarkout.indexOf(msg.str[t]) === -1) {
-                                r = whiteSpaces.indexOf(msg.str[t]);
-                                break;
-                            }
-                        }
-                    } else
-                        r = whiteSpaces.indexOf(msg.str[j]);
+                    l = kindOfL(i - 1);
+                    r = kindOfR(j);
                     if (l > -1) {
                         if (r > -1) {
                             if (j - i > 2) {
