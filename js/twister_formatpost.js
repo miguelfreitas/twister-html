@@ -110,20 +110,26 @@ function postToElem(post, kind, promoted) {
     getAvatar(username, elem.find('.avatar'));
     elem.find('.post-info-time').text(timeGmtToText(t)).attr('title', timeSincePost(t));
 
-    var mentions = [];
-    elem.find('.post-text').html(htmlFormatMsg(msg, mentions));
-    postData.attr('data-text-mentions', mentions);
+    msg = htmlFormatMsg(msg);
+    elem.find('.post-text').html(msg.html);
+    postData.attr('data-text-mentions', msg.mentions.join());  // FIXME no idea why do we need this attribute since we don't use it but use data-reply-to instead
 
-    var replyTo = '';
-    if (username !== defaultScreenName)
-        replyTo += '@' + username + ' ';
-    for (var i = 0; i < mentions.length; i++) {
-        if (mentions[i] !== username && mentions[i] !== defaultScreenName)
-            replyTo += '@' + mentions[i] + ' ';
+    if (username !== defaultScreenName) {
+        if (msg.mentions.indexOf(username) === -1)
+            msg.mentions.splice(0, 0, username);
+    } else {
+        var i = msg.mentions.indexOf(defaultScreenName);
+        if (i !== -1)
+            msg.mentions.splice(i, 1);
     }
+    if (msg.mentions.length)
+        var replyTo = '@' + msg.mentions.join(' @') + ' ';
+    else
+        var replyTo = '';
 
     var postTextArea = elem.find('.post-area-new textarea');
     postTextArea.attr('data-reply-to', replyTo);
+
     if (!defaultScreenName)
         postTextArea.attr('placeholder', polyglot.t('You have to log in to post replies.'));
     else
@@ -208,7 +214,7 @@ function dmDataToSnippetItem(dmData, remoteUser) {
         getGroupChatName( remoteUser, dmItem.find("a.post-info-name") );
     else
         getFullname( remoteUser, dmItem.find("a.post-info-name") );
-    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text, []));
+    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text).html);
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
 
     return dmItem;
@@ -226,14 +232,13 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
     getAvatar(from, dmItem.find(".post-photo").find("img") );
     dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
     setPostInfoSent(from,dmData.k,dmItem.find('.post-info-sent'));
-    var mentions = [];
-    dmItem.find('.post-text').html(htmlFormatMsg(dmData.text, mentions));
+    dmItem.find('.post-text').html(htmlFormatMsg(dmData.text).html);
 
     return dmItem;
 }
 
 // convert message text to html, featuring @users and links formating.
-function htmlFormatMsg(msg, mentions) {
+function htmlFormatMsg(msg) {
     // TODO: add options for emotions; msg = $.emotions(msg);
     // TODO make markup optionally mutable ?
 
@@ -534,6 +539,7 @@ function htmlFormatMsg(msg, mentions) {
         + whiteSpaces;
     var stopCharsMarkout = '/\\*~_-`.,:;?!%+=&\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
     var i, j, k, str;
+    var mentions = [];
 
     msg = {str: escapeHtmlEntities(msg), htmlEntities: []};
 
@@ -663,7 +669,7 @@ function htmlFormatMsg(msg, mentions) {
                     break;
             }
             str = msg.str.slice(i + 1, j).toLowerCase();
-            mentions.push(str);  // FIXME
+            mentions.push(str);
             msg = msgAddHtmlEntity(msg, i, i + str.length + 1,
                 newHtmlEntityLink(_htmlFormatMsgLinkTemplateUser,
                     $.MAL.userUrl(str), '@' + str)
@@ -713,7 +719,7 @@ function htmlFormatMsg(msg, mentions) {
     if ($.Options.displayLineFeeds.val === 'enable')
         msg = msg.replace(/\n/g, '<br />');
 
-    return msg;
+    return {html: msg, mentions: mentions};
 }
 
 function proxyURL(url) {

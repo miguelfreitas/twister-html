@@ -587,7 +587,7 @@ function posPostPreview(event) {
             - postPreview.css('padding-left') - postPreview.css('padding-right'));
     }
     if (textArea[0].value.length)
-        postPreview.html(htmlFormatMsg(textArea[0].value, [])).show();
+        postPreview.html(htmlFormatMsg(textArea[0].value).html).show();
     else
         postPreview.hide();
     textArea.before(postPreview);
@@ -698,7 +698,7 @@ function replyTextInput(event) {
 
         if ($.Options.postPreview.val) {
             if (textArea[0].value.length)
-                textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
+                textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value).html).show();
             else
                 textAreaForm.find('#post-preview').html('').hide();
         }
