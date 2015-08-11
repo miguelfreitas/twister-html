@@ -1020,7 +1020,8 @@ ol.toptrends-list {
     vertical-align: top;
 }
 .post-info-name,
-.mini-profile-name
+.mini-profile-name,
+.comment-info-name
 {
     font-weight: bold;
     font-size: 14px;
@@ -1068,6 +1069,32 @@ ol.toptrends-list {
 .mini-screen-name
 {
     color: #e34f42;
+}
+.comment-data {
+    margin: 5px 0 10px 0;
+}
+.comment-photo {
+    margin: 5px;
+    display: inline-block;
+    float: left;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    border-radius: 20%;
+}
+.comment-photo img {
+    width: 24px;
+    height: auto;
+}
+.comment-info-name {
+    font-size: 10px;
+    color: #E36F62;
+}
+.coment-text {
+    font-size: 10px;
+    margin: 2px 10px 4px 10px;
+    word-wrap: break-word;
 }
 .mini-screen-name
 {

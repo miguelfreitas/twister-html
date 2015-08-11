@@ -62,6 +62,7 @@ function postToElem( post, kind, promoted ) {
         var content_to_rt = $.toJSON(rt);
         var content_to_sigrt = userpost["sig_rt"];
         var retweeted_by = userpost["n"];
+        var comment = userpost["msg"];
     } else {
         var n = userpost["n"];
         var k = userpost["k"];
@@ -133,8 +134,15 @@ function postToElem( post, kind, promoted ) {
     postData.attr('data-reply-to', replyTo);
 
     if( retweeted_by != undefined ) {
-        elem.find('.post-context').show();
-        elem.find('.post-retransmited-by')
+        var pc = elem.find('.post-context');
+        pc.show();
+        if (typeof(comment) !== 'undefined') {
+            pc.find('.comment-data').show();
+            getFullname(userpost['n'], pc.find('.comment-info-name'));
+            getAvatar(userpost['n'], pc.find('.avatar24'));
+            pc.find('.comment-text').html(htmlFormatMsg(comment, mentions));
+        }
+        pc.find('.post-retransmited-by')
             .attr('href', $.MAL.userUrl(retweeted_by))
             .text('@' + retweeted_by)
         ;
