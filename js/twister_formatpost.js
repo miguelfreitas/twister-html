@@ -28,7 +28,7 @@ $(document).ready(function() {
 
 // format "userpost" to html element
 // kind = "original"/"ancestor"/"descendant"
-function postToElem( post, kind, promoted ) {
+function postToElem(post, kind, promoted) {
     /*
     "userpost" :
     {
@@ -49,27 +49,26 @@ function postToElem( post, kind, promoted ) {
     }
     "sig_userpost" : signature by userpost.n
     */
+    var username, k, t, msg, rt, content_to_rt, content_to_sigrt, retweeted_by;
 
     // Obtain data from userpost
-    var postJson = $.toJSON(post);
-    var userpost = post["userpost"];
-    if( "rt" in userpost ) {
-        var rt = userpost["rt"];
-        var n = rt["n"];
-        var k = rt["k"];
-        var t = rt["time"];
-        var msg = rt["msg"];
-        var content_to_rt = $.toJSON(rt);
-        var content_to_sigrt = userpost["sig_rt"];
-        var retweeted_by = userpost["n"];
+    var userpost = post.userpost;
+    if (userpost.rt) {
+        rt = userpost.rt;
+        username = rt.n;
+        k = rt.k;
+        t = rt.time;
+        msg = rt.msg;
+        content_to_rt = $.toJSON(rt);
+        content_to_sigrt = userpost.sig_rt;
+        retweeted_by = userpost.n;
     } else {
-        var n = userpost["n"];
-        var k = userpost["k"];
-        var t = userpost["time"];
-        var msg = userpost["msg"]
-        var content_to_rt = $.toJSON(userpost);
-        var content_to_sigrt = post["sig_userpost"];
-        var retweeted_by = undefined;
+        username = userpost.n;
+        k = userpost.k;
+        t = userpost.time;
+        msg = userpost.msg;
+        content_to_rt = $.toJSON(userpost);
+        content_to_sigrt = post.sig_userpost;
     }
 
     // Now create the html elements
@@ -79,36 +78,36 @@ function postToElem( post, kind, promoted ) {
         .attr('data-time', t)
     ;
 
-    if( post['isNew'] )
+    if (post.isNew)
         elem.addClass('new');
 
     var postData = elem.find('.post-data');
     postData.addClass(kind)
-        .attr('data-userpost', postJson)
+        .attr('data-userpost', $.toJSON(post))
         .attr('data-content_to_rt', content_to_rt)
         .attr('data-content_to_sigrt', content_to_sigrt)
-        .attr('data-screen-name', n)
+        .attr('data-screen-name', username)
         .attr('data-id', k)
         .attr('data-lastk', userpost["lastk"])
         .attr('data-text', msg)
     ;
-    if( 'reply' in userpost ) {
+    if (userpost.reply) {
         postData.attr('data-replied-to-screen-name', userpost.reply.n)
             .attr('data-replied-to-id', userpost.reply.k)
             .find('.post-expand').text(polyglot.t('Show conversation'))
         ;
-    } else if ( 'rt' in userpost && 'reply' in userpost.rt ) {
+    } else if (userpost.rt && userpost.rt.reply) {
         postData.attr('data-replied-to-screen-name', userpost.rt.reply.n)
             .attr('data-replied-to-id', userpost.rt.reply.k)
             .find('.post-expand').text(polyglot.t('Show conversation'))
         ;
     }
 
-    var postInfoName = elem.find('.post-info-name');
-    postInfoName.text(n).attr('href', $.MAL.userUrl(n));
-    getFullname( n, postInfoName );
-    //elem.find('.post-info-tag').text("@" + n);
-    getAvatar( n, elem.find('.avatar') );
+    var postInfoName = elem.find('.post-info-name')
+        .text(username).attr('href', $.MAL.userUrl(username));
+    getFullname(username, postInfoName);
+    //elem.find('.post-info-tag').text("@" + username);
+    getAvatar(username, elem.find('.avatar'));
     elem.find('.post-info-time').text(timeGmtToText(t)).attr('title', timeSincePost(t));
 
     var mentions = [];
@@ -116,10 +115,10 @@ function postToElem( post, kind, promoted ) {
     postData.attr('data-text-mentions', mentions);
 
     var replyTo = '';
-    if( n !== defaultScreenName )
-        replyTo += '@' + n + ' ';
+    if (username !== defaultScreenName)
+        replyTo += '@' + username + ' ';
     for (var i = 0; i < mentions.length; i++) {
-        if (mentions[i] !== n && mentions[i] !== defaultScreenName)
+        if (mentions[i] !== username && mentions[i] !== defaultScreenName)
             replyTo += '@' + mentions[i] + ' ';
     }
 
@@ -128,11 +127,11 @@ function postToElem( post, kind, promoted ) {
     if (!defaultScreenName)
         postTextArea.attr('placeholder', polyglot.t('You have to log in to post replies.'));
     else
-        postTextArea.attr('placeholder', polyglot.t('reply_to', { fullname: replyTo })+ '...');
+        postTextArea.attr('placeholder', polyglot.t('reply_to', {fullname: replyTo})+ '...');
 
     postData.attr('data-reply-to', replyTo);
 
-    if( retweeted_by != undefined ) {
+    if (typeof retweeted_by !== 'undefined') {
         elem.find('.post-context').show();
         elem.find('.post-retransmited-by')
             .attr('href', $.MAL.userUrl(retweeted_by))
@@ -140,25 +139,38 @@ function postToElem( post, kind, promoted ) {
         ;
     }
 
-    if (typeof(promoted) !== 'undefined' && promoted) {
+    if (typeof promoted !== 'undefined' && promoted) {
         elem.find('.post-propagate').remove();
         postData.attr('data-promoted', 1);
-        postData.attr('data-screen-name', '!' + n);
+        postData.attr('data-screen-name', '!' + username);
     } else {
-        setPostInfoSent(userpost["n"], userpost["k"], elem.find('.post-info-sent'));
+        setPostInfoSent(userpost.n, userpost.k, elem.find('.post-info-sent'));
         if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangSimulate.val) {
             // FIXME it's must be stuff from template actually
-            if (typeof(post['langFilter']) !== 'undefined') {
-                if (typeof(post['langFilter']['prob'][0]) !== 'undefined')
-                    var mlm = '  //  '+polyglot.t('Most possible language: this', {'this': '<em>'+post['langFilter']['prob'][0].toString()+'</em>'});
+            if (typeof post.langFilter !== 'undefined') {
+                if (typeof post.langFilter.prob[0] !== 'undefined')
+                    var mlm = '  //  ' + polyglot.t('Most possible language: this',
+                        {'this': '<em>' + post.langFilter.prob[0].toString() + '</em>'});
                 else
                     var mlm = '';
 
-                elem.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+((post['langFilter']['pass']) ? polyglot.t('passed') : polyglot.t('blocked'))+'</em>'})+'</div>')
-                    .append('<div class="langFilterSimData">'+polyglot.t('Reason: this', {'this': '<em>'+post['langFilter']['reason']+'</em>'})+mlm+'</div>')
+                elem.append('<div class="langFilterSimData">'
+                        + polyglot.t('This post is treated by language filter',
+                            {'treated': '<em>' + (post.langFilter.pass ? polyglot.t('passed') : polyglot.t('blocked')) + '</em>'})
+                        + '</div>'
+                    )
+                    .append('<div class="langFilterSimData">'
+                        + polyglot.t('Reason: this', {'this': '<em>' + post.langFilter.reason + '</em>'})
+                        + mlm +'</div>'
+                    )
                 ;
             } else {
-                elem.append('<div class="langFilterSimData">'+polyglot.t('This post is treated by language filter', {'treated': '<em>'+polyglot.t('not analyzed')+'</em>'})+'</div>');
+                elem.append('<div class="langFilterSimData">'
+                        + polyglot.t('This post is treated by language filter',
+                            {'treated': '<em>' + polyglot.t('not analyzed') + '</em>'})
+                        + '</div>'
+                    )
+                ;
             }
         }
     }
