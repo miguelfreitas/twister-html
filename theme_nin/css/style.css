@@ -1100,42 +1100,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-left: 1px;
 }
 
-.post-rt-reference {
-    background-color: #FAFAFA;
-    border: 1px solid #ccc;
-    padding: 2px;
-}
-
-.post-rt-reference:hover {
-    background-color: #FFF;
-    cursor: pointer;
-}
-
-.post-rt-reference .post-photo {
-    width: 24px;
-    height: 24px;
-}
-
-.post-rt-reference .post-photo img {
-    width: 24px;
-    height: auto;
-}
-
-.post-rt-reference .post-info-name {
-    font-size: 11px;
-    padding-left: 0px;
-}
-
-.post-rt-reference .post-text {
-    font-size: 11px;
-    margin: 4px 4px 4px 28px;
-}
-
-.post-rt-reference .post-info-time {
-    font-size: 9px;
-    color: #B3B5B7;
-}
-
 /* MODAL */
 /* line 316, ../sass/_postboard.sass */
 .modal-content .postboard {
@@ -2825,7 +2789,7 @@ ol.toptrends-list a:hover {
 
 /* line 705, ../sass/style.sass */
 .reTwist.prompt-wrapper {
-  margin-top: -110px;
+  margin-top: -150px;
 }
 
 .reTwist .modal-content {
@@ -3353,4 +3317,42 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
     float: none;
     margin: 2% 1%;
   }
+}
+
+
+.post-rt-reference {
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+
+.post-rt-reference:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.post-rt-reference .post-photo {
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+}
+
+.post-rt-reference .post-photo img {
+    width: 24px;
+    height: auto;
+}
+
+.post-rt-reference .post-info-name {
+    font-size: 11px;
+    padding-left: 0px;
+}
+
+.post-rt-reference .post-text {
+    font-size: 11px;
+    margin: 4px 4px 4px 28px;
+}
+
+.post-rt-reference .post-info-time {
+    font-size: 9px;
+    color: #B3B5B7;
 }
