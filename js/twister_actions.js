@@ -285,6 +285,14 @@ function newRtMsg(postData, msg) {
         sig_userpost = postData.attr('data-content_to_sigrt');
     }
 
+    if (typeof sig_userpost === 'undefined') {
+        alert(polyglot.t('error',
+            {error: 'can\'t sig_userpost is not deifned'}
+        ));
+
+        return;
+    }
+
     var rtObj = {sig_userpost: sig_userpost, userpost: userpost};
 
     if (typeof lastPostId !== 'undefined') {
