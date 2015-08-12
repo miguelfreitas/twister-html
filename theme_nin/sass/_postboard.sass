@@ -142,22 +142,8 @@
 .post-context
     font-size: 11px
     line-height: 11px
-    margin: 0 0 1em 0
+    margin: 2px 10px 4px 60px
     color: lighten($dark-grey,30%)
-    span
-        @extend .icon-twistagain
-        @extend .extend-icon
-        &:before
-            display: block
-            float: left
-            background: $main-color-color
-            text-align: center
-            padding: 1px 2px 2px 2px
-            line-height: 9px
-            font-size: 9px
-            +border-radius(3px)
-            color: white
-            margin-right: .4em
 
 .mini-screen-name
     font-size: 13px
@@ -165,7 +151,18 @@
 
 
 .post-retransmited-icon
-    display: none
+    @extend .icon-twistagain
+    @extend .extend-icon
+    display: block
+    float: left
+    background: $main-color-color
+    text-align: center
+    padding: 1px 2px 2px 2px
+    line-height: 9px
+    font-size: 9px
+    +border-radius(3px)
+    color: white
+    margin-right: .4em
 
 .post-interactions
     margin: 10px 0 3px 0
@@ -314,6 +311,7 @@
 .post-rt-reference
     background-color: #FAFAFA
     border: 1px solid #ccc
+    padding: 2px
     &:hover
         background-color: #FFF
         cursor: pointer
@@ -324,13 +322,13 @@
             width: 24px
             height: auto
     .post-info-name
-        font-size: 10px
+        font-size: 11px
     .post-text
-        font-size: 10px
-        margin: 2px 10px 4px 10px
+        font-size: 11px
+        margin: 4px 4px 4px 28px
     .post-info-time
         font-size: 9px
-        color: #000
+        color: #B3B5B7
 
 
 
