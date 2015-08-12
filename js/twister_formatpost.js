@@ -3,12 +3,16 @@
 //
 // Format JSON posts and DMs to HTML.
 
+var _templatePostRtReference
+var _templatePostRtBy
 var _htmlFormatMsgLinkTemplateExternal;
 var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
 
 $(document).ready(function() {
     // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post every time
+    _templatePostRtReference = $('#post-rt-reference-template').children().clone(true);
+    _templatePostRtBy = $('#post-retransmited-by-template').children().clone(true);
     _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
     if (_htmlFormatMsgLinkTemplateExternal.length) {
         _htmlFormatMsgLinkTemplateExternal = _htmlFormatMsgLinkTemplateExternal[0].cloneNode();
@@ -29,6 +33,18 @@ $(document).ready(function() {
 // format "userpost" to html element
 // kind = "original"/"ancestor"/"descendant"
 function postToElem(post, kind, promoted) {
+
+    function setPostCommon(elem, username, time) {
+        var postInfoName = elem.find('.post-info-name')
+            .text(username).attr('href', $.MAL.userUrl(username));
+
+        getFullname(username, postInfoName);
+        //elem.find('.post-info-tag').text("@" + username);  // FIXME
+        getAvatar(username, elem.find('.avatar'));
+
+        elem.find('.post-info-time').text(timeGmtToText(time)).attr('title', timeSincePost(time));
+    }
+
     /*
     "userpost" :
     {
@@ -49,23 +65,33 @@ function postToElem(post, kind, promoted) {
     }
     "sig_userpost" : signature by userpost.n
     */
-    var username, k, t, msg, rt, content_to_rt, content_to_sigrt, retweeted_by;
+
+    var username, k, time, msg, rt, content_to_rt, content_to_sigrt, retweeted_by;
 
     // Obtain data from userpost
     var userpost = post.userpost;
     if (userpost.rt) {
         rt = userpost.rt;
-        username = rt.n;
-        k = rt.k;
-        t = rt.time;
-        msg = rt.msg;
-        content_to_rt = $.toJSON(rt);
-        content_to_sigrt = userpost.sig_rt;
+        if (userpost.msg) {
+            username = userpost.n;
+            k = userpost.k;
+            time = userpost.time;
+            msg = userpost.msg;
+            content_to_rt = $.toJSON(userpost);
+            content_to_sigrt = post.sig_userpost;
+        } else {
+            username = rt.n;
+            k = rt.k;
+            time = rt.time;
+            msg = rt.msg;
+            content_to_rt = $.toJSON(rt);
+            content_to_sigrt = userpost.sig_rt;
+        }
         retweeted_by = userpost.n;
     } else {
         username = userpost.n;
         k = userpost.k;
-        t = userpost.time;
+        time = userpost.time;
         msg = userpost.msg;
         content_to_rt = $.toJSON(userpost);
         content_to_sigrt = post.sig_userpost;
@@ -75,7 +101,7 @@ function postToElem(post, kind, promoted) {
     var elem = $.MAL.getPostTemplate().clone(true);
     elem.removeAttr('id')
         .addClass(kind)
-        .attr('data-time', t)
+        .attr('data-time', time)
     ;
 
     if (post.isNew)
@@ -103,12 +129,7 @@ function postToElem(post, kind, promoted) {
         ;
     }
 
-    var postInfoName = elem.find('.post-info-name')
-        .text(username).attr('href', $.MAL.userUrl(username));
-    getFullname(username, postInfoName);
-    //elem.find('.post-info-tag').text("@" + username);
-    getAvatar(username, elem.find('.avatar'));
-    elem.find('.post-info-time').text(timeGmtToText(t)).attr('title', timeSincePost(t));
+    setPostCommon(elem, username, time);
 
     msg = htmlFormatMsg(msg);
     elem.find('.post-text').html(msg.html);
@@ -138,11 +159,19 @@ function postToElem(post, kind, promoted) {
     postData.attr('data-reply-to', replyTo);
 
     if (typeof retweeted_by !== 'undefined') {
-        elem.find('.post-context').show();
-        elem.find('.post-retransmited-by')
-            .attr('href', $.MAL.userUrl(retweeted_by))
-            .text('@' + retweeted_by)
-        ;
+        var postContext = elem.find('.post-context');
+        if (userpost.msg) {
+            postContext.append(_templatePostRtReference.clone(true))
+                .find('.post-text').html(htmlFormatMsg(rt.msg).html);
+            ;
+            setPostCommon(postContext, rt.n, rt.time)
+        } else {
+            postContext.append(_templatePostRtBy.clone(true))
+                .find('.post-retransmited-by')
+                    .attr('href', $.MAL.userUrl(retweeted_by)).text('@' + retweeted_by)
+            ;
+        }
+        postContext.show();
     }
 
     if (typeof promoted !== 'undefined' && promoted) {

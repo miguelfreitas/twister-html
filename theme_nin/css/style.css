@@ -1101,6 +1101,40 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-left: 1px;
 }
 
+.post-rt-reference {
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+}
+
+.post-rt-reference:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.post-rt-reference .post-photo {
+    width: 24px;
+    height: 24px;
+}
+
+.post-rt-reference .post-photo img {
+    width: 24px;
+    height: auto;
+}
+
+.post-rt-reference .post-info-name {
+    font-size: 10px;
+}
+
+.post-rt-reference .post-text {
+    font-size: 10px;
+    margin: 2px 10px 4px 10px;
+}
+
+.post-rt-reference .post-info-time {
+    font-size: 9px;
+    color: #000;
+}
+
 /* MODAL */
 /* line 316, ../sass/_postboard.sass */
 .modal-content .postboard {

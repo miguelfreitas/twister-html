@@ -222,11 +222,7 @@
                 <a class="post-info-time"></a>
             </div>
             <p class="post-text"></p>
-            <div class="post-context" style="display: none;">
-                <i class="post-retransmited-icon"></i>
-                <span>twisted again by</span>
-                <a class="post-retransmited-by open-profile-modal" href=""></a>
-            </div>
+            <div class="post-context" style="display: none;"></div>
             <span class="post-expand">Expand</span>
             <!-- elementos de interação com o post que são exibidos no hover -->
             <div class="post-interactions">
@@ -260,6 +256,25 @@
             </div> <!-- expanded-content -->
         </div> <!-- post-data -->
     </li> <!-- post-template -->
+
+    <div id="post-rt-reference-template">
+        <div class="post-rt-reference">
+            <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo" /></div>
+            <div class="post-info">
+                <a href="#" class="post-info-name open-profile-modal"></a>
+                <span class="post-info-tag"></span>
+                <span class="post-info-sent"></span>
+                <a class="post-info-time"></a>
+            </div>
+            <p class="post-text"></p>
+        </div>
+    </div>
+
+    <div id="post-retransmited-by-template">
+        <i class="post-retransmited-icon"></i>
+        <span>twisted again by</span><span> </span>
+        <a class="post-retransmited-by open-profile-modal" href=""></a>
+    </div>
 
     <!-- template for user links in message (open profile modal) -->
     <a id="msg-user-link-template" class="open-profile-modal"></a>
