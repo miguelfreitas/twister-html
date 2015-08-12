@@ -138,11 +138,10 @@ function postToElem(post, kind, promoted) {
     if (username !== defaultScreenName) {
         if (msg.mentions.indexOf(username) === -1)
             msg.mentions.splice(0, 0, username);
-    } else {
-        var i = msg.mentions.indexOf(defaultScreenName);
-        if (i !== -1)
-            msg.mentions.splice(i, 1);
     }
+    for (var i = msg.mentions.indexOf(defaultScreenName); i !== -1; i = msg.mentions.indexOf(defaultScreenName))
+        msg.mentions.splice(i, 1);
+
     if (msg.mentions.length)
         var replyTo = '@' + msg.mentions.join(' @') + ' ';
     else
