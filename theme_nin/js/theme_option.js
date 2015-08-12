@@ -8,9 +8,8 @@ $(function(){
     $('.userMenu-search-profiles button').html('').attr('title',polyglot.t('Follow'));
     $('.mini-profile-actions span').html('');
 
-    //$('.post-context').each(function(){
-    //    $(this).prependTo($(this).parent());
-    //});
+    $.globalEval(postToElem.toString().replace(/postContext.append\(_templatePostRtBy/,
+        'postContext.addClass(\'post-retransmited-by-container\').prependTo(postContext.parent()).append(_templatePostRtBy'));
 
 
     $( '.userMenu-home.current a' ).on( 'click', function() {

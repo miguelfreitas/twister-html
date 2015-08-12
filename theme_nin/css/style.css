@@ -907,6 +907,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-right: 0.4em;
 }
 
+.post-context.post-retransmited-by-container {
+    margin: 0 0 1em;
+}
+
 /* line 158, ../sass/_postboard.sass */
 .mini-screen-name {
   font-size: 13px;
