@@ -293,6 +293,8 @@ function newRtMsg(postData, msg) {
         return;
     }
 
+    userpost.sig_wort = undefined;
+
     var rtObj = {sig_userpost: sig_userpost, userpost: userpost};
 
     if (typeof lastPostId !== 'undefined') {

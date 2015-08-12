@@ -70,6 +70,10 @@ function postToElem(post, kind, promoted) {
 
     // Obtain data from userpost
     var userpost = post.userpost;
+
+    if (post.sig_wort)
+        userpost.sig_wort = post.sig_wort;
+
     if (userpost.rt) {
         rt = userpost.rt;
         if (userpost.msg) {
