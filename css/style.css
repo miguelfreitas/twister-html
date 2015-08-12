@@ -1787,6 +1787,10 @@ ol.toptrends-list {
     min-height: 68px;
 }
 
+.reTwist .post-area-extras {
+    margin-right: 10px;
+}
+
 /*************************************
 ********* REPLY POSTS PROMPT *********
 **************************************/
