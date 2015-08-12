@@ -1436,14 +1436,16 @@ textarea.splited-post {
     font-size: 13px;
     top: 40px;
 }
-.post-retransmited-icon
-{
+
+.post-retransmited-icon {
     display: inline-block;
     width: 25px;
     height: 25px;
     background: url(../img/repost.png) no-repeat left center;
     vertical-align: middle;
+    margin: 2px;
 }
+
 .post-interactions
 {
     margin: -5px 10px 5px 60px;
@@ -1638,12 +1640,16 @@ textarea.splited-post {
 }
 
 .post-rt-reference .post-info-name {
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .post-rt-reference .post-text {
-    font-size: 10px;
+    font-size: 11px;
     margin: 2px 10px 4px 10px;
+}
+
+.post-rt-reference .post-text a {
+    font-size: 11px;
 }
 
 .post-rt-reference .post-info-time {

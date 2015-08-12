@@ -8,9 +8,9 @@ $(function(){
     $('.userMenu-search-profiles button').html('').attr('title',polyglot.t('Follow'));
     $('.mini-profile-actions span').html('');
 
-    $('.post-context').each(function(){
-        $(this).prependTo($(this).parent());
-    });
+    //$('.post-context').each(function(){
+    //    $(this).prependTo($(this).parent());
+    //});
 
 
     $( '.userMenu-home.current a' ).on( 'click', function() {
