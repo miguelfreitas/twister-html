@@ -1240,7 +1240,7 @@ function postSubmit(e, oldLastPostId) {
     }
 
     if (btnPostSubmit.hasClass('with-reference')) {
-        function doSubmitPost(postText, postData) {
+        var doSubmitPost = function (postText, postData) {
             newRtMsg(postData, postText);
         }
     } else {
@@ -1251,7 +1251,7 @@ function postSubmit(e, oldLastPostId) {
             }
         }
 
-        function doSubmitPost(postText, postData) {
+        var doSubmitPost = function (postText, postData) {
             newPostMsg(postText, postData);
         }
     }
