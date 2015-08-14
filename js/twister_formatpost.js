@@ -12,6 +12,8 @@ var _htmlFormatMsgLinkTemplateHashtag;
 $(document).ready(function() {
     // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post every time
     _templatePostRtReference = $('#post-rt-reference-template').children().clone(true);
+    _templatePostRtReference.find('.post-text')
+        .on('click', {feeder: '.post-rt-reference'}, openConversationClick);
     _templatePostRtBy = $('#post-retransmited-by-template').children().clone(true);
     _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
     if (_htmlFormatMsgLinkTemplateExternal.length) {
@@ -165,9 +167,12 @@ function postToElem(post, kind, promoted) {
         var postContext = elem.find('.post-context');
         if (userpost.msg) {
             postContext.append(_templatePostRtReference.clone(true))
-                .find('.post-text').html(htmlFormatMsg(rt.msg).html);
+                .find('.post-rt-reference')
+                    .attr('data-screen-name', rt.n)
+                    .attr('data-id', rt.k)
+                    .find('.post-text').html(htmlFormatMsg(rt.msg).html)
             ;
-            setPostCommon(postContext, rt.n, rt.time)
+            setPostCommon(postContext, rt.n, rt.time);
         } else {
             postContext.append(_templatePostRtBy.clone(true))
                 .find('.post-retransmited-by')

@@ -293,7 +293,7 @@ function openConversationClick(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    var postData = $(this).parents('.module.post.original.open .module.post.original .post-data');
+    var postData = $(this).closest(e.data.feeder);
 
     window.location.hash = '#conversation?post=' + postData.attr('data-screen-name') +
         ':post' + postData.attr('data-id');
@@ -1427,7 +1427,8 @@ function initInterfaceCommon() {
     ;
     $('.post-submit').on('click', postSubmit);
     $('.modal-propagate').on('click', retweetSubmit);
-    $('.expanded-content .show-more').on('click', openConversationClick);
+    $('.expanded-content .show-more').on('click',
+        {feeder: '.module.post.original.open .module.post.original .post-data'}, openConversationClick);
 
     if ($.Options.unicodeConversion.val === 'disable')
         $('.undo-unicode').on('click', undoLastUnicode).css('display', 'none');
