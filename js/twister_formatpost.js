@@ -120,7 +120,7 @@ function postToElem(post, kind, promoted) {
         .attr('data-content_to_sigrt', content_to_sigrt)
         .attr('data-screen-name', username)
         .attr('data-id', k)
-        .attr('data-lastk', userpost["lastk"])
+        .attr('data-lastk', userpost.lastk)
         .attr('data-text', msg)
     ;
     if (userpost.reply) {
@@ -170,6 +170,7 @@ function postToElem(post, kind, promoted) {
                 .find('.post-rt-reference')
                     .attr('data-screen-name', rt.n)
                     .attr('data-id', rt.k)
+                    .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: userpost.sig_rt}))
                     .find('.post-text').html(htmlFormatMsg(rt.msg).html)
             ;
             setPostCommon(postContext, rt.n, rt.time);

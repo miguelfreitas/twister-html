@@ -488,6 +488,15 @@ function handleAvatarFileSelectMobile(evt) {
     }
 }
 
+function openConversationClick(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var userpost = $(event.target).closest(event.data.feeder).attr('data-userpost');
+
+    $.mobile.showPageLoadingMsg();
+    $.mobile.navigate('#post?userpost=' + encodeURIComponent(userpost));
+}
 
 
 function clearProfilePage() {
