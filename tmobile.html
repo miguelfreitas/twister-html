@@ -75,8 +75,45 @@
   .header {position:fixed;z-index:10;top:0;width:100%}
   .content {padding:15px 20px 20px 20px;}
   .footer {position:fixed;z-index:10;bottom:0;width:100%}
+
+.post-rt-reference {
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+    padding: 4px;
 }
 
+.post-rt-reference:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.post-rt-reference .post-photo {
+    float: left;
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+}
+
+.post-rt-reference .post-photo img {
+    width: 24px;
+    height: auto;
+}
+
+.post-rt-reference .post-info-name {
+    font-size: 10px;
+}
+
+.post-rt-reference .post-text {
+    font-size: 10px;
+    margin: 2px 10px 4px 10px;
+}
+
+.post-rt-reference .post-info-time {
+    font-size: 9px;
+    font-weight: lighter;
+    color: #000 !important;
+    float: right;
+}
 </style>
 
 <div id="index" data-role="page">
@@ -710,11 +747,7 @@
                 <span style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"></span>
             </h4>
             <p class="post-text no-ellipsis"></p>
-            <div class="post-context" style="display: none;">
-                <i class="post-retransmited-icon"></i>
-                <span style="font-size:60%;">twisted again by</span>
-                <a style="font-size:60%;" class="post-retransmited-by open-profile-modal" href=""></a>
-            </div>
+            <div class="post-context" style="display: none;"></div>
         </div>
     </li> <!-- post-template -->
 
@@ -733,11 +766,7 @@
                 <span style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"></span>
             </h4>
             <p class="post-text no-ellipsis"></p>
-            <div class="post-context" style="display: none;">
-                <i class="post-retransmited-icon"></i>
-                <span style="font-size:60%;">twisted again by</span>
-                <a style="font-size:60%;" class="post-retransmited-by open-profile-modal" href=""></a>
-            </div>
+            <div class="post-context" style="display: none;"></div>
             <!-- elementos de interação com o post que são exibidos no hover -->
             <fieldset class="post-interactions ui-grid-a" data-role="fieldcontain">
                 <div class="ui-block-a">
@@ -761,6 +790,24 @@
         </div> <!-- post-data -->
     </li> <!-- post-template -->
 
+    <div id="post-rt-reference-template">
+        <div class="post-rt-reference">
+            <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo" /></div>
+            <div class="post-info">
+                <a href="#" class="post-info-name open-profile-modal"></a>
+                <span class="post-info-tag"></span>
+                <span class="post-info-sent"></span>
+                <a class="post-info-time"></a>
+            </div>
+            <p class="post-text"></p>
+        </div>
+    </div>
+
+    <div id="post-retransmited-by-template">
+        <i class="post-retransmited-icon"></i>
+        <span style="font-size:60%;">twisted again by</span><span> </span>
+        <a style="font-size:60%;" class="post-retransmited-by open-profile-modal" href=""></a>
+    </div>
 
     <!-- template for user links in message (open profile modal) -->
     <a id="msg-user-link-template" class="open-profile-modal"></a>

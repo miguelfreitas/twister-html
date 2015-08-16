@@ -4,6 +4,8 @@
 // Provides functions for periodic network status check
 // Interface to network.html page.
 
+var twisterVersion;
+var twisterDisplayVersion;
 var twisterdConnections = 0;
 var twisterdAddrman = 0;
 var twisterDhtNodes = 0;
@@ -39,9 +41,9 @@ function requestNetInfo(cbFunc, cbArg) {
                    twisterdBlocks      = ret.blocks;
                    twisterDhtNodes     = ret.dht_nodes;
                    twisterVersion      = ("0000000" + ret.version).slice(-8);
-                   twisterDisplayVersion = twisterVersion.slice(0,2) + '.' + 
-                                           twisterVersion.slice(2,4) + '.' + 
-                                           twisterVersion.slice(4,6) + '.' + 
+                   twisterDisplayVersion = twisterVersion.slice(0,2) + '.' +
+                                           twisterVersion.slice(2,4) + '.' +
+                                           twisterVersion.slice(4,6) + '.' +
                                            twisterVersion.slice(6,8);
 
                    $(".connection-count").text(twisterdConnections);
@@ -301,10 +303,10 @@ function initInterfaceNetwork() {
             });
         }
         else
-	{
-	    $(".userMenu-profile > a").text(polyglot.t("Login"));
-	    $(".userMenu-profile > a").attr("href","login.html");
-	}
+    {
+        $(".userMenu-profile > a").text(polyglot.t("Login"));
+        $(".userMenu-profile > a").attr("href","login.html");
+    }
     });
     networkUpdate();
     setInterval("networkUpdate()", 2000);

@@ -293,7 +293,7 @@ function openConversationClick(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    var postData = $(this).parents('.module.post.original.open .module.post.original .post-data');
+    var postData = $(this).closest(e.data.feeder);
 
     window.location.hash = '#conversation?post=' + postData.attr('data-screen-name') +
         ':post' + postData.attr('data-id');
@@ -379,13 +379,25 @@ function reTwistPopup(e) {
         return;
     }
 
-    openModal({
+    var modal = openModal({
         classBase: '.prompt-wrapper',
         classAdd: 'reTwist',
         title: polyglot.t('retransmit_this')
-    })
-        .content
-            .append(postToElem($.evalJSON($(this).parents('.post-data').attr('data-userpost')), ''));
+    });
+
+    modal.content
+        .append(postToElem($.evalJSON($(this).parents('.post-data').attr('data-userpost')), ''))
+        .append($('#reply-modal-template').children().clone(true))  // FIXME retwist-reply-modal-template
+    ;
+
+    var replyArea = modal.content.find('.post-area .post-area-new');
+    var textArea = replyArea.find('textarea');
+    var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
+    $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
+        textArea.attr(attribute, textAreaPostInline.attr(attribute));
+    });
+
+    replyArea.find('.post-submit').addClass('with-reference');
 }
 
 // Expande Área do Novo post
@@ -399,16 +411,16 @@ function replyInitPopup(e, post) {
     getFullname(post.userpost.n, modal.self.find('h3 .fullname'));
 
     modal.content
-        .append($('#reply-modal-template').children().clone(true))
         .append(postToElem(post, ''))
+        .append($('#reply-modal-template').children().clone(true))
     ;
 
     // FIXME passing data through attributes may result in a mess like following
     var replyArea = modal.content.find('.post-area .post-area-new').addClass('open');
-    var replyText = replyArea.find('textarea');
-    var postInlineReplyText = modal.content.find('.post .post-area-new textarea');
+    var textArea = replyArea.find('textarea');
+    var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
     $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
-        replyText.attr(attribute, postInlineReplyText.attr(attribute));
+        textArea.attr(attribute, textAreaPostInline.attr(attribute));
     });
 
     composeNewPost(e, replyArea);
@@ -587,7 +599,7 @@ function posPostPreview(event) {
             - postPreview.css('padding-left') - postPreview.css('padding-right'));
     }
     if (textArea[0].value.length)
-        postPreview.html(htmlFormatMsg(textArea[0].value, [])).show();
+        postPreview.html(htmlFormatMsg(textArea[0].value).html).show();
     else
         postPreview.hide();
     textArea.before(postPreview);
@@ -698,7 +710,7 @@ function replyTextInput(event) {
 
         if ($.Options.postPreview.val) {
             if (textArea[0].value.length)
-                textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value, [])).show();
+                textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value).html).show();
             else
                 textAreaForm.find('#post-preview').html('').hide();
         }
@@ -1202,82 +1214,95 @@ function undoLastUnicode(e) {
 }
 
 function postSubmit(e, oldLastPostId) {
+    var btnPostSubmit;
+
     if (e instanceof $) {
-        var $this = e;
+        btnPostSubmit = e;
         //check if previous part was sent...
         if (oldLastPostId === lastPostId) {
-            setTimeout(postSubmit, 1000, $this, oldLastPostId);
+            setTimeout(postSubmit, 1000, btnPostSubmit, oldLastPostId);
             return;
         }
     } else {
         e.stopPropagation();
         e.preventDefault();
-        var $this = $(this);
+        btnPostSubmit = $(this);
     }
-    $.MAL.disableButton($this);
+    $.MAL.disableButton(btnPostSubmit);
 
-    var $replyText = $this.closest('.post-area-new').find('textarea');
+    var textArea = btnPostSubmit.closest('.post-area-new').find('textarea');
 
-    $replyText.siblings('#post-preview').hide();
+    textArea.siblings('#post-preview').hide();
 
-    var $postOrig = $this.closest('.post-data');
-    if (!$postOrig.length) {
-        $postOrig = $this.closest('.modal-content').find('.post-data');
+    var postData = btnPostSubmit.closest('.post-data');
+    if (!postData.length) {
+        postData = btnPostSubmit.closest('.modal-content').find('.post-data');
     }
 
-    if (splitedPostsCount > 1) {
-        if ($replyText.length < splitedPostsCount) {
-            //current part will be sent as reply to the previous part...
-            $postOrig = $('<div data-id="' + lastPostId + '" data-screen-name="' + defaultScreenName + '"></div>');
+    if (btnPostSubmit.hasClass('with-reference')) {
+        var doSubmitPost = function (postText, postData) {
+            newRtMsg(postData, postText);
+        }
+    } else {
+        if (splitedPostsCount > 1) {
+            if (textArea.length < splitedPostsCount) {
+                //current part will be sent as reply to the previous part...
+                postData = $('<div data-id="' + lastPostId + '" data-screen-name="' + defaultScreenName + '"></div>');
+            }
+        }
+
+        var doSubmitPost = function (postText, postData) {
+            newPostMsg(postText, postData);
         }
     }
 
-    if ($replyText.length <= 1) {
+    if (textArea.length <= 1) {
         if (splitedPostsCount > 1) {
-            var postxt = '';
-            var reply_to = $replyText.attr('data-reply-to');
-            var val = $replyText.val();
+            var postText = '';
+            var reply_to = textArea.attr('data-reply-to');
+            var val = textArea.val();
             if (typeof reply_to === 'undefined' || checkPostForMentions(val, reply_to, 140))
-                postxt = val + ' (' + splitedPostsCount.toString() + '/' + splitedPostsCount.toString() + ')';
+                postText = val + ' (' + splitedPostsCount.toString() + '/' + splitedPostsCount.toString() + ')';
             else
-                postxt = reply_to + val + ' (' + splitedPostsCount.toString() + '/' + splitedPostsCount.toString() + ')';
+                postText = reply_to + val + ' (' + splitedPostsCount.toString() + '/' + splitedPostsCount.toString() + ')';
 
-            newPostMsg(postxt, $postOrig);
+            doSubmitPost(postText, postData);
         } else
-            newPostMsg($replyText.val(), $postOrig);
+            doSubmitPost(textArea.val(), postData);
 
         splitedPostsCount = 1;
     } else {
-        var postxt = '';
-        var reply_to = $replyText.attr('data-reply-to');
-        var val = $replyText[0].value;
+        var postText = '';
+        var reply_to = textArea.attr('data-reply-to');
+        var val = textArea[0].value;
         if (typeof reply_to === 'undefined' || checkPostForMentions(val, reply_to, 140))
-            postxt = val + ' (' + (splitedPostsCount - $replyText.length + 1).toString() + '/' + splitedPostsCount.toString() + ')';
+            postText = val + ' (' + (splitedPostsCount - textArea.length + 1).toString() + '/' + splitedPostsCount.toString() + ')';
         else
-            postxt = reply_to + val + ' (' + (splitedPostsCount - $replyText.length + 1).toString() + '/' + splitedPostsCount.toString() + ')';
+            postText = reply_to + val + ' (' + (splitedPostsCount - textArea.length + 1).toString() + '/' + splitedPostsCount.toString() + ')';
 
-        $($replyText[0]).remove();
+        $(textArea[0]).remove();
 
         oldLastPostId = lastPostId;
-        newPostMsg(postxt, $postOrig);
-        setTimeout(postSubmit, 1000, $this, oldLastPostId);
+        doSubmitPost(postText, postData);
+        setTimeout(postSubmit, 1000, btnPostSubmit, oldLastPostId);
 
         return;
     }
 
-    $replyText.val('').attr('placeholder', polyglot.t('Your message was sent!'));
-    var tweetForm = $this.parents('form');
-    var remainingCount = tweetForm.find('.post-area-remaining');
-    remainingCount.text(140);
-
-    if ($this.parents('.prompt-wrapper').length)
+    if (btnPostSubmit.parents('.prompt-wrapper').length)
         closeModalHandler('.prompt-wrapper');
+    else {
+        textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
+        var tweetForm = btnPostSubmit.parents('form');
+        var remainingCount = tweetForm.find('.post-area-remaining');
+        remainingCount.text(140);
 
-    if ($this.closest('.post-area,.post-reply-content')) {
-        $('.post-area-new').removeClass('open').find('textarea').blur();
-    };
-    $replyText.data('unicodeConversionStack', []);
-    $replyText.data('disabledUnicodeRules', []);
+        if (btnPostSubmit.closest('.post-area,.post-reply-content')) {
+            $('.post-area-new').removeClass('open').find('textarea').blur();
+        };
+        textArea.data('unicodeConversionStack', []);
+        textArea.data('disabledUnicodeRules', []);
+    }
 }
 
 function retweetSubmit(e) {
@@ -1402,7 +1427,8 @@ function initInterfaceCommon() {
     ;
     $('.post-submit').on('click', postSubmit);
     $('.modal-propagate').on('click', retweetSubmit);
-    $('.expanded-content .show-more').on('click', openConversationClick);
+    $('.expanded-content .show-more').on('click',
+        {feeder: '.module.post.original.open .module.post.original .post-data'}, openConversationClick);
 
     if ($.Options.unicodeConversion.val === 'disable')
         $('.undo-unicode').on('click', undoLastUnicode).css('display', 'none');

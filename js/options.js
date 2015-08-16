@@ -373,7 +373,7 @@ function tickOptionsPostPreview() {
     var imgPreviewCont = elem.find('.preview-container');
 
     elem.children().first().html(htmlFormatMsg(
-        polyglot.t('post_preview_dummy', {logo: '/img/twister_mini.png', site: 'http://twister.net.co'}), []));
+        polyglot.t('post_preview_dummy', {logo: '/img/twister_mini.png', site: 'http://twister.net.co'})).html);
 
     if ($.Options.displayPreview.val === 'enable') {
         imgPreviewCont.empty();

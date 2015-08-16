@@ -263,29 +263,59 @@ function newPostMsg(msg, $postOrig) {
     }
 }
 
-function newRtMsg($postOrig) {
-    var content_to_rt = $postOrig.attr('data-content_to_rt');
-    var content_to_sigrt = $postOrig.attr('data-content_to_sigrt');
+function newRtMsg(postData, msg) {
+    var userpost = $.evalJSON(postData.attr('data-content_to_rt'));
+    var sig_userpost;
 
-    var sig_userpost = String(content_to_sigrt);
-    var userpost = $.evalJSON(String(content_to_rt));
-    var rtObj = { sig_userpost :sig_userpost, userpost : userpost };
+    if (userpost.rt) {
+        if (parseInt(twisterVersion) <= 93000) {
+            alert(polyglot.t('error',
+                {error: 'can\'t handle retwisting of commented retwisted twists with daemon version '
+                    + twisterDisplayVersion + ' and below of that. please upgrade it.'}
+            ));
 
-    if( lastPostId != undefined ) {
-        if ( typeof _sendedPostIDs !== 'undefined' )
+            return;
+        } else {
+            // dropping of rt to avoid overquoting
+            sig_userpost = userpost.sig_wort;
+            userpost.rt = undefined;
+            userpost.sig_rt = undefined;
+        }
+    } else {
+        sig_userpost = postData.attr('data-content_to_sigrt');
+    }
+
+    if (typeof sig_userpost === 'undefined') {
+        alert(polyglot.t('error',
+            {error: 'can\'t sig_userpost is not deifned'}
+        ));
+
+        return;
+    }
+
+    userpost.sig_wort = undefined;
+
+    var rtObj = {sig_userpost: sig_userpost, userpost: userpost};
+
+    if (typeof lastPostId !== 'undefined') {
+        if (typeof _sendedPostIDs !== 'undefined')
             _sendedPostIDs.push(lastPostId + 1);
 
-        var params = [defaultScreenName, lastPostId+1, rtObj]
+        var params = [defaultScreenName, lastPostId + 1, rtObj];
 
-        twisterRpc("newrtmsg", params,
-                   function(arg, ret) { incLastPostId(); }, null,
-                   function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
-                                        alert(polyglot.t("ajax_error", { error: msg })); }, null);
+        if (typeof msg !== 'undefined')
+            params.push(msg);
+
+        twisterRpc('newrtmsg', params,
+            function(arg, ret) {incLastPostId();}, null,
+            function(arg, ret) {var msg = ('message' in ret) ? ret.message : ret;
+                alert(polyglot.t('ajax_error', {error: msg}));
+            }, null
+        );
     } else {
-        alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
+        alert(polyglot.t('Internal error: lastPostId unknown (following yourself may fix!)'));
     }
 }
-
 
 function updateProfileData(profileModalContent, username) {
 

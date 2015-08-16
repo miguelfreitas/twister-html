@@ -1074,14 +1074,16 @@ ol.toptrends-list {
     font-size: 13px;
     top: 40px;
 }
-.post-retransmited-icon
-{
+
+.post-retransmited-icon {
     display: inline-block;
     width: 16px;
     height: 16px;
     background: url(../img/repost.png) no-repeat left center;
     vertical-align: middle;
+    margin: 2px;
 }
+
 .post-interactions
 {
     margin: 2px 10px 10px 60px;
@@ -1253,6 +1255,7 @@ ol.toptrends-list {
     border-left: solid 3px #E34F42;
     margin-left: 2px;
 }
+
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***
 ***********************************/
@@ -1736,7 +1739,7 @@ ol.toptrends-list {
 **************************************/
 
 .reTwist.prompt-wrapper {
-    margin-top: -100px;
+    margin-top: -140px;
 }
 
 .reTwist .post-expand,
@@ -1748,6 +1751,10 @@ ol.toptrends-list {
     margin: 5px;
     padding: 5px;
     min-height: 68px;
+}
+
+.reTwist .post-area-extras {
+    margin-right: 10px;
 }
 
 /*************************************
@@ -2084,4 +2091,39 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
     background-color: #fefedf;
     text-decoration: none;
     cursor: pointer;
+}
+
+
+.post-rt-reference {
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+}
+
+.post-rt-reference:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.post-rt-reference .post-photo {
+    width: 24px;
+    height: 24px;
+}
+
+.post-rt-reference .post-photo img {
+    width: 24px;
+    height: auto;
+}
+
+.post-rt-reference .post-info-name {
+    font-size: 11px;
+}
+
+.post-rt-reference .post-text {
+    font-size: 11px;
+    margin: 2px 10px 4px 10px;
+}
+
+.post-rt-reference .post-info-time {
+    font-size: 9px;
+    color: #000;
 }

@@ -1436,14 +1436,16 @@ textarea.splited-post {
     font-size: 13px;
     top: 40px;
 }
-.post-retransmited-icon
-{
+
+.post-retransmited-icon {
     display: inline-block;
     width: 25px;
     height: 25px;
     background: url(../img/repost.png) no-repeat left center;
     vertical-align: middle;
+    margin: 2px;
 }
+
 .post-interactions
 {
     margin: -5px 10px 5px 60px;
@@ -1616,6 +1618,7 @@ textarea.splited-post {
     border-left: solid 3px #43464d;
     margin-left: 2px;
 }
+
 /***********************************
 ******** LOGIN AND NETWORK PAGES ***
 ***********************************/
@@ -2128,7 +2131,7 @@ textarea.splited-post {
 **************************************/
 
 .reTwist.prompt-wrapper {
-    margin-top: -100px;
+    margin-top: -140px;
 }
 
 .reTwist .post-expand,
@@ -2140,6 +2143,10 @@ textarea.splited-post {
     margin: 5px;
     padding: 5px;
     min-height: 68px;
+}
+
+.reTwist .post-area-extras {
+    margin-right: 10px;
 }
 
 /*************************************
@@ -2516,4 +2523,43 @@ p.post-text img {
 
 .reply textarea{
     margin-top: 20px;
+}
+
+
+.post-rt-reference {
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+}
+
+.post-rt-reference:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.post-rt-reference .post-photo {
+    width: 24px;
+    height: 24px;
+}
+
+.post-rt-reference .post-photo img {
+    width: 24px;
+    height: auto;
+}
+
+.post-rt-reference .post-info-name {
+    font-size: 11px;
+}
+
+.post-rt-reference .post-text {
+    font-size: 11px;
+    margin: 2px 10px 4px 10px;
+}
+
+.post-rt-reference .post-text a {
+    font-size: 11px;
+}
+
+.post-rt-reference .post-info-time {
+    font-size: 9px;
+    color: #000;
 }

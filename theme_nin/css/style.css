@@ -56,7 +56,7 @@
   font-style: normal;
 }
 /* line 64, ../sass/_fonts.sass */
-[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-context span:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-retransmited-icon:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -204,7 +204,7 @@
 
 /* '' */
 /* line 188, ../sass/_fonts.sass */
-.icon-twistagain:before, .post-context span:before, .post-propagate:before {
+.icon-twistagain:before, .post-retransmited-icon:before, .post-propagate:before {
   content: "";
 }
 
@@ -888,11 +888,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .post-context {
   font-size: 11px;
   line-height: 11px;
-  margin: 0 0 1em 0;
+  margin: 2px 10px 4px 60px;
   color: #b3b5b7;
 }
 /* line 146, ../sass/_postboard.sass */
-.post-context span:before {
+.post-retransmited-icon:before {
   display: block;
   float: left;
   background: #B4C669;
@@ -907,15 +907,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-right: 0.4em;
 }
 
+.post-context.post-retransmited-by-container {
+    margin: 0 0 1em;
+}
+
 /* line 158, ../sass/_postboard.sass */
 .mini-screen-name {
   font-size: 13px;
   color: #66686B;
-}
-
-/* line 163, ../sass/_postboard.sass */
-.post-retransmited-icon {
-  display: none;
 }
 
 /* line 166, ../sass/_postboard.sass */
@@ -2790,7 +2789,7 @@ ol.toptrends-list a:hover {
 
 /* line 705, ../sass/style.sass */
 .reTwist.prompt-wrapper {
-  margin-top: -110px;
+  margin-top: -150px;
 }
 
 .reTwist .modal-content {
@@ -3318,4 +3317,42 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
     float: none;
     margin: 2% 1%;
   }
+}
+
+
+.post-rt-reference {
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+
+.post-rt-reference:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.post-rt-reference .post-photo {
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+}
+
+.post-rt-reference .post-photo img {
+    width: 24px;
+    height: auto;
+}
+
+.post-rt-reference .post-info-name {
+    font-size: 11px;
+    padding-left: 0px;
+}
+
+.post-rt-reference .post-text {
+    font-size: 11px;
+    margin: 4px 4px 4px 28px;
+}
+
+.post-rt-reference .post-info-time {
+    font-size: 9px;
+    color: #B3B5B7;
 }
