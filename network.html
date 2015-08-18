@@ -27,8 +27,8 @@
   </head>
 
   <body>
-    
-  <!-- MENU SUPERIOR INIT --> 
+
+  <!-- MENU SUPERIOR INIT -->
   <nav class="userMenu">
     <ul>
         <li class="userMenu-home"><a href="home.html"><span class="selectable_theme theme_original label">Home</span></a></li>
@@ -75,7 +75,7 @@
             <button class="terminate-daemon">Exit</button>
           </li>
         </ul>
-          
+
         <h3> Detailed information </h3>
         <ul>
           <li class="connections">
@@ -191,20 +191,25 @@
           </li>
           <li>
               <label> Post to promote: </label>
-              <textarea class="spam-msg" placeholder="Type message here"></textarea>
+            <div class="post-area">
+              <form class="post-area-new open">
+                <textarea class="spam-msg" placeholder="Type message here"></textarea>
+                <div class="post-area-extras">
+                  <span class="post-area-remaining">140</span>
+                  <button class="undo-unicode disabled" disabled="true">undo</button>
+                  <button class="post-submit update-spam-msg disabled" disabled="true">Update</button>
+                </div>
+              </form>
+            </div>
           </li>
           <li>
               <label> Send post with username </label>
               <select class="local-usernames spam-user">
                   <option value="nobody">nobody</option>
               </select>
-              <div class="character-limit">
-                <span class="post-area-remaining">140</span>
-                <button class="update-spam-msg enabled">Update</button>
-              </div>
           </li>
         </ul>
-        
+
         <h3> Block generation status</h3>
         <ul>
           <li>
@@ -216,6 +221,20 @@
 
     </div>
 
+  </div>
+
+  <div id="templates" style="display:none;">
+    <div id="post-preview-template">
+        <div id="post-preview" class="post-text">
+        </div>
+    </div>
+
+    <!-- template for user links in message (open profile modal) -->
+    <a id="msg-user-link-template" class="open-profile-modal"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
+    <!-- template for user links in message (open profile modal) -->
+    <a id="hashtag-link-template" class="open-hashtag-modal"></a>
   </div>
 
   <audio id="player"></audio>

@@ -1501,10 +1501,8 @@ span.connection-status.connected:before {
   background: #B4C669;
 }
 
-/* line 61, ../sass/_network.sass */
-.character-limit {
-  float: right;
-  margin-right: 18px;
+.network .post-area-extras {
+    margin-right: 20px;
 }
 
 /* line 65, ../sass/_network.sass */
@@ -2275,6 +2273,7 @@ textarea.splited-post {
     background-color: #FCFFF3;
     border: solid 1px #ECEFE3;
     font-size: 12px;
+    line-height: normal;
     margin: 4px 0;
     padding: 4px;
     word-wrap: break-word;

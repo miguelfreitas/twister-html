@@ -652,6 +652,7 @@ textarea.splited-post {
     background-color: #F2FFBA;
     border: solid 1px #B4C669;
     font-size: 11px;
+    line-height: normal;
     margin: 4px 0;
     padding: 4px;
     word-wrap: break-word;
@@ -1294,10 +1295,7 @@ ol.toptrends-list {
     font-size: 13px;
     list-style: circle;
 }
-.network.singleBlock button
-{
-    padding: 3px 10px;
-}
+
 .network.singleBlock ul li > span
 {
     font-weight: bold;
@@ -1335,10 +1333,9 @@ ol.toptrends-list {
 {
     border: 2px solid green;
 }
-.character-limit
-{
-    float: right;
-    margin-right: 18px;
+
+.network .post-area-extras {
+    margin-right: 20px;
 }
 
 /*************************************
