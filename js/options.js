@@ -377,13 +377,7 @@ function tickOptionsPostPreview() {
 
     if ($.Options.displayPreview.val === 'enable') {
         imgPreviewCont.empty();
-        var links = elem.children().first().find('a[rel="nofollow"]');
-        if (links.length) {
-            setPostImagePreview(elem, links);
-            imgPreviewCont.show();
-        } else {
-            imgPreviewCont.hide();
-        }
+        setPostImagePreview(elem, elem.children().first().find('a'));
     } else {
         imgPreviewCont.hide();
     }

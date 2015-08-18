@@ -807,5 +807,9 @@ function setPostImagePreview(elem, links) {
                 }
             }
         }
+        if (previewContainer.children().length)
+            previewContainer.show();
+        else
+            previewContainer.hide();
     }
 }
