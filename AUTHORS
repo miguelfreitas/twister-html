@@ -11,7 +11,7 @@ Msjoinder
     Polyglot support (internationalization), multiple fixes
 
 erkan yüksel
-    Image preview, automatic unicode conversion, split long posts, hiding posts with mentions and more.
+    Image preview, automatic unicode conversion, split long posts, hiding posts with mentions, retwists with comment and more.
 
 Hedgehog
     Calm theme, CSS + artwork and more.
@@ -38,5 +38,5 @@ Julian Steinwachs
     UI navigation overhaul with proper browser's back button support
 
 Сёма Мрачный
-    Desktop notifications, language filtering, ~markdown, ton of fixes.
+    Desktop notifications, language filtering, twistday observation, Markout markup, post preview, retwists with comment, ton of fixes.
 

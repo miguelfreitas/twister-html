@@ -244,17 +244,20 @@ function getSpamMsg() {
                }, {});
 }
 
-function setSpamMsg() {
-    var $postArea = $(".spam-msg");
-    var $localUsersList = $("select.local-usernames.spam-user");
-    var params = [$localUsersList.val(), $postArea.val()]
+function setSpamMsg(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var btnUpdate = $(event.target);
+    $.MAL.disableButton(btnUpdate);
+
+    var params = [$("select.local-usernames.spam-user").val(),
+        btnUpdate.closest('.post-area-new').find('textarea.spam-msg').val().trim()];
+
     twisterRpc("setspammsg", params,
-               function(args, ret) {
-                   console.log("setspammsg updated");
-               }, {},
-               function(args, ret) {
-                   console.log("setspammsg error");
-               }, {});
+        function(args, ret) {console.log("setspammsg updated");}, {},
+        function(args, ret) {console.log("setspammsg error");}, {}
+    );
 }
 
 function exitDaemon() {
@@ -286,7 +289,9 @@ function interfaceNetworkHandlers() {
     $( ".add-dns").bind( "click", addDNSClick );
     $( "select.genblock").change( setGenerate );
     $( ".genproclimit").change( setGenerate );
-    $( ".update-spam-msg").bind( "click", setSpamMsg );
+    $('.network .post-area-new').off('click').on('click',
+        function (e) {e.stopPropagation(); $(this).addClass('open'); usePostSpliting = false;});
+    $('.post-submit.update-spam-msg').off('click').on('click', setSpamMsg);
     $( ".terminate-daemon").bind( "click", exitDaemon )
 }
 

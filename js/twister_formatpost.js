@@ -402,14 +402,19 @@ function htmlFormatMsg(msg) {
 
                 if (i !== 0) {
                     l = kindOfL(i - 1);
+                } else {
+                    l = 0;
                 }
                 if (j !== msg.str.length) {
                     r = kindOfR(j);
+                } else {
+                    r = 0;
                 }
-                if (i === 0 || l === -10) {
+
+                if ((i === 0 && r < 0) || l === -10) {
                     p.push({i: i, k: j - i, t: -1, w: w, a: -1, p: -1});
                     w = false;
-                } else if (j === msg.str.length || r === -10) {
+                } else if ((j === msg.str.length && l < 0) || r === -10) {
                     p.push({i: i, k: j - i, t: 1, w: w, a: -1, p: -1});
                     w = false;
                 } else {
@@ -807,5 +812,9 @@ function setPostImagePreview(elem, links) {
                 }
             }
         }
+        if (previewContainer.children().length)
+            previewContainer.show();
+        else
+            previewContainer.hide();
     }
 }
