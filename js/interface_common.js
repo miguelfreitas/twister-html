@@ -8,12 +8,12 @@
 var window_scrollY = 0;
 
 function openModal(modal) {
-    window_scrollY = window.pageYOffset;
-
-    $('body').css('overflow', 'hidden');
-
-    if (!modal.classBase)
+    if (!modal.classBase) {
         modal.classBase = '.modal-wrapper';
+
+        window_scrollY = window.pageYOffset;
+        $('body').css('overflow', 'hidden');
+    }
 
     $(modal.classBase + ':not(#templates *)').remove();
 
@@ -46,18 +46,19 @@ function openModal(modal) {
 
 function closeModal() {
     closeModalHandler('.modal-wrapper');
+
     window.location.hash = '#';
     window.scroll(window.pageXOffset, window_scrollY);
+    $('body').css({
+        'overflow': 'auto',
+        'margin-right': '0'
+    });
 }
 
 function closeModalHandler(classBase) {
     var modalWindows = $(classBase+':not(#templates *)');
 
     modalWindows.fadeOut('fast', function() {modalWindows.remove();});
-    $('body').css({
-        'overflow': 'auto',
-        'margin-right': '0'
-    });
 }
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
