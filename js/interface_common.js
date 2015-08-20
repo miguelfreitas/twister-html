@@ -597,6 +597,7 @@ function posPostPreview(event) {
         postPreview.width(textArea.width());
         postPreview.width(postPreview.width()  // width is not accurate if we do it with textArea.width() directly, don't know why
             - postPreview.css('padding-left') - postPreview.css('padding-right'));
+        textArea.on('focusout', function () {$(this).siblings('#post-preview').hide();});
     }
     if (textArea[0].value.length)
         postPreview.html(htmlFormatMsg(textArea[0].value).html).show();
