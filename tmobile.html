@@ -76,6 +76,12 @@
   .content {padding:15px 20px 20px 20px;}
   .footer {position:fixed;z-index:10;bottom:0;width:100%}
 
+.post-info-time {
+    font-weight: lighter;
+    font-size: 12px;
+    color: #555 !important;
+}
+
 .post-rt-reference {
     background-color: #FAFAFA;
     border: 1px solid #ccc;
@@ -110,8 +116,6 @@
 
 .post-rt-reference .post-info-time {
     font-size: 9px;
-    font-weight: lighter;
-    color: #000 !important;
     float: right;
 }
 </style>
@@ -744,7 +748,7 @@
             <h4 class="post-info">
                 <a href="#" class="post-info-name open-profile-modal status_reply"></a>
                 <span class="post-info-tag"></span>
-                <a style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"><span class="post-info-sent"></span> <span></span></a>
+                <a class="post-info-time ui-li-aside"><span class="post-info-sent"></span> <span></span></a>
             </h4>
             <p class="post-text no-ellipsis"></p>
             <div class="post-context" style="display: none;"></div>
@@ -763,7 +767,7 @@
             <h4 class="post-info">
                 <a href="#" class="post-info-name open-profile-modal"></a>
                 <span class="post-info-tag"></span>
-                <a style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"><span class="post-info-sent"></span> <span></span></a>
+                <a class="post-info-time ui-li-aside"><span class="post-info-sent"></span> <span></span></a>
             </h4>
             <p class="post-text no-ellipsis"></p>
             <div class="post-context" style="display: none;"></div>
@@ -827,7 +831,7 @@
         <h4 class="post-info">
           <span class="post-info-name open-profile-modal"></span>
           <span class="post-info-tag">@</span>
-          <a style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"><span></span></a>
+          <a class="post-info-time ui-li-aside"><span></span></a>
         </h4>
         <!-- o texto do post (restrição de caracteres?) -->
         <p class="post-text"></p>
@@ -838,7 +842,7 @@
     <li id="dm-chat-template" class="module post message">
       <h4 class="post-photo">
         <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-        <a style='font-weight:lighter;font-size:12px;' class="post-info-time ui-li-aside"><span class="post-info-sent"></span> <span></span></a>
+        <a class="post-info-time ui-li-aside"><span class="post-info-sent"></span> <span></span></a>
       </h4>
       <p class="post-text no-ellipsis"></p>
     </li>
