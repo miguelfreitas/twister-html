@@ -753,10 +753,12 @@ ol.toptrends-list
   margin-left: -300px
   box-shadow: 0 0 30px rgba( 0, 0, 0, .6 )
   .modal-buttons
-    padding: 10px
+    margin: 4px 0
     text-align: right
-    button:last-child
-      padding: 5px 20px;
+  .switch-mode
+    display: inline-block
+    float: left
+    margin: 4px
 
 /************ FOLLOWING-CONFIG MODAL **********/
 
@@ -765,8 +767,6 @@ ol.toptrends-list
   .modal-content
     padding: 10px
     text-align: center
-  .modal-buttons
-    display: none
   h2
     text-transform: none
 .following-config-method-buttons
@@ -793,7 +793,7 @@ ol.toptrends-list
 .prompt-wrapper.reply
   &.prompt-wrapper
     margin-top: -110px
-  .modal-buttons, .post-expand, .post-interactions
+  .post-expand, .post-interactions
     display: none
   .post-area
     padding-bottom: 6px

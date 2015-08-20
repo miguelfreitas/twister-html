@@ -861,9 +861,7 @@ textarea.splited-post {
 .mini-profile .post-submit {
     margin-right: 0;
 }
-.reply .post-submit {
-    margin-right: 35px;
-}
+
 .post-submit.disabled {
     opacity: .6;
     -webkit-transition: all 200ms;
@@ -1453,9 +1451,8 @@ textarea.splited-post {
     text-align: right;
     height: 25px;
 }
-.post-interactions span,
-.post-expand
-{
+
+.post-interactions span, .post-expand, .prompt-wrapper .switch-mode {
     color: #b2b2b2;
     cursor: pointer;
     font-size: 12px;
@@ -1465,6 +1462,7 @@ textarea.splited-post {
     -o-transition: all 200ms;
     transition: all 200ms;
 }
+
 .post-expand
 {
     position: absolute;
@@ -2094,12 +2092,14 @@ textarea.splited-post {
 }
 
 .prompt-wrapper .modal-buttons {
-    padding: 10px;
+    margin: 4px 16px;
     text-align: right;
 }
 
-.prompt-wrapper .modal-buttons button:last-child {
-    padding: 5px 20px;
+.prompt-wrapper .switch-mode {
+    display: inline-block;
+    float: left;
+    margin: 4px;
 }
 
 /*************************************
@@ -2113,10 +2113,6 @@ textarea.splited-post {
 .following-config-modal .modal-content {
     padding: 10px;
     text-align: center;
-}
-
-.following-config-modal .modal-buttons {
-    display: none;
 }
 
 .following-config-method-buttons {
@@ -2137,13 +2133,13 @@ textarea.splited-post {
 }
 
 .reTwist .post {
-    margin: 5px;
-    padding: 5px;
+    margin: 8px;
+    padding: 4px;
     min-height: 68px;
 }
 
 .reTwist .post-area-extras {
-    margin-right: 10px;
+    margin: 4px 16px;
 }
 
 /*************************************
@@ -2152,10 +2148,6 @@ textarea.splited-post {
 
 .reply.prompt-wrapper {
     margin-top: -140px;
-}
-
-.reply .modal-buttons {
-    display: none;
 }
 
 .reply .post-expand,
@@ -2173,12 +2165,12 @@ textarea.splited-post {
 }
 
 .reply .post-area-extras {
-    margin-right: 10px;
+    margin: 4px 16px;
 }
 
 .reply .post {
-    margin: 10px;
-    padding: 5px;
+    margin: 8px;
+    padding: 4px;
     min-height: 68px;
 }
 
@@ -2517,11 +2509,6 @@ p.post-text img {
     width: 20px;
     height: 20px;
 }
-
-.reply textarea{
-    margin-top: 20px;
-}
-
 
 .post-rt-reference {
     background-color: #FAFAFA;

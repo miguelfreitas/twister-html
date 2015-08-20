@@ -373,12 +373,16 @@ function initHashWatching() {
     setTimeout(watchHashChange, 1000);
 }
 
-function reTwistPopup(e) {
-    e.stopPropagation();
+function reTwistPopup(event, post, textArea) {
+    event.stopPropagation();
+
     if (!defaultScreenName) {
         alert(polyglot.t('You have to log in to retransmit messages.'));
         return;
     }
+
+    if (typeof post === 'undefined')
+        post = $.evalJSON($(event.target).parents('.post-data').attr('data-userpost'));
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
@@ -387,22 +391,31 @@ function reTwistPopup(e) {
     });
 
     modal.content
-        .append(postToElem($.evalJSON($(this).parents('.post-data').attr('data-userpost')), ''))
-        .append($('#reply-modal-template').children().clone(true))  // FIXME retwist-reply-modal-template
+        .append(postToElem(post, ''))
+        .append($('#reTwist-modal-template').children().clone(true))
+    ;
+
+    modal.content.find('.switch-mode')
+        .text(polyglot.t('Switch to Reply'))
+        .on('click', (function(event) {replyInitPopup(event, post,
+            $(event.target).parents('form').find('textarea').detach());}).bind(post))
     ;
 
     var replyArea = modal.content.find('.post-area .post-area-new');
-    var textArea = replyArea.find('textarea');
-    var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
-    $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
-        textArea.attr(attribute, textAreaPostInline.attr(attribute));
-    });
-
+    if (typeof textArea === 'undefined') {
+        textArea = replyArea.find('textarea');
+        var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
+        $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
+            textArea.attr(attribute, textAreaPostInline.attr(attribute));
+        });
+    } else {
+        replyArea.find('textarea').replaceWith(textArea);
+    }
     replyArea.find('.post-submit').addClass('with-reference');
 }
 
 // Expande Área do Novo post
-function replyInitPopup(e, post) {
+function replyInitPopup(e, post, textArea) {
     var modal = openModal({
         classBase: '.prompt-wrapper',
         classAdd: 'reply',
@@ -416,14 +429,22 @@ function replyInitPopup(e, post) {
         .append($('#reply-modal-template').children().clone(true))
     ;
 
-    // FIXME passing data through attributes may result in a mess like following
-    var replyArea = modal.content.find('.post-area .post-area-new').addClass('open');
-    var textArea = replyArea.find('textarea');
-    var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
-    $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
-        textArea.attr(attribute, textAreaPostInline.attr(attribute));
-    });
+    modal.content.find('.switch-mode')
+        .text(polyglot.t('Switch to Retransmit'))
+        .on('click', (function(event) {reTwistPopup(event, post,
+            $(event.target).parents('form').find('textarea').detach())}).bind(post))
+    ;
 
+    var replyArea = modal.content.find('.post-area .post-area-new').addClass('open');
+    if (typeof textArea === 'undefined') {
+        textArea = replyArea.find('textarea');
+        var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
+        $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
+            textArea.attr(attribute, textAreaPostInline.attr(attribute));
+        });
+    } else {
+        replyArea.find('textarea').replaceWith(textArea);
+    }
     composeNewPost(e, replyArea);
 }
 

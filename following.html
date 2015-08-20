@@ -289,9 +289,7 @@
     </a>
     <li class="descendant module post">
     </li>
-    <!-- TEMPLATE INVÓLUCRO DO POST EXPANDIDO END -->
 
-    <!-- TEMPLATE DO MODAL GENÉRICO INIT -->
     <div class="modal-wrapper">
         <div class="modal-header">
             <h3></h3>
@@ -302,27 +300,16 @@
         <div class="modal-content"></div>
         <div class="modal-blackout cancel"></div>
     </div>
-    <!-- TEMPLATE DO MODAL GENÉRICO END -->
 
-    <!-- TEMPLATE GENERAL PROMPT -->
     <div class="prompt-wrapper">
       <div class="modal-header">
         <h3></h3>
         <span class="modal-close prompt-close">&times;</span>
       </div>
       <div class="modal-content"></div>
-        <div class="modal-buttons">
-        <button class="modal-cancel prompt-close">Cancel</button>
-        <button class="modal-propagate">Retransmit</button>
-        </div>
     </div>
-    <!-- TEMPLATE GENERAL PROMPT END-->
 
-    <!-- MODAL DE RETWEET INIT -->
-    <!-- MODAL DE RETWEET END -->
-
-    <!-- MODAL DE REPLY INIT -->
-    <div id="reply-modal-template">
+    <div id="reTwist-modal-template">
       <div class="post-area">
         <form class="post-area-new open">
           <textarea placeholder="New Post..."></textarea>
@@ -331,11 +318,27 @@
             <button class="undo-unicode disabled" disabled="true">undo</button>
             <button class="post-submit disabled" disabled="true">post</button>
           </div>
+          <div class="modal-buttons">
+            <span class="switch-mode">Switch to Reply</span>
+            <button class="modal-propagate">Retransmit</button>
+          </div>
         </form>
       </div>
-      <!-- use "module post" here -->
     </div>
-    <!-- MODAL DE REPLY END -->
+
+    <div id="reply-modal-template">
+      <div class="post-area">
+        <form class="post-area-new open">
+          <textarea placeholder="New Post..."></textarea>
+          <div class="post-area-extras">
+            <span class="switch-mode">Switch to Retransmit</span>
+            <span class="post-area-remaining">140</span>
+            <button class="undo-unicode disabled" disabled="true">undo</button>
+            <button class="post-submit disabled" disabled="true">post</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <!-- MODAL DE DIRECT MESSAGES INIT -->
     <!-- Este modal possui dois templates, o primeiro da lista de pessoas que enviaram mensagens e o segundo
