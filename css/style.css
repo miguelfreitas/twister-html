@@ -1091,13 +1091,13 @@ ol.toptrends-list {
     text-align: right;
     height: 23px;
 }
-.post-interactions span,
-.post-expand
-{
+
+.post-interactions span, .post-expand, .prompt-wrapper .switch-mode {
     color: #e34f42;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
 }
+
 .post-expand
 {
     position: absolute;
@@ -1702,12 +1702,14 @@ ol.toptrends-list {
 }
 
 .prompt-wrapper .modal-buttons {
-    padding: 10px;
+    margin: 4px 16px;
     text-align: right;
 }
 
-.prompt-wrapper .modal-buttons button:last-child {
-    padding: 5px 20px;
+.prompt-wrapper .switch-mode {
+    display: inline-block;
+    float: left;
+    margin: 4px;
 }
 
 /*************************************
@@ -1721,10 +1723,6 @@ ol.toptrends-list {
 .following-config-modal .modal-content {
     padding: 10px;
     text-align: center;
-}
-
-.following-config-modal .modal-buttons {
-    display: none;
 }
 
 .following-config-method-buttons {
@@ -1745,13 +1743,13 @@ ol.toptrends-list {
 }
 
 .reTwist .post {
-    margin: 5px;
-    padding: 5px;
+    margin: 8px;
+    padding: 4px;
     min-height: 68px;
 }
 
 .reTwist .post-area-extras {
-    margin-right: 10px;
+    margin: 4px 16px;
 }
 
 /*************************************
@@ -1760,10 +1758,6 @@ ol.toptrends-list {
 
 .reply.prompt-wrapper {
     margin-top: -140px;
-}
-
-.reply .modal-buttons {
-    display: none;
 }
 
 .reply .post-expand,
@@ -1781,12 +1775,12 @@ ol.toptrends-list {
 }
 
 .reply .post-area-extras {
-    margin-right: 10px;
+    margin: 4px 16px;
 }
 
 .reply .post {
-    margin: 10px;
-    padding: 5px;
+    margin: 8px;
+    padding: 4px;
     min-height: 68px;
 }
 

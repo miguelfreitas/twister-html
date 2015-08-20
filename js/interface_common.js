@@ -8,12 +8,12 @@
 var window_scrollY = 0;
 
 function openModal(modal) {
-    window_scrollY = window.pageYOffset;
-
-    $('body').css('overflow', 'hidden');
-
-    if (!modal.classBase)
+    if (!modal.classBase) {
         modal.classBase = '.modal-wrapper';
+
+        window_scrollY = window.pageYOffset;
+        $('body').css('overflow', 'hidden');
+    }
 
     $(modal.classBase + ':not(#templates *)').remove();
 
@@ -46,18 +46,19 @@ function openModal(modal) {
 
 function closeModal() {
     closeModalHandler('.modal-wrapper');
+
     window.location.hash = '#';
     window.scroll(window.pageXOffset, window_scrollY);
+    $('body').css({
+        'overflow': 'auto',
+        'margin-right': '0'
+    });
 }
 
 function closeModalHandler(classBase) {
     var modalWindows = $(classBase+':not(#templates *)');
 
     modalWindows.fadeOut('fast', function() {modalWindows.remove();});
-    $('body').css({
-        'overflow': 'auto',
-        'margin-right': '0'
-    });
 }
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
@@ -372,12 +373,16 @@ function initHashWatching() {
     setTimeout(watchHashChange, 1000);
 }
 
-function reTwistPopup(e) {
-    e.stopPropagation();
+function reTwistPopup(event, post, textArea) {
+    event.stopPropagation();
+
     if (!defaultScreenName) {
         alert(polyglot.t('You have to log in to retransmit messages.'));
         return;
     }
+
+    if (typeof post === 'undefined')
+        post = $.evalJSON($(event.target).parents('.post-data').attr('data-userpost'));
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
@@ -386,22 +391,35 @@ function reTwistPopup(e) {
     });
 
     modal.content
-        .append(postToElem($.evalJSON($(this).parents('.post-data').attr('data-userpost')), ''))
-        .append($('#reply-modal-template').children().clone(true))  // FIXME retwist-reply-modal-template
+        .append(postToElem(post, ''))
+        .append($('#reTwist-modal-template').children().clone(true))
+    ;
+
+    modal.content.find('.switch-mode')
+        .text(polyglot.t('Switch to Reply'))
+        .on('click', (function(event) {replyInitPopup(event, post,
+            $(event.target).parents('form').find('textarea').detach());}).bind(post))
     ;
 
     var replyArea = modal.content.find('.post-area .post-area-new');
-    var textArea = replyArea.find('textarea');
-    var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
-    $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
-        textArea.attr(attribute, textAreaPostInline.attr(attribute));
-    });
-
+    if (typeof textArea === 'undefined') {
+        textArea = replyArea.find('textarea');
+        var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
+        $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
+            textArea.attr(attribute, textAreaPostInline.attr(attribute));
+        });
+    } else {
+        replyArea.find('textarea').replaceWith(textArea);
+        if (textArea.val()) {
+            textArea.focus();
+            replyArea.addClass('open');
+        }
+    }
     replyArea.find('.post-submit').addClass('with-reference');
 }
 
 // Expande Área do Novo post
-function replyInitPopup(e, post) {
+function replyInitPopup(e, post, textArea) {
     var modal = openModal({
         classBase: '.prompt-wrapper',
         classAdd: 'reply',
@@ -415,14 +433,22 @@ function replyInitPopup(e, post) {
         .append($('#reply-modal-template').children().clone(true))
     ;
 
-    // FIXME passing data through attributes may result in a mess like following
-    var replyArea = modal.content.find('.post-area .post-area-new').addClass('open');
-    var textArea = replyArea.find('textarea');
-    var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
-    $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
-        textArea.attr(attribute, textAreaPostInline.attr(attribute));
-    });
+    modal.content.find('.switch-mode')
+        .text(polyglot.t('Switch to Retransmit'))
+        .on('click', (function(event) {reTwistPopup(event, post,
+            $(event.target).parents('form').find('textarea').detach())}).bind(post))
+    ;
 
+    var replyArea = modal.content.find('.post-area .post-area-new').addClass('open');
+    if (typeof textArea === 'undefined') {
+        textArea = replyArea.find('textarea');
+        var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
+        $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
+            textArea.attr(attribute, textAreaPostInline.attr(attribute));
+        });
+    } else {
+        replyArea.find('textarea').replaceWith(textArea);
+    }
     composeNewPost(e, replyArea);
 }
 
@@ -601,13 +627,14 @@ function posPostPreview(event) {
     if (textArea[0].value.length)
         postPreview.html(htmlFormatMsg(textArea[0].value).html).show();
     else
-        postPreview.hide();
+        postPreview.slideUp('fast');
     textArea.before(postPreview);
 }
 
 // Reduz Área do Novo post
 function unfocusThis() {
-    $(this).removeClass('open');
+    $(this).removeClass('open')
+        .find('#post-preview').slideUp('fast');
 }
 
 function checkPostForMentions(post, mentions, max) {
@@ -712,7 +739,7 @@ function replyTextInput(event) {
             if (textArea[0].value.length)
                 textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value).html).show();
             else
-                textAreaForm.find('#post-preview').html('').hide();
+                textAreaForm.find('#post-preview').html('').slideUp('fast');
         }
     }
 
@@ -1232,7 +1259,7 @@ function postSubmit(e, oldLastPostId) {
 
     var textArea = btnPostSubmit.closest('.post-area-new').find('textarea');
 
-    textArea.siblings('#post-preview').hide();
+    textArea.siblings('#post-preview').slideUp('fast');
 
     var postData = btnPostSubmit.closest('.post-data');
     if (!postData.length) {

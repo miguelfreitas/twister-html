@@ -925,7 +925,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   line-height: 12px;
 }
 /* line 171, ../sass/_postboard.sass */
-.post-interactions span {
+.post-interactions span, .prompt-wrapper .switch-mode {
   color: #b3b5b7;
   cursor: pointer;
   font-size: 12px;
@@ -2747,12 +2747,14 @@ ol.toptrends-list a:hover {
 }
 
 .prompt-wrapper .modal-buttons {
-    padding: 10px;
+    margin: 4px 0;
     text-align: right;
 }
 
-.prompt-wrapper .modal-buttons button:last-child {
-    padding: 5px 20px;
+.prompt-wrapper .switch-mode {
+    display: inline-block;
+    float: left;
+    margin: 4px;
 }
 
 /****** FOLLOWING-CONFIG PROMPT ******/
@@ -2764,10 +2766,6 @@ ol.toptrends-list a:hover {
 .following-config-modal .modal-content {
   padding: 10px;
   text-align: center;
-}
-
-.following-config-modal .modal-buttons {
-  display: none;
 }
 
 .following-config-modal h2 {
@@ -2810,7 +2808,7 @@ ol.toptrends-list a:hover {
   margin-top: -110px;
 }
 /* line 719, ../sass/style.sass */
-.reply .modal-buttons, .reply .post-expand, .reply .post-interactions {
+.reply .post-expand, .reply .post-interactions {
   display: none;
 }
 /* line 721, ../sass/style.sass */
