@@ -44,7 +44,11 @@ function postToElem(post, kind, promoted) {
         //elem.find('.post-info-tag').text("@" + username);  // FIXME
         getAvatar(username, elem.find('.avatar'));
 
-        elem.find('.post-info-time').text(timeGmtToText(time)).attr('title', timeSincePost(time));
+        elem.find('.post-info-time')
+            .attr('title', timeSincePost(time))
+            .find('span:last')
+                .text(timeGmtToText(time))
+        ;
     }
 
     /*
@@ -253,7 +257,11 @@ function dmDataToSnippetItem(dmData, remoteUser) {
     else
         getFullname( remoteUser, dmItem.find("a.post-info-name") );
     dmItem.find(".post-text").html(htmlFormatMsg(dmData.text).html);
-    dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
+    dmItem.find('.post-info-time')
+        .attr('title', timeSincePost(dmData.time))
+        .find('span:last')
+            .text(timeGmtToText(dmData.time))
+    ;
 
     return dmItem;
 }
@@ -268,7 +276,11 @@ function dmDataToConversationItem(dmData, localUser, remoteUser) {
     dmItem.removeAttr('id');
     dmItem.addClass(classDm);
     getAvatar(from, dmItem.find(".post-photo").find("img") );
-    dmItem.find(".post-info-time").text(timeGmtToText(dmData.time)).attr("title",timeSincePost(dmData.time));
+    dmItem.find('.post-info-time')
+        .attr('title', timeSincePost(dmData.time))
+        .find('span:last')
+            .text(timeGmtToText(dmData.time))
+    ;
     setPostInfoSent(from,dmData.k,dmItem.find('.post-info-sent'));
     dmItem.find('.post-text').html(htmlFormatMsg(dmData.text).html);
 
