@@ -271,7 +271,7 @@ function newRtMsg(postData, msg) {
         if (parseInt(twisterVersion) <= 93000) {
             alert(polyglot.t('error',
                 {error: 'can\'t handle retwisting of commented retwisted twists with daemon version '
-                    + twisterDisplayVersion + ' and below of that. please upgrade it.'}
+                    + twisterDisplayVersion + ' and below of that. Please upgrade it.'}
             ));
 
             return;
