@@ -35,22 +35,6 @@ $(document).ready(function() {
 // format "userpost" to html element
 // kind = "original"/"ancestor"/"descendant"
 function postToElem(post, kind, promoted) {
-
-    function setPostCommon(elem, username, time) {
-        var postInfoName = elem.find('.post-info-name')
-            .text(username).attr('href', $.MAL.userUrl(username));
-
-        getFullname(username, postInfoName);
-        //elem.find('.post-info-tag').text("@" + username);  // FIXME
-        getAvatar(username, elem.find('.avatar'));
-
-        elem.find('.post-info-time')
-            .attr('title', timeSincePost(time))
-            .find('span:last')
-                .text(timeGmtToText(time))
-        ;
-    }
-
     /*
     "userpost" :
     {
@@ -170,19 +154,22 @@ function postToElem(post, kind, promoted) {
     if (typeof retweeted_by !== 'undefined') {
         var postContext = elem.find('.post-context');
         if (userpost.msg) {
-            postContext.append(_templatePostRtReference.clone(true))
-                .find('.post-rt-reference')
-                    .attr('data-screen-name', rt.n)
-                    .attr('data-id', rt.k)
-                    .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: userpost.sig_rt}))
-                    .find('.post-text').html(htmlFormatMsg(rt.msg).html)
-            ;
-            setPostCommon(postContext, rt.n, rt.time);
+            setPostReference(postContext, rt, userpost.sig_rt);
         } else {
             postContext.append(_templatePostRtBy.clone(true))
                 .find('.post-retransmited-by')
                     .attr('href', $.MAL.userUrl(retweeted_by)).text('@' + retweeted_by)
             ;
+            // let's check original post and grab some possible RT
+            dhtget(username, 'post' + k, 's',
+                function(args, post) {
+                    if (post && post.userpost.msg && post.userpost.rt) {
+                        var postContext = $('<div class="post-context"></div>');
+                        setPostReference(postContext, post.userpost.rt, post.userpost.sig_rt);
+                        args.elem.find('.post-text').after(postContext);
+                    }
+                }, {elem: elem}
+            );
         }
         postContext.show();
     }
@@ -224,6 +211,32 @@ function postToElem(post, kind, promoted) {
     }
 
     return elem;
+}
+
+function setPostCommon(elem, username, time) {
+    var postInfoName = elem.find('.post-info-name')
+        .text(username).attr('href', $.MAL.userUrl(username));
+
+    getFullname(username, postInfoName);
+    //elem.find('.post-info-tag').text("@" + username);  // FIXME
+    getAvatar(username, elem.find('.avatar'));
+
+    elem.find('.post-info-time')
+        .attr('title', timeSincePost(time))
+        .find('span:last')
+            .text(timeGmtToText(time))
+    ;
+}
+
+function setPostReference(elem, rt, sig_rt) {
+    elem.append(_templatePostRtReference.clone(true))
+        .find('.post-rt-reference')
+            .attr('data-screen-name', rt.n)
+            .attr('data-id', rt.k)
+            .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: sig_rt}))
+            .find('.post-text').html(htmlFormatMsg(rt.msg).html)
+    ;
+    setPostCommon(elem, rt.n, rt.time);
 }
 
 function setPostInfoSent(n, k, item) {
