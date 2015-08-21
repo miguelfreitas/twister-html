@@ -627,7 +627,7 @@ function posPostPreview(event) {
     if (textArea[0].value.length)
         postPreview.html(htmlFormatMsg(textArea[0].value).html).show();
     else
-        postPreview.slideUp('fast');
+        postPreview.hide();
     textArea.before(postPreview);
 }
 

@@ -385,10 +385,6 @@ h2.profile-screen-name {
     color: #8f95a4;
 }
 
-.profile-modal .modal-buttons {
-   display: none;
-}
-
 .profile-modal h1.profile-name,
 .profile-modal h2.profile-screen-name,
 .profile-modal span.profile-location,
