@@ -308,7 +308,3 @@ h1.profile-name {
 h2.profile-screen-name {
     display: block;
 }
-
-.profile-modal .modal-buttons {
-   display: none;
-}
