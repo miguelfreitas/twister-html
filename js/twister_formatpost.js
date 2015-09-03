@@ -257,7 +257,7 @@ function setPostInfoSent(n, k, item) {
 function dmDataToSnippetItem(dmData, remoteUser) {
     var dmItem = $("#dm-snippet-template").clone(true);
     dmItem.removeAttr('id');
-    dmItem.attr("data-dm-screen-name",remoteUser);
+    dmItem.attr('data-screen-name', remoteUser);
     dmItem.attr("data-last_id", dmData.id);
     dmItem.attr("data-time", dmData.time);
 

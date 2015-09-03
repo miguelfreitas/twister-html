@@ -55,10 +55,54 @@ function closeModal() {
     });
 }
 
+function closePrompt() {
+    closeModalHandler('.prompt-wrapper');
+}
+
 function closeModalHandler(classBase) {
     var modalWindows = $(classBase+':not(#templates *)');
 
     modalWindows.fadeOut('fast', function() {modalWindows.remove();});
+}
+
+function confirmPopup(event, req) {
+    event.stopPropagation();
+
+    var modal = openModal({
+        classBase: '.prompt-wrapper',
+        classAdd: 'confirm-popup',
+        content: $('#confirm-popup-template').children().clone(true),
+        title: req.titleTxt
+    });
+
+    if (req.messageTxt)
+        modal.content.find('.message').text(req.messageTxt);
+
+    var btn = modal.content.find('.confirm');
+    if (req.confirmTxt)
+        btn.text(req.confirmTxt);
+    else
+        btn.text(polyglot.t('Confirm'));
+    if (req.confirmFunc) {
+        btn.on('click', function () {
+            closePrompt();
+            req.confirmFunc(req.confirmFuncArgs);
+        });
+    } else
+        btn.on('click', closePrompt);
+
+    var btn = modal.content.find('.cancel');
+    if (req.cancelTxt)
+        btn.text(req.cancelTxt);
+    else
+        btn.text(polyglot.t('Cancel'));
+    if (req.cancelFunc) {
+        btn.on('click', function () {
+            closePrompt();
+            req.cancelFunc(req.cancelFuncArgs);
+        });
+    } else
+        btn.on('click', closePrompt);
 }
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
@@ -98,7 +142,43 @@ function timeSincePost(t) {
     return polyglot.t('time_ago', {time: expression});
 }
 
-function openProfileModalWithUsernameHandler(username) {
+function openGroupProfileModalWithNameHandler(groupAlias) {
+    var modal = openModal({
+        classAdd: 'profile-modal',
+        content: $('#group-profile-modal-template').children().clone(true),
+        title: polyglot.t('users_profile', {username: '<span>' + groupAlias + '</span>'})
+    });
+
+    modal.content.find('.profile-card').attr('data-screen-name', groupAlias);
+
+    groupMsgGetGroupInfo(groupAlias,
+        function(req, ret) {
+            if (ret) {
+                req.modal.content.find('.profile-bio').text(ret.description);
+
+                if (ret.members.indexOf(defaultScreenName) !== -1)
+                    req.modal.content.find('.group-messages-control').children('button').attr('disabled', false);
+
+                var membersList = req.modal.content.find('.members');
+                var memberTemplate = $('#group-profile-member-template').children();
+                for (var i = 0; i < ret.members.length; i++) {
+                    var item = memberTemplate.clone(true).appendTo(membersList);
+
+                    item.find('.twister-user-info').attr('data-screen-name', ret.members[i]);
+                    item.find('.twister-user-name').attr('href', $.MAL.userUrl(ret.members[i]));
+
+                    getAvatar(ret.members[i], item.find('.twister-user-photo'));
+                    getFullname(ret.members[i], item.find('.twister-user-full'));
+                    getBio(ret.members[i], item.find('.bio'));
+                }
+            }
+        }, {modal: modal}
+    );
+
+
+}
+
+function openUserProfileModalWithNameHandler(username) {
     var content = $('#profile-modal-template').children().clone(true);
 
     updateProfileData(content, username);
@@ -333,18 +413,26 @@ function loadModalFromHash() {
     var hashdata = hashstring.split(':');
 
     if (hashdata[0] !== '#web+twister')
-        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following|conversation)\?(?:user|hashtag|post)=(.+)/);
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following|conversation)\?(?:group|user|hashtag|post)=(.+)/);  // need to rework hash scheme to use group|user|hashtag|post or drop it
 
     if (hashdata && hashdata[1] !== undefined && hashdata[2] !== undefined) {
         if (hashdata[1] === 'profile')
-            openProfileModalWithUsernameHandler(hashdata[2]);
+            if (hashdata[2][0] === '*')
+                openGroupProfileModalWithNameHandler(hashdata[2]);
+            else
+                openUserProfileModalWithNameHandler(hashdata[2]);
+
         else if (hashdata[1] === 'hashtag')
             openHashtagModalFromSearchHandler(hashdata[2]);
         else if (hashdata[1] === 'mentions')
             openMentionsModalHandler(hashdata[2]);
-        else if (hashdata[1] === 'directmessages')
-            openDmWithUserModal(hashdata[2]);
-        else if (hashdata[1] === 'following')
+        else if (hashdata[1] === 'directmessages') {
+            if (hashdata[2][0] === '*')
+                openGroupMessagesModal(hashdata[2]);
+            else
+                openDmWithUserModal(hashdata[2]);
+
+        } else if (hashdata[1] === 'following')
             openFollowingModal(hashdata[2]);
         else if (hashdata[1] === 'conversation') {
             splithashdata2 = hashdata[2].split(':');
@@ -352,6 +440,12 @@ function loadModalFromHash() {
         }
     } else if (hashstring === '#directmessages')
         directMessagesPopup();
+    else if (hashstring === '#groupmessages')
+        openGroupMessagesModal();
+    else if (hashstring === '#groupmessages+newgroup')
+        openGroupMessagesNewGroupModal();
+    else if (hashstring === '#groupmessages+joingroup')
+        openGroupMessagesJoinGroupModal();
     else if (hashstring === '#whotofollow')
         openWhoToFollowModal();
 }
@@ -1317,7 +1411,7 @@ function postSubmit(e, oldLastPostId) {
     }
 
     if (btnPostSubmit.parents('.prompt-wrapper').length)
-        closeModalHandler('.prompt-wrapper');
+        closePrompt();
     else {
         textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
         var tweetForm = btnPostSubmit.parents('form');
@@ -1338,7 +1432,7 @@ function retweetSubmit(e) {
 
     newRtMsg($(this).closest('.prompt-wrapper').find('.post-data'));
 
-    closeModalHandler('.prompt-wrapper');
+    closePrompt();
 }
 
 function changeStyle() {
@@ -1409,7 +1503,7 @@ function replaceDashboards() {
 }
 
 function initInterfaceCommon() {
-    $('.cancel').on('click', function() {
+    $('.modal-close, .modal-blackout').not('.prompt-close').on('click', function() {
         if ($('.modal-content').attr('style') != undefined)
             $('.modal-content').removeAttr('style');
         $('.modal-back').css('display', 'none');
@@ -1419,10 +1513,7 @@ function initInterfaceCommon() {
 
     $('.modal-back').on('click', function() {history.back();});
 
-    $('.prompt-close').on('click', function(e) {
-        e.stopPropagation();
-        closeModalHandler('.prompt-wrapper');
-    });
+    $('.prompt-close').on('click', closePrompt);
 
     /*
     $('.modal-back').on('click', function() {
@@ -1497,6 +1588,12 @@ function initInterfaceModule(module) {
 
 function killInterfaceModule(module) {
     $('.module.'+module).empty().hide();
+}
+
+function inputEnterActivator(event) {
+    var elemEvent = $(event.target);
+    elemEvent.parents(event.data.parentSelector).find(event.data.enterSelector)
+        .attr('disabled', elemEvent.val().trim() === '');
 }
 
 function setTextcompleteOnEventTarget(event) {

@@ -3,7 +3,9 @@
 //
 // Handle direct messages modal
 
-function requestDMsnippetList(dmThreadList) {
+var _groupMsgInviteToGroupQueue = [];
+
+function requestDMsnippetList(dmThreadList, forGroup) {
     var followList = [];
     for (var i = 0; i < followingUsers.length; i++)
         followList.push({username:followingUsers[i]});
@@ -11,15 +13,19 @@ function requestDMsnippetList(dmThreadList) {
         followList.push({username:groupChatAliases[i]});
 
     twisterRpc('getdirectmsgs', [defaultScreenName, 1, followList],
-        function(req, ret) {processDMsnippet(ret, dmThreadList);}, dmThreadList,
+        function(req, ret) {processDMsnippet(ret, req.dmThreadList, req.forGroup);},
+            {dmThreadList: dmThreadList, forGroup: forGroup},
         function(req, ret) {console.log('ajax error:' + ret);}, null
     );
 }
 
-function processDMsnippet(dmUsers, dmThreadList) {
+function processDMsnippet(dmUsers, dmThreadList, forGroup) {
     dmThreadList.empty();
 
     for (var u in dmUsers) {
+        if ((forGroup && u[0] !== '*') || (!forGroup && u[0] === '*'))
+            continue;
+
         // convert snipped to html and add it to date-sorted list
         var dmItem = dmDataToSnippetItem(dmUsers[u][0], u);
         var timeDmItem = parseInt(dmItem.attr('data-time'));
@@ -96,7 +102,7 @@ function directMsgSubmit(e) {
 
     replyText.siblings('#post-preview').hide();
 
-    newDirectMsg(replyText.val(), $('.directMessages').attr('data-dm-screen-name'));
+    newDirectMsg(replyText.val(), $('.directMessages').attr('data-screen-name'));
 
     replyText.val('');
 }
@@ -137,7 +143,7 @@ function directMessagesPopup() {
       return;
     }
 
-    modal = openModal({
+    var modal = openModal({
         classAdd: 'directMessages',
         content: $('.direct-messages-template').children().clone(true),
         title: polyglot.t('Direct Messages')
@@ -150,7 +156,8 @@ function directMessagesPopup() {
         .attr('title', polyglot.t('Mark all as read'))
         .on('click', function() {
             for (var user in _newDMsPerUser) {
-                _newDMsPerUser[user] = 0;
+                if (!user[0] === '*')
+                    _newDMsPerUser[user] = 0;
             }
             saveDMsToStorage();
             $.MAL.updateNewDMsUI(getNewDMsCount());
@@ -164,13 +171,13 @@ function openDmWithUserModal(dm_screenname) {
         return;
     }
 
-    modal = openModal({
+    var modal = openModal({
         classAdd: 'directMessages',
         content: $('.messages-thread-template').children().clone(true),
         title: polyglot.t('direct_messages_with', {username: '<span>' + dm_screenname + '</span>'})
     });
 
-    modal.self.attr('data-dm-screen-name', dm_screenname);
+    modal.self.attr('data-screen-name', dm_screenname);
 
     if (dm_screenname.length && dm_screenname[0] === '*')
         getGroupChatName(dm_screenname, modal.self.find('.modal-header h3 span'));
@@ -183,12 +190,233 @@ function openDmWithUserModal(dm_screenname) {
         .addClass('open').appendTo(modal.content).fadeIn('fast');
 }
 
+function openGroupMessagesModal(groupAlias) {
+    if (!defaultScreenName) {
+        alert(polyglot.t('You have to log in to use group messages.'));
+        return;
+    }
+
+    if (typeof groupAlias === 'undefined') {
+        var modal = openModal({
+            classAdd: 'directMessages groupMessages',
+            content: $('.direct-messages-template').children().clone(true),
+            title: polyglot.t('Group Messages')
+        });
+
+        modal.content.prepend($('#group-messages-profile-modal-control-template').children().clone(true));
+
+        requestDMsnippetList(modal.content.find('.direct-messages-list'), true);
+
+        modal.self.find('.mark-all-as-read')
+            .css('display', 'inline')
+            .attr('title', polyglot.t('Mark all as read'))
+            .on('click', function() {
+                for (var user in _newDMsPerUser) {
+                    if (user[0] === '*')
+                        _newDMsPerUser[user] = 0;
+                }
+                saveDMsToStorage();
+                $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+            })
+        ;
+    } else {
+        var modal = openModal({
+            classAdd: 'directMessages groupMessages',
+            title: polyglot.t('direct_messages_with', {username: '<span>' + groupAlias + '</span>'})
+        });
+
+        modal.self.attr('data-screen-name', groupAlias);
+
+        getGroupChatName(groupAlias, modal.self.find('.modal-header h3 span'));
+
+        groupMsgGetGroupInfo(groupAlias,
+            function(req, ret) {
+                if (ret && ret.members.indexOf(defaultScreenName) !== -1) {
+                    req.modal.content.append($('.messages-thread-template').children().clone(true));
+                    requestDmConversationModal(req.modal.content.find('.direct-messages-thread'), req.groupAlias);
+
+                    var control = $('#group-messages-messages-modal-control-template').children().clone(true)
+                        .appendTo(req.modal.content);
+                    control.find('.profile').on('click',  {groupAlias: req.groupAlias},
+                        function (event) {window.location.href = $.MAL.userUrl(event.data.groupAlias);}
+                    );
+
+                    $('.dm-form-template').children().clone(true)
+                        .addClass('open').appendTo(req.modal.content).fadeIn('fast');
+                }
+            }, {groupAlias: groupAlias, modal: modal}
+        );
+    }
+}
+
+function openGroupMessagesNewGroupModal() {
+    if (!defaultScreenName) {
+        alert(polyglot.t('You have to log in to use group messages.'));
+        return;
+    }
+
+    var modal = openModal({
+        classAdd: 'group-messages-new-group',
+        content: $('#group-messages-new-group-template').children().clone(true),
+        title: polyglot.t('Group Messages — New Group Creation')
+    });
+
+    modal.content.find('.description').on('input',
+        {parentSelector: '.module', enterSelector: '.create'}, inputEnterActivator);
+    modal.content.find('.create').on('click', function (event) {
+        var elemEvent = $(event.target);
+        var elemForm = elemEvent.parents('.module')
+
+        var peersToInvite = elemForm.find('.invite').val().toLowerCase().match(/@\w+/g);
+        if (peersToInvite)
+            peersToInvite = peersToInvite.join('').slice(1).split('@');
+
+        groupMsgCreateGroup(elemForm.find('.description').val(), peersToInvite);
+
+        closeModal();
+    });
+}
+
+function openGroupMessagesJoinGroupModal() {
+    if (!defaultScreenName) {
+        alert(polyglot.t('You have to log in to use group messages.'));
+        return;
+    }
+
+    var modal = openModal({
+        classAdd: 'group-messages-join-group',
+        content: $('#group-messages-join-group-template').children().clone(true),
+        title: polyglot.t('Group Messages — Join Group')
+    });
+
+    var elemGroupsList = modal.content.find('.groups-list');
+    var elemGroupTemplate = $('#groups-list-item-template').children();
+    groupMsgGetGroupsForPeer(defaultScreenName,
+        function(req, ret) {
+            if (ret) {
+                for (var i = 0; i < groupChatAliases.length; i++) {
+                    if (ret.indexOf(groupChatAliases[i]) === -1) {
+                        var item = req.elemGroupTemplate.clone(true).appendTo(req.elemGroupsList);
+
+                        item.find('input')
+                            .attr('data-screen-name', groupChatAliases[i])
+                            .on('click', function (event) {
+                                var elemEvent = $(event.target);
+                                elemEvent.parents('.module').find('.join')
+                                    .attr('disabled',
+                                        !elemEvent.parents('.groups-list').find('input:checked').length);
+                            })
+                        ;
+                        item.find('.twister-user-name')
+                            .text(groupChatAliases[i])
+                            .attr('href', $.MAL.userUrl(groupChatAliases[i]))
+                        ;
+                        getGroupChatName(groupChatAliases[i], item.find('.description'));  // FIXME
+                    }
+                }
+            }
+        }, {elemGroupsList: elemGroupsList, elemGroupTemplate: elemGroupTemplate}
+    );
+
+    modal.content.find('.join').on('click', function (event) {
+        var elemEvent = $(event.target);
+        var groups = elemEvent.parents('.module').find('.groups-list input:checked');
+        for (var i = 0; i < groups.length; i++)
+            groupMsgInviteToGroup(groups[i].getAttribute('data-screen-name'), [defaultScreenName]);
+
+        closeModal();
+    });
+
+    modal.content.find('.secret-key-import, .username-import').on('input', importSecretKeypress);
+
+    modal.content.find('.import-secret-key').on('click', function (event) {
+        var elemModule = $(event.target).parents('.module');
+        var groupAlias = elemModule.find('.username-import').val().toLowerCase();
+        var secretKey = elemModule.find('.secret-key-import').val();
+
+        twisterRpc('importprivkey', [secretKey, groupAlias],
+            function(req, ret) {
+                groupMsgInviteToGroup(req.groupAlias, [defaultScreenName]);
+                closeModal();
+            }, {groupAlias: groupAlias},
+            function(req, ret) {
+                alert(polyglot.t('Error in \'importprivkey\'', {rpc: ret.message}));
+            }, null
+        );
+    });
+}
+
+function groupMsgCreateGroup(description, peersToInvite) {
+    if (!peersToInvite)
+        peersToInvite = [];
+
+    twisterRpc('creategroup', [description],
+        function(peersToInvite, ret) {
+            groupMsgInviteToGroup(ret, peersToInvite.push(defaultScreenName));
+        }, peersToInvite,
+        function(req, ret) {
+            alert(polyglot.t('error', {error: 'can\'t create group — ' + ret.message}));
+        }, null
+    );
+}
+
+function groupMsgInviteToGroup(groupAlias, peersToInvite) {
+    _groupMsgInviteToGroupQueue.push({groupAlias: groupAlias, peersToInvite: peersToInvite});
+
+    if (_groupMsgInviteToGroupQueue.length === 1)
+        doGroupMsgInviteToGroup();
+}
+
+function doGroupMsgInviteToGroup() {
+    twisterRpc('newgroupinvite',
+        [defaultScreenName, lastPostId + 1,
+            _groupMsgInviteToGroupQueue[0].groupAlias, _groupMsgInviteToGroupQueue[0].peersToInvite],
+        function(req, ret) {
+            incLastPostId();
+            _groupMsgInviteToGroupQueue.shift();
+            if (_groupMsgInviteToGroupQueue.length)
+                setTimeout(doGroupMsgInviteToGroup, 200);
+        }, null,
+        function(req, ret) {
+            alert(polyglot.t('error',
+                {error: 'can\'t invite ' + req[1] + ' to ' + req[0] + ' group — ' + ret.message}));
+            _groupMsgInviteToGroupQueue.shift();
+            if (_groupMsgInviteToGroupQueue.length)
+                setTimeout(doGroupMsgInviteToGroup, 200);
+        }, [_groupMsgInviteToGroupQueue[0].groupAlias, _groupMsgInviteToGroupQueue[0].peersToInvite]
+    );
+}
+
+function groupMsgLeaveGroup(groupAlias, cbFunc, cbArgs) {
+    twisterRpc('leavegroup', [defaultScreenName, groupAlias],
+        cbFunc, cbArgs,
+        function(req, ret) {alert(polyglot.t('error', {error: 'can\'t leave group — ' + ret.message}));}, null
+    );
+}
+
+function groupMsgGetGroupsForPeer(peer, cbFunc, cbArgs) {
+    twisterRpc('listgroups', [peer],
+        cbFunc, cbArgs,
+        function(req, ret) {alert(polyglot.t('error', {error: 'can\'t list groups — ' + ret.message}));}, null
+    );
+}
+
+function groupMsgGetGroupInfo(groupAlias, cbFunc, cbArgs) {
+    twisterRpc('getgroupinfo', [groupAlias],
+        cbFunc, cbArgs,
+        function(req, ret) {alert(polyglot.t('error', {error: 'can\'t get group info — ' + ret.message}));}, null
+    );
+}
+
 function initInterfaceDirectMsg() {
-    $('.direct-messages').attr('href','#directmessages');
-    $('.userMenu-messages a').attr('href','#directmessages');
+    $('.direct-messages').attr('href', '#directmessages');
+    $('.userMenu-messages a').attr('href', '#directmessages');
+    $('.groupmessages').attr('href', '#groupmessages');
+    $('.userMenu-groupmessages a').attr('href', '#groupmessages');
 
     $('#dm-snippet-template').on('click', function() {
-        window.location.hash = '#directmessages?user=' + $(this).attr('data-dm-screen-name');
+        var alias = $(this).attr('data-screen-name');
+        window.location.hash = '#directmessages?' + (alias[0] === '*' ? 'group' : 'user') + '=' + alias;
     });
 
     $('.dm-submit').on('click', directMsgSubmit);
@@ -196,5 +424,63 @@ function initInterfaceDirectMsg() {
         window.location.hash = '#directmessages?user=' +
             $(this).closest('[data-screen-name]').attr('data-screen-name');
     });
-}
 
+    $('.group-messages-control .invite').on('click', function (event) {
+        $(event.target).siblings('.invite-form').toggle();
+    });
+
+    $('.group-messages-control .invite-form input').on('input',
+        {parentSelector: '.invite-form', enterSelector: 'button'}, inputEnterActivator);
+
+    $('.group-messages-control .invite-form button').on('click', function (event) {
+        var elemEvent = $(event.target);
+        var elemInput = elemEvent.siblings('input');
+        var peersToInvite = elemInput.val().toLowerCase().match(/@\w+/g);
+        if (peersToInvite)
+            peersToInvite = peersToInvite.join('').slice(1).split('@');
+
+        groupMsgInviteToGroup(elemEvent.closest('[data-screen-name]').attr('data-screen-name'),
+            peersToInvite);
+
+        elemInput.val('');
+        elemEvent.parents('.invite-form').toggle();
+
+        // TODO reload group members list
+    });
+
+    $('.group-messages-control .join').on('click', function () {
+        window.location.hash = '#groupmessages+joingroup';
+    });
+
+    $('.group-messages-control .leave').on('click', function (event) {
+        var elemEvent = $(event.target);
+        var groupAlias = elemEvent.closest('[data-screen-name]').attr('data-screen-name');
+        confirmPopup(event, {
+            titleTxt: polyglot.t('сonfirm_group_leaving_header'),
+            messageTxt: polyglot.t('сonfirm_group_leaving_body', {alias: groupAlias}),
+            confirmFunc: function (groupAlias) {
+                groupMsgLeaveGroup(groupAlias, function () {history.back();});
+            },
+            confirmFuncArgs: groupAlias
+        });
+    });
+
+    $('.group-messages-control .new').on('click', function () {
+        window.location.hash = '#groupmessages+newgroup';
+    });
+
+    $('.group-messages-control .secret-key').on('click', promptCopyAttrData);
+
+    $('.group-messages-control .show-secret-key').on('click', function (event) {
+        var elemEvent = $(event.target);
+        var elemSecretKey = elemEvent.siblings('.secret-key')
+            .toggle();
+        if (elemSecretKey.css('display') !== 'none') {
+            dumpPrivkey(elemEvent.closest('[data-screen-name]').attr('data-screen-name'),
+                function(req, ret) {req.text(ret).attr('data', ret);},
+                elemSecretKey
+            );
+        } else
+            elemSecretKey.text('').attr('data', '');
+    });
+}

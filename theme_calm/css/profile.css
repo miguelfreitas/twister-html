@@ -62,34 +62,14 @@
     color: #f8f8f8;
 }
 
-.profile-card-buttons
-{
+.profile-card-buttons {
+    padding: 4px 0;
+}
+
+.twister-user-info .profile-card-buttons {
     position: absolute;
-    bottom: 30px;
+    top: 0;
     right: 0;
-}
-
-.profile-card-buttons .direct-messages-with-user,
-.profile-card-buttons .mentions-from-user,
-.profile-card-buttons .follow,
-.profile-card-buttons .unfollow
-{
-    display: inline;
-    padding: 4px 12px;
-    font-size: 12px;
-    width: auto;
-    text-align: center;
-    color: rgba( 0, 0, 0, .7 );
-    background: rgba( 0, 0, 0, .1 );
-    border: none;
-    transition: all .2s linear;
-}
-
-.profile-card-buttons .direct-messages-with-user:hover,
-.profile-card-buttons .mentions-from-user:hover
-{
-    color: #fff;
-    background: #b2d67b;
 }
 
 .profile-card.forEdition
@@ -396,4 +376,33 @@ h2.profile-screen-name {
 .profile-modal a.profile-url:empty,
 .profile-modal a.profile-bio:empty {
     display: none;
+}
+
+.group-messages-control .invite-form, .group-messages-control .secret-key {
+    display: none;
+    font-size: 12px;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.group-messages-control .invite-form input {
+    border: solid 1px rgba(0, 0, 0, .3);
+    vertical-align: middle;
+    width: 73%;
+    margin: 0 4px;
+}
+
+.group-messages-control .invite-form input:focus {
+    border: solid 1px rgba(118, 145, 206, .8);
+}
+
+.group-messages-control .invite-form button {
+    color: #DDD;
+    background-color: #45474D;
+    border: medium none;
+    vertical-align: middle;
+}
+
+.group-messages-control .invite-form button:hover {
+    color: #FFF;
 }

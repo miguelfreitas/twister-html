@@ -56,7 +56,7 @@
   font-style: normal;
 }
 /* line 64, ../sass/_fonts.sass */
-[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-retransmited-icon:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .mini-profile-indicators .userMenu-user a:before, .twister-user-remove:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-retransmited-icon:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .twister-user-remove:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -93,12 +93,6 @@
 /* line 95, ../sass/_fonts.sass */
 .icon-star:before, .post-favorite:before {
   content: "";
-}
-
-/* '' */
-/* line 100, ../sass/_fonts.sass */
-.icon-user:before, .mini-profile-indicators .userMenu-user a:before {
-  content: "";
 }
 
 /* '' */
@@ -365,7 +359,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 /* line 65, ../sass/_menu.sass */
-.userMenu li.userMenu-dhtindicator, .userMenu li.userMenu-connections, .userMenu li.userMenu-messages {
+.userMenu li.userMenu-dhtindicator, .userMenu li.userMenu-connections,
+.userMenu li.userMenu-messages, .userMenu li.userMenu-groupmessages {
   display: none !important;
 }
 /* line 68, ../sass/_menu.sass */
@@ -438,7 +433,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0;
 }
 /* line 54, ../sass/_profile.sass */
-.profile-modal .modal-content .postboard {
+.profile-modal .modal-content .postboard, .profile-modal .modal-content .members {
   margin-left: 0;
   height: 100%;
   bottom: 0;
@@ -1703,12 +1698,12 @@ button:hover, .mini-profile-actions span:hover, a.button:hover {
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 /* line 85, ../sass/_commons.sass */
-button.disabled, .mini-profile-actions span.disabled, a.button.disabled {
+button:disabled, button.disabled, .mini-profile-actions span.disabled, a.button.disabled {
   opacity: 0.5;
   background-color: #999;
 }
 /* line 88, ../sass/_commons.sass */
-button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disabled:hover {
+button:disabled:hover, button.disabled:hover, .mini-profile-actions span.disabled:hover, a.button.disabled:hover {
   color: white;
 }
 
@@ -1981,6 +1976,7 @@ ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-prof
   position: relative;
   text-align: center;
   background: white;
+  padding: 1em;
 }
 /* line 152, ../sass/style.sass */
 .mini-profile a.button {
@@ -2007,8 +2003,8 @@ ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-prof
 
 /* line 169, ../sass/style.sass */
 .mini-profile-indicators {
-  margin: 0 0 1em 0;
   background-color: #f3f2f1;
+  text-align: center;
 }
 /* line 173, ../sass/style.sass */
 .mini-profile-indicators li {
@@ -2016,7 +2012,6 @@ ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-prof
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
-  width: 100px;
   float: left;
   font-size: 0.8em;
   position: relative;
@@ -2048,6 +2043,21 @@ ul.userMenu-search-profiles button:after, ul.userMenu-search-profiles .mini-prof
   text-align: center !important;
   margin: auto !important;
   padding-top: 0.2em;
+}
+
+.mini-profile-indicators .userMenu-connections, .mini-profile-indicators .userMenu-messages {
+    width: 30%;
+}
+
+.mini-profile-indicators .userMenu-groupmessages {
+    width: 40%;
+}
+
+.mini-profile-indicators .userMenu-groupmessages a:before {
+    content: "";
+    background: transparent url("../img/groupmessages.png") no-repeat scroll center center;
+    background-size: 24px 24px;
+    height: 1em;
 }
 
 /* line 208, ../sass/style.sass */
@@ -2969,6 +2979,140 @@ ol.toptrends-list a:hover {
   position: absolute;
   right: 0;
   left: auto;
+}
+
+
+.group-messages-control .invite-form, .group-messages-control .secret-key {
+    display: none;
+    font-size: 12px;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.group-messages-control .invite-form input {
+    border: 1px solid rgba(0, 0, 0, .1);
+    vertical-align: middle;
+    width: 73%;
+    margin: 0 4px;
+}
+
+.group-messages-control .invite-form input:focus {
+    border-bottom: solid 1px #B4C669;
+}
+
+.group-messages-control .invite-form button {
+    vertical-align: middle;
+}
+
+.group-messages-control.b-buttons {
+    padding: 4px;
+}
+
+.profile-card-buttons.group-messages-control.b-buttons {
+    text-align: center;
+}
+
+.profile-card-buttons.group-messages-control.b-buttons button {
+    margin: 2px 0;
+}
+
+/*************************************
+****** GM NEW GROUP SETUP MODAL ******
+**************************************/
+
+.group-messages-new-group.modal-wrapper {
+    width: 580px;
+    height: auto; /*about 320px*/
+    margin: -180px 0 0 -290px;
+}
+
+.group-messages-new-group .modal-content {
+    padding: 0;
+}
+
+.group-messages-new-group .modal-content .module {
+    margin: 4px;
+}
+
+.group-messages-new-group .modal-content div div {
+    margin: 4px 0;
+    padding: 4px 12px;
+}
+
+.group-messages-new-group .modal-content div div:last-child {
+    text-align: right;
+}
+
+.group-messages-new-group .modal-content div div:last-child button {
+    margin: 8px 4px;
+}
+
+.group-messages-new-group .modal-content textarea {
+    border: 1px solid rgba(0, 0, 0, .1);
+    width: 500px;
+    height: 56px;
+    resize: none;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.group-messages-new-group .modal-content textarea:focus {
+    border-bottom: solid 1px #B4C669;
+}
+
+/*************************************
+****** GM JOIN GROUP SETUP MODAL *****
+**************************************/
+
+.group-messages-join-group.modal-wrapper {
+    width: 580px;
+    height: auto; /*about 360px*/
+    margin: -250px 0 0 -290px;
+}
+
+.group-messages-join-group .modal-content {
+    padding: 0;
+}
+
+.group-messages-join-group .modal-content .module {
+    margin: 4px;
+}
+
+.group-messages-join-group .modal-content div div {
+    margin: 4px 0;
+    padding: 4px 12px;
+}
+
+.group-messages-join-group .modal-content div div:last-child {
+    text-align: right;
+}
+
+.group-messages-join-group .modal-content div div:last-child button {
+    margin: 8px 4px;
+}
+
+.group-messages-join-group .modal-content input {
+    border: 1px solid rgba(0, 0, 0, .1);
+    width: 500px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.group-messages-join-group .modal-content input:focus {
+    border-bottom: solid 1px #B4C669;
+}
+
+.group-messages-join-group .modal-content input[type='checkbox'] {
+    display: inline;
+    width: auto;
+    margin: 2px;
+}
+
+.group-messages-join-group .modal-content .groups-list {
+    background-color: #FFF;
+    height: 120px;
+    overflow-y: auto;
+    margin: 8px 8px 0;
 }
 
 /********* NEW USER MODAL************* */
