@@ -771,6 +771,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #414244;
 }
 
+.post.new .post-info-time {
+    color: #B4C669;
+}
+
 /* line 55, ../sass/_postboard.sass */
 .post-data {
   padding: 10px;

@@ -954,10 +954,11 @@ ol.toptrends-list {
     transition: background .1s linear;
     -moz-transition: background .1s linear;
 }
-.post.new
-{
-    background: #F7F8E0;
+
+.post.new {
+    background-color: #FFFFED;
 }
+
 .post.open
 {
     margin: 10px 0;

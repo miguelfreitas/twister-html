@@ -1156,6 +1156,11 @@ textarea.splited-post {
     transition: background .1s linear;
     -moz-transition: background .1s linear;
 }
+
+.post.new {
+    background-color: #FFFFED;
+}
+
 .post.open
 {
     margin: 10px 0;
