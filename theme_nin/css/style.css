@@ -2868,17 +2868,19 @@ ol.toptrends-list a:hover {
   margin-left: 58px;
   font-size: 0.9em;
 }
+
 /* line 758, ../sass/style.sass */
 .directMessages .post-info-name {
   float: none;
 }
+
 /* line 760, ../sass/style.sass */
 .directMessages .post-info-tag {
   line-height: 1em;
   padding: 0;
   display: inline;
   font-size: 80%;
-  margin: 0 0 0 1em;
+  margin-left: 0.1em;
 }
 
 /* line 767, ../sass/style.sass */
@@ -2911,6 +2913,13 @@ ol.toptrends-list a:hover {
   margin: 0px 10px 20px 10px;
   cursor: default;
 }
+
+.direct-messages-thread .post .post-info-name {
+    display: block;
+    margin-left: 128px;
+    padding: 0;
+}
+
 /* line 793, ../sass/style.sass */
 .direct-messages-thread .post .post-info-time {
   float: none;
@@ -2962,6 +2971,15 @@ ol.toptrends-list a:hover {
   left: 0;
   top: 10px;
 }
+
+.direct-messages-thread .post.sent .post-info {
+    text-align: right;
+}
+
+.direct-messages-thread .post.sent .post-info-name {
+    margin-right: 128px;
+}
+
 /* line 842, ../sass/style.sass */
 .direct-messages-thread .post.sent .post-text:after {
   border-top: solid 7px transparent;

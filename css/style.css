@@ -1552,13 +1552,21 @@ ol.toptrends-list {
     left: auto;
 }
 
+.direct-messages-thread .post.sent .post-info {
+    text-align: right;
+}
+
+.direct-messages-thread .post.sent .post-info-name {
+    margin-right: 2px;
+}
+
 .direct-messages-thread .post.sent .post-info-time {
     float: left;
 }
 
 .direct-messages-thread .post.sent .post-info-time .post-info-sent {
     float: right;
-    margin: 0 2px;
+    margin-left: 2px;
 }
 
 .direct-messages-thread .post.sent .post-text {
@@ -2205,6 +2213,7 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
 .post-rt-reference .post-photo {
     width: 24px;
     height: 24px;
+    margin: 4px;
 }
 
 .post-rt-reference .post-photo img {

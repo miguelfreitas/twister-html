@@ -150,7 +150,7 @@ var MAL = function()
             else
                 return "#profile?user=" + username;
         //}
-    }
+    };
 
     // recover username from url (only for hash)
     this.urlToUser = function(url) {

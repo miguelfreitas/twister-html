@@ -280,24 +280,31 @@ function dmDataToSnippetItem(dmData, remoteUser) {
 }
 
 // format dmdata (returned by getdirectmsgs) to display in conversation thread
-function dmDataToConversationItem(dmData, localUser, remoteUser) {
-    var from = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0))
-               ? dmData.from
-               : (dmData.fromMe ? localUser : remoteUser);
-    var classDm = dmData.fromMe ? "sent" : "received";
-    var dmItem = $("#dm-chat-template").clone(true);
-    dmItem.removeAttr('id');
-    dmItem.addClass(classDm);
-    getAvatar(from, dmItem.find(".post-photo").find("img") );
-    dmItem.find('.post-info-time')
+function postToElemDM(dmData, localUser, remoteUser) {
+    var senderAlias = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0))
+        ? dmData.from : (dmData.fromMe ? localUser : remoteUser);
+    var elem = $('#dm-chat-template').clone(true)
+        .removeAttr('id')
+        .addClass(dmData.fromMe ? 'sent' : 'received')
+    ;
+
+    var elemName = elem.find('.post-info-name')
+        .attr('href', $.MAL.userUrl(senderAlias));
+    if (senderAlias[0] === '*' )
+        getGroupChatName(senderAlias, elemName);
+    else
+        getFullname(senderAlias, elemName);
+
+    getAvatar(senderAlias, elem.find('.post-photo').find('img'));
+    elem.find('.post-info-time')
         .attr('title', timeSincePost(dmData.time))
         .find('span:last')
             .text(timeGmtToText(dmData.time))
     ;
-    setPostInfoSent(from,dmData.k,dmItem.find('.post-info-sent'));
-    dmItem.find('.post-text').html(htmlFormatMsg(dmData.text).html);
+    setPostInfoSent(senderAlias, dmData.k, elem.find('.post-info-sent'));
+    elem.find('.post-text').html(htmlFormatMsg(dmData.text).html);
 
-    return dmItem;
+    return elem;
 }
 
 // convert message text to html, featuring @users and links formating.

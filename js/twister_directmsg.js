@@ -81,7 +81,7 @@ function processDmConversation(postboard, dm_screenname, dmData) {
         var dmList = dmData[dm_screenname];
         if (dmList.length) {
             for (var i = 0; i < dmList.length; i++) {
-                var dmItem = dmDataToConversationItem(dmList[i], defaultScreenName, dm_screenname)
+                var dmItem = postToElemDM(dmList[i], defaultScreenName, dm_screenname)
                     .attr('data-id', dmList[i].id)
                     .appendTo(postboard)
                 ;
