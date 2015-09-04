@@ -1186,10 +1186,8 @@ textarea.splited-post {
 {
     background: #fff;
 }
-.post-photo,
-.mini-profile-photo
-{
-    margin: 5px;
+
+.post-photo, .mini-profile-photo {
     display: inline-block;
     float: left;
     vertical-align: middle;
@@ -1198,13 +1196,14 @@ textarea.splited-post {
     overflow: hidden;
     border-radius: 20%;
     /*transform: rotate( 45deg );*/
+    margin: 6px;
 }
-.post-photo img,
-.mini-profile-photo img
-{
+
+.post-photo img, .mini-profile-photo img {
     width: 48px;
-    height: 48px;
+    height: auto;
 }
+
 .post-info span
 {
     vertical-align: top;
@@ -1227,14 +1226,15 @@ textarea.splited-post {
     display: inline-block;
     letter-spacing: 0px;
 }
-.post-info-time
-{
+
+.post-info-time {
     float: right;
     font-size: 12px;
-    margin-right: 5px;
+    margin: 4px 8px 0;
     opacity: .5;
     text-decoration: none;
 }
+
 .post-info-time:hover {
     text-decoration: none;
     color: #43464d;
@@ -1242,7 +1242,7 @@ textarea.splited-post {
 
 .post-text {
     font-size: 13px;
-    margin: 2px 10px 4px 60px;
+    margin: 2px 16px 4px 60px;
     word-wrap: break-word;
 }
 
@@ -1252,11 +1252,11 @@ textarea.splited-post {
     padding-right: 2px;
 }
 
-.post-context
-{
+.post-context {
     font-size: 11px;
-    margin: 2px 10px 4px 60px;
+    margin: 2px 16px 4px 60px;
 }
+
 .post-text a,
 .post-context a,
 .mini-screen-name
@@ -1897,7 +1897,7 @@ textarea.splited-post {
 }
 
 .direct-messages-thread .post-text {
-    margin: 2px 10px 4px 4px;
+    margin: 2px 16px 4px 4px;
     word-wrap: break-word;
 }
 
@@ -1920,8 +1920,18 @@ textarea.splited-post {
     left: auto;
 }
 
+.direct-messages-thread .post.sent .post-info-time {
+    float: left;
+}
+
+.direct-messages-thread .post.sent .post-info-time .post-info-sent {
+    float: right;
+    margin: 0 2px;
+}
+
 .direct-messages-thread .post.sent .post-text {
-    margin: 2px 10px 4px 4px;
+    margin: 2px 4px 4px 16px;
+    text-align: right;
 }
 
 .direct-messages-thread .post.sent .post-photo {
@@ -2630,11 +2640,12 @@ p.post-text img {
 
 .post-rt-reference .post-info-name {
     font-size: 11px;
+    padding: 0;
 }
 
 .post-rt-reference .post-text {
     font-size: 11px;
-    margin: 2px 10px 4px 10px;
+    margin: 2px 8px 4px 34px;
 }
 
 .post-rt-reference .post-text a {
@@ -2644,4 +2655,5 @@ p.post-text img {
 .post-rt-reference .post-info-time {
     font-size: 9px;
     color: #000;
+    margin: 2px 4px 0;
 }
