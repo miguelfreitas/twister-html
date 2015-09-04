@@ -263,6 +263,11 @@ function openGroupMessagesNewGroupModal() {
 
     modal.content.find('.description').on('input',
         {parentSelector: '.module', enterSelector: '.create'}, inputEnterActivator);
+    modal.content.find('.invite')
+        .on('input', {handleRet: groupMsgInviteFormInputHandleUserSearchRet}, userSearchKeypress)
+        .on('focus', {req: groupMsgInviteFormInputSetTextcompleteReq}, setTextcompleteOnEventTarget)
+        .on('focusout', unsetTextcompleteOnEventTarget)
+    ;
     modal.content.find('.create').on('click', function (event) {
         var elemEvent = $(event.target);
         var elemForm = elemEvent.parents('.module')
@@ -408,6 +413,28 @@ function groupMsgGetGroupInfo(groupAlias, cbFunc, cbArgs) {
     );
 }
 
+function groupMsgInviteFormInputHandleUserSearchRet() {
+    // working with global results because of search function in textcomplete strategy, see groupMsgInviteFormInputSetTextcompleteReq
+    var i = _lastSearchUsersResults.indexOf(defaultScreenName);
+    if (i !== -1)
+        _lastSearchUsersResults.splice(i, 1);
+}
+
+function groupMsgInviteFormInputSetTextcompleteReq() {
+    return [{
+            match: /\B@(\w*)$/,
+            search: function (term, callback) {
+                callback($.map(_lastSearchUsersResults, function (mention) {
+                    return mention.indexOf(term) === 0 ? mention : null;
+                }));
+            },
+            index: 1,
+            replace: function (mention) {
+                return '@'+mention+' ';
+            }
+        }]
+}
+
 function initInterfaceDirectMsg() {
     $('.direct-messages').attr('href', '#directmessages');
     $('.userMenu-messages a').attr('href', '#directmessages');
@@ -429,12 +456,21 @@ function initInterfaceDirectMsg() {
         $(event.target).siblings('.invite-form').toggle();
     });
 
-    $('.group-messages-control .invite-form input').on('input',
-        {parentSelector: '.invite-form', enterSelector: 'button'}, inputEnterActivator);
+    $('.group-messages-control .invite-form textarea')
+        .on('input', {parentSelector: '.invite-form', enterSelector: 'button',
+            handleRet: groupMsgInviteFormInputHandleUserSearchRet},
+            function (event) {
+                inputEnterActivator(event);
+                userSearchKeypress(event);
+            }
+        )
+        .on('focus', {req: groupMsgInviteFormInputSetTextcompleteReq}, setTextcompleteOnEventTarget)
+        .on('focusout', unsetTextcompleteOnEventTarget)
+    ;
 
     $('.group-messages-control .invite-form button').on('click', function (event) {
         var elemEvent = $(event.target);
-        var elemInput = elemEvent.siblings('input');
+        var elemInput = elemEvent.siblings('textarea');
         var peersToInvite = elemInput.val().toLowerCase().match(/@\w+/g);
         if (peersToInvite)
             peersToInvite = peersToInvite.join('').slice(1).split('@');

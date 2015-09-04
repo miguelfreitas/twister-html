@@ -5,7 +5,6 @@ $(function(){
     $('.twister-user-remove').html('');
     $('.profile-card-main').attr('style', '');
     $('img[src$="img/tornado_avatar.png"]').attr("src","theme_nin/img/tornado_avatar.png");
-    $('.userMenu-search-profiles button').html('').attr('title',polyglot.t('Follow'));
     $('.mini-profile-actions span').html('');
 
     $.globalEval(postToElem.toString().replace(/postContext.append\(_templatePostRtBy/,
@@ -37,13 +36,17 @@ $(function(){
             this.slideUp(150);
     }).bind($('.left .post-area-new')));
 
-    $(".userMenu-search-profiles .follow")
-        .on("eventToggleFollow", function() {
+
+    $('#search-profile-template .follow')
+        .html('')
+        .attr('title', polyglot.t('Follow'))
+        .on('eventToggleFollow', function() {
             $(this).text('').attr('title', polyglot.t('Follow'));
         })
-        .on("eventToggleUnfollow", function() {
+        .on('eventToggleUnfollow', function() {
             $(this).text('').attr('title', polyglot.t('Unfollow'));
-        });
+        })
+    ;
 
     if (/\/options.html$/i.test(document.location))
         $(document).ready(localizeLabels);

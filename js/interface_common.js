@@ -800,7 +800,7 @@ function replyTextInput(event) {
                             $(tas[i]).caret(caretPos);
                             replyTextUpdateRemaining(tas[i]);
                             if ($.fn.textcomplete)
-                                setTextcompleteOnElement(tas[i]);
+                                setTextcompleteOnElement(tas[i], getMentionsForAutoComplete());
                         }
                     }
                 } else if (tas.length > 1 && tas[i].value.length === 0) {
@@ -1571,10 +1571,10 @@ function initInterfaceCommon() {
     $('.bitmessage-ctc').on('click', promptCopyAttrData);
 
     if ($.fn.textcomplete) {
-        $('textarea').on({
-            'focus': setTextcompleteOnEventTarget,
-            'focusout': function () {$(this).textcomplete('destroy');}
-        });
+        $('.post-area-new textarea')
+            .on('focus', {req: getMentionsForAutoComplete}, setTextcompleteOnEventTarget)
+            .on('focusout', unsetTextcompleteOnEventTarget)
+        ;
     }
 }
 
@@ -1598,15 +1598,20 @@ function inputEnterActivator(event) {
 
 function setTextcompleteOnEventTarget(event) {
     // cursor has not set yet and we need to wait 100ms to skip global click event
-    setTimeout(setTextcompleteOnElement, 100, event.target);
+    setTimeout(setTextcompleteOnElement, 100, event.target,
+        typeof event.data.req === 'function' ? event.data.req() : event.data.req);
 }
 
-function setTextcompleteOnElement(elem) {
+function setTextcompleteOnElement(elem, req) {
     elem = $(elem);
-    elem.textcomplete(getMentionsForAutoComplete(), {
+    elem.textcomplete(req, {
         appendTo: (elem.parents('.dashboard').length) ? elem.parent() : $('body'),
         listPosition: setTextcompleteDropdownListPos
     });
+}
+
+function unsetTextcompleteOnEventTarget(event) {
+    $(event.target).textcomplete('destroy');
 }
 
 // following workaround function is for calls from $.fn.textcomplete only

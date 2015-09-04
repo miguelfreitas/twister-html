@@ -658,16 +658,7 @@
     </div>
     <div>&nbsp;</div>
     <div>
-        <ul class="userMenu-search-profiles" data-role="listview">
-          <li id="search-profile-template" style="display: none;">
-            <a class="mini-profile-info open-profile-modal" data-screen-name="">
-              <img class="mini-profile-photo avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-              <span class="mini-screen-name">@<b></b></span>
-              <span class="mini-profile-name"></span>
-              <!-- <button class="follow">Follow</button> -->
-            </a>
-          </li>
-        </ul>
+        <ul class="userMenu-search-profiles" data-role="listview"></ul>
     </div>
   </div>
 
@@ -741,6 +732,17 @@
 <div id="anywhere"></div>
 
 <div id="templates" style="display:none;">
+    <div id="search-profile-template">
+        <li>
+            <a class="mini-profile-info open-profile-modal" data-screen-name="">
+                <img class="mini-profile-photo avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo" />
+                <span class="mini-screen-name">@<b></b></span>
+                <span class="mini-profile-name"></span>
+                <!-- <button class="follow">Follow</button> -->
+            </a>
+        </li>
+    </div>
+
     <li id="post-template-home" class="post-li module post" data-time="">
         <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
         <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""

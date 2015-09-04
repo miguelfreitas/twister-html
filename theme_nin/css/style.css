@@ -3008,14 +3008,18 @@ ol.toptrends-list a:hover {
     padding: 4px 0;
 }
 
-.group-messages-control .invite-form input {
+.group-messages-control .invite-form textarea {
+    font-size: 1.1em;
     border: 1px solid rgba(0, 0, 0, .1);
     vertical-align: middle;
     width: 73%;
+    height: 20px;
+    resize: none;
     margin: 0 4px;
+    padding: 1px 4px;
 }
 
-.group-messages-control .invite-form input:focus {
+.group-messages-control .invite-form textarea:focus {
     border-bottom: solid 1px #B4C669;
 }
 

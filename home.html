@@ -86,18 +86,7 @@
             <li><a href="#">Outro Fulano</a></li>
             <li><a href="#">Mais outro</a></li>
           </ul>
-          <ul class="userMenu-search-profiles">
-            <li id="search-profile-template" style="display: none;">
-              <div class="mini-profile-info" data-screen-name="">
-                <a href="#" class="open-profile-modal">
-                  <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-                  <span class="mini-screen-name">@<b></b></span>
-                  <span class="mini-profile-name"></span>
-                </a>
-                <button class="follow">Follow</button>
-              </div>
-            </li>
-          </ul>
+            <ul class="userMenu-search-profiles"></ul>
         </div>
       </li>
     </ul>
@@ -198,6 +187,19 @@
 
   <!-- TEMPLATES INIT -->
   <div id="templates" style="display:none;">
+    <div id="search-profile-template">
+        <li>
+            <div class="mini-profile-info">
+                <a class="open-profile-modal">
+                    <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo" />
+                    <span class="mini-screen-name">@<b></b></span>
+                    <span class="mini-profile-name"></span>
+                </a>
+                <button class="follow">Follow</button>
+            </div>
+        </li>
+    </div>
+
     <!-- TEMPLATE DE WHO-TO-FOLLOW MODULE -->
     <div id="who-to-follow-template">
       <div>
@@ -506,7 +508,7 @@
             <button class="invite">Invite peers</button>
             <button class="leave">Leave group</button>
             <div class="invite-form">
-                <input type="text" /><button disabled="disabled">Invite</button>
+                <textarea></textarea><button disabled="disabled">Invite</button>
             </div>
         </div>
     </div>
@@ -522,7 +524,7 @@
                 <button class="show-secret-key" disabled="disabled">Secret Key</button>
                 <button class="leave" disabled="disabled">Leave group</button>
                 <div class="invite-form">
-                    <input type="text" /><button disabled="disabled">Invite</button>
+                    <textarea></textarea><button disabled="disabled">Invite</button>
                 </div>
                 <div class="secret-key"></div>
             </div>
