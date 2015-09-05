@@ -156,7 +156,7 @@ function directMessagesPopup() {
         .attr('title', polyglot.t('Mark all as read'))
         .on('click', function() {
             for (var user in _newDMsPerUser) {
-                if (!user[0] === '*')
+                if (user[0] !== '*')
                     _newDMsPerUser[user] = 0;
             }
             saveDMsToStorage();

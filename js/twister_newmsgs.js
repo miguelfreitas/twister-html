@@ -225,7 +225,7 @@ function getNewDMsCount() {
     var newDMs = 0;
 
     for (var user in _newDMsPerUser) {
-        if (!user[0] === '*' && _newDMsPerUser[user])
+        if (user[0] !== '*' && _newDMsPerUser[user])
             newDMs += _newDMsPerUser[user];
     }
 
