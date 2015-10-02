@@ -357,7 +357,7 @@ function groupMsgCreateGroup(description, peersToInvite) {
 
     twisterRpc('creategroup', [description],
         function(peersToInvite, ret) {
-            groupMsgInviteToGroup(ret, peersToInvite.push(defaultScreenName));
+            groupMsgInviteToGroup(ret, peersToInvite.concat([defaultScreenName]));
         }, peersToInvite,
         function(req, ret) {
             alert(polyglot.t('error', {error: 'can\'t create group — ' + ret.message}));
