@@ -461,6 +461,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0;
 }
 
+.profile-modal .modal-content .members {
+    overflow-y: auto;
+}
+
 /* line 76, ../sass/_profile.sass */
 .profile-modal h2.profile-screen-name {
   display: block;

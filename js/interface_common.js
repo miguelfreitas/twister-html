@@ -171,11 +171,13 @@ function openGroupProfileModalWithNameHandler(groupAlias) {
                     getFullname(ret.members[i], item.find('.twister-user-full'));
                     getBio(ret.members[i], item.find('.bio'));
                 }
+
+                elemFitNextIntoParentHeight(req.modal.content.find('.profile-card'));
             }
         }, {modal: modal}
     );
 
-
+    elemFitNextIntoParentHeight(modal.content.find('.profile-card'));
 }
 
 function openUserProfileModalWithNameHandler(username) {
@@ -201,13 +203,11 @@ function openUserProfileModalWithNameHandler(username) {
             button.on('click', userClickFollow);
     }
 
+    elemFitNextIntoParentHeight(modal.content.find('.profile-card'));
+
     var postboard = modal.content.find('.postboard');
-    var postboardHeight = modal.content.outerHeight() - modal.content.find('.profile-card').outerHeight();
-    if (postboardHeight > 0) {  // FIXME actually it's here to exclude nin theme
-        postboard.outerHeight(postboardHeight)
-            .find('ol').outerHeight(postboard.outerHeight() - postboard.find('h2').outerHeight() - 20);  // FIXME 20px for margin, need to fix CSS for it
-    } else
-        postboard.outerHeight(modal.content.outerHeight());
+    postboard.find('ol').outerHeight(postboard.actual('height')
+        - postboard.find('h2').actual('outerHeight', {includeMargin: true}));
 }
 
 function openHashtagModalFromSearchHandler(hashtag) {
@@ -1588,6 +1588,17 @@ function initInterfaceModule(module) {
 
 function killInterfaceModule(module) {
     $('.module.'+module).empty().hide();
+}
+
+function elemFitNextIntoParentHeight(elem) {
+    var parent = elem.parent();
+    var elemNext = elem.nextAll();
+    var elemNextHeight = parent.actual('height') - elem.actual('outerHeight', {includeMargin: true});
+
+    if (elemNextHeight > 0)  // FIXME actually it's here because of nin theme's two vertical columns layout of profile modal
+        elemNext.outerHeight(elemNextHeight);
+    else
+        elemNext.outerHeight(parent.actual('outerHeight'));
 }
 
 function inputEnterActivator(event) {
