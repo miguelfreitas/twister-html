@@ -47,7 +47,7 @@ var MAL = function()
             $dmChatList.listview('refresh');
             $.mobile.silentScroll( $(".dm-form").offset().top );
         } else {
-            var modalContent = dmConvo.parents(".modal-content");
+            var modalContent = dmConvo.closest(".modal-content");
             modalContent.scrollTop(modalContent[0].scrollHeight);
         }
     }
@@ -498,7 +498,7 @@ var MAL = function()
         if ($.hasOwnProperty('mobile')) {
             return postLi.siblings().length;
         } else {
-            return postLi.parents('.module.post.original.open').find('.post.related').length;
+            return postLi.closest('.module.post.original.open').find('.post.related').length;
         }
     };
 }

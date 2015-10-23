@@ -270,7 +270,7 @@ function openGroupMessagesNewGroupModal() {
     ;
     modal.content.find('.create').on('click', function (event) {
         var elemEvent = $(event.target);
-        var elemForm = elemEvent.parents('.module')
+        var elemForm = elemEvent.closest('.module');
 
         var peersToInvite = elemForm.find('.invite').val().toLowerCase().match(/@\w+/g);
         if (peersToInvite)
@@ -307,9 +307,9 @@ function openGroupMessagesJoinGroupModal() {
                             .attr('data-screen-name', groupChatAliases[i])
                             .on('click', function (event) {
                                 var elemEvent = $(event.target);
-                                elemEvent.parents('.module').find('.join')
+                                elemEvent.closest('.module').find('.join')
                                     .attr('disabled',
-                                        !elemEvent.parents('.groups-list').find('input:checked').length);
+                                        !elemEvent.closest('.groups-list').find('input:checked').length);
                             })
                         ;
                         item.find('.twister-user-name')
@@ -325,7 +325,7 @@ function openGroupMessagesJoinGroupModal() {
 
     modal.content.find('.join').on('click', function (event) {
         var elemEvent = $(event.target);
-        var groups = elemEvent.parents('.module').find('.groups-list input:checked');
+        var groups = elemEvent.closest('.module').find('.groups-list input:checked');
         for (var i = 0; i < groups.length; i++)
             groupMsgInviteToGroup(groups[i].getAttribute('data-screen-name'), [defaultScreenName]);
 
@@ -335,7 +335,7 @@ function openGroupMessagesJoinGroupModal() {
     modal.content.find('.secret-key-import, .username-import').on('input', importSecretKeypress);
 
     modal.content.find('.import-secret-key').on('click', function (event) {
-        var elemModule = $(event.target).parents('.module');
+        var elemModule = $(event.target).closest('.module');
         var groupAlias = elemModule.find('.username-import').val().toLowerCase();
         var secretKey = elemModule.find('.secret-key-import').val();
 
@@ -490,7 +490,7 @@ function initInterfaceDirectMsg() {
             peersToInvite);
 
         elemInput.val('');
-        elemEvent.parents('.invite-form').toggle();
+        elemEvent.closest('.invite-form').toggle();
 
         // TODO reload group members list
     });
