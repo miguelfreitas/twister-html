@@ -293,6 +293,26 @@ h2.profile-screen-name {
     display: block;
 }
 
+.profile-card .profile-bio .group-description {
+    color: #fff;
+    background: rgba(0, 0, 0, 0);
+    border: none;
+    text-align: center;
+    padding: 4px;
+    vertical-align: middle;
+}
+
+.profile-card .profile-bio .group-description:focus,
+.profile-card .profile-bio .group-description:hover {
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+}
+
+.profile-card .profile-bio .save, .profile-card .profile-bio .cancel {
+    display: none;
+    margin-left: 2px;
+}
+
 .group-messages-control .invite-form, .group-messages-control .secret-key {
     display: none;
     font-size: 12px;

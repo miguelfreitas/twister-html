@@ -154,7 +154,10 @@ function openGroupProfileModalWithNameHandler(groupAlias) {
     groupMsgGetGroupInfo(groupAlias,
         function(req, ret) {
             if (ret) {
-                req.modal.content.find('.profile-bio').text(ret.description);
+                req.modal.content.find('.profile-bio .group-description')
+                    .val(ret.description)
+                    .attr('val-origin', ret.description)
+                ;
 
                 if (ret.members.indexOf(defaultScreenName) !== -1)
                     req.modal.content.find('.group-messages-control').children('button').attr('disabled', false);
@@ -1566,6 +1569,39 @@ function initInterfaceCommon() {
 
     replaceDashboards();
     $(window).resize(replaceDashboards);
+
+    $('.profile-card .profile-bio .group-description')
+        .on('focus', function (event) {
+            $(event.target)
+                .siblings('.save').show()
+                .siblings('.cancel').show()
+            ;
+        })
+        .on('input',
+            {parentSelector: '.profile-bio', enterSelector: '.save'}, inputEnterActivator)
+        .siblings('.save').on('click', function (event) {
+            var elemEvent = $(event.target);
+            var descElem = elemEvent.siblings('.group-description');
+
+            groupMsgSetGroupDescription(elemEvent.closest('.profile-card').attr('data-screen-name'),
+                descElem.val().trim(),
+                function(req) {
+                    req.descElem.attr('val-origin', req.descElem.val().trim())
+                        .siblings('.save').hide()
+                        .siblings('.cancel').hide()
+                    ;
+                }, {descElem: descElem}
+            );
+        })
+        .siblings('.cancel').on('click', function (event) {  // FIXME it would be nice to bind some 'clickoutside' event instead and remove cancel button, but current implementation of that doesn't unbind events when element dies
+            var descElem = $(event.target).hide()
+                .siblings('.save').hide()
+                .siblings('.group-description')
+            ;
+
+            descElem.val(descElem.attr('val-origin'));
+        })
+    ;
 
     $('.tox-ctc').on('click', promptCopyAttrData);
     $('.bitmessage-ctc').on('click', promptCopyAttrData);

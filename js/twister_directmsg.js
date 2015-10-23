@@ -392,6 +392,17 @@ function doGroupMsgInviteToGroup() {
     );
 }
 
+function groupMsgSetGroupDescription(groupAlias, description, cbFunc, cbArgs) {
+    twisterRpc('newgroupdescription',
+        [defaultScreenName, lastPostId + 1, groupAlias, description],
+        function (req) {
+            incLastPostId();
+            req.cbFunc(req.cbArgs);
+        }, {cbFunc: cbFunc, cbArgs: cbArgs},
+        function(req, ret) {alert(polyglot.t('error', {error: 'can\'t set group description — ' + ret.message}));}, null
+    );
+}
+
 function groupMsgLeaveGroup(groupAlias, cbFunc, cbArgs) {
     twisterRpc('leavegroup', [defaultScreenName, groupAlias],
         cbFunc, cbArgs,

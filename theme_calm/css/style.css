@@ -168,6 +168,36 @@ button.unfollow:hover {
     margin-right: 10px;
 }
 
+.a-button {
+    color: whitesmoke;
+    background-color: #6d83bd;
+    border: none;
+    font-size: 12px;
+    text-align: center;
+    width: auto;
+    padding: 4px 12px;
+    vertical-align: middle;
+    transition: all .1s linear;
+}
+
+.a-button:hover {
+    color: #FFF;
+    background: #B2D67B;
+}
+
+.a-button:disabled {
+    opacity: .7;
+}
+
+.a-button:disabled:hover {
+    color: #fff;
+}
+
+.b-buttons {
+    text-align: right;
+    padding: 4px;
+}
+
 .b-buttons {
     text-align: right;
     padding: 4px;

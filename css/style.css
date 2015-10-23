@@ -147,6 +147,31 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
     margin-right: 10px;
 }
 
+.a-button {
+    color: dimgrey;
+    background-color: whitesmoke;
+    border: none;
+    font-size: 12px;
+    text-align: center;
+    width: auto;
+    padding: 4px 12px;
+    vertical-align: middle;
+    transition: all .1s linear;
+}
+
+.a-button:hover {
+    color: #000;
+    background: #fff;
+}
+
+.a-button:disabled {
+    opacity: .9;
+}
+
+.a-button:disabled:hover {
+    color: dimgrey;
+}
+
 .b-buttons {
     text-align: right;
     padding: 4px;
