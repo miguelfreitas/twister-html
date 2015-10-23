@@ -356,6 +356,10 @@
 }
 */
 
+.profile-modal .members {
+    overflow-y: auto;
+}
+
 h1.profile-name {
     display: inline;
 }
