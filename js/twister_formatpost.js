@@ -603,6 +603,11 @@ function htmlFormatMsg(msg) {
         return msg.str;
     }
 
+    if (!msg) {
+        console.warn('htmlFormatMsg() error: input string is empty');
+        return {html: '', mentions: []};
+    }
+
     var mentionsChars = 'abcdefghijklmnopqrstuvwxyz_0123456789';
     var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
     var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
