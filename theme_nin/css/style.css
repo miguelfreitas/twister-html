@@ -3005,6 +3005,27 @@ ol.toptrends-list a:hover {
 }
 
 
+.profile-card .profile-bio .group-description {
+    border: none;
+    text-align: center;
+    width: 60%;
+    padding: 4px;
+    vertical-align: middle;
+}
+
+.profile-card .profile-bio .group-description:focus {
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-bottom: solid 1px #B4C669;
+}
+
+.profile-card .profile-bio .group-description:hover {
+    border-bottom: solid 1px #B4C669;
+}
+
+.profile-card .profile-bio .save, .profile-card .profile-bio .cancel {
+    display: none;
+}
+
 .group-messages-control .invite-form, .group-messages-control .secret-key {
     display: none;
     font-size: 12px;

@@ -154,7 +154,10 @@ function openGroupProfileModalWithNameHandler(groupAlias) {
     groupMsgGetGroupInfo(groupAlias,
         function(req, ret) {
             if (ret) {
-                req.modal.content.find('.profile-bio').text(ret.description);
+                req.modal.content.find('.profile-bio .group-description')
+                    .val(ret.description)
+                    .attr('val-origin', ret.description)
+                ;
 
                 if (ret.members.indexOf(defaultScreenName) !== -1)
                     req.modal.content.find('.group-messages-control').children('button').attr('disabled', false);
@@ -476,7 +479,7 @@ function reTwistPopup(event, post, textArea) {
     }
 
     if (typeof post === 'undefined')
-        post = $.evalJSON($(event.target).parents('.post-data').attr('data-userpost'));
+        post = $.evalJSON($(event.target).closest('.post-data').attr('data-userpost'));
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
@@ -492,7 +495,7 @@ function reTwistPopup(event, post, textArea) {
     modal.content.find('.switch-mode')
         .text(polyglot.t('Switch to Reply'))
         .on('click', (function(event) {replyInitPopup(event, post,
-            $(event.target).parents('form').find('textarea').detach());}).bind(post))
+            $(event.target).closest('form').find('textarea').detach());}).bind(post))
     ;
 
     var replyArea = modal.content.find('.post-area .post-area-new');
@@ -530,7 +533,7 @@ function replyInitPopup(e, post, textArea) {
     modal.content.find('.switch-mode')
         .text(polyglot.t('Switch to Retransmit'))
         .on('click', (function(event) {reTwistPopup(event, post,
-            $(event.target).parents('form').find('textarea').detach())}).bind(post))
+            $(event.target).closest('form').find('textarea').detach())}).bind(post))
     ;
 
     var replyArea = modal.content.find('.post-area .post-area-new').addClass('open');
@@ -658,7 +661,7 @@ function postReplyClick(e) {
     if (!post.hasClass('original'))
         replyInitPopup(e, $.evalJSON(post.find('.post-data').attr('data-userpost')));
     else {
-        if (!post.parents('.post.open').length)
+        if (!post.closest('.post.open').length)
             postExpandFunction(e, post);
         composeNewPost(e, post.find('.post-area-new'));
     }
@@ -740,12 +743,12 @@ var usePostSpliting = false;
 
 function replyTextInput(event) {
     var textArea = $(event.target);
-    var textAreaForm = textArea.parents('form');
+    var textAreaForm = textArea.closest('form');
     if (textAreaForm.length) {
         if ($.Options.unicodeConversion.val !== 'disable')
             textArea.val(convert2Unicodes(textArea.val(), textArea));
 
-        if (usePostSpliting && !textArea.parents('.directMessages').length) {
+        if (usePostSpliting && !textArea.closest('.directMessages').length) {
             var caretPos = textArea.caret();
             var reply_to = textArea.attr('data-reply-to');
             var tas = textAreaForm.find('textarea');
@@ -872,12 +875,12 @@ function replyTextUpdateRemaining(ta) {
         ta = ta.target;
     if (ta === document.activeElement) {
         var textArea = $(ta);
-        var textAreaForm = textArea.parents('form');
+        var textAreaForm = textArea.closest('form');
         if (textAreaForm.length) {
             var remainingCount = textAreaForm.find('.post-area-remaining');
             var c = replyTextCountRemaining(ta);
 
-            if (usePostSpliting && !textArea.parents('.directMessages').length && splitedPostsCount > 1)
+            if (usePostSpliting && !textArea.closest('.directMessages').length && splitedPostsCount > 1)
                 remainingCount.text((textAreaForm.find('textarea').index(ta) + 1).toString()
                     + '/' + splitedPostsCount.toString() + ': ' + c.toString());
             else
@@ -910,8 +913,8 @@ function replyTextCountRemaining(ta) {
     var textArea = $(ta);
     var c;
 
-    if (usePostSpliting && !textArea.parents('.directMessages').length && splitedPostsCount > 1) {
-        c = 140 - ta.value.length - (textArea.parents('form').find('textarea').index(ta) + 1).toString().length - splitedPostsCount.toString().length - 4;
+    if (usePostSpliting && !textArea.closest('.directMessages').length && splitedPostsCount > 1) {
+        c = 140 - ta.value.length - (textArea.closest('form').find('textarea').index(ta) + 1).toString().length - splitedPostsCount.toString().length - 4;
         var reply_to = textArea.attr('data-reply-to');
         if (typeof reply_to !== 'undefined' &&
             !checkPostForMentions(ta.value, reply_to, 140 -c -reply_to.length))
@@ -928,7 +931,7 @@ function replyTextKeySend(event) {
                 $('.dropdown-menu').css('display') === 'none')
             || ((event.metaKey || event.ctrlKey) && $.Options.keysSend.val === 'ctrlenter')) {
                 var textArea = $(event.target);
-                var textAreaForm = textArea.parents('form');
+                var textAreaForm = textArea.closest('form');
                 var buttonSend = textAreaForm.find('.post-submit');
                 if (!buttonSend.length)
                     buttonSend = textAreaForm.find('.dm-submit');
@@ -1410,11 +1413,11 @@ function postSubmit(e, oldLastPostId) {
         return;
     }
 
-    if (btnPostSubmit.parents('.prompt-wrapper').length)
+    if (btnPostSubmit.closest('.prompt-wrapper').length)
         closePrompt();
     else {
         textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
-        var tweetForm = btnPostSubmit.parents('form');
+        var tweetForm = btnPostSubmit.closest('form');
         var remainingCount = tweetForm.find('.post-area-remaining');
         remainingCount.text(140);
 
@@ -1567,6 +1570,39 @@ function initInterfaceCommon() {
     replaceDashboards();
     $(window).resize(replaceDashboards);
 
+    $('.profile-card .profile-bio .group-description')
+        .on('focus', function (event) {
+            $(event.target)
+                .siblings('.save').show()
+                .siblings('.cancel').show()
+            ;
+        })
+        .on('input',
+            {parentSelector: '.profile-bio', enterSelector: '.save'}, inputEnterActivator)
+        .siblings('.save').on('click', function (event) {
+            var elemEvent = $(event.target);
+            var descElem = elemEvent.siblings('.group-description');
+
+            groupMsgSetGroupDescription(elemEvent.closest('.profile-card').attr('data-screen-name'),
+                descElem.val().trim(),
+                function(req) {
+                    req.descElem.attr('val-origin', req.descElem.val().trim())
+                        .siblings('.save').hide()
+                        .siblings('.cancel').hide()
+                    ;
+                }, {descElem: descElem}
+            );
+        })
+        .siblings('.cancel').on('click', function (event) {  // FIXME it would be nice to bind some 'clickoutside' event instead and remove cancel button, but current implementation of that doesn't unbind events when element dies
+            var descElem = $(event.target).hide()
+                .siblings('.save').hide()
+                .siblings('.group-description')
+            ;
+
+            descElem.val(descElem.attr('val-origin'));
+        })
+    ;
+
     $('.tox-ctc').on('click', promptCopyAttrData);
     $('.bitmessage-ctc').on('click', promptCopyAttrData);
 
@@ -1603,7 +1639,7 @@ function elemFitNextIntoParentHeight(elem) {
 
 function inputEnterActivator(event) {
     var elemEvent = $(event.target);
-    elemEvent.parents(event.data.parentSelector).find(event.data.enterSelector)
+    elemEvent.closest(event.data.parentSelector).find(event.data.enterSelector)
         .attr('disabled', elemEvent.val().trim() === '');
 }
 
@@ -1616,7 +1652,7 @@ function setTextcompleteOnEventTarget(event) {
 function setTextcompleteOnElement(elem, req) {
     elem = $(elem);
     elem.textcomplete(req, {
-        appendTo: (elem.parents('.dashboard').length) ? elem.parent() : $('body'),
+        appendTo: (elem.closest('.dashboard').length) ? elem.parent() : $('body'),
         listPosition: setTextcompleteDropdownListPos
     });
 }
@@ -1630,7 +1666,7 @@ function unsetTextcompleteOnEventTarget(event) {
 function setTextcompleteDropdownListPos(position) {
     position = this._applyPlacement(position);
 
-    if (this.option.appendTo.parents('.dashboard').length > 0) {
+    if (this.option.appendTo.closest('.dashboard').length > 0) {
         position.position = 'fixed';
         position.top = (parseFloat(position.top) - window.pageYOffset).toString() + 'px';
     } else
