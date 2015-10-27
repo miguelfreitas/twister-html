@@ -1,6 +1,6 @@
 *
   outline: none!important
-  
+
 li
   list-style: none
 
@@ -15,7 +15,7 @@ html, body
 br
   display: block
 
-img 
+img
   background: $main-background-color
   +border-radius(2px)
 
@@ -26,7 +26,7 @@ a
     color: $main-color-color
     text-decoration: none
 
-p 
+p
   padding: 5px 0
 
 
@@ -36,13 +36,16 @@ h2, h3
   letter-spacing: 0.07em
   font-weight: 500
   line-height: 1.8em
-  
+
+samp
+  background-color: #EEE
+  padding-left: 2px
+  padding-right: 2px
 
 
 textarea, input[type=text]
   font: .95em/1.3em $main-font-family
   font-weight: 400
-  
 
 /* isFollowing */
 
@@ -57,7 +60,7 @@ textarea, input[type=text]
   line-height: 10px
   &:hover
     text-decoration: none!important
-  h3 &  
+  h3 &
     display: none
 
 /************** BUTTONS ************/
@@ -68,7 +71,7 @@ button, a.button
   display: inline-block
   line-height: 1em
   font-weight: 500
-  margin: 0 
+  margin: 0
   float: none
   text-shadow: 2px 2px 0 rgba(black,0)
   +transition-property(background)

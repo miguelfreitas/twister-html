@@ -273,6 +273,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
+samp {
+    background-color: #EEE;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 /* FONTS */
 /* line 2, ../sass/_utils.sass */
 .clear-fix:after, .userMenu ul:after, .profile-modal .profile-data:after, .profile-card .twister-user-info:after, .forEdition.profile-card:after, .postboard:after, .following:after, .expanded-content:after, .following-list li:after, .twistday-reminder li:after, .mini-following-info:after, .network.singleBlock:after, .options .tab-content:after, .promoted-posts-only:after, .dashboard.right:after, ul.userMenu-search-profiles li:after, .mini-profile .post-area:after, .mini-profile-indicators:after, .profile-data:after, #postboard-top:after, #postboard-top .post-area:after, .who-to-follow ol:after, .toptrends ol:after, .twistday-reminder ol:after, .twister-user:after, .modal-content:after, .modal-header:after, .direct-messages-thread .post:after {
@@ -879,12 +885,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   word-wrap: break-word;
   min-height: 25px;
   padding: 0;
-}
-
-.post-text samp {
-    background-color: #EEE;
-    padding-left: 2px;
-    padding-right: 2px;
 }
 
 /* line 138, ../sass/_postboard.sass */
