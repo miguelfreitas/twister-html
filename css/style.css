@@ -80,6 +80,13 @@ h3
     font-size: 14px;
     color: rgba( 0, 0, 0, .5 );
 }
+
+samp {
+    background-color: #F0EFCC;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 .clearfix:before,
 .clearfix:after
 {
@@ -779,6 +786,11 @@ textarea.splited-post {
 {
     vertical-align: top;
 }
+
+.twister-user .bio a {
+    color: #e34f42;
+}
+
 .followers
 {
     font-size: 12px;
@@ -1066,12 +1078,6 @@ ol.toptrends-list {
     font-size: 13px;
     margin: 2px 16px 4px 60px;
     word-wrap: break-word;
-}
-
-.post-text samp {
-    background-color: #F0EFCC;
-    padding-left: 2px;
-    padding-right: 2px;
 }
 
 .post-context {

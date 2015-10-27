@@ -172,7 +172,7 @@ function openGroupProfileModalWithNameHandler(groupAlias) {
 
                     getAvatar(ret.members[i], item.find('.twister-user-photo'));
                     getFullname(ret.members[i], item.find('.twister-user-full'));
-                    getBio(ret.members[i], item.find('.bio'));
+                    getBioToElem(ret.members[i], item.find('.bio'));
                 }
 
                 elemFitNextIntoParentHeight(req.modal.content.find('.profile-card'));
@@ -314,7 +314,7 @@ function fillWhoToFollowModal(list, hlist, start) {
 
                     getAvatar(utf, item.find('.twister-user-photo'));
                     getFullname(utf, item.find('.twister-user-full'));
-                    getBio(utf, item.find('.bio'));
+                    getBioToElem(utf, item.find('.bio'));
                     getFullname(followingUsers[i], item.find('.followed-by').text(followingUsers[i]));
 
                     item.find('.twister-user-remove').remove();
