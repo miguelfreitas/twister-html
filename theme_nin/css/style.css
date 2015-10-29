@@ -2905,6 +2905,13 @@ ol.toptrends-list a:hover {
   display: none;
 }
 
+.direct-messages-list .post .messages-qtd {
+    display: none;
+    top: -2px;
+    right: -2px;
+    font-size: 0.7em;
+}
+
 /* line 782, ../sass/style.sass */
 .direct-messages-list .post:hover:after {
   display: block;

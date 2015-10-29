@@ -1534,6 +1534,13 @@ ol.toptrends-list {
     color: rgba( 0, 0, 0, .4 );
 }
 
+.direct-messages-list .post .messages-qtd {
+    display: none;
+    top: 8px;
+    left: 16px;
+    line-height: 8px;
+}
+
 .direct-messages-thread {
     padding: 10px;
 }
