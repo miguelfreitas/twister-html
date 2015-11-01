@@ -136,9 +136,10 @@ function confirmPopup(event, req) {
 function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
     networkUpdate(function(args) {
         if (!twisterdConnectedAndUptodate) {
-            var redirect = window.confirm(polyglot.t('switch_to_network'));
-            if (redirect)
-                $.MAL.goNetwork();
+            confirmPopup(null, {
+                messageTxt: polyglot.t('switch_to_network'),
+                confirmFunc: $.MAL.goNetwork
+            });
         } else {
             if (args.cbFunc)
                 args.cbFunc(args.cbArg);
