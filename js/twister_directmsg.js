@@ -28,7 +28,6 @@ function processDMsnippet(dmUsers, dmThreadList, forGroup) {
 
         // convert snipped to html and add it to date-sorted list
         var dmItem = dmDataToSnippetItem(dmUsers[u][0], u);
-        console.log(u + ': ' + _newDMsPerUser[u]);
         if (_newDMsPerUser[u] > 0) {
             dmItem.addClass('new')
                 .find('.messages-qtd').text(_newDMsPerUser[u]).show();
