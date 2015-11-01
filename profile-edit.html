@@ -27,8 +27,8 @@
   </head>
 
   <body>
-    
-  <!-- MENU SUPERIOR INIT --> 
+
+  <!-- MENU SUPERIOR INIT -->
   <nav class="userMenu">
     <ul>
       <li class="userMenu-home"><a href="home.html">
@@ -63,7 +63,7 @@
 
 
   <div class="wrapper">
-  <!-- ÁREA DE PROFILE PHOTO INIT --> 
+  <!-- ÁREA DE PROFILE PHOTO INIT -->
     <div class="profile-card forEdition">
       <!-- Coloquei a imagem de fundo do card do usuário como background da div abaixo inline na tag para poder ser alterada dinamicamente -->
       <div class="profile-card-main" style="background: url(img/img.png) no-repeat center center #b43e34;">
@@ -85,12 +85,27 @@
       <div style="font-size:80%;text-align: center;" class="secret-key-container">
          <span class="label">Secret key:</span> <span class="secret-key"></span>
       </div>
-      
     </div>
-    
-  <!-- ÁREA DE POSTS END -->
-    
+  </div>
+
     <input type="file" id="avatar-file" name="avatar_files" style="display:none;"/>
 
+  <div id="templates" style="display:none;">
+    <div class="prompt-wrapper">
+      <div class="modal-header">
+        <h3></h3>
+        <span class="modal-close prompt-close">&times;</span>
+      </div>
+      <div class="modal-content"></div>
+    </div>
+
+    <div id="confirm-popup-template">
+        <div class="message"></div>
+        <div class="modal-buttons">
+            <button class="confirm"></button>
+            <button class="cancel"></button>
+        </div>
+    </div>
+  </div>
   </body>
 </html>
