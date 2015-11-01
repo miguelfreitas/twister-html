@@ -1855,6 +1855,10 @@ ol.toptrends-list {
 *********** CONFIRM POPUP ************
 **************************************/
 
+.confirm-popup.prompt-wrapper {
+    margin-top: -80px;
+}
+
 .confirm-popup .message {
     text-align: center;
     margin: 12px;

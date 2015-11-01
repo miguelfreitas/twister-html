@@ -66,7 +66,8 @@ function closeModalHandler(classBase) {
 }
 
 function confirmPopup(event, req) {
-    event.stopPropagation();
+    if (event && event.stopPropagation)
+        event.stopPropagation();
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
@@ -79,30 +80,57 @@ function confirmPopup(event, req) {
         modal.content.find('.message').text(req.messageTxt);
 
     var btn = modal.content.find('.confirm');
-    if (req.confirmTxt)
-        btn.text(req.confirmTxt);
-    else
-        btn.text(polyglot.t('Confirm'));
-    if (req.confirmFunc) {
-        btn.on('click', function () {
-            closePrompt();
-            req.confirmFunc(req.confirmFuncArgs);
-        });
-    } else
-        btn.on('click', closePrompt);
-
+    if (req.removeConfirm)
+        btn.remove();
+    else {
+        if (req.confirmTxt)
+            btn.text(req.confirmTxt);
+        else
+            btn.text(polyglot.t('Confirm'));
+        if (req.confirmFunc) {
+            btn.on('click', function () {
+                closePrompt();
+                req.confirmFunc(req.confirmFuncArgs);
+            });
+        } else
+            btn.on('click', closePrompt);
+    }
     var btn = modal.content.find('.cancel');
-    if (req.cancelTxt)
-        btn.text(req.cancelTxt);
-    else
-        btn.text(polyglot.t('Cancel'));
-    if (req.cancelFunc) {
-        btn.on('click', function () {
-            closePrompt();
-            req.cancelFunc(req.cancelFuncArgs);
-        });
-    } else
-        btn.on('click', closePrompt);
+    if (req.removeCancel)
+        btn.remove();
+    else {
+        if (req.cancelTxt)
+            btn.text(req.cancelTxt);
+        else
+            btn.text(polyglot.t('Cancel'));
+        if (req.cancelFunc) {
+            btn.on('click', function () {
+                closePrompt();
+                req.cancelFunc(req.cancelFuncArgs);
+            });
+        } else
+            btn.on('click', closePrompt);
+    }
+    var btn = modal.self.find('.prompt-close');
+    if (req.removeClose)
+        btn.remove();
+    else {
+        if (req.closeFunc) {
+            if (typeof req.closeFunc === 'string') {
+                if (req.closeFunc === 'confirmFunc') {
+                    req.closeFunc = req.confirmFunc;
+                    req.closeFuncArgs = req.confirmFuncArgs;
+                } else if (req.closeFunc === 'cancelFunc') {
+                    req.closeFunc = req.cancelFunc;
+                    req.closeFuncArgs = req.cancelFuncArgs;
+                }
+            }
+            btn.on('click', function () {
+                closePrompt();
+                req.closeFunc(req.closeFuncArgs);
+            });
+        }
+    }
 }
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
