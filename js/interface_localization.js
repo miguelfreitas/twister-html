@@ -2637,7 +2637,7 @@ if(preferredLanguage == "de"){
       "Create this nickname": "Nichnamen erstellen",
       "Type nickname here": "Nicknamen hier eingeben",
       "Import secret key": "Privaten Schlüssel hier importieren",
-      "52-characters secret": "52 Zeichen Geheimniss",
+      "52-characters secret": "52 Zeichen Geheimnis",
       "With nickname": "Mit Nicknamen",
       "Import key": "Schlüssel importieren",
       "Client Version:": "Client Version:",
