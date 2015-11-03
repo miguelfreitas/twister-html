@@ -3,8 +3,8 @@
 //
 // Format JSON posts and DMs to HTML.
 
-var _templatePostRtReference
-var _templatePostRtBy
+var _templatePostRtReference;
+var _templatePostRtBy;
 var _htmlFormatMsgLinkTemplateExternal;
 var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
@@ -160,6 +160,7 @@ function postToElem(post, kind, promoted) {
                 .find('.post-retransmited-by')
                     .attr('href', $.MAL.userUrl(retweeted_by)).text('@' + retweeted_by)
             ;
+            postContext.find('.post-retransmited-time').text('on ' + timeGmtToText(post.userpost.time));
             // let's check original post and grab some possible RT
             dhtget(username, 'post' + k, 's',
                 function(args, post) {
