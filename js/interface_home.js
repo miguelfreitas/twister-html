@@ -106,9 +106,10 @@ var InterfaceFunctions = function() {
                     $('.mini-profile .following-count').text(followingUsers.length - 1);
                     $('.wrapper .postboard .post').each( function() {
                         var elem = $(this);
-                        if ((elem.find('[data-screen-name="' + user + '"]').length && !elem.find(".post-retransmited-by").text())
-                        || elem.find(".post-retransmited-by").text() === '@'+user)
-                            elem.remove();
+                        if ((elem.find('[data-screen-name="' + user + '"]').length
+                            && !elem.find(".post-rt-by .open-profile-modal").text())
+                            || elem.find(".post-rt-by .open-profile-modal").text() === '@' + user)
+                                elem.remove();
                     });
                 });
 

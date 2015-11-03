@@ -1097,7 +1097,16 @@ ol.toptrends-list {
     top: 40px;
 }
 
-.post-retransmited-icon {
+.post-rt-by div {
+    display: inline;
+}
+
+.post-rt-by .prep:before,
+.post-rt-by .prep:after {
+    content: ' ';
+}
+
+.post-rt-icon {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -1106,9 +1115,6 @@ ol.toptrends-list {
     margin: 2px;
 }
 
-.post-retransmited-time:before {
-    content: ' ';
-}
 .post-interactions
 {
     margin: 2px 10px 10px 60px;

@@ -1383,7 +1383,7 @@ textarea.splited-post {
     color: #768fce;
 }
 
-.post-info a[href^="#profile"], .followers a[href^="#profile"],  a[href^="#profile"].post-retransmited-by{
+.post-info a[href^="#profile"], .followers a[href^="#profile"], .post-rt-sign a {
     color: #43464d;
     -webkit-transition: all 200ms;
     -moz-transition: all 200ms;
@@ -1392,7 +1392,7 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
-.post-info a[href^="#profile"]:hover, .followers a[href^="#profile"]:hover,  a[href^="#profile"].post-retransmited-by:hover {
+.post-info a[href^="#profile"]:hover, .followers a[href^="#profile"]:hover, .post-rt-sign a:hover {
     color: #5e8da4;
     text-decoration: none;
 }
@@ -1473,7 +1473,16 @@ textarea.splited-post {
     top: 40px;
 }
 
-.post-retransmited-icon {
+.post-rt-by div {
+    display: inline;
+}
+
+.post-rt-by .prep:before,
+.post-rt-by .prep:after {
+    content: ' ';
+}
+
+.post-rt-icon {
     display: inline-block;
     width: 25px;
     height: 25px;
