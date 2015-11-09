@@ -329,7 +329,7 @@ function updateProfileData(profileModalContent, username) {
     getFullname( username, profileModalContent.find(".profile-name") );
     getLocation( username, profileModalContent.find(".profile-location") );
     getWebpage( username, profileModalContent.find(".profile-url") );
-    getBio( username, profileModalContent.find(".profile-bio") );
+    getBioToElem(username, profileModalContent.find('.profile-bio'));
     getTox( username, profileModalContent.find(".profile-tox") );
     getBitmessage( username, profileModalContent.find(".profile-bitmessage") );
     getAvatar( username, profileModalContent.find(".profile-card-photo") );

@@ -37,7 +37,7 @@
     <script src="js/tmobile.js?vr=10"></script>
     <script src="js/jpeg_encoder_basic.js"></script>
 
-  <link rel="icon" type="image/png" href="img/twister_mini.png" />
+  <link rel="shortcut icon" type="image/png" href="img/twister_mini.png" />
 </head>
 <body>
 
@@ -80,6 +80,19 @@
     font-weight: lighter;
     font-size: 12px;
     color: #555 !important;
+}
+
+.post-rt-by {
+    font-size: 60%;
+}
+
+.post-rt-by div {
+    display: inline;
+}
+
+.post-rt-by .prep:before,
+.post-rt-by .prep:after {
+    content: ' ';
 }
 
 .post-rt-reference {
@@ -808,10 +821,13 @@
         </div>
     </div>
 
-    <div id="post-retransmited-by-template">
-        <i class="post-retransmited-icon"></i>
-        <span style="font-size:60%;">twisted again by</span><span> </span>
-        <a style="font-size:60%;" class="post-retransmited-by open-profile-modal" href=""></a>
+    <div id="post-rt-by-template">
+        <div class="post-rt-sign">
+            <span class="prep">twisted again by</span><a class="open-profile-modal"></a>
+        </div>
+        <div class="post-rt-time">
+            <span class="prep">at</span><span class="time"></span>
+        </div>
     </div>
 
     <!-- template for user links in message (open profile modal) -->

@@ -56,7 +56,7 @@
   font-style: normal;
 }
 /* line 64, ../sass/_fonts.sass */
-[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-retransmited-icon:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .twister-user-remove:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
+[class^="icon-"]:before, [class*=" icon-"]:before, .extend-icon:before, .userMenu li.userMenu-config > a:before, .post-rt-icon:before, .post-reply:before, .post-propagate:before, .post-favorite:before, .post .show-more:before, .mini-profile-actions span:before, ul.userMenu-search-profiles button:before, .mini-profile-indicators .userMenu-connections a:before, .mini-profile-indicators .userMenu-messages a:before, .twister-user-remove:before, .refresh-toptrends:before, .twistday-reminder .refresh:before, .refresh-users:before, .modal-close:before, .mark-all-as-read:before, .modal-back:before, .icon-down-after:after {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -198,7 +198,7 @@
 
 /* '' */
 /* line 188, ../sass/_fonts.sass */
-.icon-twistagain:before, .post-retransmited-icon:before, .post-propagate:before {
+.icon-twistagain:before, .post-rt-icon:before, .post-propagate:before {
   content: "";
 }
 
@@ -271,6 +271,12 @@ a img {
 /* line 116, ../../../../../../var/lib/gems/2.1.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
+}
+
+samp {
+    background-color: #EEE;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 /* FONTS */
@@ -881,12 +887,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0;
 }
 
-.post-text samp {
-    background-color: #EEE;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
 /* line 138, ../sass/_postboard.sass */
 .post-context {
   font-size: 11px;
@@ -895,8 +895,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin: 2px 8px 4px 62px;
 }
 
+.post-rt-by {
+    margin: 0 0 1em;
+}
+
+.post-rt-by div {
+    display: inline;
+}
+
+.post-rt-by .prep:before,
+.post-rt-by .prep:after {
+    content: ' ';
+}
+
 /* line 146, ../sass/_postboard.sass */
-.post-retransmited-icon:before {
+.post-rt-icon:before {
   display: block;
   float: left;
   background: #B4C669;
@@ -909,10 +922,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-radius: 3px;
   color: white;
   margin-right: 0.4em;
-}
-
-.post-context.post-retransmited-by-container {
-    margin: 0 0 1em;
 }
 
 /* line 158, ../sass/_postboard.sass */
@@ -2903,6 +2912,13 @@ ol.toptrends-list a:hover {
   margin: -6px 0 0 0;
   color: rgba(0, 0, 0, 0.4);
   display: none;
+}
+
+.direct-messages-list .post .messages-qtd {
+    display: none;
+    top: -2px;
+    right: -2px;
+    font-size: 0.7em;
 }
 
 /* line 782, ../sass/style.sass */

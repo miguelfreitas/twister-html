@@ -98,6 +98,13 @@ h3
     font-size: 14px;
     color: rgba( 0, 0, 0, .5 );
 }
+
+samp {
+    background-color: #EEE;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 .isFollowing:after {
     color: #1a1;
     content: '\2714';
@@ -959,6 +966,23 @@ textarea.splited-post {
 {
     vertical-align: top;
 }
+
+.twister-user .bio a {
+    font: italic 13px "Open Sans", sans-serif;
+    text-decoration: none;
+    color: #b46e67;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+
+.twister-user .bio a:hover {
+    color: #e18881;
+    opacity: .8;
+}
+
 .followers
 {
     font-size: 12px;
@@ -1276,12 +1300,6 @@ textarea.splited-post {
     word-wrap: break-word;
 }
 
-.post-text samp {
-    background: #EEE;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
 .post-context {
     font-size: 11px;
     margin: 2px 16px 4px 60px;
@@ -1365,7 +1383,7 @@ textarea.splited-post {
     color: #768fce;
 }
 
-.post-info a[href^="#profile"], .followers a[href^="#profile"],  a[href^="#profile"].post-retransmited-by{
+.post-info a[href^="#profile"], .followers a[href^="#profile"], .post-rt-sign a {
     color: #43464d;
     -webkit-transition: all 200ms;
     -moz-transition: all 200ms;
@@ -1374,7 +1392,7 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
-.post-info a[href^="#profile"]:hover, .followers a[href^="#profile"]:hover,  a[href^="#profile"].post-retransmited-by:hover {
+.post-info a[href^="#profile"]:hover, .followers a[href^="#profile"]:hover, .post-rt-sign a:hover {
     color: #5e8da4;
     text-decoration: none;
 }
@@ -1455,7 +1473,16 @@ textarea.splited-post {
     top: 40px;
 }
 
-.post-retransmited-icon {
+.post-rt-by div {
+    display: inline;
+}
+
+.post-rt-by .prep:before,
+.post-rt-by .prep:after {
+    content: ' ';
+}
+
+.post-rt-icon {
     display: inline-block;
     width: 25px;
     height: 25px;
@@ -1901,6 +1928,13 @@ textarea.splited-post {
     color: rgba( 0, 0, 0, .4 );
 }
 
+.direct-messages-list .post .messages-qtd {
+    display: none;
+    top: 8px;
+    left: 16px;
+    line-height: 8px;
+}
+
 .direct-messages-thread {
     padding: 10px;
 }
@@ -2237,6 +2271,10 @@ textarea.splited-post {
 /*************************************
 *********** CONFIRM POPUP ************
 **************************************/
+
+.confirm-popup.prompt-wrapper {
+    margin-top: -80px;
+}
 
 .confirm-popup .message {
     text-align: center;

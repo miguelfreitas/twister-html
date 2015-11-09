@@ -80,6 +80,13 @@ h3
     font-size: 14px;
     color: rgba( 0, 0, 0, .5 );
 }
+
+samp {
+    background-color: #F0EFCC;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 .clearfix:before,
 .clearfix:after
 {
@@ -779,6 +786,11 @@ textarea.splited-post {
 {
     vertical-align: top;
 }
+
+.twister-user .bio a {
+    color: #e34f42;
+}
+
 .followers
 {
     font-size: 12px;
@@ -1068,12 +1080,6 @@ ol.toptrends-list {
     word-wrap: break-word;
 }
 
-.post-text samp {
-    background-color: #F0EFCC;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
 .post-context {
     font-size: 11px;
     margin: 2px 16px 4px 60px;
@@ -1091,7 +1097,16 @@ ol.toptrends-list {
     top: 40px;
 }
 
-.post-retransmited-icon {
+.post-rt-by div {
+    display: inline;
+}
+
+.post-rt-by .prep:before,
+.post-rt-by .prep:after {
+    content: ' ';
+}
+
+.post-rt-icon {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -1528,6 +1543,13 @@ ol.toptrends-list {
     color: rgba( 0, 0, 0, .4 );
 }
 
+.direct-messages-list .post .messages-qtd {
+    display: none;
+    top: 8px;
+    left: 16px;
+    line-height: 8px;
+}
+
 .direct-messages-thread {
     padding: 10px;
 }
@@ -1841,6 +1863,10 @@ ol.toptrends-list {
 /*************************************
 *********** CONFIRM POPUP ************
 **************************************/
+
+.confirm-popup.prompt-wrapper {
+    margin-top: -80px;
+}
 
 .confirm-popup .message {
     text-align: center;

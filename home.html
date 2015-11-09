@@ -29,7 +29,7 @@
     <script src="js/interface_home.js"></script>
     <script src="js/jquery.textcomplete.min.js"></script>
 
-    <link rel="icon" type="image/png" href="img/twister_mini.png" />
+    <link rel="shortcut icon" type="image/png" href="img/twister_mini.png" />
   </head>
   <body>
   <!-- MENU SUPERIOR INIT -->
@@ -367,10 +367,14 @@
         </div>
     </div>
 
-    <div id="post-retransmited-by-template">
-        <i class="post-retransmited-icon"></i>
-        <span>twisted again by</span><span> </span>
-        <a class="post-retransmited-by open-profile-modal" href=""></a>
+    <div id="post-rt-by-template">
+        <i class="post-rt-icon"></i>
+        <div class="post-rt-sign">
+            <span class="prep">twisted again by</span><a class="open-profile-modal"></a>
+        </div>
+        <div class="post-rt-time">
+            <span class="prep">at</span><span class="time"></span>
+        </div>
     </div>
 
     <!-- template for user links in message (open profile modal) -->
@@ -465,6 +469,7 @@
       </div>
       <!-- o texto do post (restrição de caracteres?) -->
       <p class="post-text"></p>
+        <div class="messages-qtd">0</div>
     </li>
 
     <div class="messages-thread-template">

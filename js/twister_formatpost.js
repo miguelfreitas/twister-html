@@ -3,8 +3,8 @@
 //
 // Format JSON posts and DMs to HTML.
 
-var _templatePostRtReference
-var _templatePostRtBy
+var _templatePostRtReference;
+var _templatePostRtBy;
 var _htmlFormatMsgLinkTemplateExternal;
 var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
@@ -14,7 +14,7 @@ $(document).ready(function() {
     _templatePostRtReference = $('#post-rt-reference-template').children().clone(true);
     _templatePostRtReference.find('.post-text')
         .on('click', {feeder: '.post-rt-reference'}, openConversationClick);
-    _templatePostRtBy = $('#post-retransmited-by-template').children().clone(true);
+    _templatePostRtBy = $('#post-rt-by-template').children().clone(true);
     _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
     if (_htmlFormatMsgLinkTemplateExternal.length) {
         _htmlFormatMsgLinkTemplateExternal = _htmlFormatMsgLinkTemplateExternal[0].cloneNode();
@@ -156,10 +156,13 @@ function postToElem(post, kind, promoted) {
         if (userpost.msg) {
             setPostReference(postContext, rt, userpost.sig_rt);
         } else {
-            postContext.append(_templatePostRtBy.clone(true))
-                .find('.post-retransmited-by')
+            postContext.append(_templatePostRtBy.clone(true)).addClass('post-rt-by')
+                .find('.post-rt-sign .prep').text(polyglot.t('post_rt_sign_prep'))
+                .siblings('.open-profile-modal')
                     .attr('href', $.MAL.userUrl(retweeted_by)).text('@' + retweeted_by)
             ;
+            postContext.find('.post-rt-time .prep').text(polyglot.t('post_rt_time_prep'))
+                .siblings('.time').text(timeGmtToText(post.userpost.time));
             // let's check original post and grab some possible RT
             dhtget(username, 'post' + k, 's',
                 function(args, post) {

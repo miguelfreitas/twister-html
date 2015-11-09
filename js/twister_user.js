@@ -261,24 +261,59 @@ function loadProfileForEdit() {
            }, {} );
 }
 
-function saveProfile(e)
-{
-    var profile = {};
-    profile["fullname"] = $(".input-name").val();
-    profile["bio"]      = $(".input-description").val();
-    profile["location"] = $(".input-city").val();
-    profile["url"]      = $(".input-website").val();
-    var tox = $(".input-tox").val();
-    if( tox.length )
-        profile["tox"]  = tox;
-    var bitmessage = $(".input-bitmessage").val();
-    if( bitmessage.length )
-        profile["bitmessage"] = bitmessage;
-    dhtput( defaultScreenName, "profile", "s",
-            profile, defaultScreenName, ++profileSeqNum );
-    var avatarData = $(".profile-card-photo.forEdition").attr("src");
-    dhtput( defaultScreenName, "avatar", "s",
-           avatarData, defaultScreenName, ++avatarSeqNum );
-    clearAvatarAndProfileCache(defaultScreenName);
+function saveProfile(e) {
+    function saveAvatar(req, isProfileDataSaved) {
+        dhtput(defaultScreenName, 'avatar', 's',
+            req.avatarImgSrc,
+            defaultScreenName, ++avatarSeqNum,
+            completeProfileSaving, {isProfileDataSaved: isProfileDataSaved}
+        );
+    }
+
+    function completeProfileSaving(req, isAvatarDataSaved) {
+        if (req.isProfileDataSaved && isAvatarDataSaved) {
+            clearAvatarAndProfileCache(defaultScreenName);
+            var titleTxt = '';
+            var messageTxt = polyglot.t('profile_saved');
+        } else {
+            var titleTxt = polyglot.t('error', {error: ''});
+            var messageTxt = polyglot.t('profile_not_saved');
+        }
+        confirmPopup(null, {
+            titleTxt: titleTxt,
+            messageTxt: messageTxt,
+            confirmTxt: polyglot.t('btn_ok'),
+            confirmFunc: $.MAL.enableButton,
+            confirmFuncArgs: $('.submit-changes'),
+            closeFunc: 'confirmFunc',
+            removeCancel: true
+        });
+    }
+
+    $.MAL.disableButton($('.submit-changes'));
+
+    dhtput(defaultScreenName, 'profile', 's',
+        setObjPropFromElemVal({}, {
+            fullname:   '.input-name',
+            bio:        '.input-description',
+            location:   '.input-city',
+            url:        '.input-website',
+            tox:        '.input-tox',
+            bitmessage: '.input-bitmessage'
+        }),
+        defaultScreenName, ++profileSeqNum,
+        saveAvatar, {avatarImgSrc: $('.profile-card-photo.forEdition').attr('src')}
+    );
 }
 
+function setObjPropFromElemVal(object, req) {
+    var props = Object.getOwnPropertyNames(req);  // req's props names will be object's props names
+
+    for (var i = 0; i < props.length; i++) {
+        elem = $(req[props[i]]);  // req's props values are elements selectors
+        if (elem.length && elem.val())
+            object[props[i]] = elem.val();
+    }
+
+    return object;
+}

@@ -8,7 +8,7 @@ $(function(){
     $('.mini-profile-actions span').html('');
 
     $.globalEval(postToElem.toString().replace(/postContext.append\(_templatePostRtBy/,
-        'postContext.addClass(\'post-retransmited-by-container\').prependTo(postContext.parent()).append(_templatePostRtBy'));
+        'postContext.prependTo(postContext.parent()).append(_templatePostRtBy'));
 
 
     $( '.userMenu-home.current a' ).on( 'click', function() {
