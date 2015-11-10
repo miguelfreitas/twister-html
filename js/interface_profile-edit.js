@@ -79,9 +79,9 @@ function handleAvatarFileSelect(event) {
                     imgURL = canvas.toDataURL('image/jpeg', quality);
                 }
                 $('.profile-card-photo.forEdition').attr('src', imgURL);
-            }
+            };
             img.src = event.target.result;
-        }
+        };
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(file);
@@ -90,6 +90,8 @@ function handleAvatarFileSelect(event) {
 
 
 function verifyUserAlreadyInBlockchain() {
+    if (followingUsers.length) return;
+
     $.MAL.disableButton($('.submit-changes'));
 
     dumpPubkey(defaultScreenName, function(args, pubkey) {
