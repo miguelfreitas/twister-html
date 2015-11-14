@@ -2594,7 +2594,7 @@ if(preferredLanguage == "de"){
       "new_posts": "%{smart_count} neuer Post |||| %{smart_count} neue Posts",
       "new_mentions": "%{smart_count} neue Erwähnung |||| %{smart_count} neue Erwähnungen",
       "new_direct_messages": "%{smart_count} neue Direktnachricht |||| %{smart_count} neue Direktnachrichten",
-      "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
+      "new_group_messages": "%{smart_count} neue Gruppen-Nachricht |||| %{smart_count} neue Gruppen-Nachrichten",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Nicht verfügbar", // username is not available
       "notify_desktop_error": "Twister kann keine Desktop-Meldungen anzeigen: ein unbekannter Fehler trat auf.",
