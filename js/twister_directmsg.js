@@ -78,24 +78,29 @@ function requestDmConversation(postboard, dm_screenname) {
     );
 }
 
-function processDmConversation(postboard, dm_screenname, dmData) {
-    var lastId = undefined;
+function processDmConversation(stream, peerAlias, posts) {
+    var streamItems = stream.children();
+    var streamPostsIDs = [];
 
-    if (dmData[dm_screenname]) {
-        var dmList = dmData[dm_screenname];
-        if (dmList.length) {
-            for (var i = 0; i < dmList.length; i++) {
-                var dmItem = postToElemDM(dmList[i], defaultScreenName, dm_screenname)
-                    .attr('data-id', dmList[i].id)
-                    .appendTo(postboard)
-                ;
-                lastId = dmList[i].id;
-            }
-            $.MAL.dmChatListLoaded(postboard);
-        }
+    for (var i = 0; i < streamItems.length; i++) {
+        streamPostsIDs.push(parseInt(streamItems.eq(i).attr('data-id')));
     }
-    if (typeof lastId !== 'undefined')
-        resetNewDMsCountForUser(dm_screenname, lastId);
+
+    if (posts[peerAlias] && posts[peerAlias].length) {
+        for (var i = 0; i < posts[peerAlias].length; i++) {
+            if (streamPostsIDs.indexOf(posts[peerAlias][i].id) === -1) {
+                var lastPostID = posts[peerAlias][i].id;
+                postToElemDM(posts[peerAlias][i], defaultScreenName, peerAlias)
+                    .attr('data-id', lastPostID)
+                    .appendTo(stream)
+                ;
+                streamPostsIDs.push(lastPostID);
+            }
+        }
+        $.MAL.dmChatListLoaded(stream);
+    }
+    if (typeof lastPostID !== 'undefined')
+        resetNewDMsCountForUser(peerAlias, lastPostID);
 }
 
 function directMsgSubmit(e) {
