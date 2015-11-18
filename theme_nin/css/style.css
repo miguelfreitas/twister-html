@@ -1892,6 +1892,34 @@ button:disabled:hover, button.disabled:hover, .mini-profile-actions span.disable
   margin-left: 880px;
 }
 
+#modals-minimized {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 9000;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    width: 1180px;
+    height: 24px;
+    overflow: auto;
+    margin-left: -590px;
+    padding: 0 4%;
+}
+
+#modals-minimized li {
+    display: inline-block;
+    opacity: .88;
+    font-size: 10px;
+    color: #FFF;
+    background-color: #66686B;
+    margin: 0 2px;
+    padding: 4px 8px;
+}
+
+#modals-minimized li:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
 
 /********** CONFIG SUBMENU & SEARCH RESULTS *********** */
 /* line 76, ../sass/style.sass */
@@ -2706,7 +2734,7 @@ ol.toptrends-list a:hover {
 }
 
 /* line 629, ../sass/style.sass */
-.modal-close {
+.modal-close, .minimize-modal {
   position: absolute;
   right: 10px;
   top: 0;
@@ -2716,12 +2744,16 @@ ol.toptrends-list a:hover {
   color: rgba(255, 255, 255, 0.7);
 }
 /* line 639, ../sass/style.sass */
-.modal-close:hover {
+.modal-close:hover, .minimize-modal:hover {
   color: white;
 }
 /* line 641, ../sass/style.sass */
 .modal-close b {
   display: none;
+}
+
+.minimize-modal {
+    right: 35px;
 }
 
 /* line 644, ../sass/style.sass */
@@ -2744,7 +2776,7 @@ ol.toptrends-list a:hover {
 /* line 662, ../sass/style.sass */
 .modal-back {
   position: absolute;
-  right: 35px;
+  right: 70px;
   top: 0;
   font-size: 14px;
   line-height: 40px;
@@ -3489,6 +3521,11 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
     float: left;
     font-size: 80%;
   }
+
+    #modals-minimized {
+        width: 900px;
+        margin-left: -450px;
+    }
 }
 @media (max-width: 900px) {
   /* line 21, ../sass/_responsive.sass */

@@ -379,6 +379,39 @@ button.follow:hover, button.unfollow:hover, .following-list button.private:hover
     margin: 4px 0 0 10px;
 }
 
+#modals-minimized {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 9000;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    width: 900px;
+    height: 24px;
+    overflow: auto;
+    margin-left: -450px;
+    padding: 0 4%;
+}
+
+#modals-minimized.w1200 {
+    width: 1200px;
+    margin-left: -600px;
+}
+
+#modals-minimized li {
+    display: inline-block;
+    opacity: .88;
+    font-size: 10px;
+    color: #FFF;
+    background-color: #B43E34;
+    margin: 0 2px;
+    padding: 4px 8px;
+}
+
+#modals-minimized li:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
 /*******************************************************
 ****************** CONFIG SUBMENU & SEARCH RESULTS *****
 *******************************************************/
@@ -1483,7 +1516,7 @@ ol.toptrends-list {
     height: 100%;
 }
 
-.modal-close {
+.modal-close, .minimize-modal {
     position: absolute;
     right: 0;
     top: 0;
@@ -1495,15 +1528,19 @@ ol.toptrends-list {
     transition: all .1s linear;
 }
 
-.modal-close:hover {
+.modal-close:hover, .minimize-modal:hover {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
+}
+
+.minimize-modal {
+    right: 30px;
 }
 
 .modal-back,
 .mark-all-as-read {
     position: absolute;
-    right: 30px;
+    right: 60px;
     top: 0;
     padding: 1px 10px;
     cursor: pointer;
@@ -1518,6 +1555,14 @@ ol.toptrends-list {
 .mark-all-as-read:hover {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
+}
+
+.mark-all-as-read {
+    right: 90px;
+}
+
+.mark-all-as-read:before {
+    content: '\2714';
 }
 
 .modal-wrapper.reply .post {
@@ -1625,14 +1670,6 @@ ol.toptrends-list {
     position: absolute;
     right: -65px;
     left: auto;
-}
-
-.mark-all-as-read {
-    right: 60px;
-}
-
-.mark-all-as-read:before {
-    content: '\2714';
 }
 
 /*************************************
