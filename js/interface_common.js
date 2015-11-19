@@ -159,7 +159,7 @@ function confirmPopup(event, req) {
     });
 
     if (req.messageTxt)
-        modal.content.find('.message').text(req.messageTxt);
+        modal.content.find('.message').html(htmlFormatMsg(req.messageTxt, {markout: 'apply'}).html);
 
     var btn = modal.content.find('.confirm');
     if (req.removeConfirm)
