@@ -1346,6 +1346,7 @@ textarea.splited-post {
 }
 
 /* external http links */
+.confirm-popup .message a,
 .post-text a {
     font: italic 13px "Open Sans", sans-serif;
     text-decoration: none;
@@ -1357,11 +1358,13 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a:hover,
 .post-text a:hover {
     color: #e18881;
     opacity: .8;
 }
 
+.confirm-popup .message a[href^="http"]:after,
 .post-text a[href^="http"]:after {
     content: '';
     display: inline-block;
@@ -1380,10 +1383,12 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a[href^="http"]:hover:after,
 .post-text a[href^="http"]:hover:after {
     opacity: .8;
 }
 
+.confirm-popup .message a[href^="#profile"],
 .post-text a[href^="#profile"], .follow-suggestions a[href^="#profile"] {
     color: #5e8da4;
     text-decoration: none;
@@ -1394,6 +1399,7 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a[href^="#profile"]:hover,
 .post-text a[href^="#profile"]:hover, .follow-suggestions a[href^="#profile"]:hover {
     color: #76b2ce;
 }
@@ -1402,6 +1408,7 @@ textarea.splited-post {
     font-size: 11px;
 }
 
+.confirm-popup .message a[href^="#hashtag"],
 .toptrends-list a[href^="#hashtag"], .post-text a[href^="#hashtag"] {
     color: #5e72a4;
     text-decoration: none;
@@ -1412,6 +1419,7 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a[href^="#hashtag"]:hover,
 .toptrends-list a[href^="#hashtag"]:hover, .post-text a[href^="#hashtag"]:hover {
     color: #768fce;
 }

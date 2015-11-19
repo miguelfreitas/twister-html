@@ -1118,12 +1118,13 @@ ol.toptrends-list {
     margin: 2px 16px 4px 60px;
 }
 
+.confirm-popup .message a,
 .post-text a,
 .post-context a,
-.mini-screen-name
-{
-    color: #e34f42;
+.mini-screen-name {
+    color: #E34F42;
 }
+
 .mini-screen-name
 {
     font-size: 13px;
