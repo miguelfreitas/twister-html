@@ -261,7 +261,6 @@ function setSpamMsg(event) {
 }
 
 function exitDaemon() {
-  if (confirm(polyglot.t("Are you sure you want to exit the daemon?\nThe Twister client will stop working."))) {
     $( ".terminate-daemon").text("Exiting...");
     $( ".terminate-daemon").addClass("disabled");
     $.MAL.disableButton( $( ".terminate-daemon") );
@@ -277,8 +276,6 @@ function exitDaemon() {
                 function(args, ret) {
                     console.log("error while exiting daemon");
                 }, {});
-
-  }
 }
 
 // handlers common to both desktop and mobile
@@ -292,7 +289,8 @@ function interfaceNetworkHandlers() {
     $('.network .post-area-new').off('click').on('click',
         function (e) {e.stopPropagation(); $(this).addClass('open'); usePostSpliting = false;});
     $('.post-submit.update-spam-msg').off('click').on('click', setSpamMsg);
-    $( ".terminate-daemon").bind( "click", exitDaemon )
+    $('.terminate-daemon').on('click',
+        {messageTxt: polyglot.t('confirm_terminate_daemon'), confirmFunc: exitDaemon}, confirmPopup);
 }
 
 

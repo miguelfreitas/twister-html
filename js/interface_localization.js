@@ -48,6 +48,7 @@ if(preferredLanguage == "en"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Change user",
       "Checking...": "Checking...", // checking if username is available
       "Collapse": "Collapse", // smaller view of a post
@@ -314,7 +315,6 @@ if(preferredLanguage == "en"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "undo",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
@@ -369,6 +369,7 @@ if(preferredLanguage == "es"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Cambiar de usuario",
       "Checking...": "Comprobando ...", // checking if username is available
       "Collapse": "Colapsar", // smaller view of a post
@@ -635,7 +636,6 @@ if(preferredLanguage == "es"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "deshacer",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Llave secreta",
       "Copy to clipboard": "Copiar al portapapeles",
@@ -674,6 +674,7 @@ if(preferredLanguage == "uk"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Ви впевнені, що бажаєте завершити роботу?\nКлієнт Twister буде зупинено допоки ви не запустите його знову.",
       "Change user": "Змінити користувача",
       "Checking...": "Перевірка...", // checking if username is available
       "Collapse": "Згорнути", // smaller view of a post
@@ -937,7 +938,6 @@ if(preferredLanguage == "uk"){
       "post_rt_sign_prep": "ретвіст від",
       "post_rt_time_prep": "at",
       "undo": "відмінити",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Ви впевнені, що бажаєте завершити роботу? \n\nКлієнт Twister буде зупинено допоки ви не запустите його знову.",
       "Daemon exited...": "Twister заверив роботу...",
       "Secret Key": "Секретний ключ",
       "Copy to clipboard": "Скопіювати до буферу",
@@ -978,6 +978,7 @@ if(preferredLanguage == "zh-CN"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "你确定要退出后台进程？\nTwister 客户端将停止工作。",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
       "Collapse": "折叠", // smaller view of a post
@@ -1243,7 +1244,6 @@ if(preferredLanguage == "zh-CN"){
       "post_rt_sign_prep": "转推由",
       "post_rt_time_prep": "at",
       "undo": "撤销",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "你确定要退出后台进程？\nTwister 客户端将停止工作。",
       "Daemon exited...": "后台进程已退出...",
       "Secret Key": "私钥",
       "Copy to clipboard": "复制到剪贴板",
@@ -1299,6 +1299,7 @@ if(preferredLanguage == "nl"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Gebruiker wijzigen",
       "Checking...": "Controleren...", // checking if username is available
       "Collapse": "Uitklappen", // smaller view of a post
@@ -1565,7 +1566,6 @@ if(preferredLanguage == "nl"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "undo",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
@@ -1604,6 +1604,7 @@ if(preferredLanguage == "it"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Cambia utente",
       "Checking...": "Controllo in corso...", // checking if username is available
       "Collapse": "Chiudi", // smaller view of a post
@@ -1867,7 +1868,6 @@ if(preferredLanguage == "it"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "undo",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
@@ -1906,6 +1906,7 @@ if(preferredLanguage == "fr"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Changer d'utilisateur",
       "Checking...": "Vérification...", // checking if username is available
       "Collapse": "Fermer", // smaller view of a post
@@ -2172,7 +2173,6 @@ if(preferredLanguage == "fr"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "undo",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
@@ -2213,6 +2213,7 @@ if(preferredLanguage == "ru"){
        "Confirm": "Несомненно",
        "сonfirm_group_leaving_header": "Подтверждение ухода из группы",
        "сonfirm_group_leaving_body": "Воистину покинуть группу %{alias}?",
+       "confirm_terminate_daemon": "Вы уверены, что хотите выключить демон?\nTwister клиент перестанет работать.",
        "Change user": "Сменить пользователя",
        "Checking...": "Проверка...",
        "Collapse": "Свернуть",
@@ -2479,8 +2480,6 @@ if(preferredLanguage == "ru"){
        "post_rt_sign_prep": "ретвистит",
        "post_rt_time_prep": "в",
        "undo": "отменить",
-       "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Вы уверены, что хотите "+
-                "выключить демон?\nTwister клиент перестанет работать.",
        "Daemon exited...": "Демон twister выключен...",
        "Secret Key": "Секретный ключ",
        "Copy to clipboard": "Копировать в буфер обмена",
@@ -2523,6 +2522,7 @@ if(preferredLanguage == "de"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Benutzer wechseln",
       "Checking...": "Überprüfe...", // checking if username is available
       "Collapse": "Einklappen", // smaller view of a post
@@ -2791,7 +2791,6 @@ if(preferredLanguage == "de"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "undo",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
@@ -2830,6 +2829,7 @@ if(preferredLanguage == "ja"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "ユーザーを変更",
       "Checking...": "チェック...", // checking if username is available
       "Collapse": "閉じる", // smaller view of a post
@@ -3093,7 +3093,6 @@ if(preferredLanguage == "ja"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "undo",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
@@ -3133,6 +3132,7 @@ if(preferredLanguage == "pt-BR"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Trocar usuário",
       "Checking...": "Verificando...", // checking if username is available
       "Collapse": "Recolher", // smaller view of a post
@@ -3401,7 +3401,6 @@ if(preferredLanguage == "pt-BR"){
       "post_rt_sign_prep": "twisted again by",
       "post_rt_time_prep": "at",
       "undo": "undo",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Daemon exited...": "Daemon exited...",
       "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
@@ -3440,6 +3439,7 @@ if(preferredLanguage == "tr"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Hizmeti sonlandırmak istiyor musun?\nTwister istemcisi çalışmayacak.",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
       "Collapse": "Kapat", // smaller view of a post
@@ -3705,7 +3705,6 @@ if(preferredLanguage == "tr"){
       "post_rt_sign_prep": "yeniden ileten",
       "post_rt_time_prep": "at",
       "undo": "geri al",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Hizmeti sonlandırmak istiyor musun?\nTwister istemcisi çalışmayacak.",
       "Daemon exited...": "Hizmet sonlandırıldı...",
       "Secret Key": "Gizli Anahtar",
       "Copy to clipboard": "Panoya kopyala",
@@ -3744,6 +3743,7 @@ if(preferredLanguage == "cs"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_terminate_daemon": "Skutečně chcete ukončit server?\nTwister tím vypnete.",
       "Change user": "Změnit uživatele",
       "Checking...": "Ověřuji...", // checking if username is available
       "Collapse": "Složit", // smaller view of a post
@@ -4008,7 +4008,6 @@ if(preferredLanguage == "cs"){
       "post_rt_sign_prep": "přeposlal(a)",
       "post_rt_time_prep": "at",
       "undo": "zpět",
-      "Are you sure you want to exit the daemon?\nThe Twister client will stop working.": "Skutečně chcete ukončit server?\nTwister tím vypnete.",
       "Daemon exited...": "Server ukončen...",
       "Secret Key": "Tajný klíč",
       "Copy to clipboard": "Kopírovat do clipboardu",
