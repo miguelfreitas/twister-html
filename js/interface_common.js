@@ -144,8 +144,12 @@ function resumeModal(event) {
 }
 
 function confirmPopup(event, req) {
-    if (event && event.stopPropagation)
+    if (event && event.stopPropagation) {
         event.stopPropagation();
+
+        if (!req && event.data)
+            req = event.data;
+    }
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
