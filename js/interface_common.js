@@ -524,6 +524,9 @@ function watchHashChange(e) {
 
 function loadModalFromHash() {
     if (_minimizedModals[window.location.hash]) {
+        // need to remove active modal before btnResume.click() or it will be minimized in resumeModal()
+        // e.g. for case when you click on profile link in some modal having this profile's modal minimized already
+        $('.modal-wrapper:not(#templates *)').remove();
         _minimizedModals[window.location.hash].btnResume.click();
         return;
     }
