@@ -219,7 +219,7 @@ function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
     networkUpdate(function(args) {
         if (!twisterdConnectedAndUptodate) {
             confirmPopup(null, {
-                messageTxt: polyglot.t('switch_to_network'),
+                messageTxt: polyglot.t('confirm_switch_to_network', {page: '/network.html'}),
                 confirmFunc: $.MAL.goNetwork
             });
         } else {

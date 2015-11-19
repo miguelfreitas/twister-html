@@ -48,6 +48,10 @@ if(preferredLanguage == "en"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Local daemon is not connected to the network or block chain is outdated.\n" +
+            "If you stay in this page your actions may not work.\n" +
+            "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Change user",
       "Checking...": "Checking...", // checking if username is available
@@ -158,10 +162,6 @@ if(preferredLanguage == "en"){
       "Sent Direct Message": "Sent Direct Message",
       "Sent Post to @": "Sent Post to @",
       "Setup account": "Setup account",
-      "switch_to_network": "Local daemon is not connected to the network or\n" +
-                "block chain is outdated. If you stay in this page\n" +
-                "your actions may not work.\n" +
-                "Do you want to check Network Status page instead?",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
@@ -369,6 +369,10 @@ if(preferredLanguage == "es"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Demonio local no está conectado a la red o la cadena de bloques no está actualizada.\n" +
+            "Si te quedas en esta página tus acciones pueden no funcionar.\n" +
+            "¿Quieres comprobar la [página de estado de la red](%{page}) en su lugar?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Cambiar de usuario",
       "Checking...": "Comprobando ...", // checking if username is available
@@ -479,10 +483,6 @@ if(preferredLanguage == "es"){
       "Sent Direct Message": "Mensaje directo",
       "Sent Post to @": "El Post enviado a @",
       "Setup account": "Configuración de la cuenta",
-      "switch_to_network": "Demonio local no está conectado a la red o\n" +
-                "la cadena de bloques no está actualizada. Si te quedas en esta página\n" +
-                "tus acciones pueden no funcionar.\n" +
-                "¿Quieres comprobar la página de estado de la red en su lugar?",
       "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
       "time_ago": "hace %{time}", // 5 minutes ago
       "Time of the last block:": "Hora del último bloque: ",
@@ -674,6 +674,10 @@ if(preferredLanguage == "uk"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Локальний сервер не підєднаний до мережі або ланцюг блоків не актуальний.\n" +
+            "Якщо ви залишитесь на цій сторінці ваші дії можуть не спрацювати.\n" +
+            "Чи бажаєте ви перевірити [сторінку зі статусом мережі](%{page})?",
       "confirm_terminate_daemon": "Ви впевнені, що бажаєте завершити роботу?\nКлієнт Twister буде зупинено допоки ви не запустите його знову.",
       "Change user": "Змінити користувача",
       "Checking...": "Перевірка...", // checking if username is available
@@ -785,10 +789,6 @@ if(preferredLanguage == "uk"){
       "Sent Direct Message": "Надіслати особисте повідомлення",
       "Sent Post to @": "Надіслати твіст @",
       "Setup account": "Обліковий запис",
-      "switch_to_network": "Локальний сервер не підєднаний до мережі або \n" +
-                "ланцюг блоків не актуальний. Якщо ви залишитесь на цій сторінці\n" +
-                "ваші дії можуть не спрацювати.\n" +
-                "Чи бажаєте ви перевірити сторінку зі статусом мережі?",
       "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
@@ -978,6 +978,10 @@ if(preferredLanguage == "zh-CN"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "本地的后台进程没有连接到网络，或者区块链已经过时。\n" +
+            "如果你留在此页面你的操作将不会生效。\n" +
+            "你要跳转到[网络状态页吗](%{page})？",
       "confirm_terminate_daemon": "你确定要退出后台进程？\nTwister 客户端将停止工作。",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
@@ -1088,10 +1092,6 @@ if(preferredLanguage == "zh-CN"){
       "Sent Direct Message": "发送私信",
       "Sent Post to @": "发送推文 @",
       "Setup account": "设置账号",
-      "switch_to_network": "本地的后台进程没有连接到网络，或者\n" +
-        "区块链已经过时。如果你留在此页面\n" +
-        "你的操作将不会生效\n" +
-        "你要跳转到网络状态页吗？",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持 File API。",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新区块的时间：",
@@ -1299,6 +1299,10 @@ if(preferredLanguage == "nl"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Local daemon is not connected to the network or block chain is outdated.\n" +
+            "If you stay in this page your actions may not work.\n" +
+            "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Gebruiker wijzigen",
       "Checking...": "Controleren...", // checking if username is available
@@ -1409,10 +1413,6 @@ if(preferredLanguage == "nl"){
       "Sent Direct Message": "Verstuur privébericht",
       "Sent Post to @": "Verstuur bericht naar @",
       "Setup account": "Account instellingen",
-      "switch_to_network": "Local daemon is not connected to the network or\n" +
-                "block chain is outdated. If you stay in this page\n" +
-                "your actions may not work.\n" +
-                "Do you want to check Network Status page instead?",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Tijd van de laatste block: ",
@@ -1604,6 +1604,10 @@ if(preferredLanguage == "it"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Il servizio locale non è connesso alla rete Twister o la catena di blocchi è vecchia.\n" +
+            "Se rimani su questa pagina, Twister potrebbe non funzionare.\n" +
+            "Vuoi controllare lo [stato della rete Twister](%{page}), invece?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Cambia utente",
       "Checking...": "Controllo in corso...", // checking if username is available
@@ -1714,9 +1718,6 @@ if(preferredLanguage == "it"){
       "Sent Direct Message": "Messaggi Diretti inviati",
       "Sent Post to @": "Messaggi inviati a @",
       "Setup account": "Configurazione Utente",
-      "switch_to_network": "Il servizio locale non è connesso alla rete Twister o la catena di blocchi è vecchia.\n" +
-                "Se rimani su questa pagina, Twister potrebbe non funzionare.\n" +
-                "Vuoi controllare lo stato della rete Twister, invece?",
       "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
       "time_ago": "%{time} fa", // 5 minutes ago
       "Time of the last block:": "Orario del blocco più recente: ",
@@ -1906,6 +1907,10 @@ if(preferredLanguage == "fr"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Le démon local n'est pas connecté au réseau ou la chaîne de blocs n'est pas à jour.\n" +
+            "Si vous restez dans cette page vos actions peuvent ne pas être prises en compte.\n" +
+            "Voulez-vous consulter la [page d'état du réseau](%{page}) à la place?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Changer d'utilisateur",
       "Checking...": "Vérification...", // checking if username is available
@@ -2016,10 +2021,6 @@ if(preferredLanguage == "fr"){
       "Sent Direct Message": "Message privé envoyé",
       "Sent Post to @": "Envoyer un billet à @",
       "Setup account": "Configuration du compte",
-      "switch_to_network": "Le démon local n'est pas connecté au réseau ou\n" +
-                "la chaîne de blocs n'est pas à jour. Si vous restez dans cette page\n" +
-                "vos actions peuvent ne pas être prises en compte.\n" +
-                "Voulez-vous consulter la page d'état du réseau à la place ?",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
@@ -2213,6 +2214,10 @@ if(preferredLanguage == "ru"){
        "Confirm": "Несомненно",
        "сonfirm_group_leaving_header": "Подтверждение ухода из группы",
        "сonfirm_group_leaving_body": "Воистину покинуть группу %{alias}?",
+       "confirm_switch_to_network":
+            "Локальный демон не подключен к сети или цепочка блоков устарела.\n" +
+            "Если вы останетесь на этой странице ваши действия могут быть не выполнены.\n" +
+            "Не хотите перейти на [страницу настройки сети](%{page})?",
        "confirm_terminate_daemon": "Вы уверены, что хотите выключить демон?\nTwister клиент перестанет работать.",
        "Change user": "Сменить пользователя",
        "Checking...": "Проверка...",
@@ -2323,10 +2328,6 @@ if(preferredLanguage == "ru"){
        "Sent Direct Message": "Отправить личное сообщение",
        "Sent Post to @": "Отправить сообщение для @",
        "Setup account": "Настроить аккаунт",
-       "switch_to_network": "Локальный демон не подключен к сети или\n" +
-                 "цепочка блоков устарела. Если вы останетесь на этой странице\n" +
-                 "ваши действия могут быть не выполнены.\n" +
-                 "Не хотите перейти на страницу настройки сети?",
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
@@ -2522,6 +2523,10 @@ if(preferredLanguage == "de"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Lokaler daemon ist nicht mit dem Netzwerk verbunden oder Block-Chain ist veraltet.\n" +
+            "Wenn du auf dieser Seite bleibst können deine Handlungen nicht funktionieren.\n" +
+            "Möchtest du stattdessen den [Netzwerkstatus](%{page}) überprüfen?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Benutzer wechseln",
       "Checking...": "Überprüfe...", // checking if username is available
@@ -2633,10 +2638,6 @@ if(preferredLanguage == "de"){
       "Sent Direct Message": "Direktnachricht senden",
       "Sent Post to @": "Sende Post an @",
       "Setup account": "Accounteinstellungen",
-      "switch_to_network": "Lokaler daemon ist nicht mit dem Netzwerk verbunden oder\n" +
-                "Block-Chain ist veraltet. Wenn du auf dieser Seite bleibst\n" +
-                "können deine Handlungen nicht funktionieren.\n" +
-                "Möchtest du stattdessen den Netzwerkstatus überprüfen?",
       "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
@@ -2829,6 +2830,10 @@ if(preferredLanguage == "ja"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "ローカルデーモンが切断しているか、ブロックチェーンが最新状態ではない。\n" +
+            "このページを使用しつづければ、あなたの変更が適用されないおそれがあります。\n" +
+            "[ネットワーク状態ペー](%{page})ジへ移動して確認しますか？",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "ユーザーを変更",
       "Checking...": "チェック...", // checking if username is available
@@ -2939,10 +2944,6 @@ if(preferredLanguage == "ja"){
       "Sent Direct Message": "ダイレクトメッセージを送る",
       "Sent Post to @": "メンションを投稿する",
       "Setup account": "アカウント設定",
-      "switch_to_network": "ローカルデーモンが切断しているか、\n" +
-                "ブロックチェーンが最新状態ではない。このページを使用しつづければ、\n" +
-                "あなたの変更が適用されないおそれがあります。\n" +
-                "ネットワーク状態ページへ移動して確認しますか？",
       "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
       "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
@@ -3132,6 +3133,10 @@ if(preferredLanguage == "pt-BR"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "O Cliente do Twister não está conectado à rede ou a cadeia de blocos está desatualizada.\n" +
+            "Se permanecer nesta página suas ações podem não ter efeito.\n" +
+            "Gostaria de verificar o [Estado da Rede](%{page}) ao invés disso?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "Change user": "Trocar usuário",
       "Checking...": "Verificando...", // checking if username is available
@@ -3243,10 +3248,6 @@ if(preferredLanguage == "pt-BR"){
       "Sent Direct Message": "Mensagens Diretas trocadas",
       "Sent Post to @": "Postagens enviadas para @",
       "Setup account": "Configurar conta",
-      "switch_to_network": "O Cliente do Twister não está conectado à rede ou\n" +
-                "a cadeia de blocos está desatualizada. Se permanecer \n" +
-                "nesta página suas ações podem não ter efeito.\n" +
-                "Gostaria de verificar o Estado da Rede ao invés disso?",
       "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
       "time_ago": "%{time} atrás", // 5 minutes ago
       "Time of the last block:": "Horário do último bloco: ",
@@ -3439,6 +3440,10 @@ if(preferredLanguage == "tr"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Yerel servis ağa bağlı değil ya da blok zinciri güncel değil.\n" +
+            "Eğer bu sayfada kalırsanız eylemlerinizi işlemeyebilir.\n" +
+            "Bunun yerine [Ağ Durumu sayfasını](%{page}) kontrol etmek ister misiniz?",
       "confirm_terminate_daemon": "Hizmeti sonlandırmak istiyor musun?\nTwister istemcisi çalışmayacak.",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
@@ -3549,10 +3554,6 @@ if(preferredLanguage == "tr"){
       "Sent Direct Message": "Direk Mesaj Gönder",
       "Sent Post to @": "@ Kullanıcıya Gönder",
       "Setup account": "Hesap ayarları",
-      "switch_to_network": "Yerel servis ağa bağlı değil ya da\n" +
-                "blok zinciri güncel değil. Eğer bu sayfada kalırsanız\n" +
-                "eylemlerinizi işlemeyebilir.\n" +
-                "Bunun yerine Ağ Durumu sayfasını kontrol etmek ister misiniz?",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
@@ -3743,6 +3744,10 @@ if(preferredLanguage == "cs"){
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
+      "confirm_switch_to_network":
+            "Váš lokální server ještě není připojen k síti, nebo teprve stahuje aktuální blockchain.\n" +
+            "Pokud zůstanete na této stránce, vaše akce možná nebudou fungovat.\n" +
+            "Chcete se místo toho podívat na [stav sítě](%{page})?",
       "confirm_terminate_daemon": "Skutečně chcete ukončit server?\nTwister tím vypnete.",
       "Change user": "Změnit uživatele",
       "Checking...": "Ověřuji...", // checking if username is available
@@ -3854,9 +3859,6 @@ if(preferredLanguage == "cs"){
       "Sent Direct Message": "Poslat přímou zprávu",
       "Sent Post to @": "Poslat veřejný příspěvek pro @",
       "Setup account": "Upravit profil",
-      "switch_to_network": "Váš lokální server ještě není připojen k síti, nebo teprve stahuje\n" +
-                "aktuální blockchain. Pokud zůstanete na této stránce, vaše akce možná\n" +
-                "nebudou fungovat. Chcete se místo toho podívat na stav sítě?",
       "The File APIs are not fully supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "time_ago": "před %{time}", // 5 minutes ago
       "Time of the last block:": "Čas posledního bloku: ",
