@@ -630,7 +630,7 @@ function htmlFormatMsg(msg, opt) {
 
     msg = {str: escapeHtmlEntities(msg), htmlEntities: []};
 
-    msg = markout(msg, '`', 'samp');  // <samp> tag is kind of monospace, here sequence of chars inside it will be escaped from markup
+    msg = markout(msg, markoutOpt, '`', 'samp');  // <samp> tag is kind of monospace, here sequence of chars inside it will be escaped from markup
 
     // handling links
     for (i = 0; i < msg.str.length - 7; i++) {
@@ -669,10 +669,10 @@ function htmlFormatMsg(msg, opt) {
                                         applyHtml(  // we're trying markup inside [] of []()
                                             markout(markout(markout(markout(
                                                 {str: linkName, htmlEntities: msg.htmlEntities},
-                                                    '*', 'b'),  // bold
-                                                    '~', 'i'),  // italic
-                                                    '_', 'u'),  // underlined
-                                                    '-', 's')  // striketrough
+                                                    markoutOpt, '*', 'b'),  // bold
+                                                    markoutOpt, '~', 'i'),  // italic
+                                                    markoutOpt, '_', 'u'),  // underlined
+                                                    markoutOpt, '-', 's')  // striketrough
                                         )
                                             .replace(/&(?!lt;|gt;)/g, '&amp;')
                                     )
@@ -683,10 +683,10 @@ function htmlFormatMsg(msg, opt) {
                                     applyHtml(  // we're trying to clear markup inside [] of []()
                                         markout(markout(markout(markout(
                                             {str: linkName, htmlEntities: msg.htmlEntities},
-                                                '*', 'b'),  // bold
-                                                '~', 'i'),  // italic
-                                                '_', 'u'),  // underlined
-                                                '-', 's')  // striketrough
+                                                markoutOpt, '*', 'b'),  // bold
+                                                markoutOpt, '~', 'i'),  // italic
+                                                markoutOpt, '_', 'u'),  // underlined
+                                                markoutOpt, '-', 's')  // striketrough
                                     )
                                         .replace(/&(?!lt;|gt;)/g, '&amp;')
                                 );
