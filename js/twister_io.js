@@ -335,7 +335,11 @@ function _putResourceIntoStorage(locator, data) {
 }
 
 // get avatar and set it in img.attr("src")
+// TODO rename to getAvatarImgToELem(), move nin theme related stuff to nin's theme_option.js
 function getAvatar( username, img ){
+    if (!img.length)
+        return;
+
     if (username === 'nobody') {
         img.attr('src', ($.Options.theme.val === 'nin') ?
             'theme_nin/img/tornado_avatar.png' : 'img/tornado_avatar.png');
