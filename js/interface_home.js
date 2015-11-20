@@ -69,6 +69,7 @@ var InterfaceFunctions = function() {
             $miniProfile.find(".mini-profile-name").text(defaultScreenName);
             getFullname( defaultScreenName, $miniProfile.find(".mini-profile-name") );
             getAvatar( defaultScreenName, $miniProfile.find(".mini-profile-photo").find("img") );
+            getAvatar(defaultScreenName, $('.userMenu-config .mini-profile-photo img'));
             // add avatar in postboard-top
             getAvatar( defaultScreenName, $("#postboard-top").find("img") );
             getPostsCount( defaultScreenName,  $miniProfile.find(".posts-count") );
