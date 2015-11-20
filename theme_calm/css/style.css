@@ -564,30 +564,26 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     right: auto;
     left: 80px;
 }
-.direct-messages,
-.dropdown-menu-item
-{
+
+.dropdown-menu-item {
     display: block;
     padding: 10px;
     font-size: 12px;
     border-top: solid 1px rgba( 69, 71, 77, .1 );
     color: rgba( 0, 0, 0, .7 );
 }
+
 .dropdown-menu-item, .dropdown-menu-item:hover {
     text-decoration: none;
 }
-.dropdown-menu-item:hover {
-    background: #45474d;
-    color: #fff;
+
+.dropdown-menu-item:hover,
+.userMenu-search-sugestions a:hover,
+.userMenu-search-profiles li:hover a {
+    background: #45474D;
+    color: #FFF;
 }
 
-.direct-messages:hover,
-.userMenu-search-sugestions a:hover,
-.userMenu-search-profiles li:hover a
-{
-    background: #45474d;
-    color: #fff;
-}
 .userMenu-search-profiles li:hover span
 {
     color: #fff;
