@@ -981,7 +981,7 @@ if(preferredLanguage == "zh-CN"){
       "confirm_switch_to_network":
             "本地的后台进程没有连接到网络，或者区块链已经过时。\n" +
             "如果你留在此页面你的操作将不会生效。\n" +
-            "你要跳转到[网络状态页吗](%{page})？",
+            "你要跳转到[网络状态页](%{page})吗？",
       "confirm_terminate_daemon": "你确定要退出后台进程？\nTwister 客户端将停止工作。",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
