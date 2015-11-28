@@ -226,7 +226,7 @@ function attachPostsToStream(stream, posts, isPromoted) {
         }
         if (!isAttached) {
             intrantPost.item.appendTo(stream).show();
-            streamPosts.unshift(intrantPost);
+            streamPosts.push(intrantPost);
         }
     }
 }
