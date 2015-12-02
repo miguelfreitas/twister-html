@@ -1853,6 +1853,7 @@ $(document).ready(function()
     var page = path.split("/").pop();
     if (page.indexOf("following.html") === 0) {
         initInterfaceFollowing();
+        initHashWatching();
     } else if (page.indexOf("login.html") === 0) {
         initInterfaceLogin();
     } else if (page.indexOf("network.html") === 0) {
