@@ -12,10 +12,9 @@
 var postsPerRefresh = 10;
 var maxExpandPost = 8;
 var maxExpandPostTop = 4;
-var _hashtagProcessedMap = {};
-var _hashtagPendingPosts = [];
-var _hashtagPendingPostsUpdated = 0;
-var autoUpdateHashtag = false;
+var _queryProcessedMap = {};
+var _queryPendingPosts = {};
+var autoUpdateQuery = false;
 
 // ----------------
 
@@ -365,63 +364,98 @@ function updateProfilePosts(postsView, username, useGetposts) {
      });
 }
 
-function clearHashtagProcessed() {
-    _hashtagProcessedMap = {};
-    _hashtagPendingPosts = [];
+function clearQueryProcessed(id) {
+    if (!id) return;
+
+    _queryProcessedMap[id] = {};
+    _queryPendingPosts[id] = [];
 }
 
-function requestHashtag(postboard, hashtag, resource, timeoutArgs) {
-    postboard.closest("div").find(".postboard-loading").show();
-    dhtget(hashtag, resource, "m",
-        function(args, data) {processHashtag(args.postboard, args.hashtag, data);},
-        {postboard:postboard,hashtag:hashtag},
-        timeoutArgs
+function requestQuery(req) {
+    req.postboard.closest('div').find('.postboard-loading').show();
+    dhtget(req.query, req.resource, 'm',
+        function(req, posts) {
+            req.posts = posts;
+            processQuery(req);
+        },
+        req,
+        req.timeoutArgs
     );
 }
 
-function processHashtag(postboard, hashtag, data) {
-    if( data && window.location.hash.indexOf(encodeURIComponent(hashtag)) != -1 ) {
-        for( var i = data.length-1; i >= 0; i-- ) {
-            var userpost = data[i]["userpost"];
-            var key = userpost["n"] + ";" + userpost["time"];
-            if( !(key in _hashtagProcessedMap) ) {
-                _hashtagProcessedMap[key] = true;
+function processQuery(req) {
+    if (!isModalWithElemExists(req.postboard) || !req.posts || !req.posts.length)
+        return;
 
-                if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForSearching.val) {
-                    if (typeof(userpost['rt']) !== 'undefined') {
-                        var msg = userpost['rt']['msg'];
-                    } else {
-                        var msg = userpost['msg'];
-                    }
-                    langFilterData = filterLang(msg);
-                    if ($.Options.filterLangSimulate.val) {
-                        data[i]['langFilter'] = langFilterData;
-                    } else {
-                        if (!langFilterData['pass'])
-                            continue;
-                    }
+    if (!req.id)
+        req.id = req.query + '@' + req.resource;
+    if (typeof _queryProcessedMap[req.id] !== 'object')
+        _queryProcessedMap[req.id] = {};
+    if (typeof _queryPendingPosts[req.id] !== 'object')
+        _queryPendingPosts[req.id] = [];
+
+    for (var i = req.posts.length - 1; i >= 0; i--) {
+        var userpost = req.posts[i].userpost;
+        var key = userpost.n + ';' + userpost.time;
+
+        if (!_queryProcessedMap[req.id][key]) {
+            _queryProcessedMap[req.id][key] = true;
+
+            if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForSearching.val) {
+                if (typeof userpost.rt !== 'undefined') {
+                    var msg = userpost.rt.msg;
+                } else {
+                    var msg = userpost.msg;
                 }
-
-                _hashtagPendingPosts.push(data[i]);
-                _hashtagPendingPostsUpdated++;
+                langFilterData = filterLang(msg);
+                if ($.Options.filterLangSimulate.val) {
+                    req.posts[i].langFilter = langFilterData;
+                } else {
+                    if (!langFilterData.pass)
+                        continue;
+                }
             }
+
+            _queryPendingPosts[req.id].push(req.posts[i]);
+        }
+    }
+
+    if (_queryPendingPosts[req.id].length) {
+        if (!$.hasOwnProperty('mobile') && $.Options.showDesktopNotifPostsModal.val === 'enable'
+            && (req.resource !== 'mention' || req.query !== defaultScreenName)) {
+            $.MAL.showDesktopNotification({
+                body: polyglot.t('You got') + ' ' + polyglot.t('new_posts', _queryPendingPosts[req.id].length) + ' '
+                    + polyglot.t('in search result') + '.',
+                tag: 'twister_notification_new_posts_modal',
+                timeout: $.Options.showDesktopNotifPostsModalTimer.val,
+                funcClick: (function() {
+                    focusModalWithElement(this.postboard,
+                        function (req) {
+                            req.postboard.closest('.postboard').find('.postboard-news').hide();
+                            displayQueryPending(req.postboard);
+                        }, {postboard: this.postboard}
+                    );
+                }).bind({postboard: req.postboard})
+            });
         }
 
-        if( _hashtagPendingPosts.length ) {
-            if( !postboard.children().length || autoUpdateHashtag ) {
-                displayHashtagPending(postboard);
-            } else {
-                var newTweetsBar = postboard.closest("div").find(".postboard-news");
-                newTweetsBar.text(polyglot.t("new_posts", _hashtagPendingPosts.length));
-                newTweetsBar.fadeIn("slow");
-                postboard.closest("div").find(".postboard-loading").hide();
-            }
+        if (!req.postboard.children().length || autoUpdateQuery) {
+            displayQueryPending(req.postboard);
+        } else {
+            req.postboard.closest('div').find('.postboard-news')  // FIXME we'd replace 'div' with '.postboard' but need to dig through tmobile first
+                .text(polyglot.t('new_posts', _queryPendingPosts[req.id].length))
+                .fadeIn('slow')
+            ;
+            req.postboard.closest('div').find('.postboard-loading').hide();
         }
     }
 }
 
-function displayHashtagPending(postboard) {
-    attachPostsToStream(postboard, _hashtagPendingPosts, false);
+function displayQueryPending(postboard) {
+    var reqId = postboard.attr('data-request-id');
+
+    attachPostsToStream(postboard, _queryPendingPosts[reqId], false);
+    _queryPendingPosts[reqId] = [];
+
     $.MAL.postboardLoaded();
-    _hashtagPendingPosts = [];
 }

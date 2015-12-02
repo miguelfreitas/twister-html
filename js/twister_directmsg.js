@@ -50,10 +50,11 @@ function processDMsnippet(dmUsers, dmThreadList, forGroup) {
 }
 
 function requestDmConversationModal(postboard, dm_screenname) {
-    if (postboard.is('html *')) {
-        requestDmConversation(postboard, dm_screenname);
-        setTimeout(requestDmConversationModal, 1000, postboard, dm_screenname);
-    }
+    if (!isModalWithElemExists(postboard))
+        return;
+
+    requestDmConversation(postboard, dm_screenname);
+    setTimeout(requestDmConversationModal, 1000, postboard, dm_screenname);
 }
 
 function requestDmConversation(postboard, dm_screenname) {

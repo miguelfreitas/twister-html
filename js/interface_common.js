@@ -139,8 +139,42 @@ function resumeModal(event) {
             // TODO also need reset modal height here maybe and then compute new scroll
             if (modal.scroll)
                 modal.self.find($(modal.scroll.targetSelector).scrollTop(modal.scroll.top));
+
+            if (modal.resume && typeof modal.resume.cbFunc === 'function')
+                modal.resume.cbFunc(modal.resume.cbArg);
         });
     }
+}
+
+function focusModalWithElement(elem, cbFunc, cbArg) {
+    if (elem.jquery ? elem.is('html *') : $(elem).is('html *')) {
+        cbFunc(cbArg);
+        return true;
+    }
+
+    var hash = getHashOfMinimizedModalWithElem(elem);
+    if (hash) {
+        _minimizedModals[hash].resume = {cbFunc: cbFunc, cbArg: cbArg};
+        _minimizedModals[hash].btnResume.click();
+        return true;
+    }
+
+    return false;
+}
+
+function getHashOfMinimizedModalWithElem(elem) {
+    for (var i in _minimizedModals)
+        if (_minimizedModals[i] && _minimizedModals[i].self.find(elem).length)
+            return i;
+
+    return '';
+}
+
+function isModalWithElemExists(elem) {
+    if (elem.jquery ? elem.is('html *') : $(elem).is('html *'))
+        return true;
+    else
+        return getHashOfMinimizedModalWithElem(elem) ? true : false;
 }
 
 function confirmPopup(event, req) {
@@ -331,29 +365,37 @@ function openHashtagModalFromSearchHandler(hashtag) {
         title: '#' + hashtag
     });
 
-    clearHashtagProcessed();
-    updateHashtagModal(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
+    setupQueryModalUpdating(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
 }
 
-function updateHashtagModal(postboard, hashtag, resource, timeoutArgs) {
-    if (postboard.is('html *')) {
-        requestHashtag(postboard, hashtag, resource, timeoutArgs);
+function setupQueryModalUpdating(postboard, query, resource) {
+    var req = {
+        postboard: postboard,
+        query: query,
+        resource: resource,
+        id: query + '@' + resource
+    };
 
-        if (_hashtagPendingPostsUpdated) {
-            if (resource !== 'mention' && $.Options.showDesktopNotifPostsModal.val === 'enable') {
-                $.MAL.showDesktopNotif (false, polyglot.t('You got')+' '+polyglot.t('new_posts', _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', $.Options.showDesktopNotifPostsModalTimer.val, function() {
-                        $('.postboard-news').hide();
-                        displayHashtagPending($('.hashtag-modal .postboard-posts'));
-                    }, false)
-            }
-            _hashtagPendingPostsUpdated = 0;
-        }
+    postboard.attr('data-request-id', req.id);
 
-        // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
-        // our first query above should be faster (with default timeoutArgs of twisterd),
-        // then we may possibly collect more posts on our second try by waiting more.
-        setTimeout(updateHashtagModal, 5000, postboard, hashtag, resource, [10000,2000,3]);
+    requestQuery(req);
+
+    // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
+    // our first query above should be faster (with default timeoutArgs of twisterd),
+    // then we may possibly collect more posts on our second try by waiting more.
+    req.timeoutArgs = [10000, 2000, 3];
+
+    postboard.attr('data-request-interval', setInterval(updateQueryModal, 5000, req));  // FIXME
+}
+
+function updateQueryModal(req) {
+    if (!isModalWithElemExists(req.postboard)) {
+        clearInterval(req.postboard.attr('data-request-interval'));
+        clearQueryProcessed(req.id);
+        return;
     }
+
+    requestQuery(req);
 }
 
 function openMentionsModal(e) {
@@ -382,12 +424,16 @@ function openMentionsModalHandler(username) {
         title: polyglot.t('users_mentions', {username: username})
     });
 
-    clearHashtagProcessed();
-    updateHashtagModal(modal.content.find('.postboard-posts'), username, 'mention');
+    setupQueryModalUpdating(modal.content.find('.postboard-posts'), username, 'mention');
 
     if (username === defaultScreenName) {
         // obtain already cached mention posts from twister_newmsgs.js
-        processHashtag(modal.content.find('.postboard-posts'), defaultScreenName, getMentionsData());
+        processQuery({
+            postboard: modal.content.find('.postboard-posts'),
+            query: defaultScreenName,
+            resource: 'mention',
+            posts: getMentionsData()
+        });
         resetMentionsCount();
     }
 }
@@ -473,13 +519,8 @@ function newConversationModal(username, resource) {
             var postLi = postboard.children().first()
                 .css('display', 'none');
             getTopPostOfConversation(postLi, null, postboard);
-        }, {content:content}
+        }, {content: content}
     );
-
-    content.find('.postboard-news').on('click', function () {
-        $(this).hide();
-        displayHashtagPending($('.conversation-modal .postboard-posts'));
-    });
 
     return content;
 }
@@ -494,7 +535,7 @@ function openConversationClick(e) {
         ':post' + postData.attr('data-id');
 }
 
-function openConversationModal(username,resource) {
+function openConversationModal(username, resource) {
     openModal({
         classAdd: 'conversation-modal',
         content: newConversationModal(username, resource),
@@ -1693,7 +1734,7 @@ function initInterfaceCommon() {
 
     $('#hashtag-modal-template .postboard-news').on('click', function () {
         $(this).hide();
-        displayHashtagPending($('.hashtag-modal .postboard-posts'));
+        displayQueryPending($('.hashtag-modal .postboard-posts'));
     });
 
     replaceDashboards();

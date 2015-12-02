@@ -538,22 +538,27 @@ function encode_utf8(s) {
     return s;
 }
 
-var hashtag_elem;
-var hashtag_tag;
-var hashtag_res;
-function setupHashtagOrMention( ulElem, tag, res) {
-    hashtag_elem = ulElem;
-    hashtag_tag = tag;
-    hashtag_res = res;
-    hashtag_elem.text("");
+var tmobileQueryReq = {};  // FIXME need to rework all that searching
+
+function setupHashtagOrMention(postboard, tag, res) {
     $.MAL.setPostTemplate( $("#post-template-home") );
     $.mobile.showPageLoadingMsg();
-    clearHashtagProcessed();
-    if( tag == defaultScreenName && res == "mention" ) {
+
+    var reqId = tag + '@' + res;
+
+    clearQueryProcessed(reqId);
+
+    tmobileQueryReq.postboard = postboard.text('').attr('data-request-id', reqId);
+    tmobileQueryReq.query = tag;
+    tmobileQueryReq.resource = res;
+
+    if (tag === defaultScreenName && res === 'mention') {
         // obtain already cached mention posts from twister_newmsgs.js
-        processHashtag(hashtag_elem, defaultScreenName, getMentionsData() );
+        tmobileQueryReq.posts = getMentionsData();
+        processQuery(tmobileQueryReq);
     }
-    requestHashtag(hashtag_elem,hashtag_tag,hashtag_res);
+
+    requestQuery(tmobileQueryReq);
 }
 
 // every 2 seconds do something page specific.
@@ -575,10 +580,12 @@ function tmobileTick() {
                     }
                 }, {} );
     }
-    if( curPage == "mentions" ||  curPage == "hashtag" ) {
-        autoUpdateHashtag = true;
-        requestHashtag(hashtag_elem,hashtag_tag,hashtag_res);
+
+    else if (curPage === 'mentions' || curPage === 'hashtag') {
+        autoUpdateQuery = true;
+        requestQuery(tmobileQueryReq);
     }
+
     if( curPage == "dmchat" ) {
         requestDmConversation($("#dmchat ul.direct-messages-list"),dmChatUser);
     }
