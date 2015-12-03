@@ -312,8 +312,8 @@ twisterOptions.prototype.initControls = function () {
 
     $('#testDesktopNotif').on('click', function () {
         $.MAL.showDesktopNotification({
-            title: polyglot.t('notify_desktop_test'),
-            body: 'twister_notification_test',
+            body: polyglot.t('notify_desktop_test'),
+            tag: 'twister_notification_test',
             funcClick: function () {
                 alert(polyglot.t('notify_desktop_perm_denied', {'this_domain': document.domain}));
             }
