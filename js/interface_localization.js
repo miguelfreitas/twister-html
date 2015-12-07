@@ -2538,9 +2538,9 @@ if(preferredLanguage == "de"){
       "Detailed information": "Detaillierte Informationen",
       "DHT network down.": "DHT-Netzwerk nicht verfügbar.",
       "Direct Messages": "Direktnachrichten",
-      "Group Messages": "Group Messages",
-      "Group Messages — New Group Creation": "Group Messages — New Group Creation",
-      "Group Messages — Join Group": "Group Messages — Join Group",
+      "Group Messages": "Gruppennachrichten",
+      "Group Messages — New Group Creation": "Gruppennachrichten — Neue Gruppe erstellen",
+      "Group Messages — Join Group": "Gruppennachrichten — Gruppe beitreten",
       "direct_messages_with": "Direktnachrichten mit %{username}",
       "Disable": "Deaktivieren",
       "Display mentions to @": "Zeige Erwähnungen von @", //Ist das richtig? Ich weiß nicht, in welchem Zusammenhang das benutzt wird.
