@@ -90,6 +90,28 @@
               <label>Active DHT nodes: </label>
               <span class="dht-nodes">0</span>
           </li>
+          <li class="not-using-proxy" style="display:none;">
+              <label>External IP: </label>
+              <span class="ext-ip"></span>
+          </li>
+          <li class="not-using-proxy" style="display:none;">
+              <label>External Port 1 (TCP): </label>
+              <span class="ext-port1"></span>
+              <a class="test-ext-port1">
+                 <button>Test open port (external site)</button>
+              </a>
+          </li>
+          <li class="not-using-proxy" style="display:none;">
+              <label>External Port 2 (TCP+UDP): </label>
+              <span class="ext-port2"></span>
+              <a class="test-ext-port2">
+                 <button>Test open port (external site)</button>
+              </a>
+          </li>
+          <li class="using-proxy" style="display:none;">
+              <label>Proxy: </label>
+              <span class="proxy"></span>
+          </li>
           <li>
               <label>Force connection to peer:</label>
               <input class="new-peer-addr" type="textbox" placeholder="peer address" size="20"/>

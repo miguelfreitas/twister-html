@@ -53,6 +53,20 @@ function requestNetInfo(cbFunc, cbArg) {
                    $(".userMenu-dhtindicator a").text(twisterDhtNodes);
                    $(".version").text(twisterDisplayVersion);
 
+                   if( ret.proxy !== undefined && ret.proxy.length ) {
+                       $(".proxy").text(ret.proxy);
+                       $(".using-proxy").show();
+                       $(".not-using-proxy").hide();
+                   } else {
+                       $(".ext-ip").text(ret.ext_addr_net1);
+                       $(".ext-port1").text(ret.ext_port1);
+                       $(".ext-port2").text(ret.ext_port2);
+                       $(".test-ext-port1").attr("href","http://www.yougetsignal.com/tools/open-ports/?port=" + ret.ext_port1);
+                       $(".test-ext-port2").attr("href","http://www.yougetsignal.com/tools/open-ports/?port=" + ret.ext_port2);
+                       $(".using-proxy").hide();
+                       $(".not-using-proxy").show();
+                   }
+
                    $(".dht-torrents").text(ret.dht_torrents);
                    $(".num-peers").text(ret.num_peers);
                    $(".peerlist-size").text(ret.peerlist_size);
