@@ -158,6 +158,12 @@ function requestRTs(postLi)
 
 function appendPostToContainer(postFromJson, containerToAppend)
 {
+    // posts without 'msg' may be used for metadata like 'url'
+    // and are not meant to be displayed.
+    if (typeof(postFromJson['userpost']['msg']) === 'undefined' &&
+        typeof(postFromJson['userpost']['rt']) === 'undefined' )
+        return;
+
     var newStreamPost = postToElem(postFromJson, "original");
     newStreamPost.hide();
     containerToAppend.append( newStreamPost );
