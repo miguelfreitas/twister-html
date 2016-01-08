@@ -80,8 +80,12 @@ function requestDmConversation(postboard, peerAlias) {
 }
 
 function processDmConversation(stream, peerAlias, posts) {
+    if (!isModalWithElemExists(stream))
+        return;
+
     var streamItems = stream.children();
     var streamPostsIDs = [];
+    var newPosts = 0;
 
     for (var i = 0; i < streamItems.length; i++) {
         streamPostsIDs.push(parseInt(streamItems.eq(i).attr('data-id')));
@@ -91,6 +95,7 @@ function processDmConversation(stream, peerAlias, posts) {
         for (var i = 0; i < posts[peerAlias].length; i++) {
             if (streamPostsIDs.indexOf(posts[peerAlias][i].id) === -1) {
                 var lastPostID = posts[peerAlias][i].id;
+                newPosts++;
                 postToElemDM(posts[peerAlias][i], defaultScreenName, peerAlias)
                     .attr('data-id', lastPostID)
                     .appendTo(stream)
@@ -100,8 +105,39 @@ function processDmConversation(stream, peerAlias, posts) {
         }
         $.MAL.dmChatListLoaded(stream);
     }
-    if (typeof lastPostID !== 'undefined')
+
+    if (newPosts) {
         resetNewDMsCountForUser(peerAlias, lastPostID);
+
+        if (getHashOfMinimizedModalWithElem(stream)) {
+            $.MAL.soundNotifyDM();
+            _newDMsPerUser[peerAlias] += newPosts;
+            if (peerAlias[0] === '*')
+                $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+            else
+                $.MAL.updateNewDMsUI(getNewDMsCount());
+
+            if (!$.hasOwnProperty('mobile') && $.Options.showDesktopNotifDMs.val === 'enable')
+                $.MAL.showDesktopNotification({
+                    body: peerAlias[0] === '*' ?
+                        polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', newPosts) + '.'
+                        : polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', newPosts) + '.',
+                    tag: 'twister_notification_new_DMs',
+                    timeout: $.Options.showDesktopNotifDMsTimer.val,
+                    funcClick: (function() {
+                        focusModalWithElement(this.postboard,
+                            function (peerAlias) {
+                                _newDMsPerUser[peerAlias] = 0;
+                                if (peerAlias[0] === '*')
+                                    $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+                                else
+                                    $.MAL.updateNewDMsUI(getNewDMsCount());
+                            }, this.peerAlias);
+                    }).bind({postboard: stream, peerAlias: peerAlias})
+                });
+            // TODO here we need to set new DMs counter on minimized modal button
+        }
+    }
 }
 
 function directMsgSubmit(e) {
