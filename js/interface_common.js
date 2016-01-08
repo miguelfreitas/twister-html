@@ -148,7 +148,8 @@ function resumeModal(event) {
 
 function focusModalWithElement(elem, cbFunc, cbArg) {
     if (elem.jquery ? elem.is('html *') : $(elem).is('html *')) {
-        cbFunc(cbArg);
+        if (typeof cbFunc === 'function')
+            cbFunc(cbArg);
         return true;
     }
 
