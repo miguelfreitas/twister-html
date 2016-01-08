@@ -1570,9 +1570,8 @@ function postSubmit(e, oldLastPostId) {
 
         $(textArea[0]).remove();
 
-        oldLastPostId = lastPostId;
         doSubmitPost(postText, postData);
-        setTimeout(postSubmit, 1000, btnPostSubmit, oldLastPostId);
+        setTimeout(postSubmit, 1000, btnPostSubmit, lastPostId);
 
         return;
     }
@@ -1581,9 +1580,7 @@ function postSubmit(e, oldLastPostId) {
         closePrompt();
     else {
         textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
-        var tweetForm = btnPostSubmit.closest('form');
-        var remainingCount = tweetForm.find('.post-area-remaining');
-        remainingCount.text(140);
+        btnPostSubmit.closest('form').find('.post-area-remaining').text('140');
 
         if (btnPostSubmit.closest('.post-area,.post-reply-content')) {
             $('.post-area-new').removeClass('open').find('textarea').blur();
