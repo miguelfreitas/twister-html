@@ -3545,7 +3545,7 @@ if(preferredLanguage == "tr"){
       "Retransmit": "Tekar ilet",
       "Retransmits": "Tekrar iletenler",
       "Retransmitted by": "Tekrar ileten",
-      "Switch to Reply": "'Yanıt ara' yüzü...",
+      "Switch to Reply": "'Yanıt' ara yüzü...",
       "Switch to Retransmit": "'Yeniden ilet' ara yüzü",
       "search": "ara",
       "seconds": "%{smart_count} saniye |||| %{smart_count} saniye",
