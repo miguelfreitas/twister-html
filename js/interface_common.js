@@ -557,7 +557,7 @@ function watchHashChange(e) {
         if (notFirstModalView && notNavigatedBackToFirstModalView) {
             $('.modal-back').css('display', 'inline');
         } else {
-            window.history.pushState({showCloseButton: false}, null, null);
+            window.history.replaceState({showCloseButton: false}, '', window.location.pathname + window.location.hash);
             $('.modal-back').css('display', 'none');
         }
     }
