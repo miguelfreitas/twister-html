@@ -349,6 +349,8 @@ var MAL = function()
     }
 
     this.showDMchat = function(req) {
+        if (typeof req !== 'object')
+            req = {};
         if (req.alias) {
             if ($.hasOwnProperty('mobile')) {
                 $.mobile.navigate(this.dmchatUrl(req.alias));
