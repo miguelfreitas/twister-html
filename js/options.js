@@ -310,8 +310,14 @@ twisterOptions.prototype.initControls = function () {
         }
     }
 
-    $('#testDesktopNotif').on('click', function() {
-        $.MAL.showDesktopNotif(false, polyglot.t('notify_desktop_test'), false,'twister_notification_test', false, false, function() { alert(polyglot.t('notify_desktop_perm_denied', {'this_domain': document.domain})) })
+    $('#testDesktopNotif').on('click', function () {
+        $.MAL.showDesktopNotification({
+            body: polyglot.t('notify_desktop_test'),
+            tag: 'twister_notification_test',
+            funcClick: function () {
+                alert(polyglot.t('notify_desktop_perm_denied', {'this_domain': document.domain}));
+            }
+        });
     });
 
     tickOptionsPostPreview();

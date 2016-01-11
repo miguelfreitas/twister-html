@@ -500,6 +500,39 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     margin: 4px 0 0 -5px;
 }
 
+#modals-minimized {
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 9000;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    width: 900px;
+    height: 24px;
+    overflow: auto;
+    margin-left: -450px;
+    padding: 0 4%;
+}
+
+#modals-minimized.w1200 {
+    width: 1200px;
+    margin-left: -600px;
+}
+
+#modals-minimized li {
+    display: inline-block;
+    opacity: .88;
+    font-size: 10px;
+    color: #FFF;
+    background-color: #7691CE;
+    margin: 0 2px;
+    padding: 4px 8px;
+}
+
+#modals-minimized li:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
 /*******************************************************
 ****************** CONFIG SUBMENU & SEARCH RESULTS *****
 *******************************************************/
@@ -531,30 +564,26 @@ input.userMenu-search-field:focus::-ms-input-placeholder {
     right: auto;
     left: 80px;
 }
-.direct-messages,
-.dropdown-menu-item
-{
+
+.dropdown-menu-item {
     display: block;
     padding: 10px;
     font-size: 12px;
     border-top: solid 1px rgba( 69, 71, 77, .1 );
     color: rgba( 0, 0, 0, .7 );
 }
+
 .dropdown-menu-item, .dropdown-menu-item:hover {
     text-decoration: none;
 }
-.dropdown-menu-item:hover {
-    background: #45474d;
-    color: #fff;
+
+.dropdown-menu-item:hover,
+.userMenu-search-sugestions a:hover,
+.userMenu-search-profiles li:hover a {
+    background: #45474D;
+    color: #FFF;
 }
 
-.direct-messages:hover,
-.userMenu-search-sugestions a:hover,
-.userMenu-search-profiles li:hover a
-{
-    background: #45474d;
-    color: #fff;
-}
 .userMenu-search-profiles li:hover span
 {
     color: #fff;
@@ -1313,6 +1342,7 @@ textarea.splited-post {
 }
 
 /* external http links */
+.confirm-popup .message a,
 .post-text a {
     font: italic 13px "Open Sans", sans-serif;
     text-decoration: none;
@@ -1324,11 +1354,13 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a:hover,
 .post-text a:hover {
     color: #e18881;
     opacity: .8;
 }
 
+.confirm-popup .message a[href^="http"]:after,
 .post-text a[href^="http"]:after {
     content: '';
     display: inline-block;
@@ -1347,10 +1379,12 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a[href^="http"]:hover:after,
 .post-text a[href^="http"]:hover:after {
     opacity: .8;
 }
 
+.confirm-popup .message a[href^="#profile"],
 .post-text a[href^="#profile"], .follow-suggestions a[href^="#profile"] {
     color: #5e8da4;
     text-decoration: none;
@@ -1361,6 +1395,7 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a[href^="#profile"]:hover,
 .post-text a[href^="#profile"]:hover, .follow-suggestions a[href^="#profile"]:hover {
     color: #76b2ce;
 }
@@ -1369,6 +1404,7 @@ textarea.splited-post {
     font-size: 11px;
 }
 
+.confirm-popup .message a[href^="#hashtag"],
 .toptrends-list a[href^="#hashtag"], .post-text a[href^="#hashtag"] {
     color: #5e72a4;
     text-decoration: none;
@@ -1379,6 +1415,7 @@ textarea.splited-post {
     transition: all 200ms;
 }
 
+.confirm-popup .message a[href^="#hashtag"]:hover,
 .toptrends-list a[href^="#hashtag"]:hover, .post-text a[href^="#hashtag"]:hover {
     color: #768fce;
 }
@@ -1868,7 +1905,7 @@ textarea.splited-post {
     height: 100%;
 }
 
-.modal-close {
+.modal-close, .minimize-modal {
     position: absolute;
     right: 0;
     top: 0;
@@ -1880,15 +1917,19 @@ textarea.splited-post {
     transition: all .1s linear;
 }
 
-.modal-close:hover {
+.modal-close:hover, .minimize-modal:hover {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
+}
+
+.minimize-modal {
+    right: 30px;
 }
 
 .modal-back,
 .mark-all-as-read {
     position: absolute;
-    right: 30px;
+    right: 60px;
     top: 0;
     padding: 1px 10px;
     cursor: pointer;
@@ -1903,6 +1944,14 @@ textarea.splited-post {
 .mark-all-as-read:hover {
     color: #fff;
     background: rgba( 0, 0, 0, .1 );
+}
+
+.mark-all-as-read {
+    right: 90px;
+}
+
+.mark-all-as-read:before {
+    content: '\2714';
 }
 
 .modal-wrapper.reply .post {
@@ -2018,14 +2067,6 @@ textarea.splited-post {
 
 .direct-messages-thread li.message:hover {
     background: none;
-}
-
-.mark-all-as-read {
-    right: 60px;
-}
-
-.mark-all-as-read:before {
-    content: '\2714';
 }
 
 /*************************************

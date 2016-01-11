@@ -90,6 +90,28 @@
               <label>Active DHT nodes: </label>
               <span class="dht-nodes">0</span>
           </li>
+          <li class="not-using-proxy" style="display:none;">
+              <label>External IP: </label>
+              <span class="ext-ip"></span>
+          </li>
+          <li class="not-using-proxy" style="display:none;">
+              <label>External Port 1 (TCP): </label>
+              <span class="ext-port1"></span>
+              <a class="test-ext-port1" target="_blank">
+                 <button>Test open port (external site)</button>
+              </a>
+          </li>
+          <li class="not-using-proxy" style="display:none;">
+              <label>External Port 2 (TCP+UDP): </label>
+              <span class="ext-port2"></span>
+              <a class="test-ext-port2" target="_blank">
+                 <button>Test open port (external site)</button>
+              </a>
+          </li>
+          <li class="using-proxy" style="display:none;">
+              <label>Proxy: </label>
+              <span class="proxy"></span>
+          </li>
           <li>
               <label>Force connection to peer:</label>
               <input class="new-peer-addr" type="textbox" placeholder="peer address" size="20"/>
@@ -235,6 +257,22 @@
     <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
     <!-- template for user links in message (open profile modal) -->
     <a id="hashtag-link-template" class="open-hashtag-modal"></a>
+
+    <div class="prompt-wrapper">
+      <div class="modal-header">
+        <h3></h3>
+        <span class="modal-close prompt-close">&times;</span>
+      </div>
+      <div class="modal-content"></div>
+    </div>
+
+    <div id="confirm-popup-template">
+        <div class="message"></div>
+        <div class="modal-buttons">
+            <button class="confirm"></button>
+            <button class="cancel"></button>
+        </div>
+    </div>
   </div>
 
   <audio id="player"></audio>

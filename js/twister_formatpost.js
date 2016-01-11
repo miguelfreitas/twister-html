@@ -311,9 +311,8 @@ function postToElemDM(dmData, localUser, remoteUser) {
 }
 
 // convert message text to html, featuring @users and links formating.
-function htmlFormatMsg(msg) {
+function htmlFormatMsg(msg, opt) {
     // TODO: add options for emotions; msg = $.emotions(msg);
-    // TODO make markup optionally mutable ?
 
     function getSubStrStart(str, startPoint, stopChars, isStopCharMustExist, stopCharsTrailing) {
         for (var i = startPoint; i > -1; i--) {
@@ -349,8 +348,8 @@ function htmlFormatMsg(msg) {
         return i;
     }
 
-    function markout(msg, chr, tag) {
-        if ($.Options.postsMarkout.val === 'ignore')
+    function markout(msg, markoutOpt, chr, tag) {
+        if (markoutOpt === 'ignore')
             return msg;
 
         function isWhiteSpacesBetween(i, j) {
@@ -516,7 +515,7 @@ function htmlFormatMsg(msg) {
         }
 
         // changing the string
-        if (chr === '`' && $.Options.postsMarkout.val === 'apply') {  // if $.Options.postsMarkout.val === 'clear' then ` does not escapes anythyng so it needs to be handled like other tags
+        if (chr === '`' && markoutOpt === 'apply') {  // if markoutOpt === 'clear' then ` does not escape anythyng so it needs to be handled like other tags
             for (i = 0; i < p.length; i++) {
                 if (p[i].a > -1) {
                     if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
@@ -540,10 +539,10 @@ function htmlFormatMsg(msg) {
                 }
             }
         } else {
-            if ($.Options.postsMarkout.val === 'apply') {
+            if (markoutOpt === 'apply') {
                 t = '</' + tag + '>';
                 tag = '<' + tag + '>';
-            } else {  // $.Options.postsMarkout.val === 'clear' so we're clearing markup
+            } else {  // markoutOpt === 'clear' so we're clearing markup
                 t = '';
                 tag = '';
             }
@@ -611,6 +610,11 @@ function htmlFormatMsg(msg) {
         return {html: '', mentions: []};
     }
 
+    if (opt && opt.markout)
+        var markoutOpt = opt.markout;
+    else
+        var markoutOpt = $.Options.postsMarkout.val;
+
     var mentionsChars = 'abcdefghijklmnopqrstuvwxyz_0123456789';
     var stopCharsTrailing = '/\\*~_-`.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
     var stopCharsTrailingUrl = stopCharsTrailing.slice(1);
@@ -626,11 +630,11 @@ function htmlFormatMsg(msg) {
 
     msg = {str: escapeHtmlEntities(msg), htmlEntities: []};
 
-    msg = markout(msg, '`', 'samp');  // <samp> tag is kind of monospace, here sequence of chars inside it will be escaped from markup
+    msg = markout(msg, markoutOpt, '`', 'samp');  // <samp> tag is kind of monospace, here sequence of chars inside it will be escaped from markup
 
     // handling links
     for (i = 0; i < msg.str.length - 7; i++) {
-        if (msg.str.slice(i, i + 2) === '](' && $.Options.postsMarkout.val !== 'ignore') {
+        if (msg.str.slice(i, i + 2) === '](' && markoutOpt !== 'ignore') {
             // FIXME there can be text with [] inside [] or links with () we need to handle it too
             j = getSubStrStart(msg.str, i - 2, '[', true, '');
             if (j < i - 1) {
@@ -658,31 +662,31 @@ function htmlFormatMsg(msg) {
                         } else {
                             if (getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '') < k)  // use only first word as href target, others drop silently
                                 k = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '');
-                            if ($.Options.postsMarkout.val === 'apply') {
+                            if (markoutOpt === 'apply') {
                                 msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
                                     newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
                                         proxyURL(msg.str.slice(i, k + 1)),
                                         applyHtml(  // we're trying markup inside [] of []()
                                             markout(markout(markout(markout(
                                                 {str: linkName, htmlEntities: msg.htmlEntities},
-                                                    '*', 'b'),  // bold
-                                                    '~', 'i'),  // italic
-                                                    '_', 'u'),  // underlined
-                                                    '-', 's')  // striketrough
+                                                    markoutOpt, '*', 'b'),  // bold
+                                                    markoutOpt, '~', 'i'),  // italic
+                                                    markoutOpt, '_', 'u'),  // underlined
+                                                    markoutOpt, '-', 's')  // striketrough
                                         )
                                             .replace(/&(?!lt;|gt;)/g, '&amp;')
                                     )
                                 );
-                            } else {  // $.Options.postsMarkout.val === 'clear' so we're clearing markup
+                            } else {  // markoutOpt === 'clear' so we're clearing markup
                                 str = msg.str.slice(i, k + 1);
                                 msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
                                     applyHtml(  // we're trying to clear markup inside [] of []()
                                         markout(markout(markout(markout(
                                             {str: linkName, htmlEntities: msg.htmlEntities},
-                                                '*', 'b'),  // bold
-                                                '~', 'i'),  // italic
-                                                '_', 'u'),  // underlined
-                                                '-', 's')  // striketrough
+                                                markoutOpt, '*', 'b'),  // bold
+                                                markoutOpt, '~', 'i'),  // italic
+                                                markoutOpt, '_', 'u'),  // underlined
+                                                markoutOpt, '-', 's')  // striketrough
                                     )
                                         .replace(/&(?!lt;|gt;)/g, '&amp;')
                                 );
@@ -778,10 +782,10 @@ function htmlFormatMsg(msg) {
 
     // handling text style markup
     msg = markout(markout(markout(markout(msg,
-            '*', 'b'),  // bold
-            '~', 'i'),  // italic
-            '_', 'u'),  // underlined
-            '-', 's')  // striketrough
+            markoutOpt, '*', 'b'),  // bold
+            markoutOpt, '~', 'i'),  // italic
+            markoutOpt, '_', 'u'),  // underlined
+            markoutOpt, '-', 's')  // striketrough
     ;
 
     // handling splitted posts numbering and escaping ampersands, qoutes and apostrophes
@@ -794,6 +798,7 @@ function htmlFormatMsg(msg) {
         .replace(/&(?!lt;|gt;)/g, '&amp;')  // FIXME in many cases there is no need to escape ampersand in HTML 5
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&apos;')
+    ;
 
     // applying html entities to msg.str and converting msg to string back
     msg = applyHtml(msg);

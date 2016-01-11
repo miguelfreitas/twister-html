@@ -6,6 +6,8 @@
 // Post actions: submit, count characters
 
 var window_scrollY = 0;
+var _watchHashChangeRelaxDontDoIt = window.location.hash === '' ? true : false;
+var _minimizedModals = {};
 
 function openModal(modal) {
     if (!modal.classBase) {
@@ -47,7 +49,10 @@ function openModal(modal) {
 function closeModal() {
     closeModalHandler('.modal-wrapper');
 
-    window.location.hash = '#';
+    if (window.location.hash !== '') {
+        _watchHashChangeRelaxDontDoIt = true;
+        window.location.hash = '#';
+    }
     window.scroll(window.pageXOffset, window_scrollY);
     $('body').css({
         'overflow': 'auto',
@@ -65,9 +70,127 @@ function closeModalHandler(classBase) {
     modalWindows.fadeOut('fast', function() {modalWindows.remove();});
 }
 
+function minimizeModal(modal, switchMode) {
+    function minimize(modal, scroll) {
+        modal.detach();
+
+        btnResume = $('<li>' + modal.find('.modal-header h3').text() + '</li>')
+            .on('click', {hashString: window.location.hash}, resumeModal)
+            .appendTo($('#modals-minimized'))
+        ;
+
+        _minimizedModals[window.location.hash] = {
+            self: modal,
+            scroll: scroll,
+            btnResume: btnResume
+        };
+    }
+
+    var scroll;  // MUST be setted before modal.detach(), modal.fadeOut() and so on
+    if (modal.is('.directMessages') || modal.is('.group-messages-new-group')
+        || modal.is('.group-messages-join-group')) {
+            scroll = {
+                targetSelector: '.modal-content',
+                top: modal.find('.modal-content').scrollTop()
+            };
+    } else if (modal.is('.profile-modal')) {
+        if (modal.find('.profile-card').attr('data-screen-name')[0] === '*')
+            scroll = {
+                targetSelector: '.modal-content .members',
+                top: modal.find('.modal-content .members').scrollTop()
+            };
+        else
+            scroll = {
+                targetSelector: '.modal-content .postboard-posts',
+                top: modal.find('.modal-content .postboard-posts').scrollTop()
+            };
+    }
+
+    if (switchMode)
+        minimize(modal, scroll);
+    else
+        modal.fadeOut('fast', function () {
+            minimize(modal, scroll);
+
+            _watchHashChangeRelaxDontDoIt = true;
+            window.location.hash = '#';
+            window.scroll(window.pageXOffset, window_scrollY);
+            $('body').css({
+                'overflow': 'auto',
+                'margin-right': '0'
+            });
+        });
+}
+
+function resumeModal(event) {
+    var elemEvent = $(event.target);
+    elemEvent.fadeOut('fast', function () {elemEvent.remove();});
+
+    var modalActive = $('.modal-wrapper:not(#templates *)');
+    if (modalActive.length)
+        minimizeModal(modalActive, true);
+    else {
+        window_scrollY = window.pageYOffset;
+        $('body').css('overflow', 'hidden');
+    }
+
+    var modal = _minimizedModals[event.data.hashString];
+    if (modal) {
+        _minimizedModals[event.data.hashString] = undefined;
+        if (window.location.hash !== event.data.hashString) {
+            _watchHashChangeRelaxDontDoIt = true;
+            window.location.hash = event.data.hashString;
+        }
+        modal.self.prependTo('body').fadeIn('fast', function () {
+            // TODO also need reset modal height here maybe and then compute new scroll
+            if (modal.scroll)
+                modal.self.find($(modal.scroll.targetSelector).scrollTop(modal.scroll.top));
+
+            if (modal.resume && typeof modal.resume.cbFunc === 'function')
+                modal.resume.cbFunc(modal.resume.cbArg);
+        });
+    }
+}
+
+function focusModalWithElement(elem, cbFunc, cbArg) {
+    if (elem.jquery ? elem.is('html *') : $(elem).is('html *')) {
+        if (typeof cbFunc === 'function')
+            cbFunc(cbArg);
+        return true;
+    }
+
+    var hash = getHashOfMinimizedModalWithElem(elem);
+    if (hash) {
+        _minimizedModals[hash].resume = {cbFunc: cbFunc, cbArg: cbArg};
+        _minimizedModals[hash].btnResume.click();
+        return true;
+    }
+
+    return false;
+}
+
+function getHashOfMinimizedModalWithElem(elem) {
+    for (var i in _minimizedModals)
+        if (_minimizedModals[i] && _minimizedModals[i].self.find(elem).length)
+            return i;
+
+    return '';
+}
+
+function isModalWithElemExists(elem) {
+    if (elem.jquery ? elem.is('html *') : $(elem).is('html *'))
+        return true;
+    else
+        return getHashOfMinimizedModalWithElem(elem) ? true : false;
+}
+
 function confirmPopup(event, req) {
-    if (event && event.stopPropagation)
+    if (event && event.stopPropagation) {
         event.stopPropagation();
+
+        if (!req && event.data)
+            req = event.data;
+    }
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
@@ -77,7 +200,7 @@ function confirmPopup(event, req) {
     });
 
     if (req.messageTxt)
-        modal.content.find('.message').text(req.messageTxt);
+        modal.content.find('.message').html(htmlFormatMsg(req.messageTxt, {markout: 'apply'}).html);
 
     var btn = modal.content.find('.confirm');
     if (req.removeConfirm)
@@ -137,7 +260,7 @@ function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
     networkUpdate(function(args) {
         if (!twisterdConnectedAndUptodate) {
             confirmPopup(null, {
-                messageTxt: polyglot.t('switch_to_network'),
+                messageTxt: polyglot.t('confirm_switch_to_network', {page: '/network.html'}),
                 confirmFunc: $.MAL.goNetwork
             });
         } else {
@@ -249,29 +372,37 @@ function openHashtagModalFromSearchHandler(hashtag) {
         title: '#' + hashtag
     });
 
-    clearHashtagProcessed();
-    updateHashtagModal(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
+    setupQueryModalUpdating(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
 }
 
-function updateHashtagModal(postboard, hashtag, resource, timeoutArgs) {
-    if (postboard.is('html *')) {
-        requestHashtag(postboard, hashtag, resource, timeoutArgs);
+function setupQueryModalUpdating(postboard, query, resource) {
+    var req = {
+        postboard: postboard,
+        query: query,
+        resource: resource,
+        id: query + '@' + resource
+    };
 
-        if (_hashtagPendingPostsUpdated) {
-            if (resource !== 'mention' && $.Options.showDesktopNotifPostsModal.val === 'enable') {
-                $.MAL.showDesktopNotif (false, polyglot.t('You got')+' '+polyglot.t('new_posts', _hashtagPendingPostsUpdated)+' '+polyglot.t('in search result')+'.', false,'twister_notification_new_posts_modal', $.Options.showDesktopNotifPostsModalTimer.val, function() {
-                        $('.postboard-news').hide();
-                        displayHashtagPending($('.hashtag-modal .postboard-posts'));
-                    }, false)
-            }
-            _hashtagPendingPostsUpdated = 0;
-        }
+    postboard.attr('data-request-id', req.id);
 
-        // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
-        // our first query above should be faster (with default timeoutArgs of twisterd),
-        // then we may possibly collect more posts on our second try by waiting more.
-        setTimeout(updateHashtagModal, 5000, postboard, hashtag, resource, [10000,2000,3]);
+    requestQuery(req);
+
+    // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
+    // our first query above should be faster (with default timeoutArgs of twisterd),
+    // then we may possibly collect more posts on our second try by waiting more.
+    req.timeoutArgs = [10000, 2000, 3];
+
+    postboard.attr('data-request-interval', setInterval(updateQueryModal, 5000, req));  // FIXME
+}
+
+function updateQueryModal(req) {
+    if (!isModalWithElemExists(req.postboard)) {
+        clearInterval(req.postboard.attr('data-request-interval'));
+        clearQueryProcessed(req.id);
+        return;
     }
+
+    requestQuery(req);
 }
 
 function openMentionsModal(e) {
@@ -300,12 +431,16 @@ function openMentionsModalHandler(username) {
         title: polyglot.t('users_mentions', {username: username})
     });
 
-    clearHashtagProcessed();
-    updateHashtagModal(modal.content.find('.postboard-posts'), username, 'mention');
+    setupQueryModalUpdating(modal.content.find('.postboard-posts'), username, 'mention');
 
     if (username === defaultScreenName) {
         // obtain already cached mention posts from twister_newmsgs.js
-        processHashtag(modal.content.find('.postboard-posts'), defaultScreenName, getMentionsData());
+        processQuery({
+            postboard: modal.content.find('.postboard-posts'),
+            query: defaultScreenName,
+            resource: 'mention',
+            posts: getMentionsData()
+        });
         resetMentionsCount();
     }
 }
@@ -391,13 +526,8 @@ function newConversationModal(username, resource) {
             var postLi = postboard.children().first()
                 .css('display', 'none');
             getTopPostOfConversation(postLi, null, postboard);
-        }, {content:content}
+        }, {content: content}
     );
-
-    content.find('.postboard-news').on('click', function () {
-        $(this).hide();
-        displayHashtagPending($('.conversation-modal .postboard-posts'));
-    });
 
     return content;
 }
@@ -412,7 +542,7 @@ function openConversationClick(e) {
         ':post' + postData.attr('data-id');
 }
 
-function openConversationModal(username,resource) {
+function openConversationModal(username, resource) {
     openModal({
         classAdd: 'conversation-modal',
         content: newConversationModal(username, resource),
@@ -425,6 +555,7 @@ function watchHashChange(e) {
         var prevurlsplit = e.oldURL.split('#');
         var prevhashstring = prevurlsplit[1];
 
+        // FIXME need to move back button handling to special function and call it in openModal() and resumeModal()
         var notFirstModalView = (prevhashstring !== undefined && prevhashstring.length > 0);
         var notNavigatedBackToFirstModalView = (window.history.state == null ||
             (window.history.state != null && window.history.state.showCloseButton !== false));
@@ -432,16 +563,31 @@ function watchHashChange(e) {
         if (notFirstModalView && notNavigatedBackToFirstModalView) {
             $('.modal-back').css('display', 'inline');
         } else {
-            window.history.pushState({showCloseButton: false}, null, null);
+            window.history.replaceState({showCloseButton: false}, '', window.location.pathname + window.location.hash);
             $('.modal-back').css('display', 'none');
         }
     }
 
-    loadModalFromHash();
+    if (_watchHashChangeRelaxDontDoIt)
+        _watchHashChangeRelaxDontDoIt = false;
+    else
+        loadModalFromHash();
 }
 
 function loadModalFromHash() {
+    if (_minimizedModals[window.location.hash]) {
+        // need to remove active modal before btnResume.click() or it will be minimized in resumeModal()
+        // e.g. for case when you click on profile link in some modal having this profile's modal minimized already
+        $('.modal-wrapper:not(#templates *)').remove();
+        _minimizedModals[window.location.hash].btnResume.click();
+        return;
+    }
+
     var hashstring = decodeURIComponent(window.location.hash);
+    if (hashstring === '') {
+        closeModal();
+        return;
+    }
     var hashdata = hashstring.split(':');
 
     if (hashdata[0] !== '#web+twister')
@@ -1435,9 +1581,8 @@ function postSubmit(e, oldLastPostId) {
 
         $(textArea[0]).remove();
 
-        oldLastPostId = lastPostId;
         doSubmitPost(postText, postData);
-        setTimeout(postSubmit, 1000, btnPostSubmit, oldLastPostId);
+        setTimeout(postSubmit, 1000, btnPostSubmit, lastPostId);
 
         return;
     }
@@ -1446,9 +1591,7 @@ function postSubmit(e, oldLastPostId) {
         closePrompt();
     else {
         textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
-        var tweetForm = btnPostSubmit.closest('form');
-        var remainingCount = tweetForm.find('.post-area-remaining');
-        remainingCount.text(140);
+        btnPostSubmit.closest('form').find('.post-area-remaining').text('140');
 
         if (btnPostSubmit.closest('.post-area,.post-reply-content')) {
             $('.post-area-new').removeClass('open').find('textarea').blur();
@@ -1526,11 +1669,13 @@ function replaceDashboards() {
         $('.userMenu').addClass('w1200');
         $('.module.who-to-follow').detach().appendTo($('.dashboard.right'));
         $('.module.twistday-reminder').detach().appendTo($('.dashboard.right'));
+        $('#modals-minimized').addClass('w1200');
     } else if (width < 1200 && wrapper.hasClass('w1200')) {
         wrapper.removeClass('w1200');
         $('.userMenu').removeClass('w1200');
         $('.module.who-to-follow').detach().insertAfter($('.module.mini-profile'));
         $('.module.twistday-reminder').detach().insertAfter($('.module.toptrends'));
+        $('#modals-minimized').removeClass('w1200');
     }
 }
 
@@ -1541,6 +1686,10 @@ function initInterfaceCommon() {
         $('.modal-back').css('display', 'none');
         $('.mark-all-as-read').css('display', 'none');
         closeModal();
+    });
+
+    $('.minimize-modal').on('click', function (event) {
+        minimizeModal($(event.target).closest('.modal-wrapper'));
     });
 
     $('.modal-back').on('click', function() {history.back();});
@@ -1593,7 +1742,7 @@ function initInterfaceCommon() {
 
     $('#hashtag-modal-template .postboard-news').on('click', function () {
         $(this).hide();
-        displayHashtagPending($('.hashtag-modal .postboard-posts'));
+        displayQueryPending($('.hashtag-modal .postboard-posts'));
     });
 
     replaceDashboards();
@@ -1712,6 +1861,7 @@ $(document).ready(function()
     var page = path.split("/").pop();
     if (page.indexOf("following.html") === 0) {
         initInterfaceFollowing();
+        initHashWatching();
     } else if (page.indexOf("login.html") === 0) {
         initInterfaceLogin();
     } else if (page.indexOf("network.html") === 0) {

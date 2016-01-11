@@ -835,12 +835,9 @@ function initInterfaceFollowing() {
 }
 
 
-var InterfaceFunctions = function()
-{
-    this.init = function()
-    {
+var InterfaceFunctions = function () {
+    this.init = function () {
         initUser(initFollowing_);
-        initHashWatching();
     };
 
     function initFollowing_(cbFunc, cbArg) {

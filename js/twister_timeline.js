@@ -226,7 +226,7 @@ function attachPostsToStream(stream, posts, isPromoted) {
         }
         if (!isAttached) {
             intrantPost.item.appendTo(stream).show();
-            streamPosts.unshift(intrantPost);
+            streamPosts.push(intrantPost);
         }
     }
 }
@@ -347,6 +347,12 @@ function timelineChangedUser()
 }
 
 function willBeHidden(post){
+    // posts without 'msg' may be used for metadata like 'url'
+    // and are not meant to be displayed.
+    if (typeof(post['userpost']['msg']) === 'undefined' &&
+        typeof(post['userpost']['rt']) === 'undefined' )
+        return true;
+
     if (post['userpost']['n'] === defaultScreenName)
         return false;
 

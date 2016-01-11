@@ -65,6 +65,30 @@
     margin-left: 880px;
     @extend .clear-fix
 
+#modals-minimized
+    background-color: rgba(0, 0, 0, 0)
+    z-index: 9000
+    position: fixed
+    bottom: 0
+    left: 50%
+    width: $site-width
+    height: 24px
+    overflow: auto
+    margin-left: $site-width/2
+    padding: 0 4%
+
+    li
+        display: inline-block
+        opacity: .88
+        font-size: 10px
+        color: #FFF
+        background-color: #66686B
+        margin: 0 2px
+        padding: 4px 8px
+
+        &:hover
+            opacity: 1
+            cursor: pointer
 
 
 /********** CONFIG SUBMENU & SEARCH RESULTS ************/
