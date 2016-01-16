@@ -33,6 +33,8 @@ var InterfaceFunctions = function() {
             requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
         });
 
+        cleanupStorage();
+
         initInterfaceCommon();
         initUserSearch();
         initInterfaceDirectMsg();

@@ -315,11 +315,12 @@ function getGroupChatName( groupalias, item ){
 // data will only cause new requests to fail.
 function _getResourceFromStorage(locator) {
     var storage = $.localStorage;
-    if( storage.isSet(locator) ) {
+    if (storage.isSet(locator)) {
         var storedResource = storage.get(locator);
         var curTime = new Date().getTime() / 1000;
-        // avatar is downloaded once per day
-        if( storedResource.time + 3600*24 > curTime ) {
+        // avatar is downloaded once per day    FIXME why once per day? what about profiles?
+        // FIXME need to check what type of data is requested and what time is allowed for it
+        if (storedResource.time + 86400 > curTime) {  // 3600 * 24
             return storedResource.data;
         }
     }
@@ -332,6 +333,35 @@ function _putResourceIntoStorage(locator, data) {
 
     var storage = $.localStorage;
     storage.set(locator, storedResource);
+}
+
+function cleanupStorage() {
+    var curTime = new Date().getTime() / 1000;
+    var storage = $.localStorage, keys = storage.keys(), item = '';
+    var delAvatars = delProfiles = 0;
+
+    for (var i = 0; i < keys.length; i++) {
+        item = keys[i];
+        // FIXME need to decide what time for type of data is allowed
+        if (item.substr(0, 7) === 'avatar:') {
+            if (storage.get(item).time + 86400 < curTime) {  // 3600 * 24 hours
+                storage.remove(item);
+                delAvatars++;
+                //console.log('local storage item \'' + item + '\' was too old, deleted');
+            }
+        } else if (item.substr(0, 8) === 'profile:') {
+            if (storage.get(item).time + 86400 < curTime) {  // 3600 * 24 hours
+                storage.remove(item);
+                delProfiles++;
+                //console.log('local storage item \'' + item + '\' was too old, deleted');
+            }
+        }
+    }
+
+    console.log('cleaning of storage is completed for ' + (new Date().getTime() / 1000 - curTime) + 's');
+    if (delAvatars) console.log('  ' + delAvatars + ' cached avatars was too old, deleted');
+    if (delProfiles) console.log('  ' + delProfiles + ' cached profiles was too old, deleted');
+    console.log('  ' + 'there was ' + i + ' items in total, now ' + (i - delAvatars - delProfiles));
 }
 
 // get avatar and set it in img.attr("src")
@@ -351,6 +381,7 @@ function getAvatar( username, img ){
         img.attr('src', _avatarMap[username]);
     } else {
         var data = _getResourceFromStorage("avatar:" + username);
+
         if( data ) {
             _avatarMap[username] = data;
             img.attr('src', data);

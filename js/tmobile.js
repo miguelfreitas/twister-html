@@ -101,6 +101,7 @@ var router=new $.mobile.Router(
             initializeTwister( true, true, function() {
                 if( !$("#home .posts").children().length ) {
                     $.mobile.showPageLoadingMsg();
+                    cleanupStorage();
                     getFullname( defaultScreenName, $("#home .rtitle"));
                     $(".mentions-count").attr("href","#mentions?user="+defaultScreenName );
                     $.MAL.setPostTemplate( $("#post-template-home") );
