@@ -382,6 +382,14 @@ function getAvatar(username, img) {
         var data = _getResourceFromStorage('avatar:' + username);
 
         if (data) {
+            switch (data.substr(0, 4)) {
+                case 'jpg/':
+                    data = 'data:image/jpeg;base64,/9j/' + data.slice(4);
+                    break;
+                case 'png/':
+                    data = 'data:image/png;base64,' + data.slice(4);
+                    break;
+            }
             _avatarMap[username] = data;
             img.attr('src', data);
         } else {
@@ -389,8 +397,14 @@ function getAvatar(username, img) {
                 function(req, imagedata) {
                     if (imagedata && imagedata.length) {
                         _avatarMap[req.username] = imagedata;
-                        if (imagedata !== 'img/genericPerson.png')
-                            _putResourceIntoStorage('avatar:' + username, imagedata);
+                        if (imagedata !== 'img/genericPerson.png') {
+                            if (imagedata.substr(0, 27) === 'data:image/jpeg;base64,/9j/')
+                                _putResourceIntoStorage('avatar:' + username, 'jpg/' + imagedata.slice(27));
+                            else if (imagedata.substr(0, 22) === 'data:image/png;base64,')
+                                _putResourceIntoStorage('avatar:' + username, 'png/' + imagedata.slice(22));
+                            else
+                                _putResourceIntoStorage('avatar:' + username, imagedata);
+                        }
                         req.img.attr('src', imagedata);
                     }
                 }, {username: username, img: img}
