@@ -365,7 +365,7 @@ function cleanupStorage() {
 
 // get avatar and set it in img.attr("src")
 // TODO rename to getAvatarImgToELem(), move nin theme related stuff to nin's theme_option.js
-function getAvatar( username, img ){
+function getAvatar(username, img) {
     if (!img.length)
         return;
 
@@ -375,24 +375,25 @@ function getAvatar( username, img ){
         return;
     }
 
-    if( username in _avatarMap ) {
-        //img.attr('src', "data:image/jpg;base64,"+avatarMap[username]);
+    if (_avatarMap[username]) {
+        //img.attr('src', 'data:image/jpg;base64,'+avatarMap[username]);
         img.attr('src', _avatarMap[username]);
     } else {
-        var data = _getResourceFromStorage("avatar:" + username);
+        var data = _getResourceFromStorage('avatar:' + username);
 
-        if( data ) {
+        if (data) {
             _avatarMap[username] = data;
             img.attr('src', data);
         } else {
-            dhtget( username, "avatar", "s",
-                   function(args, imagedata) {
-                       if( imagedata && imagedata.length ) {
-                           _avatarMap[args.username] = imagedata;
-                           _putResourceIntoStorage("avatar:" + username, imagedata);
-                           args.img.attr('src', imagedata);
-                       }
-                   }, {username:username,img:img} );
+            dhtget(username, 'avatar', 's',
+                function(req, imagedata) {
+                    if (imagedata && imagedata.length) {
+                        _avatarMap[req.username] = imagedata;
+                        _putResourceIntoStorage('avatar:' + username, imagedata);
+                        req.img.attr('src', imagedata);
+                    }
+                }, {username: username, img: img}
+            );
         }
     }
 }
