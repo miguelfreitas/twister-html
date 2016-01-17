@@ -328,11 +328,10 @@ function _getResourceFromStorage(locator) {
 }
 
 function _putResourceIntoStorage(locator, data) {
-    var curTime = new Date().getTime() / 1000;
-    var storedResource = {time: curTime, data: data};
-
-    var storage = $.localStorage;
-    storage.set(locator, storedResource);
+    $.localStorage.set(locator, {
+        time: Math.trunc(new Date().getTime() / 1000),
+        data: data
+    });
 }
 
 function cleanupStorage() {
