@@ -389,7 +389,8 @@ function getAvatar(username, img) {
                 function(req, imagedata) {
                     if (imagedata && imagedata.length) {
                         _avatarMap[req.username] = imagedata;
-                        _putResourceIntoStorage('avatar:' + username, imagedata);
+                        if (imagedata !== 'img/genericPerson.png')
+                            _putResourceIntoStorage('avatar:' + username, imagedata);
                         req.img.attr('src', imagedata);
                     }
                 }, {username: username, img: img}
