@@ -389,6 +389,9 @@ function getAvatar(username, img) {
                 case 'png/':
                     data = 'data:image/png;base64,' + window.btoa(data.slice(4));
                     break;
+                case 'gif/':
+                    data = 'data:image/gif;base64,' + window.btoa(data.slice(4));
+                    break;
             }
             _avatarMap[username] = data;
             img.attr('src', data);
@@ -400,10 +403,13 @@ function getAvatar(username, img) {
                         if (imagedata !== 'img/genericPerson.png') {
                             if (imagedata.substr(0, 27) === 'data:image/jpeg;base64,/9j/')
                                 _putResourceIntoStorage('avatar:' + username, 'jpg/' + window.atob(imagedata.slice(27)));
-                            else if (imagedata.substr(0, 22) === 'data:image/png;base64,')
-                                _putResourceIntoStorage('avatar:' + username, 'png/' + window.atob(imagedata.slice(22)));
-                            else
-                                _putResourceIntoStorage('avatar:' + username, imagedata);
+                            else {
+                                var s = imagedata.substr(0, 22);
+                                if (s === 'data:image/png;base64,' || s === 'data:image/gif;base64,')
+                                    _putResourceIntoStorage('avatar:' + username, imagedata.substr(11, 3) + '/' + window.atob(imagedata.slice(22)));
+                                else
+                                    _putResourceIntoStorage('avatar:' + username, imagedata);
+                            }
                         }
                         req.img.attr('src', imagedata);
                     }
