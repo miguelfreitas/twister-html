@@ -324,7 +324,7 @@ function openGroupMessagesNewGroupModal() {
 
         groupMsgCreateGroup(elemForm.find('.description').val(), peersToInvite);
 
-        closeModal();
+        closeModal(event);
     });
 }
 
@@ -375,7 +375,7 @@ function openGroupMessagesJoinGroupModal() {
         for (var i = 0; i < groups.length; i++)
             groupMsgInviteToGroup(groups[i].getAttribute('data-screen-name'), [defaultScreenName]);
 
-        closeModal();
+        closeModal(event);
     });
 
     modal.content.find('.secret-key-import, .username-import').on('input', importSecretKeypress);
@@ -388,8 +388,8 @@ function openGroupMessagesJoinGroupModal() {
         twisterRpc('importprivkey', [secretKey, groupAlias],
             function(req, ret) {
                 groupMsgInviteToGroup(req.groupAlias, [defaultScreenName]);
-                closeModal();
-            }, {groupAlias: groupAlias},
+                closeModal(req.elem);
+            }, {groupAlias: groupAlias, elem: elemModule},
             function(req, ret) {
                 alert(polyglot.t('Error in \'importprivkey\'', {rpc: ret.message}));
             }
@@ -544,16 +544,16 @@ function initInterfaceDirectMsg() {
     });
 
     $('.group-messages-control .leave').on('click', function (event) {
-        var elemEvent = $(event.target);
-        var groupAlias = elemEvent.closest('[data-screen-name]').attr('data-screen-name');
-        confirmPopup(event, {
-            titleTxt: polyglot.t('сonfirm_group_leaving_header'),
-            messageTxt: polyglot.t('сonfirm_group_leaving_body', {alias: groupAlias}),
-            confirmFunc: function (groupAlias) {
+        var groupAlias = $(event.target).closest('[data-screen-name]').attr('data-screen-name');
+        event.data = {
+            txtTitle: polyglot.t('сonfirm_group_leaving_header'),
+            txtMessage: polyglot.t('сonfirm_group_leaving_body', {alias: groupAlias}),
+            cbConfirm: function (groupAlias) {
                 groupMsgLeaveGroup(groupAlias, function () {history.back();});
             },
-            confirmFuncArgs: groupAlias
-        });
+            cbConfirmReq: groupAlias
+        };
+        confirmPopup(event);
     });
 
     $('.group-messages-control .new').on('click', function () {

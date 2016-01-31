@@ -100,22 +100,6 @@ var InterfaceFunctions = function() {
                         args.cbFunc(args.cbArg);
                  }, {cbFunc:cbFunc, cbArg:cbArg});
 
-            $(window)
-                .on('eventFollow', function(e, user) {
-                    $('.mini-profile .following-count').text(followingUsers.length - 1);
-                    setTimeout(requestTimelineUpdate, 1000, 'latest', postsPerRefresh, [user], promotedPostsOnly);
-                })
-                .on('eventUnfollow', function(e, user) {
-                    $('.mini-profile .following-count').text(followingUsers.length - 1);
-                    $('.wrapper .postboard .post').each( function() {
-                        var elem = $(this);
-                        if ((elem.find('[data-screen-name="' + user + '"]').length
-                            && !elem.find(".post-rt-by .open-profile-modal").text())
-                            || elem.find(".post-rt-by .open-profile-modal").text() === '@' + user)
-                                elem.remove();
-                    });
-                });
-
             if ($.Options.WhoToFollow.val === 'enable')
                 initWhoToFollow();
             else

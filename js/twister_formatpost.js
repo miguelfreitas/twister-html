@@ -3,18 +3,13 @@
 //
 // Format JSON posts and DMs to HTML.
 
-var _templatePostRtReference;
-var _templatePostRtBy;
 var _htmlFormatMsgLinkTemplateExternal;
 var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
 
 $(document).ready(function() {
-    // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post every time
-    _templatePostRtReference = $('#post-rt-reference-template').children().clone(true);
-    _templatePostRtReference.find('.post-text')
-        .on('click', {feeder: '.post-rt-reference'}, openConversationClick);
-    _templatePostRtBy = $('#post-rt-by-template').children().clone(true);
+    // we're setting it here for perfomance improvement purpose
+    // to not search and prepare it for for every post every time
     _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
     if (_htmlFormatMsgLinkTemplateExternal.length) {
         _htmlFormatMsgLinkTemplateExternal = _htmlFormatMsgLinkTemplateExternal[0].cloneNode();
@@ -156,7 +151,7 @@ function postToElem(post, kind, promoted) {
         if (userpost.msg) {
             setPostReference(postContext, rt, userpost.sig_rt);
         } else {
-            postContext.append(_templatePostRtBy.clone(true)).addClass('post-rt-by')
+            postContext.append(twister.tmpl.postRtBy.clone(true)).addClass('post-rt-by')
                 .find('.post-rt-sign .prep').text(polyglot.t('post_rt_sign_prep'))
                 .siblings('.open-profile-modal')
                     .attr('href', $.MAL.userUrl(retweeted_by)).text('@' + retweeted_by)
@@ -232,7 +227,7 @@ function setPostCommon(elem, username, time) {
 }
 
 function setPostReference(elem, rt, sig_rt) {
-    elem.append(_templatePostRtReference.clone(true))
+    elem.append(twister.tmpl.postRtReference.clone(true))
         .find('.post-rt-reference')
             .attr('data-screen-name', rt.n)
             .attr('data-id', rt.k)

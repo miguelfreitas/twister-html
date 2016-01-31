@@ -5,9 +5,30 @@
 // Profile, mentions and hashtag modal
 // Post actions: submit, count characters
 
+var twister = {
+    html: {
+        detached: $('<div>'),  // here elements go to detach themself
+        blanka: $('<a target="_blank">')  // to open stuff in new tab, see routeOnClick()
+    },
+    tmpl: {},  // templates should be detached and stored here
+    modal: {}
+};
 var window_scrollY = 0;
 var _watchHashChangeRelaxDontDoIt = window.location.hash === '' ? true : false;
-var _minimizedModals = {};
+
+// FIXME so looks like it's wrapper over $; it's here to select and manipulate detached elements too
+// and actually I'm talking about 'so called \'detached\'' elements which appended to twister.html.detached
+// we may just append twister.html.detached to document instead and remove this weird shit (or I need to
+// improve my google skills to find native jQuery way to dig through all detached elemets with one query)
+function getElem(req) {
+    var elem = $(req);
+    var h = twister.html.detached.find(req);
+
+    for (var i = 0; i < h.length; i++)
+        elem[elem.length++] = h[i];
+
+    return elem;
+}
 
 function openModal(modal) {
     if (!modal.classBase) {
@@ -17,7 +38,8 @@ function openModal(modal) {
         $('body').css('overflow', 'hidden');
     }
 
-    $(modal.classBase + ':not(#templates *)').remove();
+    if (modal.classBase !== '.prompt-wrapper')
+        closeModal($(modal.classBase + ':not(#templates *)'), true);
 
     modal.self = $('#templates ' + modal.classBase).clone(true)
         .addClass(modal.classAdd);
@@ -30,9 +52,14 @@ function openModal(modal) {
     else
         modal.content = modal.self.find('.modal-content');
 
-    modal.self.prependTo('body').fadeIn('fast');
+    modal.self.appendTo('body').fadeIn('fast');  // FIXME maybe it's better to append it to some container inside body
 
     if (modal.classBase === '.modal-wrapper') {
+        twister.modal[window.location.hash] = modal;
+        modal.self.attr('data-modal-id', window.location.hash);
+
+        modal.drapper = $('<div>').appendTo(twister.html.detached);  // here modal goes instead detaching
+
         modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
 
         var windowHeight = $(window).height();
@@ -46,49 +73,95 @@ function openModal(modal) {
     return modal;
 }
 
-function closeModal() {
-    closeModalHandler('.modal-wrapper');
+function closeModal(req, switchMode) {
+    if (typeof req === 'undefined')
+        var elem = $('.modal-wrapper:not(#templates *)');  // select active modal(s)
+    else if (req.jquery)
+        var elem = req;
+    else if (req.target)
+        var elem = getElem(req.target);  // getElem() to search in minimized too
+    else if (typeof req === 'string' || req.outerHTML)
+        var elem = getElem(req);
 
-    if (window.location.hash !== '') {
-        _watchHashChangeRelaxDontDoIt = true;
-        window.location.hash = '#';
+    if (!elem || !elem.length)
+        return;
+
+    // we close all modals which are containing element(s)
+    elem.closest('.modal-wrapper:not(.closed)').addClass('closed')
+        .fadeOut(switchMode ? 10 : 'fast', function () {
+            var i = this.getAttribute('data-modal-id');
+
+            if (twister.modal[i].minimized)
+                twister.modal[i].btnResume.fadeOut('fast', function () {this.remove();});
+            else
+                this.remove();  // if it's minimized it will be removed with twister.modal[i].drapper
+
+            twister.modal[i].drapper.remove();
+            twister.modal[i] = undefined;
+        }
+    );
+
+    if (!switchMode) {
+        if (window.location.hash !== '') {
+            _watchHashChangeRelaxDontDoIt = true;
+            window.location.hash = '#';
+        }
+        window.scroll(window.pageXOffset, window_scrollY);
+        $('body').css({
+            'overflow': 'auto',
+            'margin-right': '0'
+        });
     }
-    window.scroll(window.pageXOffset, window_scrollY);
-    $('body').css({
-        'overflow': 'auto',
-        'margin-right': '0'
-    });
 }
 
-function closePrompt() {
-    closeModalHandler('.prompt-wrapper');
-}
+function closePrompt(req) {
+    if (typeof req === 'undefined')
+        var elem = $('.prompt-wrapper:not(#templates *)');
+    else if (req.jquery)
+        var elem = req;
+    else if (req.target)
+        var elem = $(req.target);
+    else if (typeof req === 'string' || req.outerHTML)
+        var elem = $(req);
 
-function closeModalHandler(classBase) {
-    var modalWindows = $(classBase+':not(#templates *)');
+    if (!elem || !elem.length)
+        return;
 
-    modalWindows.fadeOut('fast', function() {modalWindows.remove();});
+    if (typeof req.stopPropagation === 'function') {
+        req.preventDefault();
+        req.stopPropagation();
+        req = req.data;
+    }
+
+    // we close all prompts which are containing element(s)
+    elem.closest('.prompt-wrapper:not(.closed)').addClass('closed')
+        .fadeOut('fast', function() {this.remove();});
+
+    if (req && typeof req.cbFunc === 'function')  // FIXME maybe bind to ^ prompt fadeout function
+        req.cbFunc(req.cbReq);
 }
 
 function minimizeModal(modal, switchMode) {
-    function minimize(modal, scroll) {
-        modal.detach();
 
-        btnResume = $('<li>' + modal.find('.modal-header h3').text() + '</li>')
+    function minimize(modal, scroll) {
+        var i = modal.attr('data-modal-id');
+
+        modal.appendTo(twister.modal[i].drapper);
+
+        twister.modal[i].minimized = true;
+        twister.modal[i].scroll = scroll;
+        twister.modal[i].btnResume = $('<li>' + modal.find('.modal-header h3').text() + '</li>')
             .on('click', {hashString: window.location.hash}, resumeModal)
+            .on('mouseup', {route: window.location.hash, blankOnly: true}, routeOnClick)
             .appendTo($('#modals-minimized'))
         ;
-
-        _minimizedModals[window.location.hash] = {
-            self: modal,
-            scroll: scroll,
-            btnResume: btnResume
-        };
     }
+
+    if (modal.is('.closed')) return;
 
     var scroll;  // MUST be setted before modal.detach(), modal.fadeOut() and so on
     if (modal.is('.directMessages') || modal.is('.group-messages-new-group')
-        || modal.is('.group-messages-join-group')) {
+        || modal.is('.group-messages-join-group') || modal.is('.following-own-modal')) {
             scroll = {
                 targetSelector: '.modal-content',
                 top: modal.find('.modal-content').scrollTop()
@@ -123,10 +196,9 @@ function minimizeModal(modal, switchMode) {
 }
 
 function resumeModal(event) {
-    var elemEvent = $(event.target);
-    elemEvent.fadeOut('fast', function () {elemEvent.remove();});
+    $(event.target).fadeOut('fast', function () {this.remove();});
 
-    var modalActive = $('.modal-wrapper:not(#templates *)');
+    var modalActive = $('.modal-wrapper:not(#templates *)').not('.closed');
     if (modalActive.length)
         minimizeModal(modalActive, true);
     else {
@@ -134,9 +206,10 @@ function resumeModal(event) {
         $('body').css('overflow', 'hidden');
     }
 
-    var modal = _minimizedModals[event.data.hashString];
-    if (modal) {
-        _minimizedModals[event.data.hashString] = undefined;
+    var modal = twister.modal[event.data.hashString];
+    if (modal.self.not('.closed') && modal.minimized) {
+        modal.minimized = false;
+        modal.btnResume = undefined;
         if (window.location.hash !== event.data.hashString) {
             _watchHashChangeRelaxDontDoIt = true;
             window.location.hash = event.data.hashString;
@@ -146,35 +219,39 @@ function resumeModal(event) {
             if (modal.scroll)
                 modal.self.find($(modal.scroll.targetSelector).scrollTop(modal.scroll.top));
 
-            if (modal.resume && typeof modal.resume.cbFunc === 'function')
-                modal.resume.cbFunc(modal.resume.cbArg);
+            if (typeof modal.onResume === 'function')
+                modal.onResume(modal.onResumeReq);
         });
     }
 }
 
-function focusModalWithElement(elem, cbFunc, cbArg) {
+function focusModalWithElement(elem, cbFunc, cbReq) {
     if (elem.jquery ? elem.is('html *') : $(elem).is('html *')) {
         if (typeof cbFunc === 'function')
-            cbFunc(cbArg);
+            cbFunc(cbReq);
         return true;
     }
 
-    var hash = getHashOfMinimizedModalWithElem(elem);
-    if (hash) {
-        _minimizedModals[hash].resume = {cbFunc: cbFunc, cbArg: cbArg};
-        _minimizedModals[hash].btnResume.click();
+    var i = getHashOfMinimizedModalWithElem(elem);
+    if (i) {
+        if (typeof i === 'object') i = i[0]; // several modals, but only one may be active currently
+        twister.modal[i].onResume = cbFunc;
+        twister.modal[i].onResumeReq = cbReq;
+        twister.modal[i].btnResume.click();
         return true;
     }
 
     return false;
 }
 
-function getHashOfMinimizedModalWithElem(elem) {
-    for (var i in _minimizedModals)
-        if (_minimizedModals[i] && _minimizedModals[i].self.find(elem).length)
-            return i;
+function getHashOfMinimizedModalWithElem(req) {
+    var hashes = [];
 
-    return '';
+    for (var i in twister.modal)
+        if (twister.modal[i] && twister.modal[i].minimized && twister.modal[i].drapper.find(req).length)
+            hashes[hashes.length++] = i;
+
+    return hashes.length > 1 ? hashes : hashes[0];
 }
 
 function isModalWithElemExists(elem) {
@@ -184,90 +261,97 @@ function isModalWithElemExists(elem) {
         return getHashOfMinimizedModalWithElem(elem) ? true : false;
 }
 
-function confirmPopup(event, req) {
-    if (event && event.stopPropagation) {
-        event.stopPropagation();
+function confirmPopup(req) {
+    if (!req) return;
 
-        if (!req && event.data)
-            req = event.data;
+    if (typeof req.stopPropagation === 'function') {
+        req.preventDefault();
+        req.stopPropagation();
+        if (req.data)
+            req = req.data;
+        else
+            return;
     }
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
         classAdd: 'confirm-popup',
         content: $('#confirm-popup-template').children().clone(true),
-        title: req.titleTxt
+        title: req.txtTitle
     });
 
-    if (req.messageTxt)
-        modal.content.find('.message').html(htmlFormatMsg(req.messageTxt, {markout: 'apply'}).html);
+    if (req.txtMessage)
+        modal.content.find('.message').html(htmlFormatMsg(req.txtMessage, {markout: 'apply'}).html);
 
     var btn = modal.content.find('.confirm');
     if (req.removeConfirm)
         btn.remove();
     else {
-        if (req.confirmTxt)
-            btn.text(req.confirmTxt);
+        if (req.txtConfirm)
+            btn.text(req.txtConfirm);
         else
             btn.text(polyglot.t('Confirm'));
-        if (req.confirmFunc) {
-            btn.on('click', function () {
-                closePrompt();
-                req.confirmFunc(req.confirmFuncArgs);
-            });
-        } else
+
+        if (req.cbConfirm)
+            btn.on('click', {cbFunc: req.cbConfirm, cbReq: req.cbConfirmReq}, closePrompt);
+        else
             btn.on('click', closePrompt);
     }
     var btn = modal.content.find('.cancel');
     if (req.removeCancel)
         btn.remove();
     else {
-        if (req.cancelTxt)
-            btn.text(req.cancelTxt);
+        if (req.txtCancel)
+            btn.text(req.txtCancel);
         else
             btn.text(polyglot.t('Cancel'));
-        if (req.cancelFunc) {
-            btn.on('click', function () {
-                closePrompt();
-                req.cancelFunc(req.cancelFuncArgs);
-            });
-        } else
+
+        if (req.cbCancel)
+            btn.on('click', {cbFunc: req.cbCancel, cbReq: req.cbCancelReq}, closePrompt);
+        else
             btn.on('click', closePrompt);
     }
     var btn = modal.self.find('.prompt-close');
     if (req.removeClose)
         btn.remove();
     else {
-        if (req.closeFunc) {
-            if (typeof req.closeFunc === 'string') {
-                if (req.closeFunc === 'confirmFunc') {
-                    req.closeFunc = req.confirmFunc;
-                    req.closeFuncArgs = req.confirmFuncArgs;
-                } else if (req.closeFunc === 'cancelFunc') {
-                    req.closeFunc = req.cancelFunc;
-                    req.closeFuncArgs = req.cancelFuncArgs;
+        if (req.cbClose) {
+            if (typeof req.cbClose === 'string')
+                if (req.cbClose === 'cbConfirm') {
+                    req.cbClose = req.cbConfirm;
+                    req.cbCloseReq = req.cbConfirmReq;
+                } else if (req.cbClose === 'cbCancel') {
+                    req.cbClose = req.cbCancel;
+                    req.cbCloseReq = req.cbCancelReq;
                 }
-            }
-            btn.on('click', function () {
-                closePrompt();
-                req.closeFunc(req.closeFuncArgs);
-            });
+
+            btn.on('click', {cbFunc: req.cbClose, cbReq: req.cbCloseReq}, closePrompt);
         }
     }
 }
 
-function checkNetworkStatusAndAskRedirect(cbFunc, cbArg) {
-    networkUpdate(function(args) {
+function alertPopup(req) {
+    if (!req) return;
+
+    if (!req.txtConfirm)
+        req.txtConfirm = polyglot.t('btn_ok');
+    req.removeCancel = true;
+
+    confirmPopup(req);
+}
+
+function checkNetworkStatusAndAskRedirect(cbFunc, cbReq) {
+    networkUpdate(function(req) {
         if (!twisterdConnectedAndUptodate) {
-            confirmPopup(null, {
-                messageTxt: polyglot.t('confirm_switch_to_network', {page: '/network.html'}),
-                confirmFunc: $.MAL.goNetwork
+            confirmPopup({
+                txtMessage: polyglot.t('confirm_switch_to_network', {page: '/network.html'}),
+                cbConfirm: $.MAL.goNetwork
             });
         } else {
-            if (args.cbFunc)
-                args.cbFunc(args.cbArg);
+            if (req.cbFunc)
+                req.cbFunc(req.cbReq);
         }
-    }, {cbFunc:cbFunc,cbArg:cbArg});
+    }, {cbFunc: cbFunc, cbReq: cbReq});
 }
 
 function timeGmtToText(t) {
@@ -335,10 +419,10 @@ function openGroupProfileModalWithNameHandler(groupAlias) {
     elemFitNextIntoParentHeight(modal.content.find('.profile-card'));
 }
 
-function openUserProfileModalWithNameHandler(username) {
+function openUserProfileModalWithNameHandler(peerAlias) {
     var content = $('#profile-modal-template').children().clone(true);
 
-    updateProfileData(content, username);
+    updateProfileData(content, peerAlias);
     // FIXME following ctc could be part of updateProfileData() when mobile will be ready for this
     content.find('.tox-ctc').attr('title', polyglot.t('Copy to clipboard'));
     content.find('.bitmessage-ctc').attr('title', polyglot.t('Copy to clipboard'));
@@ -346,17 +430,14 @@ function openUserProfileModalWithNameHandler(username) {
     var modal = openModal({
         classAdd: 'profile-modal',
         content: content,
-        title: polyglot.t('users_profile', {username: username})
+        title: polyglot.t('users_profile', {username: peerAlias})
     });
 
-    // setup follow button in profile modal window
-    var button = modal.content.find('.profile-card-buttons .follow');
-    if (button) {
-        if (followingUsers.indexOf(username) !== -1)
-            toggleFollowButton(username, true, function() {setTimeout(loadModalFromHash, 500);});
-        else
-            button.on('click', userClickFollow);
-    }
+    toggleFollowButton({
+        button: modal.content.find('.profile-card-buttons .follow'),
+        peerAlias: peerAlias,
+        toggleUnfollow: followingUsers.indexOf(peerAlias) !== -1 ? true : false
+    });
 
     elemFitNextIntoParentHeight(modal.content.find('.profile-card'));
 
@@ -405,35 +486,38 @@ function updateQueryModal(req) {
     requestQuery(req);
 }
 
-function openMentionsModal(e) {
-    if (e && e.stopPropagation) {
-        e.stopPropagation();
-        e.preventDefault();
+function openMentionsModal(event) {
+    if (event && typeof event.stopPropagation === 'function') {
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     var userInfo = $(this).closest('[data-screen-name]');
     if (userInfo.length)
-        var username = userInfo.attr('data-screen-name');
+        var peerAlias = userInfo.attr('data-screen-name');
     else if (defaultScreenName)
-        var username = defaultScreenName;
+        var peerAlias = defaultScreenName;
     else {
-        alert(polyglot.t('No one can mention you because you are not logged in.'));
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('No one can mention you because you are not logged in.')
+        });
         return;
     }
 
-    window.location.hash = '#mentions?user=' + username;
+    window.location.hash = '#mentions?user=' + peerAlias;
 }
 
-function openMentionsModalHandler(username) {
+function openMentionsModalHandler(peerAlias) {
     var modal = openModal({
         classAdd: 'hashtag-modal',
         content: $('#hashtag-modal-template').children().clone(true),
-        title: polyglot.t('users_mentions', {username: username})
+        title: polyglot.t('users_mentions', {username: peerAlias})
     });
 
-    setupQueryModalUpdating(modal.content.find('.postboard-posts'), username, 'mention');
+    setupQueryModalUpdating(modal.content.find('.postboard-posts'), peerAlias, 'mention');
 
-    if (username === defaultScreenName) {
+    if (peerAlias === defaultScreenName) {
         // obtain already cached mention posts from twister_newmsgs.js
         processQuery({
             postboard: modal.content.find('.postboard-posts'),
@@ -445,17 +529,73 @@ function openMentionsModalHandler(username) {
     }
 }
 
-function openFollowingModal(username) {
-    var content = $('#following-modal-template').children().clone(true);
+function openFollowingModal(peerAlias) {
+    if (!peerAlias || peerAlias === defaultScreenName) {
+        if (!defaultScreenName) {
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                txtMessage: polyglot.t('You are not following anyone because you are not logged in.')
+            });
+            history.back();
+            return;
+        }
 
-    content.find('.following-screen-name b').text(username);
-    loadFollowingIntoList(username, content.closest('ol'));
+        var modal = openModal({
+            classAdd: 'following-own-modal',
+            content: twister.tmpl.followingList.clone(true),
+            title: polyglot.t('Following')
+        });
+        showFollowingUsers(modal.content.find('.following-list'));
+        requestSwarmProgress();
+    } else {
+        var modal = openModal({
+            classAdd: 'following-modal',
+            content: $('#following-modal-template').children().clone(true),
+            title: polyglot.t('followed_by', {username: peerAlias})
+        });
+        modal.content.find('.following-screen-name b').text(peerAlias);
+        loadFollowingIntoList(peerAlias, modal.content.find('ol'));
+    }
+}
 
-    openModal({
-        classAdd: 'following-modal',
-        content: content,
-        title: polyglot.t('followed_by', {username: username})
+function showFollowingUsers(followingList) {
+    if (followingEmptyOrMyself())
+        $.MAL.warnFollowingNotAny(closeModal, followingList);
+    else
+        for (var i = 0; i < followingUsers.length; i++)
+            addToFollowingList(followingList, followingUsers[i]);
+
+    $.MAL.followingListLoaded(followingList);
+}
+
+function addToFollowingList(followingList, peerAlias) {
+    var item = twister.tmpl.followingUser.clone(true).attr('data-peer-alias', peerAlias);
+
+    item.find('.mini-profile-info').attr('data-screen-name', peerAlias)
+    item.find('.following-screen-name').text(peerAlias);
+    item.find('a.open-profile-modal').attr('href', $.MAL.userUrl(peerAlias));
+    item.find('.direct-messages-with-user').text(polyglot.t('send_DM'))
+        .on('mouseup', {route: $.MAL.dmchatUrl(peerAlias)}, routeOnClick);
+    item.find('.mentions-from-user').text(polyglot.t('display_mentions'))
+        .on('mouseup', {route: $.MAL.mentionsUrl(peerAlias)}, routeOnClick);
+    getAvatar(peerAlias, item.find('.mini-profile-photo'));
+    getFullname(peerAlias, item.find('.mini-profile-name'));
+
+    if (peerAlias === defaultScreenName)
+        item.find('following-config').hide();
+
+    toggleFollowButton({
+        button: item.find('.follow'),
+        peerAlias: peerAlias,
+        toggleUnfollow: true
     });
+    var elem = item.find('.public-following').on('click', followingListPublicCheckbox);
+    if (isPublicFollowing(peerAlias))
+        elem.text(polyglot.t('Public'));
+    else
+        elem.text(polyglot.t('Private')).addClass('private');
+
+    item.prependTo(followingList);
 }
 
 function fillWhoToFollowModal(list, hlist, start) {
@@ -517,10 +657,10 @@ function openWhoToFollowModal() {
     fillWhoToFollowModal(tmplist, hlist, 0);
 }
 
-function newConversationModal(username, resource) {
+function newConversationModal(peerAlias, resource) {
     var content = $('#hashtag-modal-template').children().clone(true);
 
-    requestPost(content.find('.postboard-posts'), username, resource,
+    requestPost(content.find('.postboard-posts'), peerAlias, resource,
         function(args) {
             var postboard = args.content.find('.postboard-posts');
             var postLi = postboard.children().first()
@@ -532,27 +672,42 @@ function newConversationModal(username, resource) {
     return content;
 }
 
-function openConversationClick(e) {
-    e.stopPropagation();
-    e.preventDefault();
+function openConversationClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-    var postData = $(this).closest(e.data.feeder);
+    var elem = $(event.target);
+    var postData = elem.closest(event.data.feeder);
 
-    window.location.hash = '#conversation?post=' + postData.attr('data-screen-name') +
-        ':post' + postData.attr('data-id');
+    event.data.route = '#conversation?post=' + postData.attr('data-screen-name')
+        + ':post' + postData.attr('data-id');
+    routeOnClick(event);
 }
 
-function openConversationModal(username, resource) {
+function openConversationModal(peerAlias, resource) {
     openModal({
         classAdd: 'conversation-modal',
-        content: newConversationModal(username, resource),
-        title: polyglot.t('conversation_title', {username: username})
+        content: newConversationModal(peerAlias, resource),
+        title: polyglot.t('conversation_title', {username: peerAlias})
     });
 }
 
-function watchHashChange(e) {
-    if (e != null) {
-        var prevurlsplit = e.oldURL.split('#');
+function routeOnClick(event) {
+    if (!event || !event.data || !event.data.route)
+        return;
+
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (event.button === 0 && !event.data.blankOnly)  // left mouse button
+        window.location = event.data.route;
+    else if (event.button === 1)  // middle mouse button
+        twister.html.blanka.attr('href', event.data.route)[0].click();
+}
+
+function watchHashChange(event) {
+    if (typeof event !== 'undefined') {
+        var prevurlsplit = event.oldURL.split('#');
         var prevhashstring = prevurlsplit[1];
 
         // FIXME need to move back button handling to special function and call it in openModal() and resumeModal()
@@ -575,17 +730,18 @@ function watchHashChange(e) {
 }
 
 function loadModalFromHash() {
-    if (_minimizedModals[window.location.hash]) {
+    var i = window.location.hash;
+    if (twister.modal[i] && twister.modal[i].minimized) {
         // need to remove active modal before btnResume.click() or it will be minimized in resumeModal()
         // e.g. for case when you click on profile link in some modal having this profile's modal minimized already
         $('.modal-wrapper:not(#templates *)').remove();
-        _minimizedModals[window.location.hash].btnResume.click();
+        twister.modal[i].btnResume.click();
         return;
     }
 
     var hashstring = decodeURIComponent(window.location.hash);
     if (hashstring === '') {
-        closeModal();
+        closeModal();  // close active modal(s)
         return;
     }
     var hashdata = hashstring.split(':');
@@ -618,6 +774,8 @@ function loadModalFromHash() {
         }
     } else if (hashstring === '#directmessages')
         directMessagesPopup();
+    else if (hashstring === '#following')
+        openFollowingModal();
     else if (hashstring === '#groupmessages')
         openGroupMessagesModal();
     else if (hashstring === '#groupmessages+newgroup')
@@ -649,7 +807,10 @@ function reTwistPopup(event, post, textArea) {
     event.stopPropagation();
 
     if (!defaultScreenName) {
-        alert(polyglot.t('You have to log in to retransmit messages.'));
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('You have to log in to retransmit messages.')
+        });
         return;
     }
 
@@ -669,8 +830,13 @@ function reTwistPopup(event, post, textArea) {
 
     modal.content.find('.switch-mode')
         .text(polyglot.t('Switch to Reply'))
-        .on('click', (function(event) {replyInitPopup(event, post,
-            $(event.target).closest('form').find('textarea').detach());}).bind(post))
+        .on('click', {post: post},
+            function(event) {
+                var textArea = $(event.target).closest('form').find('textarea').detach();
+                closePrompt(event.target);
+                replyInitPopup(event, event.data.post, textArea);
+            }
+        )
     ;
 
     var replyArea = modal.content.find('.post-area .post-area-new');
@@ -707,8 +873,13 @@ function replyInitPopup(e, post, textArea) {
 
     modal.content.find('.switch-mode')
         .text(polyglot.t('Switch to Retransmit'))
-        .on('click', (function(event) {reTwistPopup(event, post,
-            $(event.target).closest('form').find('textarea').detach())}).bind(post))
+        .on('click',  {post: post},
+            function(event) {
+                var textArea = $(event.target).closest('form').find('textarea').detach();
+                closePrompt(event.target);
+                reTwistPopup(event, event.data.post, textArea);
+            }
+        )
     ;
 
     var replyArea = modal.content.find('.post-area .post-area-new').addClass('open');
@@ -734,46 +905,142 @@ function closeThis() {
     $(this).slideUp('fast');
 }
 
-function toggleFollowButton(username, toggleUnfollow, bindFunc) {
-    if (!username)
+function toggleFollowButton(req) {
+    if (!req || !req.peerAlias)
         return;
 
-    if (toggleUnfollow) {
-        $('[data-screen-name="'+username+'"]').find('.follow')
+    if (req.toggleUnfollow) {
+        if (!req.button || !req.button.jquery)
+            req.button = getElem('[data-screen-name="' + req.peerAlias + '"]').find('.follow');
+        req.button
+            .text(polyglot.t('Unfollow'))
             .removeClass('follow')
             .addClass('unfollow')
             .off('click')
-            .on('click',
-                (function(e) {
-                    e.stopPropagation();
-
-                    unfollow(this.username.toString(),
-                        (function() {
-                            toggleFollowButton(this.username);
-                            if (this.bindFunc)
-                                this.bindFunc;
-                        }).bind({username: this.username, bindFunc: this.bindFunc})
-                    );
-                }).bind({username: username, bindFunc: bindFunc})
-            )
-            .text(polyglot.t('Unfollow'))
-            .trigger('eventToggleUnfollow')
+            .on('click', {peerAlias: req.peerAlias}, clickUnfollow)
         ;
     } else {
-        $('[data-screen-name="'+username+'"]').find('.unfollow')
+        if (!req.button || !req.button.jquery)
+            req.button = getElem('[data-screen-name="' + req.peerAlias + '"]').find('.unfollow');
+        req.button
+            .text(polyglot.t('Follow'))
             .removeClass('unfollow')
             .addClass('follow')
             .off('click')
-            .on('click',
-                (function(e) {
-                    userClickFollow(e);
-                    if (this.bindFunc)
-                        this.bindFunc;
-                }).bind({bindFunc: bindFunc})
-            )
-            .text(polyglot.t('Follow'))
-            .trigger('eventToggleFollow');
+            .on('click', {peerAlias: req.peerAlias}, clickFollow)
+        ;
     }
+}
+
+function clickFollow(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!defaultScreenName) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('You have to log in to follow users.')
+        });
+        return;
+    }
+
+    var peerAlias = (event.data && event.data.peerAlias) ? event.data.peerAlias
+        : $(event.target).closest('[data-screen-name]').attr('data-screen-name');
+    var content = $('#following-config-modal-template').children().clone(true);
+
+    content.closest('.following-config-modal-content').attr('data-screen-name', peerAlias);
+    content.find('.following-config-method-message')
+        .html(htmlFormatMsg(polyglot.t('select_way_to_follow_@', {alias: peerAlias}), {markout: 'apply'}).html);
+    content.find('.following-screen-name b').text(peerAlias);
+
+    openModal({
+        classBase: '.prompt-wrapper',  // FIXME it will be modal with advanced following set up in future
+        classAdd: 'following-config-modal',
+        content: content,
+        title: polyglot.t('Following config')
+    });
+}
+
+function clickUnfollow(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var peerAlias = (event.data && event.data.peerAlias) ? event.data.peerAlias
+        : $(event.target).closest('[data-screen-name]').attr('data-screen-name');
+
+    confirmPopup({
+        txtMessage: polyglot.t('confirm_unfollow_@', {alias: peerAlias}),
+        cbConfirm: function (peerAlias) {
+            unfollow(peerAlias,
+                function(req) {
+                    $('.mini-profile .following-count').text(followingUsers.length - 1);
+                    $('.wrapper .postboard .post').each(function() {
+                        var elem = $(this);
+                        if ((elem.find('[data-screen-name="' + req.peerAlias + '"]').length
+                            && !elem.find(".post-rt-by .open-profile-modal").text())
+                            || elem.find(".post-rt-by .open-profile-modal").text() === '@' + req.peerAlias)
+                                elem.remove();
+                    }); // FIXME also need to check list of pending posts to remove from there
+                    toggleFollowButton({peerAlias: req.peerAlias});
+                    var followingList = getElem('.following-own-modal .following-list');
+                    if (followingList.length)
+                        followingList.find('li[data-peer-alias="' + req.peerAlias + '"]').remove();
+                }, {peerAlias: peerAlias}
+            );
+        },
+        cbConfirmReq: peerAlias
+    });
+}
+
+function setFollowingMethod(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var button = $(event.target);
+    var peerAlias = button.closest('.following-config-modal-content').attr('data-screen-name');
+
+    follow(peerAlias, button.hasClass('private') ? false : true,
+        function(req) {
+            $('.mini-profile .following-count').text(followingUsers.length - 1);
+            setTimeout(requestTimelineUpdate, 1000, 'latest', postsPerRefresh, [req.peerAlias], promotedPostsOnly);
+            toggleFollowButton({peerAlias: req.peerAlias, toggleUnfollow: req.toggleUnfollow});
+            var followingList = getElem('.following-own-modal .following-list');
+            if (followingList.length)
+                addToFollowingList(followingList, req.peerAlias);
+        }, {peerAlias: peerAlias, toggleUnfollow: true}
+    );
+}
+
+function followingListPublicCheckbox(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var tickSelection = function (req) {
+        if (req.isPublic === req.wasPublic) return;
+
+        var elem = $('.mini-profile-info[data-screen-name="' + req.peerAlias + '"] .public-following');
+        elem.toggleClass('private');
+        if (!req.isPublic)
+            elem.text(polyglot.t('Private'));
+        else
+            elem.text(polyglot.t('Public'));
+
+        //console.log('set following method of @' + peerAlias + ' for ' + isPublic);
+        follow(req.peerAlias, req.isPublic);
+    };
+    var elem = $(event.target);
+    var peerAlias = elem.closest('.mini-profile-info').attr('data-screen-name');
+    var wasPublic = !elem.hasClass('private');
+
+    confirmPopup({
+        txtMessage: polyglot.t('select_way_to_follow_@', {alias: peerAlias}),
+        txtConfirm: polyglot.t('Public'),
+        cbConfirm: tickSelection,
+        cbConfirmReq: {isPublic: true, wasPublic: wasPublic, peerAlias: peerAlias},
+        txtCancel: polyglot.t('Private'),
+        cbCancel: tickSelection,
+        cbCancelReq: {isPublic: false, wasPublic: wasPublic, peerAlias: peerAlias}
+    });
 }
 
 function postExpandFunction(e, postLi) {
@@ -825,23 +1092,26 @@ function postExpandFunction(e, postLi) {
     e.stopPropagation();
 }
 
-function postReplyClick(e) {
+function postReplyClick(event) {
     if (!defaultScreenName) {
-        e.stopPropagation();
-        alert(polyglot.t('You have to log in to post replies.'));
+        event.stopPropagation();
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('You have to log in to post replies.')
+        });
         return;
     }
 
     var post = $(this).closest('.post');
     if (!post.hasClass('original'))
-        replyInitPopup(e, $.evalJSON(post.find('.post-data').attr('data-userpost')));
+        replyInitPopup(event, $.evalJSON(post.find('.post-data').attr('data-userpost')));
     else {
         if (!post.closest('.post.open').length)
-            postExpandFunction(e, post);
-        composeNewPost(e, post.find('.post-area-new'));
+            postExpandFunction(event, post);
+        composeNewPost(event, post.find('.post-area-new'));
     }
 
-    e.stopPropagation();
+    event.stopPropagation();
 }
 
 // Expande Área do Novo post
@@ -1588,7 +1858,7 @@ function postSubmit(e, oldLastPostId) {
     }
 
     if (btnPostSubmit.closest('.prompt-wrapper').length)
-        closePrompt();
+        closePrompt(btnPostSubmit);
     else {
         textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
         btnPostSubmit.closest('form').find('.post-area-remaining').text('140');
@@ -1601,13 +1871,14 @@ function postSubmit(e, oldLastPostId) {
     }
 }
 
-function retweetSubmit(e) {
-    e.stopPropagation();
-    e.preventDefault();
+function retweetSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-    newRtMsg($(this).closest('.prompt-wrapper').find('.post-data'));
+    var prompt = $(event.target).closest('.prompt-wrapper');
 
-    closePrompt();
+    newRtMsg(prompt.find('.post-data'));
+    closePrompt(prompt);
 }
 
 function changeStyle() {
@@ -1680,13 +1951,7 @@ function replaceDashboards() {
 }
 
 function initInterfaceCommon() {
-    $('.modal-close, .modal-blackout').not('.prompt-close').on('click', function() {
-        if ($('.modal-content').attr('style') != undefined)
-            $('.modal-content').removeAttr('style');
-        $('.modal-back').css('display', 'none');
-        $('.mark-all-as-read').css('display', 'none');
-        closeModal();
-    });
+    $('.modal-close, .modal-blackout').not('.prompt-close').on('click', closeModal);
 
     $('.minimize-modal').on('click', function (event) {
         minimizeModal($(event.target).closest('.modal-wrapper'));
@@ -1696,13 +1961,12 @@ function initInterfaceCommon() {
 
     $('.prompt-close').on('click', closePrompt);
 
-    /*
-    $('.modal-back').on('click', function() {
-        if ($('.modal-content .direct-messages-list')[0]) return;
-        directMessagesPopup();
-        $('.modal-content').removeAttr('style');
+    $('button.follow').on('click', clickFollow);
+
+    $('.following-config-method-buttons .public-following').on('click', function(event) {
+        setFollowingMethod(event);
+        closePrompt(event);
     });
-    */
 
     $('.post-text').on('click', 'a', function(e) {e.stopPropagation();});
     $('.post-reply').on('click', postReplyClick);
@@ -1726,7 +1990,7 @@ function initInterfaceCommon() {
     ;
     $('.post-submit').on('click', postSubmit);
     $('.modal-propagate').on('click', retweetSubmit);
-    $('.expanded-content .show-more').on('click',
+    $('.expanded-content .show-more').on('mouseup',
         {feeder: '.module.post.original.open .module.post.original .post-data'}, openConversationClick);
 
     if ($.Options.unicodeConversion.val === 'disable')
@@ -1792,6 +2056,10 @@ function initInterfaceCommon() {
     }
 }
 
+function extractTemplate(selector) {
+    return $(selector).appendTo(twister.html.detached).children();
+}
+
 function promptCopyAttrData(event) {
     window.prompt(polyglot.t('copy_to_clipboard'), $(event.target).attr('data'));
 }
@@ -1855,14 +2123,17 @@ function setTextcompleteDropdownListPos(position) {
     return this;
 }
 
-$(document).ready(function()
-{
+$(document).ready(function () {
+    twister.html.blanka.appendTo('body').hide();
+    twister.tmpl.followingList = extractTemplate('#template-following-list');
+    twister.tmpl.followingUser = extractTemplate('#template-following-user');
+    twister.tmpl.postRtReference = extractTemplate('#template-post-rt-reference')
+        .on('mouseup', {feeder: '.post-rt-reference'}, openConversationClick);
+    twister.tmpl.postRtBy = extractTemplate('#template-post-rt-by');
+
     var path = window.location.pathname;
     var page = path.split("/").pop();
-    if (page.indexOf("following.html") === 0) {
-        initInterfaceFollowing();
-        initHashWatching();
-    } else if (page.indexOf("login.html") === 0) {
+    if (page.indexOf("login.html") === 0) {
         initInterfaceLogin();
     } else if (page.indexOf("network.html") === 0) {
         initInterfaceNetwork();

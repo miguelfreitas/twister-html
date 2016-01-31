@@ -273,20 +273,18 @@ function saveProfile(e) {
     function completeProfileSaving(req, isAvatarDataSaved) {
         if (req.isProfileDataSaved && isAvatarDataSaved) {
             clearAvatarAndProfileCache(defaultScreenName);
-            var titleTxt = '';
-            var messageTxt = polyglot.t('profile_saved');
+            var txtTitle = '';
+            var txtMessage = polyglot.t('profile_saved');
         } else {
-            var titleTxt = polyglot.t('error', {error: ''});
-            var messageTxt = polyglot.t('profile_not_saved');
+            var txtTitle = polyglot.t('error', {error: ''});
+            var txtMessage = polyglot.t('profile_not_saved');
         }
-        confirmPopup(null, {
-            titleTxt: titleTxt,
-            messageTxt: messageTxt,
-            confirmTxt: polyglot.t('btn_ok'),
-            confirmFunc: $.MAL.enableButton,
-            confirmFuncArgs: $('.submit-changes'),
-            closeFunc: 'confirmFunc',
-            removeCancel: true
+        alertPopup({
+            txtTitle: txtTitle,
+            txtMessage: messageTxt,
+            cbConfirm: $.MAL.enableButton,
+            cbConfirmReq: $('.submit-changes'),
+            cbClose: 'cbConfirm'
         });
     }
 

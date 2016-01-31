@@ -52,7 +52,7 @@
             <a class="dropdown-menu-item" href="options.html">Options</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
             <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
-            <a class="dropdown-menu-item dropdown-menu-following" href="following.html">Following users</a>
+            <a class="dropdown-menu-item dropdown-menu-following" href="#following">Following users</a>
             <a class="dropdown-menu-item" href="login.html">Change user</a>
             <a class="dropdown-menu-item promoted-posts-only selectable_theme theme_original theme_calm" href="#">Switch to Promoted posts</a>
             <a class="dropdown-menu-item direct-messages selectable_theme theme_original theme_calm" href="#">Direct Messages</a>
@@ -117,7 +117,7 @@
         </div>
         <ul class="module profile-data">
           <li><a href="#" class="open-profile-modal"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
-          <li><a href="following.html" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+          <li><a href="#following" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
           <li><a href="#" class="open-followers"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
         </ul>
 
@@ -357,7 +357,7 @@
         </div> <!-- post-data -->
     </li> <!-- post-template -->
 
-    <div id="post-rt-reference-template">
+    <div id="template-post-rt-reference">
         <div class="post-rt-reference">
             <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo" /></div>
             <div class="post-info">
@@ -369,7 +369,7 @@
         </div>
     </div>
 
-    <div id="post-rt-by-template">
+    <div id="template-post-rt-by">
         <i class="post-rt-icon"></i>
         <div class="post-rt-sign">
             <span class="prep">twisted again by</span><a class="open-profile-modal"></a>
@@ -684,6 +684,44 @@
     </div>
     <!-- MODAL DE HASHTAGS END -->
 
+    <div id="template-following-list">
+        <ol class="following-list">
+            <div class="loading-roller">
+                <div></div>
+            </div>
+        </ol>
+    </div>
+
+    <div id="template-following-user">
+        <li>
+            <div class="mini-profile-info">
+                <a href="#" class="open-profile-modal">
+                    <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                    <span class="mini-profile-name">Fulano da Silva</span>
+                    <span class="mini-screen-name">@<b class="following-screen-name"></b></span>
+                </a>
+                <div>
+                    <div class="mini-profile-actions">
+                        <span>Actions ▼</span>
+                        <ul>
+                            <li class="direct-messages-with-user">Send direct message</li>
+                            <!-- TODO <li>Send post</li>-->
+                            <li class="mentions-from-user">Display mentions</li>
+                            <!-- WTF <li>Display retransmissions</li> -->
+                        </ul>
+                    </div>
+                    <div class="following-config">
+                        <button class="follow">Follow</button>
+                        <button class="public-following">Public</button>
+                    </div>
+                </div>
+                <div>
+                    <span class="swarm-status" style="display: none;"></span>
+                </div>
+            </div>
+        </li>
+    </div>
+
     <!-- MODAL DE FOLLOWING -->
     <div id="following-modal-template">
         <!-- ÁREA DE PROFILE PHOTO INIT -->
@@ -708,19 +746,15 @@
     </div>
     <!-- MODAL DE FOLLOWING END -->
 
-    <!-- MODAL OF FOLLOWING CONFIG -->
     <div id="following-config-modal-template">
-        <!-- ÁREA OF FOLLOWING METHOD -->
-        <div class="following-config-modal-content" data-screen-name="">
-          <h2><span class="following-config-method-message">Which way do you want to follow</span> <span class="following-screen-name">@<b></b></span>:</h2>
+        <div class="following-config-modal-content">
+            <span class="following-config-method-message">Which way do you want to follow @</span>
             <div class="following-config-method-buttons">
                 <button class="public-following">Public</button>
                 <button class="public-following private">Private</button>
             </div>
         </div>
-        <!-- ÁREA OF FOLLOWING METHOD END -->
     </div>
-    <!-- MODAL OF FOLLOWING CONFIG END -->
   </div>
   <!-- TEMPLATES END -->
 

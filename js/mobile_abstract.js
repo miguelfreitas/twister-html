@@ -63,15 +63,26 @@ var MAL = function()
         }
     }
 
+    this.warnFollowingNotAny = function(cbFunc, cbReq) {
+        if ($.hasOwnProperty('mobile'))
+            alert(polyglot.t('warn_following_not_any'));
+        else
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or KISS
+                txtMessage: polyglot.t('warn_following_not_any'),
+                cbConfirm: cbFunc,
+                cbConfirmReq: cbReq,
+                cbClose: 'cbConfirm'
+            });
+    };
 
-    this.followingListLoaded = function() {
-        if( $.hasOwnProperty("mobile") ) {
+    this.followingListLoaded = function(followingList) {
+        if ($.hasOwnProperty('mobile')) {
             $.mobile.hidePageLoadingMsg();
-            $(".following-list").listview('refresh');
-        } else {
-            $(".postboard-loading").hide();
-        }
-    }
+            followingList.listview('refresh');
+        } else
+            followingList.find('.loading-roller').hide();
+    };
 
     this.searchUserListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {

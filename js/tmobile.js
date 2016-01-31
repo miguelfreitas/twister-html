@@ -161,7 +161,10 @@ var router=new $.mobile.Router(
                 }
                 $.mobile.showPageLoadingMsg();
                 $("#following a.ui-btn").removeClass("ui-btn-active");
-                showFollowingUsers();
+                var followingList = twister.tmpl.followingList.clone(true).appendTo($("#following .content"))
+                    .closest('.following-list').listview();
+                showFollowingUsers(followingList);
+                followingList.find('[data-role="button"]').button();
             });
         },
         post: function(type,match,ui) {
