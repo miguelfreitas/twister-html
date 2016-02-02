@@ -905,6 +905,12 @@ function closeThis() {
     $(this).slideUp('fast');
 }
 
+function muteEvent(event, preventDefault) {
+    event.stopPropagation();
+    if (preventDefault || (event.data && event.data.preventDefault))
+        event.data.preventDefault();
+}
+
 function toggleFollowButton(req) {
     if (!req || !req.peerAlias)
         return;
@@ -1968,7 +1974,7 @@ function initInterfaceCommon() {
         closePrompt(event);
     });
 
-    $('.post-text').on('click', 'a', function(e) {e.stopPropagation();});
+    $('.post-text').on('click', 'a', muteEvent);
     $('.post-reply').on('click', postReplyClick);
     $('.post-propagate').on('click', reTwistPopup);
     $('.userMenu-config').clickoutside(closeThis.bind($('.config-menu')));
@@ -1991,14 +1997,15 @@ function initInterfaceCommon() {
     $('.post-submit').on('click', postSubmit);
     $('.modal-propagate').on('click', retweetSubmit);
     $('.expanded-content .show-more').on('mouseup',
-        {feeder: '.module.post.original.open .module.post.original .post-data'}, openConversationClick);
-
+        {feeder: '.module.post.original.open .module.post.original .post-data'}, openConversationClick)
+        .on('click', muteEvent)  // to prevent post collapsing
+    ;
     if ($.Options.unicodeConversion.val === 'disable')
         $('.undo-unicode').on('click', undoLastUnicode).css('display', 'none');
     else
         $('.undo-unicode').on('click', undoLastUnicode);
 
-    $('.open-profile-modal').on('click', function(e) {e.stopPropagation();});
+    $('.open-profile-modal').on('click', muteEvent);
     //$('.open-hashtag-modal').on('click', openHashtagModal);
     //$('.open-following-modal').on('click', openFollowingModal);
     $('.userMenu-connections a').on('click', openMentionsModal);
@@ -2128,7 +2135,9 @@ $(document).ready(function () {
     twister.tmpl.followingList = extractTemplate('#template-following-list');
     twister.tmpl.followingUser = extractTemplate('#template-following-user');
     twister.tmpl.postRtReference = extractTemplate('#template-post-rt-reference')
-        .on('mouseup', {feeder: '.post-rt-reference'}, openConversationClick);
+        .on('mouseup', {feeder: '.post-rt-reference'}, openConversationClick)
+        .on('click', muteEvent)  // to prevent post expanding or collapsing
+    ;
     twister.tmpl.postRtBy = extractTemplate('#template-post-rt-by');
 
     var path = window.location.pathname;
