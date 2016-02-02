@@ -174,19 +174,6 @@ function sendNewUserTransaction(username, cbFunc) {
                }, {});
 }
 
-
-function importSecretKeypress() {
-    var secretKey = $(".secret-key-import").val();
-    var username = $(".username-import").val().toLowerCase();
-    var $importButton = $(".import-secret-key");
-
-    if( secretKey.length == 52 && username.length ) {
-        $.MAL.enableButton( $importButton );
-    } else {
-        $.MAL.disableButton( $importButton );
-    }
-}
-
 function importSecretKeyClick() {
     var secretKey = $(".secret-key-import").val();
     var username = $(".username-import").val().toLowerCase();
@@ -214,8 +201,8 @@ function interfaceCommonLoginHandlers() {
     /* must specialize: $( ".create-user").bind( "click", function() { createUserClick( processCreateUser ); } ); */
     /* must specialize: $( ".login-created-user").bind( "click", loginCreatedUser ); */
     $( ".new-username" ).keyup( newUserNameKeypress );
-    $( ".secret-key-import" ).keyup( importSecretKeypress );
-    $( ".username-import" ).keyup( importSecretKeypress );
+    $('.secret-key-import').on('input', importSecretKeypress);
+    $('.username-import').on('input', importSecretKeypress);
     $( ".import-secret-key").bind( "click", importSecretKeyClick );
 }
 

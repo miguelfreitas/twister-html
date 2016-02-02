@@ -2096,6 +2096,18 @@ function inputEnterActivator(event) {
         .attr('disabled', elemEvent.val().trim() === '');
 }
 
+function importSecretKeypress(event) {  // FIXME rename
+    var elemModule = $(event.target).closest('.module');
+    var elemEnter = elemModule.find('.import-secret-key');
+    var secretKey = elemModule.find('.secret-key-import').val();
+    var peerAlias = elemModule.find('.username-import').val().toLowerCase();
+
+    if (secretKey.length === 52 && peerAlias.length)
+        $.MAL.enableButton(elemEnter);
+    else
+        $.MAL.disableButton(elemEnter);
+}
+
 function setTextcompleteOnEventTarget(event) {
     // cursor has not set yet and we need to wait 100ms to skip global click event
     setTimeout(setTextcompleteOnElement, 100, event.target,
