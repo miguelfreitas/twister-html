@@ -544,14 +544,15 @@ function initInterfaceDirectMsg() {
     });
 
     $('.group-messages-control .leave').on('click', function (event) {
-        var groupAlias = $(event.target).closest('[data-screen-name]').attr('data-screen-name');
+        var elemLeave = $(event.target);
+        var groupAlias = elemLeave.closest('[data-screen-name]').attr('data-screen-name');
         event.data = {
             txtTitle: polyglot.t('сonfirm_group_leaving_header'),
             txtMessage: polyglot.t('сonfirm_group_leaving_body', {alias: groupAlias}),
-            cbConfirm: function (groupAlias) {
-                groupMsgLeaveGroup(groupAlias, function () {history.back();});
+            cbConfirm: function (req) {
+                groupMsgLeaveGroup(req.groupAlias, closeModal, req.elem);
             },
-            cbConfirmReq: groupAlias
+            cbConfirmReq: {groupAlias: groupAlias, elem: elemLeave}
         };
         confirmPopup(event);
     });
