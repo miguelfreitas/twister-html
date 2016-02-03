@@ -674,6 +674,46 @@ function newConversationModal(peerAlias, resource) {
     return content;
 }
 
+function addToCommonDMsList(list, targetAlias, message) {
+    var item = twister.tmpl.commonDMsListItem.clone(true)
+        .attr('data-screen-name', targetAlias)
+        .attr('data-last_id', message.id)
+        .attr('data-time', message.time)
+    ;
+
+    item.find('.post-info-tag').text('@' + targetAlias);
+    item.find('.post-info-name').attr('href', $.MAL.userUrl(targetAlias));
+    item.find('.post-text').html(htmlFormatMsg(message.text).html);
+    item.find('.post-info-time')
+        .attr('title', timeSincePost(message.time))
+        .find('span:last')
+            .text(timeGmtToText(message.time))
+    ;
+    if (targetAlias[0] === '*') {
+        getAvatar(message.from, item.find('.post-photo img'));  // it's impossible yet to get group avatar
+        getGroupChatName(targetAlias, item.find('a.post-info-name'));
+    } else {
+        getAvatar(targetAlias, item.find('.post-photo img'));
+        getFullname(targetAlias, item.find('a.post-info-name'));
+    }
+
+    if (_newDMsPerUser[targetAlias] > 0)
+        item.addClass('new')
+            .find('.messages-qtd').text(_newDMsPerUser[targetAlias]).show();
+
+    var items = list.children();
+    for (var i = 0; i < items.length; i++) {
+        var elem = items.eq(i);
+        var time = elem.attr('data-time');
+        if (typeof time === 'undefined' || message.time > parseInt(time)) {
+            elem.before(item);
+            break;
+        }
+    }
+    if (i === items.length)  // equals to !item.parent().length
+        list.append(item);
+}
+
 function openConversationClick(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -775,7 +815,7 @@ function loadModalFromHash() {
             openConversationModal(splithashdata2[0], splithashdata2[1]);
         }
     } else if (hashstring === '#directmessages')
-        directMessagesPopup();
+        openCommonDMsModal();
     else if (hashstring === '#following')
         openFollowingModal();
     else if (hashstring === '#groupmessages')
@@ -1959,6 +1999,8 @@ function replaceDashboards() {
 }
 
 function initInterfaceCommon() {
+    twister.tmpl.commonDMsList = extractTemplate('#template-direct-messages-list');
+
     $('.modal-close, .modal-blackout').not('.prompt-close').on('click', closeModal);
 
     $('.minimize-modal').on('click', function (event) {
@@ -2148,6 +2190,13 @@ $(document).ready(function () {
     twister.html.blanka.appendTo('body').hide();
     twister.tmpl.followingList = extractTemplate('#template-following-list');
     twister.tmpl.followingUser = extractTemplate('#template-following-user');
+    twister.tmpl.commonDMsListItem = extractTemplate('#template-direct-messages-list-item')
+        .on('mouseup', function (event) {
+            event.data = {route:
+                $.MAL.dmchatUrl($(event.target).closest('.module').attr('data-screen-name'))};
+            routeOnClick(event);
+        })
+    ;
     twister.tmpl.postRtReference = extractTemplate('#template-post-rt-reference')
         .on('mouseup', {feeder: '.post-rt-reference'}, openConversationClick)
         .on('click', muteEvent)  // to prevent post expanding or collapsing

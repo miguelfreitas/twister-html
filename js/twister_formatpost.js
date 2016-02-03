@@ -251,32 +251,6 @@ function setPostInfoSent(n, k, item) {
     }
 }
 
-// format dmdata (returned by getdirectmsgs) to display in "snippet" per user list
-function dmDataToSnippetItem(dmData, remoteUser) {
-    var dmItem = $("#dm-snippet-template").clone(true);
-    dmItem.removeAttr('id');
-    dmItem.attr('data-screen-name', remoteUser);
-    dmItem.attr("data-last_id", dmData.id);
-    dmItem.attr("data-time", dmData.time);
-
-    dmItem.find(".post-info-tag").text("@" + remoteUser);
-    dmItem.find("a.post-info-name").attr("href", $.MAL.userUrl(remoteUser));
-    dmItem.find("a.dm-chat-link").attr("href", $.MAL.dmchatUrl(remoteUser));
-    getAvatar( remoteUser, dmItem.find(".post-photo").find("img") );
-    if( remoteUser.length && remoteUser[0] === '*' )
-        getGroupChatName( remoteUser, dmItem.find("a.post-info-name") );
-    else
-        getFullname( remoteUser, dmItem.find("a.post-info-name") );
-    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text).html);
-    dmItem.find('.post-info-time')
-        .attr('title', timeSincePost(dmData.time))
-        .find('span:last')
-            .text(timeGmtToText(dmData.time))
-    ;
-
-    return dmItem;
-}
-
 // format dmdata (returned by getdirectmsgs) to display in conversation thread
 function postToElemDM(dmData, localUser, remoteUser) {
     var senderAlias = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0))

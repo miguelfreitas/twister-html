@@ -272,9 +272,8 @@ var router=new $.mobile.Router(
         directmsg: function(type,match,ui) {
             $.mobile.showPageLoadingMsg();
             initializeTwister( true, true, function() {
-                var $dmThreadList = $("#directmsg ul.direct-messages-thread");
                 $.mobile.showPageLoadingMsg();
-                requestDMsnippetList($dmThreadList);
+                requestDMsnippetList($('#directmsg .direct-messages-list'));
             });
         },
         dmchat: function(type,match,ui) {
@@ -282,7 +281,7 @@ var router=new $.mobile.Router(
             $.mobile.showPageLoadingMsg();
             initializeTwister( true, true, function() {
                 var user = params.user;
-                var dmConvo = $("#dmchat ul.direct-messages-list");
+                var dmConvo = $('#dmchat .direct-messages-thread');
                 $("#dmchat .rtitle").text("Chat @" + user);
                 $("#dmchat textarea").val("");
                 dmConvo.html("");
@@ -590,9 +589,8 @@ function tmobileTick() {
         requestQuery(tmobileQueryReq);
     }
 
-    if( curPage == "dmchat" ) {
-        requestDmConversation($("#dmchat ul.direct-messages-list"),dmChatUser);
-    }
+    if (curPage === 'dmchat')
+        requestDmConversation($('#dmchat .direct-messages-thread'), dmChatUser);
 }
 
 $(document).bind('mobileinit', function () {

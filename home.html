@@ -457,23 +457,22 @@
     <!-- MODAL DE DIRECT MESSAGES INIT -->
     <!-- Este modal possui dois templates, o primeiro da lista de pessoas que enviaram mensagens e o segundo
     com a thread de mensagens individual -->
-    <div class="direct-messages-template">
-      <ol class="direct-messages-list">
-        <!-- use "dm-snippet-template here -->
-      </ol>
+    <div id="template-direct-messages-list">
+        <ol class="direct-messages-list"></ol>
     </div>
 
-    <li id="dm-snippet-template" class="module post message">
-      <div class="post-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
-      <div class="post-info">
-        <a href="#" class="post-info-name open-profile-modal"></a>
-        <span class="post-info-tag">@</span>
-        <a href="#" class="post-info-time" title=""><span></span></a>
-      </div>
-      <!-- o texto do post (restrição de caracteres?) -->
-      <p class="post-text"></p>
-        <div class="messages-qtd">0</div>
-    </li>
+    <div id="template-direct-messages-list-item">
+        <li class="module post message">
+            <div class="post-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+            <div class="post-info">
+                <a class="post-info-name open-profile-modal"></a>
+                <span class="post-info-tag">@</span>
+                <a class="post-info-time"><span></span></a>
+            </div>
+            <p class="post-text"></p>
+            <div class="messages-qtd">0</div>
+        </li>
+    </div>
 
     <div class="messages-thread-template">
       <ol class="direct-messages-thread">

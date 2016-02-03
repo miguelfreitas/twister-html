@@ -131,6 +131,19 @@
     font-size: 9px;
     float: right;
 }
+
+.direct-messages-list .post-info {
+    position: absolute;
+    top: 4px;
+    left: 72px;
+    width: 90%;
+}
+
+.direct-messages-list .post-text {
+    position: absolute;
+    top: 32px;
+    left: 72px;
+}
 </style>
 
 <div id="index" data-role="page">
@@ -589,8 +602,7 @@
   </div>
 
   <div class="content" data-role="content">
-    <ul class="direct-messages-thread" data-role="listview">
-    </ul>
+    <ul class="direct-messages-list" data-role="listview"></ul>
   </div>
 
   <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -607,8 +619,7 @@
   </div>
 
   <div class="content" data-role="content">
-    <ul class="direct-messages-list" data-role="listview">
-    </ul>
+    <ul class="direct-messages-thread" data-role="listview"></ul>
 
     <div class="dm-form" style="padding:15px 20px 20px 20px;">
       <form class="post-area-new open">
@@ -812,19 +823,17 @@
        <img class="avatar size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
     </a>
 
-    <!-- template for dm-snippet (dm threads list)  -->
-    <li id="dm-snippet-template" class="module post message" data-icon="arrow-r">
-      <a class="dm-chat-link post-photo" href="#dmchat">
-        <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-        <h4 class="post-info">
-          <span class="post-info-name open-profile-modal"></span>
-          <span class="post-info-tag">@</span>
-          <a class="post-info-time ui-li-aside"><span></span></a>
-        </h4>
-        <!-- o texto do post (restrição de caracteres?) -->
-        <p class="post-text"></p>
-      </a>
-    </li>
+    <div id="template-direct-messages-list-item">
+        <li class="module post message" data-icon="arrow-r">
+            <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+            <div class="post-info">
+                <a class="post-info-name"></a>
+                <span class="post-info-tag">@</span>
+                <a class="post-info-time ui-li-aside"><span></span></a>
+            </div>
+            <p class="post-text"></p>
+        </li>
+    </div>
 
     <!-- template for each dm (chat window) -->
     <li id="dm-chat-template" class="module post message">

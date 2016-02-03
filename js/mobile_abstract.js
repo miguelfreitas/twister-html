@@ -31,27 +31,24 @@ var MAL = function()
         }
     }
 
-    this.dmThreadListLoaded = function() {
-        if( $.hasOwnProperty("mobile") ) {
+    this.commonDMsListLoaded = function () {
+        if ($.hasOwnProperty('mobile')) {
             $.mobile.hidePageLoadingMsg();
-            var $dmThreadList = $("#directmsg ul.direct-messages-thread");
-            $dmThreadList.listview('refresh');
+            $('#directmsg .direct-messages-list').listview('refresh');
         } else {
         }
-    }
+    };
 
-    this.dmChatListLoaded = function(dmConvo) {
-        if( $.hasOwnProperty("mobile") ) {
+    this.dmConversationLoaded = function (dmConvo) {
+        if ($.hasOwnProperty('mobile')) {
             $.mobile.hidePageLoadingMsg();
-            var $dmChatList = $("#dmchat ul.direct-messages-list");
-            $dmChatList.listview('refresh');
-            $.mobile.silentScroll( $(".dm-form").offset().top );
+            $('#dmchat .direct-messages-thread').listview('refresh');
+            $.mobile.silentScroll($('.dm-form').offset().top);
         } else {
-            var modalContent = dmConvo.closest(".modal-content");
+            var modalContent = dmConvo.closest('.modal-content');
             modalContent.scrollTop(modalContent[0].scrollHeight);
         }
-    }
-
+    };
 
     this.relatedPostLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
