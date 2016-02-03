@@ -10,7 +10,9 @@ var twister = {
         detached: $('<div>'),  // here elements go to detach themself
         blanka: $('<a target="_blank">')  // to open stuff in new tab, see routeOnClick()
     },
-    tmpl: {},  // templates should be detached and stored here
+    tmpl: {  // templates pointers are stored here
+        root: $('<div>')  // templates should be detached from DOM and attached here; use extractTemplate()
+    },
     modal: {}
 };
 var window_scrollY = 0;
@@ -2064,7 +2066,7 @@ function initInterfaceCommon() {
 }
 
 function extractTemplate(selector) {
-    return $(selector).appendTo(twister.html.detached).children();
+    return $(selector).appendTo(twister.tmpl.root).children();
 }
 
 function promptCopyAttrData(event) {
