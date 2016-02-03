@@ -153,7 +153,10 @@ function minimizeModal(modal, switchMode) {
         twister.modal[i].minimized = true;
         twister.modal[i].scroll = scroll;
         twister.modal[i].btnResume = $('<li>' + modal.find('.modal-header h3').text() + '</li>')
-            .on('click', {hashString: window.location.hash}, resumeModal)
+            .on('click', {hashString: window.location.hash}, function (event) {
+                if (event.button === 0)  // click may be catched not only on left mouse button in some browsers
+                    resumeModal(event);
+            })
             .on('mouseup', {route: window.location.hash, blankOnly: true}, routeOnClick)
             .appendTo($('#modals-minimized'))
         ;
@@ -742,9 +745,18 @@ function routeOnClick(event) {
     event.preventDefault();
 
     if (event.button === 0 && !event.data.blankOnly)  // left mouse button
-        window.location = event.data.route;
-    else if (event.button === 1)  // middle mouse button
-        twister.html.blanka.attr('href', event.data.route)[0].click();
+        window.location = event.data.route;  // closes modal(s) in watchHashChange() and opens .route
+    else if (event.button === 1) // middle mouse button
+        if (event.data.blankOnly || event.metaKey || event.ctrlKey)
+            twister.html.blanka.attr('href', event.data.route)[0].click();  // opens .route in new tab
+        else {
+            var modal = $(event.target).closest('.modal-wrapper:not(.closed)');
+            if (modal.length) {  // killer feature: we minimize current modal before .route opening
+                minimizeModal(modal, true);
+                window.location.hash = event.data.route;
+            } else
+                twister.html.blanka.attr('href', event.data.route)[0].click();  // opens .route in new tab
+        }
 }
 
 function watchHashChange(event) {
@@ -774,9 +786,9 @@ function watchHashChange(event) {
 function loadModalFromHash() {
     var i = window.location.hash;
     if (twister.modal[i] && twister.modal[i].minimized) {
-        // need to remove active modal before btnResume.click() or it will be minimized in resumeModal()
+        // need to close active modal(s) before btnResume.click() or it will be minimized in resumeModal()
         // e.g. for case when you click on profile link in some modal having this profile's modal minimized already
-        $('.modal-wrapper:not(#templates *)').remove();
+        closeModal(true);
         twister.modal[i].btnResume.click();
         return;
     }
