@@ -1981,9 +1981,9 @@ function initInterfaceCommon() {
     $('.post-propagate').on('click', reTwistPopup);
     $('.userMenu-config').clickoutside(closeThis.bind($('.config-menu')));
     $('.userMenu-config-dropdown').on('click', dropDownMenu);
-    $('.module.post').on('click', function(e) {
-        if (e.button === 0 && window.getSelection() == 0)
-            postExpandFunction(e,$(this));
+    $('#post-template.module.post').on('click', function(event) {
+        if (event.button === 0 && window.getSelection() == 0)
+            postExpandFunction(event, $(this));
     });
     $('.post-area-new')
         .on('click', function(e) {composeNewPost(e, $(this));})
