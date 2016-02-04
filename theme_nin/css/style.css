@@ -3182,21 +3182,25 @@ ol.toptrends-list a:hover {
 **************************************/
 
 .modal-wrapper.following-own-modal {
-    width: 674px;
+    width: 678px;
     height: 600px;
-    margin: -300px 0 0 -337px;
+    margin: -300px 0 0 -339px;
 }
 
 .following-own-modal .modal-content {
     padding: 0;
 }
 
+.following-own-modal .following-list {
+    text-align: center;
+}
+
 .following-own-modal .following-list > li {
+    display: inline-block;
     width: 320px;
     height: 160px;
     margin: 2px;
     padding: 2px;
-    float: left;
     border: solid 1px rgba(69, 71, 77, .1);
     background: #FFF;
     text-align: center;

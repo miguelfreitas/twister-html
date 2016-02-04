@@ -2190,16 +2190,21 @@ ol.toptrends-list {
 **************************************/
 
 .following-own-modal.modal-wrapper {
-    width: 662px;
-    margin-left: -331px;
+    width: 666px;
+    margin-left: -333px;
+}
+
+.following-own-modal .following-list {
+    text-align: center;
 }
 
 .following-own-modal .following-list > li {
+    display: inline-block;
+    text-align: initial;
     width: 320px;
     height: 120px;
     margin: 2px;
     padding: 2px;
-    float: left;
     border: solid 1px rgba(69, 71, 77, .1);
     background: #fff;
 }
