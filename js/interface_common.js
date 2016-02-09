@@ -587,7 +587,7 @@ function addToFollowingList(followingList, peerAlias) {
     getFullname(peerAlias, item.find('.mini-profile-name'));
 
     if (peerAlias === defaultScreenName)
-        item.find('following-config').hide();
+        item.find('.following-config').hide();
 
     toggleFollowButton({
         button: item.find('.follow'),
