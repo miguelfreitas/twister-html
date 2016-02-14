@@ -338,9 +338,16 @@ function confirmPopup(req) {
 function alertPopup(req) {
     if (!req) return;
 
-    if (!req.txtConfirm)
-        req.txtConfirm = polyglot.t('btn_ok');
-    req.removeCancel = true;
+    if (typeof req.stopPropagation === 'function') {
+        if (typeof req.data !== 'object') return;
+        if (!req.data.txtConfirm)
+            req.data.txtConfirm = polyglot.t('btn_ok');
+        req.data.removeCancel = true;
+    } else {
+        if (!req.txtConfirm)
+            req.txtConfirm = polyglot.t('btn_ok');
+        req.removeCancel = true;
+    }
 
     confirmPopup(req);
 }
