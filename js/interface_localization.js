@@ -128,6 +128,9 @@ if(preferredLanguage == "en"){
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Not available", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -451,6 +454,9 @@ if(preferredLanguage == "es"){
       "nobody": "Nadie", // used to promote a post without attaching the user
       "Not available": "No disponible", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -759,6 +765,9 @@ if(preferredLanguage == "uk"){
       "nobody": "анонім", // used to promote a post without attaching the user
       "Not available": "Не доступне", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister не може створити сповіщення: невідома помилка.",
       "notify_desktop_perm_denied": "Twister не може створити сповіщення на робочому столі: доступ обмежено.\n\nЯкщо ви бажаєте отримувати сповіщення, дозвольте їх виконання в налаштуваннях браузера для %{this_domain}.",
       "notify_desktop_test": "Є дещо новеньке у стрічці.",
@@ -1064,6 +1073,9 @@ if(preferredLanguage == "zh-CN"){
       "nobody": "无名", // used to promote a post without attaching the user
       "Not available": "用户名不可用", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister 无法发出桌面提醒：发生未知错误。",
       "notify_desktop_perm_denied": "Twister 无法发出桌面提醒：权限被拒绝。\n\n如果你想收到提醒，请在你的浏览器设置中允许 %{this_domain} 发出提醒。",
       "notify_desktop_test": "我们都在用 Twister。\n欢迎你的加入。",
@@ -1387,6 +1399,9 @@ if(preferredLanguage == "nl"){
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Niet beschikbaar", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -1694,6 +1709,9 @@ if(preferredLanguage == "it"){
       "nobody": "nessuno", // used to promote a post without attaching the user
       "Not available": "Non disponibile", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -1999,6 +2017,9 @@ if(preferredLanguage == "fr"){
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Non disponible", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Impossible d'afficher les notifications: une erreur inconnue est survenue.",
       "notify_desktop_perm_denied": "Impossible d'afficher les notifications: autorisation refusée.\n\nSi tu souhaites afficher les notifications, autorise le %{this_domain} dans les paramêtres de ton navigateur.",
       "notify_desktop_test": "All the twisters gonna twist.\nBienvenue à toi!",
@@ -2308,6 +2329,9 @@ if(preferredLanguage == "ru"){
        "nobody": "Анонимно", // used to promote a post without attaching the user
        "Not available": "Недоступно",
        "warn_following_not_any": "Пока что таки нет читаемых!\nПоди ж найди кого-нибудь да и подпишись.",
+       "warn_followers_not_all": "Пока что нет простого способа узнать список всех подписчиков.\n"
+         + "Счётчик показывает лишь количество известных пиров твоего торрента.\n"
+         + "В списке ниже включены те, главным образом, на кого подписан(а) ты сам(а).",
        "notify_desktop_error": "Твистер не может выполнить уведомление: произошла неизвестная ошибка.",
        "notify_desktop_perm_denied": "Твистер не может выполнить уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для %{this_domain} в настройках вашего браузера.",
        "notify_desktop_test": "Одна лягушка сказала:\n'если не буду квакать — лопну'.\nВы нужны нам, берегите себя.",
@@ -2620,6 +2644,9 @@ if(preferredLanguage == "de"){
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Nicht verfügbar", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister kann keine Desktop-Meldungen anzeigen: ein unbekannter Fehler trat auf.",
       "notify_desktop_perm_denied": "Twister kann keine Desktop-Meldungen anzeigen: Keine Berechtigung.\n\nWenn Du Meldungen angezeigt haben möchtest, erlaube sie für %{this_domain} in den Einstellungen Deines Browsers.",
       "notify_desktop_test": "All die Twisterer werden twisten..\nDu bist nun auch willkommen!",
@@ -2928,6 +2955,9 @@ if(preferredLanguage == "ja"){
       "nobody": "ナナシ", // used to promote a post without attaching the user
       "Not available": "使用中", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -3233,6 +3263,9 @@ if(preferredLanguage == "pt-BR"){
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Indisponível", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -3542,6 +3575,9 @@ if(preferredLanguage == "tr"){
       "nobody": "hiçkimse", // used to promote a post without attaching the user
       "Not available": "Kullanılamaz", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twister masaüstü uyarısını gösterimiyor: bilimeyen bir hata oluştu.",
       "notify_desktop_perm_denied": "Twister masaüstü uyarısını gösteremiyor: yetkilendirme hatası.\n\nUyarıları almak istiyorsanız, tarayıcı ayarlarında %{this_domain} alan adı için izin veriniz.",
       "notify_desktop_test": "Kasırga her yanı saracak\nBu karnavala hoşgeldin!",
@@ -3848,6 +3884,9 @@ if(preferredLanguage == "cs"){
       "nobody": "nikdo", // used to promote a post without attaching the user
       "Not available": "Tuto přezdívku již někdo používá", // username is not available
       "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
       "notify_desktop_error": "Twisteru se nepodařilo zobrazit upozornění na ploše: došlo k neznámé chybě.",
       "notify_desktop_perm_denied": "Twisteru se nepodařilo zobrazit upozornění na ploše: přístup byl odepřen.\n\nPokud chcete používat upozornění na ploše, povolte je pro %{this_domain} v nastavení vašeho prohlížeče.",
       "notify_desktop_test": "Twister to umí pořádně roztočit.\nKaždý je tu vítán.",

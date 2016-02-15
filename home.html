@@ -118,7 +118,7 @@
         <ul class="module profile-data">
           <li><a href="#" class="open-profile-modal"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
           <li><a href="#following" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
-          <li><a href="#" class="open-followers"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
+          <li><a class="open-followers"><span class="followers-count"></span><span class="label">Followers</span> *</a></li>
         </ul>
 
         <div class="post-area">
@@ -682,6 +682,23 @@
         <!-- ÁREA DE POSTS END -->
     </div>
     <!-- MODAL DE HASHTAGS END -->
+
+    <div id="template-followers-list">
+        <ol class="followers-list">
+            <div class="loading-roller">
+                <div></div>
+            </div>
+        </ol>
+    </div>
+
+    <div id="template-followers-peer">
+        <li class="twister-peer">
+            <div class="avatar"><img src="img/grayed_avatar_placeholder_24.png" alt="avatar" /></div>
+            <div class="name"></div>
+            <div class="alias"></div>
+            <div class="bio"></div>
+        </li>
+    </div>
 
     <div id="template-following-list">
         <ol class="following-list">

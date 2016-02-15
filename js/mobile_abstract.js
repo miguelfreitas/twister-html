@@ -73,6 +73,14 @@ var MAL = function()
             });
     };
 
+    this.listLoaded = function (list) {
+        if ($.hasOwnProperty('mobile')) {
+            $.mobile.hidePageLoadingMsg();
+            list.listview('refresh');
+        } else
+            list.find('.loading-roller').hide();
+    };
+
     this.followingListLoaded = function(followingList) {
         if ($.hasOwnProperty('mobile')) {
             $.mobile.hidePageLoadingMsg();

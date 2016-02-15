@@ -544,6 +544,46 @@ function openMentionsModalHandler(peerAlias) {
     }
 }
 
+function openFollowersModal(peerAlias) {
+    if (!peerAlias && !defaultScreenName) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('You don\'t have any followers because you are not logged in.')
+        });
+        history.back();
+        return;
+    }
+
+    var modal = openModal({
+        classAdd: 'followers-modal',
+        content: twister.tmpl.followersList.clone(true),
+        title: polyglot.t('Followers')
+    });
+
+    appendKnownFollowersToElem(modal.content.find('ol'));
+
+    alertPopup({txtMessage: '* ' + polyglot.t('warn_followers_not_all')});
+}
+
+function appendKnownFollowersToElem(list) {
+    for (var i = 0; i < twisterFollowingO.knownFollowers.length; i++)
+        addPeerToFollowersList(list, twisterFollowingO.knownFollowers[i]);
+
+    $.MAL.listLoaded(list);
+}
+
+function addPeerToFollowersList(list, peerAlias) {
+    var item = twister.tmpl.followersPeer.clone(true).attr('data-peer-alias', peerAlias);
+
+    item.find('.alias').text('@' + peerAlias);
+    item.find('.alias, .avatar, .name').on('mouseup', {route: $.MAL.userUrl(peerAlias)}, routeOnClick);
+    getAvatar(peerAlias, item.find('.avatar img'));
+    getFullname(peerAlias, item.find('.name'));
+    getBioToElem(peerAlias, item.find('.bio'));
+
+    item.prependTo(list);
+}
+
 function openFollowingModal(peerAlias) {
     if (!peerAlias || peerAlias === defaultScreenName) {
         if (!defaultScreenName) {
@@ -838,6 +878,8 @@ function loadModalFromHash() {
         }
     } else if (hashstring === '#directmessages')
         openCommonDMsModal();
+    else if (hashstring === '#followers')
+        openFollowersModal();
     else if (hashstring === '#following')
         openFollowingModal();
     else if (hashstring === '#groupmessages')
@@ -2040,6 +2082,8 @@ function initInterfaceCommon() {
         closePrompt(event);
     });
 
+    $('.open-followers').on('mouseup', {route: '#followers'}, routeOnClick);
+
     $('.post-text').on('click', 'a', muteEvent);
     $('.post-reply').on('click', postReplyClick);
     $('.post-propagate').on('click', reTwistPopup);
@@ -2210,6 +2254,8 @@ function setTextcompleteDropdownListPos(position) {
 
 $(document).ready(function () {
     twister.html.blanka.appendTo('body').hide();
+    twister.tmpl.followersList = extractTemplate('#template-followers-list');
+    twister.tmpl.followersPeer = extractTemplate('#template-followers-peer');
     twister.tmpl.followingList = extractTemplate('#template-following-list');
     twister.tmpl.followingUser = extractTemplate('#template-following-user');
     twister.tmpl.commonDMsListItem = extractTemplate('#template-direct-messages-list-item')
