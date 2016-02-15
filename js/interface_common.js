@@ -165,13 +165,7 @@ function minimizeModal(modal, switchMode) {
     if (modal.is('.closed')) return;
 
     var scroll;  // MUST be setted before modal.detach(), modal.fadeOut() and so on
-    if (modal.is('.directMessages') || modal.is('.group-messages-new-group')
-        || modal.is('.group-messages-join-group') || modal.is('.following-own-modal')) {
-            scroll = {
-                targetSelector: '.modal-content',
-                top: modal.find('.modal-content').scrollTop()
-            };
-    } else if (modal.is('.profile-modal')) {
+    if (modal.is('.profile-modal')) {
         if (modal.find('.profile-card').attr('data-screen-name')[0] === '*')
             scroll = {
                 targetSelector: '.modal-content .members',
@@ -182,7 +176,11 @@ function minimizeModal(modal, switchMode) {
                 targetSelector: '.modal-content .postboard-posts',
                 top: modal.find('.modal-content .postboard-posts').scrollTop()
             };
-    }
+    } else
+        scroll = {
+            targetSelector: '.modal-content',
+            top: modal.find('.modal-content').scrollTop()
+        };
 
     if (switchMode)
         minimize(modal, scroll);
