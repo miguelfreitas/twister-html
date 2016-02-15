@@ -89,6 +89,7 @@ if(preferredLanguage == "en"){
       "Followed by": "Followed by",
       "followed_by": "Followed by %{username}",
       "Followers": "Followers",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Following",
       "Following users": "Following users",
       "Force connection to peer:": "Force connection to peer:",
@@ -131,6 +132,8 @@ if(preferredLanguage == "en"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -415,6 +418,7 @@ if(preferredLanguage == "es"){
       "Followed by": "Seguido por",
       "followed_by": "Seguido por %{username}",
       "Followers": "Seguidores",
+      "Followers_of": "Seguidores de @%{alias}",
       "Following": "Siguiendo",
       "Following users": "Siguiendo los usuarios",
       "Force connection to peer:": "Forzar la conexión a  los pares:",
@@ -457,6 +461,8 @@ if(preferredLanguage == "es"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -726,6 +732,7 @@ if(preferredLanguage == "uk"){
       "Followed by": "читає",
       "followed_by": "%{username} читає",
       "Followers": "Читачі",
+      "Followers_of": "Читачі @%{alias}",
       "Following": "Читає",
       "Following users": "Підписані користувачі",
       "Force connection to peer:": "Примусове з’єднання з піром:",
@@ -768,6 +775,8 @@ if(preferredLanguage == "uk"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister не може створити сповіщення: невідома помилка.",
       "notify_desktop_perm_denied": "Twister не може створити сповіщення на робочому столі: доступ обмежено.\n\nЯкщо ви бажаєте отримувати сповіщення, дозвольте їх виконання в налаштуваннях браузера для %{this_domain}.",
       "notify_desktop_test": "Є дещо новеньке у стрічці.",
@@ -1034,6 +1043,7 @@ if(preferredLanguage == "zh-CN"){
       "Followed by": "关注者",
       "followed_by": "被 %{username} 关注",
       "Followers": "粉丝",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "关注",
       "Following users": "关注的用户",
       "Force connection to peer:": "强制连接到节点：",
@@ -1076,6 +1086,8 @@ if(preferredLanguage == "zh-CN"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister 无法发出桌面提醒：发生未知错误。",
       "notify_desktop_perm_denied": "Twister 无法发出桌面提醒：权限被拒绝。\n\n如果你想收到提醒，请在你的浏览器设置中允许 %{this_domain} 发出提醒。",
       "notify_desktop_test": "我们都在用 Twister。\n欢迎你的加入。",
@@ -1360,6 +1372,7 @@ if(preferredLanguage == "nl"){
       "Followed by": "Gevolgd door",
       "followed_by": "Gevolgd door %{username}",
       "Followers": "Volgers",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Volgend",
       "Following users": "Volgende gebruikers",
       "Force connection to peer:": "Forceer connectie met peer:",
@@ -1402,6 +1415,8 @@ if(preferredLanguage == "nl"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -1670,6 +1685,7 @@ if(preferredLanguage == "it"){
       "Followed by": "Seguito da",
       "followed_by": "Seguiti da %{username}",
       "Followers": "Lettori",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Seguiti",
       "Following users": "Utenti seguiti",
       "Force connection to peer:": "Forza connessione al nodo:",
@@ -1712,6 +1728,8 @@ if(preferredLanguage == "it"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -1978,6 +1996,7 @@ if(preferredLanguage == "fr"){
       "Followed by": "Suivi par",
       "followed_by": "Suivi par %{username}",
       "Followers": "Abonnés",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Abonnements",
       "Following users": "Following users",
       "Force connection to peer:": "Forcer la connection à un pair:",
@@ -2020,6 +2039,8 @@ if(preferredLanguage == "fr"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Impossible d'afficher les notifications: une erreur inconnue est survenue.",
       "notify_desktop_perm_denied": "Impossible d'afficher les notifications: autorisation refusée.\n\nSi tu souhaites afficher les notifications, autorise le %{this_domain} dans les paramêtres de ton navigateur.",
       "notify_desktop_test": "All the twisters gonna twist.\nBienvenue à toi!",
@@ -2290,6 +2311,7 @@ if(preferredLanguage == "ru"){
        "Followed by": "Подписчик у",
        "followed_by": "%{username} подписан",
        "Followers": "Читатели",
+       "Followers_of": "Читатели @%{alias}",
        "Following": "Читаемые",
        "Following users": "Подписанные пользователи",
        "Force connection to peer:": "Принудительно подключиться к пиру:",
@@ -2332,6 +2354,8 @@ if(preferredLanguage == "ru"){
        "warn_followers_not_all": "Пока что нет простого способа узнать список всех подписчиков.\n"
          + "Счётчик показывает лишь количество известных пиров твоего торрента.\n"
          + "В списке ниже включены те, главным образом, на кого подписан(а) ты сам(а).",
+       "warn_followers_not_all_of": "Пока что нет простого способа узнать список всех подписчиков.\n"
+         + "В списке ниже, возможно, лишь некоторые из тех, кто подписан на @%{alias} публично.",
        "notify_desktop_error": "Твистер не может выполнить уведомление: произошла неизвестная ошибка.",
        "notify_desktop_perm_denied": "Твистер не может выполнить уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для %{this_domain} в настройках вашего браузера.",
        "notify_desktop_test": "Одна лягушка сказала:\n'если не буду квакать — лопну'.\nВы нужны нам, берегите себя.",
@@ -2605,6 +2629,7 @@ if(preferredLanguage == "de"){
       "Followed by": "Gefolgt von",
       "followed_by": "Gefolgt von %{username}",
       "Followers": "Followers",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Folgt",
       "Following users": "Folgt Benutzern",
       "Force connection to peer:": "Erzwinge Verbindung zu Peer:",
@@ -2647,6 +2672,8 @@ if(preferredLanguage == "de"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister kann keine Desktop-Meldungen anzeigen: ein unbekannter Fehler trat auf.",
       "notify_desktop_perm_denied": "Twister kann keine Desktop-Meldungen anzeigen: Keine Berechtigung.\n\nWenn Du Meldungen angezeigt haben möchtest, erlaube sie für %{this_domain} in den Einstellungen Deines Browsers.",
       "notify_desktop_test": "All die Twisterer werden twisten..\nDu bist nun auch willkommen!",
@@ -2916,6 +2943,7 @@ if(preferredLanguage == "ja"){
       "Followed by": "フォローされている",
       "followed_by": "%{username}にフォローされている",
       "Followers": "フォロワー",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "フォロー",
       "Following users": "フォローしているユーザー",
       "Force connection to peer:": "強制的に経由するピア:",
@@ -2958,6 +2986,8 @@ if(preferredLanguage == "ja"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -3224,6 +3254,7 @@ if(preferredLanguage == "pt-BR"){
       "Followed by": "Seguido por",
       "followed_by": "Seguido por %{username}",
       "Followers": "Seguidores",
+      "Followers_of": "Seguidores de @%{alias}",
       "Following": "Seguindo",
       "Following users": "Usuários que sigo",
       "Force connection to peer:": "Forçar conexão com o nó:",
@@ -3266,6 +3297,8 @@ if(preferredLanguage == "pt-BR"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -3536,6 +3569,7 @@ if(preferredLanguage == "tr"){
       "Followed by": "Takip edenler",
       "followed_by": "%{username} tarafından takip edilenler",
       "Followers": "Takipçiler",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Takip edilenler",
       "Following users": "Takip edilen kullanıcılar",
       "Force connection to peer:": "Bağlantı için zorlanacak eş:",
@@ -3578,6 +3612,8 @@ if(preferredLanguage == "tr"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister masaüstü uyarısını gösterimiyor: bilimeyen bir hata oluştu.",
       "notify_desktop_perm_denied": "Twister masaüstü uyarısını gösteremiyor: yetkilendirme hatası.\n\nUyarıları almak istiyorsanız, tarayıcı ayarlarında %{this_domain} alan adı için izin veriniz.",
       "notify_desktop_test": "Kasırga her yanı saracak\nBu karnavala hoşgeldin!",
@@ -3845,6 +3881,7 @@ if(preferredLanguage == "cs"){
       "Followed by": "tohoto uživatele sleduje",
       "followed_by": "Uživatelé, které sleduje %{username}",
       "Followers": "Sledující",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Sledovaní",
       "Following users": "Sledovaní uživatelé",
       "Force connection to peer:": "Vyžádat připojení k uzlu:",
@@ -3887,6 +3924,8 @@ if(preferredLanguage == "cs"){
       "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
         + "The counter indicates only a number of known peers sharing your torrent.\n"
         + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twisteru se nepodařilo zobrazit upozornění na ploše: došlo k neznámé chybě.",
       "notify_desktop_perm_denied": "Twisteru se nepodařilo zobrazit upozornění na ploše: přístup byl odepřen.\n\nPokud chcete používat upozornění na ploše, povolte je pro %{this_domain} v nastavení vašeho prohlížeče.",
       "notify_desktop_test": "Twister to umí pořádně roztočit.\nKaždý je tu vítán.",

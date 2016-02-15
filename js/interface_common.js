@@ -545,29 +545,40 @@ function openMentionsModalHandler(peerAlias) {
 }
 
 function openFollowersModal(peerAlias) {
-    if (!peerAlias && !defaultScreenName) {
-        alertPopup({
-            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-            txtMessage: polyglot.t('You don\'t have any followers because you are not logged in.')
-        });
-        history.back();
-        return;
+    var followers, title, txtAlert;
+
+    if (!peerAlias || peerAlias === defaultScreenName) {
+        if (!defaultScreenName) {
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                txtMessage: polyglot.t('You don\'t have any followers because you are not logged in.')
+            });
+            history.back();
+            return;
+        }
+        title = polyglot.t('Followers');
+        followers = twisterFollowingO.knownFollowers.slice();
+        txtAlert = '* ' + polyglot.t('warn_followers_not_all');
+    } else {
+        title = polyglot.t('Followers_of', {alias: peerAlias});
+        followers = whoFollows(peerAlias);
+        txtAlert = polyglot.t('warn_followers_not_all_of', {alias: peerAlias});
     }
 
     var modal = openModal({
         classAdd: 'followers-modal',
         content: twister.tmpl.followersList.clone(true),
-        title: polyglot.t('Followers')
+        title: title
     });
 
-    appendKnownFollowersToElem(modal.content.find('ol'));
+    appendFollowersToElem(modal.content.find('ol'), followers);
 
-    alertPopup({txtMessage: '* ' + polyglot.t('warn_followers_not_all')});
+    alertPopup({txtMessage: txtAlert});
 }
 
-function appendKnownFollowersToElem(list) {
-    for (var i = 0; i < twisterFollowingO.knownFollowers.length; i++)
-        addPeerToFollowersList(list, twisterFollowingO.knownFollowers[i]);
+function appendFollowersToElem(list, followers) {
+    for (var i = 0; i < followers.length; i++)
+        addPeerToFollowersList(list, followers[i]);
 
     $.MAL.listLoaded(list);
 }
@@ -855,8 +866,9 @@ function loadModalFromHash() {
     }
     var hashdata = hashstring.split(':');
 
+    // FIXME rework hash scheme from '#following?user=twister' to something like '#/@twister/following'
     if (hashdata[0] !== '#web+twister')
-        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|following|conversation)\?(?:group|user|hashtag|post)=(.+)/);  // need to rework hash scheme to use group|user|hashtag|post or drop it
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|followers|following|conversation)\?(?:group|user|hashtag|post)=(.+)/);
 
     if (hashdata && hashdata[1] !== undefined && hashdata[2] !== undefined) {
         if (hashdata[1] === 'profile')
@@ -875,7 +887,9 @@ function loadModalFromHash() {
             else
                 openDmWithUserModal(hashdata[2]);
 
-        } else if (hashdata[1] === 'following')
+        } else if (hashdata[1] === 'followers')
+            openFollowersModal(hashdata[2]);
+        else if (hashdata[1] === 'following')
             openFollowingModal(hashdata[2]);
         else if (hashdata[1] === 'conversation') {
             splithashdata2 = hashdata[2].split(':');
