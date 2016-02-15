@@ -204,52 +204,55 @@ function getProfileResource( username, resource, item, cbFunc, cbArg ){
     }
 }
 
-// get fullname and store it in item.text
-function getFullname( username, item ){
-    // Set the username first in case the profile has no fullname
-    item.text(username);
-    getProfileResource( username, "fullname", undefined,
-                       function(args, value) {
-                           if( value ) {
-                               value.replace(/^\s+|\s+$/g, '');
-                               if( value.length )
-                                   args.item.text(value);
-                           }
-                       }, {item: item} );
-    if (typeof(twisterFollowingO) !== 'undefined' &&
-        ($.Options.isFollowingMe.val === 'everywhere' || item.hasClass('profile-name'))) {
-        if (twisterFollowingO.knownFollowers.indexOf(username) > -1) {
-            item.addClass('isFollowing');
-            item.attr("title", polyglot.t("follows you"));
-        } else if (twisterFollowingO.notFollowers.indexOf(username) === -1) {
-            if (typeof(twisterFollowingO.followingsFollowings[username]) !== 'undefined' &&
-                typeof(twisterFollowingO.followingsFollowings[username]["following"]) !== 'undefined') {
-                if (twisterFollowingO.followingsFollowings[username]["following"].indexOf(defaultScreenName) > -1) {
-                    twisterFollowingO.knownFollowers.push(username);
-                    addPeerToFollowersList(getElem('.followers-modal .followers-list'), username, true);
-                    twisterFollowingO.save();
-                    item.addClass('isFollowing');
-                    item.attr("title", polyglot.t("follows you"));
-                }
-            } else {
-                loadFollowingFromDht(username, 1, [], 0, function (args, following, seqNum) {
-                    if (following.indexOf(args.user) > -1) {
-                        item.addClass('isFollowing');
-                        item.attr("title", polyglot.t("follows you"));
-                        if (twisterFollowingO.knownFollowers.indexOf(args.username) < 0) {
-                            twisterFollowingO.knownFollowers.push(args.username);
-                            addPeerToFollowersList(getElem('.followers-modal .followers-list'), args.username, true);
+// get fullname and store it in elem.text
+function getFullname(peerAlias, elem) {
+    elem.text(peerAlias);  // fallback: set the peerAlias first in case the profile has no fullname
+    getProfileResource(peerAlias, 'fullname', undefined,
+        function(req, name) {
+            if (name && (name = name.trim()))
+                req.elem.text(name);
+
+            if (typeof twisterFollowingO !== 'undefined' &&  // FIXME delete this check when you fix client init sequence
+                ($.Options.isFollowingMe.val === 'everywhere' || req.elem.hasClass('profile-name'))) {
+                // here we try to detect if peer follows us and then display it
+                if (twisterFollowingO.knownFollowers.indexOf(req.peerAlias) > -1) {
+                    req.elem.addClass('isFollowing');
+                    req.elem.attr('title', polyglot.t('follows you'));
+                } else if (twisterFollowingO.notFollowers.indexOf(req.peerAlias) === -1) {
+                    if (twisterFollowingO.followingsFollowings[req.peerAlias] &&
+                        twisterFollowingO.followingsFollowings[req.peerAlias].following) {
+                        if (twisterFollowingO.followingsFollowings[req.peerAlias].following.indexOf(defaultScreenName) > -1) {
+                            if (twisterFollowingO.knownFollowers.indexOf(req.peerAlias) === -1) {
+                                twisterFollowingO.knownFollowers.push(req.peerAlias);
+                                twisterFollowingO.save();
+                                addPeerToFollowersList(getElem('.followers-modal .followers-list'), req.peerAlias, true);
+                                $('.open-followers').attr('title', twisterFollowingO.knownFollowers.length.toString());
+                            }
+                            req.elem.addClass('isFollowing');
+                            req.elem.attr('title', polyglot.t('follows you'));
                         }
-                    } else
-                        twisterFollowingO.notFollowers.push(args.username);
+                    } else {
+                        loadFollowingFromDht(req.peerAlias, 1, [], 0,
+                            function (req, following, seqNum) {
+                                if (following.indexOf(defaultScreenName) > -1) {
+                                    if (twisterFollowingO.knownFollowers.indexOf(req.peerAlias) === -1) {
+                                        twisterFollowingO.knownFollowers.push(req.peerAlias);
+                                        addPeerToFollowersList(getElem('.followers-modal .followers-list'), req.peerAlias, true);
+                                        $('.open-followers').attr('title', twisterFollowingO.knownFollowers.length.toString());
+                                    }
+                                    req.elem.addClass('isFollowing');
+                                    req.elem.attr('title', polyglot.t('follows you'));
+                                } else if (twisterFollowingO.notFollowers.indexOf(req.peerAlias) === -1)
+                                    twisterFollowingO.notFollowers.push(req.peerAlias);
 
-                    twisterFollowingO.save();
-                }, {"user": defaultScreenName, "item": item, "username": username});
+                                twisterFollowingO.save();
+                            }, {elem: req.elem, peerAlias: req.peerAlias}
+                        );
+                    }
+                }
             }
-        }
-
-        $(".open-followers").attr("title", twisterFollowingO.knownFollowers.length.toString());
-    }
+        }, {elem: elem, peerAlias: peerAlias}
+    );
 }
 
 // get bio, format it as post message and store result to elem
