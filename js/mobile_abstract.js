@@ -81,14 +81,6 @@ var MAL = function()
             list.find('.loading-roller').hide();
     };
 
-    this.followingListLoaded = function(followingList) {
-        if ($.hasOwnProperty('mobile')) {
-            $.mobile.hidePageLoadingMsg();
-            followingList.listview('refresh');
-        } else
-            followingList.find('.loading-roller').hide();
-    };
-
     this.searchUserListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
             $.mobile.hidePageLoadingMsg();

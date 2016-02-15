@@ -163,7 +163,7 @@ var router=new $.mobile.Router(
                 $("#following a.ui-btn").removeClass("ui-btn-active");
                 var followingList = twister.tmpl.followingList.clone(true).appendTo($("#following .content"))
                     .closest('.following-list').listview();
-                showFollowingUsers(followingList);
+                appendFollowingToElem(followingList);
                 followingList.find('[data-role="button"]').button();
             });
         },

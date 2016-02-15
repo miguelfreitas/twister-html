@@ -600,7 +600,7 @@ function openFollowingModal(peerAlias) {
             content: twister.tmpl.followingList.clone(true),
             title: polyglot.t('Following')
         });
-        showFollowingUsers(modal.content.find('.following-list'));
+        appendFollowingToElem(modal.content.find('.following-list'));
         requestSwarmProgress();
     } else {
         var modal = openModal({
@@ -613,18 +613,18 @@ function openFollowingModal(peerAlias) {
     }
 }
 
-function showFollowingUsers(followingList) {
+function appendFollowingToElem(list) {
     if (followingEmptyOrMyself())
-        $.MAL.warnFollowingNotAny(closeModal, followingList);
+        $.MAL.warnFollowingNotAny(closeModal, list);
     else
         for (var i = 0; i < followingUsers.length; i++)
-            addToFollowingList(followingList, followingUsers[i]);
+            addPeerToFollowingList(list, followingUsers[i]);
 
-    $.MAL.followingListLoaded(followingList);
+    $.MAL.listLoaded(list);
 }
 
-function addToFollowingList(followingList, peerAlias) {
-    var item = twister.tmpl.followingUser.clone(true).attr('data-peer-alias', peerAlias);
+function addPeerToFollowingList(list, peerAlias) {
+    var item = twister.tmpl.followingPeer.clone(true).attr('data-peer-alias', peerAlias);
 
     item.find('.mini-profile-info').attr('data-screen-name', peerAlias)
     item.find('.following-screen-name').text(peerAlias);
@@ -650,7 +650,7 @@ function addToFollowingList(followingList, peerAlias) {
     else
         elem.text(polyglot.t('Private')).addClass('private');
 
-    item.prependTo(followingList);
+    item.prependTo(list);
 }
 
 function fillWhoToFollowModal(list, hlist, start) {
@@ -1118,7 +1118,7 @@ function setFollowingMethod(event) {
             toggleFollowButton({peerAlias: req.peerAlias, toggleUnfollow: req.toggleUnfollow});
             var followingList = getElem('.following-own-modal .following-list');
             if (followingList.length)
-                addToFollowingList(followingList, req.peerAlias);
+                addPeerToFollowingList(followingList, req.peerAlias);
         }, {peerAlias: peerAlias, toggleUnfollow: true}
     );
 }
@@ -2257,7 +2257,7 @@ $(document).ready(function () {
     twister.tmpl.followersList = extractTemplate('#template-followers-list');
     twister.tmpl.followersPeer = extractTemplate('#template-followers-peer');
     twister.tmpl.followingList = extractTemplate('#template-following-list');
-    twister.tmpl.followingUser = extractTemplate('#template-following-user');
+    twister.tmpl.followingPeer = extractTemplate('#template-following-peer');
     twister.tmpl.commonDMsListItem = extractTemplate('#template-direct-messages-list-item')
         .on('mouseup', function (event) {
             event.data = {route:
