@@ -2289,6 +2289,7 @@ $(document).ready(function () {
         .on('click', muteEvent)  // to prevent post expanding or collapsing
     ;
     twister.tmpl.postRtBy = extractTemplate('#template-post-rt-by');
+    twister.tmpl.profileShowMoreFollowers = extractTemplate('#template-profile-show-more-followers');
 
     var path = window.location.pathname;
     var page = path.split("/").pop();

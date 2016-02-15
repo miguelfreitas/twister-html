@@ -483,33 +483,20 @@ function fillWhoFollows(list, item, offset, size) {
     }
 }
 
-function getWhoFollows(username, item) {
-    if (!defaultScreenName || typeof(defaultScreenName) === 'undefined')
+function getWhoFollows(peerAlias, elem) {
+    if (!defaultScreenName)
         return;
 
-    var list = whoFollows(username);
+    var list = whoFollows(peerAlias);
 
-    fillWhoFollows(list, item, 0, (list.length > 5 ? 5 : list.length));
+    fillWhoFollows(list, elem, 0, (list.length > 5 ? 5 : list.length));
 
-    if (list.length > 5) {
-        var more_link = $('<a class="show-more-followers">' + polyglot.t('show_more_count', {'smart_count': list.length - 5}) + '</a>');
-        more_link.on('click', function() {
-            fillWhoFollows(list, item, 5, list.length - 5);
-
-            var $this = $(this);
-            $this.remove();
-
-            $this.text(polyglot.t('hide'));
-            $this.unbind('click');
-            $this.bind('click', function() {
-                item.html('');
-                getWhoFollows(username, item);
-            });
-
-            item.append($this);
-        });
-        item.append(more_link);
-    }
+    if (list.length > 5)
+        twister.tmpl.profileShowMoreFollowers.clone(true)
+            .text(polyglot.t('show_more_count', {'smart_count': list.length - 5}))
+            .on('mouseup', {route: '#followers?user=' + peerAlias}, routeOnClick)
+            .appendTo(elem)
+        ;
 }
 
 function processWhoToFollowSuggestion(suggestion, followedBy) {
