@@ -154,7 +154,7 @@ function minimizeModal(modal, switchMode) {
         twister.modal[i].scroll = scroll;
         twister.modal[i].btnResume = $('<li>' + modal.find('.modal-header h3').text() + '</li>')
             .on('click', {hashString: window.location.hash}, function (event) {
-                if (event.button === 0)  // click may be catched not only on left mouse button in some browsers
+                if (!event.button)  // only if left mouse (button is 0) or elem.click() (button is undefined)
                     resumeModal(event);
             })
             .on('mouseup', {route: window.location.hash, blankOnly: true}, routeOnClick)
@@ -852,7 +852,7 @@ function loadModalFromHash() {
     if (twister.modal[i] && twister.modal[i].minimized) {
         // need to close active modal(s) before btnResume.click() or it will be minimized in resumeModal()
         // e.g. for case when you click on profile link in some modal having this profile's modal minimized already
-        closeModal(true);
+        closeModal(undefined, true);
         twister.modal[i].btnResume.click();
         return;
     }
