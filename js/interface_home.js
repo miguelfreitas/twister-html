@@ -57,9 +57,6 @@ var InterfaceFunctions = function() {
             $miniProfile.find(".posts-count").text("0");
             $miniProfile.find(".following-count").text("0");
             $miniProfile.find(".followers-count").text("0");
-            $miniProfile.find("a.open-following-page").attr("href","#");
-            $miniProfile.find("a.open-following-page").bind("click", function()
-            { alert(polyglot.t("You are not following anyone because you are not logged in."))} );
             $(".dropdown-menu-following").attr("href","#");
             $(".dropdown-menu-following").bind("click", function()
             { alert(polyglot.t("You are not following anyone because you are not logged in."))} );
