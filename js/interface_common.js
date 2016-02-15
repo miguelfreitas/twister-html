@@ -572,7 +572,12 @@ function appendKnownFollowersToElem(list) {
     $.MAL.listLoaded(list);
 }
 
-function addPeerToFollowersList(list, peerAlias) {
+function addPeerToFollowersList(list, peerAlias, isCheckNeeded) {
+    if (typeof list !== 'object' || !list.length)
+        return;
+    if (isCheckNeeded && list.find('li[data-peer-alias="' + peerAlias + '"]').length)
+        return;
+
     var item = twister.tmpl.followersPeer.clone(true).attr('data-peer-alias', peerAlias);
 
     item.find('.alias').text('@' + peerAlias);

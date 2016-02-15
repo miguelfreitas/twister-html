@@ -226,6 +226,7 @@ function getFullname( username, item ){
                 typeof(twisterFollowingO.followingsFollowings[username]["following"]) !== 'undefined') {
                 if (twisterFollowingO.followingsFollowings[username]["following"].indexOf(defaultScreenName) > -1) {
                     twisterFollowingO.knownFollowers.push(username);
+                    addPeerToFollowersList(getElem('.followers-modal .followers-list'), username, true);
                     twisterFollowingO.save();
                     item.addClass('isFollowing');
                     item.attr("title", polyglot.t("follows you"));
@@ -235,8 +236,10 @@ function getFullname( username, item ){
                     if (following.indexOf(args.user) > -1) {
                         item.addClass('isFollowing');
                         item.attr("title", polyglot.t("follows you"));
-                        if (twisterFollowingO.knownFollowers.indexOf(args.username) < 0)
+                        if (twisterFollowingO.knownFollowers.indexOf(args.username) < 0) {
                             twisterFollowingO.knownFollowers.push(args.username);
+                            addPeerToFollowersList(getElem('.followers-modal .followers-list'), args.username, true);
+                        }
                     } else
                         twisterFollowingO.notFollowers.push(args.username);
 

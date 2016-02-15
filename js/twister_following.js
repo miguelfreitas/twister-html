@@ -132,6 +132,7 @@ TwisterFollowing.prototype = {
                     if (following.indexOf(args.tf.user) > -1) {
                         if (args.tf.knownFollowers.indexOf(args.fu) < 0) {
                             args.tf.knownFollowers.push(args.fu);
+                            addPeerToFollowersList(getElem('.followers-modal .followers-list'), args.fu, true);
                         }
                     } else {
                         if (args.tf.notFollowers.indexOf(args.fu) < 0) {
@@ -140,6 +141,8 @@ TwisterFollowing.prototype = {
                         var tmpi = args.tf.knownFollowers.indexOf(args.fu);
                         if (tmpi > -1) {
                             args.tf.knownFollowers.splice(tmpi, 1);
+                            getElem('.followers-modal .followers-list')
+                                .find('li[data-peer-alias="' + args.fu + '"]').remove();
                         }
                     }
                     $(".open-followers").attr("title", args.tf.knownFollowers.length.toString());
