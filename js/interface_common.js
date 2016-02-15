@@ -285,8 +285,11 @@ function confirmPopup(req) {
         title: req.txtTitle
     });
 
-    if (req.txtMessage)
+    if (req.txtMessage) {
+        if (req.txtMessage.polyglot)
+            req.txtMessage = polyglot.t(req.txtMessage.polyglot, req.txtMessage.polyglotReq);
         modal.content.find('.message').html(htmlFormatMsg(req.txtMessage, {markout: 'apply'}).html);
+    }
 
     var btn = modal.content.find('.confirm');
     if (req.removeConfirm)
