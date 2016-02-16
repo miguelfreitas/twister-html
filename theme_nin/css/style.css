@@ -665,7 +665,7 @@ samp {
   background: #f3f2f1;
 }
 /* line 233, ../sass/_profile.sass */
-.forEdition.profile-card .profile-card-main input {
+.forEdition.profile-card .profile-card-main input, .forEdition .profile-card-main textarea {
   display: block;
   margin: 5px auto;
   background: white;
@@ -676,6 +676,7 @@ samp {
   transition: all 0.2s linear;
 }
 /* line 242, ../sass/_profile.sass */
+.forEdition .profile-card-main textarea:hover, .forEdition .profile-card-main textarea:focus,
 .forEdition.profile-card .profile-card-main input:hover, .forEdition.profile-card .profile-card-main input:focus {
   background: white;
   border-color: #aaa;
@@ -684,6 +685,7 @@ samp {
 /* line 246, ../sass/_profile.sass */
 .input-description {
   width: 90%;
+    max-width: 90%;
 }
 
 /* line 249, ../sass/_profile.sass */
