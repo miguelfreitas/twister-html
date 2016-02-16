@@ -268,7 +268,7 @@ function saveProfile(e) {
         }
         alertPopup({
             txtTitle: txtTitle,
-            txtMessage: messageTxt,
+            txtMessage: txtMessage,
             cbConfirm: $.MAL.enableButton,
             cbConfirmReq: $('.submit-changes'),
             cbClose: 'cbConfirm'
