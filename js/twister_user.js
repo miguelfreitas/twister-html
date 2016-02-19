@@ -79,7 +79,7 @@ function loadWalletlUsers(cbFunc, cbArg) {
 
 function loadScreenName() {
     if( $.localStorage.isSet("defaultScreenName") ) {
-        defaultScreenName = $.localStorage.get("defaultScreenName");
+        defaultScreenName = $.localStorage.get("defaultScreenName").toString();
     }
 }
 
