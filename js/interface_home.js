@@ -253,12 +253,12 @@ function refreshTwistdayReminder() {
                     var listCurrent = module.find('.current .list');
                     var listUpcoming = module.find('.upcoming .list');
                     var d = new Date();
-                    var todayYear = d.getUTCFullYear();
-                    var todayMonth = d.getUTCMonth();
-                    var todayDate = d.getUTCDate();
-                    var todaySec = Date.UTC(todayYear, todayMonth, todayDate,
-                        d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()) /1000;
-                    var thatSec;
+                    var curYear = d.getFullYear(), curYearUTC = d.getUTCFullYear();
+                    var curMonth = d.getMonth();
+                    var curDate = d.getDate();
+                    var curSecUTC = Date.UTC(curYearUTC, d.getUTCMonth(), d.getUTCDate(),
+                        d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()) / 1000;
+                    var upcSecUTC;
 
                     posts.sort(function(a, b) {
                         return (parseInt(a.userpost.time) > parseInt(b.userpost.time)) ? 1 : -1;
@@ -268,16 +268,16 @@ function refreshTwistdayReminder() {
                         if (followingUsers.indexOf(posts[i].userpost.n) > -1) {
                             d.setTime(0);
                             d.setUTCSeconds(posts[i].userpost.time);
-                            if (d.getUTCMonth() === todayMonth && d.getUTCDate() === todayDate) {
+                            if (d.getMonth() === curMonth && d.getDate() === curDate) {
                                 addLuckyToList(listCurrent, posts[i]);
                                 removeLuckyFromList(listUpcoming, posts[i].userpost.n);
                             } else if (showUpcomingTimer > 0) {
-                                thatSec = Date.UTC(todayYear, d.getUTCMonth(), d.getUTCDate(),
-                                    d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()) /1000;
-                                if (thatSec > todaySec && thatSec -todaySec <= showUpcomingTimer) {
+                                upcSecUTC = Date.UTC(curYearUTC, d.getUTCMonth(), d.getUTCDate(),
+                                    d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()) / 1000;
+                                if (upcSecUTC > curSecUTC && upcSecUTC - curSecUTC <= showUpcomingTimer) {
                                     d.setTime(0);
-                                    d.setUTCSeconds(thatSec);
-                                    addLuckyToList(listUpcoming, posts[i], d.getTime() /1000);
+                                    d.setUTCSeconds(upcSecUTC);
+                                    addLuckyToList(listUpcoming, posts[i], d.getTime() / 1000);
                                 } else {
                                     removeLuckyFromList(listCurrent, posts[i].userpost.n);
                                     removeLuckyFromList(listUpcoming, posts[i].userpost.n);
