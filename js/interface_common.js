@@ -801,6 +801,27 @@ function openConversationModal(peerAlias, resource) {
     });
 }
 
+function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
+    var formatted = htmlFormatMsg(txt, htmlFormatMsgOpt);
+
+    elem.html(formatted.html);
+    elem.find('a')
+        .on('mouseup',
+            function (event) {
+                var href = event.target.getAttribute('href');
+                if (href[0] === '#') {
+                    event.data = {route: href};
+                    routeOnClick(event);
+                } else
+                    muteEvent(event);
+            }
+        )
+        .on('click', {preventDefault: true}, muteEvent)
+    ;
+
+    return formatted;
+}
+
 function routeOnClick(event) {
 
     function routeNewTab(event) {
