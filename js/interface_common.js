@@ -805,19 +805,16 @@ function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
     var formatted = htmlFormatMsg(txt, htmlFormatMsgOpt);
 
     elem.html(formatted.html);
-    elem.find('a')
-        .on('mouseup',
-            function (event) {
-                var href = event.target.getAttribute('href');
-                if (href[0] === '#') {
-                    event.data = {route: href};
-                    routeOnClick(event);
-                } else
-                    muteEvent(event);
-            }
-        )
-        .on('click', {preventDefault: true}, muteEvent)
-    ;
+    elem.find('a').each(function (i, elem) {
+        var href = elem.getAttribute('href');
+        if (href && href[0] === '#')
+            $(elem)
+                .on('click', {preventDefault: true}, muteEvent)
+                .on('mouseup', {route: href}, routeOnClick)
+            ;
+        else
+            $(elem).on('click mouseup', muteEvent);
+    });
 
     return formatted;
 }
