@@ -1043,7 +1043,7 @@ function closeThis() {
 function muteEvent(event, preventDefault) {
     event.stopPropagation();
     if (preventDefault || (event.data && event.data.preventDefault))
-        event.data.preventDefault();
+        event.preventDefault();
 }
 
 function toggleFollowButton(req) {
