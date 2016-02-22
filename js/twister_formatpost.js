@@ -573,10 +573,8 @@ function htmlFormatMsg(msg, opt) {
         return msg.str;
     }
 
-    if (!msg) {
-        console.warn('htmlFormatMsg() error: input string is empty');
+    if (!msg)
         return {html: '', mentions: []};
-    }
 
     if (opt && opt.markout)
         var markoutOpt = opt.markout;
