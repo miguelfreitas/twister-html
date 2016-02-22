@@ -120,8 +120,7 @@ function postToElem(post, kind, promoted) {
 
     setPostCommon(elem, username, time);
 
-    msg = htmlFormatMsg(msg);
-    elem.find('.post-text').html(msg.html);
+    msg = fillElemWithTxt(elem.find('.post-text'), msg);  // fillElemWithTxt() returns result of htmlFormatMsg(msg)
     postData.attr('data-text-mentions', msg.mentions.join());  // FIXME no idea why do we need this attribute since we don't use it but use data-reply-to instead
 
     if (username !== defaultScreenName) {
@@ -232,7 +231,7 @@ function setPostReference(elem, rt, sig_rt) {
             .attr('data-screen-name', rt.n)
             .attr('data-id', rt.k)
             .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: sig_rt}))
-            .find('.post-text').html(htmlFormatMsg(rt.msg).html)
+            .find('.post-text').each(function (i, elem) {fillElemWithTxt($(elem), rt.msg);})
     ;
     setPostCommon(elem, rt.n, rt.time);
 }
@@ -274,7 +273,7 @@ function postToElemDM(dmData, localUser, remoteUser) {
             .text(timeGmtToText(dmData.time))
     ;
     setPostInfoSent(senderAlias, dmData.k, elem.find('.post-info-sent'));
-    elem.find('.post-text').html(htmlFormatMsg(dmData.text).html);
+    fillElemWithTxt(elem.find('.post-text'), dmData.text);
 
     return elem;
 }

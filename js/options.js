@@ -378,8 +378,8 @@ function tickOptionsPostPreview() {
     var elem = $('#opt-mod-posts-display #post-preview');
     var imgPreviewCont = elem.find('.preview-container');
 
-    elem.children().first().html(htmlFormatMsg(
-        polyglot.t('post_preview_dummy', {logo: '/img/twister_mini.png', site: 'http://twister.net.co'})).html);
+    fillElemWithTxt(elem.children().first(),
+        polyglot.t('post_preview_dummy', {logo: '/img/twister_mini.png', site: 'http://twister.net.co'}));
 
     if ($.Options.displayPreview.val === 'enable') {
         imgPreviewCont.empty();

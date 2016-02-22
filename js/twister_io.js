@@ -257,11 +257,7 @@ function getFullname(peerAlias, elem) {
 
 // get bio, format it as post message and store result to elem
 function getBioToElem(peerAlias, elem) {
-    getProfileResource(peerAlias, 'bio', undefined,
-        function (req, ret) {
-            req.elem.html(htmlFormatMsg(ret).html);
-        }, {elem: elem}
-    );
+    getProfileResource(peerAlias, 'bio', undefined, fillElemWithTxt, elem);
 }
 
 // get tox address and store it in item.text

@@ -286,7 +286,7 @@ function confirmPopup(req) {
     if (req.txtMessage) {
         if (req.txtMessage.polyglot)
             req.txtMessage = polyglot.t(req.txtMessage.polyglot, req.txtMessage.polyglotReq);
-        modal.content.find('.message').html(htmlFormatMsg(req.txtMessage, {markout: 'apply'}).html);
+        fillElemWithTxt(modal.content.find('.message'), req.txtMessage, {markout: 'apply'});
     }
 
     var btn = modal.content.find('.confirm');
@@ -750,7 +750,7 @@ function addToCommonDMsList(list, targetAlias, message) {
 
     item.find('.post-info-tag').text('@' + targetAlias);
     item.find('.post-info-name').attr('href', $.MAL.userUrl(targetAlias));
-    item.find('.post-text').html(htmlFormatMsg(message.text).html);
+    fillElemWithTxt(item.find('.post-text'), message.text);
     item.find('.post-info-time')
         .attr('title', timeSincePost(message.time))
         .find('span:last')
@@ -1111,8 +1111,8 @@ function clickFollow(event) {
     var content = $('#following-config-modal-template').children().clone(true);
 
     content.closest('.following-config-modal-content').attr('data-screen-name', peerAlias);
-    content.find('.following-config-method-message')
-        .html(htmlFormatMsg(polyglot.t('select_way_to_follow_@', {alias: peerAlias}), {markout: 'apply'}).html);
+    fillElemWithTxt(content.find('.following-config-method-message'),
+        polyglot.t('select_way_to_follow_@', {alias: peerAlias}), {markout: 'apply'});
     content.find('.following-screen-name b').text(peerAlias);
 
     openModal({
@@ -1329,7 +1329,7 @@ function posPostPreview(event) {
             - postPreview.css('padding-left') - postPreview.css('padding-right'));
     }
     if (textArea[0].value.length)
-        postPreview.html(htmlFormatMsg(textArea[0].value).html).show();
+        fillElemWithTxt(postPreview.show(), textArea[0].value);
     else
         postPreview.hide();
     textArea.before(postPreview);
@@ -1441,7 +1441,7 @@ function replyTextInput(event) {
 
         if ($.Options.postPreview.val) {
             if (textArea[0].value.length)
-                textAreaForm.find('#post-preview').html(htmlFormatMsg(textArea[0].value).html).show();
+                fillElemWithTxt(textAreaForm.find('#post-preview').show(), textArea[0].value);
             else
                 textAreaForm.find('#post-preview').html('').slideUp('fast');
         }
