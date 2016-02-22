@@ -802,6 +802,18 @@ function openConversationModal(peerAlias, resource) {
 }
 
 function routeOnClick(event) {
+
+    function routeNewTab(event) {
+        if (event.target.href) {
+            // we can't prevent hyperlink navigation on middle button in Firefox via event.preventDefault(), see https://bugzilla.mozilla.org/show_bug.cgi?id=1249970
+            // so we need to delete href to make element not hyperlink and add it again after 200 ms
+            setTimeout((function () {this.elem.setAttribute('href', this.href);})
+                .bind({elem: event.target, href: event.target.getAttribute('href')}), 200);
+            event.target.removeAttribute('href');
+        }
+        twister.html.blanka.attr('href', event.data.route)[0].click();  // opens .route in new tab
+    }
+
     if (!event || !event.data || !event.data.route)
         return;
 
@@ -812,14 +824,14 @@ function routeOnClick(event) {
         window.location = event.data.route;  // closes modal(s) in watchHashChange() and opens .route
     else if (event.button === 1) // middle mouse button
         if (event.data.blankOnly || event.metaKey || event.ctrlKey)
-            twister.html.blanka.attr('href', event.data.route)[0].click();  // opens .route in new tab
+            routeNewTab(event);
         else {
             var modal = $(event.target).closest('.modal-wrapper:not(.closed)');
             if (modal.length) {  // killer feature: we minimize current modal before .route opening
                 minimizeModal(modal, true);
                 window.location.hash = event.data.route;
             } else
-                twister.html.blanka.attr('href', event.data.route)[0].click();  // opens .route in new tab
+                routeNewTab(event);
         }
 }
 
