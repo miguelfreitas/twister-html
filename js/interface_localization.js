@@ -2740,7 +2740,7 @@ if(preferredLanguage == "de"){
       "Create a new user": "Neuen Benutzer erstellen",
       "Login": "Einloggen",
       "Check availability": "Verfügbarkeit überprüfen",
-      "Create this nickname": "Nichnamen erstellen",
+      "Create this nickname": "Nicknamen erstellen",
       "Type nickname here": "Nicknamen hier eingeben",
       "Import secret key": "Privaten Schlüssel hier importieren",
       "52-characters secret": "52 Zeichen Geheimnis",
