@@ -2333,4 +2333,11 @@ $(document).ready(function () {
     }
 
     changeStyle();
+
+    // need to play something once in result of click on Firefox to be able to play sound notifications
+    // FXIME it's just workaround of FF's bug, see https://bugzilla.mozilla.org/show_bug.cgi?id=1197631
+    $('body').on('click', function () {
+        playSound('player', $.Options.sndMention.val, 0.001);
+        setTimeout(function () {$('body').off('click');}, 10000);  // sound must be played before unbinding
+    });
 });
