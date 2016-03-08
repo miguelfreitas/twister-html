@@ -513,7 +513,7 @@ var MAL = function()
 
 jQuery.MAL = new MAL;
 
-function playSound(player, sound) {
+function playSound(player, sound, volume) {
     if ($.mobile) {
     } else {
         var player = $('#'+player);
@@ -526,7 +526,7 @@ function playSound(player, sound) {
             else
                 player.attr({type: 'audio/ogg', src: 'sound/' + sound + '.ogg'});
 
-            player[0].volume = $.Options.playerVol.val;
+            player[0].volume = (typeof volume === 'number') ? volume : $.Options.playerVol.val;
             player[0].play();
         } else
             console.warn('cannot find player to play sound, selector: #'+player);
