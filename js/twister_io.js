@@ -55,7 +55,10 @@ function _dhtgetProcessPending(locator, multi, ret)
             var cbFunc = _dhtgetPendingMap[locator][i].cbFunc;
             var cbArg  = _dhtgetPendingMap[locator][i].cbArg;
 
-            if( multi == 's' ) {
+            if( multi == 'url' ) {
+                // here is decodeshorturl case
+                cbFunc(cbArg, ret);
+            } else if( multi == 's' ) {
                 if( ret[0] != undefined ) {
                      cbFunc(cbArg, ret[0]["p"]["v"], ret);
                 } else {
@@ -110,6 +113,25 @@ function dhtget( username, resource, multi, cbFunc, cbArg, timeoutArgs ) {
     }
 }
 
+// decode shortened url
+// the expanded url is returned to callback
+// null is passed to callback in case of an error
+function decodeshorturl( locator, cbFunc, cbArg, timeoutArgs ) {
+    if( locator in _dhtgetPendingMap) {
+        _dhtgetAddPending(locator, cbFunc, cbArg);
+    } else {
+        _dhtgetAddPending(locator, cbFunc, cbArg);
+        // limit the number of simultaneous decodeshorturl's and dhtgets.
+        // this should leave some sockets for other non-blocking daemon requests.
+        if( _dhtgetsInProgress < _maxDhtgets ) {
+            _decodeshorturlInternal( locator, timeoutArgs );
+        } else {
+            // just queue the locator. it will be unqueue when some dhtget completes.
+            _queuedDhtgets.push(locator);
+        }
+    }
+}
+
 function _dhtgetInternal( username, resource, multi, timeoutArgs ) {
     var locator = _dhtgetLocator(username, resource, multi);
     _dhtgetsInProgress++;
@@ -131,10 +153,35 @@ function _dhtgetInternal( username, resource, multi, timeoutArgs ) {
                }, locator);
 }
 
+function _decodeshorturlInternal( locator, timeoutArgs ) {
+    _dhtgetsInProgress++;
+    argsList = [locator];
+    if( typeof timeoutArgs !== 'undefined' ) {
+        argsList = argsList.concat(timeoutArgs);
+    }
+    twisterRpc("decodeshorturl", argsList,
+               function(args, ret) {
+                   _dhtgetsInProgress--;
+                   _dhtgetProcessPending(args.locator, "url", ret);
+                   _dhtgetDequeue();
+               }, {locator:locator},
+               function(cbArg, ret) {
+                   console.log("ajax error:" + ret);
+                   _dhtgetsInProgress--;
+                   _dhtgetAbortPending(locator);
+                   _dhtgetDequeue();
+               }, locator);
+}
+
 function _dhtgetDequeue() {
     if( _queuedDhtgets.length ) {
-        var locatorSplit = _queuedDhtgets.pop().split(";");
-        _dhtgetInternal(locatorSplit[0], locatorSplit[1], locatorSplit[2]);
+        var locator = _queuedDhtgets.pop();
+        var locatorSplit = locator.split(";");
+        if( locatorSplit.length == 3) {
+            _dhtgetInternal(locatorSplit[0], locatorSplit[1], locatorSplit[2]);
+        } else {
+            _decodeshorturlInternal( locator )
+        }
     }
 }
 
