@@ -6,6 +6,7 @@
 // Post actions: submit, count characters
 
 var twister = {
+    URIs: {},  // shortened URIs are cached here after fetching
     html: {
         detached: $('<div>'),  // here elements go to detach themself
         blanka: $('<a target="_blank">')  // to open stuff in new tab, see routeOnClick()
@@ -823,28 +824,36 @@ function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
 }
 
 function fetchShortenedURI(req) {
-    // FIXME need to check if ret for req is cached here
+    if (twister.URIs[req]) {
+        applyShortenedURI(req, twister.URIs[req]);
+        return;
+    }
     if (parseInt(twisterVersion) < 93500) {
         console.warn('can\'t fetch URI "' + req + '": daemon is obsolete, version 0.9.35 or higher is required');
         return;
     }
     twisterRpc('decodeshorturl', [req],
-        function gotShortURI(req, ret) {
-            // FIXME need to cache ret here
-            var elems = $('.link-shortened[href="' + req + '"]')
-                .attr('href', ret)
-                .removeClass('link-shortened')
-                .off('click mouseup')
-                .on('click mouseup', muteEvent)
-            ;
-            for (var i = 0; i < elems.length; i++)
-                if (elems[i].text === req)
-                    elems[i].text = ret;
+        function (req, ret) {
+            twister.URIs[req] = ret;
+            $.localStorage.set('twistaURIs', twister.URIs);
+            applyShortenedURI(req, ret);
         }, req,
         function (req, ret) {
             console.warn('can\'t fetch URI "' + req + '": ' + ret.message);
         }, req
     );
+}
+
+function applyShortenedURI(short, long) {
+    var elems = $('.link-shortened[href="' + short + '"]')
+        .attr('href', long)
+        .removeClass('link-shortened')
+        .off('click mouseup')
+        .on('click mouseup', muteEvent)
+    ;
+    for (var i = 0; i < elems.length; i++)
+        if (elems[i].text === short)  // there may be some other text, possibly formatted, so we check it
+            elems[i].text = long;
 }
 
 function routeOnClick(event) {
@@ -2328,6 +2337,8 @@ function setTextcompleteDropdownListPos(position) {
 }
 
 $(document).ready(function () {
+    if ($.localStorage.isSet('twistaURIs'))
+        twister.URIs = $.localStorage.get('twistaURIs');
     twister.html.blanka.appendTo('body').hide();
     twister.tmpl.followersList = extractTemplate('#template-followers-list');
     twister.tmpl.followersPeer = extractTemplate('#template-followers-peer');
