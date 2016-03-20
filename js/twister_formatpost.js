@@ -25,6 +25,7 @@ $(document).ready(function() {
         _htmlFormatMsgLinkTemplateHashtag = _htmlFormatMsgLinkTemplateHashtag[0].cloneNode();
         _htmlFormatMsgLinkTemplateHashtag.removeAttribute('id');
     }
+    twister.tmpl.linkShortened = extractTemplate('#template-link-shortened')[0];
 });
 
 // format "userpost" to html element
@@ -626,36 +627,33 @@ function htmlFormatMsg(msg, opt) {
                                 + '</samp><br>'
                             );
                         } else {
-                            if (getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '') < k)  // use only first word as href target, others drop silently
-                                k = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '');
+                            if ((x = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '')) < k)  // use only first word as href target, others drop silently
+                                k = x;
+                            linkName = applyHtml(  // we're handling markup inside [] of []()
+                                markout(markout(markout(markout(
+                                    {str: linkName, htmlEntities: msg.htmlEntities},
+                                        markoutOpt, '*', 'b'),  // bold
+                                        markoutOpt, '~', 'i'),  // italic
+                                        markoutOpt, '_', 'u'),  // underlined
+                                        markoutOpt, '-', 's')  // striketrough
+                            )
+                                .replace(/&(?!lt;|gt;)/g, '&amp;');
                             if (markoutOpt === 'apply') {
-                                msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
-                                    newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
-                                        proxyURL(msg.str.slice(i, k + 1)),
-                                        applyHtml(  // we're trying markup inside [] of []()
-                                            markout(markout(markout(markout(
-                                                {str: linkName, htmlEntities: msg.htmlEntities},
-                                                    markoutOpt, '*', 'b'),  // bold
-                                                    markoutOpt, '~', 'i'),  // italic
-                                                    markoutOpt, '_', 'u'),  // underlined
-                                                    markoutOpt, '-', 's')  // striketrough
-                                        )
-                                            .replace(/&(?!lt;|gt;)/g, '&amp;')
-                                    )
-                                );
+                                if (msg.str.slice(i, i + 6).toLowerCase() === 'twist:' && msg.str[i + 17] === '='
+                                    && getSubStrStart(msg.str, i + 16, stopCharsRightHashtags, false, '') === i + 6)
+                                    msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                        newHtmlEntityLink(twister.tmpl.linkShortened,
+                                            msg.str.slice(i, i + 18), linkName)
+                                    );
+                                else
+                                    msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                        newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                                            proxyURL(msg.str.slice(i, k + 1)), linkName)
+                                    );
                             } else {  // markoutOpt === 'clear' so we're clearing markup
                                 str = msg.str.slice(i, k + 1);
                                 msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
-                                    applyHtml(  // we're trying to clear markup inside [] of []()
-                                        markout(markout(markout(markout(
-                                            {str: linkName, htmlEntities: msg.htmlEntities},
-                                                markoutOpt, '*', 'b'),  // bold
-                                                markoutOpt, '~', 'i'),  // italic
-                                                markoutOpt, '_', 'u'),  // underlined
-                                                markoutOpt, '-', 's')  // striketrough
-                                    )
-                                        .replace(/&(?!lt;|gt;)/g, '&amp;')
-                                );
+                                    linkName);
                                 // here we put link target as plain text to handle it usual way (search http[s]:// and so on)
                                 i = msg.i + 1
                                 msg.str = msg.str.slice(0, i) + ' ' + str + msg.str.slice(i);
@@ -692,6 +690,12 @@ function htmlFormatMsg(msg, opt) {
                     i = msg.i;
                 }
             }
+        } else if (msg.str.slice(i, i + 6).toLowerCase() === 'twist:' && msg.str[i + 17] === '='
+            && getSubStrStart(msg.str, i + 16, stopCharsRightHashtags, false, '') === i + 6) {
+            str = msg.str.slice(i, i + 18);
+            msg = msgAddHtmlEntity(msg, i, i + str.length,
+                newHtmlEntityLink(twister.tmpl.linkShortened, str, str));
+            i = msg.i;
         }
     }
 

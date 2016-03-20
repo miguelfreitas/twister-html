@@ -807,7 +807,10 @@ function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
     elem.html(formatted.html);
     elem.find('a').each(function (i, elem) {
         var href = elem.getAttribute('href');
-        if (href && href[0] === '#')
+        if (elem.classList.contains('link-shortened')) {
+            $(elem).on('click mouseup', {preventDefault: true}, muteEvent);
+            fetchShortenedURI(href);
+        } else if (href && href[0] === '#')
             $(elem)
                 .on('click', {preventDefault: true}, muteEvent)
                 .on('mouseup', {route: href}, routeOnClick)
@@ -817,6 +820,31 @@ function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
     });
 
     return formatted;
+}
+
+function fetchShortenedURI(req) {
+    // FIXME need to check if ret for req is cached here
+    if (parseInt(twisterVersion) < 93500) {
+        console.warn('can\'t fetch URI "' + req + '": daemon is obsolete, version 0.9.35 or higher is required');
+        return;
+    }
+    twisterRpc('decodeshorturl', [req],
+        function gotShortURI(req, ret) {
+            // FIXME need to cache ret here
+            var elems = $('.link-shortened[href="' + req + '"]')
+                .attr('href', ret)
+                .removeClass('link-shortened')
+                .off('click mouseup')
+                .on('click mouseup', muteEvent)
+            ;
+            for (var i = 0; i < elems.length; i++)
+                if (elems[i].text === req)
+                    elems[i].text = ret;
+        }, req,
+        function (req, ret) {
+            console.warn('can\'t fetch URI "' + req + '": ' + ret.message);
+        }, req
+    );
 }
 
 function routeOnClick(event) {
