@@ -88,7 +88,7 @@ function postToElem(post, kind, promoted) {
     }
 
     // Now create the html elements
-    var elem = $.MAL.getPostTemplate().clone(true);
+    var elem = $.MAL.getPostTemplate().clone(true).appendTo(twister.html.detached);
     elem.removeAttr('id')
         .addClass(kind)
         .attr('data-time', time)
