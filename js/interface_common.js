@@ -832,17 +832,18 @@ function fetchShortenedURI(req) {
         console.warn('can\'t fetch URI "' + req + '": daemon is obsolete, version 0.9.35 or higher is required');
         return;
     }
-    
-    decodeshorturl( req,
+
+    decodeShortURI(req,
         function (req, ret) {
-            if( ret ) {
+            if (ret) {
                 twister.URIs[req] = ret;
                 $.localStorage.set('twistaURIs', twister.URIs);
                 applyShortenedURI(req, ret);
             } else {
-                        console.warn('can\'t fetch URI "' + req + '": ' + ret.message);
+                console.warn('can\'t fetch URI "' + req + '": null response');
             }
-        }, req);
+        }, req
+    );
 }
 
 function applyShortenedURI(short, long) {

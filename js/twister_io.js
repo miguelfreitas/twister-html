@@ -163,7 +163,7 @@ function _decodeshorturlInternal(locator, timeoutArgs) {
             _dhtgetDequeue();
         }, locator,
         function(req, ret) {
-            console.warn('can\'t fetch URI "' + req + '" — RPC "decodeshorturl" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "decodeshorturl" error: ' + (ret && ret.message) ? ret.message : ret);
             _dhtgetsInProgress--;
             _dhtgetAbortPending(req);
             _dhtgetDequeue();
