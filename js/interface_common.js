@@ -847,7 +847,7 @@ function fetchShortenedURI(req) {
 }
 
 function applyShortenedURI(short, long) {
-    var elems = $('.link-shortened[href="' + short + '"]')
+    var elems = getElem('.link-shortened[href="' + short + '"]')
         .attr('href', long)
         .removeClass('link-shortened')
         .off('click mouseup')
