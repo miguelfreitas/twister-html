@@ -802,6 +802,30 @@ function openConversationModal(peerAlias, resource) {
     });
 }
 
+function openRequestShortURIForm() {
+    if (!defaultScreenName) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'You can\'t short links because you are not logged in.'
+        });
+    }
+    var uri = prompt('enter a link, watch yourself carefully');  // FIXME
+    newShortURI(uri,
+        function (req, uriLong, uriShort) {
+            if (uriShort)
+                alertPopup({
+                    txtTitle: 'URI shortener',
+                    txtMessage: uriLong + ' — `' + uriShort + '`'
+                });
+            else
+                alertPopup({
+                    txtTitle: 'URI shortener',
+                    txtMessage: 'something went wrong. RPC error message:\n' + (uriShort && uriShort.message) ? uriShort.message : uriShort
+                });
+        }
+    );
+}
+
 function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
     var formatted = htmlFormatMsg(txt, htmlFormatMsgOpt);
 
@@ -2250,6 +2274,8 @@ function initInterfaceCommon() {
 
     $('.tox-ctc').on('click', promptCopyAttrData);
     $('.bitmessage-ctc').on('click', promptCopyAttrData);
+
+    $('.uri-shortener').on('click', openRequestShortURIForm);  // FIXME implement Uri Shortener Center with links library etc
 
     if ($.fn.textcomplete) {
         $('.post-area-new textarea')

@@ -322,6 +322,37 @@ function newRtMsg(postData, msg) {
     }
 }
 
+function newShortURI(uri, cbFunc, cbReq) {
+    if (!uri || !defaultScreenName) return;
+
+    for (var i in twister.URIs)
+        if (twister.URIs[i] === uri) {
+            if (typeof cbFunc === 'function')
+                cbFunc(cbReq, uri, i);
+            return;
+        }
+
+    twisterRpc('newshorturl', [defaultScreenName, lastPostId + 1, uri],
+        function (req, ret) {
+            if (ret) {
+                ret = ret[0];  // FIXME there should be 1 element anyway for daemon version 93500
+                twister.URIs[ret] = req.uri;
+                $.localStorage.set('twistaURIs', twister.URIs);
+                incLastPostId();
+            } else
+                console.warn('RPC "newshorturl" error: empty response');
+
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.cbReq, req.uri, ret);
+        }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq},
+        function (req, ret) {
+            console.warn('RPC "newshorturl" error: ' + (ret && ret.message) ? ret.message : ret);
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.cbReq, req.uri, ret);
+        }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq}
+    );
+}
+
 function updateProfileData(profileModalContent, username) {
 
     //profileModalContent.find("a").attr("href",$.MAL.userUrl(username));
