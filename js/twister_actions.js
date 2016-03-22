@@ -350,7 +350,7 @@ function newShortURI(uri, cbFunc, cbReq) {
                 req.cbFunc(req.cbReq, req.uri, ret);
         }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq},
         function (req, ret) {
-            console.warn('RPC "newshorturl" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "newshorturl" error: ' + (ret && ret.message ? ret.message : ret));
             if (typeof req.cbFunc === 'function')
                 req.cbFunc(req.cbReq, req.uri, ret);
         }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq}

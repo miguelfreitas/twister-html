@@ -591,7 +591,9 @@ function searchPartialUsername(event) {
                 _searchingPartialName = '';
             }
         }, event,
-        function(req, ret) {console.warn('ajax error:' + ret.message);}, null
+        function(req, ret) {
+            console.warn('RPC "listusernamespartial" error: ' + (ret && ret.message ? ret.message : ret));
+        }, null
     );
 }
 

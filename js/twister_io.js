@@ -148,7 +148,7 @@ function _dhtgetInternal(peerAlias, resource, multi, timeoutArgs) {
             _dhtgetDequeue();
         }, {locator: locator, multi: multi},
         function(req, ret) {
-            console.warn('RPC "dhtget" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "dhtget" error: ' + (ret && ret.message ? ret.message : ret));
             _dhtgetsInProgress--;
             _dhtgetAbortPending(req);
             _dhtgetDequeue();
@@ -169,7 +169,7 @@ function _decodeshorturlInternal(locator, timeoutArgs) {
             _dhtgetDequeue();
         }, locator,
         function(req, ret) {
-            console.warn('RPC "decodeshorturl" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "decodeshorturl" error: ' + (ret && ret.message ? ret.message : ret));
             _dhtgetsInProgress--;
             _dhtgetAbortPending(req);
             _dhtgetDequeue();
@@ -217,7 +217,7 @@ function dhtput(peerAlias, resource, multi, value, sig_user, seq, cbFunc, cbReq)
                 req.cbFunc(req.cbReq, true);
         }, {cbFunc: cbFunc, cbReq: cbReq},
         function(req, ret) {
-            console.warn('RPC "dhtput" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "dhtput" error: ' + (ret && ret.message ? ret.message : ret));
             if (req.cbFunc)
                 req.cbFunc(req.cbReq, false);
         }, {cbFunc: cbFunc, cbReq: cbReq}
@@ -364,7 +364,7 @@ function getGroupChatName(groupAlias, elem) {
             elem.text(ret.description);
         }, elem,
         function(req, ret) {
-            console.warn('RPC "getgroupinfo" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "getgroupinfo" error: ' + (ret && ret.message ? ret.message : ret));
             req.elem.text(req.groupAlias);
         }, {elem: elem, groupAlias: groupAlias}
     );
@@ -526,7 +526,7 @@ function getPostMaxAvailability(peerAlias, k, cbFunc, cbReq) {
             req.cbFunc(req.cbReq, ret);
         }, {cbFunc: cbFunc, cbReq: cbReq},
         function(req, ret) {
-            console.warn('RPC "getpiecemaxseen" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "getpiecemaxseen" error: ' + (ret && ret.message ? ret.message : ret));
         }
     );
 }
@@ -539,7 +539,7 @@ function checkPubkeyExists(peerAlias, cbFunc, cbReq) {
             req.cbFunc(req.cbReq, ret.length > 0);
         }, {cbFunc: cbFunc, cbReq: cbReq},
         function(req, ret) {
-            console.warn('RPC "dumppubkey" error: ' + (ret && ret.message) ? ret.message : ret);
+            console.warn('RPC "dumppubkey" error: ' + (ret && ret.message ? ret.message : ret));
             alert(polyglot.t('error_connecting_to_daemon'));
         }
     );
@@ -564,7 +564,7 @@ function dumpPubkey(peerAlias, cbFunc, cbReq) {
                 }
             }, {cbFunc: cbFunc, cbReq: cbReq},
             function (req, ret) {
-                console.warn('RPC "dumppubkey" error: ' + (ret && ret.message) ? ret.message : ret);
+                console.warn('RPC "dumppubkey" error: ' + (ret && ret.message ? ret.message : ret));
                 alert(polyglot.t('error_connecting_to_daemon'));
             }
         );
@@ -580,7 +580,7 @@ function dumpPrivkey(peerAlias, cbFunc, cbReq) {
         }, {cbFunc: cbFunc, cbReq: cbReq},
         function(req, ret) {
             req.cbFunc(req.cbReq, '');
-            console.warn('user unknown — RPC "dumppubkey" error: ' + ret.message);
+            console.warn('user unknown — RPC "dumppubkey" error: ' + (ret && ret.message ? ret.message : ret));
         }, {cbFunc: cbFunc, cbReq: cbReq}
     );
 }
