@@ -806,14 +806,14 @@ function openRequestShortURIForm() {
     if (!defaultScreenName) {
         alertPopup({
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-            txtMessage: 'You can\'t short links because you are not logged in.'
+            txtMessage: 'You can\'t shorten links because you are not logged in.'
         });
         return;
     }
     if (parseInt(twisterVersion) < 93500) {
         alertPopup({
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-            txtMessage: 'You can\'t short links because twister daemon is obsolete!\n'
+            txtMessage: 'You can\'t shorten links because twister daemon is obsolete!\n'
                 + 'Version 0.9.35 or higher is required. Please keep your twister up to date.'
         });
         return;
