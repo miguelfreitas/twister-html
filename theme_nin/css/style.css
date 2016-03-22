@@ -2077,6 +2077,12 @@ textarea.splited-post {
   transition: all 0.6s linear;
 }
 
+.post-area-new .shorten-uri {
+    font-size: 11px;
+    float: left;
+    margin: 2px 4px;
+}
+
 /* line 399, ../sass/style.sass */
 .post-area-remaining {
   padding-right: 3px;

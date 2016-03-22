@@ -332,7 +332,7 @@ function newShortURI(uri, cbFunc, cbReq) {
     for (var i in twister.URIs)
         if (twister.URIs[i] === uri) {
             if (typeof cbFunc === 'function')
-                cbFunc(cbReq, uri, i);
+                cbFunc(uri, i, cbReq);
             return;
         }
 
@@ -347,12 +347,12 @@ function newShortURI(uri, cbFunc, cbReq) {
                 console.warn('RPC "newshorturl" error: empty response');
 
             if (typeof req.cbFunc === 'function')
-                req.cbFunc(req.cbReq, req.uri, ret);
+                req.cbFunc(req.uri, ret, req.cbReq);
         }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq},
         function (req, ret) {
             console.warn('RPC "newshorturl" error: ' + (ret && ret.message ? ret.message : ret));
             if (typeof req.cbFunc === 'function')
-                req.cbFunc(req.cbReq, req.uri, ret);
+                req.cbFunc(req.uri, ret, req.cbReq);
         }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq}
     );
 }

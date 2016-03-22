@@ -927,6 +927,17 @@ textarea.splited-post {
     height: 35px;
     transition: all .6s linear;
 }
+
+.post-area-new .shorten-uri {
+    font-size: 11px;
+    float: left;
+    margin: 2px 4px;
+}
+
+.postboard .post-area-new .shorten-uri, .modal-content .post-area-new .shorten-uri {
+    margin-left: 56px;
+}
+
 .post-area-remaining
 {
     font-size: 13px;

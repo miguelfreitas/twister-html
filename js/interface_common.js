@@ -7,6 +7,7 @@
 
 var twister = {
     URIs: {},  // shortened URIs are cached here after fetching
+    focus: {},  // focused elements are counted here
     html: {
         detached: $('<div>'),  // here elements go to detach themself
         blanka: $('<a target="_blank">')  // to open stuff in new tab, see routeOnClick()
@@ -802,7 +803,9 @@ function openConversationModal(peerAlias, resource) {
     });
 }
 
-function openRequestShortURIForm() {
+function openRequestShortURIForm(event) {
+    if (event) muteEvent(event);
+
     if (!defaultScreenName) {
         alertPopup({
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
@@ -820,20 +823,28 @@ function openRequestShortURIForm() {
     }
 
     var uri = prompt('enter a link, watch yourself carefully');  // FIXME
-    newShortURI(uri,
-        function (req, uriLong, uriShort) {
-            if (uriShort)
-                alertPopup({
-                    txtTitle: 'URI shortener',
-                    txtMessage: uriLong + ' — `' + uriShort + '`'
-                });
-            else
-                alertPopup({
-                    txtTitle: 'URI shortener',
-                    txtMessage: 'something went wrong. RPC error message:\n' + (uriShort && uriShort.message) ? uriShort.message : uriShort
-                });
-        }
-    );
+
+    if (event && event.data && typeof event.data.cbFunc === 'function')
+        newShortURI(uri, event.data.cbFunc, event.data.cbReq);
+    else
+        newShortURI(uri, showURIPair);
+}
+
+function showURIPair(uriLong, uriShort) {  // FIXME req
+    if (uriShort)
+        alertPopup({
+            txtTitle: 'URI shortener',
+            txtMessage: uriLong + ' — `' + uriShort + '`'
+        });
+    else
+        showURIShortenerErrorRPC(uriShort);
+}
+
+function showURIShortenerErrorRPC(ret) {
+    alertPopup({
+        txtTitle: 'URI shortener',
+        txtMessage: 'something went wrong. RPC error message:\n' + (ret && ret.message ? ret.message : ret)
+    });
 }
 
 function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
@@ -2283,12 +2294,31 @@ function initInterfaceCommon() {
 
     $('.uri-shortener').on('click', openRequestShortURIForm);  // FIXME implement Uri Shortener Center with links library etc
 
-    if ($.fn.textcomplete) {
-        $('.post-area-new textarea')
-            .on('focus', {req: getMentionsForAutoComplete}, setTextcompleteOnEventTarget)
-            .on('focusout', unsetTextcompleteOnEventTarget)
-        ;
-    }
+    $('.post-area-new textarea')
+        .on('focus',
+            function (event) {
+                twister.focus.textareaPostCur = $(event.target);
+
+                // FIXME that's a hack, need to implement complete toolbar with buttons of text formatting
+                var xtrs = twister.focus.textareaPostCur.siblings('.post-area-extras');
+                if (!xtrs.find('.shorten-uri').length)
+                    xtrs.prepend(twister.tmpl.shortenUri.clone(true));
+
+                if ($.fn.textcomplete) {  // because some pages don't have that. // network.html
+                    event.data = {req: getMentionsForAutoComplete};
+                    setTextcompleteOnEventTarget(event);
+                }
+            }
+        )
+        .on('focusout',
+            function (event) {
+                twister.focus.textareaPostCur = undefined;
+                twister.focus.textareaPostPrev = $(event.target);
+                if ($.fn.textcomplete)  // because some pages don't have that. // network.html
+                    unsetTextcompleteOnEventTarget(event);
+            }
+        )
+    ;
 }
 
 function extractTemplate(selector) {
@@ -2334,6 +2364,25 @@ function importSecretKeypress(event) {  // FIXME rename
         $.MAL.enableButton(elemEnter);
     else
         $.MAL.disableButton(elemEnter);
+}
+
+function pasteToTextarea(ta, p) {
+    if (!ta || typeof ta.val !== 'function') return;
+
+    var s = ta.val();
+    var c = ta.caret();
+
+    if (s.length) {
+        if (c < 1)
+            ta.val(p + (s[c].match(/\s/) ? '' : ' ') + s);
+        else if (c < s.length)
+            ta.val(s.slice(0, c) + (s[c - 1].match(/\s/) ? '' : ' ') + p + (s[c].match(/\s/) ? '' : ' ') + s.slice(c));
+        else
+            ta.val(s + (s[c - 1].match(/\s/) ? '' : ' ') + p + ' ');
+    } else
+        ta.val(p + ' ');
+
+    ta.focus().caret(c + p.length + ((ta.val().length - s.length - p.length) > 1 ? 2 : 1));
 }
 
 function setTextcompleteOnEventTarget(event) {
@@ -2384,6 +2433,29 @@ $(document).ready(function () {
                 $.MAL.dmchatUrl($(event.target).closest('.module').attr('data-screen-name'))};
             routeOnClick(event);
         })
+    ;
+    twister.tmpl.shortenUri = extractTemplate('#template-shorten-uri')
+        .on('click',
+            {cbFunc:
+                function (uriLong, uriShort, textArea) {
+                    if (uriShort)
+                        pasteToTextarea(textArea, uriShort);
+                    else
+                        showURIShortenerErrorRPC(uriShort);
+                }
+            },
+            function (event) {
+                muteEvent(event);
+
+                var formPost = $(event.target).closest('.post-area-new');
+                var textArea = formPost.find(twister.focus.textareaPostCur);
+                if (!textArea.length) textArea = formPost.find(twister.focus.textareaPostPrev);
+                if (!textArea.length) textArea = formPost.find('textarea:last');
+
+                event.data.cbReq = textArea;
+                openRequestShortURIForm(event);
+            }
+        )
     ;
     twister.tmpl.postRtReference = extractTemplate('#template-post-rt-reference')
         .on('mouseup', {feeder: '.post-rt-reference'}, openConversationClick)
