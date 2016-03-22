@@ -113,6 +113,12 @@ function dhtget(peerAlias, resource, multi, cbFunc, cbReq, timeoutArgs) {
 // the expanded url is returned to callback
 // null is passed to callback in case of an error
 function decodeShortURI(locator, cbFunc, cbReq, timeoutArgs) {
+    if (!locator) return;
+    if (parseInt(twisterVersion) < 93500) {
+        console.warn('can\'t fetch URI "' + req + '": daemon is obsolete, version 0.9.35 or higher is required');
+        return;
+    }
+
     if (_dhtgetPendingMap[locator]) {
         _dhtgetAddPending(locator, cbFunc, cbReq);
     } else {

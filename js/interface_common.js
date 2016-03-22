@@ -808,7 +808,17 @@ function openRequestShortURIForm() {
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
             txtMessage: 'You can\'t short links because you are not logged in.'
         });
+        return;
     }
+    if (parseInt(twisterVersion) < 93500) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'You can\'t short links because twister daemon is obsolete!\n'
+                + 'Version 0.9.35 or higher is required. Please keep your twister up to date.'
+        });
+        return;
+    }
+
     var uri = prompt('enter a link, watch yourself carefully');  // FIXME
     newShortURI(uri,
         function (req, uriLong, uriShort) {
@@ -850,10 +860,6 @@ function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
 function fetchShortenedURI(req) {
     if (twister.URIs[req]) {
         applyShortenedURI(req, twister.URIs[req]);
-        return;
-    }
-    if (parseInt(twisterVersion) < 93500) {
-        console.warn('can\'t fetch URI "' + req + '": daemon is obsolete, version 0.9.35 or higher is required');
         return;
     }
 

@@ -324,6 +324,10 @@ function newRtMsg(postData, msg) {
 
 function newShortURI(uri, cbFunc, cbReq) {
     if (!uri || !defaultScreenName) return;
+    if (parseInt(twisterVersion) < 93500) {
+        console.warn('can\'t short URI "' + uri + '": daemon is obsolete, version 0.9.35 or higher is required');
+        return;
+    }
 
     for (var i in twister.URIs)
         if (twister.URIs[i] === uri) {
