@@ -24,12 +24,18 @@ var _watchHashChangeRelaxDontDoIt = window.location.hash === '' ? true : false;
 // and actually I'm talking about 'so called \'detached\'' elements which appended to twister.html.detached
 // we may just append twister.html.detached to document instead and remove this weird shit (or I need to
 // improve my google skills to find native jQuery way to dig through all detached elemets with one query)
-function getElem(req) {
+function getElem(req, searchInTmpl) {
     var elem = $(req);
     var h = twister.html.detached.find(req);
 
     for (var i = 0; i < h.length; i++)
         elem[elem.length++] = h[i];
+
+    if (searchInTmpl) {
+        h = twister.tmpl.root.find(req);
+        for (var i = 0; i < h.length; i++)
+            elem[elem.length++] = h[i];
+    }
 
     return elem;
 }
