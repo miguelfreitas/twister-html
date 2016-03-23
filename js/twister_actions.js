@@ -156,18 +156,13 @@ function requestRTs(postLi)
     }
 }
 
-function appendPostToContainer(postFromJson, containerToAppend)
-{
-    // posts without 'msg' may be used for metadata like 'url'
-    // and are not meant to be displayed.
-    if (typeof(postFromJson['userpost']['msg']) === 'undefined' &&
-        typeof(postFromJson['userpost']['rt']) === 'undefined' )
+function appendPostToElem(postFromJson, elem) {
+    // posts without 'msg' and 'rt' may be used for metadata like 'url' and are not meant to be displayed
+    if (!postFromJson.userpost.msg && !postFromJson.userpost.rt)
         return;
 
-    var newStreamPost = postToElem(postFromJson, "original");
-    newStreamPost.hide();
-    containerToAppend.append( newStreamPost );
-    newStreamPost.slideDown("fast");
+    postToElem(postFromJson, 'original').hide().appendTo(elem).slideDown('fast');
+
     $.MAL.postboardLoaded();
 }
 
@@ -183,7 +178,7 @@ function requestPost(containerToAppend,username,resource,cbFunc,cbArgs){
 
             //console.log(postFromJson);
 
-            appendPostToContainer(postFromJson,args.containerToAppend);
+            appendPostToElem(postFromJson, args.containerToAppend);
 
             if(args.cbFunc!=undefined) args.cbFunc(args.cbArgs);
 
@@ -217,7 +212,7 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
         twisterRpc("getposts", [count,[req]],
                        function(args, posts) {
                            for( var i = 0; i < posts.length; i++ ) {
-                              appendPostToContainer(posts[i],args.containerToAppend);
+                                appendPostToElem(posts[i], args.containerToAppend);
                            }
                            profilePostsLoading = false;
                        }, {containerToAppend:containerToAppend},
@@ -228,7 +223,7 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
         dhtget( username, resource, "s",
             function(args, postFromJson) {
                if( postFromJson ) {
-                   appendPostToContainer(postFromJson,args.containerToAppend);
+                    appendPostToElem(postFromJson, args.containerToAppend);
 
                    if( args.count > 1 ) {
                        var userpost = postFromJson["userpost"];
