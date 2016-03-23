@@ -937,8 +937,8 @@ function routeOnClick(event) {
             routeNewTab(event);
         else {
             var modal = $(event.target).closest('.modal-wrapper:not(.closed)');
-            if (modal.length) {  // killer feature: we minimize current modal before .route opening
-                minimizeModal(modal, true);
+            if (modal.length && window.location.hash !== event.data.route) {
+                minimizeModal(modal, true);  // yep, we minimize current modal before .route opening
                 window.location.hash = event.data.route;
             } else
                 routeNewTab(event);
