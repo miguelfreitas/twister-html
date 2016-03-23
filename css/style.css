@@ -2336,6 +2336,10 @@ ul.dropdown-menu .active, ul.dropdown-menu .active a {
     cursor: pointer;
 }
 
+ul.dropdown-menu li a {
+    font-weight: black;
+}
+
 
 .post-rt-reference {
     background-color: #FAFAFA;
