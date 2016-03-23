@@ -2077,9 +2077,12 @@ textarea.splited-post {
   transition: all 0.6s linear;
 }
 
-.post-area-new .shorten-uri {
+.post-area-new .post-textarea-edit-bar {
     font-size: 11px;
-    float: left;
+    margin: 2px 0;
+}
+
+.post-area-new .post-textarea-edit-bar > * {
     margin: 2px 4px;
 }
 

@@ -822,7 +822,7 @@ function openRequestShortURIForm(event) {
         return;
     }
 
-    var uri = prompt('enter a link, watch yourself carefully');  // FIXME
+    var uri = prompt(polyglot.t('shorten_URI_enter_link'));  // FIXME replace native prompt
 
     if (event && event.data && typeof event.data.cbFunc === 'function')
         newShortURI(uri, event.data.cbFunc, event.data.cbReq);
@@ -1359,7 +1359,7 @@ function composeNewPost(e, postAreaNew) {
     if (!postAreaNew.hasClass('open')) {
         postAreaNew.addClass('open');
         //se o usuário clicar fora é pra fechar
-        postAreaNew.clickoutside(unfocusThis);
+        postAreaNew.clickoutside(unfocusPostAreaNew);
 
         if ($.Options.splitPosts.val === 'enable')
             usePostSpliting = true;
@@ -1380,21 +1380,26 @@ function composeNewPost(e, postAreaNew) {
     var textArea = postAreaNew.find('textarea');
     if (textArea.attr('data-reply-to') && !textArea.val().length) {
         textArea.val(textArea.attr('data-reply-to'));
-        posPostPreview(textArea);
+        poseTextareaPostTools(textArea);
     }
     if (!postAreaNew.find('textarea:focus').length)
         postAreaNew.find('textarea:last').focus();
 }
 
-function posPostPreview(event) {
+function poseTextareaPostTools(event) {
+    if (event.jquery)
+        var textArea = event;
+    else
+        var textArea = $(event.target);
+
+    posePostPreview(textArea);
+    poseTextareaEditBar(textArea);
+}
+
+function posePostPreview(textArea) {
     if (!$.Options.postPreview.val)
         return;
 
-    if (event.jquery) {
-        var textArea = event;
-    } else {
-        var textArea = $(event.target);
-    }
     var postPreview = textArea.siblings('#post-preview');
     if (!postPreview.length) {
         postPreview = $('#post-preview-template').children().clone()
@@ -1412,10 +1417,23 @@ function posPostPreview(event) {
     textArea.before(postPreview);
 }
 
+function poseTextareaEditBar(textArea) {
+    var editBar = textArea.siblings('.post-textarea-edit-bar');
+    if (!editBar.length) {
+        editBar = twister.tmpl.postTextareaEditBar.clone(true)
+            .css('margin-left', textArea.css('margin-left'))
+            .css('margin-right', textArea.css('margin-right'))
+        ;
+        editBar.find('.shorten-uri').text(polyglot.t('shorten_URI'));
+    }
+    editBar.insertAfter(textArea).show();
+}
+
 // Reduz Área do Novo post
-function unfocusThis() {
-    $(this).removeClass('open')
-        .find('#post-preview').slideUp('fast');
+function unfocusPostAreaNew() {
+    var postAreaNew = $(this).removeClass('open');
+    postAreaNew.find('#post-preview').slideUp('fast');
+    postAreaNew.find('.post-textarea-edit-bar').hide();
 }
 
 function checkPostForMentions(post, mentions, max) {
@@ -2222,10 +2240,10 @@ function initInterfaceCommon() {
     });
     $('.post-area-new')
         .on('click', function(e) {composeNewPost(e, $(this));})
-        .clickoutside(unfocusThis)
+        .clickoutside(unfocusPostAreaNew)
         .children('textarea')
             .on({
-                'focus': posPostPreview,
+                'focus': poseTextareaPostTools,
                 'input': replyTextInput,  // input event fires in modern browsers (IE9+) on any changes in textarea (and copypasting with mouse too)
                 'input focus': replyTextUpdateRemaining,
                 'keyup': replyTextKeySend
@@ -2298,12 +2316,6 @@ function initInterfaceCommon() {
         .on('focus',
             function (event) {
                 twister.focus.textareaPostCur = $(event.target);
-
-                // FIXME that's a hack, need to implement complete toolbar with buttons of text formatting
-                var xtrs = twister.focus.textareaPostCur.siblings('.post-area-extras');
-                if (!xtrs.find('.shorten-uri').length)
-                    xtrs.prepend(twister.tmpl.shortenUri.clone(true));
-
                 if ($.fn.textcomplete) {  // because some pages don't have that. // network.html
                     event.data = {req: getMentionsForAutoComplete};
                     setTextcompleteOnEventTarget(event);
@@ -2447,15 +2459,18 @@ $(document).ready(function () {
             function (event) {
                 muteEvent(event);
 
-                var formPost = $(event.target).closest('.post-area-new');
-                var textArea = formPost.find(twister.focus.textareaPostCur);
-                if (!textArea.length) textArea = formPost.find(twister.focus.textareaPostPrev);
-                if (!textArea.length) textArea = formPost.find('textarea:last');
+                var postAreaNew = $(event.target).closest('.post-area-new');
+                var textArea = postAreaNew.find(twister.focus.textareaPostCur);
+                if (!textArea.length) textArea = postAreaNew.find(twister.focus.textareaPostPrev);
+                if (!textArea.length) textArea = postAreaNew.find('textarea:last');
 
                 event.data.cbReq = textArea;
                 openRequestShortURIForm(event);
             }
         )
+    ;
+    twister.tmpl.postTextareaEditBar = extractTemplate('#template-post-textarea-edit-bar')
+        .append(twister.tmpl.shortenUri.clone(true))
     ;
     twister.tmpl.postRtReference = extractTemplate('#template-post-rt-reference')
         .on('mouseup', {feeder: '.post-rt-reference'}, openConversationClick)
