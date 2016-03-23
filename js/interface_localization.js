@@ -171,7 +171,9 @@ if(preferredLanguage == "en"){
       "Sent Post to @": "Sent Post to @",
       "Setup account": "Setup account",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
@@ -502,7 +504,9 @@ if(preferredLanguage == "es"){
       "Sent Post to @": "El Post enviado a @",
       "Setup account": "Configuración de la cuenta",
       "shorten_URI": "Acortar URL",
-      "shorten_URI_enter_link": "Introducir el enlace largo (¡ten cuidado!):",
+      "shorten_URI_enter_link": "Introducir el enlace largo.\n"
+        + "¡Ten cuidado! Se envía un twist 'oculto' después de obtener"
+        + "de cada nueva URL, incluso si no publicas algo todavía.",
       "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
       "time_ago": "hace %{time}", // 5 minutes ago
       "Time of the last block:": "Hora del último bloque: ",
@@ -818,7 +822,9 @@ if(preferredLanguage == "uk"){
       "Sent Post to @": "Надіслати твіст @",
       "Setup account": "Обліковий запис",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
@@ -1131,7 +1137,9 @@ if(preferredLanguage == "zh-CN"){
       "Sent Post to @": "发送推文 @",
       "Setup account": "设置账号",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持 File API。",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新区块的时间：",
@@ -1462,7 +1470,9 @@ if(preferredLanguage == "nl"){
       "Sent Post to @": "Verstuur bericht naar @",
       "Setup account": "Account instellingen",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Tijd van de laatste block: ",
@@ -1777,7 +1787,9 @@ if(preferredLanguage == "it"){
       "Sent Post to @": "Messaggi inviati a @",
       "Setup account": "Configurazione Utente",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
       "time_ago": "%{time} fa", // 5 minutes ago
       "Time of the last block:": "Orario del blocco più recente: ",
@@ -2090,7 +2102,9 @@ if(preferredLanguage == "fr"){
       "Sent Post to @": "Envoyer un billet à @",
       "Setup account": "Configuration du compte",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
@@ -2407,7 +2421,9 @@ if(preferredLanguage == "ru"){
        "Sent Post to @": "Отправить сообщение для @",
        "Setup account": "Настроить аккаунт",
        "shorten_URI": "Сокр. URL",
-       "shorten_URI_enter_link": "Введи длинную ссылку (очень осторожно!):",
+       "shorten_URI_enter_link": "Введи длинную ссылку.\n"
+        + "Будь осторожнее! Ты отправляешь 'скрытый' твист после получения\n"
+        + "каждой новой URL, даже если ты ещё не успел(а) ничего никуда отправить.",
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
@@ -2727,7 +2743,9 @@ if(preferredLanguage == "de"){
       "Sent Post to @": "Sende Post an @",
       "Setup account": "Accounteinstellungen",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
@@ -3043,7 +3061,9 @@ if(preferredLanguage == "ja"){
       "Sent Post to @": "メンションを投稿する",
       "Setup account": "アカウント設定",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
       "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
@@ -3357,7 +3377,9 @@ if(preferredLanguage == "pt-BR"){
       "Sent Post to @": "Postagens enviadas para @",
       "Setup account": "Configurar conta",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
       "time_ago": "%{time} atrás", // 5 minutes ago
       "Time of the last block:": "Horário do último bloco: ",
@@ -3673,7 +3695,9 @@ if(preferredLanguage == "tr"){
       "Sent Post to @": "@ Kullanıcıya Gönder",
       "Setup account": "Hesap ayarları",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
@@ -3988,7 +4012,9 @@ if(preferredLanguage == "cs"){
       "Sent Post to @": "Poslat veřejný příspěvek pro @",
       "Setup account": "Upravit profil",
       "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link (be careful!):",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "time_ago": "před %{time}", // 5 minutes ago
       "Time of the last block:": "Čas posledního bloku: ",
