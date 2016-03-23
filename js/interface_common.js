@@ -795,7 +795,7 @@ function handleClickOpenProfileModal(event) {
     routeOnClick(event);
 }
 
-function openConversationClick(event) {
+function handleClickOpenConversation(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -2264,7 +2264,7 @@ function initInterfaceCommon() {
     $('.post-submit').on('click', postSubmit);
     $('.modal-propagate').on('click', retweetSubmit);
     $('.expanded-content .show-more').on('mouseup',
-        {feeder: '.module.post.original.open .module.post.original .post-data'}, openConversationClick)
+        {feeder: '.module.post.original.open .module.post.original .post-data'}, handleClickOpenConversation)
         .on('click', muteEvent)  // to prevent post collapsing
     ;
     if ($.Options.unicodeConversion.val === 'disable')
@@ -2485,7 +2485,7 @@ $(document).ready(function () {
         .append(twister.tmpl.shortenUri.clone(true))
     ;
     twister.tmpl.postRtReference = extractTemplate('#template-post-rt-reference')
-        .on('mouseup', {feeder: '.post-rt-reference'}, openConversationClick)
+        .on('mouseup', {feeder: '.post-rt-reference'}, handleClickOpenConversation)
         .on('click', muteEvent)  // to prevent post expanding or collapsing
     ;
     twister.tmpl.postRtBy = extractTemplate('#template-post-rt-by');

@@ -495,7 +495,7 @@ function handleAvatarFileSelectMobile(evt) {
     }
 }
 
-function openConversationClick(event) {
+function handleClickOpenConversation(event) {
     event.stopPropagation();
     event.preventDefault();
 
