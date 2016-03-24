@@ -156,12 +156,12 @@ function requestRTs(postLi)
     }
 }
 
-function appendPostToElem(postFromJson, elem) {
-    // posts without 'msg' and 'rt' may be used for metadata like 'url' and are not meant to be displayed
-    if (!postFromJson.userpost.msg && !postFromJson.userpost.rt)
+function appendPostToElem(post, elem) {
+    // posts without 'msg' and 'rt.msg' may be used for metadata like 'url' and are not meant to be displayed
+    if (!post.userpost.msg && (!post.userpost.rt || (post.userpost.rt && !post.userpost.rt.msg)))
         return;
 
-    postToElem(postFromJson, 'original').hide().appendTo(elem).slideDown('fast');
+    postToElem(post, 'original').hide().appendTo(elem).slideDown('fast');
 
     $.MAL.postboardLoaded();
 }
