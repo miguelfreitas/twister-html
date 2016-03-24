@@ -60,7 +60,7 @@ function postToElem(post, kind, promoted) {
     if (post.sig_wort)
         userpost.sig_wort = post.sig_wort;
 
-    if (userpost.rt) {
+    if (userpost.rt && userpost.rt.msg) {
         rt = userpost.rt;
         if (userpost.msg) {
             username = userpost.n;
