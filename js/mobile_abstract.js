@@ -543,7 +543,9 @@ function filterLang(string) {
         var langFilterReason = '';
         var langFilterList = $.Options.filterLangList.val;
 
-        if (langFilterList.length > 0) {
+        if (!string) {
+            langFilterReason = polyglot.t('this is undefined', {'this': 'string'});
+        } else if (langFilterList.length > 0) {
             var langFilterAccuracy = $.Options.filterLangAccuracy.val;
             langFilterPass = (langFilterMode === 'whitelist') ? false : true;
             langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t(langFilterMode), 'that': polyglot.t('language of this')});
