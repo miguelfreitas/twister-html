@@ -157,8 +157,10 @@ function requestRTs(postLi)
 }
 
 function appendPostToElem(post, elem) {
-    // posts without 'msg' and 'rt.msg' may be used for metadata like 'url' and are not meant to be displayed
-    if (!post.userpost.msg && (!post.userpost.rt || (post.userpost.rt && !post.userpost.rt.msg)))
+    // posts without non-empty strings in both 'msg' and 'rt.msg' may be used for metadata like 'url' and are not meant to be displayed
+    if ((typeof post.userpost.msg !== 'string' || post.userpost.msg === '')
+        && (typeof post.userpost.rt !== 'object'
+            || typeof post.userpost.rt.msg !== 'string' || post.userpost.rt.msg === ''))
         return;
 
     postToElem(post, 'original').hide().appendTo(elem).slideDown('fast');

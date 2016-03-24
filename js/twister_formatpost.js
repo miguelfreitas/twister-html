@@ -60,7 +60,7 @@ function postToElem(post, kind, promoted) {
     if (post.sig_wort)
         userpost.sig_wort = post.sig_wort;
 
-    if (userpost.rt && userpost.rt.msg) {
+    if (userpost.rt && typeof userpost.rt.msg === 'string' && userpost.rt.msg !== '') {
         rt = userpost.rt;
         if (userpost.msg) {
             username = userpost.n;
@@ -86,6 +86,8 @@ function postToElem(post, kind, promoted) {
         content_to_rt = $.toJSON(userpost);
         content_to_sigrt = post.sig_userpost;
     }
+    if (typeof msg !== 'string')
+        msg = '';
 
     // Now create the html elements
     var elem = $.MAL.getPostTemplate().clone(true).appendTo(twister.html.detached);
