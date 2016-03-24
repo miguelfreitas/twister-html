@@ -790,8 +790,7 @@ function addToCommonDMsList(list, targetAlias, message) {
 }
 
 function handleClickOpenProfileModal(event) {
-    muteEvent(event, true);
-    event.data = {route: $(event.target).attr('href')};
+    event.data = {route: $(this).attr('href')};
     routeOnClick(event);
 }
 
@@ -2272,7 +2271,8 @@ function initInterfaceCommon() {
     else
         $('.undo-unicode').on('click', undoLastUnicode);
 
-    getElem('.open-profile-modal', true).on('click mouseup', handleClickOpenProfileModal);
+    getElem('.open-profile-modal', true)
+        .on('click', muteEvent).on('mouseup', handleClickOpenProfileModal);
     //$('.open-hashtag-modal').on('click', openHashtagModal);
     //$('.open-following-modal').on('click', openFollowingModal);
     $('.userMenu-connections a').on('click', openMentionsModal);
