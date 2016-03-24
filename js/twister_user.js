@@ -79,7 +79,7 @@ function loadWalletlUsers(cbFunc, cbArg) {
 
 function loadScreenName() {
     if( $.localStorage.isSet("defaultScreenName") ) {
-        defaultScreenName = $.localStorage.get("defaultScreenName");
+        defaultScreenName = $.localStorage.get("defaultScreenName").toString();
     }
 }
 
@@ -174,19 +174,6 @@ function sendNewUserTransaction(username, cbFunc) {
                }, {});
 }
 
-
-function importSecretKeypress() {
-    var secretKey = $(".secret-key-import").val();
-    var username = $(".username-import").val().toLowerCase();
-    var $importButton = $(".import-secret-key");
-
-    if( secretKey.length == 52 && username.length ) {
-        $.MAL.enableButton( $importButton );
-    } else {
-        $.MAL.disableButton( $importButton );
-    }
-}
-
 function importSecretKeyClick() {
     var secretKey = $(".secret-key-import").val();
     var username = $(".username-import").val().toLowerCase();
@@ -214,8 +201,8 @@ function interfaceCommonLoginHandlers() {
     /* must specialize: $( ".create-user").bind( "click", function() { createUserClick( processCreateUser ); } ); */
     /* must specialize: $( ".login-created-user").bind( "click", loginCreatedUser ); */
     $( ".new-username" ).keyup( newUserNameKeypress );
-    $( ".secret-key-import" ).keyup( importSecretKeypress );
-    $( ".username-import" ).keyup( importSecretKeypress );
+    $('.secret-key-import').on('input', importSecretKeypress);
+    $('.username-import').on('input', importSecretKeypress);
     $( ".import-secret-key").bind( "click", importSecretKeyClick );
 }
 
@@ -273,20 +260,18 @@ function saveProfile(e) {
     function completeProfileSaving(req, isAvatarDataSaved) {
         if (req.isProfileDataSaved && isAvatarDataSaved) {
             clearAvatarAndProfileCache(defaultScreenName);
-            var titleTxt = '';
-            var messageTxt = polyglot.t('profile_saved');
+            var txtTitle = '';
+            var txtMessage = polyglot.t('profile_saved');
         } else {
-            var titleTxt = polyglot.t('error', {error: ''});
-            var messageTxt = polyglot.t('profile_not_saved');
+            var txtTitle = polyglot.t('error', {error: ''});
+            var txtMessage = polyglot.t('profile_not_saved');
         }
-        confirmPopup(null, {
-            titleTxt: titleTxt,
-            messageTxt: messageTxt,
-            confirmTxt: polyglot.t('btn_ok'),
-            confirmFunc: $.MAL.enableButton,
-            confirmFuncArgs: $('.submit-changes'),
-            closeFunc: 'confirmFunc',
-            removeCancel: true
+        alertPopup({
+            txtTitle: txtTitle,
+            txtMessage: txtMessage,
+            cbConfirm: $.MAL.enableButton,
+            cbConfirmReq: $('.submit-changes'),
+            cbClose: 'cbConfirm'
         });
     }
 

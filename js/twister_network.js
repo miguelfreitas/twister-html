@@ -304,7 +304,7 @@ function interfaceNetworkHandlers() {
         function (e) {e.stopPropagation(); $(this).addClass('open'); usePostSpliting = false;});
     $('.post-submit.update-spam-msg').off('click').on('click', setSpamMsg);
     $('.terminate-daemon').on('click',
-        {messageTxt: polyglot.t('confirm_terminate_daemon'), confirmFunc: exitDaemon}, confirmPopup);
+        {txtMessage: {polyglot: 'confirm_terminate_daemon'}, cbConfirm: exitDaemon}, confirmPopup);
 }
 
 

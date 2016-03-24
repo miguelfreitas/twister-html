@@ -53,6 +53,7 @@ if(preferredLanguage == "en"){
             "If you stay in this page your actions may not work.\n" +
             "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Change user",
       "Checking...": "Checking...", // checking if username is available
       "Collapse": "Collapse", // smaller view of a post
@@ -68,7 +69,7 @@ if(preferredLanguage == "en"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Disable",
-      "Display mentions to @": "Display mentions to @",
+      "display_mentions": "Display mentions",
       "Display retransmissions": "Display retransmissions",
       "DNS to obtain list of peers:": "DNS to obtain list of peers:",
       "downloading_block_chain": "Downloading block chain, please wait before continuing (block chain is %{days} days old).",
@@ -84,10 +85,11 @@ if(preferredLanguage == "en"){
       "File APIs not supported in this browser.": "File APIs not supported in this browser.",
       "Follow": "Follow",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "Followed by",
       "followed_by": "Followed by %{username}",
       "Followers": "Followers",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Following",
       "Following users": "Following users",
       "Force connection to peer:": "Force connection to peer:",
@@ -126,6 +128,12 @@ if(preferredLanguage == "en"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Not available", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -159,9 +167,13 @@ if(preferredLanguage == "en"){
       "seconds": "%{smart_count} second |||| %{smart_count} seconds",
       "send": "send",
       "Send post with username": "Send post with username ",
-      "Sent Direct Message": "Sent Direct Message",
+      "send_DM": "Send direct message",
       "Sent Post to @": "Sent Post to @",
       "Setup account": "Setup account",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
@@ -374,6 +386,7 @@ if(preferredLanguage == "es"){
             "Si te quedas en esta página tus acciones pueden no funcionar.\n" +
             "¿Quieres comprobar la [página de estado de la red](%{page}) en su lugar?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Cambiar de usuario",
       "Checking...": "Comprobando ...", // checking if username is available
       "Collapse": "Colapsar", // smaller view of a post
@@ -389,7 +402,7 @@ if(preferredLanguage == "es"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Mensajes directos con %{username}",
       "Disable": "Inhabilitar",
-      "Display mentions to @": "Visualización de menciones a @",
+      "display_mentions": "Visualización de menciones",
       "Display retransmissions": "Visualización de retransmisiones",
       "DNS to obtain list of peers:": "DNS para obtener la lista de los pares:",
       "downloading_block_chain": "Descarga de la cadena de bloques, por favor espere antes de continuar (la cadena de bloques esta %{days} días).",
@@ -405,10 +418,11 @@ if(preferredLanguage == "es"){
       "File APIs not supported in this browser.": "Los archivos API no compatibles con este navegador",
       "Follow": "Seguir",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "Seguido por",
       "followed_by": "Seguido por %{username}",
       "Followers": "Seguidores",
+      "Followers_of": "Seguidores de @%{alias}",
       "Following": "Siguiendo",
       "Following users": "Siguiendo los usuarios",
       "Force connection to peer:": "Forzar la conexión a  los pares:",
@@ -447,6 +461,12 @@ if(preferredLanguage == "es"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "Nadie", // used to promote a post without attaching the user
       "Not available": "No disponible", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -480,9 +500,13 @@ if(preferredLanguage == "es"){
       "seconds": "%{smart_count} segundo |||| %{smart_count} segundos",
       "send": "send",
       "Send post with username": "Enviar post con nombre de usuario ",
-      "Sent Direct Message": "Mensaje directo",
+      "send_DM": "Mensaje directo",
       "Sent Post to @": "El Post enviado a @",
       "Setup account": "Configuración de la cuenta",
+      "shorten_URI": "Acortar URL",
+      "shorten_URI_enter_link": "Introducir el enlace largo.\n"
+        + "¡Ten cuidado! Se envía un twist 'oculto' después de obtener"
+        + "de cada nueva URL, incluso si no publicas algo todavía.",
       "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
       "time_ago": "hace %{time}", // 5 minutes ago
       "Time of the last block:": "Hora del último bloque: ",
@@ -679,6 +703,7 @@ if(preferredLanguage == "uk"){
             "Якщо ви залишитесь на цій сторінці ваші дії можуть не спрацювати.\n" +
             "Чи бажаєте ви перевірити [сторінку зі статусом мережі](%{page})?",
       "confirm_terminate_daemon": "Ви впевнені, що бажаєте завершити роботу?\nКлієнт Twister буде зупинено допоки ви не запустите його знову.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Змінити користувача",
       "Checking...": "Перевірка...", // checking if username is available
       "Collapse": "Згорнути", // smaller view of a post
@@ -694,7 +719,7 @@ if(preferredLanguage == "uk"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Вимкнено",
-      "Display mentions to @": "Показати сповіщення @",
+      "display_mentions": "Показати сповіщення",
       "Display retransmissions": "Показати пересилання",
       "DNS to obtain list of peers:": "DNS для отримання пірів:",
       "dns address": "адреса DNS",
@@ -711,10 +736,11 @@ if(preferredLanguage == "uk"){
       "File APIs not supported in this browser.": "File APIs не підтримуєтся цим браузером.",
       "Follow": "Читати",
       "Following config": "Налаштування читання",
-      "Which way do you want to follow": "У який спосіб ви бажаєте читати",
+      "select_way_to_follow_@": "У який спосіб ви бажаєте читати @%{alias}",
       "Followed by": "читає",
       "followed_by": "%{username} читає",
       "Followers": "Читачі",
+      "Followers_of": "Читачі @%{alias}",
       "Following": "Читає",
       "Following users": "Підписані користувачі",
       "Force connection to peer:": "Примусове з’єднання з піром:",
@@ -753,6 +779,12 @@ if(preferredLanguage == "uk"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "анонім", // used to promote a post without attaching the user
       "Not available": "Не доступне", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister не може створити сповіщення: невідома помилка.",
       "notify_desktop_perm_denied": "Twister не може створити сповіщення на робочому столі: доступ обмежено.\n\nЯкщо ви бажаєте отримувати сповіщення, дозвольте їх виконання в налаштуваннях браузера для %{this_domain}.",
       "notify_desktop_test": "Є дещо новеньке у стрічці.",
@@ -786,9 +818,13 @@ if(preferredLanguage == "uk"){
       "seconds": "%{smart_count} секунда |||| %{smart_count} секунд",
       "send": "відіслати",
       "Send post with username": "Надіслати повідомлення від",
-      "Sent Direct Message": "Надіслати особисте повідомлення",
+      "send_DM": "Надіслати особисте повідомлення",
       "Sent Post to @": "Надіслати твіст @",
       "Setup account": "Обліковий запис",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
@@ -983,6 +1019,7 @@ if(preferredLanguage == "zh-CN"){
             "如果你留在此页面你的操作将不会生效。\n" +
             "你要跳转到[网络状态页](%{page})吗？",
       "confirm_terminate_daemon": "你确定要退出后台进程？\nTwister 客户端将停止工作。",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
       "Collapse": "折叠", // smaller view of a post
@@ -998,7 +1035,7 @@ if(preferredLanguage == "zh-CN"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "关闭",
-      "Display mentions to @": "显示@",
+      "display_mentions": "显示",
       "Display retransmissions": "显示转发",
       "DNS to obtain list of peers:": "用DNS获取节点列表：",
       "downloading_block_chain": "区块链下载中，请等待下载完成（区块链仍落后 %{days} 天）。",
@@ -1014,10 +1051,11 @@ if(preferredLanguage == "zh-CN"){
       "File APIs not supported in this browser.": "这个浏览器不支持 File API。",
       "Follow": "关注",
       "Following config": "关注配置",
-      "Which way do you want to follow": "你想以哪种方式关注",
+      "select_way_to_follow_@": "你想以哪种方式关注 @%{alias}",
       "Followed by": "关注者",
       "followed_by": "被 %{username} 关注",
       "Followers": "粉丝",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "关注",
       "Following users": "关注的用户",
       "Force connection to peer:": "强制连接到节点：",
@@ -1056,6 +1094,12 @@ if(preferredLanguage == "zh-CN"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "无名", // used to promote a post without attaching the user
       "Not available": "用户名不可用", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister 无法发出桌面提醒：发生未知错误。",
       "notify_desktop_perm_denied": "Twister 无法发出桌面提醒：权限被拒绝。\n\n如果你想收到提醒，请在你的浏览器设置中允许 %{this_domain} 发出提醒。",
       "notify_desktop_test": "我们都在用 Twister。\n欢迎你的加入。",
@@ -1089,9 +1133,13 @@ if(preferredLanguage == "zh-CN"){
       "seconds": "%{smart_count} 秒",
       "send": "发送",
       "Send post with username": "发送推文的用户名",
-      "Sent Direct Message": "发送私信",
+      "send_DM": "发送私信",
       "Sent Post to @": "发送推文 @",
       "Setup account": "设置账号",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持 File API。",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新区块的时间：",
@@ -1304,6 +1352,7 @@ if(preferredLanguage == "nl"){
             "If you stay in this page your actions may not work.\n" +
             "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Gebruiker wijzigen",
       "Checking...": "Controleren...", // checking if username is available
       "Collapse": "Uitklappen", // smaller view of a post
@@ -1319,7 +1368,7 @@ if(preferredLanguage == "nl"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Uitschakelen",
-      "Display mentions to @": "Toon vermeldingen voor @",
+      "display_mentions": "Toon vermeldingen",
       "Display retransmissions": "Toon retransmissions",
       "DNS to obtain list of peers:": "DNS om peers lijst op te halen:",
       "downloading_block_chain": "Bezig met downloaden block chain, wacht a.u.b. voordat je doorgaat (block chain is %{days} dagen oud).",
@@ -1335,10 +1384,11 @@ if(preferredLanguage == "nl"){
       "File APIs not supported in this browser.": "File APIs worden nie ondersteund in deze browser.",
       "Follow": "Volgen",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "Gevolgd door",
       "followed_by": "Gevolgd door %{username}",
       "Followers": "Volgers",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Volgend",
       "Following users": "Volgende gebruikers",
       "Force connection to peer:": "Forceer connectie met peer:",
@@ -1377,6 +1427,12 @@ if(preferredLanguage == "nl"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Niet beschikbaar", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -1410,9 +1466,13 @@ if(preferredLanguage == "nl"){
       "seconds": "%{smart_count} seconde |||| %{smart_count} seconden",
       "send": "Verstuur",
       "Send post with username": "Verstuur bericht met gebruikersnaam ",
-      "Sent Direct Message": "Verstuur privébericht",
+      "send_DM": "Verstuur privébericht",
       "Sent Post to @": "Verstuur bericht naar @",
       "Setup account": "Account instellingen",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Tijd van de laatste block: ",
@@ -1609,6 +1669,7 @@ if(preferredLanguage == "it"){
             "Se rimani su questa pagina, Twister potrebbe non funzionare.\n" +
             "Vuoi controllare lo [stato della rete Twister](%{page}), invece?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Cambia utente",
       "Checking...": "Controllo in corso...", // checking if username is available
       "Collapse": "Chiudi", // smaller view of a post
@@ -1624,7 +1685,7 @@ if(preferredLanguage == "it"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Messaggi Diretti come %{username}",
       "Disable": "Disabilitato",
-      "Display mentions to @": "Mostra le menzioni di @",
+      "display_mentions": "Mostra le menzioni",
       "Display retransmissions": "Mostra Ripubblicazioni",
       "DNS to obtain list of peers:": "DNS per la lista dei nodi:",
       "downloading_block_chain": "Scaricamento della catena di blocchi in corso, attendere prego (la catena risale a %{days} giorni fa).",
@@ -1640,10 +1701,11 @@ if(preferredLanguage == "it"){
       "File APIs not supported in this browser.": "File APIs non supportati in questo browser.",
       "Follow": "Segui",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "Seguito da",
       "followed_by": "Seguiti da %{username}",
       "Followers": "Lettori",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Seguiti",
       "Following users": "Utenti seguiti",
       "Force connection to peer:": "Forza connessione al nodo:",
@@ -1682,6 +1744,12 @@ if(preferredLanguage == "it"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "nessuno", // used to promote a post without attaching the user
       "Not available": "Non disponibile", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -1715,9 +1783,13 @@ if(preferredLanguage == "it"){
       "seconds": "%{smart_count} secondo |||| %{smart_count} secondi",
       "send": "Invia",
       "Send post with username": "Pubblica come utente ",
-      "Sent Direct Message": "Messaggi Diretti inviati",
+      "send_DM": "Messaggi Diretti inviati",
       "Sent Post to @": "Messaggi inviati a @",
       "Setup account": "Configurazione Utente",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
       "time_ago": "%{time} fa", // 5 minutes ago
       "Time of the last block:": "Orario del blocco più recente: ",
@@ -1912,6 +1984,7 @@ if(preferredLanguage == "fr"){
             "Si vous restez dans cette page vos actions peuvent ne pas être prises en compte.\n" +
             "Voulez-vous consulter la [page d'état du réseau](%{page}) à la place?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Changer d'utilisateur",
       "Checking...": "Vérification...", // checking if username is available
       "Collapse": "Fermer", // smaller view of a post
@@ -1927,7 +2000,7 @@ if(preferredLanguage == "fr"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Messages privés avec %{username}",
       "Disable": "Désactiver",
-      "Display mentions to @": "Afficher les mentions pour @",
+      "display_mentions": "Afficher les mentions",
       "Display retransmissions": "Afficher les retransmissions",
       "DNS to obtain list of peers:": "DNS où obtenir une liste des pairs:",
       "downloading_block_chain": "Téléchargement de la chaîne de blocs, veuillez patienter avant de continuer (la chaîne de blocs a %{days} jours de retard).",
@@ -1943,10 +2016,11 @@ if(preferredLanguage == "fr"){
       "File APIs not supported in this browser.": "L'API de fichiers n'est pas pris en charge dans votre navigateur.",
       "Follow": "Suivre",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "Suivi par",
       "followed_by": "Suivi par %{username}",
       "Followers": "Abonnés",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Abonnements",
       "Following users": "Following users",
       "Force connection to peer:": "Forcer la connection à un pair:",
@@ -1985,6 +2059,12 @@ if(preferredLanguage == "fr"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Non disponible", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Impossible d'afficher les notifications: une erreur inconnue est survenue.",
       "notify_desktop_perm_denied": "Impossible d'afficher les notifications: autorisation refusée.\n\nSi tu souhaites afficher les notifications, autorise le %{this_domain} dans les paramêtres de ton navigateur.",
       "notify_desktop_test": "All the twisters gonna twist.\nBienvenue à toi!",
@@ -2018,9 +2098,13 @@ if(preferredLanguage == "fr"){
       "seconds": "%{smart_count} seconde |||| %{smart_count} secondes",
       "send": "envoyer",
       "Send post with username": "Envoyer le billet avec le pseudo",
-      "Sent Direct Message": "Message privé envoyé",
+      "send_DM": "Message privé envoyé",
       "Sent Post to @": "Envoyer un billet à @",
       "Setup account": "Configuration du compte",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
@@ -2219,6 +2303,7 @@ if(preferredLanguage == "ru"){
             "Если вы останетесь на этой странице ваши действия могут быть не выполнены.\n" +
             "Не хотите перейти на [страницу настройки сети](%{page})?",
        "confirm_terminate_daemon": "Вы уверены, что хотите выключить демон?\nTwister клиент перестанет работать.",
+       "confirm_unfollow_@": "Действительно отписаться от @%{alias}?",
        "Change user": "Сменить пользователя",
        "Checking...": "Проверка...",
        "Collapse": "Свернуть",
@@ -2234,7 +2319,7 @@ if(preferredLanguage == "ru"){
        "Group Messages — Join Group": "Групповые сообщения — Присоединиться к группе",
        "direct_messages_with": "Личная переписка с %{username}",
        "Disable": "Отключено",
-       "Display mentions to @": "Показать ответы для @",
+       "display_mentions": "Показать упоминания",
        "Display retransmissions": "Показать репосты",
        "DNS to obtain list of peers:": "DNS адрес для получения пиров:",
        "downloading_block_chain": "Загрузка цепочки блоков, пожалуйста подождите, (Цепочка блоков устарела на %{days} дней).",
@@ -2250,11 +2335,12 @@ if(preferredLanguage == "ru"){
        "File APIs not supported in this browser.": "Ваш браузер не поддерживает File APIs.",
        "Follow": "Подписаться",
        "Following config": "Настройка подписки",
-       "Which way do you want to follow": "Выберите тип подписки на",
+       "select_way_to_follow_@": "Выбери же тип подписки на @%{alias}",
        "Followed by": "Подписчик у",
        "followed_by": "%{username} подписан",
-       "Followers": "Читателей",
-       "Following": "Читаемых",
+       "Followers": "Читатели",
+       "Followers_of": "Читатели @%{alias}",
+       "Following": "Читаемые",
        "Following users": "Подписанные пользователи",
        "Force connection to peer:": "Принудительно подключиться к пиру:",
        "General information": "Основное",
@@ -2292,6 +2378,12 @@ if(preferredLanguage == "ru"){
        "new_group_messages": "%{smart_count} новое сообщение в группе |||| %{smart_count} новых групповых сообщений",
        "nobody": "Анонимно", // used to promote a post without attaching the user
        "Not available": "Недоступно",
+       "warn_following_not_any": "Пока что таки нет читаемых!\nПоди ж найди кого-нибудь да и подпишись.",
+       "warn_followers_not_all": "Пока что нет простого способа узнать список всех подписчиков.\n"
+         + "Счётчик показывает лишь количество известных пиров твоего торрента.\n"
+         + "В списке ниже включены те, главным образом, на кого подписан(а) ты сам(а).",
+       "warn_followers_not_all_of": "Пока что нет простого способа узнать список всех подписчиков.\n"
+         + "В списке ниже, возможно, лишь некоторые из тех, кто подписан на @%{alias} публично.",
        "notify_desktop_error": "Твистер не может выполнить уведомление: произошла неизвестная ошибка.",
        "notify_desktop_perm_denied": "Твистер не может выполнить уведомление: разрешение не получено.\n\nЧтобы получать уведомления, разрешите их для %{this_domain} в настройках вашего браузера.",
        "notify_desktop_test": "Одна лягушка сказала:\n'если не буду квакать — лопну'.\nВы нужны нам, берегите себя.",
@@ -2325,9 +2417,13 @@ if(preferredLanguage == "ru"){
        "seconds": "%{smart_count} секунда |||| %{smart_count} секунд",
        "send": "отправить",
        "Send post with username": "Отправить сообщение от имени",
-       "Sent Direct Message": "Отправить личное сообщение",
+       "send_DM": "Отправить личное сообщение",
        "Sent Post to @": "Отправить сообщение для @",
        "Setup account": "Настроить аккаунт",
+       "shorten_URI": "Сокр. URL",
+       "shorten_URI_enter_link": "Введи длинную ссылку.\n"
+        + "Будь осторожнее! Ты отправляешь 'скрытый' твист после получения\n"
+        + "каждой новой URL, даже если ты ещё не успел(а) ничего никуда отправить.",
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
@@ -2528,6 +2624,7 @@ if(preferredLanguage == "de"){
             "Wenn du auf dieser Seite bleibst können deine Handlungen nicht funktionieren.\n" +
             "Möchtest du stattdessen den [Netzwerkstatus](%{page}) überprüfen?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Benutzer wechseln",
       "Checking...": "Überprüfe...", // checking if username is available
       "Collapse": "Einklappen", // smaller view of a post
@@ -2543,7 +2640,7 @@ if(preferredLanguage == "de"){
       "Group Messages — Join Group": "Gruppennachrichten — Gruppe beitreten",
       "direct_messages_with": "Direktnachrichten mit %{username}",
       "Disable": "Deaktivieren",
-      "Display mentions to @": "Zeige Erwähnungen von @", //Ist das richtig? Ich weiß nicht, in welchem Zusammenhang das benutzt wird.
+      "display_mentions": "Zeige Erwähnungen", // Ist das richtig? Ich weiß nicht, in welchem Zusammenhang das benutzt wird.
       "Display retransmissions": "Weiterleitungen anzeigen",
       "DNS to obtain list of peers:": "DNS um Peer-Liste abzurufen:",
       "dns address": "DNS-Adresse",
@@ -2560,10 +2657,11 @@ if(preferredLanguage == "de"){
       "File APIs not supported in this browser.": "File APIs werden von diesem Browser nicht unterstützt.",
       "Follow": "Folgen",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "Gefolgt von",
       "followed_by": "Gefolgt von %{username}",
       "Followers": "Followers",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Folgt",
       "Following users": "Folgt Benutzern",
       "Force connection to peer:": "Erzwinge Verbindung zu Peer:",
@@ -2602,6 +2700,12 @@ if(preferredLanguage == "de"){
       "new_group_messages": "%{smart_count} neue Gruppen-Nachricht |||| %{smart_count} neue Gruppen-Nachrichten",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Nicht verfügbar", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister kann keine Desktop-Meldungen anzeigen: ein unbekannter Fehler trat auf.",
       "notify_desktop_perm_denied": "Twister kann keine Desktop-Meldungen anzeigen: Keine Berechtigung.\n\nWenn Du Meldungen angezeigt haben möchtest, erlaube sie für %{this_domain} in den Einstellungen Deines Browsers.",
       "notify_desktop_test": "All die Twisterer werden twisten..\nDu bist nun auch willkommen!",
@@ -2635,9 +2739,13 @@ if(preferredLanguage == "de"){
       "seconds": "%{smart_count} Sekunde |||| %{smart_count} Sekunden",
       "send": "senden",
       "Send post with username": "Sende Post mit Benutzernamen ",
-      "Sent Direct Message": "Direktnachricht senden",
+      "send_DM": "Direktnachricht senden",
       "Sent Post to @": "Sende Post an @",
       "Setup account": "Accounteinstellungen",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
@@ -2668,7 +2776,7 @@ if(preferredLanguage == "de"){
       "Create a new user": "Neuen Benutzer erstellen",
       "Login": "Einloggen",
       "Check availability": "Verfügbarkeit überprüfen",
-      "Create this nickname": "Nichnamen erstellen",
+      "Create this nickname": "Nicknamen erstellen",
       "Type nickname here": "Nicknamen hier eingeben",
       "Import secret key": "Privaten Schlüssel hier importieren",
       "52-characters secret": "52 Zeichen Geheimnis",
@@ -2835,6 +2943,7 @@ if(preferredLanguage == "ja"){
             "このページを使用しつづければ、あなたの変更が適用されないおそれがあります。\n" +
             "[ネットワーク状態ペー](%{page})ジへ移動して確認しますか？",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "ユーザーを変更",
       "Checking...": "チェック...", // checking if username is available
       "Collapse": "閉じる", // smaller view of a post
@@ -2850,7 +2959,7 @@ if(preferredLanguage == "ja"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "停止",
-      "Display mentions to @": "メンションを表示する",
+      "display_mentions": "メンションを表示する",
       "Display retransmissions": "リトランスミットを表示する",
       "DNS to obtain list of peers:": "ピア取得用のDNS:",
       "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。（ブロックチェーンは%{days}日送れています）",
@@ -2866,10 +2975,11 @@ if(preferredLanguage == "ja"){
       "File APIs not supported in this browser.": "利用しているブラウザはファイルAPIをサポートしていません。",
       "Follow": "フォロー",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "フォローされている",
       "followed_by": "%{username}にフォローされている",
       "Followers": "フォロワー",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "フォロー",
       "Following users": "フォローしているユーザー",
       "Force connection to peer:": "強制的に経由するピア:",
@@ -2908,6 +3018,12 @@ if(preferredLanguage == "ja"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "ナナシ", // used to promote a post without attaching the user
       "Not available": "使用中", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -2941,9 +3057,13 @@ if(preferredLanguage == "ja"){
       "seconds": "%{smart_count} 秒 |||| %{smart_count} 秒",
       "send": "送信",
       "Send post with username": "プロモートメッセージの送信元",
-      "Sent Direct Message": "ダイレクトメッセージを送る",
+      "send_DM": "ダイレクトメッセージを送る",
       "Sent Post to @": "メンションを投稿する",
       "Setup account": "アカウント設定",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
       "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
@@ -3138,6 +3258,7 @@ if(preferredLanguage == "pt-BR"){
             "Se permanecer nesta página suas ações podem não ter efeito.\n" +
             "Gostaria de verificar o [Estado da Rede](%{page}) ao invés disso?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Trocar usuário",
       "Checking...": "Verificando...", // checking if username is available
       "Collapse": "Recolher", // smaller view of a post
@@ -3153,7 +3274,7 @@ if(preferredLanguage == "pt-BR"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Mensagens Diretas com %{username}",
       "Disable": "Desabilitado",
-      "Display mentions to @": "Exibir menções a @",
+      "display_mentions": "Exibir menções",
       "Display retransmissions": "Exibir retransmissões",
       "DNS to obtain list of peers:": "DNS para obter a lista de nós:",
       "downloading_block_chain": "Baixando a Cadeia de Blocos, por favor aguarde (A Cadeia de Blocos está %{days} dias desatualizada).",
@@ -3169,10 +3290,11 @@ if(preferredLanguage == "pt-BR"){
       "File APIs not supported in this browser.": "O gerenciamento de arquivos não é suportado neste navegador.",
       "Follow": "Seguir",
       "Following config": "Following config",
-      "Which way do you want to follow": "Which way do you want to follow",
+      "select_way_to_follow_@": "Which way do you want to follow @%{alias}",
       "Followed by": "Seguido por",
       "followed_by": "Seguido por %{username}",
       "Followers": "Seguidores",
+      "Followers_of": "Seguidores de @%{alias}",
       "Following": "Seguindo",
       "Following users": "Usuários que sigo",
       "Force connection to peer:": "Forçar conexão com o nó:",
@@ -3211,6 +3333,12 @@ if(preferredLanguage == "pt-BR"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "nobody", // used to promote a post without attaching the user
       "Not available": "Indisponível", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister cannot perform desktop notification: unknown error occured.",
       "notify_desktop_perm_denied": "Twister cannot perform desktop notification: permission denied.\n\nIf you want to get notifications, allow them for %{this_domain} in settings of your browser.",
       "notify_desktop_test": "All the twisters gonna twist.\nNow you are welcome too.",
@@ -3245,9 +3373,13 @@ if(preferredLanguage == "pt-BR"){
       "seconds": "%{smart_count} segundo |||| %{smart_count} segundos",
       "send": "enviar",
       "Send post with username": "Promover esta mensagem como usuário",
-      "Sent Direct Message": "Mensagens Diretas trocadas",
+      "send_DM": "Mensagens Diretas trocadas",
       "Sent Post to @": "Postagens enviadas para @",
       "Setup account": "Configurar conta",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
       "time_ago": "%{time} atrás", // 5 minutes ago
       "Time of the last block:": "Horário do último bloco: ",
@@ -3445,6 +3577,7 @@ if(preferredLanguage == "tr"){
             "Eğer bu sayfada kalırsanız eylemlerinizi işlemeyebilir.\n" +
             "Bunun yerine [Ağ Durumu sayfasını](%{page}) kontrol etmek ister misiniz?",
       "confirm_terminate_daemon": "Hizmeti sonlandırmak istiyor musun?\nTwister istemcisi çalışmayacak.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
       "Collapse": "Kapat", // smaller view of a post
@@ -3460,7 +3593,7 @@ if(preferredLanguage == "tr"){
       "Group Messages — Join Group": "Grup Mesajları — Gruba katıl",
       "direct_messages_with": "%{username} ile Direk Mesajlar",
       "Disable": "Kullanılmaz",
-      "Display mentions to @": "@ adının geçtiği gönderiler",
+      "display_mentions": "@ adının geçtiği gönderiler",  // FIXME
       "Display retransmissions": "Tekrar iletimleri göster",
       "DNS to obtain list of peers:": "Eş listesini almak için DNS:",
       "downloading_block_chain": "Blok zinciri indiriliyor, devam edebilmek için lütfen bekleyiniz (blok zinciri %{days} günlük).",
@@ -3476,10 +3609,11 @@ if(preferredLanguage == "tr"){
       "File APIs not supported in this browser.": "Tarayıcınızda dosya API'si desteklenmiyor.",
       "Follow": "Takip et",
       "Following config": "Takip ayarları",
-      "Which way do you want to follow": "Nasıl takip etmek istiyorsun",
+      "select_way_to_follow_@": "Nasıl takip etmek istiyorsun @%{alias}",
       "Followed by": "Takip edenler",
       "followed_by": "%{username} tarafından takip edilenler",
       "Followers": "Takipçiler",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Takip edilenler",
       "Following users": "Takip edilen kullanıcılar",
       "Force connection to peer:": "Bağlantı için zorlanacak eş:",
@@ -3518,6 +3652,12 @@ if(preferredLanguage == "tr"){
       "new_group_messages": "%{smart_count} yeni grup mesajı |||| %{smart_count} yeni grup mesajı",
       "nobody": "hiçkimse", // used to promote a post without attaching the user
       "Not available": "Kullanılamaz", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twister masaüstü uyarısını gösterimiyor: bilimeyen bir hata oluştu.",
       "notify_desktop_perm_denied": "Twister masaüstü uyarısını gösteremiyor: yetkilendirme hatası.\n\nUyarıları almak istiyorsanız, tarayıcı ayarlarında %{this_domain} alan adı için izin veriniz.",
       "notify_desktop_test": "Kasırga her yanı saracak\nBu karnavala hoşgeldin!",
@@ -3551,9 +3691,13 @@ if(preferredLanguage == "tr"){
       "seconds": "%{smart_count} saniye |||| %{smart_count} saniye",
       "send": "gönder",
       "Send post with username": "İletiyi kullanıcı adıyla gönder ",
-      "Sent Direct Message": "Direk Mesaj Gönder",
+      "send_DM": "Direk Mesaj Gönder",
       "Sent Post to @": "@ Kullanıcıya Gönder",
       "Setup account": "Hesap ayarları",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
@@ -3749,6 +3893,7 @@ if(preferredLanguage == "cs"){
             "Pokud zůstanete na této stránce, vaše akce možná nebudou fungovat.\n" +
             "Chcete se místo toho podívat na [stav sítě](%{page})?",
       "confirm_terminate_daemon": "Skutečně chcete ukončit server?\nTwister tím vypnete.",
+      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
       "Change user": "Změnit uživatele",
       "Checking...": "Ověřuji...", // checking if username is available
       "Collapse": "Složit", // smaller view of a post
@@ -3764,7 +3909,7 @@ if(preferredLanguage == "cs"){
       "Group Messages — Join Group": "Group Messages — Join Group",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Vypnuto",
-      "Display mentions to @": "Zobrazit zmínky o @",
+      "display_mentions": "Zobrazit zmínky",
       "Display retransmissions": "Zobrazit přeposlané",
       "DNS to obtain list of peers:": "DNS pro načtení seznamu uzlů:",
       "downloading_block_chain": "Stahuji blockchain, prosím počkejte (blockchain je %{days} dnů starý).",
@@ -3780,10 +3925,11 @@ if(preferredLanguage == "cs"){
       "File APIs not supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "Follow": "Sledovat",
       "Following config": "Nastavení sledování",
-      "Which way do you want to follow": "Zvolte způsob sledování",
+      "select_way_to_follow_@": "Zvolte způsob sledování @%{alias}",
       "Followed by": "tohoto uživatele sleduje",
       "followed_by": "Uživatelé, které sleduje %{username}",
       "Followers": "Sledující",
+      "Followers_of": "Followers of @%{alias}",
       "Following": "Sledovaní",
       "Following users": "Sledovaní uživatelé",
       "Force connection to peer:": "Vyžádat připojení k uzlu:",
@@ -3822,6 +3968,12 @@ if(preferredLanguage == "cs"){
       "new_group_messages": "%{smart_count} new group message |||| %{smart_count} new group messages",
       "nobody": "nikdo", // used to promote a post without attaching the user
       "Not available": "Tuto přezdívku již někdo používá", // username is not available
+      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
+      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
+        + "The counter indicates only a number of known peers sharing your torrent.\n"
+        + "In the list below are included ones, mostly, who are followed by you.",
+      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
+        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
       "notify_desktop_error": "Twisteru se nepodařilo zobrazit upozornění na ploše: došlo k neznámé chybě.",
       "notify_desktop_perm_denied": "Twisteru se nepodařilo zobrazit upozornění na ploše: přístup byl odepřen.\n\nPokud chcete používat upozornění na ploše, povolte je pro %{this_domain} v nastavení vašeho prohlížeče.",
       "notify_desktop_test": "Twister to umí pořádně roztočit.\nKaždý je tu vítán.",
@@ -3856,9 +4008,13 @@ if(preferredLanguage == "cs"){
       "seconds": "%{smart_count} vteřinou |||| %{smart_count} vteřinami |||| %{smart_count} vteřinami",
       "send": "odeslat",
       "Send post with username": "Příspěvek vložit pod přezdívkou ",
-      "Sent Direct Message": "Poslat přímou zprávu",
+      "send_DM": "Poslat přímou zprávu",
       "Sent Post to @": "Poslat veřejný příspěvek pro @",
       "Setup account": "Upravit profil",
+      "shorten_URI": "Shorten URL",
+      "shorten_URI_enter_link": "Enter the long link.\n"
+        + "Be careful! You send a 'hidden' twist after getting\n"
+        + "of each new URL even if you ain't post anything yet.",
       "The File APIs are not fully supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "time_ago": "před %{time}", // 5 minutes ago
       "Time of the last block:": "Čas posledního bloku: ",

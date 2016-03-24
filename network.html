@@ -18,6 +18,7 @@
     <script src="js/twister_formatpost.js"></script>
     <script src="js/twister_following.js"></script>
     <script src="js/twister_newmsgs.js"></script>
+    <script src="js/twister_actions.js"></script>
     <script src="js/polyglot.min.js"></script>
     <script src="js/interface_localization.js"></script>
     <script src="js/twister_network.js"></script>
@@ -35,7 +36,7 @@
         <li class="userMenu-network current selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
         <li class="userMenu-profile selectable_theme theme_original theme_nin"><a class="label" href="profile-edit.html">Profile</a></li>
         <li class="userMenu-config">
-          <a class="userMenu-config-dropdown" href="#">
+          <a class="userMenu-config-dropdown">
             <div class="config-menu dialog-modal">
               <div class="mini-profile-info selectable_theme theme_original">
                 <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
@@ -44,7 +45,6 @@
               </div>
               <a class="dropdown-menu-item" href="options.html">Options</a>
               <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
-              <a class="dropdown-menu-item" href="following.html">Following users</a>
               <a class="dropdown-menu-item" href="network.html">Network config</a>
               <a class="dropdown-menu-item" href="login.html">Change user</a>
            </div>
@@ -251,12 +251,23 @@
         </div>
     </div>
 
+    <div id="template-post-textarea-edit-bar">
+        <div class="post-textarea-edit-bar"></div>
+    </div>
+
+    <div id="template-shorten-uri">
+        <a class="shorten-uri">shorten URL</a>
+    </div>
+
     <!-- template for user links in message (open profile modal) -->
     <a id="msg-user-link-template" class="open-profile-modal"></a>
     <!-- template for user links in message (open profile modal) -->
     <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
     <!-- template for user links in message (open profile modal) -->
     <a id="hashtag-link-template" class="open-hashtag-modal"></a>
+    <div id="template-link-shortened">
+        <a class="link-shortened" rel="nofollow" target="_blank"></a>
+    </div>
 
     <div class="prompt-wrapper">
       <div class="modal-header">

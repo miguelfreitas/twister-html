@@ -7,8 +7,8 @@ $(function(){
     $('img[src$="img/tornado_avatar.png"]').attr("src","theme_nin/img/tornado_avatar.png");
     $('.mini-profile-actions span').html('');
 
-    $.globalEval(postToElem.toString().replace(/postContext.append\(_templatePostRtBy/,
-        'postContext.prependTo(postContext.parent()).append(_templatePostRtBy'));
+    $.globalEval(postToElem.toString().replace(/postContext.append\(twister\.tmpl\.postRtBy/,
+        'postContext.prependTo(postContext.parent()).append(twister.tmpl.postRtBy'));
 
 
     $( '.userMenu-home.current a' ).on( 'click', function() {

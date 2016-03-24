@@ -3,18 +3,13 @@
 //
 // Format JSON posts and DMs to HTML.
 
-var _templatePostRtReference;
-var _templatePostRtBy;
 var _htmlFormatMsgLinkTemplateExternal;
 var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
 
 $(document).ready(function() {
-    // we're setting it here for perfomance improvement purpose  // to not search and prepare it for for every post every time
-    _templatePostRtReference = $('#post-rt-reference-template').children().clone(true);
-    _templatePostRtReference.find('.post-text')
-        .on('click', {feeder: '.post-rt-reference'}, openConversationClick);
-    _templatePostRtBy = $('#post-rt-by-template').children().clone(true);
+    // we're setting it here for perfomance improvement purpose
+    // to not search and prepare it for for every post every time
     _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
     if (_htmlFormatMsgLinkTemplateExternal.length) {
         _htmlFormatMsgLinkTemplateExternal = _htmlFormatMsgLinkTemplateExternal[0].cloneNode();
@@ -30,6 +25,7 @@ $(document).ready(function() {
         _htmlFormatMsgLinkTemplateHashtag = _htmlFormatMsgLinkTemplateHashtag[0].cloneNode();
         _htmlFormatMsgLinkTemplateHashtag.removeAttribute('id');
     }
+    twister.tmpl.linkShortened = extractTemplate('#template-link-shortened')[0];
 });
 
 // format "userpost" to html element
@@ -64,7 +60,7 @@ function postToElem(post, kind, promoted) {
     if (post.sig_wort)
         userpost.sig_wort = post.sig_wort;
 
-    if (userpost.rt) {
+    if (userpost.rt && userpost.rt.msg) {
         rt = userpost.rt;
         if (userpost.msg) {
             username = userpost.n;
@@ -92,7 +88,7 @@ function postToElem(post, kind, promoted) {
     }
 
     // Now create the html elements
-    var elem = $.MAL.getPostTemplate().clone(true);
+    var elem = $.MAL.getPostTemplate().clone(true).appendTo(twister.html.detached);
     elem.removeAttr('id')
         .addClass(kind)
         .attr('data-time', time)
@@ -125,8 +121,7 @@ function postToElem(post, kind, promoted) {
 
     setPostCommon(elem, username, time);
 
-    msg = htmlFormatMsg(msg);
-    elem.find('.post-text').html(msg.html);
+    msg = fillElemWithTxt(elem.find('.post-text'), msg);  // fillElemWithTxt() returns result of htmlFormatMsg(msg)
     postData.attr('data-text-mentions', msg.mentions.join());  // FIXME no idea why do we need this attribute since we don't use it but use data-reply-to instead
 
     if (username !== defaultScreenName) {
@@ -156,7 +151,7 @@ function postToElem(post, kind, promoted) {
         if (userpost.msg) {
             setPostReference(postContext, rt, userpost.sig_rt);
         } else {
-            postContext.append(_templatePostRtBy.clone(true)).addClass('post-rt-by')
+            postContext.append(twister.tmpl.postRtBy.clone(true)).addClass('post-rt-by')
                 .find('.post-rt-sign .prep').text(polyglot.t('post_rt_sign_prep'))
                 .siblings('.open-profile-modal')
                     .attr('href', $.MAL.userUrl(retweeted_by)).text('@' + retweeted_by)
@@ -232,12 +227,12 @@ function setPostCommon(elem, username, time) {
 }
 
 function setPostReference(elem, rt, sig_rt) {
-    elem.append(_templatePostRtReference.clone(true))
+    elem.append(twister.tmpl.postRtReference.clone(true))
         .find('.post-rt-reference')
             .attr('data-screen-name', rt.n)
             .attr('data-id', rt.k)
             .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: sig_rt}))
-            .find('.post-text').html(htmlFormatMsg(rt.msg).html)
+            .find('.post-text').each(function (i, elem) {fillElemWithTxt($(elem), rt.msg);})
     ;
     setPostCommon(elem, rt.n, rt.time);
 }
@@ -254,32 +249,6 @@ function setPostInfoSent(n, k, item) {
                 }
             }, {n:n,k:k,item:item});
     }
-}
-
-// format dmdata (returned by getdirectmsgs) to display in "snippet" per user list
-function dmDataToSnippetItem(dmData, remoteUser) {
-    var dmItem = $("#dm-snippet-template").clone(true);
-    dmItem.removeAttr('id');
-    dmItem.attr('data-screen-name', remoteUser);
-    dmItem.attr("data-last_id", dmData.id);
-    dmItem.attr("data-time", dmData.time);
-
-    dmItem.find(".post-info-tag").text("@" + remoteUser);
-    dmItem.find("a.post-info-name").attr("href", $.MAL.userUrl(remoteUser));
-    dmItem.find("a.dm-chat-link").attr("href", $.MAL.dmchatUrl(remoteUser));
-    getAvatar( remoteUser, dmItem.find(".post-photo").find("img") );
-    if( remoteUser.length && remoteUser[0] === '*' )
-        getGroupChatName( remoteUser, dmItem.find("a.post-info-name") );
-    else
-        getFullname( remoteUser, dmItem.find("a.post-info-name") );
-    dmItem.find(".post-text").html(htmlFormatMsg(dmData.text).html);
-    dmItem.find('.post-info-time')
-        .attr('title', timeSincePost(dmData.time))
-        .find('span:last')
-            .text(timeGmtToText(dmData.time))
-    ;
-
-    return dmItem;
 }
 
 // format dmdata (returned by getdirectmsgs) to display in conversation thread
@@ -305,7 +274,7 @@ function postToElemDM(dmData, localUser, remoteUser) {
             .text(timeGmtToText(dmData.time))
     ;
     setPostInfoSent(senderAlias, dmData.k, elem.find('.post-info-sent'));
-    elem.find('.post-text').html(htmlFormatMsg(dmData.text).html);
+    fillElemWithTxt(elem.find('.post-text'), dmData.text);
 
     return elem;
 }
@@ -605,10 +574,8 @@ function htmlFormatMsg(msg, opt) {
         return msg.str;
     }
 
-    if (!msg) {
-        console.warn('htmlFormatMsg() error: input string is empty');
+    if (!msg)
         return {html: '', mentions: []};
-    }
 
     if (opt && opt.markout)
         var markoutOpt = opt.markout;
@@ -660,36 +627,33 @@ function htmlFormatMsg(msg, opt) {
                                 + '</samp><br>'
                             );
                         } else {
-                            if (getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '') < k)  // use only first word as href target, others drop silently
-                                k = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '');
+                            if ((x = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '')) < k)  // use only first word as href target, others drop silently
+                                k = x;
+                            linkName = applyHtml(  // we're handling markup inside [] of []()
+                                markout(markout(markout(markout(
+                                    {str: linkName, htmlEntities: msg.htmlEntities},
+                                        markoutOpt, '*', 'b'),  // bold
+                                        markoutOpt, '~', 'i'),  // italic
+                                        markoutOpt, '_', 'u'),  // underlined
+                                        markoutOpt, '-', 's')  // striketrough
+                            )
+                                .replace(/&(?!lt;|gt;)/g, '&amp;');
                             if (markoutOpt === 'apply') {
-                                msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
-                                    newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
-                                        proxyURL(msg.str.slice(i, k + 1)),
-                                        applyHtml(  // we're trying markup inside [] of []()
-                                            markout(markout(markout(markout(
-                                                {str: linkName, htmlEntities: msg.htmlEntities},
-                                                    markoutOpt, '*', 'b'),  // bold
-                                                    markoutOpt, '~', 'i'),  // italic
-                                                    markoutOpt, '_', 'u'),  // underlined
-                                                    markoutOpt, '-', 's')  // striketrough
-                                        )
-                                            .replace(/&(?!lt;|gt;)/g, '&amp;')
-                                    )
-                                );
+                                if (msg.str.slice(i, i + 6).toLowerCase() === 'twist:' && msg.str[i + 17] === '='
+                                    && getSubStrStart(msg.str, i + 16, stopCharsRightHashtags, false, '') === i + 6)
+                                    msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                        newHtmlEntityLink(twister.tmpl.linkShortened,
+                                            msg.str.slice(i, i + 18), linkName)
+                                    );
+                                else
+                                    msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
+                                        newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                                            proxyURL(msg.str.slice(i, k + 1)), linkName)
+                                    );
                             } else {  // markoutOpt === 'clear' so we're clearing markup
                                 str = msg.str.slice(i, k + 1);
                                 msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
-                                    applyHtml(  // we're trying to clear markup inside [] of []()
-                                        markout(markout(markout(markout(
-                                            {str: linkName, htmlEntities: msg.htmlEntities},
-                                                markoutOpt, '*', 'b'),  // bold
-                                                markoutOpt, '~', 'i'),  // italic
-                                                markoutOpt, '_', 'u'),  // underlined
-                                                markoutOpt, '-', 's')  // striketrough
-                                    )
-                                        .replace(/&(?!lt;|gt;)/g, '&amp;')
-                                );
+                                    linkName);
                                 // here we put link target as plain text to handle it usual way (search http[s]:// and so on)
                                 i = msg.i + 1
                                 msg.str = msg.str.slice(0, i) + ' ' + str + msg.str.slice(i);
@@ -726,6 +690,12 @@ function htmlFormatMsg(msg, opt) {
                     i = msg.i;
                 }
             }
+        } else if (msg.str.slice(i, i + 6).toLowerCase() === 'twist:' && msg.str[i + 17] === '='
+            && getSubStrStart(msg.str, i + 16, stopCharsRightHashtags, false, '') === i + 6) {
+            str = msg.str.slice(i, i + 18);
+            msg = msgAddHtmlEntity(msg, i, i + str.length,
+                newHtmlEntityLink(twister.tmpl.linkShortened, str, str));
+            i = msg.i;
         }
     }
 

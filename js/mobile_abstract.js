@@ -31,27 +31,24 @@ var MAL = function()
         }
     }
 
-    this.dmThreadListLoaded = function() {
-        if( $.hasOwnProperty("mobile") ) {
+    this.commonDMsListLoaded = function () {
+        if ($.hasOwnProperty('mobile')) {
             $.mobile.hidePageLoadingMsg();
-            var $dmThreadList = $("#directmsg ul.direct-messages-thread");
-            $dmThreadList.listview('refresh');
+            $('#directmsg .direct-messages-list').listview('refresh');
         } else {
         }
-    }
+    };
 
-    this.dmChatListLoaded = function(dmConvo) {
-        if( $.hasOwnProperty("mobile") ) {
+    this.dmConversationLoaded = function (dmConvo) {
+        if ($.hasOwnProperty('mobile')) {
             $.mobile.hidePageLoadingMsg();
-            var $dmChatList = $("#dmchat ul.direct-messages-list");
-            $dmChatList.listview('refresh');
-            $.mobile.silentScroll( $(".dm-form").offset().top );
+            $('#dmchat .direct-messages-thread').listview('refresh');
+            $.mobile.silentScroll($('.dm-form').offset().top);
         } else {
-            var modalContent = dmConvo.closest(".modal-content");
+            var modalContent = dmConvo.closest('.modal-content');
             modalContent.scrollTop(modalContent[0].scrollHeight);
         }
-    }
-
+    };
 
     this.relatedPostLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
@@ -63,15 +60,26 @@ var MAL = function()
         }
     }
 
+    this.warnFollowingNotAny = function(cbFunc, cbReq) {
+        if ($.hasOwnProperty('mobile'))
+            alert(polyglot.t('warn_following_not_any'));
+        else
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or KISS
+                txtMessage: polyglot.t('warn_following_not_any'),
+                cbConfirm: cbFunc,
+                cbConfirmReq: cbReq,
+                cbClose: 'cbConfirm'
+            });
+    };
 
-    this.followingListLoaded = function() {
-        if( $.hasOwnProperty("mobile") ) {
+    this.listLoaded = function (list) {
+        if ($.hasOwnProperty('mobile')) {
             $.mobile.hidePageLoadingMsg();
-            $(".following-list").listview('refresh');
-        } else {
-            $(".postboard-loading").hide();
-        }
-    }
+            list.listview('refresh');
+        } else
+            list.find('.loading-roller').hide();
+    };
 
     this.searchUserListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
@@ -505,7 +513,7 @@ var MAL = function()
 
 jQuery.MAL = new MAL;
 
-function playSound(player, sound) {
+function playSound(player, sound, volume) {
     if ($.mobile) {
     } else {
         var player = $('#'+player);
@@ -518,7 +526,7 @@ function playSound(player, sound) {
             else
                 player.attr({type: 'audio/ogg', src: 'sound/' + sound + '.ogg'});
 
-            player[0].volume = $.Options.playerVol.val;
+            player[0].volume = (typeof volume === 'number') ? volume : $.Options.playerVol.val;
             player[0].play();
         } else
             console.warn('cannot find player to play sound, selector: #'+player);
@@ -535,7 +543,9 @@ function filterLang(string) {
         var langFilterReason = '';
         var langFilterList = $.Options.filterLangList.val;
 
-        if (langFilterList.length > 0) {
+        if (!string) {
+            langFilterReason = polyglot.t('this is undefined', {'this': 'string'});
+        } else if (langFilterList.length > 0) {
             var langFilterAccuracy = $.Options.filterLangAccuracy.val;
             langFilterPass = (langFilterMode === 'whitelist') ? false : true;
             langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t(langFilterMode), 'that': polyglot.t('language of this')});

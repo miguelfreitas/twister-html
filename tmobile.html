@@ -76,6 +76,16 @@
   .content {padding:15px 20px 20px 20px;}
   .footer {position:fixed;z-index:10;bottom:0;width:100%}
 
+.post-textarea-edit-bar {
+    font-weight: lighter;
+    font-size: 12px;
+    margin: 2px 0;
+}
+
+.post-area-new .post-textarea-edit-bar > * {
+    margin: 2px 4px;
+}
+
 .post-info-time {
     font-weight: lighter;
     font-size: 12px;
@@ -130,6 +140,19 @@
 .post-rt-reference .post-info-time {
     font-size: 9px;
     float: right;
+}
+
+.direct-messages-list .post-info {
+    position: absolute;
+    top: 4px;
+    left: 72px;
+    width: 90%;
+}
+
+.direct-messages-list .post-text {
+    position: absolute;
+    top: 32px;
+    left: 72px;
 }
 </style>
 
@@ -467,37 +490,7 @@
     <h1 class="rtitle">Following</h1>
   </div>
 
-  <div class="content" data-role="content">
-      <ul class="following-list" data-role="listview">
-        <li id="following-user-template" style="display: none;">
-            <div class="mini-profile-info" data-screen-name="">
-                <a href="#" class="open-profile-modal">
-                    <img class="mini-profile-photo avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-                    <span class="mini-profile-name">Fulano da Silva</span>
-                    <span>&nbsp;</span>
-                    <span class="mini-screen-name">@
-                        <b class="following-screen-name"></b>
-                    </span>
-                </a>
-                <div>
-                    <a data-role="button" data-mini="true" class="unfollow">Unfollow</a>
-                    <a data-role="button" data-mini="true" class="direct-messages-with-user" href="#dmchat">Direct Message</a>
-                    <!-- <a data-role="button" data-mini="true" class="public-following">Public</button> -->
-                </div>
-                <div>
-                    <span class="swarm-status" style="display: none;"></span>
-                </div>
-            </div>
-        </li>
-      </ul>
-
-      <div class="not-following-any" style="display:none;">
-            <h3>
-               <div> Not following any users! </div>
-               <div> Use "Search" button to find and follow some.</div>
-            </h3>
-      </div>
-  </div>
+  <div class="content" data-role="content"></div>
 
   <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
     <a href="#home" data-role="button">Home</a>
@@ -619,8 +612,7 @@
   </div>
 
   <div class="content" data-role="content">
-    <ul class="direct-messages-thread" data-role="listview">
-    </ul>
+    <ul class="direct-messages-list" data-role="listview"></ul>
   </div>
 
   <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -637,8 +629,7 @@
   </div>
 
   <div class="content" data-role="content">
-    <ul class="direct-messages-list" data-role="listview">
-    </ul>
+    <ul class="direct-messages-thread" data-role="listview"></ul>
 
     <div class="dm-form" style="padding:15px 20px 20px 20px;">
       <form class="post-area-new open">
@@ -775,6 +766,14 @@
         </div>
     </div>
 
+    <div id="template-post-textarea-edit-bar">
+        <div class="post-textarea-edit-bar"></div>
+    </div>
+
+    <div id="template-shorten-uri">
+        <a class="shorten-uri">shorten URL</a>
+    </div>
+
     <li id="post-template-post" class="module post" data-time="">
         <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
         <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""
@@ -809,7 +808,7 @@
         </div> <!-- post-data -->
     </li> <!-- post-template -->
 
-    <div id="post-rt-reference-template">
+    <div id="template-post-rt-reference">
         <div class="post-rt-reference">
             <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo" /></div>
             <div class="post-info">
@@ -821,7 +820,7 @@
         </div>
     </div>
 
-    <div id="post-rt-by-template">
+    <div id="template-post-rt-by">
         <div class="post-rt-sign">
             <span class="prep">twisted again by</span><a class="open-profile-modal"></a>
         </div>
@@ -836,25 +835,26 @@
     <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
     <!-- template for user links in message (open profile modal) -->
     <a id="hashtag-link-template" class="open-hashtag-modal"></a>
+    <div id="template-link-shortened">
+        <a class="link-shortened" rel="nofollow" target="_blank"></a>
+    </div>
 
     <!-- template para ir dentro de avatar-row -->
     <a id="avatar-row-template" class="open-profile-modal" href="">
        <img class="avatar size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
     </a>
 
-    <!-- template for dm-snippet (dm threads list)  -->
-    <li id="dm-snippet-template" class="module post message" data-icon="arrow-r">
-      <a class="dm-chat-link post-photo" href="#dmchat">
-        <img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-        <h4 class="post-info">
-          <span class="post-info-name open-profile-modal"></span>
-          <span class="post-info-tag">@</span>
-          <a class="post-info-time ui-li-aside"><span></span></a>
-        </h4>
-        <!-- o texto do post (restrição de caracteres?) -->
-        <p class="post-text"></p>
-      </a>
-    </li>
+    <div id="template-direct-messages-list-item">
+        <li class="module post message" data-icon="arrow-r">
+            <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+            <div class="post-info">
+                <a class="post-info-name"></a>
+                <span class="post-info-tag">@</span>
+                <a class="post-info-time ui-li-aside"><span></span></a>
+            </div>
+            <p class="post-text"></p>
+        </li>
+    </div>
 
     <!-- template for each dm (chat window) -->
     <li id="dm-chat-template" class="module post message">
@@ -865,6 +865,32 @@
       <p class="post-text no-ellipsis"></p>
     </li>
 
+    <div id="template-following-list">
+        <ul class="following-list" data-role="listview"></ul>
+    </div>
+
+    <div id="template-following-peer">
+        <li>
+            <div class="mini-profile-info">
+                <a href="#" class="open-profile-modal">
+                    <img class="mini-profile-photo avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                    <span class="mini-profile-name">Fulano da Silva</span>
+                    <span>&nbsp;</span>
+                    <span class="mini-screen-name">@
+                        <b class="following-screen-name"></b>
+                    </span>
+                </a>
+                <div>
+                    <a data-role="button" data-mini="true" class="unfollow">Unfollow</a>
+                    <a data-role="button" data-mini="true" class="direct-messages-with-user" href="#dmchat">Direct Message</a>
+                    <!-- <a data-role="button" data-mini="true" class="public-following">Public</button> -->
+                </div>
+                <div>
+                    <span class="swarm-status" style="display: none;"></span>
+                </div>
+            </div>
+        </li>
+    </div>
 </div> <!-- templates -->
 
 

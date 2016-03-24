@@ -17,6 +17,8 @@
     <script src="js/polyglot.min.js"></script>
     <script src="js/interface_localization.js"></script>
     <script src="js/twister_user.js"></script>
+    <script src="js/twister_formatpost.js"></script>
+    <script src="js/twister_actions.js"></script>
     <script src="js/twister_network.js"></script>
     <script src="js/twister_following.js"></script>
     <script src="js/twister_newmsgs.js"></script>
@@ -38,7 +40,7 @@
       <li class="userMenu-network selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
       <li class="userMenu-profile selectable_theme theme_original theme_nin current"><a class="label" href="profile-edit.html">Profile</a></li>
       <li class="userMenu-config">
-        <a class="userMenu-config-dropdown" href="#">
+        <a class="userMenu-config-dropdown">
           <div class="config-menu dialog-modal">
             <div class="mini-profile-info selectable_theme theme_original">
               <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
@@ -47,7 +49,6 @@
             </div>
             <a class="dropdown-menu-item" href="options.html">Options</a>
             <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
-            <a class="dropdown-menu-item" href="following.html">Following users</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
             <a class="dropdown-menu-item" href="login.html">Change user</a>
           </div>
@@ -67,7 +68,7 @@
         <img class="profile-card-photo forEdition" src="img/genericPerson.png"/>
         <input type="text" class="input-name" placeholder="Full name here"/>
         <h2></h2>
-        <input type="text" class="input-description" placeholder="Describe yourself"/>
+        <textarea class="input-description" placeholder="Describe yourself"></textarea>
         <input type="text" class="input-city" placeholder="Location"/>
         <input type="text" class="input-website" placeholder="website"/>
         <input type="text" class="input-tox" placeholder="Tox address"/>

@@ -42,17 +42,18 @@
       <li class="userMenu-network selectable_theme theme_original theme_nin"><a class="label" href="network.html">Network</a></li>
       <li class="userMenu-profile selectable_theme theme_original theme_nin"><a class="label" href="profile-edit.html">Profile</a></li>
       <li class="userMenu-config">
-        <a class="userMenu-config-dropdown" href="#">
+        <a class="userMenu-config-dropdown">
           <div class="config-menu dialog-modal">
             <div class="mini-profile-info selectable_theme theme_original">
               <div class="mini-profile-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
               <a href="#" class="mini-profile-name">Fulano da Silva</a>
               <span class="mini-profile-view">View</span>
             </div>
+            <a class="dropdown-menu-item uri-shortener">URI shortener</a>
             <a class="dropdown-menu-item" href="options.html">Options</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
             <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
-            <a class="dropdown-menu-item dropdown-menu-following" href="following.html">Following users</a>
+            <a class="dropdown-menu-item dropdown-menu-following" href="#following">Following users</a>
             <a class="dropdown-menu-item" href="login.html">Change user</a>
             <a class="dropdown-menu-item promoted-posts-only selectable_theme theme_original theme_calm" href="#">Switch to Promoted posts</a>
             <a class="dropdown-menu-item direct-messages selectable_theme theme_original theme_calm" href="#">Direct Messages</a>
@@ -117,8 +118,8 @@
         </div>
         <ul class="module profile-data">
           <li><a href="#" class="open-profile-modal"><span class="posts-count">&nbsp;</span><span class="label">Posts</span></a></li>
-          <li><a href="following.html" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
-          <li><a href="#" class="open-followers"><span class="followers-count">&nbsp;</span><span class="label">Followers</span> *</a></li>
+          <li><a href="#following" class="open-following-page"><span class="following-count">&nbsp;</span><span class="label">Following</span></a></li>
+          <li><a class="open-followers"><span class="followers-count"></span><span class="label">Followers</span> *</a></li>
         </ul>
 
         <div class="post-area">
@@ -312,6 +313,14 @@
         </div>
     </div>
 
+    <div id="template-post-textarea-edit-bar">
+        <div class="post-textarea-edit-bar"><!-- TODO add buttons to format text --></div>
+    </div>
+
+    <div id="template-shorten-uri">
+        <a class="shorten-uri">shorten URL</a>
+    </div>
+
     <li id="post-template" class="module post" data-time="">
         <div class="post-data" data-userpost="" data-content_to_rt="" data-content_to_sigrt=""
              data-screen-name="" data-id="" data-text="" data-text-mentions="">
@@ -357,7 +366,7 @@
         </div> <!-- post-data -->
     </li> <!-- post-template -->
 
-    <div id="post-rt-reference-template">
+    <div id="template-post-rt-reference">
         <div class="post-rt-reference">
             <div class="post-photo"><img class="avatar" src="img/grayed_avatar_placeholder_24.png" alt="user-photo" /></div>
             <div class="post-info">
@@ -369,7 +378,7 @@
         </div>
     </div>
 
-    <div id="post-rt-by-template">
+    <div id="template-post-rt-by">
         <i class="post-rt-icon"></i>
         <div class="post-rt-sign">
             <span class="prep">twisted again by</span><a class="open-profile-modal"></a>
@@ -385,6 +394,9 @@
     <a id="external-page-link-template" rel="nofollow" target="_blank"></a>
     <!-- template for user links in message (open profile modal) -->
     <a id="hashtag-link-template" class="open-hashtag-modal"></a>
+    <div id="template-link-shortened">
+        <a class="link-shortened" rel="nofollow" target="_blank"></a>
+    </div>
 
     <!-- template para ir dentro de avatar-row -->
     <a id="avatar-row-template" class="open-profile-modal" href="">
@@ -457,23 +469,22 @@
     <!-- MODAL DE DIRECT MESSAGES INIT -->
     <!-- Este modal possui dois templates, o primeiro da lista de pessoas que enviaram mensagens e o segundo
     com a thread de mensagens individual -->
-    <div class="direct-messages-template">
-      <ol class="direct-messages-list">
-        <!-- use "dm-snippet-template here -->
-      </ol>
+    <div id="template-direct-messages-list">
+        <ol class="direct-messages-list"></ol>
     </div>
 
-    <li id="dm-snippet-template" class="module post message">
-      <div class="post-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
-      <div class="post-info">
-        <a href="#" class="post-info-name open-profile-modal"></a>
-        <span class="post-info-tag">@</span>
-        <a href="#" class="post-info-time" title=""><span></span></a>
-      </div>
-      <!-- o texto do post (restrição de caracteres?) -->
-      <p class="post-text"></p>
-        <div class="messages-qtd">0</div>
-    </li>
+    <div id="template-direct-messages-list-item">
+        <li class="module post message">
+            <div class="post-photo"><img src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/></div>
+            <div class="post-info">
+                <a class="post-info-name open-profile-modal"></a>
+                <span class="post-info-tag">@</span>
+                <a class="post-info-time"><span></span></a>
+            </div>
+            <p class="post-text"></p>
+            <div class="messages-qtd">0</div>
+        </li>
+    </div>
 
     <div class="messages-thread-template">
       <ol class="direct-messages-thread">
@@ -665,6 +676,10 @@
     </div>
     <!-- MODAL DE PROFILE END -->
 
+    <div id="template-profile-show-more-followers">
+        <a class="show-more-followers"></a>
+    </div>
+
     <!-- MODAL DE HASHTAGS -->
     <div id="hashtag-modal-template">
         <!-- ÁREA DE POSTS INIT -->
@@ -683,6 +698,61 @@
         <!-- ÁREA DE POSTS END -->
     </div>
     <!-- MODAL DE HASHTAGS END -->
+
+    <div id="template-followers-list">
+        <ol class="followers-list">
+            <div class="loading-roller">
+                <div></div>
+            </div>
+        </ol>
+    </div>
+
+    <div id="template-followers-peer">
+        <li class="twister-peer">
+            <div class="avatar"><img src="img/grayed_avatar_placeholder_24.png" alt="avatar" /></div>
+            <div class="name"></div>
+            <div class="alias"></div>
+            <div class="bio"></div>
+        </li>
+    </div>
+
+    <div id="template-following-list">
+        <ol class="following-list">
+            <div class="loading-roller">
+                <div></div>
+            </div>
+        </ol>
+    </div>
+
+    <div id="template-following-peer">
+        <li>
+            <div class="mini-profile-info">
+                <a href="#" class="open-profile-modal">
+                    <img class="mini-profile-photo" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+                    <span class="mini-profile-name">Fulano da Silva</span>
+                    <span class="mini-screen-name">@<b class="following-screen-name"></b></span>
+                </a>
+                <div>
+                    <div class="mini-profile-actions">
+                        <span>Actions ▼</span>
+                        <ul>
+                            <li class="direct-messages-with-user">Send direct message</li>
+                            <!-- TODO <li>Send post</li>-->
+                            <li class="mentions-from-user">Display mentions</li>
+                            <!-- WTF <li>Display retransmissions</li> -->
+                        </ul>
+                    </div>
+                    <div class="following-config">
+                        <button class="follow">Follow</button>
+                        <button class="public-following">Public</button>
+                    </div>
+                </div>
+                <div>
+                    <span class="swarm-status" style="display: none;"></span>
+                </div>
+            </div>
+        </li>
+    </div>
 
     <!-- MODAL DE FOLLOWING -->
     <div id="following-modal-template">
@@ -708,19 +778,15 @@
     </div>
     <!-- MODAL DE FOLLOWING END -->
 
-    <!-- MODAL OF FOLLOWING CONFIG -->
     <div id="following-config-modal-template">
-        <!-- ÁREA OF FOLLOWING METHOD -->
-        <div class="following-config-modal-content" data-screen-name="">
-          <h2><span class="following-config-method-message">Which way do you want to follow</span> <span class="following-screen-name">@<b></b></span>:</h2>
+        <div class="following-config-modal-content">
+            <span class="following-config-method-message">Which way do you want to follow @</span>
             <div class="following-config-method-buttons">
                 <button class="public-following">Public</button>
                 <button class="public-following private">Private</button>
             </div>
         </div>
-        <!-- ÁREA OF FOLLOWING METHOD END -->
     </div>
-    <!-- MODAL OF FOLLOWING CONFIG END -->
   </div>
   <!-- TEMPLATES END -->
 

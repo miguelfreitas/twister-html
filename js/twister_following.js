@@ -132,6 +132,7 @@ TwisterFollowing.prototype = {
                     if (following.indexOf(args.tf.user) > -1) {
                         if (args.tf.knownFollowers.indexOf(args.fu) < 0) {
                             args.tf.knownFollowers.push(args.fu);
+                            addPeerToFollowersList(getElem('.followers-modal .followers-list'), args.fu, true);
                         }
                     } else {
                         if (args.tf.notFollowers.indexOf(args.fu) < 0) {
@@ -140,6 +141,8 @@ TwisterFollowing.prototype = {
                         var tmpi = args.tf.knownFollowers.indexOf(args.fu);
                         if (tmpi > -1) {
                             args.tf.knownFollowers.splice(tmpi, 1);
+                            getElem('.followers-modal .followers-list')
+                                .find('li[data-peer-alias="' + args.fu + '"]').remove();
                         }
                     }
                     $(".open-followers").attr("title", args.tf.knownFollowers.length.toString());
@@ -373,7 +376,6 @@ function follow(user, publicFollow, cbFunc, cbArg) {
     if( followingUsers.indexOf(user) < 0 ) {
         followingUsers.push(user);
         twisterFollowingO.update(user);
-        $(window).trigger("eventFollow", user)
     }
     if( publicFollow == undefined || publicFollow )
         _isFollowPublic[user] = true;
@@ -389,8 +391,6 @@ function unfollow(user, cbFunc, cbArg) {
     if (i >= 0) {
         followingUsers.splice(i, 1);
         twisterFollowingO.update(user);
-        // FIXME also need to check list of pending posts to remove from there
-        $(window).trigger('eventUnfollow', user);
     }
     delete _isFollowPublic[user];
     saveFollowing();
@@ -471,7 +471,8 @@ function whoFollows(username) {
 
 function fillWhoFollows(list, item, offset, size) {
     for (var i = offset; i < offset + size; i++) {
-        var follower_link = $( '<a class="mini-follower-link"></a>' );
+        var follower_link = $('<a class="mini-follower-link"></a>')
+            .on('click mouseup', handleClickOpenProfileModal);
 
         // link follower to profile page
         follower_link.attr("data-screen-name", list[i]);
@@ -483,73 +484,20 @@ function fillWhoFollows(list, item, offset, size) {
     }
 }
 
-function getWhoFollows(username, item) {
-    if (!defaultScreenName || typeof(defaultScreenName) === 'undefined')
+function getWhoFollows(peerAlias, elem) {
+    if (!defaultScreenName)
         return;
 
-    var list = whoFollows(username);
+    var list = whoFollows(peerAlias);
 
-    fillWhoFollows(list, item, 0, (list.length > 5 ? 5 : list.length));
+    fillWhoFollows(list, elem, 0, (list.length > 5 ? 5 : list.length));
 
-    if (list.length > 5) {
-        var more_link = $('<a class="show-more-followers">' + polyglot.t('show_more_count', {'smart_count': list.length - 5}) + '</a>');
-        more_link.on('click', function() {
-            fillWhoFollows(list, item, 5, list.length - 5);
-
-            var $this = $(this);
-            $this.remove();
-
-            $this.text(polyglot.t('hide'));
-            $this.unbind('click');
-            $this.bind('click', function() {
-                item.html('');
-                getWhoFollows(username, item);
-            });
-
-            item.append($this);
-        });
-        item.append(more_link);
-    }
-}
-
-// adds following users to the interface (following.html)
-function showFollowingUsers(){
-    var $notFollowing = $(".not-following-any");
-    if( followingEmptyOrMyself() ) {
-        $notFollowing.show();
-    } else {
-        $notFollowing.hide();
-    }
-
-    var $followingList = $(".following-list");
-    var $template = $("#following-user-template").detach();
-
-    $followingList.empty();
-    $followingList.append($template);
-
-    for( var i = 0; i < followingUsers.length; i++ ) {
-        var resItem = $template.clone(true);
-        resItem.removeAttr('id');
-        resItem.show();
-        resItem.find(".mini-profile-info").attr("data-screen-name", followingUsers[i]);
-        resItem.find(".following-screen-name").text(followingUsers[i]);
-        resItem.find("a.open-profile-modal").attr("href",$.MAL.userUrl(followingUsers[i]));
-        resItem.find("a.direct-messages-with-user").attr("href", $.MAL.dmchatUrl(followingUsers[i]));
-        if (isPublicFollowing(followingUsers[i])) {
-            resItem.find(".public-following").text(polyglot.t("Public"));
-        } else {
-            resItem.find(".public-following").text(polyglot.t("Private")).addClass( "private" );
-        }
-        getAvatar(followingUsers[i],resItem.find(".mini-profile-photo"));
-        getFullname(followingUsers[i],resItem.find(".mini-profile-name"));
-        if( followingUsers[i] == defaultScreenName ) {
-            resItem.find("button").hide();
-        }
-
-        resItem.prependTo($followingList);
-        toggleFollowButton(followingUsers[i], true)
-    }
-    $.MAL.followingListLoaded();
+    if (list.length > 5)
+        twister.tmpl.profileShowMoreFollowers.clone(true)
+            .text(polyglot.t('show_more_count', {'smart_count': list.length - 5}))
+            .on('mouseup', {route: '#followers?user=' + peerAlias}, routeOnClick)
+            .appendTo(elem)
+        ;
 }
 
 function processWhoToFollowSuggestion(suggestion, followedBy) {
@@ -644,7 +592,9 @@ function searchPartialUsername(event) {
                 _searchingPartialName = '';
             }
         }, event,
-        function(req, ret) {console.warn('ajax error:' + ret.message);}, null
+        function(req, ret) {
+            console.warn('RPC "listusernamespartial" error: ' + (ret && ret.message ? ret.message : ret));
+        }, null
     );
 }
 
@@ -664,35 +614,14 @@ function processDropdownUserResults(event, results) {
         getFullname(results[i], item.find('.mini-profile-name'));
         item.appendTo(container);
 
-        if (followingUsers.indexOf(results[i]) !== -1)
-            toggleFollowButton(results[i], true);
+        toggleFollowButton({
+            button: item.find('.follow'),
+            peerAlias: results[i],
+            toggleUnfollow: followingUsers.indexOf(results[i]) !== -1 ? true : false
+        });
     }
 
     $.MAL.searchUserListLoaded();
-}
-
-function userClickFollow(e) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (!defaultScreenName) {
-        alert(polyglot.t('You have to log in to follow users.'));
-        return;
-    }
-
-    var username = $(e.target).closest('[data-screen-name]').attr('data-screen-name');
-    var content = $('#following-config-modal-template').children().clone(true);
-
-    content.closest('.following-config-modal-content').attr('data-screen-name', username);
-    content.find('.following-config-method-message').text(polyglot.t('Which way do you want to follow'));
-    content.find('.following-screen-name b').text(username);
-
-    openModal({
-        classBase: '.prompt-wrapper',
-        classAdd: 'following-config-modal',
-        content: content,
-        title: polyglot.t('Following config')
-    });
 }
 
 function initUserSearch() {
@@ -703,16 +632,6 @@ function initUserSearch() {
         .on('keyup', userSearchEnter)
     ;
     $('.userMenu-search').clickoutside(closeSearchDialog.bind(elem));
-
-    // following stuff should be moved to special function
-    $('button.follow').on('click', userClickFollow);
-    $('.following-config-method-buttons .public-following')
-        .on('click', function(e) {
-            setFollowingMethod(e);
-            closePrompt();
-            window.setTimeout(loadModalFromHash, 500);  // delay reload so dhtput may do it's job
-        })
-    ;
 }
 
 function userSearchEnter(event) {
@@ -722,37 +641,6 @@ function userSearchEnter(event) {
             window.location.hash = '#hashtag?hashtag=' + encodeURIComponent(str.slice(1));
     }
 }
-
-function followingListPublicCheckbox(e) {
-    e.stopPropagation();
-
-    var $this = $(this);
-    var username = $this.closest(".mini-profile-info").attr("data-screen-name");
-    var publicFollow = false;
-    $this.toggleClass( "private" );
-    if( $this.hasClass( "private" ) ) {
-        $this.text( polyglot.t("Private") );
-    } else {
-        $this.text( polyglot.t("Public") );
-        publicFollow = true;
-    }
-
-    //console.log("set following method of @" +username +" for "+publicFollow);
-    follow(username, publicFollow);
-}
-
-function setFollowingMethod(event) {
-    var button = $(event.target);
-    var username = button.closest('.following-config-modal-content').attr('data-screen-name');
-
-    follow(username,
-        (button.hasClass('private')) ? false : true,  // is folowing public
-        toggleFollowButton, username, true  // last two are args for toggleFollowButton()
-    );
-
-    event.stopPropagation();
-}
-
 
 function requestSwarmProgress() {
     twisterRpc("getlasthave", [defaultScreenName],
@@ -793,84 +681,4 @@ function followingChangedUser() {
     _followingSeqNum = 0;
     _followSuggestions = [];
     _lastLoadFromDhtTime = 0;
-}
-
-function initInterfaceFollowing() {
-    initInterfaceCommon();
-    initUserSearch();
-    initInterfaceDirectMsg();
-
-    $(".mini-profile-info .public-following").bind( "click", followingListPublicCheckbox );
-
-    $(".mentions-from-user").bind( "click", openMentionsModal );
-
-    initUser( function() {
-        if( !defaultScreenName ) {
-            alert(polyglot.t("username_undefined"));
-            $.MAL.goLogin();
-            return;
-        }
-        checkNetworkStatusAndAskRedirect();
-
-        $(".postboard-loading").fadeIn();
-        loadFollowing( function(args) {
-                          twisterFollowingO = TwisterFollowing(defaultScreenName);
-
-                          showFollowingUsers();
-                          requestSwarmProgress();
-        });
-        initMentionsCount();
-        initDMsCount();
-    });
-
-    $(window)
-        .on('eventFollow', function(e, user) {
-            $('.mini-profile .following-count').text(followingUsers.length - 1);
-            showFollowingUsers();
-        })
-        .on('eventUnfollow', function(e, user) {
-            $('.mini-profile .following-count').text(followingUsers.length - 1);
-            showFollowingUsers();
-        });
-}
-
-
-var InterfaceFunctions = function () {
-    this.init = function () {
-        initUser(initFollowing_);
-    };
-
-    function initFollowing_(cbFunc, cbArg) {
-        var $miniProfile = $(".left .mini-profile");
-        if(!defaultScreenName)
-        {
-
-        }
-        else
-        {
-            $miniProfile.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
-            $miniProfile.find("a.open-profile-modal").attr("href",$.MAL.userUrl(defaultScreenName));
-            $miniProfile.find(".mini-profile-name").text(defaultScreenName);
-            getFullname( defaultScreenName, $miniProfile.find(".mini-profile-name") );
-            getAvatar( defaultScreenName, $miniProfile.find(".mini-profile-photo").find("img") );
-            getPostsCount( defaultScreenName,  $miniProfile.find(".posts-count") );
-            getFollowers( defaultScreenName, $miniProfile.find(".followers-count") );
-
-            loadFollowing( function(args) {
-                     $(".left .following-count").text(followingUsers.length-1);
-                     initMentionsCount();
-                     initDMsCount();
-                 }, {cbFunc:cbFunc, cbArg:cbArg});
-
-        }
-
-    }
-};
-
-//***********************************************
-//******************* INIT **************
-//***********************************************
-if (!/\/home.html$/i.test(document.location)) {  // FIXME we're doing it wrong, interfaceFunctions declaration should be inside interface common
-    var interfaceFunctions = new InterfaceFunctions;
-    $(document).ready(interfaceFunctions.init);
 }

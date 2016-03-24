@@ -5,7 +5,7 @@
 
 var _groupMsgInviteToGroupQueue = [];
 
-function requestDMsnippetList(dmThreadList, forGroup) {
+function requestDMsnippetList(elemList, forGroup) {
     var followList = [];
     for (var i = 0; i < followingUsers.length; i++)
         followList.push({username: followingUsers[i]});
@@ -13,40 +13,19 @@ function requestDMsnippetList(dmThreadList, forGroup) {
         followList.push({username: groupChatAliases[i]});
 
     twisterRpc('getdirectmsgs', [defaultScreenName, 1, followList],
-        function(req, ret) {processDMsnippet(ret, req.dmThreadList, req.forGroup);},
-            {dmThreadList: dmThreadList, forGroup: forGroup},
+        processDMsnippet, {elemList: elemList, forGroup: forGroup},
         function(req, ret) {console.log('ajax error:' + ret);}, null
     );
 }
 
-function processDMsnippet(dmUsers, dmThreadList, forGroup) {
-    dmThreadList.empty();
+function processDMsnippet(req, DMs) {
+    req.elemList.empty();
 
-    for (var u in dmUsers) {
-        if ((forGroup && u[0] !== '*') || (!forGroup && u[0] === '*'))
-            continue;
+    for (var alias in DMs)
+        if ((req.forGroup && alias[0] === '*') || (!req.forGroup && alias[0] !== '*'))
+            addToCommonDMsList(req.elemList, alias, DMs[alias][0]);
 
-        // convert snipped to html and add it to date-sorted list
-        var dmItem = dmDataToSnippetItem(dmUsers[u][0], u);
-        if (_newDMsPerUser[u] > 0) {
-            dmItem.addClass('new')
-                .find('.messages-qtd').text(_newDMsPerUser[u]).show();
-        }
-        var timeDmItem = parseInt(dmItem.attr('data-time'));
-        var existingItems = dmThreadList.children();
-        for (var j = 0; j < existingItems.length; j++) {
-            var streamItem = existingItems.eq(j);
-            var timeExisting = streamItem.attr('data-time');
-            if (typeof timeExisting === 'undefined' || timeDmItem > parseInt(timeExisting)) {
-                // this post in stream is older, so post must be inserted above
-                streamItem.before(dmItem);
-                break;
-            }
-        }
-        if (j === existingItems.length)
-            dmThreadList.append(dmItem);
-    }
-    $.MAL.dmThreadListLoaded();
+    $.MAL.commonDMsListLoaded();
 }
 
 function requestDmConversationModal(postboard, peerAlias) {
@@ -103,7 +82,7 @@ function processDmConversation(stream, peerAlias, posts) {
                 streamPostsIDs.push(lastPostID);
             }
         }
-        $.MAL.dmChatListLoaded(stream);
+        $.MAL.dmConversationLoaded(stream);
     }
 
     if (newPosts) {
@@ -183,7 +162,7 @@ function newDirectMsg(msg, peerAlias) {
 }
 
 // dispara o modal de direct messages
-function directMessagesPopup() {
+function openCommonDMsModal() {
     if (!defaultScreenName) {
       alert(polyglot.t('You have to log in to use direct messages.'));
       return;
@@ -191,7 +170,7 @@ function directMessagesPopup() {
 
     var modal = openModal({
         classAdd: 'directMessages',
-        content: $('.direct-messages-template').children().clone(true),
+        content: twister.tmpl.commonDMsList.clone(true),
         title: polyglot.t('Direct Messages')
     });
 
@@ -245,7 +224,7 @@ function openGroupMessagesModal(groupAlias) {
     if (typeof groupAlias === 'undefined') {
         var modal = openModal({
             classAdd: 'directMessages groupMessages',
-            content: $('.direct-messages-template').children().clone(true),
+            content: twister.tmpl.commonDMsList.clone(true),
             title: polyglot.t('Group Messages')
         });
 
@@ -324,7 +303,7 @@ function openGroupMessagesNewGroupModal() {
 
         groupMsgCreateGroup(elemForm.find('.description').val(), peersToInvite);
 
-        closeModal();
+        closeModal(event);
     });
 }
 
@@ -375,7 +354,7 @@ function openGroupMessagesJoinGroupModal() {
         for (var i = 0; i < groups.length; i++)
             groupMsgInviteToGroup(groups[i].getAttribute('data-screen-name'), [defaultScreenName]);
 
-        closeModal();
+        closeModal(event);
     });
 
     modal.content.find('.secret-key-import, .username-import').on('input', importSecretKeypress);
@@ -388,8 +367,8 @@ function openGroupMessagesJoinGroupModal() {
         twisterRpc('importprivkey', [secretKey, groupAlias],
             function(req, ret) {
                 groupMsgInviteToGroup(req.groupAlias, [defaultScreenName]);
-                closeModal();
-            }, {groupAlias: groupAlias},
+                closeModal(req.elem);
+            }, {groupAlias: groupAlias, elem: elemModule},
             function(req, ret) {
                 alert(polyglot.t('Error in \'importprivkey\'', {rpc: ret.message}));
             }
@@ -496,11 +475,6 @@ function initInterfaceDirectMsg() {
     $('.groupmessages').attr('href', '#groupmessages');
     $('.userMenu-groupmessages a').attr('href', '#groupmessages');
 
-    $('#dm-snippet-template').on('click', function() {
-        var alias = $(this).attr('data-screen-name');
-        window.location.hash = '#directmessages?' + (alias[0] === '*' ? 'group' : 'user') + '=' + alias;
-    });
-
     $('.dm-submit').on('click', directMsgSubmit);
     $('.direct-messages-with-user').on('click', function() {
         window.location.hash = '#directmessages?user=' +
@@ -544,16 +518,17 @@ function initInterfaceDirectMsg() {
     });
 
     $('.group-messages-control .leave').on('click', function (event) {
-        var elemEvent = $(event.target);
-        var groupAlias = elemEvent.closest('[data-screen-name]').attr('data-screen-name');
-        confirmPopup(event, {
-            titleTxt: polyglot.t('сonfirm_group_leaving_header'),
-            messageTxt: polyglot.t('сonfirm_group_leaving_body', {alias: groupAlias}),
-            confirmFunc: function (groupAlias) {
-                groupMsgLeaveGroup(groupAlias, function () {history.back();});
+        var elemLeave = $(event.target);
+        var groupAlias = elemLeave.closest('[data-screen-name]').attr('data-screen-name');
+        event.data = {
+            txtTitle: polyglot.t('сonfirm_group_leaving_header'),
+            txtMessage: polyglot.t('сonfirm_group_leaving_body', {alias: groupAlias}),
+            cbConfirm: function (req) {
+                groupMsgLeaveGroup(req.groupAlias, closeModal, req.elem);
             },
-            confirmFuncArgs: groupAlias
-        });
+            cbConfirmReq: {groupAlias: groupAlias, elem: elemLeave}
+        };
+        confirmPopup(event);
     });
 
     $('.group-messages-control .new').on('click', function () {

@@ -156,18 +156,13 @@ function requestRTs(postLi)
     }
 }
 
-function appendPostToContainer(postFromJson, containerToAppend)
-{
-    // posts without 'msg' may be used for metadata like 'url'
-    // and are not meant to be displayed.
-    if (typeof(postFromJson['userpost']['msg']) === 'undefined' &&
-        typeof(postFromJson['userpost']['rt']) === 'undefined' )
+function appendPostToElem(post, elem) {
+    // posts without 'msg' and 'rt.msg' may be used for metadata like 'url' and are not meant to be displayed
+    if (!post.userpost.msg && (!post.userpost.rt || (post.userpost.rt && !post.userpost.rt.msg)))
         return;
 
-    var newStreamPost = postToElem(postFromJson, "original");
-    newStreamPost.hide();
-    containerToAppend.append( newStreamPost );
-    newStreamPost.slideDown("fast");
+    postToElem(post, 'original').hide().appendTo(elem).slideDown('fast');
+
     $.MAL.postboardLoaded();
 }
 
@@ -183,7 +178,7 @@ function requestPost(containerToAppend,username,resource,cbFunc,cbArgs){
 
             //console.log(postFromJson);
 
-            appendPostToContainer(postFromJson,args.containerToAppend);
+            appendPostToElem(postFromJson, args.containerToAppend);
 
             if(args.cbFunc!=undefined) args.cbFunc(args.cbArgs);
 
@@ -217,7 +212,7 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
         twisterRpc("getposts", [count,[req]],
                        function(args, posts) {
                            for( var i = 0; i < posts.length; i++ ) {
-                              appendPostToContainer(posts[i],args.containerToAppend);
+                                appendPostToElem(posts[i], args.containerToAppend);
                            }
                            profilePostsLoading = false;
                        }, {containerToAppend:containerToAppend},
@@ -228,7 +223,7 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
         dhtget( username, resource, "s",
             function(args, postFromJson) {
                if( postFromJson ) {
-                   appendPostToContainer(postFromJson,args.containerToAppend);
+                    appendPostToElem(postFromJson, args.containerToAppend);
 
                    if( args.count > 1 ) {
                        var userpost = postFromJson["userpost"];
@@ -320,6 +315,41 @@ function newRtMsg(postData, msg) {
     } else {
         alert(polyglot.t('Internal error: lastPostId unknown (following yourself may fix!)'));
     }
+}
+
+function newShortURI(uri, cbFunc, cbReq) {
+    if (!uri || !defaultScreenName) return;
+    if (parseInt(twisterVersion) < 93500) {
+        console.warn('can\'t shorten URI "' + uri + '": daemon is obsolete, version 0.9.35 or higher is required');
+        return;
+    }
+
+    for (var i in twister.URIs)
+        if (twister.URIs[i] === uri) {
+            if (typeof cbFunc === 'function')
+                cbFunc(uri, i, cbReq);
+            return;
+        }
+
+    twisterRpc('newshorturl', [defaultScreenName, lastPostId + 1, uri],
+        function (req, ret) {
+            if (ret) {
+                ret = ret[0];  // FIXME there should be 1 element anyway for daemon version 93500
+                twister.URIs[ret] = req.uri;
+                $.localStorage.set('twistaURIs', twister.URIs);
+                incLastPostId();
+            } else
+                console.warn('RPC "newshorturl" error: empty response');
+
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.uri, ret, req.cbReq);
+        }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq},
+        function (req, ret) {
+            console.warn('RPC "newshorturl" error: ' + (ret && ret.message ? ret.message : ret));
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.uri, ret, req.cbReq);
+        }, {uri: uri, cbFunc: cbFunc, cbReq: cbReq}
+    );
 }
 
 function updateProfileData(profileModalContent, username) {

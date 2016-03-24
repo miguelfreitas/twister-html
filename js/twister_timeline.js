@@ -346,11 +346,9 @@ function timelineChangedUser()
     timelineLoaded = false;
 }
 
-function willBeHidden(post){
-    // posts without 'msg' may be used for metadata like 'url'
-    // and are not meant to be displayed.
-    if (typeof(post['userpost']['msg']) === 'undefined' &&
-        typeof(post['userpost']['rt']) === 'undefined' )
+function willBeHidden(post) {
+    // posts without 'msg' and 'rt.msg' may be used for metadata like 'url' and are not meant to be displayed
+    if (!post.userpost.msg && (!post.userpost.rt || (post.userpost.rt && !post.userpost.rt.msg)))
         return true;
 
     if (post['userpost']['n'] === defaultScreenName)

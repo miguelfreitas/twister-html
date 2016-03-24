@@ -101,8 +101,8 @@
 {
     margin-bottom: 8px;
 }
-.forEdition .profile-card-main input
-{
+
+.forEdition .profile-card-main input, .forEdition .profile-card-main textarea {
     display: block;
     margin: 0 auto;
     background: rgba( 0, 0, 0, .1 );
@@ -113,16 +113,20 @@
     text-align: center;
     transition: all .2s linear;
 }
+
 .forEdition .profile-card-main input:hover,
 .forEdition .profile-card-main input:focus,
+.forEdition .profile-card-main textarea:hover, .forEdition .profile-card-main textarea:focus,
 .forEdition .profile-card-photo:hover
 {
     background: rgba( 0, 0, 0, .3 );
 }
-.input-description
-{
+
+.input-description {
     width: 90%;
+    max-width: 90%;
 }
+
 .input-name
 {
     font-size: 20px;

@@ -26,7 +26,7 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
         // reply text counter both newmsg and dmchat
         $('.post-area-new textarea')
             .off('input keyup')
-            .on('focus', posPostPreview)
+            .on('focus', poseTextareaPostTools)
             .on('keyup', replyTextInput)
             .on('keyup', function() { replyTextUpdateRemaining(this); })
         ;
@@ -101,6 +101,7 @@ var router=new $.mobile.Router(
             initializeTwister( true, true, function() {
                 if( !$("#home .posts").children().length ) {
                     $.mobile.showPageLoadingMsg();
+                    cleanupStorage();
                     getFullname( defaultScreenName, $("#home .rtitle"));
                     $(".mentions-count").attr("href","#mentions?user="+defaultScreenName );
                     $.MAL.setPostTemplate( $("#post-template-home") );
@@ -160,7 +161,10 @@ var router=new $.mobile.Router(
                 }
                 $.mobile.showPageLoadingMsg();
                 $("#following a.ui-btn").removeClass("ui-btn-active");
-                showFollowingUsers();
+                var followingList = twister.tmpl.followingList.clone(true).appendTo($("#following .content"))
+                    .closest('.following-list').listview();
+                appendFollowingToElem(followingList);
+                followingList.find('[data-role="button"]').button();
             });
         },
         post: function(type,match,ui) {
@@ -268,9 +272,8 @@ var router=new $.mobile.Router(
         directmsg: function(type,match,ui) {
             $.mobile.showPageLoadingMsg();
             initializeTwister( true, true, function() {
-                var $dmThreadList = $("#directmsg ul.direct-messages-thread");
                 $.mobile.showPageLoadingMsg();
-                requestDMsnippetList($dmThreadList);
+                requestDMsnippetList($('#directmsg .direct-messages-list'));
             });
         },
         dmchat: function(type,match,ui) {
@@ -278,7 +281,7 @@ var router=new $.mobile.Router(
             $.mobile.showPageLoadingMsg();
             initializeTwister( true, true, function() {
                 var user = params.user;
-                var dmConvo = $("#dmchat ul.direct-messages-list");
+                var dmConvo = $('#dmchat .direct-messages-thread');
                 $("#dmchat .rtitle").text("Chat @" + user);
                 $("#dmchat textarea").val("");
                 dmConvo.html("");
@@ -492,7 +495,7 @@ function handleAvatarFileSelectMobile(evt) {
     }
 }
 
-function openConversationClick(event) {
+function handleClickOpenConversation(event) {
     event.stopPropagation();
     event.preventDefault();
 
@@ -586,9 +589,8 @@ function tmobileTick() {
         requestQuery(tmobileQueryReq);
     }
 
-    if( curPage == "dmchat" ) {
-        requestDmConversation($("#dmchat ul.direct-messages-list"),dmChatUser);
-    }
+    if (curPage === 'dmchat')
+        requestDmConversation($('#dmchat .direct-messages-thread'), dmChatUser);
 }
 
 $(document).bind('mobileinit', function () {
