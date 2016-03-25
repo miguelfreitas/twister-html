@@ -66,14 +66,14 @@ function postToElem(post, kind, promoted) {
             username = userpost.n;
             k = userpost.k;
             time = userpost.time;
-            msg = userpost.msg;
+            msg = userpost.msg + (userpost.msg2 || '');
             content_to_rt = $.toJSON(userpost);
             content_to_sigrt = post.sig_userpost;
         } else {
             username = rt.n;
             k = rt.k;
             time = rt.time;
-            msg = rt.msg;
+            msg = rt.msg + (rt.msg2 || '');
             content_to_rt = $.toJSON(rt);
             content_to_sigrt = userpost.sig_rt;
         }
@@ -82,7 +82,7 @@ function postToElem(post, kind, promoted) {
         username = userpost.n;
         k = userpost.k;
         time = userpost.time;
-        msg = userpost.msg;
+        msg = userpost.msg + (userpost.msg2 || '');
         content_to_rt = $.toJSON(userpost);
         content_to_sigrt = post.sig_userpost;
     }
