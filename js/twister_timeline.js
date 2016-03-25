@@ -360,7 +360,7 @@ function willBeHidden(post) {
     if (typeof post.userpost.lastk === 'undefined')
         return false;
 
-    if (post.userpost.rt && typeof post.userpost.rt.msg === 'string' && post.userpost.rt.msg !== '') {
+    if (typeof post.userpost.msg !== 'string' || post.userpost.msg === '') {
         // hope it is not too egocentric to overcome hideCloseRtsHour this way
         if (post.userpost.rt.n === defaultScreenName)
             return false;

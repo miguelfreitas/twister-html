@@ -445,7 +445,7 @@ function processQuery(req) {
                 continue;
 
             if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForSearching.val) {
-                if (userpost.msg !== '')
+                if (typeof userpost.msg === 'string' && userpost.msg !== '')
                     langFilterData = filterLang(userpost.msg);
                 else
                     langFilterData = filterLang(userpost.rt.msg);
