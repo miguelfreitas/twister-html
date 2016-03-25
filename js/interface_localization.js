@@ -172,8 +172,8 @@ if(preferredLanguage == "en"){
       "Setup account": "Setup account",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
@@ -505,8 +505,8 @@ if(preferredLanguage == "es"){
       "Setup account": "Configuración de la cuenta",
       "shorten_URI": "Acortar URL",
       "shorten_URI_enter_link": "Introducir el enlace largo.\n"
-        + "¡Ten cuidado! Se envía un twist 'oculto' después de obtener"
-        + "de cada nueva URL, incluso si no publicas algo todavía.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
       "time_ago": "hace %{time}", // 5 minutes ago
       "Time of the last block:": "Hora del último bloque: ",
@@ -823,8 +823,8 @@ if(preferredLanguage == "uk"){
       "Setup account": "Обліковий запис",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
@@ -1138,8 +1138,8 @@ if(preferredLanguage == "zh-CN"){
       "Setup account": "设置账号",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持 File API。",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新区块的时间：",
@@ -1471,8 +1471,8 @@ if(preferredLanguage == "nl"){
       "Setup account": "Account instellingen",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Tijd van de laatste block: ",
@@ -1788,8 +1788,8 @@ if(preferredLanguage == "it"){
       "Setup account": "Configurazione Utente",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
       "time_ago": "%{time} fa", // 5 minutes ago
       "Time of the last block:": "Orario del blocco più recente: ",
@@ -2103,8 +2103,8 @@ if(preferredLanguage == "fr"){
       "Setup account": "Configuration du compte",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
@@ -2422,8 +2422,8 @@ if(preferredLanguage == "ru"){
        "Setup account": "Настроить аккаунт",
        "shorten_URI": "Сокр. URL",
        "shorten_URI_enter_link": "Введи длинную ссылку.\n"
-        + "Будь осторожнее! Ты отправляешь 'скрытый' твист после получения\n"
-        + "каждой новой URL, даже если ты ещё не успел(а) ничего никуда отправить.",
+        + "Примечание: в результате сокращения URL получается 'пустой' твист, содержащий эту URL.\n"
+        + "Этот особый твист не отображается клиентами твистера, но учитывается в числе твоих твистов.",
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
@@ -2744,8 +2744,8 @@ if(preferredLanguage == "de"){
       "Setup account": "Accounteinstellungen",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
@@ -3062,8 +3062,8 @@ if(preferredLanguage == "ja"){
       "Setup account": "アカウント設定",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
       "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
@@ -3378,8 +3378,8 @@ if(preferredLanguage == "pt-BR"){
       "Setup account": "Configurar conta",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
       "time_ago": "%{time} atrás", // 5 minutes ago
       "Time of the last block:": "Horário do último bloco: ",
@@ -3696,8 +3696,8 @@ if(preferredLanguage == "tr"){
       "Setup account": "Hesap ayarları",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
@@ -4013,8 +4013,8 @@ if(preferredLanguage == "cs"){
       "Setup account": "Upravit profil",
       "shorten_URI": "Shorten URL",
       "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Be careful! You send a 'hidden' twist after getting\n"
-        + "of each new URL even if you ain't post anything yet.",
+        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
+        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "The File APIs are not fully supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "time_ago": "před %{time}", // 5 minutes ago
       "Time of the last block:": "Čas posledního bloku: ",
