@@ -551,7 +551,7 @@ function filterLang(string) {
             langFilterReason = polyglot.t('this doesnt contain that', {'this': polyglot.t(langFilterMode), 'that': polyglot.t('language of this')});
 
             // before detection attempts we cut out any mentions and links, and replace _ with space
-            langFilterSubj = string.replace(/@\S\w*|https?:\/\/\S*/g, '').replace(/_+/g, ' ')
+            langFilterSubj = string.replace(/@\S\w*|https?:\/\/\S*|twist:\S\S\S\S\S\S\S\S\S\S\S=/g, '').replace(/_+/g, ' ')
             // cut out common frequently used words FIXME I believe there is a list of similar international stuff somewhere outside which is waiting for us, we should just find it
                 .replace(/\btwister|tox|github|linux|ubuntu|debian|windows|google|twitter|facebook|microsoft|ping|pong|email|javascript\b/ig, '')
             // replace zero-width word boundaries, such as between letters from different alphabets [or other symbols], with spaces
