@@ -353,28 +353,25 @@ function willBeHidden(post) {
             || typeof post.userpost.rt.msg !== 'string' || post.userpost.rt.msg === ''))
         return true;
 
-    if (post['userpost']['n'] === defaultScreenName)
+    if (post.userpost.n === defaultScreenName)
         return false;
 
     // currently we don't need to filter promoted posts anyhow
-    if (typeof(post['userpost']['lastk']) === 'undefined' )
+    if (typeof post.userpost.lastk === 'undefined')
         return false;
 
-    if (typeof(post['userpost']['rt']) !== 'undefined') {
+    if (post.userpost.rt && typeof post.userpost.rt.msg === 'string' && post.userpost.rt.msg !== '') {
         // hope it is not too egocentric to overcome hideCloseRtsHour this way
-        if (post['userpost']['rt']['n'] === defaultScreenName)
+        if (post.userpost.rt.n === defaultScreenName)
             return false;
 
-        if ($.Options.hideCloseRTs.val !== 'disable' &&
-            followingUsers.indexOf(post['userpost']['rt']['n']) > -1 &&
-            parseInt(post['userpost']['time']) - parseInt(post['userpost']['rt']['time']) < $.Options.hideCloseRtsHour.val * 3600)
-        {
+        if ($.Options.hideCloseRTs.val !== 'disable' && followingUsers.indexOf(post.userpost.rt.n) > -1
+            && parseInt(post.userpost.time) - parseInt(post.userpost.rt.time) < $.Options.hideCloseRtsHour.val * 3600)
             return true;
-        }
 
-        var msg = post['userpost']['rt']['msg'];
+        var msg = post.userpost.rt.msg;
     } else {
-        var msg = post['userpost']['msg'];
+        var msg = post.userpost.msg;
 
         if ($.Options.hideReplies.val !== 'disable' && /^\@/.test(msg) &&
             !(new RegExp('@' + defaultScreenName + '( |,|;|\\.|:|\\/|\\?|\\!|\\\\|\'|"|\\n|\\t|$)').test(msg)))
@@ -389,8 +386,8 @@ function willBeHidden(post) {
     }
 
     if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForPostboard.val) {
-        post['langFilter'] = filterLang(msg);
-        if (!post['langFilter']['pass'] && !$.Options.filterLangSimulate.val) {
+        post.langFilter = filterLang(msg);
+        if (!post.langFilter.pass && !$.Options.filterLangSimulate.val) {
             // TODO maybe we need a counter of posts blocked by language filter and even caching of them and button to show?
             //console.log('post by @'+post['userpost']['n']+' was hidden because it didn\'t passed by language filter:');
             return true;
