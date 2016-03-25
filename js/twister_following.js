@@ -472,7 +472,7 @@ function whoFollows(username) {
 function fillWhoFollows(list, item, offset, size) {
     for (var i = offset; i < offset + size; i++) {
         var follower_link = $('<a class="mini-follower-link"></a>')
-            .on('click mouseup', handleClickOpenProfileModal);
+            .on('click', muteEvent).on('mouseup', handleClickOpenProfileModal);
 
         // link follower to profile page
         follower_link.attr("data-screen-name", list[i]);

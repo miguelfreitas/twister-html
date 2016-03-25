@@ -157,8 +157,10 @@ function requestRTs(postLi)
 }
 
 function appendPostToElem(post, elem) {
-    // posts without 'msg' and 'rt.msg' may be used for metadata like 'url' and are not meant to be displayed
-    if (!post.userpost.msg && (!post.userpost.rt || (post.userpost.rt && !post.userpost.rt.msg)))
+    // posts without non-empty strings in both 'msg' and 'rt.msg' may be used for metadata like 'url' and are not meant to be displayed
+    if ((typeof post.userpost.msg !== 'string' || post.userpost.msg === '')
+        && (typeof post.userpost.rt !== 'object'
+            || typeof post.userpost.rt.msg !== 'string' || post.userpost.rt.msg === ''))
         return;
 
     postToElem(post, 'original').hide().appendTo(elem).slideDown('fast');
@@ -437,13 +439,17 @@ function processQuery(req) {
         if (!_queryProcessedMap[req.id][key]) {
             _queryProcessedMap[req.id][key] = true;
 
+            if ((typeof userpost.msg !== 'string' || userpost.msg === '')
+                && (typeof userpost.rt !== 'object'
+                    || typeof userpost.rt.msg !== 'string' || userpost.rt.msg === ''))
+                continue;
+
             if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForSearching.val) {
-                if (typeof userpost.rt !== 'undefined') {
-                    var msg = userpost.rt.msg;
-                } else {
-                    var msg = userpost.msg;
-                }
-                langFilterData = filterLang(msg);
+                if (userpost.msg !== '')
+                    langFilterData = filterLang(userpost.msg);
+                else
+                    langFilterData = filterLang(userpost.rt.msg);
+
                 if ($.Options.filterLangSimulate.val) {
                     req.posts[i].langFilter = langFilterData;
                 } else {
