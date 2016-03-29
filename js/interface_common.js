@@ -2477,7 +2477,15 @@ $(document).ready(function () {
                 if (!textArea.length) textArea = postAreaNew.find('textarea:last');
 
                 event.data.cbReq = textArea;
-                openRequestShortURIForm(event);
+                if (postAreaNew.closest('.directMessages').length)
+                    confirmPopup({
+                        txtMessage: polyglot.t('shorten_URI_its_public_is_it_ok'),
+                        txtConfirm: polyglot.t('shorten_URI'),
+                        cbConfirm: openRequestShortURIForm,
+                        cbConfirmReq: event
+                    });
+                else
+                    openRequestShortURIForm(event);
             }
         )
     ;

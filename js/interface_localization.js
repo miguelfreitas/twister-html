@@ -174,6 +174,7 @@ if(preferredLanguage == "en"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
@@ -507,6 +508,7 @@ if(preferredLanguage == "es"){
       "shorten_URI_enter_link": "Introducir el enlace largo.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
       "time_ago": "hace %{time}", // 5 minutes ago
       "Time of the last block:": "Hora del último bloque: ",
@@ -825,6 +827,7 @@ if(preferredLanguage == "uk"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
@@ -1140,6 +1143,7 @@ if(preferredLanguage == "zh-CN"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持 File API。",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新区块的时间：",
@@ -1473,6 +1477,7 @@ if(preferredLanguage == "nl"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Tijd van de laatste block: ",
@@ -1790,6 +1795,7 @@ if(preferredLanguage == "it"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
       "time_ago": "%{time} fa", // 5 minutes ago
       "Time of the last block:": "Orario del blocco più recente: ",
@@ -2105,6 +2111,7 @@ if(preferredLanguage == "fr"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
@@ -2424,6 +2431,7 @@ if(preferredLanguage == "ru"){
        "shorten_URI_enter_link": "Введи длинную ссылку.\n"
         + "Примечание: в результате сокращения URL получается 'пустой' твист, содержащий эту URL.\n"
         + "Этот особый твист не отображается клиентами твистера, но учитывается в числе твоих твистов.",
+       "shorten_URI_its_public_is_it_ok": "Ссылка будет общедоступной! Это приемлимо для тебя?",
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
@@ -2746,6 +2754,7 @@ if(preferredLanguage == "de"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
@@ -3064,6 +3073,7 @@ if(preferredLanguage == "ja"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
       "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
@@ -3380,6 +3390,7 @@ if(preferredLanguage == "pt-BR"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
       "time_ago": "%{time} atrás", // 5 minutes ago
       "Time of the last block:": "Horário do último bloco: ",
@@ -3698,6 +3709,7 @@ if(preferredLanguage == "tr"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
@@ -4015,6 +4027,7 @@ if(preferredLanguage == "cs"){
       "shorten_URI_enter_link": "Enter the long link.\n"
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "time_ago": "před %{time}", // 5 minutes ago
       "Time of the last block:": "Čas posledního bloku: ",
