@@ -212,7 +212,8 @@ function openDmWithUserModal(peerAlias) {
     requestDmConversationModal(modal.self.find('.direct-messages-thread').empty(), peerAlias);
 
     $('.dm-form-template').children().clone(true)
-        .addClass('open').appendTo(modal.content).fadeIn('fast');
+        .addClass('open').appendTo(modal.content).fadeIn('fast')
+            .find('textarea').focus();
 }
 
 function openGroupMessagesModal(groupAlias) {
@@ -267,7 +268,8 @@ function openGroupMessagesModal(groupAlias) {
                     );
 
                     $('.dm-form-template').children().clone(true)
-                        .addClass('open').appendTo(req.modal.content).fadeIn('fast');
+                        .addClass('open').appendTo(req.modal.content).fadeIn('fast')
+                            .find('textarea').focus();
                 }
             }, {groupAlias: groupAlias, modal: modal}
         );
