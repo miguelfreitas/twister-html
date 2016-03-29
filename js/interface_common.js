@@ -2484,7 +2484,10 @@ $(document).ready(function () {
                         cbConfirm: openRequestShortURIForm,
                         cbConfirmReq: event
                     });
-                else
+                else if ($.mobile && postAreaNew.closest('.dm-form').length) {
+                    if (confirm(polyglot.t('shorten_URI_its_public_is_it_ok')))
+                        openRequestShortURIForm(event);
+                } else
                     openRequestShortURIForm(event);
             }
         )
