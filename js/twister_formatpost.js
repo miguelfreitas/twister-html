@@ -257,7 +257,7 @@ function setPostInfoSent(n, k, item) {
 function postToElemDM(dmData, localUser, remoteUser) {
     var senderAlias = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0))
         ? dmData.from : (dmData.fromMe ? localUser : remoteUser);
-    var elem = $('#dm-chat-template').clone(true)
+    var elem = $('#dm-chat-template').clone(true).appendTo(twister.html.detached)
         .removeAttr('id')
         .addClass(dmData.fromMe ? 'sent' : 'received')
     ;
