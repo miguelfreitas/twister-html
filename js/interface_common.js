@@ -905,9 +905,17 @@ function applyShortenedURI(short, long) {
         .off('click mouseup')
         .on('click mouseup', muteEvent)
     ;
+    var cropped = (/*$.Options.cropLongURIs &&*/ long.length > 23) ? long.slice(0, 23) + '…' : undefined;
     for (var i = 0; i < elems.length; i++)
         if (elems[i].text === short)  // there may be some other text, possibly formatted, so we check it
-            elems[i].text = long;
+            if (cropped)
+                $(elems[i])
+                    .text(cropped)
+                    .on('mouseover', {uri: long}, function (event) {event.target.text = event.data.uri;})
+                    .on('mouseout', {uri: cropped}, function (event) {event.target.text = event.data.uri;})
+                ;
+            else
+                elems[i].text = long;
 }
 
 function routeOnClick(event) {
