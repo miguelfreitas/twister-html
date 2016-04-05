@@ -10,7 +10,7 @@ var twister = {
     focus: {},  // focused elements are counted here
     html: {
         detached: $('<div>'),  // here elements go to detach themself
-        blanka: $('<a target="_blank">')  // to open stuff in new tab, see routeOnClick()
+        blanka: $('<a rel="nofollow noreferrer" target="_blank">')  // to open stuff in new tab, see routeOnClick()
     },
     tmpl: {  // templates pointers are stored here
         root: $('<div>')  // templates should be detached from DOM and attached here; use extractTemplate()
