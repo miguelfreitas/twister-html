@@ -128,7 +128,7 @@ function requestMentionsCount() {
                     }
                 });
         }
-    }U
+    }
 
     // was moved here from requestDMsCount() because that is not ticking right
     // we would place it with other notifications into separate notification center
