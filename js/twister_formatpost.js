@@ -593,6 +593,7 @@ function htmlFormatMsg(msg, opt) {
     var stopCharsRight = '>' + whiteSpaces;
     var stopCharsRightHashtags = '>/\\.,:;?!%\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049'  // same as stopCharsTrailing but without '*~_-`' plus '>'
         + whiteSpaces;
+    var stopCharsRightHashtagsBase64 = stopCharsRightHashtags.replace('/','').replace('+','') // exclude valid base64 chars used in shortened urls
     var stopCharsMarkout = '/\\*~_-`.,:;?!%+=&\'"[](){}^|«»…\u201C\u201D\u2026\u2014\u4E00\u3002\uFF0C\uFF1A\uFF1F\uFF01\u3010\u3011\u2047\u2048\u2049';
     var i, j, k, str;
     var mentions = [];
@@ -642,7 +643,7 @@ function htmlFormatMsg(msg, opt) {
                                 .replace(/&(?!lt;|gt;)/g, '&amp;');
                             if (markoutOpt === 'apply') {
                                 if (msg.str.slice(i, i + 6).toLowerCase() === 'twist:' && msg.str[i + 17] === '='
-                                    && getSubStrStart(msg.str, i + 16, stopCharsRightHashtags, false, '') === i + 6)
+                                    && getSubStrStart(msg.str, i + 16, stopCharsRightHashtagsBase64, false, '') === i + 6)
                                     msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
                                         newHtmlEntityLink(twister.tmpl.linkShortened,
                                             msg.str.slice(i, i + 18), linkName)
@@ -693,7 +694,7 @@ function htmlFormatMsg(msg, opt) {
                 }
             }
         } else if (msg.str.slice(i, i + 6).toLowerCase() === 'twist:' && msg.str[i + 17] === '='
-            && getSubStrStart(msg.str, i + 16, stopCharsRightHashtags, false, '') === i + 6) {
+            && getSubStrStart(msg.str, i + 16, stopCharsRightHashtagsBase64, false, '') === i + 6) {
             str = msg.str.slice(i, i + 18);
             msg = msgAddHtmlEntity(msg, i, i + str.length,
                 newHtmlEntityLink(twister.tmpl.linkShortened, str, str));
