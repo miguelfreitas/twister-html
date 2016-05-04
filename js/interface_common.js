@@ -898,7 +898,8 @@ function fetchShortenedURI(req) {
     );
 }
 
-function applyShortenedURI(short, long) {
+function applyShortenedURI(short, uriAndMimetype) {
+    var long = (uriAndMimetype instanceof Array) ? uriAndMimetype[0] : uriAndMimetype;
     var elems = getElem('.link-shortened[href="' + short + '"]')
         .attr('href', long)
         .removeClass('link-shortened')
