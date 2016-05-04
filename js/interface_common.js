@@ -10,7 +10,7 @@ var twister = {
     focus: {},  // focused elements are counted here
     html: {
         detached: $('<div>'),  // here elements go to detach themself
-        blanka: $('<a target="_blank">')  // to open stuff in new tab, see routeOnClick()
+        blanka: $('<a rel="nofollow noreferrer" target="_blank">')  // to open stuff in new tab, see routeOnClick()
     },
     tmpl: {  // templates pointers are stored here
         root: $('<div>')  // templates should be detached from DOM and attached here; use extractTemplate()
@@ -898,16 +898,25 @@ function fetchShortenedURI(req) {
     );
 }
 
-function applyShortenedURI(short, long) {
+function applyShortenedURI(short, uriAndMimetype) {
+    var long = (uriAndMimetype instanceof Array) ? uriAndMimetype[0] : uriAndMimetype;
     var elems = getElem('.link-shortened[href="' + short + '"]')
         .attr('href', long)
         .removeClass('link-shortened')
         .off('click mouseup')
         .on('click mouseup', muteEvent)
     ;
+    var cropped = (/*$.Options.cropLongURIs &&*/ long.length > 23) ? long.slice(0, 23) + '…' : undefined;
     for (var i = 0; i < elems.length; i++)
         if (elems[i].text === short)  // there may be some other text, possibly formatted, so we check it
-            elems[i].text = long;
+            if (cropped)
+                $(elems[i])
+                    .text(cropped)
+                    .on('mouseover', {uri: long}, function (event) {event.target.text = event.data.uri;})
+                    .on('mouseout', {uri: cropped}, function (event) {event.target.text = event.data.uri;})
+                ;
+            else
+                elems[i].text = long;
 }
 
 function routeOnClick(event) {
@@ -2477,7 +2486,18 @@ $(document).ready(function () {
                 if (!textArea.length) textArea = postAreaNew.find('textarea:last');
 
                 event.data.cbReq = textArea;
-                openRequestShortURIForm(event);
+                if (postAreaNew.closest('.directMessages').length)
+                    confirmPopup({
+                        txtMessage: polyglot.t('shorten_URI_its_public_is_it_ok'),
+                        txtConfirm: polyglot.t('shorten_URI'),
+                        cbConfirm: openRequestShortURIForm,
+                        cbConfirmReq: event
+                    });
+                else if ($.mobile && postAreaNew.closest('.dm-form').length) {
+                    if (confirm(polyglot.t('shorten_URI_its_public_is_it_ok')))
+                        openRequestShortURIForm(event);
+                } else
+                    openRequestShortURIForm(event);
             }
         )
     ;
