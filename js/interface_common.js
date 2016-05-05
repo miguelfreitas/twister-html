@@ -896,7 +896,7 @@ function fetchShortenedURI(req, attemptCount) {
                 if ((req.attemptCount ? ++req.attemptCount : req.attemptCount = 1) < 3)  // < $.Options.decodeShortURITriesMax
                     fetchShortenedURI(req.shortURI, req.attemptCount);
             }
-        }, {short: req, attemptCount: attemptCount}
+        }, {shortURI: req, attemptCount: attemptCount}
     );
 }
 
