@@ -879,7 +879,7 @@ function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
     return formatted;
 }
 
-function fetchShortenedURI(req) {
+function fetchShortenedURI(req, attemptCount) {
     if (twister.URIs[req]) {
         applyShortenedURI(req, twister.URIs[req]);
         return;
@@ -888,13 +888,15 @@ function fetchShortenedURI(req) {
     decodeShortURI(req,
         function (req, ret) {
             if (ret) {
-                twister.URIs[req] = ret;
+                twister.URIs[req.shortURI] = ret;
                 $.localStorage.set('twistaURIs', twister.URIs);
-                applyShortenedURI(req, ret);
+                applyShortenedURI(req.shortURI, ret);
             } else {
-                console.warn('can\'t fetch URI "' + req + '": null response');
+                console.warn('can\'t fetch URI "' + req.shortURI + '": null response');
+                if ((req.attemptCount ? ++req.attemptCount : req.attemptCount = 1) < 3)  // < $.Options.decodeShortURITriesMax
+                    fetchShortenedURI(req.shortURI, req.attemptCount);
             }
-        }, req
+        }, {short: req, attemptCount: attemptCount}
     );
 }
 
