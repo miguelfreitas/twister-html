@@ -865,7 +865,12 @@ function fillElemWithTxt(elem, txt, htmlFormatMsgOpt) {
     elem.find('a').each(function (i, elem) {
         var href = elem.getAttribute('href');
         if (elem.classList.contains('link-shortened')) {
-            $(elem).on('click mouseup', {preventDefault: true}, muteEvent);
+            $(elem).on('click mouseup', {href: href},
+                function (event) {
+                    muteEvent(event, true);
+                    fetchShortenedURI(event.data.href);
+                }
+            );
             fetchShortenedURI(href);
         } else if (href && href[0] === '#')
             $(elem)
