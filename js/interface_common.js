@@ -7,6 +7,7 @@
 
 var twister = {
     URIs: {},  // shortened URIs are cached here after fetching
+    torrentIds: {},  // auto-download torrentIds
     focus: {},  // focused elements are counted here
     html: {
         detached: $('<div>'),  // here elements go to detach themself
@@ -900,6 +901,7 @@ function fetchShortenedURI(req) {
 
 function applyShortenedURI(short, uriAndMimetype) {
     var long = (uriAndMimetype instanceof Array) ? uriAndMimetype[0] : uriAndMimetype;
+    var mimetype = (uriAndMimetype instanceof Array) ? uriAndMimetype[1] : undefined;
     var elems = getElem('.link-shortened[href="' + short + '"]')
         .attr('href', long)
         .removeClass('link-shortened')
@@ -907,7 +909,7 @@ function applyShortenedURI(short, uriAndMimetype) {
         .on('click mouseup', muteEvent)
     ;
     var cropped = (/*$.Options.cropLongURIs &&*/ long.length > 23) ? long.slice(0, 23) + '…' : undefined;
-    for (var i = 0; i < elems.length; i++)
+    for (var i = 0; i < elems.length; i++) {
         if (elems[i].text === short)  // there may be some other text, possibly formatted, so we check it
             if (cropped)
                 $(elems[i])
@@ -917,6 +919,80 @@ function applyShortenedURI(short, uriAndMimetype) {
                 ;
             else
                 elems[i].text = long;
+
+        if (long.lastIndexOf('magnet:?xt=urn:btih:') === 0) {
+            var previewContainer = $(elems[i]).parents(".post-data").find(".preview-container");
+            var fromUser = $(elems[i]).parents(".post-data").attr("data-screen-name");
+            var isMedia = mimetype !== undefined &&
+                          (mimetype.lastIndexOf('video') === 0 ||
+                           mimetype.lastIndexOf('image') === 0 ||
+                           mimetype.lastIndexOf('audio') === 0);
+            if ($.Options.WebTorrent.val === 'enable') {
+                if ($.Options.WebTorrentAutoDownload.val === 'enable' &&
+                    followingUsers.indexOf(fromUser) !==-1) {
+                    twister.torrentIds[long] = true;
+                    $.localStorage.set('torrentIds', twister.torrentIds);
+                    startTorrentDownloadAndPreview(long, previewContainer, isMedia);
+                } else {
+                    // webtorrent enabled but no auto-download. provide a link to start manually.
+                    var startTorrentLink = $('<a href="#">Start WebTorrent download of this media</a>');
+                    startTorrentLink.on('click', function(event) {
+                        event.stopPropagation();
+                        startTorrentDownloadAndPreview(long, previewContainer, isMedia)
+                    });
+                    previewContainer.append(startTorrentLink);
+                }
+            } else {
+                previewContainer.text(polyglot.t('Enable WebTorrent support in options page to display this content'));
+            }
+        }
+    }
+}
+
+function startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
+    var torrent = WebTorrentClient.get(torrentId);
+    if( torrent === null ) 
+        torrent = WebTorrentClient.add(torrentId);
+
+    previewContainer.empty();
+    var speedStatus = $('<span class="post-text"/>');
+    previewContainer.append(speedStatus);
+    function updateSpeed () {
+        var progress = (100 * torrent.progress).toFixed(1)
+        speedStatus[0].innerHTML =
+            '<b>Peers:</b> ' + torrent.numPeers + ' ' +
+            '<b>Progress:</b> ' + progress + '% ' +
+            '<b>Download:</b> ' + torrent.downloadSpeed + '/s ' +
+            '<b>Upload:</b> ' + torrent.uploadSpeed + '/s';
+    }
+    setInterval(updateSpeed, 1000);
+    updateSpeed();
+
+    if( torrent.files.length ) {
+        webtorrentFilePreview(torrent.files[0], previewContainer, isMedia)
+    } else {
+        torrent.on('metadata', function () {
+            webtorrentFilePreview(torrent.files[0], previewContainer, isMedia)
+        });
+    }
+}
+
+function webtorrentFilePreview(file, previewContainer, isMedia) {
+    if (isMedia) {
+        var imagePreview = $('<div class="image-preview" />');
+        previewContainer.append(imagePreview);
+        file.appendTo(imagePreview[0], function (err, elem) {
+            elem.pause();
+        });
+        imagePreview.find("video").removeAttr("autoplay").get(0).pause();
+    } else {
+        file.getBlobURL(function (err, url) {
+            if (err) return console.error(err)
+            var blobLink = $('<a href="' + url + '" download="'+file.name+'">' +
+                'Download ' + file.name + '</a>');
+            previewContainer.append(blobLink);
+        })
+    }
 }
 
 function routeOnClick(event) {

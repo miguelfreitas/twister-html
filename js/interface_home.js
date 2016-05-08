@@ -109,6 +109,9 @@ var InterfaceFunctions = function() {
             initTopTrends();
         else
             killInterfaceModule('toptrends');
+
+        if ($.Options.WebTorrent.val === 'enable')
+            initWebTorrent();
     }
 }
 
@@ -300,6 +303,34 @@ function refreshTwistdayReminder() {
         if ($.Options.TwistdayReminderAutoUpdate.val === 'enable' && $.Options.TwistdayReminderAutoUpdateTimer.val > 0)
             setTimeout(refreshTwistdayReminder, $.Options.TwistdayReminderAutoUpdateTimer.val * 1000);
     }
+}
+
+function initWebTorrent() {
+    //localStorage.debug = '*'
+    localStorage.removeItem('debug')
+
+    WEBTORRENT_ANNOUNCE = $.Options.WebTorrentTrackers.val.split(/[ ,]+/)
+    $.getScript('js/webtorrent.min.js', function( data, textStatus, jqxhr ) {
+        WebTorrentClient = new WebTorrent();
+        console.log("WebTorrent started")
+        WebTorrentClient.on('error', function (err) {
+            console.error('ERROR: ' + err.message);
+        });
+        WebTorrentClient.on('warning', function (err) {
+            console.error('WARNING: ' + err.message);
+        });
+
+        if ($.localStorage.isSet('torrentIds'))
+            twister.torrentIds = $.localStorage.get('torrentIds');
+        if ($.Options.WebTorrentAutoDownload.val === 'enable') {
+            for (var torrentId in twister.torrentIds) {
+                if( twister.torrentIds[torrentId] === true ) {
+                    console.log("WebTorrent auto-download: " + torrentId);
+                    WebTorrentClient.add(torrentId);
+                }
+            }
+        }
+    });
 }
 
 //***********************************************

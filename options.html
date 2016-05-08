@@ -60,6 +60,8 @@
       <label for="t-5" class="tabs selectable_theme theme_nin">Appearance</label>
       <input id="t-6" name="option_tab" type="radio" class="selectable_theme theme_nin" />
       <label for="t-6" class="tabs selectable_theme theme_nin">Users</label>
+      <input id="t-7" name="option_tab" type="radio" class="selectable_theme theme_nin" />
+      <label for="t-7" class="tabs selectable_theme theme_nin">WebTorrent</label>
 
       <div class="tab-content">
 
@@ -447,6 +449,32 @@
                 <option value="everywhere">Show with every user name</option>
               </select>
             </form>
+          </div>
+        </div>
+
+        <div class="webtorrent">
+          <div class="module">
+            <p class="label label-h"> WebTorrent </p>
+            <div class="container">
+              <form>
+                <p class="label">WebTorrent support to display shortened URL media</p>
+                <select id="WebTorrent" class="container">
+                  <option value="enable">Enable</option>
+                  <option value="disable">Disable</option>
+                </select>
+              </form>
+            </div>
+            <div id="WebTorrentCont" class="container">
+              <form>
+                <p class="label">WebTorrent default trackers to use (announce list)</p>
+                <input type="text" id="WebTorrentTrackers" size="80" class="container"/>
+                <p class="label">Auto start download from users we follow</p>
+                <select id="WebTorrentAutoDownload" class="container">
+                  <option value="enable">Enable</option>
+                  <option value="disable">Disable</option>
+                </select>
+              </form>
+            </div>
           </div>
         </div>
 
