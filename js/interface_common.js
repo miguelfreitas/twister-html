@@ -930,8 +930,10 @@ function applyShortenedURI(short, uriAndMimetype) {
             if ($.Options.WebTorrent.val === 'enable') {
                 if ($.Options.WebTorrentAutoDownload.val === 'enable' &&
                     followingUsers.indexOf(fromUser) !==-1) {
-                    twister.torrentIds[long] = true;
-                    $.localStorage.set('torrentIds', twister.torrentIds);
+                    if(!(long in twister.torrentIds)) {
+                        twister.torrentIds[long] = true;
+                        $.localStorage.set('torrentIds', twister.torrentIds);
+                    }
                     startTorrentDownloadAndPreview(long, previewContainer, isMedia);
                 } else {
                     // webtorrent enabled but no auto-download. provide a link to start manually.
@@ -987,9 +989,11 @@ function webtorrentFilePreview(file, previewContainer, isMedia) {
         var imagePreview = $('<div class="image-preview" />');
         previewContainer.append(imagePreview);
         file.appendTo(imagePreview[0], function (err, elem) {
-            elem.pause();
+            if ('pause' in elem) {
+                elem.pause();
+            }
         });
-        imagePreview.find("video").removeAttr("autoplay").get(0).pause();
+        imagePreview.find("video").removeAttr("autoplay");
     } else {
         file.getBlobURL(function (err, url) {
             if (err) return console.error(err)
