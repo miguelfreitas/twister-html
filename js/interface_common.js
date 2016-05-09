@@ -952,7 +952,10 @@ function applyShortenedURI(short, uriAndMimetype) {
                     previewContainer.append(startTorrentLink);
                 }
             } else {
-                previewContainer.text(polyglot.t('Enable WebTorrent support in options page to display this content'));
+                var enableWebTorrentWarning = $('<span>' + 
+                    polyglot.t('Enable WebTorrent support in options page to display this content') +
+                    '</span>');
+                previewContainer.append(enableWebTorrentWarning);
             }
         }
     }
