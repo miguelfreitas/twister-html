@@ -1301,6 +1301,10 @@ ol.toptrends-list {
     display: block;
     margin: 0 auto 10px auto;
 }
+.image-preview video
+{
+    width: 100%;
+}
 .preview-container
 {
     max-height: 500px;

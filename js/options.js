@@ -280,6 +280,21 @@ function twisterOptions() {
         getMethod: function (val) {return parseFloat(val);},
         tickMethod: function (elem) {$('.volValue').text((elem.value * 100).toFixed());}
     });
+    this.add({
+        name: 'WebTorrent',
+        valDefault: 'disable',
+        tickMethod: function (elem) {
+            $('#WebTorrentCont').css('display', (elem.value === 'enable') ? 'block' : 'none');
+        }
+    });
+    this.add({
+        name: 'WebTorrentTrackers',
+        valDefault: 'wss://tracker.webtorrent.io,wss://tracker.btorrent.xyz,wss://tracker.openwebtorrent.com,wss://tracker.fastcast.nz'
+    });
+    this.add({
+        name: 'WebTorrentAutoDownload',
+        valDefault: 'enable'
+    });
 }
 
 twisterOptions.prototype.add = function (option) {
