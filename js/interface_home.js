@@ -307,7 +307,7 @@ function refreshTwistdayReminder() {
 
 function initWebTorrent() {
     //localStorage.debug = '*'
-    localStorage.removeItem('debug')
+    //localStorage.removeItem('debug')
 
     if ($.localStorage.isSet('torrentIds'))
         twister.torrentIds = $.localStorage.get('torrentIds');
