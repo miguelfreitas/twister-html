@@ -309,6 +309,9 @@ function initWebTorrent() {
     //localStorage.debug = '*'
     localStorage.removeItem('debug')
 
+    if ($.localStorage.isSet('torrentIds'))
+        twister.torrentIds = $.localStorage.get('torrentIds');
+
     WEBTORRENT_ANNOUNCE = $.Options.WebTorrentTrackers.val.split(/[ ,]+/)
     $.getScript('js/webtorrent.min.js', function() {
         WebTorrentClient = new WebTorrent();
@@ -319,9 +322,6 @@ function initWebTorrent() {
         WebTorrentClient.on('warning', function (err) {
             console.error('WARNING: ' + err.message);
         });
-
-        if ($.localStorage.isSet('torrentIds'))
-            twister.torrentIds = $.localStorage.get('torrentIds');
 
         $.getScript('js/localforage.min.js', function() {
             localforage.setDriver([localforage.INDEXEDDB,localforage.WEBSQL]).then(function() {

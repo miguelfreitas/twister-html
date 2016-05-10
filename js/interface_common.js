@@ -962,6 +962,15 @@ function applyShortenedURI(short, uriAndMimetype) {
 }
 
 function startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
+    if (typeof WebTorrentClient !== 'undefined') {
+        _startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia);
+    } else {
+        // delay execution until WebTorrent is loaded/initialized
+        setTimeout(_startTorrentDownloadAndPreview,1000,torrentId, previewContainer, isMedia)
+    }
+}
+
+function _startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
     var torrent = WebTorrentClient.get(torrentId);
     if( torrent === null ) 
         torrent = WebTorrentClient.add(torrentId);
