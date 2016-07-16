@@ -191,6 +191,20 @@ function twisterOptions() {
         valDefault: false
     });
     this.add({
+        name: 'MaxPostDisplayChars',
+        type: 'numeric',
+        valDefault: '256',
+        valMes: 'characters',
+        getMethod: function (val) {return parseInt(val);}
+    });
+    this.add({
+        name: 'MaxPostEditorChars',
+        type: 'numeric',
+        valDefault: '256',
+        valMes: 'characters',
+        getMethod: function (val) {return parseInt(val);}
+    });
+    this.add({
         name: 'splitPosts',
         valDefault: 'disable'
     });

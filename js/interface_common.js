@@ -1667,8 +1667,9 @@ function replyTextInput(event) {
     }
 
     function getPostSplitingPML() {
+        var MaxPostSize = $.Options.MaxPostEditorChars.val;
         if (splitedPostsCount > 1) {
-            var pml = 140 - (i+1).toString().length - splitedPostsCount.toString().length - 4;
+            var pml = MaxPostSize - (i+1).toString().length - splitedPostsCount.toString().length - 4;
 
             // if mention exists, we shouldn't add it while posting.
             if (typeof reply_to !== 'undefined' &&
@@ -1676,7 +1677,7 @@ function replyTextInput(event) {
                 pml -= reply_to.length;
             }
         } else
-            var pml = 140;
+            var pml = MaxPostSize;
         return pml;
     }
 
@@ -1723,7 +1724,8 @@ function replyTextUpdateRemaining(ta) {
                     return false;
                 }
             });
-            if (!disable && c >= 0 && c < 140 && textArea.val() !== textArea.attr('data-reply-to')) {
+            if (!disable && c >= 0 && c < $.Options.MaxPostEditorChars.val && 
+                 textArea.val() !== textArea.attr('data-reply-to')) {
                 remainingCount.removeClass('warn');
                 $.MAL.enableButton(buttonSend);
             } else {
@@ -1739,14 +1741,15 @@ function replyTextCountRemaining(ta) {
     var textArea = $(ta);
     var c;
 
+    var MaxPostSize = $.Options.MaxPostEditorChars.val;
     if (usePostSpliting && !textArea.closest('.directMessages').length && splitedPostsCount > 1) {
-        c = 140 - ta.value.length - (textArea.closest('form').find('textarea').index(ta) + 1).toString().length - splitedPostsCount.toString().length - 4;
+        c = MaxPostSize - ta.value.length - (textArea.closest('form').find('textarea').index(ta) + 1).toString().length - splitedPostsCount.toString().length - 4;
         var reply_to = textArea.attr('data-reply-to');
         if (typeof reply_to !== 'undefined' &&
-            !checkPostForMentions(ta.value, reply_to, 140 -c -reply_to.length))
+            !checkPostForMentions(ta.value, reply_to, MaxPostSize -c -reply_to.length))
                 c -= reply_to.length;
     } else
-        c = 140 - ta.value.length;
+        c = MaxPostSize - ta.value.length;
 
     return c;
 }
@@ -2211,7 +2214,7 @@ function postSubmit(e, oldLastPostId) {
             var postText = '';
             var reply_to = textArea.attr('data-reply-to');
             var val = textArea.val();
-            if (typeof reply_to === 'undefined' || checkPostForMentions(val, reply_to, 140))
+            if (typeof reply_to === 'undefined' || checkPostForMentions(val, reply_to, $.Options.MaxPostEditorChars.val))
                 postText = val + ' (' + splitedPostsCount.toString() + '/' + splitedPostsCount.toString() + ')';
             else
                 postText = reply_to + val + ' (' + splitedPostsCount.toString() + '/' + splitedPostsCount.toString() + ')';
@@ -2225,7 +2228,7 @@ function postSubmit(e, oldLastPostId) {
         var postText = '';
         var reply_to = textArea.attr('data-reply-to');
         var val = textArea[0].value;
-        if (typeof reply_to === 'undefined' || checkPostForMentions(val, reply_to, 140))
+        if (typeof reply_to === 'undefined' || checkPostForMentions(val, reply_to, $.Options.MaxPostEditorChars.val))
             postText = val + ' (' + (splitedPostsCount - textArea.length + 1).toString() + '/' + splitedPostsCount.toString() + ')';
         else
             postText = reply_to + val + ' (' + (splitedPostsCount - textArea.length + 1).toString() + '/' + splitedPostsCount.toString() + ')';
@@ -2242,7 +2245,7 @@ function postSubmit(e, oldLastPostId) {
         closePrompt(btnPostSubmit);
     else {
         textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
-        btnPostSubmit.closest('form').find('.post-area-remaining').text('140');
+        btnPostSubmit.closest('form').find('.post-area-remaining').text('');
 
         if (btnPostSubmit.closest('.post-area,.post-reply-content')) {
             $('.post-area-new').removeClass('open').find('textarea').blur();

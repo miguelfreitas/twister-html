@@ -89,6 +89,10 @@ function postToElem(post, kind, promoted) {
     if (typeof msg !== 'string')
         msg = '';
 
+    if (msg.length > $.Options.MaxPostDisplayChars.val) {
+        msg = msg.slice(0,$.Options.MaxPostDisplayChars.val) + "\u2026";
+    }
+
     // Now create the html elements
     var elem = $.MAL.getPostTemplate().clone(true).appendTo(twister.html.detached);
     elem.removeAttr('id')
