@@ -109,6 +109,9 @@ var InterfaceFunctions = function() {
             initTopTrends();
         else
             killInterfaceModule('toptrends');
+
+        if ($.Options.WebTorrent.val === 'enable')
+            initWebTorrent();
     }
 }
 
@@ -300,6 +303,98 @@ function refreshTwistdayReminder() {
         if ($.Options.TwistdayReminderAutoUpdate.val === 'enable' && $.Options.TwistdayReminderAutoUpdateTimer.val > 0)
             setTimeout(refreshTwistdayReminder, $.Options.TwistdayReminderAutoUpdateTimer.val * 1000);
     }
+}
+
+function initWebTorrent() {
+    //localStorage.debug = '*'
+    //localStorage.removeItem('debug')
+
+    if ($.localStorage.isSet('torrentIds'))
+        twister.torrentIds = $.localStorage.get('torrentIds');
+
+    WEBTORRENT_ANNOUNCE = $.Options.WebTorrentTrackers.val.split(/[ ,]+/)
+    $.getScript('js/webtorrent.min.js', function() {
+        WebTorrentClient = new WebTorrent();
+        console.log("WebTorrent started")
+        WebTorrentClient.on('error', function (err) {
+            console.error('ERROR: ' + err.message);
+        });
+        WebTorrentClient.on('warning', function (err) {
+            console.error('WARNING: ' + err.message);
+        });
+
+        $.getScript('js/localforage.min.js', function() {
+            localforage.setDriver([localforage.INDEXEDDB,localforage.WEBSQL]).then(function() {
+                for (var torrentId in twister.torrentIds) {
+                    if( twister.torrentIds[torrentId] ) {
+                        if (typeof(twister.torrentIds[torrentId]) === "string") {
+                            // get blob file to restart seeding this file
+                            var onGetItem = function(torrentId, err, data) {
+                                console.log("onget:", torrentId, err, data)
+                                if (err || data === null) {
+                                    // error reading blob, just add torrentId
+                                    console.log("WebTorrent auto-download: " + torrentId + 
+                                                " (previously seeded as: " + twister.torrentIds[torrentId] + ")" );
+                                    WebTorrentClient.add(torrentId);
+                                } else {
+                                    var fileBlob = new File([data], twister.torrentIds[torrentId]);
+                                    console.log('WebTorrent seeding: "' + twister.torrentIds[torrentId] +
+                                                '" size: ' + data.size);
+                                    WebTorrentClient.seed(fileBlob);
+                                }
+                            }
+                            localforage.getItem(torrentId, onGetItem.bind(null, torrentId));
+                        } else if ($.Options.WebTorrentAutoDownload.val === 'enable') {
+                            console.log("WebTorrent auto-download: " + torrentId);
+                            WebTorrentClient.add(torrentId);
+                        }
+                    }
+                }
+
+                // setup attach button
+                $(".post-area-attach").show();
+                var fileInput = $("#fileInputAttach");
+                fileInput.on('change', function(event) {
+                    var file = fileInput[0].files[0];
+                    var seedingTorrent = undefined;
+                    for (var i = 0; i < WebTorrentClient.torrents.length; i++) {
+                        var torrent = WebTorrentClient.torrents[i];
+                        if (torrent.length === file.size &&
+                            torrent.files[0].name === file.name) {
+                            seedingTorrent = torrent;
+                        }
+                    }
+                    var saveBlobFile = function(infoHash,file) {
+                        var magnetLink = "magnet:?xt=urn:btih:" + infoHash
+                        var blobFile = new Blob([file]);
+                        localforage.setItem(magnetLink, blobFile);
+                        twister.torrentIds[magnetLink] = file.name;
+                        $.localStorage.set('torrentIds', twister.torrentIds);
+                        return magnetLink;
+                    }
+                    if (seedingTorrent) {
+                        var magnetLink = saveBlobFile(seedingTorrent.infoHash,file);
+                        console.log('Already seeding ' + magnetLink);
+                        shortenMagnetLink(event,magnetLink);
+                    } else {
+                        WebTorrentClient.seed(file, function (torrent) {
+                            var magnetLink = saveBlobFile(torrent.infoHash,file);
+                            console.log('Client is seeding ' + magnetLink);
+                            shortenMagnetLink(event,magnetLink);
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+function shortenMagnetLink(event,magnetLink) {
+    var uri = prompt(polyglot.t('shorten_URI_enter_link'), magnetLink);
+    var textArea = $(event.target).closest('form').find('textarea');
+    newShortURI(uri, function(long,short) {
+        textArea.append(short);
+    });
 }
 
 //***********************************************

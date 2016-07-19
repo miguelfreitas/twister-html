@@ -59,5 +59,6 @@ function localizeLabels() {
     $("label[for=t-4]").text(polyglot.t("Keys"));
     $("label[for=t-5]").text(polyglot.t("Appearance"));
     $("label[for=t-6]").text(polyglot.t("Users"));
+    $("label[for=t-7]").text(polyglot.t("WebTorrent"));
 }
 

@@ -191,6 +191,20 @@ function twisterOptions() {
         valDefault: false
     });
     this.add({
+        name: 'MaxPostDisplayChars',
+        type: 'numeric',
+        valDefault: '256',
+        valMes: 'characters',
+        getMethod: function (val) {return parseInt(val);}
+    });
+    this.add({
+        name: 'MaxPostEditorChars',
+        type: 'numeric',
+        valDefault: '256',
+        valMes: 'characters',
+        getMethod: function (val) {return parseInt(val);}
+    });
+    this.add({
         name: 'splitPosts',
         valDefault: 'disable'
     });
@@ -279,6 +293,21 @@ function twisterOptions() {
         valDefault: 1,
         getMethod: function (val) {return parseFloat(val);},
         tickMethod: function (elem) {$('.volValue').text((elem.value * 100).toFixed());}
+    });
+    this.add({
+        name: 'WebTorrent',
+        valDefault: 'disable',
+        tickMethod: function (elem) {
+            $('#WebTorrentCont').css('display', (elem.value === 'enable') ? 'block' : 'none');
+        }
+    });
+    this.add({
+        name: 'WebTorrentTrackers',
+        valDefault: 'wss://tracker.webtorrent.io,wss://tracker.btorrent.xyz,wss://tracker.openwebtorrent.com,wss://tracker.fastcast.nz'
+    });
+    this.add({
+        name: 'WebTorrentAutoDownload',
+        valDefault: 'enable'
     });
 }
 
