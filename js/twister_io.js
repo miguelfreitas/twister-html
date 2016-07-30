@@ -279,7 +279,8 @@ function getFullname(peerAlias, elem) {
                                 twisterFollowingO.knownFollowers.push(req.peerAlias);
                                 twisterFollowingO.save();
                                 addPeerToFollowersList(getElem('.followers-modal .followers-list'), req.peerAlias, true);
-                                $('.open-followers').attr('title', twisterFollowingO.knownFollowers.length.toString());
+                                $('.module.mini-profile .open-followers')
+                                    .attr('title', twisterFollowingO.knownFollowers.length.toString());
                             }
                             req.elem.addClass('isFollowing');
                             req.elem.attr('title', polyglot.t('follows you'));
@@ -291,7 +292,8 @@ function getFullname(peerAlias, elem) {
                                     if (twisterFollowingO.knownFollowers.indexOf(req.peerAlias) === -1) {
                                         twisterFollowingO.knownFollowers.push(req.peerAlias);
                                         addPeerToFollowersList(getElem('.followers-modal .followers-list'), req.peerAlias, true);
-                                        $('.open-followers').attr('title', twisterFollowingO.knownFollowers.length.toString());
+                                        $('.module.mini-profile .open-followers')
+                                            .attr('title', twisterFollowingO.knownFollowers.length.toString());
                                     }
                                     req.elem.addClass('isFollowing');
                                     req.elem.attr('title', polyglot.t('follows you'));

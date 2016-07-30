@@ -449,6 +449,8 @@ function openUserProfileModalWithNameHandler(peerAlias) {
     content.find('.tox-ctc').attr('title', polyglot.t('Copy to clipboard'));
     content.find('.bitmessage-ctc').attr('title', polyglot.t('Copy to clipboard'));
 
+    content.find('.open-followers').on('mouseup', {route: '#followers?user=' + peerAlias}, routeOnClick);
+
     var modal = openModal({
         classAdd: 'profile-modal',
         content: content,
@@ -952,7 +954,7 @@ function applyShortenedURI(short, uriAndMimetype) {
                     previewContainer.append(startTorrentLink);
                 }
             } else {
-                var enableWebTorrentWarning = $('<span>' + 
+                var enableWebTorrentWarning = $('<span>' +
                     polyglot.t('Enable WebTorrent support in options page to display this content') +
                     '</span>');
                 previewContainer.append(enableWebTorrentWarning);
@@ -972,7 +974,7 @@ function startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
 
 function _startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
     var torrent = WebTorrentClient.get(torrentId);
-    if( torrent === null ) 
+    if( torrent === null )
         torrent = WebTorrentClient.add(torrentId);
 
     previewContainer.empty();
@@ -1003,7 +1005,7 @@ function webtorrentFilePreview(file, previewContainer, isMedia) {
         // try guessing by filename extension
         isMedia = /^[^?]+\.(?:jpe?g|gif|png|mp4|webm|mp3|ogg|wav|)$/i.test(file.name)
     }
-    
+
     if (isMedia) {
         var imagePreview = $('<div class="image-preview" />');
         previewContainer.append(imagePreview);
@@ -1724,7 +1726,7 @@ function replyTextUpdateRemaining(ta) {
                     return false;
                 }
             });
-            if (!disable && c >= 0 && c < $.Options.MaxPostEditorChars.val && 
+            if (!disable && c >= 0 && c < $.Options.MaxPostEditorChars.val &&
                  textArea.val() !== textArea.attr('data-reply-to')) {
                 remainingCount.removeClass('warn');
                 $.MAL.enableButton(buttonSend);
@@ -2354,7 +2356,7 @@ function initInterfaceCommon() {
         closePrompt(event);
     });
 
-    $('.open-followers').on('mouseup', {route: '#followers'}, routeOnClick);
+    $('.module.mini-profile .open-followers').on('mouseup', {route: '#followers'}, routeOnClick);
 
     $('.post-text').on('click', 'a', muteEvent);
     $('.post-reply').on('click', postReplyClick);

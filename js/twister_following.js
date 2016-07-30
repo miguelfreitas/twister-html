@@ -145,7 +145,8 @@ TwisterFollowing.prototype = {
                                 .find('li[data-peer-alias="' + args.fu + '"]').remove();
                         }
                     }
-                    $(".open-followers").attr("title", args.tf.knownFollowers.length.toString());
+                    $('.module.mini-profile .open-followers')
+                        .attr('title', args.tf.knownFollowers.length.toString());
 
                     var ctime = new Date().getTime() / 1000;
                     if (typeof(args.tf.followingsFollowings[args.fu]) === 'undefined' ||
