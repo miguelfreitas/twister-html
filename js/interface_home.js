@@ -268,7 +268,9 @@ function refreshTwistdayReminder() {
                     });
 
                     for (var i = 0; i < posts.length; i++) {
-                        if (followingUsers.indexOf(posts[i].userpost.n) > -1) {
+                        if (followingUsers.indexOf(posts[i].userpost.n) > -1
+                            && posts[i].userpost.height !== posts[i].userpost.k)  // to filter possible promoted twists which may appear suddenly (shame on you Miguel!)
+                        {
                             d.setTime(0);
                             d.setUTCSeconds(posts[i].userpost.time);
                             if (d.getMonth() === curMonth && d.getDate() === curDate) {
@@ -333,7 +335,7 @@ function initWebTorrent() {
                                 console.log("onget:", torrentId, err, data)
                                 if (err || data === null) {
                                     // error reading blob, just add torrentId
-                                    console.log("WebTorrent auto-download: " + torrentId + 
+                                    console.log("WebTorrent auto-download: " + torrentId +
                                                 " (previously seeded as: " + twister.torrentIds[torrentId] + ")" );
                                     WebTorrentClient.add(torrentId);
                                 } else {
