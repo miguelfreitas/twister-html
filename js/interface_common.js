@@ -1041,6 +1041,9 @@ function routeOnClick(event) {
     if (!event || !event.data || !event.data.route)
         return;
 
+    if (event.button === 0 && window.getSelection().toString() !== '')
+        return;
+
     event.stopPropagation();
     event.preventDefault();
 
