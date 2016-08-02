@@ -3604,7 +3604,7 @@ if(preferredLanguage == "tr"){
       "Group Messages — Join Group": "Grup Mesajları — Gruba katıl",
       "direct_messages_with": "%{username} ile Direk Mesajlar",
       "Disable": "Kullanılmaz",
-      "display_mentions": "@ adının geçtiği gönderiler",  // FIXME
+      "display_mentions": "Bahsedenleri göster",
       "Display retransmissions": "Tekrar iletimleri göster",
       "DNS to obtain list of peers:": "Eş listesini almak için DNS:",
       "downloading_block_chain": "Blok zinciri indiriliyor, devam edebilmek için lütfen bekleyiniz (blok zinciri %{days} günlük).",
@@ -3663,12 +3663,12 @@ if(preferredLanguage == "tr"){
       "new_group_messages": "%{smart_count} yeni grup mesajı |||| %{smart_count} yeni grup mesajı",
       "nobody": "hiçkimse", // used to promote a post without attaching the user
       "Not available": "Kullanılamaz", // username is not available
-      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
-      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
-        + "The counter indicates only a number of known peers sharing your torrent.\n"
-        + "In the list below are included ones, mostly, who are followed by you.",
-      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
-        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
+      "warn_following_not_any": "Hiç kimseyi takip etmiyorsun!\nAra ve birilerini takip et.",
+      "warn_followers_not_all": "Tüm takipçilerini belirlemenin kolay bir yolu bulunmuyor.\n"
+        + "Takipçi sayacı torrent'ini paylaşan eşlerin sayısından ibaret ve\n"
+        + "aşağıdaki liste çoğunlukla takip ettiklerinden seni takip edenleri içerir.",
+      "warn_followers_not_all_of": "Tüm takipçilerini belirlemenin kolay bir yolu bulunmuyor.\n"
+        + "Aşağıdaki liste takipçilerin bir kısmını ve çoğunlukla takip ettiklerinden @%{alias} kullanıcısını gizlemeden takip edenleri içerir.",
       "notify_desktop_error": "Twister masaüstü uyarısını gösterimiyor: bilimeyen bir hata oluştu.",
       "notify_desktop_perm_denied": "Twister masaüstü uyarısını gösteremiyor: yetkilendirme hatası.\n\nUyarıları almak istiyorsanız, tarayıcı ayarlarında %{this_domain} alan adı için izin veriniz.",
       "notify_desktop_test": "Kasırga her yanı saracak\nBu karnavala hoşgeldin!",
@@ -3705,10 +3705,10 @@ if(preferredLanguage == "tr"){
       "send_DM": "Direk Mesaj Gönder",
       "Sent Post to @": "@ Kullanıcıya Gönder",
       "Setup account": "Hesap ayarları",
-      "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
-        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI": "URL kısalt",
+      "shorten_URI_enter_link": "Uzun bağlantıyı yazın.\n"
+        + "Not: URL kısaltma işlemi tam URL'i barındıran 'boş' bir twist oluşturacak.\n"
+        + "Bu özel twist görüntülenmeyecek, fakat gönderi sayınızda hesaba katılacak.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
@@ -3752,8 +3752,8 @@ if(preferredLanguage == "tr"){
       "Terminate Daemon:": "Servisi Durdur:",
       "Exit": "Çıkış",
       "Save Changes": "Değişiklikleri Kaydet",
-      "profile_saved": "Profile data has been saved to DHT.",
-      "profile_not_saved": "Profile data has been not saved.",
+      "profile_saved": "Profil bilgileri DHT'ye kaydedildi.",
+      "profile_not_saved": "Profil bilgileri kaydedilmedi.",
       "Secret key:": "Gizli anahtar:",
       "Options": "Ayarlar",
       "Switch to Promoted posts": "Destekli Mesajlara Geç",
@@ -3829,7 +3829,7 @@ if(preferredLanguage == "tr"){
       "not analyzed": "incelenmedi",
       "Reason: this": "Sebep: %{this}",
       "this doesnt contain that": "%{that} %{this} tarafından kapsanmıyor",
-      "this is undefined": "%{this} is undefined",
+      "this is undefined": "%{this} tanımsız",
       "blacklist": "beyaz liste",
       "whitelist": "kara liste",
       "language of this": "dili",
