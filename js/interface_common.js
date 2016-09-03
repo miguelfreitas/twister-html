@@ -1014,7 +1014,9 @@ function webtorrentFilePreview(file, previewContainer, isMedia) {
                 elem.pause();
             }
         });
-        imagePreview.find("video").removeAttr("autoplay");
+        var $vid = imagePreview.find("video");
+        $vid.removeAttr("autoplay");
+        $vid.on('click mouseup', muteEvent);
     } else {
         file.getBlobURL(function (err, url) {
             if (err) return console.error(err)
