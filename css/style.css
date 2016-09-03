@@ -1305,6 +1305,10 @@ ol.toptrends-list {
 {
     width: 100%;
 }
+.image-preview img
+{
+    max-width: 100%;
+}
 .preview-container
 {
     max-height: 500px;
