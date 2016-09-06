@@ -326,10 +326,12 @@ function newShortURI(uri, cbFunc, cbReq) {
         return;
     }
 
-    for (var i in twister.URIs)
-        if (twister.URIs[i] === uri) {
+    for (var short in twister.URIs)
+        if (twister.URIs[short] instanceof Array ?
+            twister.URIs[short][0] === uri : twister.URIs[short] === uri) {
             if (typeof cbFunc === 'function')
-                cbFunc(uri, i, cbReq);
+                cbFunc(uri, short, cbReq);
+
             return;
         }
 
