@@ -510,6 +510,39 @@ function updateQueryModal(req) {
     requestQuery(req);
 }
 
+function openFavsModal(event) {
+    if (event && typeof event.stopPropagation === 'function') {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    var userInfo = $(this).closest('[data-screen-name]');
+    var peerAlias = '';
+    if (userInfo.length)
+        peerAlias = userInfo.attr('data-screen-name');
+    else if (defaultScreenName)
+        peerAlias = defaultScreenName;
+    else {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('No favs here because you are not logged in.')
+        });
+        return;
+    }
+
+    window.location.hash = '#favs?user=' + peerAlias;
+}
+
+function openFavsModalHandler(peerAlias) {
+    var modal = openModal({
+        classAdd: 'hashtag-modal',
+        content: $('#hashtag-modal-template').children().clone(true),
+        title: polyglot.t('users_favs', {username: peerAlias})
+    });
+
+    setupQueryModalUpdating(modal.content.find('.postboard-posts'), peerAlias, 'fav');
+}
+
 function openMentionsModal(event) {
     if (event && typeof event.stopPropagation === 'function') {
         event.preventDefault();
@@ -1131,7 +1164,7 @@ function loadModalFromHash() {
 
     // FIXME rework hash scheme from '#following?user=twister' to something like '#/@twister/following'
     if (hashdata[0] !== '#web+twister')
-        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|followers|following|conversation)\?(?:group|user|hashtag|post)=(.+)/);
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|followers|following|conversation|favs)\?(?:group|user|hashtag|post)=(.+)/);
 
     if (hashdata && hashdata[1] !== undefined && hashdata[2] !== undefined) {
         if (hashdata[1] === 'profile')
@@ -1158,6 +1191,8 @@ function loadModalFromHash() {
             splithashdata2 = hashdata[2].split(':');
             openConversationModal(splithashdata2[0], splithashdata2[1]);
         }
+        else if (hashdata[1] === 'favs')
+            openFavsModalHandler(hashdata[2]);
     } else if (hashstring === '#directmessages')
         openCommonDMsModal();
     else if (hashstring === '#followers')
@@ -1244,6 +1279,49 @@ function reTwistPopup(event, post, textArea) {
         }
     }
     replyArea.find('.post-submit').addClass('with-reference');
+}
+
+function favPopup(event, post, textArea) {
+    event.stopPropagation();
+
+    if (!defaultScreenName) {
+        alertPopup({
+            txtMessage: polyglot.t('You have to log in to favorite messages.')
+        });
+        return;
+    }
+
+    if (typeof post === 'undefined')
+        post = $.evalJSON($(event.target).closest('.post-data').attr('data-userpost'));
+
+    var modal = openModal({
+        classBase: '.prompt-wrapper',
+        classAdd: 'fav-this',
+        title: polyglot.t('fav_this')
+    });
+
+    modal.content
+        .append(postToElem(post, ''))
+        .append($('#fav-modal-template').children().clone(true))
+    ;
+    /*
+    //TODO: favs can be also commented
+    var replyArea = modal.content.find('.post-area .post-area-new');
+    if (typeof textArea === 'undefined') {
+        textArea = replyArea.find('textarea');
+        var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
+        $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
+            textArea.attr(attribute, textAreaPostInline.attr(attribute));
+        });
+    } else {
+        replyArea.find('textarea').replaceWith(textArea);
+        if (textArea.val()) {
+            textArea.focus();
+            replyArea.addClass('open');
+        }
+    }
+    replyArea.find('.post-submit').addClass('with-reference');
+    */
 }
 
 // Expande Área do Novo post
@@ -2298,6 +2376,17 @@ function retweetSubmit(event) {
     closePrompt(prompt);
 }
 
+function favSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var prompt = $(event.target).closest('.prompt-wrapper');
+    var priv = (event.target.className.indexOf('private') > -1);
+
+    newFavMsg(prompt.find('.post-data'), priv);
+    closePrompt(prompt);
+}
+
 function changeStyle() {
     var style, profile, menu;
     var theme = $.Options.theme.val;
@@ -2442,6 +2531,7 @@ function initInterfaceCommon() {
     $('.post-text').on('click', 'a', muteEvent);
     $('.post-reply').on('click', postReplyClick);
     $('.post-propagate').on('click', reTwistPopup);
+    $('.post-favorite').on('click', favPopup);
     $('.userMenu-config').clickoutside(closeThis.bind($('.config-menu')));
     $('.userMenu-config-dropdown').on('click', dropDownMenu);
     $('#post-template.module.post').on('click', function(event) {
@@ -2461,6 +2551,8 @@ function initInterfaceCommon() {
     ;
     $('.post-submit').on('click', postSubmit);
     $('.modal-propagate').on('click', retweetSubmit);
+    $('.modal-fav-public').on('click', favSubmit);
+    $('.modal-fav-private').on('click', favSubmit);
     $('.expanded-content .show-more').on('mouseup',
         {feeder: '.module.post.original.open .module.post.original .post-data'}, handleClickOpenConversation)
         .on('click', muteEvent)  // to prevent post collapsing
@@ -2476,6 +2568,8 @@ function initInterfaceCommon() {
     //$('.open-following-modal').on('click', openFollowingModal);
     $('.userMenu-connections a').on('click', openMentionsModal);
     $('.mentions-from-user').on('click', openMentionsModal);
+    $('.userMenu-favs a').on('click', openFavsModal);
+    $('.favs-from-user').on('click', openFavsModal);
 
     $('#hashtag-modal-template .postboard-news').on('click', function () {
         $(this).hide();

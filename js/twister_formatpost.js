@@ -43,6 +43,8 @@ function postToElem(post, kind, promoted) {
             "dm" : encrypted message (dm) -opt
             "rt" : original userpost - opt
             "sig_rt" : sig of rt - opt
+            "fav" : original userpost - opt
+            "sif_fav" : sig of fav - opt
             "reply" : - opt
             {
                     "n" : reference username
@@ -56,6 +58,10 @@ function postToElem(post, kind, promoted) {
 
     // Obtain data from userpost
     var userpost = post.userpost;
+
+    //TODO: favorites may have comment also...
+    if (userpost.fav)
+        userpost = userpost.fav;
 
     if (post.sig_wort)
         userpost.sig_wort = post.sig_wort;
