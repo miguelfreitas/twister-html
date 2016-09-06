@@ -737,6 +737,30 @@ function openWhoToFollowModal() {
     fillWhoToFollowModal(tmplist, hlist, 0);
 }
 
+function openModalUriShortener()
+{
+    var modal = openModal({
+        classAdd: 'uri-shortener-modal',
+        content: twister.tmpl.uriShortenerMC.clone(true),
+        title: polyglot.t('URI_shortener')
+    });
+
+    modal.content.find('.uri-shortener-control .shorten-uri').text(polyglot.t('shorten_URI'));
+    modal.content.find('.uri-shortener-control .clear-cache').text(polyglot.t('clear_cache'));
+
+    var urisList = modal.content.find('.uris-list');
+    //var i = 0;
+    for (var short in twister.URIs) {
+        //i++;
+        var long = twister.URIs[short] instanceof Array ? twister.URIs[short][0] : twister.URIs[short];
+        var item = twister.tmpl.uriShortenerUrisListItem.clone(true);
+        item.find('.short').text(short);
+        item.find('.long').text(long).attr('href', long);
+        item.appendTo(urisList);
+    }
+    //i + URIs are cached
+}
+
 function newConversationModal(peerAlias, resource) {
     var content = $('#hashtag-modal-template').children().clone(true);
 
@@ -1148,6 +1172,8 @@ function loadModalFromHash() {
         openGroupMessagesJoinGroupModal();
     else if (hashstring === '#whotofollow')
         openWhoToFollowModal();
+    else if (hashstring === '#/uri-shortener')
+        openModalUriShortener();
 }
 
 function initHashWatching() {
@@ -2343,6 +2369,56 @@ function replaceDashboards() {
 
 function initInterfaceCommon() {
     twister.tmpl.commonDMsList = extractTemplate('#template-direct-messages-list');
+    twister.tmpl.uriShortenerMC = extractTemplate('#template-uri-shortener-modal-content');
+    twister.tmpl.uriShortenerMC
+        .find('.shorten-uri').on('click',
+            {cbFunc:
+                function (long, short) {
+                    if (short) {
+                        var urisList = getElem('.uri-shortener-modal .uris-list');
+                        if (urisList.length) {
+                            var item = urisList.find('.short:contains("' + short + '")').closest('li');
+                            if (!item.length) {
+                                item = twister.tmpl.uriShortenerUrisListItem.clone(true);
+                                item.find('.short').text(short);
+                                item.find('.long').text(long).attr('href', long);
+                                item.appendTo(urisList);
+                            }
+                            urisList.children('.highlighted').removeClass('highlighted');
+                            item.addClass('highlighted');
+                            var mc = urisList.closest('.modal-content');
+                            mc.scrollTop(item.offset().top - mc.offset().top + mc.scrollTop());
+                        }
+                        showURIPair(long, short);
+                    } else
+                        showURIShortenerErrorRPC(short);
+                }
+            },
+            function (event) {
+                muteEvent(event);
+                openRequestShortURIForm(event);
+            }
+        )
+        .siblings('.clear-cache').on('click',
+            function () {
+                confirmPopup({
+                    txtMessage: polyglot.t('confirm_uri_shortener_clear_cache'),
+                    cbConfirm: function () {
+                        twister.URIs = {};
+                        $.localStorage.set('twistaURIs', twister.URIs);
+                        getElem('.uri-shortener-modal .uris-list').empty();
+                    }
+                });
+            }
+        )
+    ;
+    twister.tmpl.uriShortenerUrisListItem = extractTemplate('#template-uri-shortener-uris-list-item')
+        .on('click', function (event) {
+            var elem = $(event.target);
+            elem.closest('.uris-list').children('.highlighted').removeClass('highlighted');
+            elem.addClass('highlighted');
+        })
+    ;
 
     $('.modal-close, .modal-blackout').not('.prompt-close').on('click', closeModal);
 
@@ -2445,7 +2521,7 @@ function initInterfaceCommon() {
     $('.tox-ctc').on('click', promptCopyAttrData);
     $('.bitmessage-ctc').on('click', promptCopyAttrData);
 
-    $('.uri-shortener').on('click', openRequestShortURIForm);  // FIXME implement Uri Shortener Center with links library etc
+    $('.uri-shortener').on('mouseup', {route: '#/uri-shortener'}, routeOnClick);
 
     $('.post-area-new textarea')
         .on('focus',

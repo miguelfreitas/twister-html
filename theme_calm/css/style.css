@@ -2343,6 +2343,42 @@ textarea.splited-post {
 }
 
 /*************************************
+********* URI SHORTENER MODAL ********
+**************************************/
+
+.uri-shortener-modal .uris-list {
+    font-size: 12px;
+    overflow-x: hidden;
+}
+
+.uri-shortener-modal .uris-list li {
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-bottom: 4px;
+}
+
+.uri-shortener-modal .uris-list li:last-child {
+    margin-bottom: 16px;
+}
+
+.uri-shortener-modal .uris-list li.highlighted,
+.uri-shortener-modal .uris-list li:hover {
+    background-color: #FEFEDF;
+}
+
+.uri-shortener-modal .uris-list .short {
+    background-color: #F0EFCC;
+    display: inline-block;
+    width: 26%;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.uri-shortener-modal .uris-list .long {
+    margin-left: 4px;
+}
+
+/*************************************
 ************ POPUP PROMPT ************
 **************************************/
 

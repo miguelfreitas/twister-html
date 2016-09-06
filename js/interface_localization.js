@@ -45,6 +45,7 @@ if(preferredLanguage == "en"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancel",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -54,6 +55,7 @@ if(preferredLanguage == "en"){
             "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Change user",
       "Checking...": "Checking...", // checking if username is available
       "Collapse": "Collapse", // smaller view of a post
@@ -175,6 +177,7 @@ if(preferredLanguage == "en"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
@@ -379,6 +382,7 @@ if(preferredLanguage == "es"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancelar",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -388,6 +392,7 @@ if(preferredLanguage == "es"){
             "¿Quieres comprobar la [página de estado de la red](%{page}) en su lugar?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Cambiar de usuario",
       "Checking...": "Comprobando ...", // checking if username is available
       "Collapse": "Colapsar", // smaller view of a post
@@ -509,6 +514,7 @@ if(preferredLanguage == "es"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
       "time_ago": "hace %{time}", // 5 minutes ago
       "Time of the last block:": "Hora del último bloque: ",
@@ -697,6 +703,7 @@ if(preferredLanguage == "uk"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Відміна",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -706,6 +713,7 @@ if(preferredLanguage == "uk"){
             "Чи бажаєте ви перевірити [сторінку зі статусом мережі](%{page})?",
       "confirm_terminate_daemon": "Ви впевнені, що бажаєте завершити роботу?\nКлієнт Twister буде зупинено допоки ви не запустите його знову.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Змінити користувача",
       "Checking...": "Перевірка...", // checking if username is available
       "Collapse": "Згорнути", // smaller view of a post
@@ -828,6 +836,7 @@ if(preferredLanguage == "uk"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
@@ -1014,6 +1023,7 @@ if(preferredLanguage == "zh-CN"){
       "busted_avowal": "系统检测到此用户试图在这里注入恶意代码",
       "btn_ok": "Okay",
       "Cancel": "取消",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1023,6 +1033,7 @@ if(preferredLanguage == "zh-CN"){
             "你要跳转到[网络状态页](%{page})吗？",
       "confirm_terminate_daemon": "你确定要退出后台进程？\nTwister 客户端将停止工作。",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
       "Collapse": "折叠", // smaller view of a post
@@ -1144,6 +1155,7 @@ if(preferredLanguage == "zh-CN"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持 File API。",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新区块的时间：",
@@ -1348,6 +1360,7 @@ if(preferredLanguage == "nl"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Annuleren",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1357,6 +1370,7 @@ if(preferredLanguage == "nl"){
             "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Gebruiker wijzigen",
       "Checking...": "Controleren...", // checking if username is available
       "Collapse": "Uitklappen", // smaller view of a post
@@ -1478,6 +1492,7 @@ if(preferredLanguage == "nl"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Tijd van de laatste block: ",
@@ -1666,6 +1681,7 @@ if(preferredLanguage == "it"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancella",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1675,6 +1691,7 @@ if(preferredLanguage == "it"){
             "Vuoi controllare lo [stato della rete Twister](%{page}), invece?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Cambia utente",
       "Checking...": "Controllo in corso...", // checking if username is available
       "Collapse": "Chiudi", // smaller view of a post
@@ -1796,6 +1813,7 @@ if(preferredLanguage == "it"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
       "time_ago": "%{time} fa", // 5 minutes ago
       "Time of the last block:": "Orario del blocco più recente: ",
@@ -1982,6 +2000,7 @@ if(preferredLanguage == "fr"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Annuler",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1991,6 +2010,7 @@ if(preferredLanguage == "fr"){
             "Voulez-vous consulter la [page d'état du réseau](%{page}) à la place?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Changer d'utilisateur",
       "Checking...": "Vérification...", // checking if username is available
       "Collapse": "Fermer", // smaller view of a post
@@ -2112,6 +2132,7 @@ if(preferredLanguage == "fr"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
@@ -2302,6 +2323,7 @@ if(preferredLanguage == "ru"){
        "busted_avowal": "я пойман на попытке вставить этот подозрительный код здесь",
        "btn_ok": "Лады́",
        "Cancel": "Отмена",
+       "clear_cache": "Очистить кэш",
        "Confirm": "Несомненно",
        "сonfirm_group_leaving_header": "Подтверждение ухода из группы",
        "сonfirm_group_leaving_body": "Воистину покинуть группу %{alias}?",
@@ -2311,6 +2333,7 @@ if(preferredLanguage == "ru"){
             "Не хотите перейти на [страницу настройки сети](%{page})?",
        "confirm_terminate_daemon": "Вы уверены, что хотите выключить демон?\nTwister клиент перестанет работать.",
        "confirm_unfollow_@": "Действительно отписаться от @%{alias}?",
+       "confirm_uri_shortener_clear_cache": "В самом деле очистить кэш сокращённых URI в браузере?",
        "Change user": "Сменить пользователя",
        "Checking...": "Проверка...",
        "Collapse": "Свернуть",
@@ -2432,6 +2455,7 @@ if(preferredLanguage == "ru"){
         + "Примечание: в результате сокращения URL получается 'пустой' твист, содержащий эту URL.\n"
         + "Этот особый твист не отображается клиентами твистера, но учитывается в числе твоих твистов.",
        "shorten_URI_its_public_is_it_ok": "Ссылка будет общедоступной! Это приемлимо для тебя?",
+       "URI_shortener": "Сокращалка URI",
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
@@ -2624,6 +2648,7 @@ if(preferredLanguage == "de"){
       "busted_avowal": "Ich bin ertappt, habe versucht, hier Schadcode einzugeben!",
       "btn_ok": "Okay",
       "Cancel": "Abbrechen",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -2633,6 +2658,7 @@ if(preferredLanguage == "de"){
             "Möchtest du stattdessen den [Netzwerkstatus](%{page}) überprüfen?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Benutzer wechseln",
       "Checking...": "Überprüfe...", // checking if username is available
       "Collapse": "Einklappen", // smaller view of a post
@@ -2755,6 +2781,7 @@ if(preferredLanguage == "de"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
@@ -2944,6 +2971,7 @@ if(preferredLanguage == "ja"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "キャンセル",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -2953,6 +2981,7 @@ if(preferredLanguage == "ja"){
             "[ネットワーク状態ペー](%{page})ジへ移動して確認しますか？",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "ユーザーを変更",
       "Checking...": "チェック...", // checking if username is available
       "Collapse": "閉じる", // smaller view of a post
@@ -3074,6 +3103,7 @@ if(preferredLanguage == "ja"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
       "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
@@ -3260,6 +3290,7 @@ if(preferredLanguage == "pt-BR"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancelar",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -3269,6 +3300,7 @@ if(preferredLanguage == "pt-BR"){
             "Gostaria de verificar o [Estado da Rede](%{page}) ao invés disso?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Trocar usuário",
       "Checking...": "Verificando...", // checking if username is available
       "Collapse": "Recolher", // smaller view of a post
@@ -3391,6 +3423,7 @@ if(preferredLanguage == "pt-BR"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
       "time_ago": "%{time} atrás", // 5 minutes ago
       "Time of the last block:": "Horário do último bloco: ",
@@ -3399,6 +3432,7 @@ if(preferredLanguage == "pt-BR"){
       "Update": "Atualizar",
       "Auto updating": "Auto updating",
       "Updating status...": "Atualizando estado da Cadeia de Blocos...", // status of block chain
+      "URI_shortener_caption": "URI Shortener",
       "user_not_yet_accepted": "Outros nós ainda não aceitaram este novo usuário.\n" +
                 "Infelizmente não é possível salvar o perfil\n" +
                 "ou realizar postagens neste estado.\n\n" +
@@ -3580,6 +3614,7 @@ if(preferredLanguage == "tr"){
       "busted_avowal": "Şüpheli bir şeyler iliştirmeye çalışırken enselendim.",
       "btn_ok": "Tamam",
       "Cancel": "İptal",
+      "clear_cache": "Clear cache",
       "Confirm": "Onayla",
       "сonfirm_group_leaving_header": "Gruptan ayrılmayı onayla",
       "сonfirm_group_leaving_body": "%{alias} grubundan ayrılmak istiyor musun?",
@@ -3589,6 +3624,7 @@ if(preferredLanguage == "tr"){
             "Bunun yerine [Ağ Durumu sayfasını](%{page}) kontrol etmek ister misiniz?",
       "confirm_terminate_daemon": "Hizmeti sonlandırmak istiyor musun?\nTwister istemcisi çalışmayacak.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
       "Collapse": "Kapat", // smaller view of a post
@@ -3710,6 +3746,7 @@ if(preferredLanguage == "tr"){
         + "Not: URL kısaltma işlemi tam URL'i barındıran 'boş' bir twist oluşturacak.\n"
         + "Bu özel twist görüntülenmeyecek, fakat gönderi sayınızda hesaba katılacak.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
@@ -3897,6 +3934,7 @@ if(preferredLanguage == "cs"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Zrušit",
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -3906,6 +3944,7 @@ if(preferredLanguage == "cs"){
             "Chcete se místo toho podívat na [stav sítě](%{page})?",
       "confirm_terminate_daemon": "Skutečně chcete ukončit server?\nTwister tím vypnete.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Změnit uživatele",
       "Checking...": "Ověřuji...", // checking if username is available
       "Collapse": "Složit", // smaller view of a post
@@ -4028,6 +4067,7 @@ if(preferredLanguage == "cs"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "time_ago": "před %{time}", // 5 minutes ago
       "Time of the last block:": "Čas posledního bloku: ",

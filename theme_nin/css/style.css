@@ -3134,6 +3134,57 @@ ol.toptrends-list a:hover {
   font-style: italic;
 }
 
+/*************************************
+********* URI SHORTENER MODAL ********
+**************************************/
+
+.modal-wrapper.uri-shortener-modal {
+  width: 520px;
+  height: 720px;
+  margin: -360px 0 0 -260px;
+}
+
+.uri-shortener-modal .modal-content {
+  padding: 20px;
+}
+
+.uri-shortener-control.b-buttons {
+    padding: 4px;
+}
+
+.uri-shortener-modal .uris-list {
+    font-size: 12px;
+    overflow-x: hidden;
+}
+
+.uri-shortener-modal .uris-list li {
+    background-color: #FFF;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-bottom: 2px;
+}
+
+.uri-shortener-modal .uris-list li:last-child {
+    margin-bottom: 16px;
+}
+
+.uri-shortener-modal .uris-list li.highlighted,
+.uri-shortener-modal .uris-list li:hover {
+    background-color: #FEFEDF;
+}
+
+.uri-shortener-modal .uris-list .short {
+    background-color: #EEE;
+    display: inline-block;
+    width: 26%;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.uri-shortener-modal .uris-list .long {
+    margin-left: 4px;
+}
+
 /******* LOADER ************ */
 /* line 978, ../sass/style.sass */
 .postboard-loading, .loading-roller {
