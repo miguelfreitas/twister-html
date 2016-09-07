@@ -361,6 +361,11 @@ if(preferredLanguage == "en"){
       "IP Overhead Upload:": "IP Overhead Upload:",
       "Payload Download:": "Payload Download:",
       "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 if(preferredLanguage == "es"){
@@ -681,6 +686,24 @@ if(preferredLanguage == "es"){
       "Sound": "Sonido",
       "Users": "Usuarios",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -1001,6 +1024,23 @@ if(preferredLanguage == "uk"){
       "Direct Message's copy to self": "Повідомлення скопійовано самому собі",
       "Traffic information": "Статистика трафіку",
       "Direct messages with": "Співбесіда з",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -1338,6 +1378,11 @@ if(preferredLanguage == "zh-CN"){
       "IP Overhead Upload:": "IP层开销上传:",
       "Payload Download:": "有效载荷下载:",
       "Payload Upload:": "有效载荷上传:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -1659,6 +1704,24 @@ if(preferredLanguage == "nl"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -1978,6 +2041,24 @@ if(preferredLanguage == "it"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -2299,6 +2380,24 @@ if(preferredLanguage == "fr"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages."
+
     };
 }
 
@@ -2626,6 +2725,24 @@ if(preferredLanguage == "ru"){
        "New post": "Новый пост",
        "Search": "Поиск",
        "Direct Msg": "ЛС",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -2728,7 +2845,7 @@ if(preferredLanguage == "de"){
       "in postboard": "in der Timeline",
       "in search result": "in den Suchergebnissen",
       "in top trends": "in den Top Trends",
-      "new_posts": "%{smart_count} neuer Post |||| %{smart_count} neue Posts",
+      "new_posts": "%{smart_count} neuer Post |||| %{smart_count} neue Posts", /* FIXME: duplicate */
       "new_mentions": "%{smart_count} neue Erwähnung |||| %{smart_count} neue Erwähnungen",
       "new_direct_messages": "%{smart_count} neue Direktnachricht |||| %{smart_count} neue Direktnachrichten",
       "new_group_messages": "%{smart_count} neue Gruppen-Nachricht |||| %{smart_count} neue Gruppen-Nachrichten",
@@ -2840,7 +2957,7 @@ if(preferredLanguage == "de"){
       "Options": "Einstellungen",
       "Switch to Promoted posts": "Wechsle zu Promoted Nachrichten",
       "Switch to Normal posts": "Switch to Normal posts",
-      "new_posts": "%{smart_count} neue Nachricht |||| %{smart_count} neue Nachrichten",
+      "new_posts": "%{smart_count} neue Nachricht |||| %{smart_count} neue Nachrichten", /* FIXME: duplicate */
       "Use language": "Sprache einstellen",
       "Ignore": "Ignorieren",
       "Ignore and clear out": "Ignore and clear out",
@@ -2949,6 +3066,24 @@ if(preferredLanguage == "de"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Kopie der Direktnachricht an mich selbst",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -3267,6 +3402,24 @@ if(preferredLanguage == "ja"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -3580,7 +3733,6 @@ if(preferredLanguage == "pt-BR"){
       "post_rt_time_prep": "at",
       "undo": "undo",
       "Daemon exited...": "Daemon exited...",
-      "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
       "Full name here": "Full name here",
       "Describe yourself": "Describe yourself",
@@ -3592,6 +3744,24 @@ if(preferredLanguage == "pt-BR"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 
@@ -3912,6 +4082,24 @@ if(preferredLanguage == "tr"){
       "Sound": "Ses",
       "Users": "Kullanıcılar",
       "Direct Message's copy to self": "Özel iletinin kopyasını sakla",
+      "Traffic information": "Trafik bilgileri",
+      "DHT Torrents:": "DHT Torrentleri:",
+      "Peers:": "Eşler:",
+      "Peer List Size:": "Eş listesi uzunluğu:",
+      "Active Requests:": "Aktif istekler:",
+      "Download:": "İndirme:",
+      "Upload:": "Yükleme:",
+      "DHT Download:": "DHT İndirme:",
+      "DHT Upload:": "DHT Yükleme:",
+      "IP Overhead Download:": "IP Başlık İndirme:",
+      "IP Overhead Upload:": "IP Başlık Yükleme:",
+      "Payload Download:": "İçerik İndirme:",
+      "Payload Upload:": "İçerik Yükleme:",
+      "No favs here because you are not logged in." : "Giriş yapmadan favorileri göremezsin.",
+      "users_favs": "@%{username} kullanıcısının favorileri",
+      "Favorites": "Favoriler",
+      "You have to log in to favorite messages.": "İletileri favorine eklemek için giriş yapmalısın.",
+      "fav_this": "Sana özel mi?"
     };
 }
 
@@ -4248,6 +4436,11 @@ if(preferredLanguage == "cs"){
       "IP Overhead Upload:": "IP Overhead - odesílání:",
       "Payload Download:": "Data aplikace - stahování:",
       "Payload Upload:": "Data aplikace - odesílání:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?"
     };
 }
 

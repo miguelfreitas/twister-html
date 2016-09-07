@@ -300,6 +300,16 @@ button.follow:hover, button.unfollow:hover, .following-own-modal .following-list
     opacity: 0.9;
 }
 
+.userMenu li.userMenu-favs > a {
+    padding: 0 14px;
+    opacity: 1;
+}
+
+.userMenu li.userMenu-favs > a:before {
+    content: '★';
+    font-size: 24px;
+}
+
 .userMenu li.userMenu-profile > a {
     background: url(../img/profile.png) no-repeat 5px center;
 }
@@ -1280,6 +1290,7 @@ ol.toptrends-list {
 .post-favorite:before
 {
     content: "★";
+    font-size: 18px;
 }
 .post-reply:hover,
 .post-propagate:hover,

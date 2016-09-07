@@ -319,6 +319,39 @@ function newRtMsg(postData, msg) {
     }
 }
 
+function newFavMsg(postData, priv, msg) {
+    var userpost = $.evalJSON(postData.attr('data-content_to_rt'));
+    var sig_userpost = postData.attr('data-content_to_sigrt');
+
+    if (typeof sig_userpost === 'undefined') {
+        alert(polyglot.t('error',
+            {error: 'can\'t sig_userpost is not deifned'}
+        ));
+
+        return;
+    }
+    var rtObj = {sig_userpost: sig_userpost, userpost: userpost};
+
+    if (typeof lastPostId !== 'undefined') {
+        if (typeof _sendedPostIDs !== 'undefined')
+            _sendedPostIDs.push(lastPostId + 1);
+
+        var params = [defaultScreenName, lastPostId + 1, rtObj, priv];
+
+        if (typeof msg !== 'undefined')
+            params.push(msg);
+
+        twisterRpc('newfavmsg', params,
+            function(arg, ret) {incLastPostId();}, null,
+            function(arg, ret) {var msg = ('message' in ret) ? ret.message : ret;
+                alert(polyglot.t('ajax_error', {error: msg}));
+            }, null
+        );
+    } else {
+        alert(polyglot.t('Internal error: lastPostId unknown (following yourself may fix!)'));
+    }
+}
+
 function newShortURI(uri, cbFunc, cbReq) {
     if (!uri || !defaultScreenName) return;
     if (parseInt(twisterVersion) < 93500) {
@@ -413,14 +446,22 @@ function clearQueryProcessed(id) {
 
 function requestQuery(req) {
     req.postboard.closest('div').find('.postboard-loading').show();
-    dhtget(req.query, req.resource, 'm',
-        function(req, posts) {
-            req.posts = posts;
-            processQuery(req);
-        },
-        req,
-        req.timeoutArgs
-    );
+    if (req.resource === 'fav'){
+        twisterRpc("getfavs", [req.query, 1000], function(req, posts){
+                req.posts = posts;
+                processQuery(req)
+            }, req);
+    }
+    else {
+        dhtget(req.query, req.resource, 'm',
+            function (req, posts) {
+                req.posts = posts;
+                processQuery(req);
+            },
+            req,
+            req.timeoutArgs
+        );
+    }
 }
 
 function processQuery(req) {
@@ -436,6 +477,10 @@ function processQuery(req) {
 
     for (var i = req.posts.length - 1; i >= 0; i--) {
         var userpost = req.posts[i].userpost;
+
+        if (userpost.fav)
+            userpost = userpost.fav;
+
         var key = userpost.n + ';' + userpost.time;
 
         if (!_queryProcessedMap[req.id][key]) {

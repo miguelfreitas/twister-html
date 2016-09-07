@@ -76,6 +76,7 @@
           <span class="messages-qtd" style="display:none;">0</span>
         </a>
       </li>
+      <li class="userMenu-favs"><a href="#"></a></li>
       <li class="userMenu-dhtindicator selectable_theme theme_calm"><a href="network.html"></a></li>
 
       <!-- BUSCA -->
@@ -343,7 +344,7 @@
             <div class="post-interactions">
                 <span class="post-reply">Reply</span>
                 <span class="post-propagate">Retransmit</span>
-                <!--span class="post-favorite">Favorite</span-->
+                <span class="post-favorite">Favorite</span>
             </div>
             <div class="expanded-content" style="display: none;">
                 <ul class="post-stats" style="display: none;">
@@ -472,6 +473,14 @@
       </div>
     </div>
 
+      <div id="fav-modal-template">
+          <div class="post-area">
+              <div class="modal-buttons">
+                  <button class="modal-fav-public">Public</button>
+                  <button class="modal-fav-private">Private</button>
+              </div>
+          </div>
+      </div>
     <!-- MODAL DE DIRECT MESSAGES INIT -->
     <!-- Este modal possui dois templates, o primeiro da lista de pessoas que enviaram mensagens e o segundo
     com a thread de mensagens individual -->
@@ -662,6 +671,7 @@
                 <button class="follow" href="#">Follow</button>
                 <button class="direct-messages-with-user" href="#">Direct Messages</button>
                 <button class="mentions-from-user" href="#">Mentions</button>
+                <button class="favs-from-user" href="#">Favorites</button>
               </div>
             </div>
             <div class="who-follow"></div>
