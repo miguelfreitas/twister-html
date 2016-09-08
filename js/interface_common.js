@@ -1537,7 +1537,7 @@ function postExpandFunction(e, postLi) {
         var originalLi = $('<li/>', {class: 'module post original'}).appendTo(itemOl)
             .append(originalPost);
 
-        setPostImagePreview(postExpandedContent, originalPost.find('a[rel="nofollow"]'));
+        setPostImagePreview(postExpandedContent, originalPost.find('a[rel^="nofollow"]'));
 
         postExpandedContent.slideDown('fast');
 
