@@ -57,6 +57,10 @@ function openModal(modal) {
 
     if (modal.title)
         modal.self.find('.modal-header h3').html(modal.title);
+    if (modal.warn)
+        modal.self.find('.modal-warn')
+            .show()
+            .find('.warn-text').html(modal.warn);
     if (modal.content)
         modal.content = modal.self.find('.modal-content')
             .append(modal.content);
@@ -610,12 +614,11 @@ function openFollowersModal(peerAlias) {
     var modal = openModal({
         classAdd: 'followers-modal',
         content: twister.tmpl.followersList.clone(true),
-        title: title
+        title: title,
+        warn: txtAlert
     });
 
     appendFollowersToElem(modal.content.find('ol'), followers);
-
-    alertPopup({txtMessage: txtAlert});
 }
 
 function appendFollowersToElem(list, followers) {
@@ -1537,7 +1540,7 @@ function postExpandFunction(e, postLi) {
         var originalLi = $('<li/>', {class: 'module post original'}).appendTo(itemOl)
             .append(originalPost);
 
-        setPostImagePreview(postExpandedContent, originalPost.find('a[rel="nofollow"]'));
+        setPostImagePreview(postExpandedContent, originalPost.find('a[rel^="nofollow"]'));
 
         postExpandedContent.slideDown('fast');
 
@@ -2516,6 +2519,8 @@ function initInterfaceCommon() {
     });
 
     $('.modal-back').on('click', function() {history.back();});
+
+    $('.modal-warn-close').on('click', function() {$(this).closest('.modal-warn').hide()});
 
     $('.prompt-close').on('click', closePrompt);
 
