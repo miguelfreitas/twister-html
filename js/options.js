@@ -316,6 +316,20 @@ twisterOptions.prototype.add = function (option) {
         this[option.name] = new twisterOption(option);
 };
 
+twisterOptions.prototype.get = function (optionName) {
+    if (optionName && typeof this[optionName] !== 'undefined')
+        return this[optionName].val;
+    else
+        console.warn('option \'' + optionName + '\' does not exist');
+};
+
+twisterOptions.prototype.set = function (optionName, val) {
+    if (optionName && typeof this[optionName] !== 'undefined')
+        this[optionName].set(val);
+    else
+        console.warn('option \'' + optionName + '\' does not exist');
+};
+
 twisterOptions.prototype.initControls = function () {
     var elem;
 
