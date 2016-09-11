@@ -314,6 +314,11 @@ function twisterOptions() {
         type: 'checkbox',
         valDefault: false
     });
+    this.add({
+        name: 'skipWarnFollowersNotAllOf',
+        type: 'checkbox',
+        valDefault: false
+    });
 }
 
 twisterOptions.prototype.add = function (option) {

@@ -599,7 +599,7 @@ function openMentionsModalHandler(peerAlias) {
 }
 
 function openFollowersModal(peerAlias) {
-    var followers, title, txtAlert;
+    var followers, title, warn;
 
     if (!peerAlias || peerAlias === defaultScreenName) {
         if (!defaultScreenName) {
@@ -612,21 +612,24 @@ function openFollowersModal(peerAlias) {
         }
         title = polyglot.t('Followers');
         followers = twisterFollowingO.knownFollowers.slice();
-        txtAlert = '* ' + polyglot.t('warn_followers_not_all');
+        warn = {
+            name: 'FollowersNotAll',
+            text: '* ' + polyglot.t('warn_followers_not_all')
+        };
     } else {
         title = polyglot.t('Followers_of', {alias: peerAlias});
         followers = whoFollows(peerAlias);
-        txtAlert = polyglot.t('warn_followers_not_all_of', {alias: peerAlias});
+        warn = {
+            name: 'FollowersNotAllOf',
+            text: polyglot.t('warn_followers_not_all_of', {alias: peerAlias})
+        };
     }
 
     var modal = openModal({
         classAdd: 'followers-modal',
         content: twister.tmpl.followersList.clone(true),
         title: title,
-        warn: {
-            name: 'FollowersNotAll',
-            text: txtAlert
-        }
+        warn: warn
     });
 
     appendFollowersToElem(modal.content.find('ol'), followers);
