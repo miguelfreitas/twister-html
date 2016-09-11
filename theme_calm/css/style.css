@@ -2034,11 +2034,13 @@ textarea.splited-post {
 
 .inline-warn .text {
     font-size: 0.8em;
+    text-align: center;
 }
 
 .inline-warn .options {
     font-size: 0.8em;
     text-align: right;
+    margin-top: 4px;
 }
 
 /*************************************

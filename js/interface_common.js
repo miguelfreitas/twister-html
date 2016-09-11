@@ -63,14 +63,15 @@ function openModal(modal) {
     else
         modal.content = modal.self.find('.modal-content');
 
-    if (modal.warn && modal.warn.name && modal.warn.text)
-        twister.tmpl.modalComponentWarn.clone(true)
+    if (modal.warn && modal.warn.name && modal.warn.text) {
+        var elem = twister.tmpl.modalComponentWarn.clone(true)
             .attr('data-warn-name', modal.warn.name)
             .toggle(!$.Options.get('skipWarn' + modal.warn.name))
-            .insertBefore(modal.content)
-            .find('.text').html(modal.warn.text)
-            .siblings('.options').find('.never-again + span').text(polyglot.t('do_not_show_it_again'))
         ;
+        fillElemWithTxt(elem.find('.text'), modal.warn.text, {markout: 'apply'});
+        elem.find('.options .never-again + span').text(polyglot.t('do_not_show_it_again'));
+        elem.insertBefore(modal.content);
+    }
 
     modal.self.appendTo('body').fadeIn('fast');  // FIXME maybe it's better to append it to some container inside body
 
