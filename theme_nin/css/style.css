@@ -2582,6 +2582,24 @@ ol.toptrends-list a:hover {
     margin: 4px;
 }
 
+
+.inline-warn {
+    background-color: #FEFEDF;
+    padding: 10px;
+}
+
+.inline-warn .close {
+    float: right;
+    font-size: 1.2em;
+    color: #e34f42;
+    cursor: pointer;
+    margin: -8px 2px 8px 8px;
+}
+
+.inline-warn .text {
+    font-size: 0.8em;
+}
+
 /*************************************
 *********** CONFIRM POPUP ************
 **************************************/

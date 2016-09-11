@@ -57,15 +57,17 @@ function openModal(modal) {
 
     if (modal.title)
         modal.self.find('.modal-header h3').html(modal.title);
-    if (modal.warn)
-        modal.self.find('.modal-warn')
-            .show()
-            .find('.warn-text').html(modal.warn);
     if (modal.content)
         modal.content = modal.self.find('.modal-content')
             .append(modal.content);
     else
         modal.content = modal.self.find('.modal-content');
+
+    if (modal.warn)
+        twister.tmpl.modalComponentWarn.clone(true)
+            .insertBefore(modal.content)
+            .find('.text').html(modal.warn)
+        ;
 
     modal.self.appendTo('body').fadeIn('fast');  // FIXME maybe it's better to append it to some container inside body
 
@@ -75,7 +77,8 @@ function openModal(modal) {
 
         modal.drapper = $('<div>').appendTo(twister.html.detached);  // here modal goes instead detaching
 
-        modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
+        modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight()
+            - modal.self.find('.inline-warn').outerHeight());
 
         var windowHeight = $(window).height();
         if (modal.self.outerHeight() > windowHeight) {
@@ -2460,6 +2463,27 @@ function replaceDashboards() {
 }
 
 function initInterfaceCommon() {
+    twister.tmpl.modalComponentWarn = extractTemplate('#template-inline-warn');
+    twister.tmpl.modalComponentWarn.find('.close').on('click',
+        function(event) {
+            var i = $(event.target).closest('.modal-wrapper').attr('data-modal-id');
+
+            if (!i || !twister.modal[i]) return;
+
+            var modal = twister.modal[i];
+
+            modal.self.find('.inline-warn').hide();
+
+            modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
+
+            var windowHeight = $(window).height();
+            if (modal.self.outerHeight() > windowHeight) {
+                modal.content.outerHeight(modal.content.outerHeight() - modal.self.outerHeight() + windowHeight);
+                modal.self.outerHeight(windowHeight);
+                modal.self.css('margin-top', - windowHeight / 2);
+            }
+        }
+    );
     twister.tmpl.commonDMsList = extractTemplate('#template-direct-messages-list');
     twister.tmpl.uriShortenerMC = extractTemplate('#template-uri-shortener-modal-content');
     twister.tmpl.uriShortenerMC
@@ -2519,8 +2543,6 @@ function initInterfaceCommon() {
     });
 
     $('.modal-back').on('click', function() {history.back();});
-
-    $('.modal-warn-close').on('click', function() {$(this).closest('.modal-warn').hide()});
 
     $('.prompt-close').on('click', closePrompt);
 
