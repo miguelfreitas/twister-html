@@ -2600,6 +2600,11 @@ ol.toptrends-list a:hover {
     font-size: 0.8em;
 }
 
+.inline-warn .options {
+    font-size: 0.8em;
+    text-align: right;
+}
+
 /*************************************
 *********** CONFIRM POPUP ************
 **************************************/

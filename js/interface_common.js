@@ -63,10 +63,13 @@ function openModal(modal) {
     else
         modal.content = modal.self.find('.modal-content');
 
-    if (modal.warn)
+    if (modal.warn && modal.warn.name && modal.warn.text)
         twister.tmpl.modalComponentWarn.clone(true)
+            .attr('data-warn-name', modal.warn.name)
+            .toggle(!$.Options.get('skipWarn' + modal.warn.name))
             .insertBefore(modal.content)
-            .find('.text').html(modal.warn)
+            .find('.text').html(modal.warn.text)
+            .siblings('.options').find('.never-again + span').text(polyglot.t('do_not_show_it_again'))
         ;
 
     modal.self.appendTo('body').fadeIn('fast');  // FIXME maybe it's better to append it to some container inside body
@@ -78,7 +81,8 @@ function openModal(modal) {
         modal.drapper = $('<div>').appendTo(twister.html.detached);  // here modal goes instead detaching
 
         modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight()
-            - modal.self.find('.inline-warn').outerHeight());
+            - modal.self.find('.inline-warn').outerHeight()
+            * (modal.warn && !$.Options.get('skipWarn' + modal.warn.name) ? 1 : 0));
 
         var windowHeight = $(window).height();
         if (modal.self.outerHeight() > windowHeight) {
@@ -618,7 +622,10 @@ function openFollowersModal(peerAlias) {
         classAdd: 'followers-modal',
         content: twister.tmpl.followersList.clone(true),
         title: title,
-        warn: txtAlert
+        warn: {
+            name: 'FollowersNotAll',
+            text: txtAlert
+        }
     });
 
     appendFollowersToElem(modal.content.find('ol'), followers);
@@ -2482,6 +2489,12 @@ function initInterfaceCommon() {
                 modal.self.outerHeight(windowHeight);
                 modal.self.css('margin-top', - windowHeight / 2);
             }
+        }
+    );
+    twister.tmpl.modalComponentWarn.find('.options .never-again').on('change',
+        function(event) {
+            $.Options.set('skipWarn' + $(event.target).closest('.inline-warn')
+                .attr('data-warn-name'), event.target.checked);  // e.g. 'skipWarnFollowersNotAll'
         }
     );
     twister.tmpl.commonDMsList = extractTemplate('#template-direct-messages-list');

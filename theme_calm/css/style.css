@@ -2036,6 +2036,11 @@ textarea.splited-post {
     font-size: 0.8em;
 }
 
+.inline-warn .options {
+    font-size: 0.8em;
+    text-align: right;
+}
+
 /*************************************
 ******** DIRECT MESSAGES MODAL *******
 **************************************/

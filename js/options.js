@@ -309,6 +309,11 @@ function twisterOptions() {
         name: 'WebTorrentAutoDownload',
         valDefault: 'enable'
     });
+    this.add({
+        name: 'skipWarnFollowersNotAll',
+        type: 'checkbox',
+        valDefault: false
+    });
 }
 
 twisterOptions.prototype.add = function (option) {
