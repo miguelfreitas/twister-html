@@ -1577,22 +1577,6 @@ ol.toptrends-list {
     font-weight: bold;
 }
 
-.modal-warn {
-    display: none;
-    background: #fffbc3;
-    font-size: 0.8em;
-    padding: 10px;
-    border: 3px solid #fff;
-}
-
-.modal-warn-close {
-    float:right;
-    font-size: 1.2em;
-    color: #e34f42;
-    cursor: pointer;
-    margin: -8px;
-}
-
 .modal-wrapper .modal-content {
     background: #fff;
     overflow-y: auto;
@@ -1660,6 +1644,30 @@ ol.toptrends-list {
 .modal-wrapper.reply .post {
     background: #ececed;
     padding: 10px 15px;
+}
+
+.inline-warn {
+    background-color: #FEFEDF;
+    padding: 10px;
+}
+
+.inline-warn .close {
+    float: right;
+    font-size: 1.2em;
+    color: #e34f42;
+    cursor: pointer;
+    margin: -8px 2px 8px 8px;
+}
+
+.inline-warn .text {
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.inline-warn .options {
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 4px;
 }
 
 /*************************************

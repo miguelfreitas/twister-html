@@ -74,6 +74,7 @@ if(preferredLanguage == "en"){
       "display_mentions": "Display mentions",
       "Display retransmissions": "Display retransmissions",
       "DNS to obtain list of peers:": "DNS to obtain list of peers:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Downloading block chain, please wait before continuing (block chain is %{days} days old).",
       "download_posts_status": "Downloaded %{portion} posts", // Downloaded 10/30 posts
       "Enable": "Enable",
@@ -416,6 +417,7 @@ if(preferredLanguage == "es"){
       "display_mentions": "Visualización de menciones",
       "Display retransmissions": "Visualización de retransmisiones",
       "DNS to obtain list of peers:": "DNS para obtener la lista de los pares:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Descarga de la cadena de bloques, por favor espere antes de continuar (la cadena de bloques esta %{days} días).",
       "download_posts_status": "Post %{portion} descargados", // Downloaded 10/30 posts
       "Enable": "Permitir",
@@ -755,6 +757,7 @@ if(preferredLanguage == "uk"){
       "display_mentions": "Показати сповіщення",
       "Display retransmissions": "Показати пересилання",
       "DNS to obtain list of peers:": "DNS для отримання пірів:",
+      "do_not_show_it_again": "don't show it again",
       "dns address": "адреса DNS",
       "downloading_block_chain": "Завантаження ланцюга блоків, будь ласка, зачекайте перед продовженням (ланцюг блоків віком %{days} днів).",
       "download_posts_status": "Завантажено %{portion} твістів", // Downloaded 10/30 posts
@@ -1092,6 +1095,7 @@ if(preferredLanguage == "zh-CN"){
       "display_mentions": "显示",
       "Display retransmissions": "显示转发",
       "DNS to obtain list of peers:": "用DNS获取节点列表：",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "区块链下载中，请等待下载完成（区块链仍落后 %{days} 天）。",
       "download_posts_status": "已下载 %{portion} 推文", // Downloaded 10/30 posts
       "Enable": "开启",
@@ -1434,6 +1438,7 @@ if(preferredLanguage == "nl"){
       "display_mentions": "Toon vermeldingen",
       "Display retransmissions": "Toon retransmissions",
       "DNS to obtain list of peers:": "DNS om peers lijst op te halen:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Bezig met downloaden block chain, wacht a.u.b. voordat je doorgaat (block chain is %{days} dagen oud).",
       "download_posts_status": "%{portion} berichten gedownload", // Downloaded 10/30 posts
       "Enable": "Activeren",
@@ -1773,6 +1778,7 @@ if(preferredLanguage == "it"){
       "display_mentions": "Mostra le menzioni",
       "Display retransmissions": "Mostra Ripubblicazioni",
       "DNS to obtain list of peers:": "DNS per la lista dei nodi:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Scaricamento della catena di blocchi in corso, attendere prego (la catena risale a %{days} giorni fa).",
       "download_posts_status": "Scaricati %{portion} messaggi", // Downloaded 10/30 posts
       "Enable": "Attivato",
@@ -2110,6 +2116,7 @@ if(preferredLanguage == "fr"){
       "display_mentions": "Afficher les mentions",
       "Display retransmissions": "Afficher les retransmissions",
       "DNS to obtain list of peers:": "DNS où obtenir une liste des pairs:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Téléchargement de la chaîne de blocs, veuillez patienter avant de continuer (la chaîne de blocs a %{days} jours de retard).",
       "download_posts_status": "%{portion} billets téléchargés", // Downloaded 10/30 posts
       "Enable": "Activer",
@@ -2451,6 +2458,7 @@ if(preferredLanguage == "ru"){
        "display_mentions": "Показать упоминания",
        "Display retransmissions": "Показать репосты",
        "DNS to obtain list of peers:": "DNS адрес для получения пиров:",
+       "do_not_show_it_again": "не показывать больше",
        "downloading_block_chain": "Загрузка цепочки блоков, пожалуйста подождите, (Цепочка блоков устарела на %{days} дней).",
        "download_posts_status": "Загружено %{portion} постов", // Downloaded 10/30 posts
        "Enable": "Включено",
@@ -2794,6 +2802,7 @@ if(preferredLanguage == "de"){
       "display_mentions": "Zeige Erwähnungen", // Ist das richtig? Ich weiß nicht, in welchem Zusammenhang das benutzt wird.
       "Display retransmissions": "Weiterleitungen anzeigen",
       "DNS to obtain list of peers:": "DNS um Peer-Liste abzurufen:",
+      "do_not_show_it_again": "don't show it again",
       "dns address": "DNS-Adresse",
       "downloading_block_chain": "Block-Chain wird heruntergeladen, bitte warten (Block-Chain ist %{days} Tage alt).",
       "download_posts_status": "%{portion} Posts heruntergeladen", // Downloaded 10/30 posts
@@ -3135,6 +3144,7 @@ if(preferredLanguage == "ja"){
       "display_mentions": "メンションを表示する",
       "Display retransmissions": "リトランスミットを表示する",
       "DNS to obtain list of peers:": "ピア取得用のDNS:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。（ブロックチェーンは%{days}日送れています）",
       "download_posts_status": "ダウンロード済みの投稿 %{portion}", // Downloaded 10/30 posts
       "Enable": "有効",
@@ -3472,6 +3482,7 @@ if(preferredLanguage == "pt-BR"){
       "display_mentions": "Exibir menções",
       "Display retransmissions": "Exibir retransmissões",
       "DNS to obtain list of peers:": "DNS para obter a lista de nós:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Baixando a Cadeia de Blocos, por favor aguarde (A Cadeia de Blocos está %{days} dias desatualizada).",
       "download_posts_status": "%{portion} postagens carregadas.", // Downloaded 10/30 posts
       "Enable": "Habilitado",
@@ -3813,6 +3824,7 @@ if(preferredLanguage == "tr"){
       "display_mentions": "Bahsedenleri göster",
       "Display retransmissions": "Tekrar iletimleri göster",
       "DNS to obtain list of peers:": "Eş listesini almak için DNS:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Blok zinciri indiriliyor, devam edebilmek için lütfen bekleyiniz (blok zinciri %{days} günlük).",
       "download_posts_status": "Göderilerin indirilme oranı: %{portion}", // Downloaded 10/30 posts
       "Enable": "Kullanılabilir",
@@ -4151,6 +4163,7 @@ if(preferredLanguage == "cs"){
       "display_mentions": "Zobrazit zmínky",
       "Display retransmissions": "Zobrazit přeposlané",
       "DNS to obtain list of peers:": "DNS pro načtení seznamu uzlů:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Stahuji blockchain, prosím počkejte (blockchain je %{days} dnů starý).",
       "download_posts_status": "Staženo %{portion} příspěvků", // Downloaded 10/30 posts
       "Enable": "Zapnuto",
