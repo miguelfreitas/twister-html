@@ -63,6 +63,16 @@ function openModal(modal) {
     else
         modal.content = modal.self.find('.modal-content');
 
+    if (modal.warn && modal.warn.name && modal.warn.text) {
+        var elem = twister.tmpl.modalComponentWarn.clone(true)
+            .attr('data-warn-name', modal.warn.name)
+            .toggle(!$.Options.get('skipWarn' + modal.warn.name))
+        ;
+        fillElemWithTxt(elem.find('.text'), modal.warn.text, {markout: 'apply'});
+        elem.find('.options .never-again + span').text(polyglot.t('do_not_show_it_again'));
+        elem.insertBefore(modal.content);
+    }
+
     modal.self.appendTo('body').fadeIn('fast');  // FIXME maybe it's better to append it to some container inside body
 
     if (modal.classBase === '.modal-wrapper') {
@@ -71,7 +81,9 @@ function openModal(modal) {
 
         modal.drapper = $('<div>').appendTo(twister.html.detached);  // here modal goes instead detaching
 
-        modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
+        modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight()
+            - modal.self.find('.inline-warn').outerHeight()
+            * (modal.warn && !$.Options.get('skipWarn' + modal.warn.name) ? 1 : 0));
 
         var windowHeight = $(window).height();
         if (modal.self.outerHeight() > windowHeight) {
@@ -587,7 +599,7 @@ function openMentionsModalHandler(peerAlias) {
 }
 
 function openFollowersModal(peerAlias) {
-    var followers, title, txtAlert;
+    var followers, title, warn;
 
     if (!peerAlias || peerAlias === defaultScreenName) {
         if (!defaultScreenName) {
@@ -600,22 +612,27 @@ function openFollowersModal(peerAlias) {
         }
         title = polyglot.t('Followers');
         followers = twisterFollowingO.knownFollowers.slice();
-        txtAlert = '* ' + polyglot.t('warn_followers_not_all');
+        warn = {
+            name: 'FollowersNotAll',
+            text: '* ' + polyglot.t('warn_followers_not_all')
+        };
     } else {
         title = polyglot.t('Followers_of', {alias: peerAlias});
         followers = whoFollows(peerAlias);
-        txtAlert = polyglot.t('warn_followers_not_all_of', {alias: peerAlias});
+        warn = {
+            name: 'FollowersNotAllOf',
+            text: polyglot.t('warn_followers_not_all_of', {alias: peerAlias})
+        };
     }
 
     var modal = openModal({
         classAdd: 'followers-modal',
         content: twister.tmpl.followersList.clone(true),
-        title: title
+        title: title,
+        warn: warn
     });
 
     appendFollowersToElem(modal.content.find('ol'), followers);
-
-    alertPopup({txtMessage: txtAlert});
 }
 
 function appendFollowersToElem(list, followers) {
@@ -2457,6 +2474,33 @@ function replaceDashboards() {
 }
 
 function initInterfaceCommon() {
+    twister.tmpl.modalComponentWarn = extractTemplate('#template-inline-warn');
+    twister.tmpl.modalComponentWarn.find('.close').on('click',
+        function(event) {
+            var i = $(event.target).closest('.modal-wrapper').attr('data-modal-id');
+
+            if (!i || !twister.modal[i]) return;
+
+            var modal = twister.modal[i];
+
+            modal.self.find('.inline-warn').hide();
+
+            modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
+
+            var windowHeight = $(window).height();
+            if (modal.self.outerHeight() > windowHeight) {
+                modal.content.outerHeight(modal.content.outerHeight() - modal.self.outerHeight() + windowHeight);
+                modal.self.outerHeight(windowHeight);
+                modal.self.css('margin-top', - windowHeight / 2);
+            }
+        }
+    );
+    twister.tmpl.modalComponentWarn.find('.options .never-again').on('change',
+        function(event) {
+            $.Options.set('skipWarn' + $(event.target).closest('.inline-warn')
+                .attr('data-warn-name'), event.target.checked);  // e.g. 'skipWarnFollowersNotAll'
+        }
+    );
     twister.tmpl.commonDMsList = extractTemplate('#template-direct-messages-list');
     twister.tmpl.uriShortenerMC = extractTemplate('#template-uri-shortener-modal-content');
     twister.tmpl.uriShortenerMC

@@ -309,11 +309,35 @@ function twisterOptions() {
         name: 'WebTorrentAutoDownload',
         valDefault: 'enable'
     });
+    this.add({
+        name: 'skipWarnFollowersNotAll',
+        type: 'checkbox',
+        valDefault: false
+    });
+    this.add({
+        name: 'skipWarnFollowersNotAllOf',
+        type: 'checkbox',
+        valDefault: false
+    });
 }
 
 twisterOptions.prototype.add = function (option) {
     if (option.name && !this[option.name])
         this[option.name] = new twisterOption(option);
+};
+
+twisterOptions.prototype.get = function (optionName) {
+    if (optionName && typeof this[optionName] !== 'undefined')
+        return this[optionName].val;
+    else
+        console.warn('option \'' + optionName + '\' does not exist');
+};
+
+twisterOptions.prototype.set = function (optionName, val) {
+    if (optionName && typeof this[optionName] !== 'undefined')
+        this[optionName].set(val);
+    else
+        console.warn('option \'' + optionName + '\' does not exist');
 };
 
 twisterOptions.prototype.initControls = function () {
