@@ -3795,7 +3795,7 @@ if(preferredLanguage == "tr"){
       "busted_avowal": "Şüpheli bir şeyler iliştirmeye çalışırken enselendim.",
       "btn_ok": "Tamam",
       "Cancel": "İptal",
-      "clear_cache": "Clear cache",
+      "clear_cache": "Geçmişi temizle",
       "Confirm": "Onayla",
       "сonfirm_group_leaving_header": "Gruptan ayrılmayı onayla",
       "сonfirm_group_leaving_body": "%{alias} grubundan ayrılmak istiyor musun?",
@@ -3804,8 +3804,8 @@ if(preferredLanguage == "tr"){
             "Eğer bu sayfada kalırsanız eylemlerinizi işlemeyebilir.\n" +
             "Bunun yerine [Ağ Durumu sayfasını](%{page}) kontrol etmek ister misiniz?",
       "confirm_terminate_daemon": "Hizmeti sonlandırmak istiyor musun?\nTwister istemcisi çalışmayacak.",
-      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
-      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
+      "confirm_unfollow_@": "@%{alias} kullanıcısını takip etmeyi bırakmak istiyor musun?",
+      "confirm_uri_shortener_clear_cache": "Kısaltılmış adres geçimişini temizlemek istiyor musun?",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
       "Collapse": "Kapat", // smaller view of a post
@@ -3824,7 +3824,7 @@ if(preferredLanguage == "tr"){
       "display_mentions": "Bahsedenleri göster",
       "Display retransmissions": "Tekrar iletimleri göster",
       "DNS to obtain list of peers:": "Eş listesini almak için DNS:",
-      "do_not_show_it_again": "don't show it again",
+      "do_not_show_it_again": "bir daha gösterme",
       "downloading_block_chain": "Blok zinciri indiriliyor, devam edebilmek için lütfen bekleyiniz (blok zinciri %{days} günlük).",
       "download_posts_status": "Göderilerin indirilme oranı: %{portion}", // Downloaded 10/30 posts
       "Enable": "Kullanılabilir",
@@ -3928,7 +3928,7 @@ if(preferredLanguage == "tr"){
         + "Not: URL kısaltma işlemi tam URL'i barındıran 'boş' bir twist oluşturacak.\n"
         + "Bu özel twist görüntülenmeyecek, fakat gönderi sayınızda hesaba katılacak.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
-      "URI_shortener": "URI Shortener",
+      "URI_shortener": "Adres kısalt",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
