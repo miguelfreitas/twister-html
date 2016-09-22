@@ -890,12 +890,15 @@ textarea.splited-post {
     color: #e34f42;
 }
 
-.followers
+.followers,
+.last-activity
 {
     font-size: 12px;
     color: rgba( 0, 0, 0, .6 );
+    margin-left: 58px;
 }
-.followed-by
+.followed-by,
+.user-status-time
 {
     color: #e34f42;
     font-size: 13px;

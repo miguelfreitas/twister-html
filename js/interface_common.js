@@ -389,6 +389,7 @@ function checkNetworkStatusAndAskRedirect(cbFunc, cbReq) {
 }
 
 function timeGmtToText(t) {
+    if (t == 0) return '-';
     var d = new Date(0);
     d.setUTCSeconds(t);
     return d.toString().replace(/GMT.*/g, '');
@@ -750,6 +751,7 @@ function fillWhoToFollowModal(list, hlist, start) {
                     getFullname(utf, item.find('.twister-user-full'));
                     getBioToElem(utf, item.find('.bio'));
                     getFullname(followingUsers[i], item.find('.followed-by').text(followingUsers[i]));
+                    getStatusTime(utf,item.find('.user-status-time'));
 
                     item.find('.twister-user-remove').remove();
 
@@ -2619,6 +2621,8 @@ function initInterfaceCommon() {
         $(this).hide();
         displayQueryPending($('.hashtag-modal .postboard-posts'));
     });
+
+    $('.user-status-time').on('mouseup', {feeder: '.user-status-time'}, handleClickOpenConversation);
 
     replaceDashboards();
     $(window).resize(replaceDashboards);

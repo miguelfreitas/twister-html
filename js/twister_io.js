@@ -522,6 +522,25 @@ function getPostsCount(peerAlias, elem) {
     );
 }
 
+function getStatusTime(peerAlias, elem) {
+    dhtget(peerAlias, 'status', 's',
+        function(req, v) {
+            var time = 0;
+            var k = -1;
+            if (v && v.userpost) {
+                time = v.userpost.time;
+                k = v.userpost.k;
+            }
+            elem.text(timeGmtToText(time));
+            elem.attr('data-time', time);
+            if (k > -1) {
+                elem.attr('data-screen-name', peerAlias);
+                elem.attr('data-id', k);
+            }
+        }, {peerAlias: peerAlias, elem: elem}
+    );
+}
+
 function getPostMaxAvailability(peerAlias, k, cbFunc, cbReq) {
     twisterRpc('getpiecemaxseen', [peerAlias, k],
         function(req, ret) {
