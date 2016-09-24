@@ -711,6 +711,7 @@ function addPeerToFollowingList(list, peerAlias) {
         .on('mouseup', {route: $.MAL.mentionsUrl(peerAlias)}, routeOnClick);
     getAvatar(peerAlias, item.find('.mini-profile-photo'));
     getFullname(peerAlias, item.find('.mini-profile-name'));
+    getStatusTime(peerAlias, item.find('.user-status-time'));
 
     if (peerAlias === defaultScreenName)
         item.find('.following-config').hide();

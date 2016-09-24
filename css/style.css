@@ -2346,7 +2346,7 @@ ol.toptrends-list {
     display: inline-block;
     text-align: initial;
     width: 320px;
-    height: 120px;
+    height: 130px;
     margin: 2px;
     padding: 2px;
     border: solid 1px rgba(69, 71, 77, .1);
@@ -2389,6 +2389,12 @@ ol.toptrends-list {
     right: 32px;
 }
 
+.following-own-modal .following-list .last-activity {
+    position: absolute;
+    top: 110px;
+    right: 32px;
+    margin: 0;
+}
 /*************************************
 *********** AUTOCOMPLETING ***********
 **************************************/
