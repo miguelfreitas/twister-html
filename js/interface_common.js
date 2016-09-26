@@ -875,14 +875,22 @@ function handleClickOpenProfileModal(event) {
 }
 
 function handleClickOpenConversation(event) {
-    event.preventDefault();
-    event.stopPropagation();
+    var elem = $(event.target).closest(event.data.feeder);
+    if (!elem.length) {
+        muteEvent(event, true);
+        return;
+    }
 
-    var elem = $(event.target);
-    var postData = elem.closest(event.data.feeder);
+    var post = {
+        writer: elem.attr('data-screen-name'),
+        id: elem.attr('data-id')
+    };
+    if (!post.writer || !post.id) {
+        muteEvent(event, true);
+        return;
+    }
 
-    event.data.route = '#conversation?post=' + postData.attr('data-screen-name')
-        + ':post' + postData.attr('data-id');
+    event.data.route = '#conversation?post=' + post.writer + ':post' + post.id;
     routeOnClick(event);
 }
 
