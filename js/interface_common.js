@@ -711,7 +711,7 @@ function addPeerToFollowingList(list, peerAlias) {
         .on('mouseup', {route: $.MAL.mentionsUrl(peerAlias)}, routeOnClick);
     getAvatar(peerAlias, item.find('.mini-profile-photo'));
     getFullname(peerAlias, item.find('.mini-profile-name'));
-    getStatusTime(peerAlias, item.find('.user-status-time'));
+    getStatusTime(peerAlias, item.find('.latest-activity .time'));
 
     if (peerAlias === defaultScreenName)
         item.find('.following-config').hide();
@@ -752,7 +752,7 @@ function fillWhoToFollowModal(list, hlist, start) {
                     getFullname(utf, item.find('.twister-user-full'));
                     getBioToElem(utf, item.find('.bio'));
                     getFullname(followingUsers[i], item.find('.followed-by').text(followingUsers[i]));
-                    getStatusTime(utf,item.find('.user-status-time'));
+                    getStatusTime(utf, item.find('.latest-activity .time'));
 
                     item.find('.twister-user-remove').remove();
 
@@ -2623,7 +2623,8 @@ function initInterfaceCommon() {
         displayQueryPending($('.hashtag-modal .postboard-posts'));
     });
 
-    $('.user-status-time').on('mouseup', {feeder: '.user-status-time'}, handleClickOpenConversation);
+    getElem('.latest-activity', true).on('mouseup',
+        {feeder: '.latest-activity'}, handleClickOpenConversation);
 
     replaceDashboards();
     $(window).resize(replaceDashboards);
