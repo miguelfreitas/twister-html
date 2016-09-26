@@ -2209,7 +2209,8 @@ textarea.splited-post {
 }
 
 /* line 447, ../sass/style.sass */
-.followers {
+.followers,
+.latest-activity {
   font-size: 12px;
   color: #66686B;
 }
@@ -2219,11 +2220,20 @@ textarea.splited-post {
 }
 
 /* line 453, ../sass/style.sass */
-.followed-by {
+.followed-by,
+.latest-activity {
   color: #aaa;
   font-size: 12px;
   cursor: pointer;
   display: block;
+}
+
+.who-to-follow .latest-activity {
+    margin-bottom: 8px;
+}
+
+.who-to-follow .latest-activity .label {
+    display: none;
 }
 
 /* line 459, ../sass/style.sass */
@@ -3356,7 +3366,7 @@ ol.toptrends-list a:hover {
 .following-own-modal .following-list > li {
     display: inline-block;
     width: 320px;
-    height: 160px;
+    height: 184px;
     margin: 2px;
     padding: 2px;
     border: solid 1px rgba(69, 71, 77, .1);
@@ -3454,6 +3464,10 @@ ol.toptrends-list a:hover {
 .following-own-modal .following-list .swarm-status {
     font-size: 11px;
     display: block;
+}
+
+.following-own-modal .following-list .latest-activity {
+    font-size: 11px;
 }
 
 /********** AUTOCOMPLETING *********/
