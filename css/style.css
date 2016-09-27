@@ -891,19 +891,19 @@ textarea.splited-post {
 }
 
 .followers,
-.last-activity
-{
+.latest-activity {
     font-size: 12px;
     color: rgba( 0, 0, 0, .6 );
     margin-left: 58px;
 }
+
 .followed-by,
-.user-status-time
-{
+.latest-activity .time {
     color: #e34f42;
     font-size: 13px;
     cursor: pointer;
 }
+
 .twister-user-name,
 .twister-by-user-name
 {
@@ -2389,12 +2389,13 @@ ol.toptrends-list {
     right: 32px;
 }
 
-.following-own-modal .following-list .last-activity {
+.following-own-modal .following-list .latest-activity {
     position: absolute;
     top: 110px;
     right: 32px;
     margin: 0;
 }
+
 /*************************************
 *********** AUTOCOMPLETING ***********
 **************************************/
