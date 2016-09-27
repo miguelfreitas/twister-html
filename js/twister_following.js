@@ -515,6 +515,7 @@ function processWhoToFollowSuggestion(suggestion, followedBy) {
 
         getAvatar(suggestion, item.find('.twister-user-photo'));
         getFullname(followedBy, item.find('.followed-by').text(followedBy));
+        getStatusTime(suggestion, item.find('.latest-activity .time'));
 
         item.find('.twister-user-remove').on('click', function() {
             item.remove();
