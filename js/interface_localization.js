@@ -62,6 +62,7 @@ if(preferredLanguage == "en"){
       "Configure block generation": "Configure block generation",
       "Connections:": "Connections: ", // to network
       "Connection lost.": "Connection lost.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} day |||| %{smart_count} days",
       "Detailed information": "Detailed information",
       "DHT network down.": "DHT network down.",
@@ -410,6 +411,7 @@ if(preferredLanguage == "es"){
       "Configure block generation": "Configure la generación de bloques",
       "Connections:": "Conexiones: ", // to network
       "Connection lost.": "Conexión perdida.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} día |||| %{smart_count} días",
       "Detailed information": "Información detallada",
       "DHT network down.": "Red DHT caida.",
@@ -755,6 +757,7 @@ if(preferredLanguage == "uk"){
       "Configure block generation": "Налаштувати генерацію блоку",
       "Connections:": "З’єднання: ", // to network
       "Connection lost.": "З’єднання втрачено.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} день |||| %{smart_count} днів",
       "Detailed information": "Детальна інформація",
       "DHT network down.": "Мережа DHT недоступна.",
@@ -1098,6 +1101,7 @@ if(preferredLanguage == "zh-CN"){
       "Configure block generation": "配置区块生成器",
       "Connections:": "连接数：", // to network
       "Connection lost.": "连接中断。",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} 天",
       "Detailed information": "详细信息",
       "DHT network down.": "DHT网络中断。",
@@ -1446,6 +1450,7 @@ if(preferredLanguage == "nl"){
       "Configure block generation": "Block productie configureren",
       "Connections:": "Connecties: ", // to network
       "Connection lost.": "Verbinding kwijt.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} dag |||| %{smart_count} dagen",
       "Detailed information": "Gedetailleerde informatie",
       "DHT network down.": "DHT netwerk down.",
@@ -1791,6 +1796,7 @@ if(preferredLanguage == "it"){
       "Configure block generation": "Configura generatore di blocchi",
       "Connections:": "Connessioni: ", // to network
       "Connection lost.": "Connessione interrotta.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} giorno |||| %{smart_count} giorni",
       "Detailed information": "Informazioni dettagliate",
       "DHT network down.": "DHT network inaccessibile.",
@@ -2134,6 +2140,7 @@ if(preferredLanguage == "fr"){
       "Configure block generation": "Configuration de la production de blocs",
       "Connections:": "Connexions: ", // to network
       "Connection lost.": "Connexion perdue.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} jour |||| %{smart_count} jours",
       "Detailed information": "Informations détaillées",
       "DHT network down.": "Panne du réseau DHT.",
@@ -2480,6 +2487,7 @@ if(preferredLanguage == "ru"){
        "Configure block generation": "Настройка майнинга",
        "Connections:": "Соединений: ",
        "Connection lost.": "Соединение с сетью было потеряно.",
+       "daemon_is_obsolete": "твистер демон устарел, необходима версия %{versionReq} или выше",
        "days": "%{smart_count} день |||| %{smart_count} дней",
        "Detailed information": "Подробная информация",
        "DHT network down.": "Недоступна DHT сеть.",
@@ -2829,6 +2837,7 @@ if(preferredLanguage == "de"){
       "Configure block generation": "Block-Generierung einstellen",
       "Connections:": "Verbindungen: ", // to network
       "Connection lost.": "Verbindung verloren.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} Tag |||| %{smart_count} Tage",
       "Detailed information": "Detaillierte Informationen",
       "DHT network down.": "DHT-Netzwerk nicht verfügbar.",
@@ -3176,6 +3185,7 @@ if(preferredLanguage == "ja"){
       "Configure block generation": "ブロック生成の設定",
       "Connections:": "接続数: ", // to network
       "Connection lost.": "切断されました。",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count}日 |||| %{smart_count}日",
       "Detailed information": "詳細",
       "DHT network down.": "DHTネットワークがダウンしています",
@@ -3519,6 +3529,7 @@ if(preferredLanguage == "pt-BR"){
       "Configure block generation": "Configurar a geração de blocos",
       "Connections:": "Conexões: ", // to network
       "Connection lost.": "Conexão perdida.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} dia |||| %{smart_count} dias",
       "Detailed information": "Informações detalhadas",
       "DHT network down.": "Falha na rede DHT",
@@ -3866,6 +3877,7 @@ if(preferredLanguage == "tr"){
       "Configure block generation": "Blok üretim ayarları",
       "Connections:": "Bağlantılar: ", // to network
       "Connection lost.": "Bağlantı koptu.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} gün |||| %{smart_count} gün",
       "Detailed information": "Detaylı bilgi",
       "DHT network down.": "DHT ağı çalışmıyor.",
@@ -4210,6 +4222,7 @@ if(preferredLanguage == "cs"){
       "Configure block generation": "Nastavení generace bloků",
       "Connections:": "Připojení: ", // to network
       "Connection lost.": "Žádné připojení do sítě.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} dnem |||| %{smart_count} dny |||| %{smart_count} dny",
       "Detailed information": "Podrobné informace",
       "DHT network down.": "Síť DHT je nedostupná.",

@@ -271,10 +271,11 @@ function newRtMsg(postData, msg) {
 
     if (userpost.rt) {
         if (parseInt(twisterVersion) <= 93000) {
-            alert(polyglot.t('error',
-                {error: 'can\'t handle retwisting of commented retwisted twists with daemon version '
-                    + twisterDisplayVersion + ' and below of that. Please upgrade it.'}
-            ));
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                txtMessage: 'Can\'t handle retwisting of commented retwisted twists —\n'
+                    + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.3+'})
+            });
 
             return;
         } else {
@@ -355,7 +356,8 @@ function newFavMsg(postData, priv, msg) {
 function newShortURI(uri, cbFunc, cbReq) {
     if (!uri || !defaultScreenName) return;
     if (parseInt(twisterVersion) < 93500) {
-        console.warn('can\'t shorten URI "' + uri + '": daemon is obsolete, version 0.9.35 or higher is required');
+        console.warn('can\'t shorten URI "' + uri + '" — '
+            + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.35'}));
         return;
     }
 

@@ -115,7 +115,8 @@ function dhtget(peerAlias, resource, multi, cbFunc, cbReq, timeoutArgs) {
 function decodeShortURI(locator, cbFunc, cbReq, timeoutArgs) {
     if (!locator) return;
     if (parseInt(twisterVersion) < 93500) {
-        console.warn('can\'t fetch URI "' + req + '": daemon is obsolete, version 0.9.35 or higher is required');
+        console.warn('can\'t fetch URI "' + req + '" — '
+            + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.35'}));
         return;
     }
 

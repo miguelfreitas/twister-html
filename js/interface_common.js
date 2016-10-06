@@ -915,8 +915,8 @@ function openRequestShortURIForm(event) {
     if (parseInt(twisterVersion) < 93500) {
         alertPopup({
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-            txtMessage: 'You can\'t shorten links because twister daemon is obsolete!\n'
-                + 'Version 0.9.35 or higher is required. Please keep your twister up to date.'
+            txtMessage: 'You can\'t shorten links —\n'
+                + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.35'})
         });
         return;
     }

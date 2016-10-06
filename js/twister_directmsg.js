@@ -387,8 +387,8 @@ function groupMsgImportKey(key) {
     if (parseInt(twisterVersion) < 93800) {
         alertPopup({
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-            txtMessage: polyglot.t('group_key_cant_import')
-                + ' —\ndaemon is obsolete, version 0.9.38 or higher is required'
+            txtMessage: polyglot.t('group_key_cant_import') + ' —\n'
+                + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.38'})
         });
         return;
     }
