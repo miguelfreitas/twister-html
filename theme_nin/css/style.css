@@ -389,6 +389,15 @@ samp {
   font-size: 1.5em;
 }
 
+.userMenu li.userMenu-favs > a {
+    padding: 0 14px;
+    opacity: 1;
+}
+
+.userMenu li.userMenu-favs > a:before {
+    content: '★';
+    font-size: 24px;
+}
 /*************************************
 ************ PROFILE MODAL ***********
 **************************************/
@@ -961,11 +970,6 @@ samp {
   color: #727578;
 }
 
-/* line 195, ../sass/_postboard.sass */
-.post-favorite {
-  display: none !important;
-}
-
 /* line 200, ../sass/_postboard.sass */
 .post .show-more {
   display: inline-block;
@@ -1014,7 +1018,7 @@ samp {
   display: none !important;
 }
 /* line 236, ../sass/_postboard.sass */
-.open .related:hover .post-reply, .mini-profile .post-area-new .related:hover .post-reply, #postboard-top .post-area .post-area-new .related:hover .post-reply, .open .related:hover .post-propagate, .mini-profile .post-area-new .related:hover .post-propagate, #postboard-top .post-area .post-area-new .related:hover .post-propagate {
+.open .related:hover .post-reply, .mini-profile .post-area-new .related:hover .post-reply, #postboard-top .post-area .post-area-new .related:hover .post-reply, .open .related:hover .post-propagate, .mini-profile .post-area-new .related:hover .post-propagate, #postboard-top .post-area .post-area-new .related:hover .post-propagate, .open .related:hover .post-favorite, .mini-profile .post-area-new .related:hover .post-favorite, #postboard-top .post-area .post-area-new .related:hover .post-favorite {
   display: inline-block !important;
 }
 
