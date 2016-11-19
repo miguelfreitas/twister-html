@@ -42,6 +42,10 @@ function twisterOptions() {
         valDefault: 'enable'
     });
     this.add({
+        name: 'NewUsers',
+        valDefault: 'enable'
+    });
+    this.add({
         name: 'TwistdayReminder',
         valDefault: 'enable',
         tickMethod: function (elem) {
