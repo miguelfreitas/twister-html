@@ -159,9 +159,6 @@ function requestNthBlock(n, cbFunc, cbArg) {
 function requestBlock(hash, cbFunc, cbArg) {
     twisterRpc("getblock", [hash],
                function(args, block) {
-                   //twisterdLastBlockTime = block.time;
-                   //$(".last-block-time").text( timeGmtToText(twisterdLastBlockTime) );
-
                    if( args.cbFunc )
                        args.cbFunc(block, args.cbArg);
                }, {cbFunc:cbFunc, cbArg:cbArg},
