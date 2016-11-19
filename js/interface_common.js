@@ -783,16 +783,16 @@ function openNewUsersModal() {
 
     var hlist = $('<ol class="follow-suggestions"></ol>')
         .appendTo(modal.content);
-    var count = 10;
+    var count = 15;
 
     modal.content.on('scroll', function() {
         if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
-            !getLastNUsers(5, count, modal.self);
-            count += 10;
+            if (getLastNUsers(5, count, modal.self))
+                count += 5;
         }
     });
 
-    getLastNUsers(10, 0, modal.self);
+    getLastNUsers(15, 0, modal.self);
 }
 
 function openModalUriShortener()

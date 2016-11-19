@@ -17,6 +17,7 @@ var _lastSearchUsersResultsRemovedFromDHTgetQueue = true;
 var _lastLoadFromDhtTime = 0;
 var _lastProcessedBlock = -1;
 var knownNewUsers = [];
+var isNewUserThRunning = false;
 
 var twisterFollowingO = undefined;
 
@@ -431,23 +432,34 @@ function followingEmptyOrMyself() {
 
 function getLastNUsers(n,offset,module) {
 
+    if (isNewUserThRunning)
+        return false;
+
+    isNewUserThRunning = true;
     for (var i = offset; i < knownNewUsers.length && i < offset + n; i++)
         processWhoToFollowSuggestion(module, knownNewUsers[i]);
 
     if (knownNewUsers.length >= n + offset)
-        return;
+    {
+        isNewUserThRunning = false;
+        return true;
+    }
 
     if (_lastProcessedBlock == -1)
         requestBestBlock(processBlockUsers, {n: n, offset: offset, module: module});
     else
         requestNthBlock(_lastProcessedBlock - 1, processBlockUsers, {n: n, offset: offset, module: module});
+
+    return true;
 }
 
 function processBlockUsers(block, users){
     _lastProcessedBlock = block.height;
 
-    if (knownNewUsers.length + block.usernames.length < users.n + users.offset)
+    if (knownNewUsers.length + block.usernames.length < users.n + users.offset && typeof block.previousblockhash !== 'undefined')
         setTimeout(function(){requestBlock(block.previousblockhash, processBlockUsers, users);}, 100);
+    else
+        isNewUserThRunning = false;
 
     for (var i = 0; i < block.usernames.length; i++) {
         if (knownNewUsers.indexOf(block.usernames[i]) == -1) {
