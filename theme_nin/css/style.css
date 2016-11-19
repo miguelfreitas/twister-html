@@ -2159,27 +2159,32 @@ textarea.splited-post {
 /******** WHO TO FOLLOW ********/
 
 /* line 411, ../sass/style.sass */
-.who-to-follow.module {
+.who-to-follow.module,
+.new-users.module {
   width: inherit;
   margin-bottom: 20px;
 }
 
 /* line 414, ../sass/style.sass */
-.who-to-follow small {
+.who-to-follow small,
+.new-users small {
   display: none;
 }
 
 /* line 416, ../sass/style.sass */
-.who-to-follow h3 {
+.who-to-follow h3,
+.new-users h3 {
   float: left;
 }
 
 /* line 418, ../sass/style.sass */
-.who-to-follow ol {
+.who-to-follow ol,
+.new-users ol {
   clear: both;
 }
 
-.who-to-follow .twister-user-info {
+.who-to-follow .twister-user-info,
+.new-users .twister-user-info {
   margin-top: 8px;
 }
 
@@ -3130,45 +3135,53 @@ ol.toptrends-list a:hover {
 
 /******* WHO TO FOLLOW MODAL****** */
 /* line 943, ../sass/style.sass */
-.modal-wrapper.who-to-follow-modal {
+.modal-wrapper.who-to-follow-modal,
+.modal-wrapper.new-users-modal {
   width: 520px;
   height: 580px;
   margin: -290px 0 0 -260px;
 }
 /* line 949, ../sass/style.sass */
-.who-to-follow-modal .modal-content {
+.who-to-follow-modal .modal-content,
+.new-users-modal .modal-content {
   padding: 15px;
 }
 
 /* line 955, ../sass/style.sass */
-.who-to-follow-modal ol {
+.who-to-follow-modal ol,
+.new-users-modal ol {
   margin: 5px;
 }
 /* line 958, ../sass/style.sass */
-.who-to-follow-modal .open-profile-modal:hover {
+.who-to-follow-modal .open-profile-modal:hover,
+.new-users-modal .open-profile-modal:hover {
   text-decoration: none;
 }
 /* line 960, ../sass/style.sass */
-.who-to-follow-modal .twister-user {
-  position: relative;
+.who-to-follow-modal .twister-user,
+.new-users-modal .twister-user {
+position: relative;
   padding: 5px;
 }
 /* line 963, ../sass/style.sass */
-.who-to-follow-modal .twister-user-photo {
+.who-to-follow-modal .twister-user-photo,
+.new-users-modal .twister-user-photo {
   position: relative;
   left: 0;
   float: left;
   display: block;
 }
 /* line 968, ../sass/style.sass */
-.who-to-follow-modal .twister-user-info {
+.who-to-follow-modal .twister-user-info,
+.new-users-modal .twister-user-info {
   position: relative;
   margin-top: 4px;
   padding-left: 70px;
   width: auto;
 }
 /* line 972, ../sass/style.sass */
-.who-to-follow-modal .bio {
+.who-to-follow-modal .bio,
+.new-users-modal .bio {
   color: rgba(0, 0, 0, 0.6);
   font-style: italic;
 }

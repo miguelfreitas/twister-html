@@ -1024,12 +1024,12 @@ textarea.splited-post {
 /***********************************
 ********************* WHO TO FOLLOW
 ***********************************/
-.who-to-follow
-{
+.who-to-follow,
+.new-users {
     padding: 10px;
 }
-.who-to-follow h3
-{
+.who-to-follow h3,
+.new-users h3 {
     display: inline;
 }
 .twister-user
@@ -2345,19 +2345,23 @@ textarea.splited-post {
 ********* WHO TO FOLLOW MODAL ********
 **************************************/
 
-.who-to-follow-modal .modal-content {
+.who-to-follow-modal .modal-content,
+.new-users-modal .modal-content {
     padding: 15px;
 }
 
-.who-to-follow-modal ol {
+.who-to-follow-modal ol,
+.new-users-modal ol {
     margin: 5px;
 }
 
-.who-to-follow-modal .open-profile-modal:hover {
+.who-to-follow-modal .open-profile-modal:hover,
+.new-users-modal .open-profile-modal span:hover {
     text-decoration: none;
 }
 
-.who-to-follow-modal .open-profile-modal span {
+.who-to-follow-modal .open-profile-modal span,
+.new-users-modal .open-profile-modal span {
     vertical-align: middle;
 }
 
@@ -2365,16 +2369,19 @@ textarea.splited-post {
     text-decoration: underline;
 }
 
-.who-to-follow-modal .follow {
+.who-to-follow-modal .follow,
+.new-users-modal .follow {
     float: right;
     margin: -30px 10px 0 10px;
 }
 
-.who-to-follow-modal .twister-user-info span {
+.who-to-follow-modal .twister-user-info span,
+.new-users-modal .twister-user-info span {
     vertical-align: bottom;
 }
 
-.who-to-follow-modal .bio {
+.who-to-follow-modal .bio,
+.new-users-modal .bio {
     font-size: 12px;
     color: rgba( 0, 0, 0, .6 );
 }

@@ -741,22 +741,7 @@ function fillWhoToFollowModal(list, hlist, start) {
                 if (followingUsers.indexOf(utf) < 0 && list.indexOf(utf) < 0) {
                     list.push(utf);
 
-                    var item = itemTmp.clone(true);
-
-                    item.find('.twister-user-info').attr('data-screen-name', utf);
-                    item.find('.twister-user-name').attr('href', $.MAL.userUrl(utf));
-                    item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followingUsers[i]));
-                    item.find('.twister-user-tag').text('@' + utf);
-
-                    getAvatar(utf, item.find('.twister-user-photo'));
-                    getFullname(utf, item.find('.twister-user-full'));
-                    getBioToElem(utf, item.find('.bio'));
-                    getFullname(followingUsers[i], item.find('.followed-by').text(followingUsers[i]));
-                    getStatusTime(utf, item.find('.latest-activity .time'));
-
-                    item.find('.twister-user-remove').remove();
-
-                    hlist.append(item);
+                    processWhoToFollowSuggestion(hlist, utf, followingUsers[i]);
                 }
             }
         }
@@ -782,12 +767,32 @@ function openWhoToFollowModal() {
 
     modal.content.on('scroll', function() {
         if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
-            if (!fillWhoToFollowModal(tmplist, hlist, tmplist.length))
+            if (!fillWhoToFollowModal(tmplist, modal.self, tmplist.length))
                 modal.content.off('scroll');
         }
     });
 
-    fillWhoToFollowModal(tmplist, hlist, 0);
+    fillWhoToFollowModal(tmplist, modal.self, 0);
+}
+
+function openNewUsersModal() {
+    var modal = openModal({
+        classAdd: 'new-users-modal',
+        title: polyglot.t('New Users')
+    });
+
+    var hlist = $('<ol class="follow-suggestions"></ol>')
+        .appendTo(modal.content);
+    var count = 15;
+
+    modal.content.on('scroll', function() {
+        if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
+            if (getLastNUsers(5, count, modal.self))
+                count += 5;
+        }
+    });
+
+    getLastNUsers(15, 0, modal.self);
 }
 
 function openModalUriShortener()
@@ -1237,6 +1242,8 @@ function loadModalFromHash() {
         openWhoToFollowModal();
     else if (hashstring === '#/uri-shortener')
         openModalUriShortener();
+    else if (hashstring === '#newusers')
+        openNewUsersModal();
 }
 
 function initHashWatching() {
