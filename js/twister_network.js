@@ -171,31 +171,31 @@ function networkUpdate(cbFunc, cbArg) {
     requestNetInfo(function () {
         requestBestBlock(function(block, args) {
 
-                twisterdLastBlockTime = block.time;
-                $(".last-block-time").text( timeGmtToText(twisterdLastBlockTime) );
+            twisterdLastBlockTime = block.time;
+            $(".last-block-time").text(timeGmtToText(twisterdLastBlockTime));
 
-                var curTime = new Date().getTime() / 1000;
-                if (twisterdConnections) {
-                    if (twisterdLastBlockTime > curTime + 3600) {
-                        $.MAL.setNetworkStatusMsg(polyglot.t("Last block is ahead of your computer time, check your clock."), false);
-                        twisterdConnectedAndUptodate = false;
-                    } else if (twisterdLastBlockTime > curTime - (2 * 3600)) {
-                        if (twisterDhtNodes) {
-                            $.MAL.setNetworkStatusMsg(polyglot.t("Block chain is up-to-date, twister is ready to use!"), true);
-                            twisterdConnectedAndUptodate = true;
-                        } else {
-                            $.MAL.setNetworkStatusMsg(polyglot.t("DHT network down."), false);
-                            twisterdConnectedAndUptodate = true;
-                        }
+            var curTime = new Date().getTime() / 1000;
+            if (twisterdConnections) {
+                if (twisterdLastBlockTime > curTime + 3600) {
+                    $.MAL.setNetworkStatusMsg(polyglot.t("Last block is ahead of your computer time, check your clock."), false);
+                    twisterdConnectedAndUptodate = false;
+                } else if (twisterdLastBlockTime > curTime - (2 * 3600)) {
+                    if (twisterDhtNodes) {
+                        $.MAL.setNetworkStatusMsg(polyglot.t("Block chain is up-to-date, twister is ready to use!"), true);
+                        twisterdConnectedAndUptodate = true;
                     } else {
-                        var daysOld = (curTime - twisterdLastBlockTime) / (3600 * 24);
-                        $.MAL.setNetworkStatusMsg(polyglot.t("downloading_block_chain", {days: daysOld.toFixed(2)}), false);
-                        // don't alarm user if blockchain is just a little bit behind
-                        twisterdConnectedAndUptodate = (daysOld < 2);
+                        $.MAL.setNetworkStatusMsg(polyglot.t("DHT network down."), false);
+                        twisterdConnectedAndUptodate = true;
                     }
+                } else {
+                    var daysOld = (curTime - twisterdLastBlockTime) / (3600 * 24);
+                    $.MAL.setNetworkStatusMsg(polyglot.t("downloading_block_chain", {days: daysOld.toFixed(2)}), false);
+                    // don't alarm user if blockchain is just a little bit behind
+                    twisterdConnectedAndUptodate = (daysOld < 2);
                 }
-                if (args.cbFunc)
-                    args.cbFunc(args.cbArg);
+            }
+            if (args.cbFunc)
+                args.cbFunc(args.cbArg);
         }, {cbFunc:cbFunc, cbArg:cbArg} );
     });
 }
