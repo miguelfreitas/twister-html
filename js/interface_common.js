@@ -120,7 +120,7 @@ function closeModal(req, switchMode) {
                 this.remove();  // if it's minimized it will be removed with twister.modal[i].drapper
 
             if (typeof twister.modal[i].onClose === 'function')
-                twister.modal[i].onClose(twister.modal[i].closeArg);
+                twister.modal[i].onClose(twister.modal[i].onCloseReq);
 
             twister.modal[i].drapper.remove();
             twister.modal[i] = undefined;
