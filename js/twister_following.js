@@ -517,7 +517,7 @@ NewUserSearch.prototype = {
 
             setTimeout(function () {
                 requestBlock(block.previousblockhash, NewUserSearch.processBlockUsersProxy, {obj: args.obj, args: args.args});
-            }, 100);
+            }, 10);
 
         } else {
             NewUserSearch.isNewUserThRunning = false;
@@ -527,14 +527,15 @@ NewUserSearch.prototype = {
         for (var i = 0; i < block.usernames.length; i++) {
             if (NewUserSearch.knownNewUsers.indexOf(block.usernames[i]) == -1) {
                 processWhoToFollowSuggestion(args.args.module, block.usernames[i], undefined, args.args.prepend);
-                if (args.args.prepend)
-                    NewUserSearch.knownNewUsers.unshift(block.usernames[i]);
-                else
-                    NewUserSearch.knownNewUsers.push(block.usernames[i]);
                 if (!args.args.live && NewUserSearch.knownNewUsers.length >= args.args.n + args.args.offset)
                     break;
             }
         }
+        if (args.args.prepend)
+            NewUserSearch.knownNewUsers.unshift(block.usernames);
+        else
+            NewUserSearch.knownNewUsers.push(block.usernames);
+
         this.save();
     }
 };
