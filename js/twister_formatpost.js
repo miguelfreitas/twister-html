@@ -626,21 +626,25 @@ function htmlFormatMsg(msg, opt) {
                             break;
                     }
                     if (i < k) {
-                        var x = getSubStrEnd(msg.str, i, ':', false, '') + 1;
                         // following check is NOT for real protection (we have blocking CSP rule instead), it's just to aware people
-                        if (msg.str[i] === '#' || (x > i && x < k && (msg.str.slice(x - 6, x).toLowerCase() === 'script'  // other things would be added when W3C and all the people invent it
-                            || msg.str.slice(x - 4, x).toLowerCase() === 'data'))) {
+                        if (isUriSuspicious(msg.str.slice(i, k + 1))) {
                             msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
                                 '…<br><b><i>' + polyglot.t('busted_oh') + '</i> '
-                                + polyglot.t('busted_avowal') + ':</b><br><samp>'
+                                + polyglot.t('busted_avowal') + ':</b><br><samp>['
+                                + linkName
+                                    .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                    .replace(/"/g, '&quot;')
+                                    .replace(/'/g, '&apos;')
+                                + ']('
                                 + msg.str.slice(i, k + 1)
                                     .replace(/&(?!lt;|gt;)/g, '&amp;')
                                     .replace(/"/g, '&quot;')
                                     .replace(/'/g, '&apos;')
-                                + '</samp><br>'
+                                + ')</samp><br>…<br>'
                             );
                         } else {
-                            if ((x = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '')) < k)  // use only first word as href target, others drop silently
+                            var x = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '');
+                            if (x < k)  // use only first word as href target, others drop silently
                                 k = x;
                             linkName = applyHtml(  // we're handling markup inside [] of []()
                                 markout(markout(markout(markout(
@@ -791,6 +795,27 @@ function htmlFormatMsg(msg, opt) {
         msg = msg.replace(/\n/g, '<br />');
 
     return {html: msg, mentions: mentions};
+}
+
+function isUriSuspicious(req) {
+    var colonPos = req.search(/:|%3A/gi);
+    if (colonPos === 0)
+        return true;
+
+    var hashPos = req.search(/#|%23/g);
+
+    if (colonPos === -1)
+        if (hashPos > -1)
+            return req = req.slice(hashPos + 1),
+                (req.search(/^(?:hashtag|profile|conversation|mentions|favs|directmessages|groupmessages|newusers|followers|following|whotofollow|groupmessages\+newgroup|groupmessages\+joingroup\/uri\-shortener)\b/) > -1) ? false : true;
+        else
+            return false;  //(req.search(/^\s*@[A-Za-z0-9]+\/\d/g) === 0) ? false : true;
+
+    if (hashPos > -1 && hashPos < colonPos)
+        return true;
+
+    return req = req.slice(req.search(/\S/g), colonPos),
+        req.search(/[^A-Za-z0-9\+\.\-]/) > -1 || req.search(/(?:script|data)$/i) > -1;
 }
 
 function proxyURL(url) {
