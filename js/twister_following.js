@@ -524,17 +524,26 @@ NewUserSearch.prototype = {
             this.isForced = false;
         }
 
-        for (var i = 0; i < block.usernames.length; i++) {
+        var i = 0;
+        for (; i < block.usernames.length; i++) {
             if (NewUserSearch.knownNewUsers.indexOf(block.usernames[i]) == -1) {
                 processWhoToFollowSuggestion(args.args.module, block.usernames[i], undefined, args.args.prepend);
+                if (args.args.prepend)
+                    NewUserSearch.knownNewUsers.unshift(block.usernames[i]);
+                else
+                    NewUserSearch.knownNewUsers.push(block.usernames[i]);
                 if (!args.args.live && NewUserSearch.knownNewUsers.length >= args.args.n + args.args.offset)
                     break;
             }
         }
-        if (args.args.prepend)
-            NewUserSearch.knownNewUsers.unshift(block.usernames);
-        else
-            NewUserSearch.knownNewUsers.push(block.usernames);
+        for (; i < block.usernames.length; i++) {
+            if (NewUserSearch.knownNewUsers.indexOf(block.usernames[i]) == -1) {
+                if (args.args.prepend)
+                    NewUserSearch.knownNewUsers.unshift(block.usernames[i]);
+                else
+                    NewUserSearch.knownNewUsers.push(block.usernames[i]);
+            }
+        }
 
         this.save();
     }
