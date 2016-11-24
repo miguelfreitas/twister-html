@@ -1004,12 +1004,28 @@ function fetchShortenedURI(req, attemptCount) {
 function applyShortenedURI(short, uriAndMimetype) {
     var long = (uriAndMimetype instanceof Array) ? uriAndMimetype[0] : uriAndMimetype;
     var mimetype = (uriAndMimetype instanceof Array) ? uriAndMimetype[1] : undefined;
-    var elems = getElem('.link-shortened[href="' + short + '"]')
+    var elems = getElem('.link-shortened[href="' + short + '"]');
+
+    if (isUriSuspicious(long)) {
+        elems.replaceWith(
+            '…<br><b><i>' + polyglot.t('busted_oh') + '</i> '
+            + polyglot.t('busted_avowal') + ':</b><br><samp>'
+            + long
+                .replace(/&(?!lt;|gt;)/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;')
+            + '</samp><br>…<br>'
+        );
+        return;
+    }
+
+    elems
         .attr('href', long)
         .removeClass('link-shortened')
         .off('click mouseup')
         .on('click mouseup', muteEvent)
     ;
+
     var cropped = (/*$.Options.cropLongURIs &&*/ long.length > 23) ? long.slice(0, 23) + '…' : undefined;
     for (var i = 0; i < elems.length; i++) {
         if (elems[i].text === short)  // there may be some other text, possibly formatted, so we check it
