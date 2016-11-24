@@ -118,7 +118,7 @@ var InterfaceFunctions = function() {
         if ($.Options.WebTorrent.val === 'enable')
             initWebTorrent();
     }
-}
+};
 
 function initTopTrends() {
     var $tt = initInterfaceModule('toptrends');
@@ -208,6 +208,7 @@ function refreshWhoToFollow() {
 function initNewUsers() {
     var nus = initInterfaceModule('new-users');
 
+    newUsers = NewUserSearch();
     if (nus.length) {
         var nusRefresh = nus.find('.refresh-users');
         nusRefresh.on('click', refreshNewUsers);
@@ -224,7 +225,7 @@ function refreshNewUsers() {
         module.find('.refresh-users').hide();
         module.find('.loading-roller').show();
 
-        getLastNUsers(3, 0, module);
+        newUsers.getLastNUsers(3, 0, module, true);
     }
 }
 

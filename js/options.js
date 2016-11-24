@@ -43,6 +43,13 @@ function twisterOptions() {
     });
     this.add({
         name: 'NewUsers',
+        valDefault: 'enable',
+        tickMethod: function (elem) {
+            $('#NewUsersCont').css('display', (elem.value === 'enable') ? 'block' : 'none');
+        }
+    });
+    this.add({
+        name: 'NewUsersLiveTracking',
         valDefault: 'enable'
     });
     this.add({

@@ -15,11 +15,9 @@ var _searchKeypressTimer = undefined;
 var _lastSearchUsersResults = [];
 var _lastSearchUsersResultsRemovedFromDHTgetQueue = true;
 var _lastLoadFromDhtTime = 0;
-var _lastProcessedBlock = -1;
-var knownNewUsers = [];
-var isNewUserThRunning = false;
 
 var twisterFollowingO = undefined;
+var newUsers = undefined;
 
 var TwisterFollowing = function (user) {
     if (!(this instanceof TwisterFollowing))
@@ -430,46 +428,116 @@ function followingEmptyOrMyself() {
     return (!followingUsers.length || (followingUsers.length === 1 && followingUsers[0] === defaultScreenName))
 }
 
-function getLastNUsers(n,offset,module) {
+/* NEW USER SEARCH */
+var NewUserSearch = function(){
+    if (!(this instanceof NewUserSearch))
+        return new NewUserSearch();
 
-    if (isNewUserThRunning)
-        return false;
+    this.init();
+};
 
-    isNewUserThRunning = true;
-    for (var i = offset; i < knownNewUsers.length && i < offset + n; i++)
-        processWhoToFollowSuggestion(module, knownNewUsers[i]);
-
-    if (knownNewUsers.length >= n + offset)
-    {
-        isNewUserThRunning = false;
-        return true;
+NewUserSearch.knownNewUsers = [];
+NewUserSearch.isNewUserThRunning = false;
+NewUserSearch.isNewUserModalOpen = false;
+NewUserSearch.startProcessedBlock = -1;
+NewUserSearch.lastProcessedBlock = -1;
+NewUserSearch.processBlockUsersProxy = function(block, args){
+    if (args.obj instanceof NewUserSearch)
+        args.obj.processBlockUsers(block, args);
+};
+NewUserSearch.live = function(module) {
+    newUsers.getNewUsers(module);
+};
+NewUserSearch.processBestBlockUsersProxy = function(block, args){
+    if (block.height > NewUserSearch.startProcessedBlock) {
+        if (args.obj instanceof NewUserSearch)
+            args.obj.processBlockUsers(block, {obj: args.obj, args: {n: 0, offset: 0, module: args.args.module, prepend: true, live: true}});
     }
+};
 
-    if (_lastProcessedBlock == -1)
-        requestBestBlock(processBlockUsers, {n: n, offset: offset, module: module});
-    else
-        requestNthBlock(_lastProcessedBlock - 1, processBlockUsers, {n: n, offset: offset, module: module});
+NewUserSearch.prototype = {
+    storage: undefined,
+    isForced: false,
 
-    return true;
-}
+    init: function() {
+        this.storage = $.initNamespaceStorage(defaultScreenName).sessionStorage;
+        if (this.storage.isSet("knownNewUsers"))
+            NewUserSearch.knownNewUsers = this.storage.get("knownNewUsers");
+        if (this.storage.isSet("lastProcessedBlock"))
+            NewUserSearch.lastProcessedBlock = this.storage.get("lastProcessedBlock");
+        if (this.storage.isSet("startProcessedBlock"))
+            NewUserSearch.startProcessedBlock = this.storage.get("startProcessedBlock");
 
-function processBlockUsers(block, users){
-    _lastProcessedBlock = block.height;
+        if ($.Options.NewUsersLiveTracking.val === 'enable')
+            setInterval(function(){NewUserSearch.live($('.module.new-users'));}, 10000);
+    },
 
-    if (knownNewUsers.length + block.usernames.length < users.n + users.offset && typeof block.previousblockhash !== 'undefined')
-        setTimeout(function(){requestBlock(block.previousblockhash, processBlockUsers, users);}, 100);
-    else
-        isNewUserThRunning = false;
+    save: function(){
+        this.storage.set("knownNewUsers", NewUserSearch.knownNewUsers);
+        this.storage.set("lastProcessedBlock", NewUserSearch.lastProcessedBlock);
+        this.storage.set("startProcessedBlock", NewUserSearch.startProcessedBlock);
+    },
 
-    for (var i = 0; i < block.usernames.length; i++) {
-        if (knownNewUsers.indexOf(block.usernames[i]) == -1) {
-            processWhoToFollowSuggestion(users.module, block.usernames[i]);
-            knownNewUsers.push(block.usernames[i]);
-            if (knownNewUsers.length >= users.n + users.offset)
-                break;
+    getNewUsers: function(module) {
+        requestBestBlock(NewUserSearch.processBestBlockUsersProxy, {obj: this, args: {module: module}});
+    },
+
+    getLastNUsers: function (n, offset, module, forced) {
+        for (var i = offset; i < NewUserSearch.knownNewUsers.length && i < offset + n; i++)
+            processWhoToFollowSuggestion(module, NewUserSearch.knownNewUsers[i]);
+
+        if (NewUserSearch.knownNewUsers.length >= n + offset) {
+            NewUserSearch.isNewUserThRunning = false;
+            return true;
         }
+
+        if (NewUserSearch.isNewUserThRunning)
+            return false;
+
+        NewUserSearch.isNewUserThRunning = true;
+        this.isForced = forced;
+
+        if (NewUserSearch.lastProcessedBlock == -1)
+            requestBestBlock(NewUserSearch.processBlockUsersProxy, {obj: this, args: {n: n, offset: offset, module: module}});
+        else
+            requestNthBlock(NewUserSearch.lastProcessedBlock - 1, NewUserSearch.processBlockUsersProxy, {obj: this, args: {n: n, offset: offset, module: module}});
+
+        return true;
+    },
+
+    processBlockUsers: function (block, args) {
+        if (NewUserSearch.startProcessedBlock === -1)
+            NewUserSearch.startProcessedBlock = block.height;
+        if (NewUserSearch.lastProcessedBlock === -1 || block.height < NewUserSearch.lastProcessedBlock)
+            NewUserSearch.lastProcessedBlock = block.height;
+
+        if ((this.isForced || NewUserSearch.isNewUserModalOpen) &&
+            NewUserSearch.knownNewUsers.length + block.usernames.length < args.args.n + args.args.offset &&
+            typeof block.previousblockhash !== 'undefined') {
+
+            setTimeout(function () {
+                requestBlock(block.previousblockhash, NewUserSearch.processBlockUsersProxy, {obj: args.obj, args: args.args});
+            }, 100);
+
+        } else {
+            NewUserSearch.isNewUserThRunning = false;
+            this.isForced = false;
+        }
+
+        for (var i = 0; i < block.usernames.length; i++) {
+            if (NewUserSearch.knownNewUsers.indexOf(block.usernames[i]) == -1) {
+                processWhoToFollowSuggestion(args.args.module, block.usernames[i], undefined, args.args.prepend);
+                if (args.args.prepend)
+                    NewUserSearch.knownNewUsers.unshift(block.usernames[i]);
+                else
+                    NewUserSearch.knownNewUsers.push(block.usernames[i]);
+                if (!args.args.live && NewUserSearch.knownNewUsers.length >= args.args.n + args.args.offset)
+                    break;
+            }
+        }
+        this.save();
     }
-}
+};
 
 // randomly choose a user we follow, get "following1" from him and them
 // choose a suggestion from their list. this function could be way better, but
@@ -546,7 +614,7 @@ function getWhoFollows(peerAlias, elem) {
         ;
 }
 
-function processWhoToFollowSuggestion(module, suggestion, followedBy) {
+function processWhoToFollowSuggestion(module, suggestion, followedBy, prepend) {
     if (suggestion) {
         var list = module.find('.follow-suggestions');
         var item = $('#follow-suggestion-template').clone(true)
@@ -578,7 +646,14 @@ function processWhoToFollowSuggestion(module, suggestion, followedBy) {
             item.find('.twister-user-remove').remove();
         }
 
-        list.append(item).show();
+        if (prepend)
+            list.prepend(item).show();
+        else
+            list.append(item).show();
+
+        while (module.hasClass('new-users') && list.children().length > 3)
+            list.children().last().remove();
+
         module.find('.refresh-users').show();
         module.find('.loading-roller').hide();
     } else

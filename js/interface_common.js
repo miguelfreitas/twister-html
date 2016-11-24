@@ -119,6 +119,9 @@ function closeModal(req, switchMode) {
             else
                 this.remove();  // if it's minimized it will be removed with twister.modal[i].drapper
 
+            if (typeof twister.modal[i].onClose === 'function')
+                twister.modal[i].onClose(twister.modal[i].closeArg);
+
             twister.modal[i].drapper.remove();
             twister.modal[i] = undefined;
         }
@@ -731,9 +734,6 @@ function addPeerToFollowingList(list, peerAlias) {
 }
 
 function fillWhoToFollowModal(list, hlist, start) {
-    var itemTmp = $('#follow-suggestion-template').clone(true)
-        .removeAttr('id');
-
     for (var i = 0; i < followingUsers.length && list.length < start + 20; i++) {
         if (typeof twisterFollowingO.followingsFollowings[followingUsers[i]] !== 'undefined') {
             for (var j = 0; j < twisterFollowingO.followingsFollowings[followingUsers[i]].following.length && list.length < start + 25; j++) {
@@ -746,7 +746,6 @@ function fillWhoToFollowModal(list, hlist, start) {
             }
         }
     }
-    itemTmp.remove();
 
     if (i >= followingUsers.length - 1)
         return false;
@@ -778,7 +777,10 @@ function openWhoToFollowModal() {
 function openNewUsersModal() {
     var modal = openModal({
         classAdd: 'new-users-modal',
-        title: polyglot.t('New Users')
+        title: polyglot.t('New Users'),
+        onClose: function() {
+            NewUserSearch.isNewUserModalOpen = false;
+        }
     });
 
     var hlist = $('<ol class="follow-suggestions"></ol>')
@@ -787,12 +789,13 @@ function openNewUsersModal() {
 
     modal.content.on('scroll', function() {
         if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
-            if (getLastNUsers(5, count, modal.self))
+            if (newUsers.getLastNUsers(5, count, modal.self))
                 count += 5;
         }
     });
 
-    getLastNUsers(15, 0, modal.self);
+    NewUserSearch.isNewUserModalOpen = true;
+    newUsers.getLastNUsers(15, 0, modal.self);
 }
 
 function openModalUriShortener()
