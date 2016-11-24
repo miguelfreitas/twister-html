@@ -119,6 +119,9 @@ function closeModal(req, switchMode) {
             else
                 this.remove();  // if it's minimized it will be removed with twister.modal[i].drapper
 
+            if (typeof twister.modal[i].onClose === 'function')
+                twister.modal[i].onClose(twister.modal[i].closeArg);
+
             twister.modal[i].drapper.remove();
             twister.modal[i] = undefined;
         }
@@ -731,9 +734,6 @@ function addPeerToFollowingList(list, peerAlias) {
 }
 
 function fillWhoToFollowModal(list, hlist, start) {
-    var itemTmp = $('#follow-suggestion-template').clone(true)
-        .removeAttr('id');
-
     for (var i = 0; i < followingUsers.length && list.length < start + 20; i++) {
         if (typeof twisterFollowingO.followingsFollowings[followingUsers[i]] !== 'undefined') {
             for (var j = 0; j < twisterFollowingO.followingsFollowings[followingUsers[i]].following.length && list.length < start + 25; j++) {
@@ -741,27 +741,11 @@ function fillWhoToFollowModal(list, hlist, start) {
                 if (followingUsers.indexOf(utf) < 0 && list.indexOf(utf) < 0) {
                     list.push(utf);
 
-                    var item = itemTmp.clone(true);
-
-                    item.find('.twister-user-info').attr('data-screen-name', utf);
-                    item.find('.twister-user-name').attr('href', $.MAL.userUrl(utf));
-                    item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followingUsers[i]));
-                    item.find('.twister-user-tag').text('@' + utf);
-
-                    getAvatar(utf, item.find('.twister-user-photo'));
-                    getFullname(utf, item.find('.twister-user-full'));
-                    getBioToElem(utf, item.find('.bio'));
-                    getFullname(followingUsers[i], item.find('.followed-by').text(followingUsers[i]));
-                    getStatusTime(utf, item.find('.latest-activity .time'));
-
-                    item.find('.twister-user-remove').remove();
-
-                    hlist.append(item);
+                    processWhoToFollowSuggestion(hlist, utf, followingUsers[i]);
                 }
             }
         }
     }
-    itemTmp.remove();
 
     if (i >= followingUsers.length - 1)
         return false;
@@ -782,12 +766,36 @@ function openWhoToFollowModal() {
 
     modal.content.on('scroll', function() {
         if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
-            if (!fillWhoToFollowModal(tmplist, hlist, tmplist.length))
+            if (!fillWhoToFollowModal(tmplist, modal.self, tmplist.length))
                 modal.content.off('scroll');
         }
     });
 
-    fillWhoToFollowModal(tmplist, hlist, 0);
+    fillWhoToFollowModal(tmplist, modal.self, 0);
+}
+
+function openNewUsersModal() {
+    var modal = openModal({
+        classAdd: 'new-users-modal',
+        title: polyglot.t('New Users'),
+        onClose: function() {
+            NewUserSearch.isNewUserModalOpen = false;
+        }
+    });
+
+    var hlist = $('<ol class="follow-suggestions"></ol>')
+        .appendTo(modal.content);
+    var count = 15;
+
+    modal.content.on('scroll', function() {
+        if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
+            if (newUsers.getLastNUsers(5, count, modal.self))
+                count += 5;
+        }
+    });
+
+    NewUserSearch.isNewUserModalOpen = true;
+    newUsers.getLastNUsers(15, 0, modal.self);
 }
 
 function openModalUriShortener()
@@ -1237,6 +1245,8 @@ function loadModalFromHash() {
         openWhoToFollowModal();
     else if (hashstring === '#/uri-shortener')
         openModalUriShortener();
+    else if (hashstring === '#newusers')
+        openNewUsersModal();
 }
 
 function initHashWatching() {

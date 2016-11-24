@@ -372,7 +372,9 @@ if(preferredLanguage == "en"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+      "New Users": "New Users",
+      "Live tracking" : "Live tracking"
     };
 }
 if(preferredLanguage == "es"){
@@ -717,7 +719,9 @@ if(preferredLanguage == "es"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+      "New Users": "New Users",
+      "Live tracking" : "Live tracking"
     };
 }
 
@@ -1061,7 +1065,9 @@ if(preferredLanguage == "uk"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -1410,7 +1416,9 @@ if(preferredLanguage == "zh-CN"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -1756,7 +1764,9 @@ if(preferredLanguage == "nl"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -2100,7 +2110,9 @@ if(preferredLanguage == "it"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -2445,7 +2457,9 @@ if(preferredLanguage == "fr"){
       "users_favs": "Favorites of @%{username}",
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -2797,7 +2811,9 @@ if(preferredLanguage == "ru"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -3145,7 +3161,9 @@ if(preferredLanguage == "de"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -3488,7 +3506,9 @@ if(preferredLanguage == "ja"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -3837,7 +3857,9 @@ if(preferredLanguage == "pt-BR"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -4182,7 +4204,9 @@ if(preferredLanguage == "tr"){
       "Favorites": "Favoriler",
       "You have to log in to favorite messages.": "İletileri favorine eklemek için giriş yapmalısın.",
       "fav_this": "Sana özel mi?",
-      "Last activity": "Son etkinlik"
+      "Last activity": "Son etkinlik",
+      "New Users": "Yeni Kullanıcılar",
+      "Live tracking" : "Canlı takip"
     };
 }
 
@@ -4530,7 +4554,9 @@ if(preferredLanguage == "cs"){
       "Favorites": "Favorites",
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "fav_this": "Is it for you only?",
-      "Last activity": "Last activity"
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 

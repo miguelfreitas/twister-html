@@ -17,6 +17,7 @@ var _lastSearchUsersResultsRemovedFromDHTgetQueue = true;
 var _lastLoadFromDhtTime = 0;
 
 var twisterFollowingO = undefined;
+var newUsers = undefined;
 
 var TwisterFollowing = function (user) {
     if (!(this instanceof TwisterFollowing))
@@ -427,6 +428,127 @@ function followingEmptyOrMyself() {
     return (!followingUsers.length || (followingUsers.length === 1 && followingUsers[0] === defaultScreenName))
 }
 
+/* NEW USER SEARCH */
+var NewUserSearch = function(){
+    if (!(this instanceof NewUserSearch))
+        return new NewUserSearch();
+
+    this.init();
+};
+
+NewUserSearch.knownNewUsers = [];
+NewUserSearch.isNewUserThRunning = false;
+NewUserSearch.isNewUserModalOpen = false;
+NewUserSearch.startProcessedBlock = -1;
+NewUserSearch.lastProcessedBlock = -1;
+NewUserSearch.processBlockUsersProxy = function(block, args){
+    if (args.obj instanceof NewUserSearch)
+        args.obj.processBlockUsers(block, args);
+};
+NewUserSearch.live = function(module) {
+    newUsers.getNewUsers(module);
+};
+NewUserSearch.processBestBlockUsersProxy = function(block, args){
+    if (block.height > NewUserSearch.startProcessedBlock) {
+        if (args.obj instanceof NewUserSearch)
+            args.obj.processBlockUsers(block, {obj: args.obj, args: {n: 0, offset: 0, module: args.args.module, prepend: true, live: true}});
+    }
+};
+
+NewUserSearch.prototype = {
+    storage: undefined,
+    isForced: false,
+
+    init: function() {
+        this.storage = $.initNamespaceStorage(defaultScreenName).sessionStorage;
+        if (this.storage.isSet("knownNewUsers"))
+            NewUserSearch.knownNewUsers = this.storage.get("knownNewUsers");
+        if (this.storage.isSet("lastProcessedBlock"))
+            NewUserSearch.lastProcessedBlock = this.storage.get("lastProcessedBlock");
+        if (this.storage.isSet("startProcessedBlock"))
+            NewUserSearch.startProcessedBlock = this.storage.get("startProcessedBlock");
+
+        if ($.Options.NewUsersLiveTracking.val === 'enable')
+            setInterval(function(){NewUserSearch.live($('.module.new-users'));}, 10000);
+    },
+
+    save: function(){
+        this.storage.set("knownNewUsers", NewUserSearch.knownNewUsers);
+        this.storage.set("lastProcessedBlock", NewUserSearch.lastProcessedBlock);
+        this.storage.set("startProcessedBlock", NewUserSearch.startProcessedBlock);
+    },
+
+    getNewUsers: function(module) {
+        requestBestBlock(NewUserSearch.processBestBlockUsersProxy, {obj: this, args: {module: module}});
+    },
+
+    getLastNUsers: function (n, offset, module, forced) {
+        for (var i = offset; i < NewUserSearch.knownNewUsers.length && i < offset + n; i++)
+            processWhoToFollowSuggestion(module, NewUserSearch.knownNewUsers[i]);
+
+        if (NewUserSearch.knownNewUsers.length >= n + offset) {
+            NewUserSearch.isNewUserThRunning = false;
+            return true;
+        }
+
+        if (NewUserSearch.isNewUserThRunning)
+            return false;
+
+        NewUserSearch.isNewUserThRunning = true;
+        this.isForced = forced;
+
+        if (NewUserSearch.lastProcessedBlock == -1)
+            requestBestBlock(NewUserSearch.processBlockUsersProxy, {obj: this, args: {n: n, offset: offset, module: module}});
+        else
+            requestNthBlock(NewUserSearch.lastProcessedBlock - 1, NewUserSearch.processBlockUsersProxy, {obj: this, args: {n: n, offset: offset, module: module}});
+
+        return true;
+    },
+
+    processBlockUsers: function (block, args) {
+        if (NewUserSearch.startProcessedBlock === -1)
+            NewUserSearch.startProcessedBlock = block.height;
+        if (NewUserSearch.lastProcessedBlock === -1 || block.height < NewUserSearch.lastProcessedBlock)
+            NewUserSearch.lastProcessedBlock = block.height;
+
+        if ((this.isForced || NewUserSearch.isNewUserModalOpen) &&
+            NewUserSearch.knownNewUsers.length + block.usernames.length < args.args.n + args.args.offset &&
+            typeof block.previousblockhash !== 'undefined') {
+
+            setTimeout(function () {
+                requestBlock(block.previousblockhash, NewUserSearch.processBlockUsersProxy, {obj: args.obj, args: args.args});
+            }, 10);
+
+        } else {
+            NewUserSearch.isNewUserThRunning = false;
+            this.isForced = false;
+        }
+
+        var i = 0;
+        for (; i < block.usernames.length; i++) {
+            if (NewUserSearch.knownNewUsers.indexOf(block.usernames[i]) == -1) {
+                processWhoToFollowSuggestion(args.args.module, block.usernames[i], undefined, args.args.prepend);
+                if (args.args.prepend)
+                    NewUserSearch.knownNewUsers.unshift(block.usernames[i]);
+                else
+                    NewUserSearch.knownNewUsers.push(block.usernames[i]);
+                if (!args.args.live && NewUserSearch.knownNewUsers.length >= args.args.n + args.args.offset)
+                    break;
+            }
+        }
+        for (; i < block.usernames.length; i++) {
+            if (NewUserSearch.knownNewUsers.indexOf(block.usernames[i]) == -1) {
+                if (args.args.prepend)
+                    NewUserSearch.knownNewUsers.unshift(block.usernames[i]);
+                else
+                    NewUserSearch.knownNewUsers.push(block.usernames[i]);
+            }
+        }
+
+        this.save();
+    }
+};
+
 // randomly choose a user we follow, get "following1" from him and them
 // choose a suggestion from their list. this function could be way better, but
 // that's about the simplest we may get to start with.
@@ -446,10 +568,11 @@ function getRandomFollowSuggestion() {
 
     var suggested = false;
     var j = Math.floor(Math.random() * twisterFollowingO.followingsFollowings[followingUsers[i]].following.length);
+    var module = $('.module.who-to-follow');
     for( ; j < twisterFollowingO.followingsFollowings[followingUsers[i]].following.length; j++ ) {
         if( followingUsers.indexOf(twisterFollowingO.followingsFollowings[followingUsers[i]].following[j]) < 0 &&
             _followSuggestions.indexOf(twisterFollowingO.followingsFollowings[followingUsers[i]].following[j]) < 0) {
-                processWhoToFollowSuggestion(twisterFollowingO.followingsFollowings[followingUsers[i]].following[j], followingUsers[i]);
+                processWhoToFollowSuggestion(module, twisterFollowingO.followingsFollowings[followingUsers[i]].following[j], followingUsers[i]);
                 _followSuggestions.push(twisterFollowingO.followingsFollowings[followingUsers[i]].following[j]);
                 suggested = true;
                 break;
@@ -501,28 +624,46 @@ function getWhoFollows(peerAlias, elem) {
         ;
 }
 
-function processWhoToFollowSuggestion(suggestion, followedBy) {
+function processWhoToFollowSuggestion(module, suggestion, followedBy, prepend) {
     if (suggestion) {
-        var module = $('.module.who-to-follow');
         var list = module.find('.follow-suggestions');
         var item = $('#follow-suggestion-template').clone(true)
             .removeAttr('id');
 
         item.find('.twister-user-info').attr('data-screen-name', suggestion);
         item.find('.twister-user-name').attr('href', $.MAL.userUrl(suggestion));
-        item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followedBy));
         item.find('.twister-user-tag').text('@' + suggestion);
 
         getAvatar(suggestion, item.find('.twister-user-photo'));
-        getFullname(followedBy, item.find('.followed-by').text(followedBy));
         getStatusTime(suggestion, item.find('.latest-activity .time'));
 
-        item.find('.twister-user-remove').on('click', function() {
-            item.remove();
-            getRandomFollowSuggestion();
-        });
+        if (module.hasClass('who-to-follow') || module.hasClass('who-to-follow-modal')) {
+            item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followedBy));
+            getFullname(followedBy, item.find('.followed-by').text(followedBy));
+            item.find('.twister-user-remove').on('click', function () {
+                item.remove();
+                getRandomFollowSuggestion();
+            });
+        }
+        else if (module.hasClass('new-users') || module.hasClass('new-users-modal')){
+            item.find('.followers').remove();
+            item.find('.twister-user-remove').remove();
+        }
 
-        list.append(item).show();
+        if (module.hasClass('modal-wrapper')) {
+            getFullname(suggestion, item.find('.twister-user-full'));
+            getBioToElem(suggestion, item.find('.bio'));
+            item.find('.twister-user-remove').remove();
+        }
+
+        if (prepend)
+            list.prepend(item).show();
+        else
+            list.append(item).show();
+
+        while (module.hasClass('new-users') && list.children().length > 3)
+            list.children().last().remove();
+
         module.find('.refresh-users').show();
         module.find('.loading-roller').hide();
     } else

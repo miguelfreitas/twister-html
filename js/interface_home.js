@@ -100,6 +100,11 @@ var InterfaceFunctions = function() {
             else
                 killInterfaceModule('who-to-follow');
 
+            if ($.Options.NewUsers.val === 'enable')
+                initNewUsers();
+            else
+                killInterfaceModule('new-users');
+
             if ($.Options.TwistdayReminder.val === 'enable')
                 initTwistdayReminder();
             else
@@ -113,7 +118,7 @@ var InterfaceFunctions = function() {
         if ($.Options.WebTorrent.val === 'enable')
             initWebTorrent();
     }
-}
+};
 
 function initTopTrends() {
     var $tt = initInterfaceModule('toptrends');
@@ -197,6 +202,30 @@ function refreshWhoToFollow() {
         getRandomFollowSuggestion();
         getRandomFollowSuggestion();
         getRandomFollowSuggestion();
+    }
+}
+
+function initNewUsers() {
+    var nus = initInterfaceModule('new-users');
+
+    newUsers = NewUserSearch();
+    if (nus.length) {
+        var nusRefresh = nus.find('.refresh-users');
+        nusRefresh.on('click', refreshNewUsers);
+        setTimeout(function() {nusRefresh.click();}, 100);
+    }
+}
+
+function refreshNewUsers() {
+    var module = $('.module.new-users');
+    var list = module.find('.follow-suggestions');
+
+    if (list.length) {
+        list.empty().hide();
+        module.find('.refresh-users').hide();
+        module.find('.loading-roller').show();
+
+        newUsers.getLastNUsers(3, 0, module, true);
     }
 }
 
