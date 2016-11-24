@@ -2812,6 +2812,7 @@ $(document).ready(function () {
     twister.tmpl.followersPeer = extractTemplate('#template-followers-peer');
     twister.tmpl.followingList = extractTemplate('#template-following-list');
     twister.tmpl.followingPeer = extractTemplate('#template-following-peer');
+    twister.tmpl.whoTofollowPeer = extractTemplate('#template-whotofollow-peer');
     twister.tmpl.commonDMsListItem = extractTemplate('#template-direct-messages-list-item')
         .on('mouseup', function (event) {
             event.data = {route:

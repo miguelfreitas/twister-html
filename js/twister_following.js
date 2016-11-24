@@ -624,50 +624,50 @@ function getWhoFollows(peerAlias, elem) {
         ;
 }
 
-function processWhoToFollowSuggestion(module, suggestion, followedBy, prepend) {
-    if (suggestion) {
-        var list = module.find('.follow-suggestions');
-        var item = $('#follow-suggestion-template').clone(true)
-            .removeAttr('id');
-
-        item.find('.twister-user-info').attr('data-screen-name', suggestion);
-        item.find('.twister-user-name').attr('href', $.MAL.userUrl(suggestion));
-        item.find('.twister-user-tag').text('@' + suggestion);
-
-        getAvatar(suggestion, item.find('.twister-user-photo'));
-        getStatusTime(suggestion, item.find('.latest-activity .time'));
-
-        if (module.hasClass('who-to-follow') || module.hasClass('who-to-follow-modal')) {
-            item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followedBy));
-            getFullname(followedBy, item.find('.followed-by').text(followedBy));
-            item.find('.twister-user-remove').on('click', function () {
-                item.remove();
-                getRandomFollowSuggestion();
-            });
-        }
-        else if (module.hasClass('new-users') || module.hasClass('new-users-modal')){
-            item.find('.followers').remove();
-            item.find('.twister-user-remove').remove();
-        }
-
-        if (module.hasClass('modal-wrapper')) {
-            getFullname(suggestion, item.find('.twister-user-full'));
-            getBioToElem(suggestion, item.find('.bio'));
-            item.find('.twister-user-remove').remove();
-        }
-
-        if (prepend)
-            list.prepend(item).show();
-        else
-            list.append(item).show();
-
-        while (module.hasClass('new-users') && list.children().length > 3)
-            list.children().last().remove();
-
-        module.find('.refresh-users').show();
-        module.find('.loading-roller').hide();
-    } else
+function processWhoToFollowSuggestion(module, peerAlias, followedBy, prepend) {
+    if (!peerAlias) {
         console.warn('nothing to proceed: no twisters to follow was suggested');
+        return;
+    }
+
+    var list = module.find('.follow-suggestions');
+    var item = twister.tmpl.whoTofollowPeer.clone(true);
+
+    item.find('.twister-user-info').attr('data-screen-name', peerAlias);
+    item.find('.twister-user-name').attr('href', $.MAL.userUrl(peerAlias));
+    item.find('.twister-user-tag').text('@' + peerAlias);
+
+    getAvatar(peerAlias, item.find('.twister-user-photo'));
+    getStatusTime(peerAlias, item.find('.latest-activity .time'));
+
+    if (module.hasClass('who-to-follow') || module.hasClass('who-to-follow-modal')) {
+        item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followedBy));
+        getFullname(followedBy, item.find('.followed-by').text(followedBy));
+        item.find('.twister-user-remove').on('click', {item: item}, function (event) {
+            event.data.item.remove();
+            getRandomFollowSuggestion();
+        });
+    } else if (module.hasClass('new-users') || module.hasClass('new-users-modal')) {
+        item.find('.followers').remove();
+        item.find('.twister-user-remove').remove();
+    }
+
+    if (module.hasClass('modal-wrapper')) {
+        getFullname(peerAlias, item.find('.twister-user-full'));
+        getBioToElem(peerAlias, item.find('.bio'));
+        item.find('.twister-user-remove').remove();
+    }
+
+    if (prepend)
+        list.prepend(item).show();
+    else
+        list.append(item).show();
+
+    while (module.hasClass('new-users') && list.children().length > 3)
+        list.children().last().remove();
+
+    module.find('.refresh-users').show();
+    module.find('.loading-roller').hide();
 }
 
 function closeSearchDialog(event) {
