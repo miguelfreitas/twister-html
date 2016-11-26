@@ -647,12 +647,13 @@ function htmlFormatMsg(msg, opt) {
                             if (x < k)  // use only first word as href target, others drop silently
                                 k = x;
                             linkName = applyHtml(  // we're handling markup inside [] of []()
-                                markout(markout(markout(markout(
+                                markout(markout(markout(markout(markout(
                                     {str: linkName, htmlEntities: msg.htmlEntities},
                                         markoutOpt, '*', 'b'),  // bold
                                         markoutOpt, '~', 'i'),  // italic
                                         markoutOpt, '_', 'u'),  // underlined
-                                        markoutOpt, '-', 's')  // striketrough
+                                        markoutOpt, '-', 's'),  // striketrough
+                                        markoutOpt, '|', 'blockquote')
                             )
                                 .replace(/&(?!lt;|gt;)/g, '&amp;');
                             if (markoutOpt === 'apply') {
@@ -768,11 +769,12 @@ function htmlFormatMsg(msg, opt) {
     }
 
     // handling text style markup
-    msg = markout(markout(markout(markout(msg,
+    msg = markout(markout(markout(markout(markout(msg,
             markoutOpt, '*', 'b'),  // bold
             markoutOpt, '~', 'i'),  // italic
             markoutOpt, '_', 'u'),  // underlined
-            markoutOpt, '-', 's')  // striketrough
+            markoutOpt, '-', 's'),  // striketrough
+            markoutOpt, '|', 'blockquote')
     ;
 
     // handling splitted posts numbering and escaping ampersands, qoutes and apostrophes

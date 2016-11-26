@@ -857,6 +857,15 @@ textarea.splited-post {
 .splited-post-counter:before {
     content: '\2026';
 }
+
+.post blockquote,
+#post-preview blockquote {
+    margin-left: 3px;
+    border-left: 2px solid #c7c7c8;
+    padding: 0.4em 0 0.4em 0.8em;
+    font-style: italic;
+}
+
 .post-area-extras
 {
     overflow: hidden;
