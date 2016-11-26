@@ -791,6 +791,14 @@ textarea.splited-post {
     content: '💭';
 }
 
+.post blockquote,
+#post-preview blockquote {
+    margin-left: 3px;
+    border-left: 2px solid #c7c7c8;
+    padding: 0.4em 0 0.4em 0.8em;
+    font-style: italic;
+}
+
 /* FIXME need to rework and replace all .twister-user to get same vis */
 .twister-peer {
     margin: 0;
