@@ -496,56 +496,31 @@ function htmlFormatMsg(msg, opt) {
         }
 
         // changing the string
-        if (chr === '`' && markoutOpt === 'apply') {  // if markoutOpt === 'clear' then ` does not escape anythyng so it needs to be handled like other tags
-            for (i = 0; i < p.length; i++) {
-                if (p[i].a > -1) {
-                    if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
-                        if (p[i].k > 1)
-                            t = Array(p[i].k).join(chr);
-                        else
-                            t = '';
-                        j = p[i].a;
-                        t = t + msg.str.slice(p[i].i + p[i].k, p[j].i);
-                        if (p[j].k > 1)
-                            t = t + Array(p[i].k).join(chr);
-                        t = '<' + tag + '>' + t + '</' + tag + '>';
-                        msg.htmlEntities.push(t.replace(/&(?!lt;|gt;)/g, '&amp;'));
-                        htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
-                        msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[j].i + p[j].k);
-                        l = htmlEntityEncoded.length - p[j].i - p[j].k + p[i].i;
-                        i = j;
-                        for (j += 1; j < p.length; j++)
-                            p[j].i += l;
-                    }
+        if (markoutOpt === 'apply') {
+            t = '</' + tag + '>';
+            tag = '<' + tag + '>';
+        } else {  // markoutOpt === 'clear' so we're clearing markup
+            t = '';
+            tag = '';
+        }
+        for (i = 0; i < p.length; i++) {
+            if (p[i].a > -1) {
+                if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
+                    if (p[i].k > 1)
+                        msg.htmlEntities.push(tag + Array(p[i].k).join(chr));
+                    else
+                        msg.htmlEntities.push(tag);
+                } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
+                    if (p[i].k > 1)
+                        msg.htmlEntities.push(Array(p[i].k).join(chr) + t);
+                    else
+                        msg.htmlEntities.push(t);
                 }
-            }
-        } else {
-            if (markoutOpt === 'apply') {
-                t = '</' + tag + '>';
-                tag = '<' + tag + '>';
-            } else {  // markoutOpt === 'clear' so we're clearing markup
-                t = '';
-                tag = '';
-            }
-            for (i = 0; i < p.length; i++) {
-                if (p[i].a > -1) {
-                    if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
-                        if (p[i].k > 1)
-                            msg.htmlEntities.push(tag + Array(p[i].k).join(chr));
-                        else
-                            msg.htmlEntities.push(tag);
-                    } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
-                        if (p[i].k > 1)
-                            msg.htmlEntities.push(Array(p[i].k).join(chr) + t);
-                        else
-                            msg.htmlEntities.push(t);
-                    }
-                        htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
-                        msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[i].i + p[i].k);
-                        l = htmlEntityEncoded.length - p[i].k;
-                        for (j = i + 1; j < p.length; j++)
-                            p[j].i += l;
-                }
+                htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
+                msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[i].i + p[i].k);
+                l = htmlEntityEncoded.length - p[i].k;
+                for (j = i + 1; j < p.length; j++)
+                    p[j].i += l;
             }
         }
 
@@ -610,7 +585,17 @@ function htmlFormatMsg(msg, opt) {
 
     msg = {str: escapeHtmlEntities(msg), htmlEntities: []};
 
-    msg = markout(msg, markoutOpt, '`', 'samp');  // <samp> tag is kind of monospace, here sequence of chars inside it will be escaped from markup
+    // markout is not applied for chars inside of ``; to escape ` use backslash
+    if (markoutOpt === 'apply')
+        msg.str = msg.str.replace(/`(?:[^`\\]|\\.)*`/g, function (s) {
+            msg.htmlEntities.push('<samp>' + s.slice(1, -1).replace(/\\`/g, '`')
+                .replace(/&(?!lt;|gt;)/g, '&amp;') + '</samp>');
+            return '>' + (msg.htmlEntities.length - 1).toString() + '<';
+        });
+    else if (markoutOpt === 'clear')
+        msg.str = msg.str.replace(/`((?:[^`\\]|\\.)*)`/g, function (s) {
+            return s.slice(1, -1).replace(/\\`/g, '`');
+        });
 
     // handling links
     for (i = 0; i < msg.str.length - 7; i++) {
