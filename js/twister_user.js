@@ -84,7 +84,7 @@ function loadScreenName() {
 }
 
 function saveScreenName() {
-    $.localStorage.set("defaultScreenName", defaultScreenName);
+    $.localStorage.set("defaultScreenName", '"' + defaultScreenName + '"');
 }
 
 
