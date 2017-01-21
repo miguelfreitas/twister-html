@@ -244,7 +244,7 @@ function setPostReference(elem, rt, sig_rt) {
             .attr('data-screen-name', rt.n)
             .attr('data-id', rt.k)
             .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: sig_rt}))
-            .find('.post-text').each(function (i, elem) {fillElemWithTxt($(elem), rt.msg);})
+            .find('.post-text').each(function (i, elem) {fillElemWithTxt($(elem), rt.msg + (rt.msg2 || ''));})
     ;
     setPostCommon(elem, rt.n, rt.time);
 }
