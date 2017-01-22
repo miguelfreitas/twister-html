@@ -2603,7 +2603,7 @@ function initInterfaceCommon() {
 
     $('.prompt-close').on('click', closePrompt);
 
-    $('button.follow').on('click', clickFollow);
+    getElem('button.follow', true).on('click', clickFollow);
 
     $('.following-config-method-buttons .public-following').on('click', function(event) {
         setFollowingMethod(event);
