@@ -45,6 +45,7 @@ if(preferredLanguage == "en"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancel",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -191,6 +192,14 @@ if(preferredLanguage == "en"){
       "Unfollow": "Unfollow",
       "Update": "Update",
       "Auto updating": "Automatic updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Updating status...", // status of block chain
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
@@ -396,6 +405,7 @@ if(preferredLanguage == "es"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancelar",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -542,6 +552,14 @@ if(preferredLanguage == "es"){
       "Unfollow": "Dejar de seguir",
       "Update": "Actualizar",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Actualización del estado ...", // status of block chain
       "user_not_yet_accepted": "Otros pares no han aceptado este nuevo usuario.\n" +
                 "Por desgracia, no es posible guardar el perfil\n" +
@@ -744,6 +762,7 @@ if(preferredLanguage == "uk"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Відміна",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -891,6 +910,14 @@ if(preferredLanguage == "uk"){
       "Unfollow": "Відписатись",
       "Update": "Оновити",
       "Auto updating": "Автоматичне оновлення",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Оновлення статусу...", // status of block chain
       "user_not_yet_accepted": "Триває підтвердження нового користувача.\n" +
                 "У цей час не можна редагувати профіль та надсилати повідомлення.\n\n" +
@@ -1090,6 +1117,7 @@ if(preferredLanguage == "zh-CN"){
       "busted_avowal": "系统检测到此用户试图在这里注入恶意代码",
       "btn_ok": "Okay",
       "Cancel": "取消",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -1236,6 +1264,14 @@ if(preferredLanguage == "zh-CN"){
       "Unfollow": "取消关注",
       "Update": "更新",
       "Auto updating": "自动更新",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "状态更新中...", // status of block chain
       "user_not_yet_accepted": "其他节点还没有接受这个新用户。\n" +
         "很抱歉，现在你还不能保存你的个人简介\n" +
@@ -1441,6 +1477,7 @@ if(preferredLanguage == "nl"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Annuleren",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -1587,6 +1624,14 @@ if(preferredLanguage == "nl"){
       "Unfollow": "Ontvolgen",
       "Update": "Update",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Status aan het updaten...", // status of block chain
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
@@ -1789,6 +1834,7 @@ if(preferredLanguage == "it"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancella",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -1935,6 +1981,14 @@ if(preferredLanguage == "it"){
       "Unfollow": "Smetti di seguire",
       "Update": "Aggiorna",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Aggiornamento in corso...", // status of block chain
       "user_not_yet_accepted": "Gli altri nodi non hanno ancora accettato il nuovo utente.\n" +
                 "Al momento non puoi salvare il profilo o spedire messaggi.\n" +
@@ -2135,6 +2189,7 @@ if(preferredLanguage == "fr"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Annuler",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -2281,6 +2336,14 @@ if(preferredLanguage == "fr"){
       "Unfollow": "Se désabonner",
       "Update": "Mettre à jour",
       "Auto updating": "Mise à jour automatique",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Mise à jour du statut...", // status of block chain
       "user_not_yet_accepted": "Les autres pairs n'ont pas encore accepté ce nouvel utilisateur.\n" +
                 "Malheureusement, il n'est pas possible d'enregistrer le profil\n" +
@@ -2484,6 +2547,7 @@ if(preferredLanguage == "ru"){
        "busted_avowal": "я пойман на попытке вставить этот подозрительный код здесь",
        "btn_ok": "Лады́",
        "Cancel": "Отмена",
+      'cant_get_requested_resourse': 'Невозможно получить %{link}\n  статус: %{status}.',
        "clear_cache": "Очистить кэш",
        "Confirm": "Несомненно",
        "сonfirm_group_leaving_header": "Подтверждение ухода из группы",
@@ -2630,6 +2694,14 @@ if(preferredLanguage == "ru"){
        "Unfollow": "Отписаться",
        "Update": "Обновить",
        "Auto updating": "Автоматическое обновление",
+      'updates_are_available': 'Доступны обновления',
+      'updates_not_available': 'Обновления не доступны',
+      'updates_check_client': 'Проверить обновления клиента',
+      'updates_repo_overview': 'Мы сейчас на ветке %{branch} в %{repo} на коммите\n  %{commit} от %{date},\n'
+        + 'а вот HEAD её источника уже на коммите\n  %{commitUpstream} от %{dateUpstream}.',
+      'updates_checkout_diff': 'Смотри [сравнение на GitHub](%{link}), чтобы узнать каковы изменения.',
+      'updates_checkout_diff_nfmt': 'Смотри сравнение на GitHub, чтобы узнать каковы изменения:\n  %{link}',
+      'updates_upstream_isnt_changed': 'Соответствующая ветка в исходном репозитории выглядит неизменённой.',
        "Updating status...": "Обновление информации...", // status of block chain
        "user_not_yet_accepted": "Другие участники сети еще не получили информацию о новом пользователе.\n" +
                  "К сожалению, сейчас вы не можете редактировать ваш профиль\n" +
@@ -2836,6 +2908,7 @@ if(preferredLanguage == "de"){
       "busted_avowal": "Ich bin ertappt, habe versucht, hier Schadcode einzugeben!",
       "btn_ok": "Okay",
       "Cancel": "Abbrechen",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -2983,6 +3056,14 @@ if(preferredLanguage == "de"){
       "Unfollow": "Nicht mehr folgen",
       "Update": "Aktualisieren",
       "Auto updating": "Automatische Aktualisierung",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Status wird aktualisiert...", // status of block chain
       "user_not_yet_accepted": "Andere Peers haben diesen Benutzter noch nicht akzeptiert.\n" +
                 "Leider ist es nicht möglich, das Profil zu speichern\n" +
@@ -3186,6 +3267,7 @@ if(preferredLanguage == "ja"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "キャンセル",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -3332,6 +3414,14 @@ if(preferredLanguage == "ja"){
       "Unfollow": "解除",
       "Update": "アップデート",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "ブロックチェーンを更新中…", // status of block chain
       "user_not_yet_accepted": "この新ユーザーが他のピアーにまだ認証されていない。\n" +
                 "なので、プロファイルの保存やメッセージの投稿は現在不可能です。\n" +
@@ -3532,6 +3622,7 @@ if(preferredLanguage == "pt-BR"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancelar",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -3679,6 +3770,14 @@ if(preferredLanguage == "pt-BR"){
       "Unfollow": "Deixar de seguir",
       "Update": "Atualizar",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Atualizando estado da Cadeia de Blocos...", // status of block chain
       "URI_shortener_caption": "URI Shortener",
       "user_not_yet_accepted": "Outros nós ainda não aceitaram este novo usuário.\n" +
@@ -3882,6 +3981,7 @@ if(preferredLanguage == "tr"){
       "busted_avowal": "Şüpheli bir şeyler iliştirmeye çalışırken enselendim.",
       "btn_ok": "Tamam",
       "Cancel": "İptal",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Geçmişi temizle",
       "Confirm": "Onayla",
       "сonfirm_group_leaving_header": "Gruptan ayrılmayı onayla",
@@ -4028,6 +4128,14 @@ if(preferredLanguage == "tr"){
       "Unfollow": "Takibi bırak",
       "Update": "Güncelle",
       "Auto updating": "Otomatik güncelleme",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Durum güncelleniyor...", // status of block chain
       "user_not_yet_accepted": "Diğer eşler bu yeni kullanıcıyı henüz kabul etmediler.\n" +
                 "Malesef profili kaydetmek ya da bu durumda\n" +
@@ -4229,6 +4337,7 @@ if(preferredLanguage == "cs"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Zrušit",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
       "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
@@ -4376,6 +4485,14 @@ if(preferredLanguage == "cs"){
       "Unfollow": "Přestat sledovat",
       "Update": "Aktualizovat",
       "Auto updating": "Automatická aktualizace",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Aktualizuji stav...", // status of block chain
       "user_not_yet_accepted": "Ostatní uzly ještě nepřijaly tohoto nového uživatele.\n" +
                 "Proto zatím není možné uložit profil nebo vkládat příspěvky.\n" +

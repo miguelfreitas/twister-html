@@ -16,7 +16,10 @@ var twister = {
     tmpl: {  // templates pointers are stored here
         root: $('<div>')  // templates should be detached from DOM and attached here; use extractTemplate()
     },
-    modal: {}
+    modal: {},
+    var: {
+        updatesCheckClient: {}
+    }
 };
 var window_scrollY = 0;
 var _watchHashChangeRelaxDontDoIt = window.location.hash === '' ? true : false;
@@ -2700,6 +2703,13 @@ function initInterfaceCommon() {
     $('.bitmessage-ctc').on('click', promptCopyAttrData);
 
     $('.uri-shortener').on('mouseup', {route: '#/uri-shortener'}, routeOnClick);
+
+    $('.updates-check-client').text(polyglot.t('updates_check_client'))
+        .on('mouseup', function (event) {
+            muteEvent(event);
+            checkUpdatesClient(true);
+        }
+    );
 
     $('.post-area-new textarea')
         .on('focus',
