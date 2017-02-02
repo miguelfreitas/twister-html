@@ -1038,7 +1038,7 @@ function openRequestShortURIForm(event) {
 function showURIPair(uriLong, uriShort) {  // FIXME req
     if (uriShort)
         alertPopup({
-            txtTitle: 'URI shortener',
+            txtTitle: polyglot.t('URI_shortener'),
             txtMessage: uriLong + ' — `' + uriShort + '`'
         });
     else
@@ -1047,7 +1047,7 @@ function showURIPair(uriLong, uriShort) {  // FIXME req
 
 function showURIShortenerErrorRPC(ret) {
     alertPopup({
-        txtTitle: 'URI shortener',
+        txtTitle: polyglot.t('URI_shortener'),
         txtMessage: 'something went wrong. RPC error message:\n' + (ret && ret.message ? ret.message : ret)
     });
 }

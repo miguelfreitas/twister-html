@@ -3869,7 +3869,6 @@ if(preferredLanguage == "pt-BR"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Atualizando estado da Cadeia de Blocos...", // status of block chain
-      "URI_shortener_caption": "URI Shortener",
       'new_account_briefing': 'A new account was created and it is being propagated to the network. '
         + 'Please do not close this window, this might take a few minutes.\n\n'
         + 'Your secret key is: *%{secretKey}*\n\n'
