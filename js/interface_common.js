@@ -18,6 +18,7 @@ var twister = {
     },
     modal: {},
     var: {
+        localAccounts: [],
         updatesCheckClient: {}
     }
 };
@@ -57,6 +58,9 @@ function openModal(modal) {
 
     modal.self = $('#templates ' + modal.classBase).clone(true)
         .addClass(modal.classAdd);
+
+    if (modal.removeBlackout)
+        modal.self.find('.modal-blackout').remove();
 
     if (modal.title)
         modal.self.find('.modal-header h3').html(modal.title);
@@ -305,8 +309,9 @@ function confirmPopup(req) {
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
-        classAdd: 'confirm-popup',
+        classAdd: req.classAdd ? 'confirm-popup ' + req.classAdd : 'confirm-popup',
         content: $('#confirm-popup-template').children().clone(true),
+        removeBlackout: !req.addBlackout,
         title: req.txtTitle
     });
 
@@ -361,6 +366,8 @@ function confirmPopup(req) {
             btn.on('click', {cbFunc: req.cbClose, cbReq: req.cbCloseReq}, closePrompt);
         }
     }
+
+    return modal;
 }
 
 function alertPopup(req) {
@@ -377,7 +384,7 @@ function alertPopup(req) {
         req.removeCancel = true;
     }
 
-    confirmPopup(req);
+    return confirmPopup(req);
 }
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbReq) {
@@ -417,6 +424,94 @@ function timeSincePost(t) {
         expression = polyglot.t('days', Math.floor(t_delta / 86400));  // 24 * 60 * 60
 
     return polyglot.t('time_ago', {time: expression});
+}
+
+function openModalLogin() {
+    var modal = openModal({
+        classAdd: 'login-modal',
+        content: twister.tmpl.loginMC.clone(true),
+        title: polyglot.t('twister login')
+    });
+}
+
+function handleClickAccountLoginLogin(event) {
+    loginToAccount($(event.target).closest('.module').find('select.local-usernames').val());
+}
+
+function handleInputAccountCreateSetReq(event) {
+    var container = $(event.target).closest('.module');
+
+    container.find('.availability').text('');
+    $.MAL.enableButton(container.find('.check'));
+    $.MAL.disableButton(container.find('.create'));
+}
+
+function handleClickAccountCreateCheckReq(event) {
+    var container = $(event.target).closest('.module');
+    var peerAliasElem = container.find('.alias');
+    var peerAlias = peerAliasElem.val().toLowerCase();
+    var availField = container.find('.availability');
+
+    peerAliasElem.val(peerAlias);
+    $.MAL.disableButton(container.find('.check'));
+
+    if (!peerAlias.length)
+        return;
+    if (peerAlias.length > 16) {
+        availField.text(polyglot.t('Must be 16 characters or less.'));
+        return;
+    }
+
+    // check for non-alphabetic characters and space
+    if (peerAlias.search(/[^a-z0-9_]/) !== -1) {
+        availField.text(polyglot.t('Only alphanumeric and underscore allowed.'));
+        return;
+    }
+
+    availField.text(polyglot.t('Checking...'));
+
+    dumpPubkey(peerAlias,
+        function(req, ret) {
+            if (ret) {
+                req.container.find('.availability').text(polyglot.t('Not available'));
+            } else {
+                req.container.find('.availability').text(polyglot.t('Available'));
+                $.MAL.enableButton(req.container.find('.create'));
+            }
+        }, {container: container}
+    );
+}
+
+function handleClickAccountCreateCreate(event) {
+    var container = $(event.target).closest('.module');
+    var peerAlias = container.find('.alias').val().toLowerCase();
+
+    if (twister.var.localAccounts.indexOf(peerAlias) < 0) {
+        createAccount(peerAlias);
+    } else {
+        // user exists in wallet but transaction not sent
+        dumpPrivkey(peerAlias,
+            function (req, ret) {
+                $.MAL.processCreateAccount(req.peerAlias, ret);
+            }, {peerAlias: peerAlias}
+        );
+    }
+}
+
+function handleInputAccountImportSetReq(event) {
+    var container = $(event.target).closest('.module');
+
+    if (container.find('.secret-key').val().length === 52
+        && container.find('.alias').val().toLowerCase().length)
+        $.MAL.enableButton(container.find('.import'));
+    else
+        $.MAL.disableButton(container.find('.import'));
+}
+
+function handleClickAccountImportImport(event) {
+    var container = $(event.target).closest('.module');
+
+    importAccount(container.find('.alias').val().toLowerCase(), container.find('.secret-key').val())
 }
 
 function openGroupProfileModalWithNameHandler(groupAlias) {
@@ -1260,6 +1355,8 @@ function loadModalFromHash() {
         openGroupMessagesNewGroupModal();
     else if (hashstring === '#groupmessages+joingroup')
         openGroupMessagesJoinGroupModal();
+    else if (hashstring === '#/login')
+        openModalLogin();
     else if (hashstring === '#whotofollow')
         openWhoToFollowModal();
     else if (hashstring === '#/uri-shortener')
@@ -2593,7 +2690,7 @@ function initInterfaceCommon() {
         })
     ;
 
-    $('.modal-close, .modal-blackout').not('.prompt-close').on('click', closeModal);
+    getElem('.modal-wrapper .modal-close, .modal-wrapper .modal-blackout').on('click', closeModal);
 
     $('.minimize-modal').on('click', function (event) {
         minimizeModal($(event.target).closest('.modal-wrapper'));
@@ -2765,18 +2862,6 @@ function inputEnterActivator(event) {
         .attr('disabled', elemEvent.val().trim() === '');
 }
 
-function importSecretKeypress(event) {  // FIXME rename
-    var elemModule = $(event.target).closest('.module');
-    var elemEnter = elemModule.find('.import-secret-key');
-    var secretKey = elemModule.find('.secret-key-import').val();
-    var peerAlias = elemModule.find('.username-import').val().toLowerCase();
-
-    if (secretKey.length === 52 && peerAlias.length)
-        $.MAL.enableButton(elemEnter);
-    else
-        $.MAL.disableButton(elemEnter);
-}
-
 function pasteToTextarea(ta, p) {
     if (!ta || typeof ta.val !== 'function') return;
 
@@ -2834,6 +2919,16 @@ $(document).ready(function () {
     if ($.localStorage.isSet('twistaURIs'))
         twister.URIs = $.localStorage.get('twistaURIs');
     twister.html.blanka.appendTo('body').hide();
+    twister.tmpl.loginMC = extractTemplate('#template-login-modal');
+    twister.tmpl.loginMC.find('.login').on('click', handleClickAccountLoginLogin);
+    var module = twister.tmpl.loginMC.closest('.create-account');
+        module.find('.alias').on('input', handleInputAccountCreateSetReq);
+        module.find('.check').on('click', handleClickAccountCreateCheckReq);
+        module.find('.create').on('click', handleClickAccountCreateCreate);
+    module = twister.tmpl.loginMC.closest('.import-account');
+        module.find('.secret-key').on('input', handleInputAccountImportSetReq);
+        module.find('.alias').on('input', handleInputAccountImportSetReq);
+        module.find('.import').on('click', handleClickAccountImportImport);
     twister.tmpl.followersList = extractTemplate('#template-followers-list');
     twister.tmpl.followersPeer = extractTemplate('#template-followers-peer');
     twister.tmpl.followingList = extractTemplate('#template-following-list');
@@ -2892,9 +2987,7 @@ $(document).ready(function () {
 
     var path = window.location.pathname;
     var page = path.split("/").pop();
-    if (page.indexOf("login.html") === 0) {
-        initInterfaceLogin();
-    } else if (page.indexOf("network.html") === 0) {
+    if (page.indexOf('network.html') === 0) {
         initInterfaceNetwork();
     } else if (page.indexOf('options.html') === 0) {
         initInterfaceCommon();

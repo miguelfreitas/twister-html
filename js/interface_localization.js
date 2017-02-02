@@ -201,6 +201,15 @@ if(preferredLanguage == "en"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Updating status...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
                 "or send any posts in this state.\n\n" +
@@ -561,6 +570,15 @@ if(preferredLanguage == "es"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Actualización del estado ...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Otros pares no han aceptado este nuevo usuario.\n" +
                 "Por desgracia, no es posible guardar el perfil\n" +
                 "o enviar ningún mensaje en este estado.\n\n" +
@@ -919,6 +937,15 @@ if(preferredLanguage == "uk"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Оновлення статусу...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Триває підтвердження нового користувача.\n" +
                 "У цей час не можна редагувати профіль та надсилати повідомлення.\n\n" +
                 "Будь ласка, зачекайте декілька хвилин.\n" +
@@ -1273,6 +1300,15 @@ if(preferredLanguage == "zh-CN"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "状态更新中...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "其他节点还没有接受这个新用户。\n" +
         "很抱歉，现在你还不能保存你的个人简介\n" +
         "或发送新的推文。\n\n" +
@@ -1633,6 +1669,15 @@ if(preferredLanguage == "nl"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Status aan het updaten...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
                 "or send any posts in this state.\n\n" +
@@ -1990,6 +2035,15 @@ if(preferredLanguage == "it"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Aggiornamento in corso...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Gli altri nodi non hanno ancora accettato il nuovo utente.\n" +
                 "Al momento non puoi salvare il profilo o spedire messaggi.\n" +
                 "Attendi qualche minuto prima di continuare.\n\n" +
@@ -2345,6 +2399,15 @@ if(preferredLanguage == "fr"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Mise à jour du statut...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Les autres pairs n'ont pas encore accepté ce nouvel utilisateur.\n" +
                 "Malheureusement, il n'est pas possible d'enregistrer le profil\n" +
                 "ou envoyer des billets pour le moment.\n\n" +
@@ -2703,6 +2766,15 @@ if(preferredLanguage == "ru"){
       'updates_checkout_diff_nfmt': 'Смотри сравнение на GitHub, чтобы узнать каковы изменения:\n  %{link}',
       'updates_upstream_isnt_changed': 'Соответствующая ветка в исходном репозитории выглядит неизменённой.',
        "Updating status...": "Обновление информации...", // status of block chain
+      'new_account_briefing': 'Новая учётная запись создана и сейчас распространяется по сети. '
+        + 'Пожалуйста, не закрывай это окно: это может занять несколько минут.\n\n'
+        + 'Твой секретный ключ: *%{secretKey}*\n\n'
+        + 'Настоятельно рекомендуется провести время ожидания, сохраняя этот ключ. '
+        + 'Распечатай его, сделай скриншот, сфотографируй телефоном или перепиши на бумагу.\n\n'
+        + 'Секретный ключ будет необходим для использования на разных устройствах. '
+        + 'В случае его утери учётная запись окажется недосягаемой навсегда '
+        + '(заметь: ~это альфа-версия и возможны сбои, приводящие к утере данных~).\n\n'
+        + 'Подожди. Кнопка OK станет доступна быстрее, чем ты произнесёшь ~децентрализация~.',
        "user_not_yet_accepted": "Другие участники сети еще не получили информацию о новом пользователе.\n" +
                  "К сожалению, сейчас вы не можете редактировать ваш профиль\n" +
                  "или отправлять сообщение.\n\n" +
@@ -3065,6 +3137,15 @@ if(preferredLanguage == "de"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Status wird aktualisiert...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Andere Peers haben diesen Benutzter noch nicht akzeptiert.\n" +
                 "Leider ist es nicht möglich, das Profil zu speichern\n" +
                 "oder Nachrichten zu senden.\n\n" +
@@ -3423,6 +3504,15 @@ if(preferredLanguage == "ja"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "ブロックチェーンを更新中…", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "この新ユーザーが他のピアーにまだ認証されていない。\n" +
                 "なので、プロファイルの保存やメッセージの投稿は現在不可能です。\n" +
                 "しばらくしてから続行してください。\n\n" +
@@ -3780,6 +3870,15 @@ if(preferredLanguage == "pt-BR"){
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Atualizando estado da Cadeia de Blocos...", // status of block chain
       "URI_shortener_caption": "URI Shortener",
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Outros nós ainda não aceitaram este novo usuário.\n" +
                 "Infelizmente não é possível salvar o perfil\n" +
                 "ou realizar postagens neste estado.\n\n" +
@@ -4137,6 +4236,15 @@ if(preferredLanguage == "tr"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Durum güncelleniyor...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Diğer eşler bu yeni kullanıcıyı henüz kabul etmediler.\n" +
                 "Malesef profili kaydetmek ya da bu durumda\n" +
                 "ileti gönedermek mümkün değil.\n\n" +
@@ -4494,6 +4602,15 @@ if(preferredLanguage == "cs"){
       'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
       'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Aktualizuji stav...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Ostatní uzly ještě nepřijaly tohoto nového uživatele.\n" +
                 "Proto zatím není možné uložit profil nebo vkládat příspěvky.\n" +
                 "Počkejte prosím pár minut.\n\n" +
@@ -4717,12 +4834,7 @@ var fixedLabels = [
   ".network label",
   ".network input",
 
-  // login page
-  ".login ul li span",
   ".module span",
-  ".login span",
-  ".login-local-username",
-  ".login input",
 
   // mobile version //
 

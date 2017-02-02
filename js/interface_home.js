@@ -49,8 +49,7 @@ var InterfaceFunctions = function() {
         //$("span.screen-name").text('@' + user);
         var $miniProfile = $(".mini-profile");
         if (!defaultScreenName) {
-            $(".userMenu-profile > a").text(polyglot.t("Login"));
-            $(".userMenu-profile > a").attr("href","login.html");
+            $('.userMenu-profile > a').attr('href', '#/login').text(polyglot.t('Login'));
             $(".post-area-new > textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
             $(".post-area-new > textarea").attr("disabled","true");
             $miniProfile.find(".mini-profile-name").text("guest");

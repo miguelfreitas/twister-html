@@ -53,9 +53,9 @@
             <a class="dropdown-menu-item" href="options.html">Options</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
             <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
+            <a class="dropdown-menu-item" href="#/login">Change user</a>
             <a class="dropdown-menu-item updates-check-client">Check for client's updates</a>
             <a class="dropdown-menu-item dropdown-menu-following" href="#following">Following users</a>
-            <a class="dropdown-menu-item" href="login.html">Change user</a>
             <a class="dropdown-menu-item promoted-posts-only selectable_theme theme_original theme_calm" href="#">Switch to Promoted posts</a>
             <a class="dropdown-menu-item direct-messages selectable_theme theme_original theme_calm" href="#">Direct Messages</a>
             <a class="dropdown-menu-item groupmessages selectable_theme theme_original theme_calm" href="#">Group Messages</a>
@@ -458,11 +458,12 @@
     </div>
 
     <div class="prompt-wrapper">
-      <div class="modal-header">
-        <h3></h3>
-        <span class="modal-close prompt-close">&times;</span>
-      </div>
-      <div class="modal-content"></div>
+        <div class="modal-header">
+            <h3></h3>
+            <span class="modal-close prompt-close">&times;</span>
+        </div>
+        <div class="modal-content"></div>
+        <div class="modal-blackout"></div>
     </div>
 
     <div id="confirm-popup-template">
@@ -470,6 +471,42 @@
         <div class="modal-buttons">
             <button class="confirm"></button>
             <button class="cancel"></button>
+        </div>
+    </div>
+
+    <div id="template-login-modal">
+        <div class="module">
+            <div>
+                <p class="label">Existing local users</p>
+                <select class="local-usernames"></select>
+            </div>
+            <div>
+                <button class="login">Login</button>
+            </div>
+        </div>
+        <div class="module create-account">
+            <div>
+                <p class="label">Create a new user</p>
+                <input class="alias" type="textbox" placeholder="Type nickname here"></input>
+                <div class="availability"></div>
+            </div>
+            <div>
+                <button class="check" disabled="disabled">Check availability</button>
+                <button class="create" disabled="disabled">Create this nickname</button>
+            </div>
+        </div>
+        <div class="module import-account">
+            <div>
+                <p class="label">Import secret key</p>
+                <input class="secret-key" type="textbox" placeholder="52-characters secret" size="52"></input>
+            </div>
+            <div>
+                <p class="label">With nickname</p>
+                <input class="alias" type="textbox" placeholder="Type nickname here"></input>
+            </div>
+            <div>
+                <button class="import" disabled="disabled">Import key</button>
+            </div>
         </div>
     </div>
 

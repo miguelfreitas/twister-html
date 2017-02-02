@@ -8,7 +8,6 @@ var handlersInstalled = false;
 function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
     if( !handlersInstalled ) {
         interfaceNetworkHandlers();
-        interfaceCommonLoginHandlers();
         installUserSearchHandler();
         installProfileEditHandlers();
         // install scrollbottom handler to load more posts as needed
@@ -253,11 +252,12 @@ var router=new $.mobile.Router(
             });
         },
         login: function(type,match,ui) {
+            if (!$('#login .content').children().length)
+                $('#login .content').append(twister.tmpl.loginMC.clone(true)).trigger('create');
             $.mobile.showPageLoadingMsg();
             initializeTwister( true, false, function() {
                 $.mobile.hidePageLoadingMsg();
-                $("select.local-usernames.login-user").selectmenu("refresh", true);
-                installCreateUserClick();
+                $("select.local-usernames").selectmenu("refresh", true);
             });
         },
         network: function(type,match,ui) {
@@ -418,19 +418,6 @@ function installRetransmitConfirmClick() {
         $.mobile.showPageLoadingMsg();
         newRtMsg($postOrig);
         $.MAL.goHome();
-    });
-}
-
-function installCreateUserClick() {
-    $( ".create-user").unbind('click').click( function(e) {
-        createUserClick( function(username, secretKey) {
-            defaultScreenName = username;
-            if(defaultScreenName) {
-                saveScreenName();
-            }
-            $(".secret-key").text(secretKey);
-            sendNewUserTransaction( username, function() {} );
-            $.mobile.navigate( "#new-user-modal" ); } );
     });
 }
 
@@ -600,4 +587,3 @@ $(document).bind('mobileinit', function () {
   $.mobile.defaultDialogTransition = 'none';
   $.mobile.defaultPageTransition = 'none';
 });
-

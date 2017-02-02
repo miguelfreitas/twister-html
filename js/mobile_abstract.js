@@ -321,12 +321,12 @@ var MAL = function()
     }
 
     this.goLogin = function() {
-        if( $.hasOwnProperty("mobile") ) {
-            $.mobile.navigate( "#login" );
+        if ($.hasOwnProperty('mobile')) {
+            $.mobile.navigate('#login');
         } else {
-            window.location.href = "login.html";
+            window.location.hash = '#/login';
         }
-    }
+    };
 
     this.goNetwork = function() {
         if( $.hasOwnProperty("mobile") ) {
@@ -417,6 +417,38 @@ var MAL = function()
              $button.attr("disabled","true");
          }
      }
+
+    this.processCreateAccount = function (peerAlias, secretKey) {
+        defaultScreenName = peerAlias;
+        if (defaultScreenName) {
+            saveScreenName();
+        }
+
+        if ($.hasOwnProperty('mobile')) {
+            $('.secret-key').text(secretKey);
+            sendNewUserTransaction(peerAlias);
+            $.mobile.navigate('#new-user-modal');
+        } else {
+            var modal = confirmPopup({
+                classAdd: 'new-account-briefing',
+                txtTitle: polyglot.t('propagating_nickname', {username: peerAlias}),
+                txtMessage: polyglot.t('new_account_briefing', {secretKey: secretKey}),
+                txtConfirm: polyglot.t('Login'),
+                cbConfirm: $.MAL.goProfileEdit,
+                addBlackout: true,
+                removeCancel: true,
+                removeClose: true
+            });
+
+            modal.content.find('.confirm').attr('disabled', true);
+
+            sendNewUserTransaction(peerAlias,
+                function (accountCreatedModal) {
+                    accountCreatedModal.content.find('.confirm').attr('disabled', false);
+                }, modal
+            );
+        }
+    };
 
     this.changedUser = function() {
         if( $.hasOwnProperty("mobile") ) {

@@ -328,12 +328,9 @@ function initInterfaceNetwork() {
                 initMentionsCount();
                 initDMsCount();
             });
+        } else {
+            $('.userMenu-profile > a').attr('href', '#/login').text(polyglot.t('Login'));
         }
-        else
-    {
-        $(".userMenu-profile > a").text(polyglot.t("Login"));
-        $(".userMenu-profile > a").attr("href","login.html");
-    }
     });
     networkUpdate();
     setInterval("networkUpdate()", 2000);

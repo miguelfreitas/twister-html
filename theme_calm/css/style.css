@@ -1784,8 +1784,7 @@ textarea.splited-post {
     padding: 10px;
     border-radius: 6px;
 }
-.singleBlock h2, .header-bold
-{
+.singleBlock h2 {
     font-weight: bold;
     line-height: 40px;
     color: rgba( 255, 255, 255, 1 );
@@ -1857,83 +1856,6 @@ textarea.splited-post {
 }
 
 /*************************************
-************* LOGIN PAGE *************
-**************************************/
-
-.login .header-bold {
-    display: block;
-    width: 500px;
-    margin: 0px auto 12px auto;
-}
-
-.login .module {
-    padding: 20px;
-    width: 500px;
-    margin: 10px auto;
-    border: 3px solid #c7cdda;
-    border-radius: 6px;
-}
-.login .module p {
-    font: 14px "Open Sans", sans-serif;
-    margin-bottom: 5px;
-
-}
-.login .module input {
-    padding: 5px 10px;
-    font: 13px/24px "Open sans";
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    background: #f3f3f3;
-}
-.login .module input:focus {
-    background: #fff;
-    transition: background-color 100ms linear;
-}
-.login .module select {
-    height: 30px;
-    font: 13px/24px "Open sans";
-    text-align: center;
-    padding: 3px 30px 3px 10px;
-    margin: 0;
-    background: #fff url(../img/form-arrow-down-black.png) no-repeat right center;
-    border: 1px solid #ccc;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-
-/* hide default apperance select element and arrow in firefox */
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
-    text-indent: 0.01px;
-    text-overflow: '';
-/* end */
-}
-
-.login .module span.availability {
-    margin-left: 10px;
-    font: italic 16px "Open sans";
-    color: #45474d;
-}
-.with-nickname, .import-secret-key, .create-user {
-    margin-top: 10px;
-}
-
-.login .module input:focus::-webkit-input-placeholder {
-    color: #fff;
-}
-.login .module input:focus:-moz-placeholder {
-    color: #fff;
-}
-.login .module input:focus::-moz-placeholder {
-    color: #fff;
-}
-.login .module input::-ms-input-placeholder {
-    color: #fff;
-}
-
-/*************************************
 ************* POPUP MODAL ************
 **************************************/
 
@@ -1963,12 +1885,12 @@ textarea.splited-post {
     font-weight: bold;
 }
 
-.modal-wrapper .modal-content {
+.modal-content {
     background: #fff;
     overflow-y: auto;
 }
 
-.modal-wrapper .modal-blackout {
+.modal-blackout {
     background: rgba(0,0,0, .6);
     z-index: -1;
     position: fixed;
@@ -2054,6 +1976,62 @@ textarea.splited-post {
     font-size: 0.8em;
     text-align: right;
     margin-top: 4px;
+}
+
+/*************************************
+******* LOGIN TO ACCOUNT MODAL *******
+**************************************/
+
+.login-modal.modal-wrapper {
+    height: auto; /*about 580px*/
+    margin-top: -290px;
+}
+
+.login-modal .module {
+    margin: 4px;
+}
+
+.login-modal .module > div {
+    width: 100%;
+    margin: 4px 0;
+    padding: 4px 12px;
+}
+
+.login-modal .module > div:last-child {
+    text-align: right;
+    margin: 8px 0;
+}
+
+.login-modal .module input {
+    border: solid 1px rgba(0, 0, 0, .3);
+    border-radius: 4px;
+    width: 320px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.login-modal .module select {
+    border: solid 1px rgba(0, 0, 0, .3);
+    border-radius: 4px;
+    width: 310px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.login-modal .module input:focus, .login-modal .module select:focus {
+    border: solid 1px rgba(118, 145, 206, .8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+}
+
+.login-modal .module .secret-key {
+    width: 500px;
+}
+
+.login-modal .module .availability {
+    font: italic 13px "Open sans";
+    color: #45474D;
+    display: inline-block;
+    margin-left: 16px;
 }
 
 /*************************************
@@ -2261,38 +2239,6 @@ textarea.splited-post {
 }
 
 /*************************************
-*********** NEW USER MODAL ***********
-**************************************/
-
-.new-user.modal-wrapper {
-    width: 720px;
-    height: 580px;
-    margin: -290px 0 0 -360px;
-}
-
-.new-user .modal-content {
-    padding: 25px;
-}
-
-.new-user .modal-close {
-    display: none;
-}
-
-.new-user .text {
-    margin: 0 0 15px 0;
-}
-
-.new-user .emphasis {
-    font-size: 18px;
-    text-align: center;
-}
-
-.new-user .secret-key {
-    color: rgba(.5,0,0, 1.0);
-    font-weight: bold;
-}
-
-/*************************************
 ************ HASHTAG MODAL ***********
 **************************************/
 
@@ -2439,7 +2385,7 @@ textarea.splited-post {
 }
 
 .prompt-wrapper .modal-buttons {
-    margin: 4px 16px;
+    margin: 4px 16px 16px;
     text-align: right;
 }
 
@@ -2459,12 +2405,19 @@ textarea.splited-post {
 
 .confirm-popup .message {
     text-align: center;
-    margin: 12px;
+    padding: 12px;
 }
 
 .confirm-popup .modal-buttons {
     text-align: center;
-    padding: 4px;
+}
+
+/*************************************
+********* NEW ACCOUNT POPUP **********
+**************************************/
+
+.new-account-briefing.prompt-wrapper {
+    margin-top: -164px;
 }
 
 /*************************************
