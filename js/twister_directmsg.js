@@ -179,13 +179,14 @@ function openCommonDMsModal() {
     modal.self.find('.mark-all-as-read')
         .css('display', 'inline')
         .attr('title', polyglot.t('Mark all as read'))
-        .on('click', function() {
+        .on('click', function (event) {
             for (var user in _newDMsPerUser) {
                 if (user[0] !== '*')
                     _newDMsPerUser[user] = 0;
             }
             saveDMsToStorage();
             $.MAL.updateNewDMsUI(getNewDMsCount());
+            $(event.target).closest('.directMessages').find('.direct-messages-list .messages-qtd').hide();
         })
     ;
 }
@@ -236,13 +237,14 @@ function openGroupMessagesModal(groupAlias) {
         modal.self.find('.mark-all-as-read')
             .css('display', 'inline')
             .attr('title', polyglot.t('Mark all as read'))
-            .on('click', function() {
+            .on('click', function (event) {
                 for (var user in _newDMsPerUser) {
                     if (user[0] === '*')
                         _newDMsPerUser[user] = 0;
                 }
                 saveDMsToStorage();
                 $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+                $(event.target).closest('.groupMessages').find('.direct-messages-list .messages-qtd').hide();
             })
         ;
     } else {
