@@ -2752,9 +2752,13 @@ function initInterfaceCommon() {
     $('.userMenu-favs a').on('click', openFavsModal);
     $('.favs-from-user').on('click', openFavsModal);
 
-    $('#hashtag-modal-template .postboard-news').on('click', function () {
-        $(this).hide();
-        displayQueryPending($('.hashtag-modal .postboard-posts'));
+    $('#hashtag-modal-template .postboard-news').on('click', function (event) {
+        var elem = $(event.target).hide().closest('.postboard').find('.postboard-posts');
+
+        displayQueryPending(elem);
+
+        if (elem.attr('data-request-id') === defaultScreenName + '@mention')
+            resetMentionsCount();
     });
 
     getElem('.latest-activity', true).on('mouseup',
