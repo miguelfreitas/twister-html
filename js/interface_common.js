@@ -611,12 +611,12 @@ function setupQueryModalUpdating(postboard, query, resource) {
     // then we may possibly collect more posts on our second try by waiting more.
     req.timeoutArgs = [10000, 2000, 3];
 
-    postboard.attr('data-request-interval', setInterval(updateQueryModal, 5000, req));  // FIXME
+    req.interval = setInterval(updateQueryModal, 5000, req);
 }
 
 function updateQueryModal(req) {
     if (!isModalWithElemExists(req.postboard)) {
-        clearInterval(req.postboard.attr('data-request-interval'));
+        clearInterval(req.interval);
         clearQueryProcessed(req.id);
         return;
     }
