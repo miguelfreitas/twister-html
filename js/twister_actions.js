@@ -12,9 +12,6 @@
 var postsPerRefresh = 10;
 var maxExpandPost = 8;
 var maxExpandPostTop = 4;
-var _queryProcessedMap = {};
-var _queryPendingPosts = {};
-var autoUpdateQuery = false;
 
 // ----------------
 
@@ -439,55 +436,120 @@ function updateProfilePosts(postsView, username, useGetposts) {
      });
 }
 
-function clearQueryProcessed(id) {
-    if (!id) return;
+function queryStart(board, query, resource) {
+    var req = query + '@' + resource;
 
-    _queryProcessedMap[id] = {};
-    _queryPendingPosts[id] = [];
-}
-
-function requestQuery(req) {
-    req.postboard.closest('div').find('.postboard-loading').show();
-    if (req.resource === 'fav'){
-        twisterRpc("getfavs", [req.query, 1000], function(req, posts){
-                req.posts = posts;
-                processQuery(req)
-            }, req);
-    }
+    if (typeof twister.res[req] !== 'object')
+        twister.res[req] = {
+            board: board,
+            query: query,
+            resource: resource,
+            twists: {
+                cached: {},
+                pending: []
+            }
+        };
     else {
-        dhtget(req.query, req.resource, 'm',
-            function (req, posts) {
-                req.posts = posts;
-                processQuery(req);
-            },
-            req,
-            req.timeoutArgs
-        );
+        twister.res[req].board = board;
+        for (var i in twister.res[req].twists.cached)
+            if (twister.res[req].twists.pending.indexOf(i) === -1)
+                twister.res[req].twists.pending.push(i);
+
+        queryPendingDraw(req)
     }
+
+    queryRequest(req);
+
+    // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
+    // our first query above should be faster (with default timeoutArgs of twisterd),
+    // then we may possibly collect more posts on our second try by waiting more.
+    twister.res[req].timeoutArgs = [10000, 2000, 3];
+
+    twister.res[req].interval = setInterval(queryTick, 5000, req);
+
+    return req;
 }
 
-function processQuery(req) {
-    if (!isModalWithElemExists(req.postboard) || !req.posts || !req.posts.length)
+function queryTick(req) {
+    if (typeof twister.res[req].skidoo === 'function' ? twister.res[req].skidoo(req)
+        : !isModalWithElemExists(twister.res[req].board)) {
+        clearInterval(twister.res[req].interval);
+        queryClear(req);
+        return;
+    }
+
+    queryRequest(req);
+}
+
+function queryClear(req) {
+    if (!req || !twister.res[req] || !twister.res[req].twists)
         return;
 
-    if (!req.id)
-        req.id = req.query + '@' + req.resource;
-    if (typeof _queryProcessedMap[req.id] !== 'object')
-        _queryProcessedMap[req.id] = {};
-    if (typeof _queryPendingPosts[req.id] !== 'object')
-        _queryPendingPosts[req.id] = [];
+    twister.res[req].twists.pending = [];
+}
 
-    for (var i = req.posts.length - 1; i >= 0; i--) {
-        var userpost = req.posts[i].userpost;
+function queryRequest(req) {
+    twister.res[req].board.closest('div').find('.postboard-loading').show();
+
+    if (twister.res[req].resource === 'fav')
+        twisterRpc('getfavs', [twister.res[req].query, 1000],
+            queryProcess, req);
+    else
+        dhtget(twister.res[req].query, twister.res[req].resource, 'm',
+            queryProcess, req, twister.res[req].timeoutArgs);
+}
+
+function queryProcess(req, twists) {
+    queryPendingPush(req, twists);
+
+    if (typeof twister.res[req].skidoo === 'function' ? twister.res[req].skidoo(req)
+        : !isModalWithElemExists(twister.res[req].board))
+        return;
+
+    if (twister.res[req].twists.pending.length) {
+        if (twister.res[req].board.children().length && !$.mobile
+            && $.Options.showDesktopNotifPostsModal.val === 'enable'
+            && (twister.res[req].resource !== 'mention' || twister.res[req].query !== defaultScreenName))
+            $.MAL.showDesktopNotification({
+                body: polyglot.t('You got') + ' ' + polyglot.t('new_posts', twister.res[req].twists.pending.length) + ' '
+                    + polyglot.t('in search result') + '.',
+                tag: 'twister_notification_new_posts_modal',
+                timeout: $.Options.showDesktopNotifPostsModalTimer.val,
+                funcClick: (function() {
+                    focusModalWithElement(twister.res[this.req].board,
+                        function (req) {
+                            twister.res[req].board.closest('.postboard')
+                                .find('.postboard-news').click();
+                        },
+                        this.req
+                    );
+                }).bind({req: req})
+            });
+
+        if (!twister.res[req].board.children().length || twister.res[req].boardAutoAppend)
+            queryPendingDraw(req);
+        else {
+            twister.res[req].board.closest('div').find('.postboard-news')  // FIXME we'd replace 'div' with '.postboard' but need to dig through tmobile first
+                .text(polyglot.t('new_posts', twister.res[req].twists.pending.length))
+                .fadeIn('slow')
+            ;
+            twister.res[req].board.closest('div').find('.postboard-loading').hide();
+        }
+    }
+}
+
+function queryPendingPush(req, twists) {
+    if (!req || !twister.res[req] || !twists || !twists.length)
+        return;
+
+    for (var i = twists.length - 1; i >= 0; i--) {
+        var userpost = twists[i].userpost;
+        var j = userpost.n + '/' + userpost.time;
 
         if (userpost.fav)
             userpost = userpost.fav;
 
-        var key = userpost.n + ';' + userpost.time;
-
-        if (!_queryProcessedMap[req.id][key]) {
-            _queryProcessedMap[req.id][key] = true;
-
+        if (typeof twister.res[req].twists.cached[j] === 'undefined') {
             if ((typeof userpost.msg !== 'string' || userpost.msg === '')
                 && (typeof userpost.rt !== 'object'
                     || typeof userpost.rt.msg !== 'string' || userpost.rt.msg === ''))
@@ -500,53 +562,27 @@ function processQuery(req) {
                     langFilterData = filterLang(userpost.rt.msg);
 
                 if ($.Options.filterLangSimulate.val) {
-                    req.posts[i].langFilter = langFilterData;
+                    twists[i].langFilter = langFilterData;
                 } else {
                     if (!langFilterData.pass)
                         continue;
                 }
             }
 
-            _queryPendingPosts[req.id].push(req.posts[i]);
-        }
-    }
-
-    if (_queryPendingPosts[req.id].length) {
-        if (!$.hasOwnProperty('mobile') && $.Options.showDesktopNotifPostsModal.val === 'enable'
-            && (req.resource !== 'mention' || req.query !== defaultScreenName)) {
-            $.MAL.showDesktopNotification({
-                body: polyglot.t('You got') + ' ' + polyglot.t('new_posts', _queryPendingPosts[req.id].length) + ' '
-                    + polyglot.t('in search result') + '.',
-                tag: 'twister_notification_new_posts_modal',
-                timeout: $.Options.showDesktopNotifPostsModalTimer.val,
-                funcClick: (function() {
-                    focusModalWithElement(this.postboard,
-                        function (req) {
-                            req.postboard.closest('.postboard').find('.postboard-news').hide();
-                            displayQueryPending(req.postboard);
-                        }, {postboard: this.postboard}
-                    );
-                }).bind({postboard: req.postboard})
-            });
-        }
-
-        if (!req.postboard.children().length || autoUpdateQuery) {
-            displayQueryPending(req.postboard);
-        } else {
-            req.postboard.closest('div').find('.postboard-news')  // FIXME we'd replace 'div' with '.postboard' but need to dig through tmobile first
-                .text(polyglot.t('new_posts', _queryPendingPosts[req.id].length))
-                .fadeIn('slow')
-            ;
-            req.postboard.closest('div').find('.postboard-loading').hide();
+            twister.res[req].twists.cached[j] = twists[i];
+            twister.res[req].twists.pending.push(j);
         }
     }
 }
 
-function displayQueryPending(postboard) {
-    var reqId = postboard.attr('data-request-id');
+function queryPendingDraw(req) {
+    var twists = [];
+    for (var i = 0; i < twister.res[req].twists.pending.length; i++)
+        twists.push(twister.res[req].twists.cached[twister.res[req].twists.pending[i]]);
 
-    attachPostsToStream(postboard, _queryPendingPosts[reqId], false);
-    _queryPendingPosts[reqId] = [];
+    attachPostsToStream(twister.res[req].board, twists, false);
+
+    queryClear(req);
 
     $.MAL.postboardLoaded();
 }

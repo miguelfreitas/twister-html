@@ -30,10 +30,12 @@ function processMention(user, mentionTime, data) {
                 _lastMentionTime = Math.max(mentionTime, _lastMentionTime);
                 data.isNew = true;
 
-                var reqId = defaultScreenName + '@mention';
-                if (typeof _queryPendingPosts[reqId] !== 'object')
-                    _queryPendingPosts[reqId] = [];
-                _queryPendingPosts[reqId].push(data);
+                var req = defaultScreenName + '@mention';
+                var j = data.userpost.n + '/' + data.userpost.time;
+                if (typeof twister.res[req].twists.cached[j] === 'undefined') {
+                    twister.res[req].twists.cached[j] = data;
+                    twister.res[req].twists.pending.push(j);
+                }
             }
             _knownMentions[key] = {mentionTime: mentionTime, data: data};
             purgeOldMentions();
@@ -114,15 +116,13 @@ function requestMentionsCount() {
                     tag: 'twister_notification_new_mentions',
                     timeout: $.Options.showDesktopNotifMentionsTimer.val,
                     funcClick: function () {
-                        var postboardSelector =
-                            '.postboard-posts[data-request-id="' + defaultScreenName + '@mention"]';
-                        if (!focusModalWithElement(postboardSelector,
+                        var req = defaultScreenName + '@mention';
+                        if (!focusModalWithElement(twister.res[req].board,
                             function (req) {
-                                var postboard = $(req.postboardSelector);
-                                postboard.closest('.postboard').find('.postboard-news').hide();
-                                displayQueryPending(postboard);
-                                resetMentionsCount();
-                            }, {postboardSelector: postboardSelector}
+                                twister.res[req].board.closest('.postboard')
+                                    .find('.postboard-news').click();
+                            },
+                            req
                         ))
                             $.MAL.showMentions(defaultScreenName);
                     }
@@ -175,8 +175,18 @@ function resetMentionsCount() {
 }
 
 function initMentionsCount() {
-    // polling mentions is a temporary solution
+    var req = defaultScreenName + '@mention';
+    twister.res[req] = {
+        query: defaultScreenName,
+        resource: 'mention',
+        twists: {
+            cached: {},
+            pending: []
+        }
+    };
     loadMentionsFromStorage();
+    queryPendingPush(req, getMentionsData());
+
     $.MAL.updateNewMentionsUI(_newMentions);
     requestMentionsCount();
     setInterval(requestMentionsCount, 10000);

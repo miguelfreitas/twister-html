@@ -528,27 +528,22 @@ function encode_utf8(s) {
     return s;
 }
 
-var tmobileQueryReq = {};  // FIXME need to rework all that searching
+var tmobileQueryReq;
 
-function setupHashtagOrMention(postboard, tag, res) {
+function setupHashtagOrMention(board, query, resource) {
     $.MAL.setPostTemplate( $("#post-template-home") );
     $.mobile.showPageLoadingMsg();
+    board.empty();
 
-    var reqId = tag + '@' + res;
+    var req = queryStart(board, query, resource);
 
-    clearQueryProcessed(reqId);
+    twister.res[req].boardAutoAppend = true;
+    twister.res[req].skidoo = function (req) {
+        var curPage = $.mobile.activePage.attr('id');
+        return (curPage !== 'mentions' && curPage !== 'hashtag') || req !== tmobileQueryReq;
+    };
 
-    tmobileQueryReq.postboard = postboard.text('').attr('data-request-id', reqId);
-    tmobileQueryReq.query = tag;
-    tmobileQueryReq.resource = res;
-
-    if (tag === defaultScreenName && res === 'mention') {
-        // obtain already cached mention posts from twister_newmsgs.js
-        tmobileQueryReq.posts = getMentionsData();
-        processQuery(tmobileQueryReq);
-    }
-
-    requestQuery(tmobileQueryReq);
+    tmobileQueryReq = req;
 }
 
 // every 2 seconds do something page specific.
@@ -570,12 +565,6 @@ function tmobileTick() {
                     }
                 }, {} );
     }
-
-    else if (curPage === 'mentions' || curPage === 'hashtag') {
-        autoUpdateQuery = true;
-        requestQuery(tmobileQueryReq);
-    }
-
     if (curPage === 'dmchat')
         requestDmConversation($('#dmchat .direct-messages-thread'), dmChatUser);
 }

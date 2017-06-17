@@ -17,6 +17,7 @@ var twister = {
         root: $('<div>')  // templates should be detached from DOM and attached here; use extractTemplate()
     },
     modal: {},
+    res: {},  // reses for various reqs are cached here
     var: {
         localAccounts: [],
         updatesCheckClient: {}
@@ -591,37 +592,20 @@ function openHashtagModalFromSearchHandler(hashtag) {
         title: '#' + hashtag
     });
 
-    setupQueryModalUpdating(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
+    var req = queryStart(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
+    modal.content.find('.postboard-news').on('click', {req: req}, handleClickDisplayPendingTwists);
 }
 
-function setupQueryModalUpdating(postboard, query, resource) {
-    var req = {
-        postboard: postboard,
-        query: query,
-        resource: resource,
-        id: query + '@' + resource
-    };
-
-    postboard.attr('data-request-id', req.id);
-
-    requestQuery(req);
-
-    // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
-    // our first query above should be faster (with default timeoutArgs of twisterd),
-    // then we may possibly collect more posts on our second try by waiting more.
-    req.timeoutArgs = [10000, 2000, 3];
-
-    req.interval = setInterval(updateQueryModal, 5000, req);
-}
-
-function updateQueryModal(req) {
-    if (!isModalWithElemExists(req.postboard)) {
-        clearInterval(req.interval);
-        clearQueryProcessed(req.id);
+function handleClickDisplayPendingTwists(event) {
+    if (!event || !event.data || !event.data.req)
         return;
-    }
 
-    requestQuery(req);
+    $(event.target).hide();
+
+    queryPendingDraw(event.data.req);
+
+    if (typeof event.data.cbFunc === 'function')
+        event.data.cbFunc(event.data.cbReq);
 }
 
 function openFavsModal(event) {
@@ -654,7 +638,8 @@ function openFavsModalHandler(peerAlias) {
         title: polyglot.t('users_favs', {username: peerAlias})
     });
 
-    setupQueryModalUpdating(modal.content.find('.postboard-posts'), peerAlias, 'fav');
+    var req = queryStart(modal.content.find('.postboard-posts'), peerAlias, 'fav');
+    modal.content.find('.postboard-news').on('click', {req: req}, handleClickDisplayPendingTwists);
 }
 
 function openMentionsModal(event) {
@@ -686,18 +671,16 @@ function openMentionsModalHandler(peerAlias) {
         title: polyglot.t('users_mentions', {username: peerAlias})
     });
 
-    setupQueryModalUpdating(modal.content.find('.postboard-posts'), peerAlias, 'mention');
+    var req = queryStart(modal.content.find('.postboard-posts'), peerAlias, 'mention');
+    modal.content.find('.postboard-news')
+        .on('click',
+            {req: req, cbFunc: (peerAlias === defaultScreenName) ? resetMentionsCount : ''},
+            handleClickDisplayPendingTwists
+        )
+    ;
 
-    if (peerAlias === defaultScreenName) {
-        // obtain already cached mention posts from twister_newmsgs.js
-        processQuery({
-            postboard: modal.content.find('.postboard-posts'),
-            query: defaultScreenName,
-            resource: 'mention',
-            posts: getMentionsData()
-        });
+    if (peerAlias === defaultScreenName)
         resetMentionsCount();
-    }
 }
 
 function openFollowersModal(peerAlias) {
@@ -2751,15 +2734,6 @@ function initInterfaceCommon() {
     $('.mentions-from-user').on('click', openMentionsModal);
     $('.userMenu-favs a').on('click', openFavsModal);
     $('.favs-from-user').on('click', openFavsModal);
-
-    $('#hashtag-modal-template .postboard-news').on('click', function (event) {
-        var elem = $(event.target).hide().closest('.postboard').find('.postboard-posts');
-
-        displayQueryPending(elem);
-
-        if (elem.attr('data-request-id') === defaultScreenName + '@mention')
-            resetMentionsCount();
-    });
 
     getElem('.latest-activity', true).on('mouseup',
         {feeder: '.latest-activity'}, handleClickOpenConversation);
