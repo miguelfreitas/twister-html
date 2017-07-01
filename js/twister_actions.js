@@ -436,10 +436,10 @@ function updateProfilePosts(postsView, username, useGetposts) {
      });
 }
 
-function queryStart(board, query, resource) {
+function queryStart(board, query, resource, timeoutArgs, intervalTimeout, extra) {
     var req = query + '@' + resource;
 
-    if (typeof twister.res[req] !== 'object')
+    if (typeof twister.res[req] !== 'object') {
         twister.res[req] = {
             board: board,
             query: query,
@@ -449,16 +449,18 @@ function queryStart(board, query, resource) {
                 pending: []
             }
         };
-    else {
+        for (i in extra)
+            twister.res[req][i] = extra[i];
+    } else {
         twister.res[req].board = board;
         for (var i in twister.res[req].twists.cached)
             if (twister.res[req].twists.pending.indexOf(i) === -1)
                 twister.res[req].twists.pending.push(i);
 
-        queryPendingDraw(req)
+        queryPendingDraw(req);
     }
 
-    if (req === defaultScreenName + '@mention')
+    if (twister.res[req].interval)
         return req;
 
     queryRequest(req);
@@ -466,9 +468,9 @@ function queryStart(board, query, resource) {
     // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
     // our first query above should be faster (with default timeoutArgs of twisterd),
     // then we may possibly collect more posts on our second try by waiting more.
-    twister.res[req].timeoutArgs = [10000, 2000, 3];
+    twister.res[req].timeoutArgs = timeoutArgs ? timeoutArgs : [10000, 2000, 3];
 
-    twister.res[req].interval = setInterval(queryTick, 5000, req);
+    twister.res[req].interval = setInterval(queryTick, intervalTimeout ? intervalTimeout : 5000, req);
 
     return req;
 }
@@ -477,24 +479,30 @@ function queryTick(req) {
     if (typeof twister.res[req].skidoo === 'function' ? twister.res[req].skidoo(req)
         : !isModalWithElemExists(twister.res[req].board)) {
         clearInterval(twister.res[req].interval);
-        queryClear(req);
+        twister.res[req].interval = 0;
+        queryPendingClear(req);
         return;
     }
 
     queryRequest(req);
 }
 
-function queryClear(req) {
-    if (!req || !twister.res[req] || !twister.res[req].twists)
-        return;
-
+function queryPendingClear(req) {
     twister.res[req].twists.pending = [];
 }
 
 function queryRequest(req) {
-    twister.res[req].board.closest('div').find('.postboard-loading').show();
+    if (twister.res[req].board && isModalWithElemExists(twister.res[req].board))
+        twister.res[req].board.closest('div').find('.postboard-loading').show();
 
-    if (twister.res[req].resource === 'fav')
+    if (twister.res[req].resource === 'mention' && twister.res[req].query === defaultScreenName) {
+        twisterRpc('getmentions', [twister.res[req].query, 100, {since_id: twister.res[req].lastTorrentId}],
+            queryProcess, req,
+            function () {console.warn('getmentions API requires twister-core > 0.9.27');}
+        );
+        dhtget(twister.res[req].query, twister.res[req].resource, 'm',
+            queryProcess, req, twister.res[req].timeoutArgs);
+    } else if (twister.res[req].resource === 'fav')
         twisterRpc('getfavs', [twister.res[req].query, 1000],
             queryProcess, req);
     else
@@ -503,16 +511,44 @@ function queryRequest(req) {
 }
 
 function queryProcess(req, twists) {
-    queryPendingPush(req, twists);
-
-    if (typeof twister.res[req].skidoo === 'function' ? twister.res[req].skidoo(req)
-        : !isModalWithElemExists(twister.res[req].board))
+    if (!req || !twister.res[req] || !twists || !twists.length)
         return;
 
-    if (twister.res[req].twists.pending.length) {
-        if (twister.res[req].board.children().length && !$.mobile
-            && $.Options.showDesktopNotifPostsModal.val === 'enable'
-            && (twister.res[req].resource !== 'mention' || twister.res[req].query !== defaultScreenName))
+    var lengthNew = 0;
+    var lengthPending = twister.res[req].twists.pending.length;
+
+    if (twister.res[req].resource === 'mention' && twister.res[req].query === defaultScreenName)
+        lengthNew = queryPendingPushMentions(req, twists);
+    else
+        lengthNew = queryPendingPush(req, twists);
+
+    if (typeof twister.res[req].skidoo === 'function' && twister.res[req].skidoo(req))
+        return;
+
+    if (lengthNew)
+        if (twister.res[req].resource === 'mention' && twister.res[req].query === defaultScreenName) {
+            $.MAL.updateNewMentionsUI(twister.res[req].lengthNew);
+            $.MAL.soundNotifyMentions();
+            if (!$.mobile && $.Options.showDesktopNotifMentions.val === 'enable')
+                $.MAL.showDesktopNotification({
+                    body: polyglot.t('You got') + ' ' + polyglot.t('new_mentions', twister.res[req].lengthNew) + '.',
+                    tag: 'twister_notification_new_mentions',
+                    timeout: $.Options.showDesktopNotifMentionsTimer.val,
+                    funcClick: (function () {
+                        if (!twister.res[this.req].board || !focusModalWithElement(twister.res[this.req].board,
+                            function (req) {
+                                twister.res[req].board.closest('.postboard')
+                                    .find('.postboard-news').click();
+                            },
+                            this.req
+                        ))
+                            $.MAL.showMentions(defaultScreenName);
+                    }).bind({req: req})
+                });
+        } else if (!$.mobile && $.Options.showDesktopNotifPostsModal.val === 'enable'
+            && (twister.res[req].resource !== 'mention' || twister.res[req].query !== defaultScreenName)
+            && twister.res[req].board && isModalWithElemExists(twister.res[req].board)
+            && twister.res[req].board.children().length)
             $.MAL.showDesktopNotification({
                 body: polyglot.t('You got') + ' ' + polyglot.t('new_posts', twister.res[req].twists.pending.length) + ' '
                     + polyglot.t('in search result') + '.',
@@ -529,6 +565,10 @@ function queryProcess(req, twists) {
                 }).bind({req: req})
             });
 
+    if (twister.res[req].twists.pending.length > lengthPending) {  // there is some twists may be which are not considered new so lengthNew equals zero (mentions thing)
+        if (!twister.res[req].board || (!$.mobile && !isModalWithElemExists(twister.res[req].board)))
+            return;
+
         if (!twister.res[req].board.children().length || twister.res[req].boardAutoAppend)
             queryPendingDraw(req);
         else {
@@ -542,23 +582,23 @@ function queryProcess(req, twists) {
 }
 
 function queryPendingPush(req, twists) {
-    if (!req || !twister.res[req] || !twists || !twists.length)
-        return;
+    var lengthNew = 0;
+    var needForFilter = $.Options.filterLang.val !== 'disable' && $.Options.filterLangForSearching.val;
 
     for (var i = twists.length - 1; i >= 0; i--) {
         var userpost = twists[i].userpost;
         var j = userpost.n + '/' + userpost.time;
 
-        if (userpost.fav)
-            userpost = userpost.fav;
-
         if (typeof twister.res[req].twists.cached[j] === 'undefined') {
+            if (userpost.fav)
+                userpost = userpost.fav;
+
             if ((typeof userpost.msg !== 'string' || userpost.msg === '')
                 && (typeof userpost.rt !== 'object'
                     || typeof userpost.rt.msg !== 'string' || userpost.rt.msg === ''))
                 continue;
 
-            if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangForSearching.val) {
+            if (needForFilter) {
                 if (typeof userpost.msg === 'string' && userpost.msg !== '')
                     langFilterData = filterLang(userpost.msg);
                 else
@@ -572,10 +612,13 @@ function queryPendingPush(req, twists) {
                 }
             }
 
+            lengthNew++;
             twister.res[req].twists.cached[j] = twists[i];
             twister.res[req].twists.pending.push(j);
         }
     }
+
+    return lengthNew;
 }
 
 function queryPendingDraw(req) {
@@ -585,7 +628,7 @@ function queryPendingDraw(req) {
 
     attachPostsToStream(twister.res[req].board, twists, false);
 
-    queryClear(req);
+    queryPendingClear(req);
 
     $.MAL.postboardLoaded();
 }

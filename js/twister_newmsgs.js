@@ -78,27 +78,11 @@ function loadMentionsFromStorage() {
         storage.remove('newMentions');
 }
 
-function requestMentionsCount() {
-    // first: getmentions from torrents we follow
-    twisterRpc('getmentions', [defaultScreenName, 100, {since_id: twister.mentions.lastTorrentId}],
-        processNewMentions, undefined,
-        function(req, ret) {console.warn('getmentions API requires twister-core > 0.9.27');}, null
-    );
-    // second: get mentions from dht (not-following)
-    dhtget(defaultScreenName, 'mention', 'm',
-        processNewMentions, undefined,
-        twister.res[defaultScreenName + '@mention'].timeoutArgs
-    );
-}
-
-function processNewMentions(req, res) {
-    if (!res || !res.length)
-        return;
-
+function queryPendingPushMentions(req, res) {
     var lengthNew = 0;
-    var lengthPending = twister.mentions.twists.pending.length;
+    var lengthPending = twister.res[req].twists.pending.length;
     var timeCurrent = new Date().getTime() / 1000 + 7200;  // 60 * 60 * 2
-    var timeLastMention = twister.mentions.lastTime;
+    var timeLastMention = twister.res[req].lastTime;
 
     for (var i = 0; i < res.length; i++) {
         if (res[i].userpost.time > timeCurrent) {
@@ -108,64 +92,31 @@ function processNewMentions(req, res) {
         }
 
         if (res[i].id) {
-            twister.mentions.lastTorrentId = Math.max(twister.mentions.lastTorrentId, res[i].id);
+            twister.res[req].lastTorrentId = Math.max(twister.res[req].lastTorrentId, res[i].id);
             delete res[i].id;
         }
 
         var j = res[i].userpost.n + '/' + res[i].userpost.time;
-        if (typeof twister.mentions.twists.cached[j] === 'undefined') {
-            twister.mentions.twists.cached[j] = res[i];
-            twister.mentions.twists.pending.push(j);
+        if (typeof twister.res[req].twists.cached[j] === 'undefined') {
+            twister.res[req].twists.cached[j] = res[i];
+            twister.res[req].twists.pending.push(j);
 
             // mention must be somewhat recent compared to last known one to be considered new
             if (res[i].userpost.time + 259200 > timeLastMention) {  // 3600 * 24 * 3
                 lengthNew++;
-                twister.mentions.lastTime = Math.max(res[i].userpost.time, twister.mentions.lastTime);
-                twister.mentions.twists.cached[j].isNew = true;
+                twister.res[req].lastTime = Math.max(res[i].userpost.time, twister.res[req].lastTime);
+                twister.res[req].twists.cached[j].isNew = true;
             }
         }
     }
 
-    if (lengthNew) {
-        twister.mentions.lengthNew += lengthNew;
-        $.MAL.updateNewMentionsUI(twister.mentions.lengthNew);
-        $.MAL.soundNotifyMentions();
-        if (!$.mobile && $.Options.showDesktopNotifMentions.val === 'enable')
-            $.MAL.showDesktopNotification({
-                body: polyglot.t('You got') + ' ' + polyglot.t('new_mentions', twister.mentions.lengthNew) + '.',
-                tag: 'twister_notification_new_mentions',
-                timeout: $.Options.showDesktopNotifMentionsTimer.val,
-                funcClick: function () {
-                    var req = defaultScreenName + '@mention';
-                    if (!twister.res[req].board || !focusModalWithElement(twister.res[req].board,
-                        function (req) {
-                            twister.res[req].board.closest('.postboard')
-                                .find('.postboard-news').click();
-                        },
-                        req
-                    ))
-                        $.MAL.showMentions(defaultScreenName);
-                }
-            });
-    }
+    if (lengthNew)
+        twister.res[req].lengthNew += lengthNew;
 
-    if (twister.mentions.twists.pending.length > lengthPending) {
+    if (twister.res[req].twists.pending.length > lengthPending)
         saveMentionsToStorage();
 
-        var req = defaultScreenName + '@mention';
-        if (!twister.res[req].board || !isModalWithElemExists(twister.res[req].board))
-            return;
-
-        if (!twister.res[req].board.children().length || twister.res[req].boardAutoAppend)
-            queryPendingDraw(req);
-        else {
-            twister.res[req].board.closest('div').find('.postboard-news')  // FIXME we'd replace 'div' with '.postboard' but need to dig through tmobile first
-                .text(polyglot.t('new_posts', twister.mentions.twists.pending.length))
-                .fadeIn('slow')
-            ;
-            twister.res[req].board.closest('div').find('.postboard-loading').hide();
-        }
-    }
+    return lengthNew;
 }
 
 function resetMentionsCount() {
@@ -180,25 +131,17 @@ function resetMentionsCount() {
 }
 
 function initMentionsCount() {
-    var req = defaultScreenName + '@mention';
-    twister.res[req] = {
-        query: defaultScreenName,
-        resource: 'mention',
-        timeoutArgs: [10000, 2000, 3],
-        twists: {
-            cached: {},
-            pending: [],
-        },
+    var req = queryStart('', defaultScreenName, 'mention', [10000, 2000, 3], 10000, {
         lastTime: 0,
         lastTorrentId: -1,
-        lengthNew: 0
-    };
+        lengthNew: 0,
+        skidoo: function () {return false;}
+    });
     twister.mentions = twister.res[req];
+
     loadMentionsFromStorage();
 
     $.MAL.updateNewMentionsUI(twister.mentions.lengthNew);
-    requestMentionsCount();
-    twister.mentions.interval = setInterval(requestMentionsCount, 10000);
 }
 
 // --- direct messages ---
@@ -252,6 +195,7 @@ function requestDMsCount() {
                 if (newDMs) {
                     $.MAL.updateNewDMsUI(newDMs);
                     $.MAL.soundNotifyDM();
+
                     if (!$.mobile && $.Options.showDesktopNotifDMs.val === 'enable') {
                         $.MAL.showDesktopNotification({
                             body: polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', newDMs) + '.',
@@ -265,6 +209,7 @@ function requestDMsCount() {
                 if (newDMs) {
                     $.MAL.updateNewGroupDMsUI(newDMs);
                     $.MAL.soundNotifyDM();
+
                     if (!$.mobile && $.Options.showDesktopNotifDMs.val === 'enable') {
                         $.MAL.showDesktopNotification({
                             body: polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', newDMs) + '.',

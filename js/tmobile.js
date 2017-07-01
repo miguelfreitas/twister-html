@@ -535,13 +535,13 @@ function setupHashtagOrMention(board, query, resource) {
     $.mobile.showPageLoadingMsg();
     board.empty();
 
-    var req = queryStart(board, query, resource);
-
-    twister.res[req].boardAutoAppend = true;
-    twister.res[req].skidoo = function (req) {
-        var curPage = $.mobile.activePage.attr('id');
-        return (curPage !== 'mentions' && curPage !== 'hashtag') || req !== tmobileQueryReq;
-    };
+    var req = queryStart(board, query, resource, undefined, undefined, {
+        boardAutoAppend: true,
+        skidoo: function (req) {
+            var curPage = $.mobile.activePage.attr('id');
+            return (curPage !== 'mentions' && curPage !== 'hashtag') || req !== tmobileQueryReq;
+        }
+    });
 
     tmobileQueryReq = req;
 }
