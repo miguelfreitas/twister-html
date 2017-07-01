@@ -52,7 +52,7 @@ function loadMentionsFromStorage() {
         }
     }
 
-    // WARN all following storage keys are deprecated
+    // WARN all following storage keys are deprecated (see commit dc8cfc20ef10ff3008b4abfdb30d31e7fcbec0cd)
     if (storage.isSet('knownMentions')) {
         var mentions = storage.get('knownMentions');
         if (typeof mentions === 'object')
