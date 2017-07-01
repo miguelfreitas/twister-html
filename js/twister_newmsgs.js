@@ -6,7 +6,6 @@
 
 // --- mentions ---
 
-var _newDMsUpdated = false;
 var groupChatAliases = []
 
 function saveMentionsToStorage() {
@@ -90,39 +89,6 @@ function requestMentionsCount() {
         processNewMentions, undefined,
         twister.res[defaultScreenName + '@mention'].timeoutArgs
     );
-
-    // was moved here from requestDMsCount() because that is not ticking right
-    // we would place it with other notifications into separate notification center
-    if (_newDMsUpdated) {
-        _newDMsUpdated = false;
-
-        var newDMs = getNewDMsCount();
-        if (newDMs) {
-            $.MAL.soundNotifyDM();
-
-            if (!$.hasOwnProperty('mobile') && $.Options.showDesktopNotifDMs.val === 'enable') {
-                $.MAL.showDesktopNotification({
-                    body: polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', newDMs) + '.',
-                    tag: 'twister_notification_new_DMs',
-                    timeout: $.Options.showDesktopNotifDMsTimer.val,
-                    funcClick: function () {$.MAL.showDMchat();}
-                });
-            }
-        }
-        var newDMs = getNewGroupDMsCount();
-        if (newDMs) {
-            $.MAL.soundNotifyDM();
-
-            if (!$.hasOwnProperty('mobile') && $.Options.showDesktopNotifDMs.val === 'enable') {
-                $.MAL.showDesktopNotification({
-                    body: polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', newDMs) + '.',
-                    tag: 'twister_notification_new_DMs',
-                    timeout: $.Options.showDesktopNotifDMsTimer.val,
-                    funcClick: function () {$.MAL.showDMchat({group: true});}
-                });
-            }
-        }
-    }
 }
 
 function processNewMentions(req, res) {
@@ -263,25 +229,51 @@ function requestDMsCount() {
 
     twisterRpc('getdirectmsgs', [defaultScreenName, 1, followList],
         function(req, dmUsers) {
+            var newDMsUpdated;
+
             for (var u in dmUsers) {
                 if (dmUsers[u]) {
                     var dmData = dmUsers[u][0];
                     if (u in _lastDMIdPerUser && u in _newDMsPerUser) {
                         if (dmData.id !== _lastDMIdPerUser[u]) {
                             _newDMsPerUser[u] += dmData.id - _lastDMIdPerUser[u];
-                            _newDMsUpdated = true;
+                            newDMsUpdated = true;
                         }
                     } else {
                         _newDMsPerUser[u] = dmData.id + 1;
-                        _newDMsUpdated = true;
+                        newDMsUpdated = true;
                     }
                     _lastDMIdPerUser[u] = dmData.id;
                 }
             }
-            if (_newDMsUpdated) {
+            if (newDMsUpdated) {
                 saveDMsToStorage();
-                $.MAL.updateNewDMsUI(getNewDMsCount());
-                $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+                var newDMs = getNewDMsCount();
+                if (newDMs) {
+                    $.MAL.updateNewDMsUI(newDMs);
+                    $.MAL.soundNotifyDM();
+                    if (!$.mobile && $.Options.showDesktopNotifDMs.val === 'enable') {
+                        $.MAL.showDesktopNotification({
+                            body: polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', newDMs) + '.',
+                            tag: 'twister_notification_new_DMs',
+                            timeout: $.Options.showDesktopNotifDMsTimer.val,
+                            funcClick: function () {$.MAL.showDMchat();}
+                        });
+                    }
+                }
+                var newDMs = getNewGroupDMsCount();
+                if (newDMs) {
+                    $.MAL.updateNewGroupDMsUI(newDMs);
+                    $.MAL.soundNotifyDM();
+                    if (!$.mobile && $.Options.showDesktopNotifDMs.val === 'enable') {
+                        $.MAL.showDesktopNotification({
+                            body: polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', newDMs) + '.',
+                            tag: 'twister_notification_new_DMs',
+                            timeout: $.Options.showDesktopNotifDMsTimer.val,
+                            funcClick: function () {$.MAL.showDMchat({group: true});}
+                        });
+                    }
+                }
             }
         }, null,
         function(req, ret) {console.warn('ajax error:' + ret);}, null
