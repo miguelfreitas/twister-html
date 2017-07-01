@@ -6,129 +6,90 @@
 
 // --- mentions ---
 
-var _knownMentions = {}
-var _lastMentionTime = 0;
-var _newMentions = 0;
-var _lastLocalMentionId = -1;
-var PURGE_OLD_MENTIONS_TIMEOUT = 3600 * 24 * 30; // one month
-var _newMentionsUpdated = false;
 var _newDMsUpdated = false;
 var groupChatAliases = []
 
-// process a mention received to check if it is really new
-function processMention(user, mentionTime, data) {
-    var key = user + ';' + mentionTime;
-    var curTime = new Date().getTime() / 1000;
-    if (mentionTime > curTime + 7200)  // 3600 * 2
-        console.warn('ignoring mention from the future');
-    else {
-        if (!_knownMentions[key]) {
-            // mention must be somewhat recent compared to last known one to be considered new
-            if (mentionTime + 259200 > _lastMentionTime) {  // 3600 * 24 * 3
-                _newMentions++;
-                _newMentionsUpdated = true;
-                _lastMentionTime = Math.max(mentionTime, _lastMentionTime);
-                data.isNew = true;
-
-                var req = defaultScreenName + '@mention';
-                var j = data.userpost.n + '/' + data.userpost.time;
-                if (typeof twister.res[req].twists.cached[j] === 'undefined') {
-                    twister.res[req].twists.cached[j] = data;
-                    twister.res[req].twists.pending.push(j);
-                }
-            }
-            _knownMentions[key] = {mentionTime: mentionTime, data: data};
-            purgeOldMentions();
-            saveMentionsToStorage();
-        }
-    }
-}
-
-function purgeOldMentions() {
-    for (var key in _knownMentions) {
-        if (_knownMentions[key]) {
-            if (!_knownMentions[key].mentionTime || !_knownMentions[key].data ||
-                _knownMentions[key].mentionTime + PURGE_OLD_MENTIONS_TIMEOUT < _lastMentionTime) {
-                delete _knownMentions[key];
-            }
-        }
-    }
-}
-
 function saveMentionsToStorage() {
-    var ns = $.initNamespaceStorage(defaultScreenName);
-    ns.localStorage.set('knownMentions', _knownMentions);
-    ns.localStorage.set('lastMentionTime', _lastMentionTime);
-    ns.localStorage.set('newMentions', _newMentions);
-    ns.localStorage.set('lastLocalMentionId', _lastLocalMentionId);
+    var twists = [], length = 0;
+    for (var j in twister.mentions.twists.cached) {
+        for (var i = 0; i < length; i++)
+            if (twister.mentions.twists.cached[j].userpost.time > twists[i].userpost.time) {
+                twists.splice(i, 0, twister.mentions.twists.cached[j]);
+                break;
+            }
+
+        if (length === twists.length)
+            twists.push(twister.mentions.twists.cached[j]);
+
+        length++;
+    }
+
+    $.initNamespaceStorage(defaultScreenName).localStorage
+        .set('mentions', {
+            twists: twists.slice(0, 100),  // TODO add an option to specify number of mentions to cache
+            lastTime: twister.mentions.lastTime,
+            lastTorrentId: twister.mentions.lastTorrentId
+        })
+    ;
 }
 
 function loadMentionsFromStorage() {
-    var ns = $.initNamespaceStorage(defaultScreenName);
-    if (ns.localStorage.isSet('knownMentions'))
-        _knownMentions = ns.localStorage.get('knownMentions');
-    if (ns.localStorage.isSet('lastMentionTime'))
-        _lastMentionTime = ns.localStorage.get('lastMentionTime');
-    if (ns.localStorage.isSet('newMentions'))
-        _newMentions = ns.localStorage.get('newMentions');
-    if (ns.localStorage.isSet('lastLocalMentionId'))
-        _lastLocalMentionId = ns.localStorage.get('lastLocalMentionId');
+    var storage = $.initNamespaceStorage(defaultScreenName).localStorage;
+
+    if (storage.isSet('mentions')) {
+        var mentions = storage.get('mentions');
+        if (typeof mentions === 'object') {
+            for (var i = 0; i < mentions.twists.length; i++) {
+                var j = mentions.twists[i].userpost.n + '/' + mentions.twists[i].userpost.time;
+                if (typeof twister.mentions.twists.cached[j] === 'undefined') {
+                    twister.mentions.twists.cached[j] = mentions.twists[i];
+                    if (twister.mentions.twists.cached[j].isNew)
+                        twister.mentions.lengthNew++;
+                }
+            }
+            twister.mentions.lastTime = mentions.lastTime;
+            twister.mentions.lastTorrentId = mentions.lastTorrentId;
+        }
+    }
+
+    // WARN all following storage keys are deprecated
+    if (storage.isSet('knownMentions')) {
+        var mentions = storage.get('knownMentions');
+        if (typeof mentions === 'object')
+            for (var i in mentions) {
+                var j = mentions[i].data.userpost.n + '/' + mentions[i].mentionTime;
+                if (typeof twister.mentions.twists.cached[j] === 'undefined') {
+                    twister.mentions.twists.cached[j] = mentions[i].data;
+                    if (twister.mentions.twists.cached[j].isNew)
+                        twister.mentions.lengthNew++;
+                }
+            }
+
+        storage.remove('knownMentions');
+    }
+    if (storage.isSet('lastMentionTime')) {
+        twister.mentions.lastTime = storage.get('lastMentionTime');
+        storage.remove('lastMentionTime');
+    }
+    if (storage.isSet('lastLocalMentionId')) {
+        twister.mentions.lastTorrentId = storage.get('lastLocalMentionId');
+        storage.remove('lastLocalMentionId');
+    }
+    if (storage.isSet('newMentions'))
+        storage.remove('newMentions');
 }
 
 function requestMentionsCount() {
     // first: getmentions from torrents we follow
-    twisterRpc('getmentions', [defaultScreenName, 100, {since_id: _lastLocalMentionId}],
-        function(args, data) {
-            if (data) {
-                for (var i = 0; i < data.length; i++) {
-                    _lastLocalMentionId = Math.max(_lastLocalMentionId, data[i].id);
-                    var userpost = data[i].userpost;
-                    processMention(userpost.n, userpost.time, data[i]);
-                }
-                $.MAL.updateNewMentionsUI(_newMentions);
-            }
-        }, null,
+    twisterRpc('getmentions', [defaultScreenName, 100, {since_id: twister.mentions.lastTorrentId}],
+        processNewMentions, undefined,
         function(req, ret) {console.warn('getmentions API requires twister-core > 0.9.27');}, null
     );
     // second: get mentions from dht (not-following)
     dhtget(defaultScreenName, 'mention', 'm',
-            function(args, data) {
-                if (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        var userpost = data[i].userpost;
-                        processMention(userpost.n, userpost.time, data[i]);
-                    }
-                    $.MAL.updateNewMentionsUI(_newMentions);
-                }
-            }, {},
-            [10000, 2000, 3]  // use extended timeout parameters (requires twister_core >= 0.9.14)
+        processNewMentions, undefined,
+        twister.res[defaultScreenName + '@mention'].timeoutArgs
     );
-
-    if (_newMentionsUpdated) {
-        _newMentionsUpdated = false;
-
-        if (_newMentions) {
-            $.MAL.soundNotifyMentions();
-
-            if (!$.hasOwnProperty('mobile') && $.Options.showDesktopNotifMentions.val === 'enable')
-                $.MAL.showDesktopNotification({
-                    body: polyglot.t('You got') + ' ' + polyglot.t('new_mentions', _newMentions) + '.',
-                    tag: 'twister_notification_new_mentions',
-                    timeout: $.Options.showDesktopNotifMentionsTimer.val,
-                    funcClick: function () {
-                        var req = defaultScreenName + '@mention';
-                        if (!focusModalWithElement(twister.res[req].board,
-                            function (req) {
-                                twister.res[req].board.closest('.postboard')
-                                    .find('.postboard-news').click();
-                            },
-                            req
-                        ))
-                            $.MAL.showMentions(defaultScreenName);
-                    }
-                });
-        }
-    }
 
     // was moved here from requestDMsCount() because that is not ticking right
     // we would place it with other notifications into separate notification center
@@ -164,14 +125,92 @@ function requestMentionsCount() {
     }
 }
 
-function resetMentionsCount() {
-    _newMentions = 0;
-    for (var key in _knownMentions) {
-        if (_knownMentions[key] && _knownMentions[key].data)
-            delete _knownMentions[key].data.isNew
+function processNewMentions(req, res) {
+    if (!res || !res.length)
+        return;
+
+    var lengthNew = 0;
+    var lengthPending = twister.mentions.twists.pending.length;
+    var timeCurrent = new Date().getTime() / 1000 + 7200;  // 60 * 60 * 2
+    var timeLastMention = twister.mentions.lastTime;
+
+    for (var i = 0; i < res.length; i++) {
+        if (res[i].userpost.time > timeCurrent) {
+            console.warn('ignoring mention from the future:');
+            console.log(res[i]);
+            continue;
+        }
+
+        if (res[i].id) {
+            twister.mentions.lastTorrentId = Math.max(twister.mentions.lastTorrentId, res[i].id);
+            delete res[i].id;
+        }
+
+        var j = res[i].userpost.n + '/' + res[i].userpost.time;
+        if (typeof twister.mentions.twists.cached[j] === 'undefined') {
+            twister.mentions.twists.cached[j] = res[i];
+            twister.mentions.twists.pending.push(j);
+
+            // mention must be somewhat recent compared to last known one to be considered new
+            if (res[i].userpost.time + 259200 > timeLastMention) {  // 3600 * 24 * 3
+                lengthNew++;
+                twister.mentions.lastTime = Math.max(res[i].userpost.time, twister.mentions.lastTime);
+                twister.mentions.twists.cached[j].isNew = true;
+            }
+        }
     }
+
+    if (lengthNew) {
+        twister.mentions.lengthNew += lengthNew;
+        $.MAL.updateNewMentionsUI(twister.mentions.lengthNew);
+        $.MAL.soundNotifyMentions();
+        if (!$.mobile && $.Options.showDesktopNotifMentions.val === 'enable')
+            $.MAL.showDesktopNotification({
+                body: polyglot.t('You got') + ' ' + polyglot.t('new_mentions', twister.mentions.lengthNew) + '.',
+                tag: 'twister_notification_new_mentions',
+                timeout: $.Options.showDesktopNotifMentionsTimer.val,
+                funcClick: function () {
+                    var req = defaultScreenName + '@mention';
+                    if (!twister.res[req].board || !focusModalWithElement(twister.res[req].board,
+                        function (req) {
+                            twister.res[req].board.closest('.postboard')
+                                .find('.postboard-news').click();
+                        },
+                        req
+                    ))
+                        $.MAL.showMentions(defaultScreenName);
+                }
+            });
+    }
+
+    if (twister.mentions.twists.pending.length > lengthPending) {
+        saveMentionsToStorage();
+
+        var req = defaultScreenName + '@mention';
+        if (!twister.res[req].board || !isModalWithElemExists(twister.res[req].board))
+            return;
+
+        if (!twister.res[req].board.children().length || twister.res[req].boardAutoAppend)
+            queryPendingDraw(req);
+        else {
+            twister.res[req].board.closest('div').find('.postboard-news')  // FIXME we'd replace 'div' with '.postboard' but need to dig through tmobile first
+                .text(polyglot.t('new_posts', twister.mentions.twists.pending.length))
+                .fadeIn('slow')
+            ;
+            twister.res[req].board.closest('div').find('.postboard-loading').hide();
+        }
+    }
+}
+
+function resetMentionsCount() {
+    twister.mentions.lengthNew = 0;
+
+    for (var j in twister.mentions.twists.cached)
+        if (twister.mentions.twists.cached[j].isNew)
+            delete twister.mentions.twists.cached[j].isNew;
+
     saveMentionsToStorage();
-    $.MAL.updateNewMentionsUI(_newMentions);
+    $.MAL.updateNewMentionsUI(twister.mentions.lengthNew);
 }
 
 function initMentionsCount() {
@@ -179,27 +218,21 @@ function initMentionsCount() {
     twister.res[req] = {
         query: defaultScreenName,
         resource: 'mention',
+        timeoutArgs: [10000, 2000, 3],
         twists: {
             cached: {},
-            pending: []
-        }
+            pending: [],
+        },
+        lastTime: 0,
+        lastTorrentId: -1,
+        lengthNew: 0
     };
+    twister.mentions = twister.res[req];
     loadMentionsFromStorage();
-    queryPendingPush(req, getMentionsData());
 
-    $.MAL.updateNewMentionsUI(_newMentions);
+    $.MAL.updateNewMentionsUI(twister.mentions.lengthNew);
     requestMentionsCount();
-    setInterval(requestMentionsCount, 10000);
-}
-
-function getMentionsData() {
-    mentions = []
-    for (var key in _knownMentions) {
-        if (_knownMentions[key] && _knownMentions[key].data) {
-            mentions.push(_knownMentions[key].data);
-        }
-    }
-    return mentions;
+    twister.mentions.interval = setInterval(requestMentionsCount, 10000);
 }
 
 // --- direct messages ---
@@ -307,7 +340,5 @@ function initDMsCount() {
 }
 
 function newmsgsChangedUser() {
-    _knownMentions = {}
-    _lastMentionTime = 0;
-    _newMentions = 0;
+    clearInterval(twister.mentions.interval);
 }

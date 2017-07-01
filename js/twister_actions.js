@@ -458,6 +458,9 @@ function queryStart(board, query, resource) {
         queryPendingDraw(req)
     }
 
+    if (req === defaultScreenName + '@mention')
+        return req;
+
     queryRequest(req);
 
     // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
