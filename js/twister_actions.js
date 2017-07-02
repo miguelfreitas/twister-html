@@ -449,8 +449,13 @@ function queryStart(board, query, resource, timeoutArgs, intervalTimeout, extra)
                 pending: []
             }
         };
-        for (i in extra)
-            twister.res[req][i] = extra[i];
+        if (extra) {
+            for (i in extra)
+                twister.res[req][i] = extra[i];
+
+            if (typeof extra.ready === 'function')
+                extra.ready(req, extra.readyReq);
+        }
     } else {
         twister.res[req].board = board;
         for (var i in twister.res[req].twists.cached)

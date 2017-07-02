@@ -135,11 +135,12 @@ function initMentionsCount() {
         lastTime: 0,
         lastTorrentId: -1,
         lengthNew: 0,
+        ready: function (req) {
+            twister.mentions = twister.res[req];
+            loadMentionsFromStorage();
+        },
         skidoo: function () {return false;}
     });
-    twister.mentions = twister.res[req];
-
-    loadMentionsFromStorage();
 
     $.MAL.updateNewMentionsUI(twister.mentions.lengthNew);
 }
