@@ -44,6 +44,8 @@ function loadMentionsFromStorage() {
                     twister.mentions.twists.cached[j] = mentions.twists[i];
                     if (twister.mentions.twists.cached[j].isNew)
                         twister.mentions.lengthNew++;
+
+                    twister.mentions.lengthFromTorrent++;
                 }
             }
             twister.mentions.lastTime = mentions.lastTime;
@@ -61,6 +63,8 @@ function loadMentionsFromStorage() {
                     twister.mentions.twists.cached[j] = mentions[i].data;
                     if (twister.mentions.twists.cached[j].isNew)
                         twister.mentions.lengthNew++;
+
+                    twister.mentions.lengthFromTorrent++;
                 }
             }
 
@@ -94,6 +98,7 @@ function queryPendingPushMentions(req, res) {
         if (res[i].id) {
             twister.res[req].lastTorrentId = Math.max(twister.res[req].lastTorrentId, res[i].id);
             delete res[i].id;
+            twister.res[req].lengthFromTorrent++;
         }
 
         var j = res[i].userpost.n + '/' + res[i].userpost.time;
@@ -137,12 +142,34 @@ function initMentionsCount() {
         lengthNew: 0,
         ready: function (req) {
             twister.mentions = twister.res[req];
+            twister.mentions.lengthFromTorrent = 0;
             loadMentionsFromStorage();
         },
         skidoo: function () {return false;}
     });
 
     $.MAL.updateNewMentionsUI(twister.mentions.lengthNew);
+}
+
+function handleMentionsModalScroll(event) {
+    if (!event || twister.mentions.scrollQueryActive)
+        return;
+
+    var elem = $(event.target);
+    if (elem.scrollTop() >= elem[0].scrollHeight - elem.height() - 50) {
+        twister.mentions.scrollQueryActive = true;
+
+        twisterRpc('getmentions', [twister.mentions.query, 10,
+            {max_id: twister.mentions.lastTorrentId - twister.mentions.lengthFromTorrent}],
+            function (req, res) {
+                twister.mentions.scrollQueryActive = false;
+                twister.res[req].boardAutoAppend = true;  // FIXME all pending twists will be appended
+                queryProcess(req, res);
+                twister.res[req].boardAutoAppend = false;
+            }, twister.mentions.query + '@' + twister.mentions.resource,
+            function () {console.warn('getmentions API requires twister-core > 0.9.27');}
+        );
+    }
 }
 
 // --- direct messages ---

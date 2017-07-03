@@ -679,8 +679,10 @@ function openMentionsModalHandler(peerAlias) {
         )
     ;
 
-    if (peerAlias === defaultScreenName)
+    if (peerAlias === defaultScreenName) {
+        modal.content.on('scroll', handleMentionsModalScroll);
         resetMentionsCount();
+    }
 }
 
 function openFollowersModal(peerAlias) {
