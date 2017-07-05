@@ -203,8 +203,11 @@ function requestDMsCount() {
             var newDMsUpdated;
 
             for (var u in dmUsers) {
-                if (dmUsers[u]) {
-                    var dmData = dmUsers[u][0];
+                if (!dmUsers[u])
+                    continue;
+
+                var dmData = dmUsers[u][0];
+                if (dmData.from !== defaultScreenName) {
                     if (u in _lastDMIdPerUser && u in _newDMsPerUser) {
                         if (dmData.id !== _lastDMIdPerUser[u]) {
                             _newDMsPerUser[u] += dmData.id - _lastDMIdPerUser[u];
@@ -214,8 +217,8 @@ function requestDMsCount() {
                         _newDMsPerUser[u] = dmData.id + 1;
                         newDMsUpdated = true;
                     }
-                    _lastDMIdPerUser[u] = dmData.id;
                 }
+                _lastDMIdPerUser[u] = dmData.id;
             }
             if (newDMsUpdated) {
                 saveDMsToStorage();
