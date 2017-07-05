@@ -49,8 +49,7 @@ var InterfaceFunctions = function() {
         //$("span.screen-name").text('@' + user);
         var $miniProfile = $(".mini-profile");
         if (!defaultScreenName) {
-            $(".userMenu-profile > a").text(polyglot.t("Login"));
-            $(".userMenu-profile > a").attr("href","login.html");
+            $('.userMenu-profile > a').attr('href', '#/login').text(polyglot.t('Login'));
             $(".post-area-new > textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
             $(".post-area-new > textarea").attr("disabled","true");
             $miniProfile.find(".mini-profile-name").text("guest");
@@ -100,6 +99,11 @@ var InterfaceFunctions = function() {
             else
                 killInterfaceModule('who-to-follow');
 
+            if ($.Options.NewUsers.val === 'enable')
+                initNewUsers();
+            else
+                killInterfaceModule('new-users');
+
             if ($.Options.TwistdayReminder.val === 'enable')
                 initTwistdayReminder();
             else
@@ -113,7 +117,7 @@ var InterfaceFunctions = function() {
         if ($.Options.WebTorrent.val === 'enable')
             initWebTorrent();
     }
-}
+};
 
 function initTopTrends() {
     var $tt = initInterfaceModule('toptrends');
@@ -200,6 +204,30 @@ function refreshWhoToFollow() {
     }
 }
 
+function initNewUsers() {
+    var nus = initInterfaceModule('new-users');
+
+    newUsers = NewUserSearch();
+    if (nus.length) {
+        var nusRefresh = nus.find('.refresh-users');
+        nusRefresh.on('click', refreshNewUsers);
+        setTimeout(function() {nusRefresh.click();}, 100);
+    }
+}
+
+function refreshNewUsers() {
+    var module = $('.module.new-users');
+    var list = module.find('.follow-suggestions');
+
+    if (list.length) {
+        list.empty().hide();
+        module.find('.refresh-users').hide();
+        module.find('.loading-roller').show();
+
+        newUsers.getLastNUsers(3, 0, module, true);
+    }
+}
+
 function initTwistdayReminder() {
     var $module = initInterfaceModule('twistday-reminder');
 
@@ -268,7 +296,9 @@ function refreshTwistdayReminder() {
                     });
 
                     for (var i = 0; i < posts.length; i++) {
-                        if (followingUsers.indexOf(posts[i].userpost.n) > -1) {
+                        if (followingUsers.indexOf(posts[i].userpost.n) > -1
+                            && posts[i].userpost.height !== posts[i].userpost.k)  // to filter possible promoted twists which may appear suddenly (shame on you Miguel!)
+                        {
                             d.setTime(0);
                             d.setUTCSeconds(posts[i].userpost.time);
                             if (d.getMonth() === curMonth && d.getDate() === curDate) {
@@ -333,7 +363,7 @@ function initWebTorrent() {
                                 console.log("onget:", torrentId, err, data)
                                 if (err || data === null) {
                                     // error reading blob, just add torrentId
-                                    console.log("WebTorrent auto-download: " + torrentId + 
+                                    console.log("WebTorrent auto-download: " + torrentId +
                                                 " (previously seeded as: " + twister.torrentIds[torrentId] + ")" );
                                     WebTorrentClient.add(torrentId);
                                 } else {

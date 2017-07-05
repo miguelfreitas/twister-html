@@ -171,55 +171,7 @@
     <h1 class="rtitle">twister login</h1>
   </div>
 
-  <div class="content" data-role="content" style="">
-    <div class="login">
-      <div class="module">
-        <span> Existing local users </span>
-        <div class="ui-grid-a">
-            <div class="ui-block-a">
-                <select class="local-usernames login-user"></select>
-            </div>
-            <div class="ui-block-b">
-                <button class="login-local-username">Login</button>
-            </div>
-        </div>
-      </div>
-
-      <hr/>
-      <span> Or... </span>
-
-      <div class="module">
-        <span> Create a new user </span>
-        <div>
-            <input class="new-username" type="textbox" placeholder="Type nickname here" cols="16" rows="1"></input>
-            <button class="check-availability">Check availability</button>
-            <span class="availability"></span>
-        </div>
-        <div>
-            <button class="create-user disabled" disabled="disabled">Create this nickname</button>
-        </div>
-      </div>
-
-      <hr/>
-      <span> Or... </span>
-
-      <div class="module">
-        <div>
-            <span> Import secret key </span>
-            <input class="secret-key-import" type="textbox" placeholder="52-characters secret" size="52" rows="1"></input>
-        </div>
-        <div>
-            <span> With nickname </span>
-            <input class="username-import" type="textbox" placeholder="Type nickname here" size="16" rows="1"></input>
-        </div>
-        <div>
-            <button class="import-secret-key disabled" disabled="disabled">Import key</button>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
+  <div class="content" data-role="content" style=""></div>
 
   <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
     <a href="#home" data-role="button">Home</a>
@@ -890,6 +842,52 @@
                 </div>
             </div>
         </li>
+    </div>
+
+    <div id="template-login-modal">
+      <div class="module">
+        <span>Existing local users</span>
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <select class="local-usernames"></select>
+            </div>
+            <div class="ui-block-b">
+                <button class="login">Login</button>
+            </div>
+        </div>
+      </div>
+
+      <hr/>
+      <span> Or... </span>
+
+      <div class="module create-account">
+        <span>Create a new user</span>
+        <div>
+            <input class="alias" type="textbox" placeholder="Type nickname here" cols="16" rows="1"></input>
+            <span class="availability"></span>
+        </div>
+        <div>
+            <button class="check" disabled="disabled">Check availability</button>
+            <button class="create" disabled="disabled">Create this nickname</button>
+        </div>
+      </div>
+
+      <hr/>
+      <span> Or... </span>
+
+      <div class="module import-account">
+        <div>
+            <span>Import secret key</span>
+            <input class="secret-key" type="textbox" placeholder="52-characters secret" size="52" rows="1"></input>
+        </div>
+        <div>
+            <span>With nickname</span>
+            <input class="alias" type="textbox" placeholder="Type nickname here" size="16" rows="1"></input>
+        </div>
+        <div>
+            <button class="import" disabled="disabled">Import key</button>
+        </div>
+      </div>
     </div>
 </div> <!-- templates -->
 

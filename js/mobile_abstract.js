@@ -321,12 +321,12 @@ var MAL = function()
     }
 
     this.goLogin = function() {
-        if( $.hasOwnProperty("mobile") ) {
-            $.mobile.navigate( "#login" );
+        if ($.hasOwnProperty('mobile')) {
+            $.mobile.navigate('#login');
         } else {
-            window.location.href = "login.html";
+            window.location.hash = '#/login';
         }
-    }
+    };
 
     this.goNetwork = function() {
         if( $.hasOwnProperty("mobile") ) {
@@ -417,6 +417,38 @@ var MAL = function()
              $button.attr("disabled","true");
          }
      }
+
+    this.processCreateAccount = function (peerAlias, secretKey) {
+        defaultScreenName = peerAlias;
+        if (defaultScreenName) {
+            saveScreenName();
+        }
+
+        if ($.hasOwnProperty('mobile')) {
+            $('.secret-key').text(secretKey);
+            sendNewUserTransaction(peerAlias);
+            $.mobile.navigate('#new-user-modal');
+        } else {
+            var modal = confirmPopup({
+                classAdd: 'new-account-briefing',
+                txtTitle: polyglot.t('propagating_nickname', {username: peerAlias}),
+                txtMessage: polyglot.t('new_account_briefing', {secretKey: secretKey}),
+                txtConfirm: polyglot.t('Login'),
+                cbConfirm: $.MAL.goProfileEdit,
+                addBlackout: true,
+                removeCancel: true,
+                removeClose: true
+            });
+
+            modal.content.find('.confirm').attr('disabled', true);
+
+            sendNewUserTransaction(peerAlias,
+                function (accountCreatedModal) {
+                    accountCreatedModal.content.find('.confirm').attr('disabled', false);
+                }, modal
+            );
+        }
+    };
 
     this.changedUser = function() {
         if( $.hasOwnProperty("mobile") ) {
@@ -592,3 +624,166 @@ function filterLang(string) {
     }
 }
 
+function checkUpdatesClient(alertIfNoUpdates) {
+    function handleGetFail(jqXHR) {
+        twister.var.updatesCheckClient.isOngoing = false;
+
+        console.warn(polyglot.t('cant_get_requested_resourse', {link: this.url, status: jqXHR.status + ', \'' + jqXHR.statusText + '\''}));
+
+        if (alertIfNoUpdates) {
+            if ($.hasOwnProperty('mobile'))
+                alert(polyglot.t('updates_not_available') + '.\n\n'
+                    + polyglot.t('cant_get_requested_resourse', {link: this.url, status: jqXHR.status + ', \'' + jqXHR.statusText + '\''})
+                );
+            else
+                alertPopup({
+                    txtTitle: polyglot.t('updates_not_available'),
+                    txtMessage: polyglot.t('cant_get_requested_resourse', {link: this.url, status: jqXHR.status + ', ~' + jqXHR.statusText + '~'})
+                });
+        }
+    }
+
+    if (twister.var.updatesCheckClient.isOngoing)
+        return;
+
+    twister.var.updatesCheckClient.isOngoing = true;
+
+    $.get('.git/HEAD', function (ret) {
+        if (ret.slice(0, 16) !== 'ref: refs/heads/') {
+            twister.var.updatesCheckClient.isOngoing = false;
+            if (alertIfNoUpdates)
+                alert(polyglot.t('updates_not_available') + '.\n\nCan\'t parse local HEAD: unknown syntax, FUBAR!');
+
+            return;
+        }
+
+        var branch = ret.slice(16).trim();
+
+        $.get('.git/refs/heads/' + branch, function (ret) {
+            var commit = ret.trim();
+            if (!commit) {
+                twister.var.updatesCheckClient.isOngoing = false;
+                if (alertIfNoUpdates)
+                    alert(polyglot.t('updates_not_available') + '.\n\nCan\'t parse local HEAD: \'' + '.git/refs/heads/' + branch + '\' is empty, FUBAR!');
+
+                return;
+            }
+
+            var repo = 'twister-html';  // TODO source repo selection in options
+            var repoOwner = 'miguelfreitas';
+
+            // TODO notification if local branch was changed ('r u wanna reload the page?')
+            /*if (!twister.var.updatesCheckClient.formerBranch || !twister.var.updatesCheckClient.formerCommit) {
+                twister.var.updatesCheckClient.formerBranch = branch;
+                twister.var.updatesCheckClient.formerCommit = commit;
+            }*/
+
+            console.log('currently we are on the branch \'' + branch + '\' of ' + repo + ' at the commit ' + commit);
+
+            $.get('https://api.github.com/repos/' + repoOwner + '/' + repo + '/branches', function (ret) {
+                for (var i = 0; i < ret.length; i++) {
+                    if (ret[i].name === branch) {
+                        if (ret[i].commit.sha === commit) {
+                            twister.var.updatesCheckClient.isOngoing = false;
+
+                            console.log(polyglot.t('updates_upstream_isnt_changed'));
+
+                            if (alertIfNoUpdates) {
+                                if ($.hasOwnProperty('mobile'))
+                                    alert(polyglot.t('updates_not_available') + '.\n\n'
+                                        + polyglot.t('updates_upstream_isnt_changed')
+                                    );
+                                else
+                                    alertPopup({
+                                        txtTitle: polyglot.t('updates_not_available'),
+                                        txtMessage: polyglot.t('updates_upstream_isnt_changed')
+                                    });
+                            }
+                        } else {
+                            console.log('source branch has a different HEAD: ' + ret[i].commit.sha);
+
+                            var commitUpstream = ret[i].commit.sha;
+
+                            $.get('https://api.github.com/repos/' + repoOwner + '/' + repo + '/git/commits/' + commit, function (ret) {
+                                if (ret.sha !== commit) {  // the response is wrong if so, should be 404 instead
+                                    twister.var.updatesCheckClient.isOngoing = false;
+                                    console.log('upstream tree doesn\'t have our most recent commit,\nlooks like we are in the process of development locally.');
+                                    if (alertIfNoUpdates)
+                                        alert(polyglot.t('updates_not_available') + '.\n\nUpstream tree doesn\'t have our most recent commit,\nlooks like we are in the process of development locally.');
+
+                                    return;
+                                }
+
+                                commit = ret;
+
+                                $.get('https://api.github.com/repos/' + repoOwner + '/' + repo + '/git/commits/' + commitUpstream, function (ret) {
+                                    twister.var.updatesCheckClient.isOngoing = false;
+
+                                    if (ret.sha !== commitUpstream) {  // the response is wrong if so, should be 404 instead
+                                        console.warn('upstream tree doesn\'t have the commit which is named most recent in the list of branches, FUBAR!');
+                                        if (alertIfNoUpdates)
+                                            alert(polyglot.t('updates_not_available') + '.\n\nUpstream tree doesn\'t have the commit which is named most recent in the list of branches, FUBAR!');
+
+                                        return;
+                                    }
+
+                                    commitUpstream = ret;
+                                    var linkGitHubDiff = 'https://github.com/' + repoOwner + '/' + repo + '/compare/' + commit.sha + '...' + repoOwner + ':' + branch;
+
+                                    console.log(polyglot.t('updates_checkout_diff_nfmt', {link: linkGitHubDiff}));
+
+                                    if ($.hasOwnProperty('mobile'))
+                                        alert(polyglot.t('updates_are_available') + '.\n\n'
+                                            + polyglot.t('updates_repo_overview', {
+                                                branch: '\'' + branch + '\'',
+                                                repo: repo,
+                                                commit: commit.sha,
+                                                date: new Date(commit.author.date).toString().replace(/ GMT.*/g, ''),
+                                                commitUpstream: commitUpstream.sha,
+                                                dateUpstream: new Date(commitUpstream.author.date).toString().replace(/ GMT.*/g, '')
+                                            }) + '\n\n'
+                                            + polyglot.t('updates_checkout_diff_nfmt', {link: linkGitHubDiff})
+                                        );
+                                    else
+                                        alertPopup({
+                                            txtTitle: polyglot.t('updates_are_available'),
+                                            txtMessage: polyglot.t('updates_repo_overview', {
+                                                branch: '~' + branch + '~',
+                                                repo: repo,
+                                                commit: '*' + commit.sha + '*',
+                                                date: new Date(commit.author.date).toString().replace(/ GMT.*/g, ''),
+                                                commitUpstream: '*' + commitUpstream.sha + '*',
+                                                dateUpstream: new Date(commitUpstream.author.date).toString().replace(/ GMT.*/g, '')
+                                            }) + '\n\n'
+                                            + polyglot.t('updates_checkout_diff', {link: linkGitHubDiff})
+                                        });
+                                }).fail(function (jqXHR) {
+                                    if (jqXHR.status === 404) {
+                                        twister.var.updatesCheckClient.isOngoing = false;
+                                        console.warn('upstream tree doesn\'t have the commit which is named most recent in the list of branches, FUBAR!');
+                                        if (alertIfNoUpdates)
+                                            alert(polyglot.t('updates_not_available') + '.\n\nUpstream tree doesn\'t have the commit which is named most recent in the list of branches, FUBAR!');
+                                    } else
+                                        handleGetFail(jqXHR);
+                                });
+                            }).fail(function (jqXHR) {
+                                if (jqXHR.status === 404) {
+                                    twister.var.updatesCheckClient.isOngoing = false;
+                                    console.log('upstream tree doesn\'t have our most recent commit,\nlooks like we are in the process of development locally.');
+                                    if (alertIfNoUpdates)
+                                        alert(polyglot.t('updates_not_available') + '.\n\nUpstream tree doesn\'t have our most recent commit,\nlooks like we are in the process of development locally.');
+                                } else
+                                    handleGetFail(jqXHR);
+                            });
+                        }
+                        return;
+                    }
+                }
+                twister.var.updatesCheckClient.isOngoing = false;
+                console.log('upstream tree doesn\'t have our branch,\nlooks like we are in the process of development locally.');
+                if (alertIfNoUpdates)
+                    alert(polyglot.t('updates_not_available') + '.\n\nUpstream tree doesn\'t have our branch,\nlooks like we are in the process of development locally.');
+            }).fail(handleGetFail);
+        }).fail(handleGetFail);
+    }).fail(handleGetFail);
+}

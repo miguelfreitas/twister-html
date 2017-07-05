@@ -115,7 +115,8 @@ function dhtget(peerAlias, resource, multi, cbFunc, cbReq, timeoutArgs) {
 function decodeShortURI(locator, cbFunc, cbReq, timeoutArgs) {
     if (!locator) return;
     if (parseInt(twisterVersion) < 93500) {
-        console.warn('can\'t fetch URI "' + req + '": daemon is obsolete, version 0.9.35 or higher is required');
+        console.warn('can\'t fetch URI "' + req + '" — '
+            + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.35'}));
         return;
     }
 
@@ -279,7 +280,8 @@ function getFullname(peerAlias, elem) {
                                 twisterFollowingO.knownFollowers.push(req.peerAlias);
                                 twisterFollowingO.save();
                                 addPeerToFollowersList(getElem('.followers-modal .followers-list'), req.peerAlias, true);
-                                $('.open-followers').attr('title', twisterFollowingO.knownFollowers.length.toString());
+                                $('.module.mini-profile .open-followers')
+                                    .attr('title', twisterFollowingO.knownFollowers.length.toString());
                             }
                             req.elem.addClass('isFollowing');
                             req.elem.attr('title', polyglot.t('follows you'));
@@ -291,7 +293,8 @@ function getFullname(peerAlias, elem) {
                                     if (twisterFollowingO.knownFollowers.indexOf(req.peerAlias) === -1) {
                                         twisterFollowingO.knownFollowers.push(req.peerAlias);
                                         addPeerToFollowersList(getElem('.followers-modal .followers-list'), req.peerAlias, true);
-                                        $('.open-followers').attr('title', twisterFollowingO.knownFollowers.length.toString());
+                                        $('.module.mini-profile .open-followers')
+                                            .attr('title', twisterFollowingO.knownFollowers.length.toString());
                                     }
                                     req.elem.addClass('isFollowing');
                                     req.elem.attr('title', polyglot.t('follows you'));
@@ -516,6 +519,22 @@ function getPostsCount(peerAlias, elem) {
             if (peerAlias === defaultScreenName && count) {
                 incLastPostId(v.userpost.k);
             }
+        }, {peerAlias: peerAlias, elem: elem}
+    );
+}
+
+function getStatusTime(peerAlias, elem) {
+    dhtget(peerAlias, 'status', 's',
+        function (req, ret) {
+            if (!ret || !ret.userpost)
+                return;
+
+            req.elem.text(timeGmtToText(ret.userpost.time))
+                .closest('.latest-activity')
+                    .attr('data-screen-name', req.peerAlias)
+                    .attr('data-id', ret.userpost.k)
+                    .attr('data-time', ret.userpost.time)
+            ;
         }, {peerAlias: peerAlias, elem: elem}
     );
 }

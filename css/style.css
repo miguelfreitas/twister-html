@@ -300,6 +300,16 @@ button.follow:hover, button.unfollow:hover, .following-own-modal .following-list
     opacity: 0.9;
 }
 
+.userMenu li.userMenu-favs > a {
+    padding: 0 14px;
+    opacity: 1;
+}
+
+.userMenu li.userMenu-favs > a:before {
+    content: '★';
+    font-size: 24px;
+}
+
 .userMenu li.userMenu-profile > a {
     background: url(../img/profile.png) no-repeat 5px center;
 }
@@ -833,13 +843,13 @@ textarea.splited-post {
 /***********************************
 ********************* WHO TO FOLLOW
 ***********************************/
-.who-to-follow
-{
+.who-to-follow,
+.new-users {
     padding: 10px;
     margin-bottom: 10px;
 }
-.who-to-follow h3
-{
+.who-to-follow h3,
+.new-users h3 {
     display: inline;
 }
 .twister-user
@@ -880,17 +890,20 @@ textarea.splited-post {
     color: #e34f42;
 }
 
-.followers
-{
+.followers,
+.latest-activity {
     font-size: 12px;
     color: rgba( 0, 0, 0, .6 );
+    margin-left: 58px;
 }
-.followed-by
-{
+
+.followed-by,
+.latest-activity .time {
     color: #e34f42;
     font-size: 13px;
     cursor: pointer;
 }
+
 .twister-user-name,
 .twister-by-user-name
 {
@@ -1280,6 +1293,7 @@ ol.toptrends-list {
 .post-favorite:before
 {
     content: "★";
+    font-size: 18px;
 }
 .post-reply:hover,
 .post-propagate:hover,
@@ -1304,6 +1318,10 @@ ol.toptrends-list {
 .image-preview video
 {
     width: 100%;
+}
+.image-preview img
+{
+    max-width: 100%;
 }
 .preview-container
 {
@@ -1390,8 +1408,7 @@ ol.toptrends-list {
     border: solid 1px rgba( 69, 71, 77, .05 );
     padding: 10px;
 }
-.singleBlock h2, .header-bold
-{
+.singleBlock h2 {
     font-weight: bold;
     line-height: 40px;
     color: rgba( 255, 255, 255, 1 );
@@ -1463,76 +1480,6 @@ ol.toptrends-list {
 }
 
 /*************************************
-************* LOGIN PAGE *************
-**************************************/
-
-.login .header-bold {
-    display: block;
-    width: 720px;
-    margin: 0px auto 12px auto;
-}
-
-.login .module {
-    display: block;
-    width: 720px;
-    padding: 32px 40px;
-    margin: 8px auto;
-    background: #fff;
-}
-
-.login .module p {
-    margin-bottom: 5px;
-}
-
-.login .module input {
-    padding: 5px 10px;
-    background: #f3f3f3;
-    border: solid 1px #dcdcdc;
-    transition: box-shadow 0.3s, border 0.3s;
-    font-size: 14px;
-}
-
-.login .module input:focus, .login .module select:focus {
-    background: #fff;
-    transition: background-color 100ms linear;
-    border: solid 1px rgba( 227, 79, 66, .5 );
-    box-shadow: 0 0 10px rgba(0, 0, 0, .3 );
-}
-
-.login .module select {
-    height: 30px;
-    padding: 3px 30px 3px 10px;
-    margin: 0;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-
-.login .module span.availability {
-    margin-left: 10px;
-    color: #45474d;
-}
-
-.with-nickname, .import-secret-key, .create-user {
-    margin-top: 10px;
-}
-
-.login .module:nth-child(2) div ,
-.login .module:nth-child(3) div:nth-child(2),
-.login .secret-key-import,
-.login .username-import {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 16px;
-}
-
-.login .create-user,
-.login .import-secret-key {
-    display: block;
-    margin-left: auto;
-    margin-right: 16px;
-}
-
-/*************************************
 ************* POPUP MODAL ************
 **************************************/
 
@@ -1562,12 +1509,12 @@ ol.toptrends-list {
     font-weight: bold;
 }
 
-.modal-wrapper .modal-content {
+.modal-content {
     background: #fff;
     overflow-y: auto;
 }
 
-.modal-wrapper .modal-blackout {
+.modal-blackout {
     background: rgba(0,0,0, .6);
     z-index: -1;
     position: fixed;
@@ -1629,6 +1576,84 @@ ol.toptrends-list {
 .modal-wrapper.reply .post {
     background: #ececed;
     padding: 10px 15px;
+}
+
+.inline-warn {
+    background-color: #FEFEDF;
+    padding: 10px;
+}
+
+.inline-warn .close {
+    float: right;
+    font-size: 1.2em;
+    color: #e34f42;
+    cursor: pointer;
+    margin: -8px 2px 8px 8px;
+}
+
+.inline-warn .text {
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.inline-warn .options {
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 4px;
+}
+
+/*************************************
+******* LOGIN TO ACCOUNT MODAL *******
+**************************************/
+
+.login-modal.modal-wrapper {
+    height: auto; /*about 580px*/
+    margin-top: -290px;
+}
+
+.login-modal .module {
+    margin: 4px;
+}
+
+.login-modal .module > div {
+    width: 100%;
+    margin: 4px 0;
+    padding: 4px 12px;
+}
+
+.login-modal .module > div:last-child {
+    text-align: right;
+    margin: 8px 0;
+}
+
+.login-modal .module input {
+    border: solid 1px rgba(0, 0, 0, .3);
+    border-radius: 3px;
+    width: 320px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.login-modal .module select {
+    border: solid 1px rgba(0, 0, 0, .3);
+    border-radius: 3px;
+    width: 310px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.login-modal .module input:focus, .login-modal .module select:focus {
+    border: solid 1px rgba(227, 79, 66, .5);
+}
+
+.login-modal .module .secret-key {
+    width: 500px;
+}
+
+.login-modal .module .availability {
+    color: #45474D;
+    display: inline-block;
+    margin-left: 16px;
 }
 
 /*************************************
@@ -1780,7 +1805,7 @@ ol.toptrends-list {
 
 .group-messages-join-group.modal-wrapper {
     height: auto; /*about 360px*/
-    margin-top: -240px;
+    margin-top: -204px;
 }
 
 .group-messages-join-group .modal-content .module {
@@ -1823,38 +1848,6 @@ ol.toptrends-list {
     height: 120px;
     overflow-y: auto;
     margin: 8px 8px 0;
-}
-
-/*************************************
-*********** NEW USER MODAL ***********
-**************************************/
-
-.new-user.modal-wrapper {
-    width: 720px;
-    height: 580px;
-    margin: -290px 0 0 -360px;
-}
-
-.new-user .modal-content {
-    padding: 25px;
-}
-
-.new-user .modal-close {
-    display: none;
-}
-
-.new-user .text {
-    margin: 0 0 15px 0;
-}
-
-.new-user .emphasis {
-    font-size: 18px;
-    text-align: center;
-}
-
-.new-user .secret-key {
-    color: rgba(.5,0,0, 1.0);
-    font-weight: bold;
 }
 
 /*************************************
@@ -1901,34 +1894,77 @@ ol.toptrends-list {
 ********* WHO TO FOLLOW MODAL ********
 **************************************/
 
-.who-to-follow-modal ol {
+.who-to-follow-modal ol,
+.new-users-modal ol {
     margin: 5px;
 }
 
-.who-to-follow-modal .open-profile-modal:hover {
+.who-to-follow-modal .open-profile-modal:hover,
+.new-users-modal .open-profile-modal:hover {
     text-decoration: none;
 }
 
-.who-to-follow-modal .open-profile-modal span {
+.who-to-follow-modal .open-profile-modal span,
+.new-users-modal .open-profile-modal span {
     vertical-align: middle;
 }
 
-.who-to-follow-modal .open-profile-modal span:hover {
+.who-to-follow-modal .open-profile-modal span:hover,
+.new-users-modal .open-profile-modal span:hover {
     text-decoration: underline;
 }
 
-.who-to-follow-modal .follow {
+.who-to-follow-modal .follow,
+.new-users-modal .follow {
     float: right;
     margin: -30px 10px 0 10px;
 }
 
-.who-to-follow-modal .twister-user-info span {
+.who-to-follow-modal .twister-user-info span,
+.new-users-modal .twister-user-info span {
     vertical-align: bottom;
 }
 
-.who-to-follow-modal .bio {
+.who-to-follow-modal .bio,
+.new-users-modal .bio {
     font-size: 12px;
     color: rgba( 0, 0, 0, .6 );
+}
+
+/*************************************
+********* URI SHORTENER MODAL ********
+**************************************/
+
+.uri-shortener-modal .uris-list {
+    font-size: 12px;
+    overflow-x: hidden;
+}
+
+.uri-shortener-modal .uris-list li {
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-bottom: 4px;
+}
+
+.uri-shortener-modal .uris-list li:last-child {
+    margin-bottom: 16px;
+}
+
+.uri-shortener-modal .uris-list li.highlighted,
+.uri-shortener-modal .uris-list li:hover {
+    background-color: #FEFEDF;
+}
+
+.uri-shortener-modal .uris-list .short {
+    background-color: #F0EFCC;
+    display: inline-block;
+    width: 26%;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.uri-shortener-modal .uris-list .long {
+    margin-left: 4px;
 }
 
 /*************************************
@@ -1948,7 +1984,7 @@ ol.toptrends-list {
 }
 
 .prompt-wrapper .modal-buttons {
-    margin: 4px 16px;
+    padding: 4px 16px 16px;
     text-align: right;
 }
 
@@ -1968,12 +2004,19 @@ ol.toptrends-list {
 
 .confirm-popup .message {
     text-align: center;
-    margin: 12px;
+    padding: 12px;
 }
 
 .confirm-popup .modal-buttons {
     text-align: center;
-    padding: 4px;
+}
+
+/*************************************
+********* NEW ACCOUNT POPUP **********
+**************************************/
+
+.new-account-briefing.prompt-wrapper {
+    margin-top: -164px;
 }
 
 /*************************************
@@ -2268,7 +2311,7 @@ ol.toptrends-list {
     display: inline-block;
     text-align: initial;
     width: 320px;
-    height: 120px;
+    height: 130px;
     margin: 2px;
     padding: 2px;
     border: solid 1px rgba(69, 71, 77, .1);
@@ -2309,6 +2352,13 @@ ol.toptrends-list {
     position: absolute;
     top: 94px;
     right: 32px;
+}
+
+.following-own-modal .following-list .latest-activity {
+    position: absolute;
+    top: 110px;
+    right: 32px;
+    margin: 0;
 }
 
 /*************************************

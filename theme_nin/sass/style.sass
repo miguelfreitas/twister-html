@@ -8,7 +8,6 @@
 @import _profile
 @import _postboard
 @import _following
-@import _login
 @import _network
 @import _commons
 @import _tabs
@@ -784,6 +783,43 @@ ol.toptrends-list
     float: left
     margin: 4px
 
+
+.inline-warn
+    background-color: #FEFEDF
+    padding: 10px
+    .close
+        float: right
+        font-size: 1.2em
+        color: #E34F42
+        cursor: pointer
+        margin: -8px 2px 8px 8px
+    .text
+        font-size: 0.8em
+        text-align: center
+    .options
+        font-size: 0.8em
+        text-align: right
+        margin-top: 4px
+
+/*************************************
+*********** CONFIRM POPUP ************
+**************************************/
+
+.confirm-popup
+    &.prompt-wrapper
+        top: 30%
+    .message
+        margin: 8px 12px 20px
+
+/*************************************
+********* NEW ACCOUNT POPUP **********
+**************************************/
+
+.new-account-briefing
+    &.prompt-wrapper
+        top: 50%
+        margin-top: -164px
+
 /************ FOLLOWING-CONFIG MODAL **********/
 
 .prompt-wrapper.following-config-modal
@@ -821,6 +857,44 @@ ol.toptrends-list
     display: none
   .post-area
     padding-bottom: 6px
+
+/*************************************
+******* LOGIN TO ACCOUNT MODAL *******
+**************************************/
+
+.login-modal
+    &.modal-wrapper
+        width: 580px
+        height: auto /*about 532px*/
+        margin: -270px 0 0 -290px
+    .modal-content
+        padding: 0
+    .module
+        margin: 4px
+        > div
+            margin: 4px 0
+            padding: 4px 12px
+        > div:last-child
+            text-align: right
+            margin: 8px 0
+        input
+            border: 1px solid rgba(0, 0, 0, .1)
+            width: 320px
+            margin: 12px 16px
+            padding: 2px 4px
+        select
+            border: 1px solid rgba(0, 0, 0, .1)
+            width: 310px
+            margin: 12px 16px
+            padding: 2px 4px
+        input:focus, select:focus
+            border-bottom: solid 1px #B4C669
+        .secret-key
+            width: 500px
+        .availability
+            color: #45474D
+            display: inline-block
+            margin-left: 16px
 
 /****** DIRECT MESSAGES MODAL**********/
 

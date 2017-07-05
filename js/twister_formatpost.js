@@ -43,6 +43,8 @@ function postToElem(post, kind, promoted) {
             "dm" : encrypted message (dm) -opt
             "rt" : original userpost - opt
             "sig_rt" : sig of rt - opt
+            "fav" : original userpost - opt
+            "sif_fav" : sig of fav - opt
             "reply" : - opt
             {
                     "n" : reference username
@@ -56,6 +58,10 @@ function postToElem(post, kind, promoted) {
 
     // Obtain data from userpost
     var userpost = post.userpost;
+
+    //TODO: favorites may have comment also...
+    if (userpost.fav)
+        userpost = userpost.fav;
 
     if (post.sig_wort)
         userpost.sig_wort = post.sig_wort;
@@ -238,7 +244,7 @@ function setPostReference(elem, rt, sig_rt) {
             .attr('data-screen-name', rt.n)
             .attr('data-id', rt.k)
             .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: sig_rt}))
-            .find('.post-text').each(function (i, elem) {fillElemWithTxt($(elem), rt.msg);})
+            .find('.post-text').each(function (i, elem) {fillElemWithTxt($(elem), rt.msg + (rt.msg2 || ''));})
     ;
     setPostCommon(elem, rt.n, rt.time);
 }
@@ -490,56 +496,31 @@ function htmlFormatMsg(msg, opt) {
         }
 
         // changing the string
-        if (chr === '`' && markoutOpt === 'apply') {  // if markoutOpt === 'clear' then ` does not escape anythyng so it needs to be handled like other tags
-            for (i = 0; i < p.length; i++) {
-                if (p[i].a > -1) {
-                    if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
-                        if (p[i].k > 1)
-                            t = Array(p[i].k).join(chr);
-                        else
-                            t = '';
-                        j = p[i].a;
-                        t = t + msg.str.slice(p[i].i + p[i].k, p[j].i);
-                        if (p[j].k > 1)
-                            t = t + Array(p[i].k).join(chr);
-                        t = '<' + tag + '>' + t + '</' + tag + '>';
-                        msg.htmlEntities.push(t.replace(/&(?!lt;|gt;)/g, '&amp;'));
-                        htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
-                        msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[j].i + p[j].k);
-                        l = htmlEntityEncoded.length - p[j].i - p[j].k + p[i].i;
-                        i = j;
-                        for (j += 1; j < p.length; j++)
-                            p[j].i += l;
-                    }
+        if (markoutOpt === 'apply') {
+            t = '</' + tag + '>';
+            tag = '<' + tag + '>';
+        } else {  // markoutOpt === 'clear' so we're clearing markup
+            t = '';
+            tag = '';
+        }
+        for (i = 0; i < p.length; i++) {
+            if (p[i].a > -1) {
+                if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
+                    if (p[i].k > 1)
+                        msg.htmlEntities.push(tag + Array(p[i].k).join(chr));
+                    else
+                        msg.htmlEntities.push(tag);
+                } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
+                    if (p[i].k > 1)
+                        msg.htmlEntities.push(Array(p[i].k).join(chr) + t);
+                    else
+                        msg.htmlEntities.push(t);
                 }
-            }
-        } else {
-            if (markoutOpt === 'apply') {
-                t = '</' + tag + '>';
-                tag = '<' + tag + '>';
-            } else {  // markoutOpt === 'clear' so we're clearing markup
-                t = '';
-                tag = '';
-            }
-            for (i = 0; i < p.length; i++) {
-                if (p[i].a > -1) {
-                    if (p[i].t === -1 || (p[i].t === 0 && p[i].a > i)) {
-                        if (p[i].k > 1)
-                            msg.htmlEntities.push(tag + Array(p[i].k).join(chr));
-                        else
-                            msg.htmlEntities.push(tag);
-                    } else if (p[i].t === 1 || (p[i].t === 0 && p[i].a < i)) {
-                        if (p[i].k > 1)
-                            msg.htmlEntities.push(Array(p[i].k).join(chr) + t);
-                        else
-                            msg.htmlEntities.push(t);
-                    }
-                        htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
-                        msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[i].i + p[i].k);
-                        l = htmlEntityEncoded.length - p[i].k;
-                        for (j = i + 1; j < p.length; j++)
-                            p[j].i += l;
-                }
+                htmlEntityEncoded = '>' + (msg.htmlEntities.length - 1).toString() + '<';
+                msg.str = msg.str.slice(0, p[i].i) + htmlEntityEncoded + msg.str.slice(p[i].i + p[i].k);
+                l = htmlEntityEncoded.length - p[i].k;
+                for (j = i + 1; j < p.length; j++)
+                    p[j].i += l;
             }
         }
 
@@ -604,7 +585,17 @@ function htmlFormatMsg(msg, opt) {
 
     msg = {str: escapeHtmlEntities(msg), htmlEntities: []};
 
-    msg = markout(msg, markoutOpt, '`', 'samp');  // <samp> tag is kind of monospace, here sequence of chars inside it will be escaped from markup
+    // markout is not applied for chars inside of ``; to escape ` use backslash
+    if (markoutOpt === 'apply')
+        msg.str = msg.str.replace(/`(?:[^`\\]|\\.)*`/g, function (s) {
+            msg.htmlEntities.push('<samp>' + s.slice(1, -1).replace(/\\`/g, '`')
+                .replace(/&(?!lt;|gt;)/g, '&amp;') + '</samp>');
+            return '>' + (msg.htmlEntities.length - 1).toString() + '<';
+        });
+    else if (markoutOpt === 'clear')
+        msg.str = msg.str.replace(/`((?:[^`\\]|\\.)*)`/g, function (s) {
+            return s.slice(1, -1).replace(/\\`/g, '`');
+        });
 
     // handling links
     for (i = 0; i < msg.str.length - 7; i++) {
@@ -620,21 +611,25 @@ function htmlFormatMsg(msg, opt) {
                             break;
                     }
                     if (i < k) {
-                        var x = getSubStrEnd(msg.str, i, ':', false, '') + 1;
                         // following check is NOT for real protection (we have blocking CSP rule instead), it's just to aware people
-                        if (msg.str[i] === '#' || (x > i && x < k && (msg.str.slice(x - 6, x).toLowerCase() === 'script'  // other things would be added when W3C and all the people invent it
-                            || msg.str.slice(x - 4, x).toLowerCase() === 'data'))) {
+                        if (isUriSuspicious(msg.str.slice(i, k + 1))) {
                             msg = msgAddHtmlEntity(msg, j - 1, getSubStrEnd(msg.str, k + 1, ')', true, '') + 2,
                                 '…<br><b><i>' + polyglot.t('busted_oh') + '</i> '
-                                + polyglot.t('busted_avowal') + ':</b><br><samp>'
+                                + polyglot.t('busted_avowal') + ':</b><br><samp>['
+                                + linkName
+                                    .replace(/&(?!lt;|gt;)/g, '&amp;')
+                                    .replace(/"/g, '&quot;')
+                                    .replace(/'/g, '&apos;')
+                                + ']('
                                 + msg.str.slice(i, k + 1)
                                     .replace(/&(?!lt;|gt;)/g, '&amp;')
                                     .replace(/"/g, '&quot;')
                                     .replace(/'/g, '&apos;')
-                                + '</samp><br>'
+                                + ')</samp><br>…<br>'
                             );
                         } else {
-                            if ((x = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '')) < k)  // use only first word as href target, others drop silently
+                            var x = getSubStrEnd(msg.str, i + 1, whiteSpacesUrl, false, '');
+                            if (x < k)  // use only first word as href target, others drop silently
                                 k = x;
                             linkName = applyHtml(  // we're handling markup inside [] of []()
                                 markout(markout(markout(markout(
@@ -785,6 +780,27 @@ function htmlFormatMsg(msg, opt) {
         msg = msg.replace(/\n/g, '<br />');
 
     return {html: msg, mentions: mentions};
+}
+
+function isUriSuspicious(req) {
+    var colonPos = req.search(/:|%3A/gi);
+    if (colonPos === 0)
+        return true;
+
+    var hashPos = req.search(/#|%23/g);
+
+    if (colonPos === -1)
+        if (hashPos > -1)
+            return req = req.slice(hashPos + 1),
+                (req.search(/^(?:hashtag|profile|conversation|mentions|favs|directmessages|groupmessages|newusers|followers|following|whotofollow|groupmessages\+newgroup|groupmessages\+joingroup\/uri\-shortener)\b/) > -1) ? false : true;
+        else
+            return false;  //(req.search(/^\s*@[A-Za-z0-9]+\/\d/g) === 0) ? false : true;
+
+    if (hashPos > -1 && hashPos < colonPos)
+        return true;
+
+    return req = req.slice(req.search(/\S/g), colonPos),
+        req.search(/[^A-Za-z0-9\+\.\-]/) > -1 || req.search(/(?:script|data)$/i) > -1;
 }
 
 function proxyURL(url) {

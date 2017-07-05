@@ -389,6 +389,15 @@ samp {
   font-size: 1.5em;
 }
 
+.userMenu li.userMenu-favs > a {
+    padding: 0 14px;
+    opacity: 1;
+}
+
+.userMenu li.userMenu-favs > a:before {
+    content: '★';
+    font-size: 24px;
+}
 /*************************************
 ************ PROFILE MODAL ***********
 **************************************/
@@ -961,11 +970,6 @@ samp {
   color: #727578;
 }
 
-/* line 195, ../sass/_postboard.sass */
-.post-favorite {
-  display: none !important;
-}
-
 /* line 200, ../sass/_postboard.sass */
 .post .show-more {
   display: inline-block;
@@ -1014,7 +1018,7 @@ samp {
   display: none !important;
 }
 /* line 236, ../sass/_postboard.sass */
-.open .related:hover .post-reply, .mini-profile .post-area-new .related:hover .post-reply, #postboard-top .post-area .post-area-new .related:hover .post-reply, .open .related:hover .post-propagate, .mini-profile .post-area-new .related:hover .post-propagate, #postboard-top .post-area .post-area-new .related:hover .post-propagate {
+.open .related:hover .post-reply, .mini-profile .post-area-new .related:hover .post-reply, #postboard-top .post-area .post-area-new .related:hover .post-reply, .open .related:hover .post-propagate, .mini-profile .post-area-new .related:hover .post-propagate, #postboard-top .post-area .post-area-new .related:hover .post-propagate, .open .related:hover .post-favorite, .mini-profile .post-area-new .related:hover .post-favorite, #postboard-top .post-area .post-area-new .related:hover .post-favorite {
   display: inline-block !important;
 }
 
@@ -1306,75 +1310,6 @@ textarea, input[type=text] {
 /* line 60, ../sass/_commons.sass */
 h3 .isFollowing:after {
   display: none;
-}
-
-/*************************************
-************* LOGIN PAGE *************
-**************************************/
-
-.login .header-bold {
-    display: block;
-    width: 720px;
-    margin: 0px auto 12px auto;
-}
-
-.login .module {
-    display: block;
-    width: 720px;
-    padding: 32px 40px;
-    margin: 8px auto;
-    background: #fff;
-}
-
-.login .module p {
-    margin-bottom: 5px;
-}
-
-.login .module input {
-    padding: 5px 10px;
-    background: #f3f3f3;
-    border: solid 1px #dcdcdc;
-    transition: box-shadow 0.3s, border 0.3s;
-    font-size: 14px;
-}
-
-.login .module input:focus, .login .module select:focus {
-    background: #fff;
-    transition: background-color 100ms linear;
-    border-bottom: solid 2px #B4C669;
-}
-
-.login .module select {
-    height: 30px;
-    padding: 3px 30px 3px 10px;
-    margin: 0;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-
-.login .module span.availability {
-    margin-left: 10px;
-    color: #45474d;
-}
-
-.with-nickname, .import-secret-key, .create-user {
-    margin-top: 10px;
-}
-
-.login .module:nth-child(2) div ,
-.login .module:nth-child(3) div:nth-child(2),
-.login .secret-key-import,
-.login .username-import {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 16px;
-}
-
-.login .create-user,
-.login .import-secret-key {
-    display: block;
-    margin-left: auto;
-    margin-right: 16px;
 }
 
 /************** BUTTONS *********** */
@@ -2155,27 +2090,32 @@ textarea.splited-post {
 /******** WHO TO FOLLOW ********/
 
 /* line 411, ../sass/style.sass */
-.who-to-follow.module {
+.who-to-follow.module,
+.new-users.module {
   width: inherit;
   margin-bottom: 20px;
 }
 
 /* line 414, ../sass/style.sass */
-.who-to-follow small {
+.who-to-follow small,
+.new-users small {
   display: none;
 }
 
 /* line 416, ../sass/style.sass */
-.who-to-follow h3 {
+.who-to-follow h3,
+.new-users h3 {
   float: left;
 }
 
 /* line 418, ../sass/style.sass */
-.who-to-follow ol {
+.who-to-follow ol,
+.new-users ol {
   clear: both;
 }
 
-.who-to-follow .twister-user-info {
+.who-to-follow .twister-user-info,
+.new-users .twister-user-info {
   margin-top: 8px;
 }
 
@@ -2209,7 +2149,8 @@ textarea.splited-post {
 }
 
 /* line 447, ../sass/style.sass */
-.followers {
+.followers,
+.latest-activity {
   font-size: 12px;
   color: #66686B;
 }
@@ -2219,11 +2160,20 @@ textarea.splited-post {
 }
 
 /* line 453, ../sass/style.sass */
-.followed-by {
+.followed-by,
+.latest-activity {
   color: #aaa;
   font-size: 12px;
   cursor: pointer;
   display: block;
+}
+
+.who-to-follow .latest-activity {
+    margin-bottom: 8px;
+}
+
+.who-to-follow .latest-activity .label {
+    display: none;
 }
 
 /* line 459, ../sass/style.sass */
@@ -2582,6 +2532,31 @@ ol.toptrends-list a:hover {
     margin: 4px;
 }
 
+
+.inline-warn {
+    background-color: #FEFEDF;
+    padding: 10px;
+}
+
+.inline-warn .close {
+    float: right;
+    font-size: 1.2em;
+    color: #e34f42;
+    cursor: pointer;
+    margin: -8px 2px 8px 8px;
+}
+
+.inline-warn .text {
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.inline-warn .options {
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 4px;
+}
+
 /*************************************
 *********** CONFIRM POPUP ************
 **************************************/
@@ -2592,6 +2567,15 @@ ol.toptrends-list a:hover {
 
 .confirm-popup .message {
     margin: 8px 12px 20px;
+}
+
+/*************************************
+********* NEW ACCOUNT POPUP **********
+**************************************/
+
+.new-account-briefing.prompt-wrapper {
+    top: 50%;
+    margin-top: -164px;
 }
 
 /****** FOLLOWING-CONFIG PROMPT ******/
@@ -2651,6 +2635,62 @@ ol.toptrends-list a:hover {
 /* line 721, ../sass/style.sass */
 .reply .post-area {
   padding-bottom: 6px;
+}
+
+/*************************************
+******* LOGIN TO ACCOUNT MODAL *******
+**************************************/
+
+.login-modal.modal-wrapper {
+    width: 580px;
+    height: auto; /*about 532px*/
+    margin: -270px 0 0 -290px;
+}
+
+.login-modal .modal-content {
+    padding: 0;
+}
+
+.login-modal .module {
+    margin: 4px;
+}
+
+.login-modal .module > div {
+    margin: 4px 0;
+    padding: 4px 12px;
+}
+
+.login-modal .module > div:last-child {
+    text-align: right;
+    margin: 8px 0;
+}
+
+.login-modal .module input {
+    border: 1px solid rgba(0, 0, 0, .1);
+    width: 320px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.login-modal .module select {
+    border: 1px solid rgba(0, 0, 0, .1);
+    width: 310px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.login-modal .module input:focus, .login-modal .module select:focus {
+    border-bottom: solid 1px #B4C669;
+}
+
+.login-modal .module .secret-key {
+    width: 500px;
+}
+
+.login-modal .module .availability {
+    color: #45474D;
+    display: inline-block;
+    margin-left: 16px;
 }
 
 /****** DIRECT MESSAGES MODAL********* */
@@ -2939,8 +2979,8 @@ ol.toptrends-list a:hover {
 
 .group-messages-join-group.modal-wrapper {
     width: 580px;
-    height: auto; /*about 360px*/
-    margin: -250px 0 0 -290px;
+    height: auto; /*about 409px*/
+    margin: -204px 0 0 -290px;
 }
 
 .group-messages-join-group .modal-content {
@@ -2986,39 +3026,6 @@ ol.toptrends-list a:hover {
     height: 120px;
     overflow-y: auto;
     margin: 8px 8px 0;
-}
-
-/********* NEW USER MODAL************* */
-
-.new-user.modal-wrapper {
-    width: 720px;
-    height: 580px;
-    margin: -290px 0 0 -360px;
-}
-
-.new-user .modal-content {
-    padding: 25px;
-}
-
-/* line 870, ../sass/style.sass */
-.new-user .modal-close {
-  display: none;
-}
-/* line 872, ../sass/style.sass */
-.new-user .text {
-  margin: 0 0 15px 0;
-}
-/* line 874, ../sass/style.sass */
-.new-user .emphasis {
-  text-align: center;
-}
-/* line 877, ../sass/style.sass */
-.new-user .secret-key {
-  display: block;
-  margin-top: 8px;
-  color: black;
-  font-weight: bold;
-  font-size: 110%;
 }
 
 /******** HASHTAG MODAL********** */
@@ -3091,47 +3098,106 @@ ol.toptrends-list a:hover {
 
 /******* WHO TO FOLLOW MODAL****** */
 /* line 943, ../sass/style.sass */
-.modal-wrapper.who-to-follow-modal {
+.modal-wrapper.who-to-follow-modal,
+.modal-wrapper.new-users-modal {
   width: 520px;
   height: 580px;
   margin: -290px 0 0 -260px;
 }
 /* line 949, ../sass/style.sass */
-.who-to-follow-modal .modal-content {
+.who-to-follow-modal .modal-content,
+.new-users-modal .modal-content {
   padding: 15px;
 }
 
 /* line 955, ../sass/style.sass */
-.who-to-follow-modal ol {
+.who-to-follow-modal ol,
+.new-users-modal ol {
   margin: 5px;
 }
 /* line 958, ../sass/style.sass */
-.who-to-follow-modal .open-profile-modal:hover {
+.who-to-follow-modal .open-profile-modal:hover,
+.new-users-modal .open-profile-modal:hover {
   text-decoration: none;
 }
 /* line 960, ../sass/style.sass */
-.who-to-follow-modal .twister-user {
-  position: relative;
+.who-to-follow-modal .twister-user,
+.new-users-modal .twister-user {
+position: relative;
   padding: 5px;
 }
 /* line 963, ../sass/style.sass */
-.who-to-follow-modal .twister-user-photo {
+.who-to-follow-modal .twister-user-photo,
+.new-users-modal .twister-user-photo {
   position: relative;
   left: 0;
   float: left;
   display: block;
 }
 /* line 968, ../sass/style.sass */
-.who-to-follow-modal .twister-user-info {
+.who-to-follow-modal .twister-user-info,
+.new-users-modal .twister-user-info {
   position: relative;
   margin-top: 4px;
   padding-left: 70px;
   width: auto;
 }
 /* line 972, ../sass/style.sass */
-.who-to-follow-modal .bio {
+.who-to-follow-modal .bio,
+.new-users-modal .bio {
   color: rgba(0, 0, 0, 0.6);
   font-style: italic;
+}
+
+/*************************************
+********* URI SHORTENER MODAL ********
+**************************************/
+
+.modal-wrapper.uri-shortener-modal {
+  width: 520px;
+  height: 720px;
+  margin: -360px 0 0 -260px;
+}
+
+.uri-shortener-modal .modal-content {
+  padding: 20px;
+}
+
+.uri-shortener-control.b-buttons {
+    padding: 4px;
+}
+
+.uri-shortener-modal .uris-list {
+    font-size: 12px;
+    overflow-x: hidden;
+}
+
+.uri-shortener-modal .uris-list li {
+    background-color: #FFF;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-bottom: 2px;
+}
+
+.uri-shortener-modal .uris-list li:last-child {
+    margin-bottom: 16px;
+}
+
+.uri-shortener-modal .uris-list li.highlighted,
+.uri-shortener-modal .uris-list li:hover {
+    background-color: #FEFEDF;
+}
+
+.uri-shortener-modal .uris-list .short {
+    background-color: #EEE;
+    display: inline-block;
+    width: 26%;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.uri-shortener-modal .uris-list .long {
+    margin-left: 4px;
 }
 
 /******* LOADER ************ */
@@ -3280,7 +3346,7 @@ ol.toptrends-list a:hover {
 .following-own-modal .following-list > li {
     display: inline-block;
     width: 320px;
-    height: 160px;
+    height: 184px;
     margin: 2px;
     padding: 2px;
     border: solid 1px rgba(69, 71, 77, .1);
@@ -3378,6 +3444,10 @@ ol.toptrends-list a:hover {
 .following-own-modal .following-list .swarm-status {
     font-size: 11px;
     display: block;
+}
+
+.following-own-modal .following-list .latest-activity {
+    font-size: 11px;
 }
 
 /********** AUTOCOMPLETING *********/

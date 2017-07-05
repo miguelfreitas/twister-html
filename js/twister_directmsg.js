@@ -179,13 +179,14 @@ function openCommonDMsModal() {
     modal.self.find('.mark-all-as-read')
         .css('display', 'inline')
         .attr('title', polyglot.t('Mark all as read'))
-        .on('click', function() {
+        .on('click', function (event) {
             for (var user in _newDMsPerUser) {
                 if (user[0] !== '*')
                     _newDMsPerUser[user] = 0;
             }
             saveDMsToStorage();
             $.MAL.updateNewDMsUI(getNewDMsCount());
+            $(event.target).closest('.directMessages').find('.direct-messages-list .messages-qtd').hide();
         })
     ;
 }
@@ -236,13 +237,14 @@ function openGroupMessagesModal(groupAlias) {
         modal.self.find('.mark-all-as-read')
             .css('display', 'inline')
             .attr('title', polyglot.t('Mark all as read'))
-            .on('click', function() {
+            .on('click', function (event) {
                 for (var user in _newDMsPerUser) {
                     if (user[0] === '*')
                         _newDMsPerUser[user] = 0;
                 }
                 saveDMsToStorage();
                 $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+                $(event.target).closest('.groupMessages').find('.direct-messages-list .messages-qtd').hide();
             })
         ;
     } else {
@@ -359,22 +361,13 @@ function openGroupMessagesJoinGroupModal() {
         closeModal(event);
     });
 
-    modal.content.find('.secret-key-import, .username-import').on('input', importSecretKeypress);
+    modal.content.find('.secret-key-import').on('input',
+        {parentSelector: '.module', enterSelector: '.import-secret-key'}, inputEnterActivator);
 
     modal.content.find('.import-secret-key').on('click', function (event) {
-        var elemModule = $(event.target).closest('.module');
-        var groupAlias = elemModule.find('.username-import').val().toLowerCase();
-        var secretKey = elemModule.find('.secret-key-import').val();
+        groupMsgImportKey($(event.target).closest('.module').find('.secret-key-import').val());
 
-        twisterRpc('importprivkey', [secretKey, groupAlias],
-            function(req, ret) {
-                groupMsgInviteToGroup(req.groupAlias, [defaultScreenName]);
-                closeModal(req.elem);
-            }, {groupAlias: groupAlias, elem: elemModule},
-            function(req, ret) {
-                alert(polyglot.t('Error in \'importprivkey\'', {rpc: ret.message}));
-            }
-        );
+        closeModal(event);
     });
 }
 
@@ -392,8 +385,54 @@ function groupMsgCreateGroup(description, peersToInvite) {
     );
 }
 
-function groupMsgInviteToGroup(groupAlias, peersToInvite) {
-    _groupMsgInviteToGroupQueue.push({groupAlias: groupAlias, peersToInvite: peersToInvite});
+function groupMsgImportKey(key) {
+    if (parseInt(twisterVersion) < 93800) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('group_key_cant_import') + ' —\n'
+                + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.38'})
+        });
+        return;
+    }
+
+    twisterRpc('creategroup', ['whatever', key],
+        function(req, ret) {
+            if (!ret) {
+                alertPopup({
+                    //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                    txtMessage: polyglot.t('group_key_cant_import') + ' —\n'
+                        + polyglot.t('group_key_is_invalid_perhaps')
+                });
+                return;
+            }
+
+            groupMsgInviteToGroup(ret, [defaultScreenName],
+                function () {
+                    twisterRpc('rescandirectmsgs', [defaultScreenName],
+                        function () {}, undefined, function () {});
+                }
+            );
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                txtMessage: polyglot.t('group_key_was_imported', {alias: ret})
+            });
+        }, undefined,
+        function(req, ret) {
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                txtMessage: polyglot.t('group_key_cant_import') + ' —\n' + ret.message
+            });
+        }
+    );
+}
+
+function groupMsgInviteToGroup(groupAlias, peersToInvite, cbFunc, cbReq) {
+    _groupMsgInviteToGroupQueue.push({
+        groupAlias: groupAlias,
+        peersToInvite: peersToInvite,
+        cbFunc: cbFunc,
+        cbReq: cbReq
+    });
 
     if (_groupMsgInviteToGroupQueue.length === 1)
         doGroupMsgInviteToGroup();
@@ -408,7 +447,10 @@ function doGroupMsgInviteToGroup() {
             _groupMsgInviteToGroupQueue.shift();
             if (_groupMsgInviteToGroupQueue.length)
                 setTimeout(doGroupMsgInviteToGroup, 200);
-        }, null,
+
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.cbReq);
+        }, {cbFunc: _groupMsgInviteToGroupQueue[0].cbFunc, cbReq: _groupMsgInviteToGroupQueue[0].cbReq},
         function(req, ret) {
             alert(polyglot.t('error',
                 {error: 'can\'t invite ' + req[1] + ' to ' + req[0] + ' group — ' + ret.message}));

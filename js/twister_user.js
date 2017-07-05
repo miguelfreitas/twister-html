@@ -6,47 +6,48 @@
 // Load/save profile (profile-edit.html)
 
 var defaultScreenName = undefined;
-var localUsernames = [];
 var lastPostId = undefined;
 
 // basic user functions
 // -------------------------------
 
-function initUser(cbFunc, cbArg) {
-    loadWalletlUsers( function() {
-                       var $localUsersList = $("select.local-usernames");
-                       if( $localUsersList.length ) {
-                           for( var i = 0; i < localUsernames.length; i++ ) {
-                               var $existingOption = $localUsersList.find("option[value='" + localUsernames[i] + "']");
-                               if( !$existingOption.length ) {
-                                   var $userOption = $("<option/>");
-                                   $userOption.val(localUsernames[i]);
-                                   $userOption.text(localUsernames[i]);
-                                   $localUsersList.append($userOption);
-                               }
-                           }
-                       }
+function initUser(cbFunc, cbReq) {
+    loadWalletlUsers(
+        function (req) {
+            var elemAccountsList = getElem('select.local-usernames', true);
+            if (elemAccountsList.length) {
+                for (var i = 0; i < twister.var.localAccounts.length; i++) {
+                    if (!elemAccountsList.find('option[value=\'' + twister.var.localAccounts[i] + '\']').length) {
+                        $('<option/>')
+                            .val(twister.var.localAccounts[i])
+                            .text(twister.var.localAccounts[i])
+                            .appendTo(elemAccountsList)
+                        ;
+                    }
+                }
+            }
 
-                       loadScreenName();
-                       if( !defaultScreenName || localUsernames.indexOf(defaultScreenName) < 0 ) {
-                           defaultScreenName = undefined;
-                       } else {
-                           var $localUsersLogin = $("select.local-usernames.login-user");
-                           if( $localUsersLogin.length ) {
-                               $localUsersLogin.val(defaultScreenName);
-                           }
+            loadScreenName();
+            if (!defaultScreenName || twister.var.localAccounts.indexOf(defaultScreenName) < 0) {
+                defaultScreenName = undefined;
+            } else {
+                getElem('select.local-usernames', true).val(defaultScreenName);
 
-                           var $userMenuConfig = $(".userMenu-config");
-                           if( $userMenuConfig.length ) {
-                               $userMenuConfig.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
-                               $userMenuConfig.find(".mini-profile-name").text(defaultScreenName);
-                               getFullname( defaultScreenName, $userMenuConfig.find(".mini-profile-name") );
-                           }
-                       }
-                       lastPostId = undefined;
-                       if( cbFunc )
-                           cbFunc(cbArg);
-    });
+                var userMenuConfig = $('.userMenu-config');
+                if (userMenuConfig.length) {
+                    var elem = userMenuConfig.find('.mini-profile-name')
+                        .attr('href', $.MAL.userUrl(defaultScreenName)).text(defaultScreenName);
+                    getFullname(defaultScreenName, elem);
+                }
+            }
+
+            lastPostId = undefined;
+
+            if (typeof req.cbFunc === 'function') {
+                req.cbFunc(req.cbReq);
+            }
+        }, {cbFunc: cbFunc, cbReq: cbReq}
+    );
 }
 
 function incLastPostId( optionalNewValue ) {
@@ -60,150 +61,102 @@ function incLastPostId( optionalNewValue ) {
     $.MAL.updateMyOwnPostCount(lastPostId+1);
 }
 
-function loadWalletlUsers(cbFunc, cbArg) {
-    twisterRpc("listwalletusers", [],
-               function(args, ret) {
-                   localUsernames = [];
-                   for( var i = 0; i < ret.length; i++ ) {
-                        // filter out group aliases
-                        if( ret.length && ret[i][0] !== '*' ) {
-                            localUsernames.push(ret[i]);
-                        }
-                   }
-                   args.cbFunc(args.cbArg);
-               }, {cbFunc:cbFunc, cbArg:cbArg},
-               function(args, ret) {
-                   alert(polyglot.t("error_connecting_to_daemon"));
-               }, {});
+function loadWalletlUsers(cbFunc, cbReq) {
+    twisterRpc('listwalletusers', [],
+        function (req, ret) {
+            twister.var.localAccounts = [];
+            for (var i = 0; i < ret.length; i++) {
+                if (ret.length && ret[i][0] !== '*') { // filter out group aliases (starting with '*')
+                    twister.var.localAccounts.push(ret[i]);
+                }
+            }
+
+            if (typeof req.cbFunc === 'function') {
+                req.cbFunc(req.cbReq);
+            }
+        }, {cbFunc: cbFunc, cbReq: cbReq},
+        function (req, ret) {
+            alert(polyglot.t('error_connecting_to_daemon'));
+        }
+    );
 }
 
 function loadScreenName() {
-    if( $.localStorage.isSet("defaultScreenName") ) {
-        defaultScreenName = $.localStorage.get("defaultScreenName").toString();
+    if ($.localStorage.isSet('defaultScreenName')) {
+        defaultScreenName = $.localStorage.get('defaultScreenName').toString();
     }
 }
 
 function saveScreenName() {
-    $.localStorage.set("defaultScreenName", defaultScreenName);
+    $.localStorage.set('defaultScreenName', defaultScreenName);
 }
 
 
 // user-related functions used by login page (desktop/mobile)
 // ----------------------------------------------------------
 
-function loginLocalUsername() {
-    defaultScreenName = $("select.local-usernames.login-user").val();
-    if(defaultScreenName) {
-        saveScreenName();
-        $.MAL.changedUser();
-        $.MAL.goHome();
-    }
-}
-
-function checkUsernameAvailability() {
-    var $newUsername = $(".new-username");
-    var username = $newUsername.val().toLowerCase();
-    $newUsername.val(username);
-    var $availField = $(".availability");
-
-    if( !username.length )
-        return;
-    if( username.length > 16 ) {
-        $availField.text(polyglot.t("Must be 16 characters or less."));
+function loginToAccount(peerAlias) {
+    if (!peerAlias) {
+        console.warn('can\'t login to account: empty alias was given');
         return;
     }
 
-    //Check for non-alphabetic characters and space
-    if(username.search(/[^a-z0-9_]/) != -1) {
-        $availField.text(polyglot.t("Only alphanumeric and underscore allowed."));
-        return;
-    }
-
-    $availField.text(polyglot.t("Checking..."));
-
-    dumpPubkey(username, function(dummy, pubkey) {
-                            var notAvailable =  pubkey.length > 0
-                            var $availField = $(".availability");
-                            if( notAvailable ) {
-                                $availField.text(polyglot.t("Not available"));
-                            } else {
-                                $availField.text(polyglot.t("Available"));
-
-                                var $createButton = $(".create-user");
-                                $.MAL.enableButton( $createButton );
-                            }
-                        }, null);
-}
-
-function newUserNameKeypress() {
-    var $availField = $(".availability");
-    $availField.text("");
-    var $createButton = $(".create-user");
-    $.MAL.disableButton( $createButton );
-}
-
-// create user and call cbFunc(username, privkey)
-function createUserClick(cbFunc) {
-    var $newUsername = $(".new-username");
-    var username = $newUsername.val().toLowerCase();
-
-    if( localUsernames.indexOf(username) < 0 ) {
-        twisterRpc("createwalletuser", [username],
-                   function(args, ret) {
-                       args.cbFunc(args.username, ret);
-                   }, {username:username, cbFunc:cbFunc},
-                   function(args, ret) {
-                       alert(polyglot.t("Error in 'createwalletuser' RPC."));
-                   }, {cbFunc:cbFunc});
-    } else {
-        // user exists in wallet but transaction not sent
-        dumpPrivkey(username,
-                    function(args, ret) {
-                       args.cbFunc(args.username, ret);
-                    }, {username:username, cbFunc:cbFunc});
-    }
-}
-
-function sendNewUserTransaction(username, cbFunc) {
-    twisterRpc("sendnewusertransaction", [username],
-               function(args, ret) {
-                   args.cbFunc();
-               }, {cbFunc:cbFunc},
-               function(args, ret) {
-                   alert(polyglot.t("Error in 'sendnewusertransaction' RPC."));
-               }, {});
-}
-
-function importSecretKeyClick() {
-    var secretKey = $(".secret-key-import").val();
-    var username = $(".username-import").val().toLowerCase();
-
-    twisterRpc("importprivkey", [secretKey,username],
-               function(args, ret) {
-                   processNewSecretKeyImported(args.username);
-               }, {username:username},
-               function(args, ret) {
-                   alert(polyglot.t("Error in 'importprivkey'", {rpc: ret.message }));
-               }, {});
-}
-
-function processNewSecretKeyImported(username) {
-    defaultScreenName = username;
+    defaultScreenName = peerAlias;
     saveScreenName();
     $.MAL.changedUser();
     $.MAL.goHome();
 }
 
-// handlers common to both desktop and mobile
-function interfaceCommonLoginHandlers() {
-    $( ".login-local-username" ).bind( "click", loginLocalUsername );
-    $( ".check-availability").bind( "click", checkUsernameAvailability );
-    /* must specialize: $( ".create-user").bind( "click", function() { createUserClick( processCreateUser ); } ); */
-    /* must specialize: $( ".login-created-user").bind( "click", loginCreatedUser ); */
-    $( ".new-username" ).keyup( newUserNameKeypress );
-    $('.secret-key-import').on('input', importSecretKeypress);
-    $('.username-import').on('input', importSecretKeypress);
-    $( ".import-secret-key").bind( "click", importSecretKeyClick );
+function createAccount(peerAlias) {
+    if (!peerAlias) {
+        console.warn('can\'t create account: empty alias was given');
+        return;
+    }
+
+    twisterRpc('createwalletuser', [peerAlias],
+        function(req, ret) {
+            $.MAL.processCreateAccount(req.peerAlias, ret);
+        }, {peerAlias: peerAlias},
+        function(req, ret) {
+            alert(polyglot.t('Error in \'createwalletuser\' RPC.'));
+        }
+    );
+}
+
+function importAccount(peerAlias, secretKey) {
+    if (!peerAlias) {
+        console.warn('can\'t import account: empty alias was given');
+        return;
+    }
+    if (!secretKey) {
+        console.warn('can\'t import account: empty secret key was given');
+        return;
+    }
+
+    twisterRpc('importprivkey', [secretKey, peerAlias],
+        function (req, ret) {
+            defaultScreenName = req.peerAlias;
+            saveScreenName();
+            $.MAL.changedUser();
+            $.MAL.goHome();
+        }, {peerAlias: peerAlias},
+        function (req, ret) {
+            alert(polyglot.t('Error in \'importprivkey\'', {rpc: ret.message}));
+        }
+    );
+}
+
+function sendNewUserTransaction(peerAlias, cbFunc, cbReq) {
+    twisterRpc('sendnewusertransaction', [peerAlias],
+        function (req, ret) {
+            if (typeof req.cbFunc === 'function') {
+                req.cbFunc(req.cbReq);
+            }
+        }, {cbFunc: cbFunc, cbReq: cbReq},
+        function (req, ret) {
+            alert(polyglot.t('Error in \'sendnewusertransaction\' RPC.'));
+        }
+    );
 }
 
 // profile-related functions used by profile-edit

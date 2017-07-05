@@ -16,7 +16,12 @@ var twister = {
     tmpl: {  // templates pointers are stored here
         root: $('<div>')  // templates should be detached from DOM and attached here; use extractTemplate()
     },
-    modal: {}
+    modal: {},
+    res: {},  // reses for various reqs are cached here
+    var: {
+        localAccounts: [],
+        updatesCheckClient: {}
+    }
 };
 var window_scrollY = 0;
 var _watchHashChangeRelaxDontDoIt = window.location.hash === '' ? true : false;
@@ -55,6 +60,9 @@ function openModal(modal) {
     modal.self = $('#templates ' + modal.classBase).clone(true)
         .addClass(modal.classAdd);
 
+    if (modal.removeBlackout)
+        modal.self.find('.modal-blackout').remove();
+
     if (modal.title)
         modal.self.find('.modal-header h3').html(modal.title);
     if (modal.content)
@@ -62,6 +70,16 @@ function openModal(modal) {
             .append(modal.content);
     else
         modal.content = modal.self.find('.modal-content');
+
+    if (modal.warn && modal.warn.name && modal.warn.text) {
+        var elem = twister.tmpl.modalComponentWarn.clone(true)
+            .attr('data-warn-name', modal.warn.name)
+            .toggle(!$.Options.get('skipWarn' + modal.warn.name))
+        ;
+        fillElemWithTxt(elem.find('.text'), modal.warn.text, {markout: 'apply'});
+        elem.find('.options .never-again + span').text(polyglot.t('do_not_show_it_again'));
+        elem.insertBefore(modal.content);
+    }
 
     modal.self.appendTo('body').fadeIn('fast');  // FIXME maybe it's better to append it to some container inside body
 
@@ -71,7 +89,9 @@ function openModal(modal) {
 
         modal.drapper = $('<div>').appendTo(twister.html.detached);  // here modal goes instead detaching
 
-        modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
+        modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight()
+            - modal.self.find('.inline-warn').outerHeight()
+            * (modal.warn && !$.Options.get('skipWarn' + modal.warn.name) ? 1 : 0));
 
         var windowHeight = $(window).height();
         if (modal.self.outerHeight() > windowHeight) {
@@ -106,6 +126,9 @@ function closeModal(req, switchMode) {
                 twister.modal[i].btnResume.fadeOut('fast', function () {this.remove();});
             else
                 this.remove();  // if it's minimized it will be removed with twister.modal[i].drapper
+
+            if (typeof twister.modal[i].onClose === 'function')
+                twister.modal[i].onClose(twister.modal[i].onCloseReq);
 
             twister.modal[i].drapper.remove();
             twister.modal[i] = undefined;
@@ -287,8 +310,9 @@ function confirmPopup(req) {
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
-        classAdd: 'confirm-popup',
+        classAdd: req.classAdd ? 'confirm-popup ' + req.classAdd : 'confirm-popup',
         content: $('#confirm-popup-template').children().clone(true),
+        removeBlackout: !req.addBlackout,
         title: req.txtTitle
     });
 
@@ -343,6 +367,8 @@ function confirmPopup(req) {
             btn.on('click', {cbFunc: req.cbClose, cbReq: req.cbCloseReq}, closePrompt);
         }
     }
+
+    return modal;
 }
 
 function alertPopup(req) {
@@ -359,7 +385,7 @@ function alertPopup(req) {
         req.removeCancel = true;
     }
 
-    confirmPopup(req);
+    return confirmPopup(req);
 }
 
 function checkNetworkStatusAndAskRedirect(cbFunc, cbReq) {
@@ -377,6 +403,7 @@ function checkNetworkStatusAndAskRedirect(cbFunc, cbReq) {
 }
 
 function timeGmtToText(t) {
+    if (t == 0) return '-';
     var d = new Date(0);
     d.setUTCSeconds(t);
     return d.toString().replace(/GMT.*/g, '');
@@ -398,6 +425,94 @@ function timeSincePost(t) {
         expression = polyglot.t('days', Math.floor(t_delta / 86400));  // 24 * 60 * 60
 
     return polyglot.t('time_ago', {time: expression});
+}
+
+function openModalLogin() {
+    var modal = openModal({
+        classAdd: 'login-modal',
+        content: twister.tmpl.loginMC.clone(true),
+        title: polyglot.t('twister login')
+    });
+}
+
+function handleClickAccountLoginLogin(event) {
+    loginToAccount($(event.target).closest('.module').find('select.local-usernames').val());
+}
+
+function handleInputAccountCreateSetReq(event) {
+    var container = $(event.target).closest('.module');
+
+    container.find('.availability').text('');
+    $.MAL.enableButton(container.find('.check'));
+    $.MAL.disableButton(container.find('.create'));
+}
+
+function handleClickAccountCreateCheckReq(event) {
+    var container = $(event.target).closest('.module');
+    var peerAliasElem = container.find('.alias');
+    var peerAlias = peerAliasElem.val().toLowerCase();
+    var availField = container.find('.availability');
+
+    peerAliasElem.val(peerAlias);
+    $.MAL.disableButton(container.find('.check'));
+
+    if (!peerAlias.length)
+        return;
+    if (peerAlias.length > 16) {
+        availField.text(polyglot.t('Must be 16 characters or less.'));
+        return;
+    }
+
+    // check for non-alphabetic characters and space
+    if (peerAlias.search(/[^a-z0-9_]/) !== -1) {
+        availField.text(polyglot.t('Only alphanumeric and underscore allowed.'));
+        return;
+    }
+
+    availField.text(polyglot.t('Checking...'));
+
+    dumpPubkey(peerAlias,
+        function(req, ret) {
+            if (ret) {
+                req.container.find('.availability').text(polyglot.t('Not available'));
+            } else {
+                req.container.find('.availability').text(polyglot.t('Available'));
+                $.MAL.enableButton(req.container.find('.create'));
+            }
+        }, {container: container}
+    );
+}
+
+function handleClickAccountCreateCreate(event) {
+    var container = $(event.target).closest('.module');
+    var peerAlias = container.find('.alias').val().toLowerCase();
+
+    if (twister.var.localAccounts.indexOf(peerAlias) < 0) {
+        createAccount(peerAlias);
+    } else {
+        // user exists in wallet but transaction not sent
+        dumpPrivkey(peerAlias,
+            function (req, ret) {
+                $.MAL.processCreateAccount(req.peerAlias, ret);
+            }, {peerAlias: peerAlias}
+        );
+    }
+}
+
+function handleInputAccountImportSetReq(event) {
+    var container = $(event.target).closest('.module');
+
+    if (container.find('.secret-key').val().length === 52
+        && container.find('.alias').val().toLowerCase().length)
+        $.MAL.enableButton(container.find('.import'));
+    else
+        $.MAL.disableButton(container.find('.import'));
+}
+
+function handleClickAccountImportImport(event) {
+    var container = $(event.target).closest('.module');
+
+    importAccount(container.find('.alias').val().toLowerCase(), container.find('.secret-key').val())
 }
 
 function openGroupProfileModalWithNameHandler(groupAlias) {
@@ -449,6 +564,8 @@ function openUserProfileModalWithNameHandler(peerAlias) {
     content.find('.tox-ctc').attr('title', polyglot.t('Copy to clipboard'));
     content.find('.bitmessage-ctc').attr('title', polyglot.t('Copy to clipboard'));
 
+    content.find('.open-followers').on('mouseup', {route: '#followers?user=' + peerAlias}, routeOnClick);
+
     var modal = openModal({
         classAdd: 'profile-modal',
         content: content,
@@ -475,37 +592,54 @@ function openHashtagModalFromSearchHandler(hashtag) {
         title: '#' + hashtag
     });
 
-    setupQueryModalUpdating(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
+    var req = queryStart(modal.content.find('.postboard-posts'), hashtag, 'hashtag');
+    modal.content.find('.postboard-news').on('click', {req: req}, handleClickDisplayPendingTwists);
 }
 
-function setupQueryModalUpdating(postboard, query, resource) {
-    var req = {
-        postboard: postboard,
-        query: query,
-        resource: resource,
-        id: query + '@' + resource
-    };
+function handleClickDisplayPendingTwists(event) {
+    if (!event || !event.data || !event.data.req)
+        return;
 
-    postboard.attr('data-request-id', req.id);
+    $(event.target).hide();
 
-    requestQuery(req);
+    queryPendingDraw(event.data.req);
 
-    // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
-    // our first query above should be faster (with default timeoutArgs of twisterd),
-    // then we may possibly collect more posts on our second try by waiting more.
-    req.timeoutArgs = [10000, 2000, 3];
-
-    postboard.attr('data-request-interval', setInterval(updateQueryModal, 5000, req));  // FIXME
+    if (typeof event.data.cbFunc === 'function')
+        event.data.cbFunc(event.data.cbReq);
 }
 
-function updateQueryModal(req) {
-    if (!isModalWithElemExists(req.postboard)) {
-        clearInterval(req.postboard.attr('data-request-interval'));
-        clearQueryProcessed(req.id);
+function openFavsModal(event) {
+    if (event && typeof event.stopPropagation === 'function') {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    var userInfo = $(this).closest('[data-screen-name]');
+    var peerAlias = '';
+    if (userInfo.length)
+        peerAlias = userInfo.attr('data-screen-name');
+    else if (defaultScreenName)
+        peerAlias = defaultScreenName;
+    else {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('No favs here because you are not logged in.')
+        });
         return;
     }
 
-    requestQuery(req);
+    window.location.hash = '#favs?user=' + peerAlias;
+}
+
+function openFavsModalHandler(peerAlias) {
+    var modal = openModal({
+        classAdd: 'hashtag-modal',
+        content: $('#hashtag-modal-template').children().clone(true),
+        title: polyglot.t('users_favs', {username: peerAlias})
+    });
+
+    var req = queryStart(modal.content.find('.postboard-posts'), peerAlias, 'fav');
+    modal.content.find('.postboard-news').on('click', {req: req}, handleClickDisplayPendingTwists);
 }
 
 function openMentionsModal(event) {
@@ -537,22 +671,22 @@ function openMentionsModalHandler(peerAlias) {
         title: polyglot.t('users_mentions', {username: peerAlias})
     });
 
-    setupQueryModalUpdating(modal.content.find('.postboard-posts'), peerAlias, 'mention');
+    var req = queryStart(modal.content.find('.postboard-posts'), peerAlias, 'mention');
+    modal.content.find('.postboard-news')
+        .on('click',
+            {req: req, cbFunc: (peerAlias === defaultScreenName) ? resetMentionsCount : ''},
+            handleClickDisplayPendingTwists
+        )
+    ;
 
     if (peerAlias === defaultScreenName) {
-        // obtain already cached mention posts from twister_newmsgs.js
-        processQuery({
-            postboard: modal.content.find('.postboard-posts'),
-            query: defaultScreenName,
-            resource: 'mention',
-            posts: getMentionsData()
-        });
+        modal.content.on('scroll', handleMentionsModalScroll);
         resetMentionsCount();
     }
 }
 
 function openFollowersModal(peerAlias) {
-    var followers, title, txtAlert;
+    var followers, title, warn;
 
     if (!peerAlias || peerAlias === defaultScreenName) {
         if (!defaultScreenName) {
@@ -565,22 +699,27 @@ function openFollowersModal(peerAlias) {
         }
         title = polyglot.t('Followers');
         followers = twisterFollowingO.knownFollowers.slice();
-        txtAlert = '* ' + polyglot.t('warn_followers_not_all');
+        warn = {
+            name: 'FollowersNotAll',
+            text: '* ' + polyglot.t('warn_followers_not_all')
+        };
     } else {
         title = polyglot.t('Followers_of', {alias: peerAlias});
         followers = whoFollows(peerAlias);
-        txtAlert = polyglot.t('warn_followers_not_all_of', {alias: peerAlias});
+        warn = {
+            name: 'FollowersNotAllOf',
+            text: polyglot.t('warn_followers_not_all_of', {alias: peerAlias})
+        };
     }
 
     var modal = openModal({
         classAdd: 'followers-modal',
         content: twister.tmpl.followersList.clone(true),
-        title: title
+        title: title,
+        warn: warn
     });
 
     appendFollowersToElem(modal.content.find('ol'), followers);
-
-    alertPopup({txtMessage: txtAlert});
 }
 
 function appendFollowersToElem(list, followers) {
@@ -658,6 +797,7 @@ function addPeerToFollowingList(list, peerAlias) {
         .on('mouseup', {route: $.MAL.mentionsUrl(peerAlias)}, routeOnClick);
     getAvatar(peerAlias, item.find('.mini-profile-photo'));
     getFullname(peerAlias, item.find('.mini-profile-name'));
+    getStatusTime(peerAlias, item.find('.latest-activity .time'));
 
     if (peerAlias === defaultScreenName)
         item.find('.following-config').hide();
@@ -677,9 +817,6 @@ function addPeerToFollowingList(list, peerAlias) {
 }
 
 function fillWhoToFollowModal(list, hlist, start) {
-    var itemTmp = $('#follow-suggestion-template').clone(true)
-        .removeAttr('id');
-
     for (var i = 0; i < followingUsers.length && list.length < start + 20; i++) {
         if (typeof twisterFollowingO.followingsFollowings[followingUsers[i]] !== 'undefined') {
             for (var j = 0; j < twisterFollowingO.followingsFollowings[followingUsers[i]].following.length && list.length < start + 25; j++) {
@@ -687,26 +824,11 @@ function fillWhoToFollowModal(list, hlist, start) {
                 if (followingUsers.indexOf(utf) < 0 && list.indexOf(utf) < 0) {
                     list.push(utf);
 
-                    var item = itemTmp.clone(true);
-
-                    item.find('.twister-user-info').attr('data-screen-name', utf);
-                    item.find('.twister-user-name').attr('href', $.MAL.userUrl(utf));
-                    item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followingUsers[i]));
-                    item.find('.twister-user-tag').text('@' + utf);
-
-                    getAvatar(utf, item.find('.twister-user-photo'));
-                    getFullname(utf, item.find('.twister-user-full'));
-                    getBioToElem(utf, item.find('.bio'));
-                    getFullname(followingUsers[i], item.find('.followed-by').text(followingUsers[i]));
-
-                    item.find('.twister-user-remove').remove();
-
-                    hlist.append(item);
+                    processWhoToFollowSuggestion(hlist, utf, followingUsers[i]);
                 }
             }
         }
     }
-    itemTmp.remove();
 
     if (i >= followingUsers.length - 1)
         return false;
@@ -727,12 +849,60 @@ function openWhoToFollowModal() {
 
     modal.content.on('scroll', function() {
         if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
-            if (!fillWhoToFollowModal(tmplist, hlist, tmplist.length))
+            if (!fillWhoToFollowModal(tmplist, modal.self, tmplist.length))
                 modal.content.off('scroll');
         }
     });
 
-    fillWhoToFollowModal(tmplist, hlist, 0);
+    fillWhoToFollowModal(tmplist, modal.self, 0);
+}
+
+function openNewUsersModal() {
+    var modal = openModal({
+        classAdd: 'new-users-modal',
+        title: polyglot.t('New Users'),
+        onClose: function() {
+            NewUserSearch.isNewUserModalOpen = false;
+        }
+    });
+
+    var hlist = $('<ol class="follow-suggestions"></ol>')
+        .appendTo(modal.content);
+    var count = 15;
+
+    modal.content.on('scroll', function() {
+        if (modal.content.scrollTop() >= hlist.height() - modal.content.height() - 20) {
+            if (newUsers.getLastNUsers(5, count, modal.self))
+                count += 5;
+        }
+    });
+
+    NewUserSearch.isNewUserModalOpen = true;
+    newUsers.getLastNUsers(15, 0, modal.self);
+}
+
+function openModalUriShortener()
+{
+    var modal = openModal({
+        classAdd: 'uri-shortener-modal',
+        content: twister.tmpl.uriShortenerMC.clone(true),
+        title: polyglot.t('URI_shortener')
+    });
+
+    modal.content.find('.uri-shortener-control .shorten-uri').text(polyglot.t('shorten_URI'));
+    modal.content.find('.uri-shortener-control .clear-cache').text(polyglot.t('clear_cache'));
+
+    var urisList = modal.content.find('.uris-list');
+    //var i = 0;
+    for (var short in twister.URIs) {
+        //i++;
+        var long = twister.URIs[short] instanceof Array ? twister.URIs[short][0] : twister.URIs[short];
+        var item = twister.tmpl.uriShortenerUrisListItem.clone(true);
+        item.find('.short').text(short);
+        item.find('.long').text(long).attr('href', long);
+        item.appendTo(urisList);
+    }
+    //i + URIs are cached
 }
 
 function newConversationModal(peerAlias, resource) {
@@ -796,14 +966,22 @@ function handleClickOpenProfileModal(event) {
 }
 
 function handleClickOpenConversation(event) {
-    event.preventDefault();
-    event.stopPropagation();
+    var elem = $(event.target).closest(event.data.feeder);
+    if (!elem.length) {
+        muteEvent(event, true);
+        return;
+    }
 
-    var elem = $(event.target);
-    var postData = elem.closest(event.data.feeder);
+    var post = {
+        writer: elem.attr('data-screen-name'),
+        id: elem.attr('data-id')
+    };
+    if (!post.writer || !post.id) {
+        muteEvent(event, true);
+        return;
+    }
 
-    event.data.route = '#conversation?post=' + postData.attr('data-screen-name')
-        + ':post' + postData.attr('data-id');
+    event.data.route = '#conversation?post=' + post.writer + ':post' + post.id;
     routeOnClick(event);
 }
 
@@ -828,8 +1006,8 @@ function openRequestShortURIForm(event) {
     if (parseInt(twisterVersion) < 93500) {
         alertPopup({
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-            txtMessage: 'You can\'t shorten links because twister daemon is obsolete!\n'
-                + 'Version 0.9.35 or higher is required. Please keep your twister up to date.'
+            txtMessage: 'You can\'t shorten links —\n'
+                + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.35'})
         });
         return;
     }
@@ -845,7 +1023,7 @@ function openRequestShortURIForm(event) {
 function showURIPair(uriLong, uriShort) {  // FIXME req
     if (uriShort)
         alertPopup({
-            txtTitle: 'URI shortener',
+            txtTitle: polyglot.t('URI_shortener'),
             txtMessage: uriLong + ' — `' + uriShort + '`'
         });
     else
@@ -854,7 +1032,7 @@ function showURIPair(uriLong, uriShort) {  // FIXME req
 
 function showURIShortenerErrorRPC(ret) {
     alertPopup({
-        txtTitle: 'URI shortener',
+        txtTitle: polyglot.t('URI_shortener'),
         txtMessage: 'something went wrong. RPC error message:\n' + (ret && ret.message ? ret.message : ret)
     });
 }
@@ -909,12 +1087,28 @@ function fetchShortenedURI(req, attemptCount) {
 function applyShortenedURI(short, uriAndMimetype) {
     var long = (uriAndMimetype instanceof Array) ? uriAndMimetype[0] : uriAndMimetype;
     var mimetype = (uriAndMimetype instanceof Array) ? uriAndMimetype[1] : undefined;
-    var elems = getElem('.link-shortened[href="' + short + '"]')
+    var elems = getElem('.link-shortened[href="' + short + '"]');
+
+    if (isUriSuspicious(long)) {
+        elems.replaceWith(
+            '…<br><b><i>' + polyglot.t('busted_oh') + '</i> '
+            + polyglot.t('busted_avowal') + ':</b><br><samp>'
+            + long
+                .replace(/&(?!lt;|gt;)/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;')
+            + '</samp><br>…<br>'
+        );
+        return;
+    }
+
+    elems
         .attr('href', long)
         .removeClass('link-shortened')
         .off('click mouseup')
         .on('click mouseup', muteEvent)
     ;
+
     var cropped = (/*$.Options.cropLongURIs &&*/ long.length > 23) ? long.slice(0, 23) + '…' : undefined;
     for (var i = 0; i < elems.length; i++) {
         if (elems[i].text === short)  // there may be some other text, possibly formatted, so we check it
@@ -952,7 +1146,7 @@ function applyShortenedURI(short, uriAndMimetype) {
                     previewContainer.append(startTorrentLink);
                 }
             } else {
-                var enableWebTorrentWarning = $('<span>' + 
+                var enableWebTorrentWarning = $('<span>' +
                     polyglot.t('Enable WebTorrent support in options page to display this content') +
                     '</span>');
                 previewContainer.append(enableWebTorrentWarning);
@@ -972,7 +1166,7 @@ function startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
 
 function _startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
     var torrent = WebTorrentClient.get(torrentId);
-    if( torrent === null ) 
+    if( torrent === null )
         torrent = WebTorrentClient.add(torrentId);
 
     previewContainer.empty();
@@ -1003,7 +1197,7 @@ function webtorrentFilePreview(file, previewContainer, isMedia) {
         // try guessing by filename extension
         isMedia = /^[^?]+\.(?:jpe?g|gif|png|mp4|webm|mp3|ogg|wav|)$/i.test(file.name)
     }
-    
+
     if (isMedia) {
         var imagePreview = $('<div class="image-preview" />');
         previewContainer.append(imagePreview);
@@ -1012,7 +1206,9 @@ function webtorrentFilePreview(file, previewContainer, isMedia) {
                 elem.pause();
             }
         });
-        imagePreview.find("video").removeAttr("autoplay");
+        var $vid = imagePreview.find("video");
+        $vid.removeAttr("autoplay");
+        $vid.on('click mouseup', muteEvent);
     } else {
         file.getBlobURL(function (err, url) {
             if (err) return console.error(err)
@@ -1037,6 +1233,9 @@ function routeOnClick(event) {
     }
 
     if (!event || !event.data || !event.data.route)
+        return;
+
+    if (event.button === 0 && window.getSelection().toString() !== '')
         return;
 
     event.stopPropagation();
@@ -1100,7 +1299,7 @@ function loadModalFromHash() {
 
     // FIXME rework hash scheme from '#following?user=twister' to something like '#/@twister/following'
     if (hashdata[0] !== '#web+twister')
-        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|followers|following|conversation)\?(?:group|user|hashtag|post)=(.+)/);
+        hashdata = hashstring.match(/(hashtag|profile|mentions|directmessages|followers|following|conversation|favs)\?(?:group|user|hashtag|post)=(.+)/);
 
     if (hashdata && hashdata[1] !== undefined && hashdata[2] !== undefined) {
         if (hashdata[1] === 'profile')
@@ -1127,6 +1326,8 @@ function loadModalFromHash() {
             splithashdata2 = hashdata[2].split(':');
             openConversationModal(splithashdata2[0], splithashdata2[1]);
         }
+        else if (hashdata[1] === 'favs')
+            openFavsModalHandler(hashdata[2]);
     } else if (hashstring === '#directmessages')
         openCommonDMsModal();
     else if (hashstring === '#followers')
@@ -1139,8 +1340,14 @@ function loadModalFromHash() {
         openGroupMessagesNewGroupModal();
     else if (hashstring === '#groupmessages+joingroup')
         openGroupMessagesJoinGroupModal();
+    else if (hashstring === '#/login')
+        openModalLogin();
     else if (hashstring === '#whotofollow')
         openWhoToFollowModal();
+    else if (hashstring === '#/uri-shortener')
+        openModalUriShortener();
+    else if (hashstring === '#newusers')
+        openNewUsersModal();
 }
 
 function initHashWatching() {
@@ -1211,6 +1418,49 @@ function reTwistPopup(event, post, textArea) {
         }
     }
     replyArea.find('.post-submit').addClass('with-reference');
+}
+
+function favPopup(event, post, textArea) {
+    event.stopPropagation();
+
+    if (!defaultScreenName) {
+        alertPopup({
+            txtMessage: polyglot.t('You have to log in to favorite messages.')
+        });
+        return;
+    }
+
+    if (typeof post === 'undefined')
+        post = $.evalJSON($(event.target).closest('.post-data').attr('data-userpost'));
+
+    var modal = openModal({
+        classBase: '.prompt-wrapper',
+        classAdd: 'fav-this',
+        title: polyglot.t('fav_this')
+    });
+
+    modal.content
+        .append(postToElem(post, ''))
+        .append($('#fav-modal-template').children().clone(true))
+    ;
+    /*
+    //TODO: favs can be also commented
+    var replyArea = modal.content.find('.post-area .post-area-new');
+    if (typeof textArea === 'undefined') {
+        textArea = replyArea.find('textarea');
+        var textAreaPostInline = modal.content.find('.post .post-area-new textarea');
+        $.each(['placeholder', 'data-reply-to'], function(i, attribute) {
+            textArea.attr(attribute, textAreaPostInline.attr(attribute));
+        });
+    } else {
+        replyArea.find('textarea').replaceWith(textArea);
+        if (textArea.val()) {
+            textArea.focus();
+            replyArea.addClass('open');
+        }
+    }
+    replyArea.find('.post-submit').addClass('with-reference');
+    */
 }
 
 // Expande Área do Novo post
@@ -1426,7 +1676,7 @@ function postExpandFunction(e, postLi) {
         var originalLi = $('<li/>', {class: 'module post original'}).appendTo(itemOl)
             .append(originalPost);
 
-        setPostImagePreview(postExpandedContent, originalPost.find('a[rel="nofollow"]'));
+        setPostImagePreview(postExpandedContent, originalPost.find('a[rel^="nofollow"]'));
 
         postExpandedContent.slideDown('fast');
 
@@ -1724,7 +1974,7 @@ function replyTextUpdateRemaining(ta) {
                     return false;
                 }
             });
-            if (!disable && c >= 0 && c < $.Options.MaxPostEditorChars.val && 
+            if (!disable && c >= 0 && c < $.Options.MaxPostEditorChars.val &&
                  textArea.val() !== textArea.attr('data-reply-to')) {
                 remainingCount.removeClass('warn');
                 $.MAL.enableButton(buttonSend);
@@ -2265,6 +2515,17 @@ function retweetSubmit(event) {
     closePrompt(prompt);
 }
 
+function favSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var prompt = $(event.target).closest('.prompt-wrapper');
+    var priv = (event.target.className.indexOf('private') > -1);
+
+    newFavMsg(prompt.find('.post-data'), priv);
+    closePrompt(prompt);
+}
+
 function changeStyle() {
     var style, profile, menu;
     var theme = $.Options.theme.val;
@@ -2335,9 +2596,86 @@ function replaceDashboards() {
 }
 
 function initInterfaceCommon() {
-    twister.tmpl.commonDMsList = extractTemplate('#template-direct-messages-list');
+    twister.tmpl.modalComponentWarn = extractTemplate('#template-inline-warn');
+    twister.tmpl.modalComponentWarn.find('.close').on('click',
+        function(event) {
+            var i = $(event.target).closest('.modal-wrapper').attr('data-modal-id');
 
-    $('.modal-close, .modal-blackout').not('.prompt-close').on('click', closeModal);
+            if (!i || !twister.modal[i]) return;
+
+            var modal = twister.modal[i];
+
+            modal.self.find('.inline-warn').hide();
+
+            modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight());
+
+            var windowHeight = $(window).height();
+            if (modal.self.outerHeight() > windowHeight) {
+                modal.content.outerHeight(modal.content.outerHeight() - modal.self.outerHeight() + windowHeight);
+                modal.self.outerHeight(windowHeight);
+                modal.self.css('margin-top', - windowHeight / 2);
+            }
+        }
+    );
+    twister.tmpl.modalComponentWarn.find('.options .never-again').on('change',
+        function(event) {
+            $.Options.set('skipWarn' + $(event.target).closest('.inline-warn')
+                .attr('data-warn-name'), event.target.checked);  // e.g. 'skipWarnFollowersNotAll'
+        }
+    );
+    twister.tmpl.commonDMsList = extractTemplate('#template-direct-messages-list');
+    twister.tmpl.uriShortenerMC = extractTemplate('#template-uri-shortener-modal-content');
+    twister.tmpl.uriShortenerMC
+        .find('.shorten-uri').on('click',
+            {cbFunc:
+                function (long, short) {
+                    if (short) {
+                        var urisList = getElem('.uri-shortener-modal .uris-list');
+                        if (urisList.length) {
+                            var item = urisList.find('.short:contains("' + short + '")').closest('li');
+                            if (!item.length) {
+                                item = twister.tmpl.uriShortenerUrisListItem.clone(true);
+                                item.find('.short').text(short);
+                                item.find('.long').text(long).attr('href', long);
+                                item.appendTo(urisList);
+                            }
+                            urisList.children('.highlighted').removeClass('highlighted');
+                            item.addClass('highlighted');
+                            var mc = urisList.closest('.modal-content');
+                            mc.scrollTop(item.offset().top - mc.offset().top + mc.scrollTop());
+                        }
+                        showURIPair(long, short);
+                    } else
+                        showURIShortenerErrorRPC(short);
+                }
+            },
+            function (event) {
+                muteEvent(event);
+                openRequestShortURIForm(event);
+            }
+        )
+        .siblings('.clear-cache').on('click',
+            function () {
+                confirmPopup({
+                    txtMessage: polyglot.t('confirm_uri_shortener_clear_cache'),
+                    cbConfirm: function () {
+                        twister.URIs = {};
+                        $.localStorage.set('twistaURIs', twister.URIs);
+                        getElem('.uri-shortener-modal .uris-list').empty();
+                    }
+                });
+            }
+        )
+    ;
+    twister.tmpl.uriShortenerUrisListItem = extractTemplate('#template-uri-shortener-uris-list-item')
+        .on('click', function (event) {
+            var elem = $(event.target);
+            elem.closest('.uris-list').children('.highlighted').removeClass('highlighted');
+            elem.addClass('highlighted');
+        })
+    ;
+
+    getElem('.modal-wrapper .modal-close, .modal-wrapper .modal-blackout').on('click', closeModal);
 
     $('.minimize-modal').on('click', function (event) {
         minimizeModal($(event.target).closest('.modal-wrapper'));
@@ -2347,18 +2685,19 @@ function initInterfaceCommon() {
 
     $('.prompt-close').on('click', closePrompt);
 
-    $('button.follow').on('click', clickFollow);
+    getElem('button.follow', true).on('click', clickFollow);
 
     $('.following-config-method-buttons .public-following').on('click', function(event) {
         setFollowingMethod(event);
         closePrompt(event);
     });
 
-    $('.open-followers').on('mouseup', {route: '#followers'}, routeOnClick);
+    $('.module.mini-profile .open-followers').on('mouseup', {route: '#followers'}, routeOnClick);
 
     $('.post-text').on('click', 'a', muteEvent);
     $('.post-reply').on('click', postReplyClick);
     $('.post-propagate').on('click', reTwistPopup);
+    $('.post-favorite').on('click', favPopup);
     $('.userMenu-config').clickoutside(closeThis.bind($('.config-menu')));
     $('.userMenu-config-dropdown').on('click', dropDownMenu);
     $('#post-template.module.post').on('click', function(event) {
@@ -2378,6 +2717,8 @@ function initInterfaceCommon() {
     ;
     $('.post-submit').on('click', postSubmit);
     $('.modal-propagate').on('click', retweetSubmit);
+    $('.modal-fav-public').on('click', favSubmit);
+    $('.modal-fav-private').on('click', favSubmit);
     $('.expanded-content .show-more').on('mouseup',
         {feeder: '.module.post.original.open .module.post.original .post-data'}, handleClickOpenConversation)
         .on('click', muteEvent)  // to prevent post collapsing
@@ -2393,11 +2734,11 @@ function initInterfaceCommon() {
     //$('.open-following-modal').on('click', openFollowingModal);
     $('.userMenu-connections a').on('click', openMentionsModal);
     $('.mentions-from-user').on('click', openMentionsModal);
+    $('.userMenu-favs a').on('click', openFavsModal);
+    $('.favs-from-user').on('click', openFavsModal);
 
-    $('#hashtag-modal-template .postboard-news').on('click', function () {
-        $(this).hide();
-        displayQueryPending($('.hashtag-modal .postboard-posts'));
-    });
+    getElem('.latest-activity', true).on('mouseup',
+        {feeder: '.latest-activity'}, handleClickOpenConversation);
 
     replaceDashboards();
     $(window).resize(replaceDashboards);
@@ -2438,7 +2779,14 @@ function initInterfaceCommon() {
     $('.tox-ctc').on('click', promptCopyAttrData);
     $('.bitmessage-ctc').on('click', promptCopyAttrData);
 
-    $('.uri-shortener').on('click', openRequestShortURIForm);  // FIXME implement Uri Shortener Center with links library etc
+    $('.uri-shortener').on('mouseup', {route: '#/uri-shortener'}, routeOnClick);
+
+    $('.updates-check-client').text(polyglot.t('updates_check_client'))
+        .on('mouseup', function (event) {
+            muteEvent(event);
+            checkUpdatesClient(true);
+        }
+    );
 
     $('.post-area-new textarea')
         .on('focus',
@@ -2492,18 +2840,6 @@ function inputEnterActivator(event) {
     var elemEvent = $(event.target);
     elemEvent.closest(event.data.parentSelector).find(event.data.enterSelector)
         .attr('disabled', elemEvent.val().trim() === '');
-}
-
-function importSecretKeypress(event) {  // FIXME rename
-    var elemModule = $(event.target).closest('.module');
-    var elemEnter = elemModule.find('.import-secret-key');
-    var secretKey = elemModule.find('.secret-key-import').val();
-    var peerAlias = elemModule.find('.username-import').val().toLowerCase();
-
-    if (secretKey.length === 52 && peerAlias.length)
-        $.MAL.enableButton(elemEnter);
-    else
-        $.MAL.disableButton(elemEnter);
 }
 
 function pasteToTextarea(ta, p) {
@@ -2563,10 +2899,21 @@ $(document).ready(function () {
     if ($.localStorage.isSet('twistaURIs'))
         twister.URIs = $.localStorage.get('twistaURIs');
     twister.html.blanka.appendTo('body').hide();
+    twister.tmpl.loginMC = extractTemplate('#template-login-modal');
+    twister.tmpl.loginMC.find('.login').on('click', handleClickAccountLoginLogin);
+    var module = twister.tmpl.loginMC.closest('.create-account');
+        module.find('.alias').on('input', handleInputAccountCreateSetReq);
+        module.find('.check').on('click', handleClickAccountCreateCheckReq);
+        module.find('.create').on('click', handleClickAccountCreateCreate);
+    module = twister.tmpl.loginMC.closest('.import-account');
+        module.find('.secret-key').on('input', handleInputAccountImportSetReq);
+        module.find('.alias').on('input', handleInputAccountImportSetReq);
+        module.find('.import').on('click', handleClickAccountImportImport);
     twister.tmpl.followersList = extractTemplate('#template-followers-list');
     twister.tmpl.followersPeer = extractTemplate('#template-followers-peer');
     twister.tmpl.followingList = extractTemplate('#template-following-list');
     twister.tmpl.followingPeer = extractTemplate('#template-following-peer');
+    twister.tmpl.whoTofollowPeer = extractTemplate('#template-whotofollow-peer');
     twister.tmpl.commonDMsListItem = extractTemplate('#template-direct-messages-list-item')
         .on('mouseup', function (event) {
             event.data = {route:
@@ -2620,9 +2967,7 @@ $(document).ready(function () {
 
     var path = window.location.pathname;
     var page = path.split("/").pop();
-    if (page.indexOf("login.html") === 0) {
-        initInterfaceLogin();
-    } else if (page.indexOf("network.html") === 0) {
+    if (page.indexOf('network.html') === 0) {
         initInterfaceNetwork();
     } else if (page.indexOf('options.html') === 0) {
         initInterfaceCommon();

@@ -45,6 +45,8 @@ if(preferredLanguage == "en"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancel",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -54,12 +56,14 @@ if(preferredLanguage == "en"){
             "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Change user",
       "Checking...": "Checking...", // checking if username is available
       "Collapse": "Collapse", // smaller view of a post
       "Configure block generation": "Configure block generation",
       "Connections:": "Connections: ", // to network
       "Connection lost.": "Connection lost.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} day |||| %{smart_count} days",
       "Detailed information": "Detailed information",
       "DHT network down.": "DHT network down.",
@@ -67,11 +71,16 @@ if(preferredLanguage == "en"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Disable",
       "display_mentions": "Display mentions",
       "Display retransmissions": "Display retransmissions",
       "DNS to obtain list of peers:": "DNS to obtain list of peers:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Downloading block chain, please wait before continuing (block chain is %{days} days old).",
       "download_posts_status": "Downloaded %{portion} posts", // Downloaded 10/30 posts
       "Enable": "Enable",
@@ -175,6 +184,7 @@ if(preferredLanguage == "en"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} ago", // 5 minutes ago
       "Time of the last block:": "Time of the last block: ",
@@ -182,7 +192,24 @@ if(preferredLanguage == "en"){
       "Unfollow": "Unfollow",
       "Update": "Update",
       "Auto updating": "Automatic updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Updating status...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
                 "or send any posts in this state.\n\n" +
@@ -358,6 +385,14 @@ if(preferredLanguage == "en"){
       "IP Overhead Upload:": "IP Overhead Upload:",
       "Payload Download:": "Payload Download:",
       "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+      "New Users": "New Users",
+      "Live tracking" : "Live tracking"
     };
 }
 if(preferredLanguage == "es"){
@@ -379,6 +414,8 @@ if(preferredLanguage == "es"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancelar",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -388,12 +425,14 @@ if(preferredLanguage == "es"){
             "¿Quieres comprobar la [página de estado de la red](%{page}) en su lugar?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Cambiar de usuario",
       "Checking...": "Comprobando ...", // checking if username is available
       "Collapse": "Colapsar", // smaller view of a post
       "Configure block generation": "Configure la generación de bloques",
       "Connections:": "Conexiones: ", // to network
       "Connection lost.": "Conexión perdida.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} día |||| %{smart_count} días",
       "Detailed information": "Información detallada",
       "DHT network down.": "Red DHT caida.",
@@ -401,11 +440,16 @@ if(preferredLanguage == "es"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Mensajes directos con %{username}",
       "Disable": "Inhabilitar",
       "display_mentions": "Visualización de menciones",
       "Display retransmissions": "Visualización de retransmisiones",
       "DNS to obtain list of peers:": "DNS para obtener la lista de los pares:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Descarga de la cadena de bloques, por favor espere antes de continuar (la cadena de bloques esta %{days} días).",
       "download_posts_status": "Post %{portion} descargados", // Downloaded 10/30 posts
       "Enable": "Permitir",
@@ -509,6 +553,7 @@ if(preferredLanguage == "es"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Las API de archivos no son totalmente compatibles con este navegador.",
       "time_ago": "hace %{time}", // 5 minutes ago
       "Time of the last block:": "Hora del último bloque: ",
@@ -516,7 +561,24 @@ if(preferredLanguage == "es"){
       "Unfollow": "Dejar de seguir",
       "Update": "Actualizar",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Actualización del estado ...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Otros pares no han aceptado este nuevo usuario.\n" +
                 "Por desgracia, no es posible guardar el perfil\n" +
                 "o enviar ningún mensaje en este estado.\n\n" +
@@ -675,6 +737,27 @@ if(preferredLanguage == "es"){
       "Sound": "Sonido",
       "Users": "Usuarios",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+      "New Users": "New Users",
+      "Live tracking" : "Live tracking"
     };
 }
 
@@ -697,6 +780,8 @@ if(preferredLanguage == "uk"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Відміна",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -706,12 +791,14 @@ if(preferredLanguage == "uk"){
             "Чи бажаєте ви перевірити [сторінку зі статусом мережі](%{page})?",
       "confirm_terminate_daemon": "Ви впевнені, що бажаєте завершити роботу?\nКлієнт Twister буде зупинено допоки ви не запустите його знову.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Змінити користувача",
       "Checking...": "Перевірка...", // checking if username is available
       "Collapse": "Згорнути", // smaller view of a post
       "Configure block generation": "Налаштувати генерацію блоку",
       "Connections:": "З’єднання: ", // to network
       "Connection lost.": "З’єднання втрачено.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} день |||| %{smart_count} днів",
       "Detailed information": "Детальна інформація",
       "DHT network down.": "Мережа DHT недоступна.",
@@ -719,11 +806,16 @@ if(preferredLanguage == "uk"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Вимкнено",
       "display_mentions": "Показати сповіщення",
       "Display retransmissions": "Показати пересилання",
       "DNS to obtain list of peers:": "DNS для отримання пірів:",
+      "do_not_show_it_again": "don't show it again",
       "dns address": "адреса DNS",
       "downloading_block_chain": "Завантаження ланцюга блоків, будь ласка, зачекайте перед продовженням (ланцюг блоків віком %{days} днів).",
       "download_posts_status": "Завантажено %{portion} твістів", // Downloaded 10/30 posts
@@ -828,6 +920,7 @@ if(preferredLanguage == "uk"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "File APIs не повністю підтримується браузером.",
       "time_ago": "%{time} тому", // 5 minutes ago
       "Time of the last block:": "Час останнього блоку: ",
@@ -835,7 +928,24 @@ if(preferredLanguage == "uk"){
       "Unfollow": "Відписатись",
       "Update": "Оновити",
       "Auto updating": "Автоматичне оновлення",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Оновлення статусу...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Триває підтвердження нового користувача.\n" +
                 "У цей час не можна редагувати профіль та надсилати повідомлення.\n\n" +
                 "Будь ласка, зачекайте декілька хвилин.\n" +
@@ -992,6 +1102,26 @@ if(preferredLanguage == "uk"){
       "Direct Message's copy to self": "Повідомлення скопійовано самому собі",
       "Traffic information": "Статистика трафіку",
       "Direct messages with": "Співбесіда з",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -1014,6 +1144,8 @@ if(preferredLanguage == "zh-CN"){
       "busted_avowal": "系统检测到此用户试图在这里注入恶意代码",
       "btn_ok": "Okay",
       "Cancel": "取消",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1023,12 +1155,14 @@ if(preferredLanguage == "zh-CN"){
             "你要跳转到[网络状态页](%{page})吗？",
       "confirm_terminate_daemon": "你确定要退出后台进程？\nTwister 客户端将停止工作。",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "切换用户",
       "Checking...": "检查中...", // checking if username is available
       "Collapse": "折叠", // smaller view of a post
       "Configure block generation": "配置区块生成器",
       "Connections:": "连接数：", // to network
       "Connection lost.": "连接中断。",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} 天",
       "Detailed information": "详细信息",
       "DHT network down.": "DHT网络中断。",
@@ -1036,11 +1170,16 @@ if(preferredLanguage == "zh-CN"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "关闭",
       "display_mentions": "显示",
       "Display retransmissions": "显示转发",
       "DNS to obtain list of peers:": "用DNS获取节点列表：",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "区块链下载中，请等待下载完成（区块链仍落后 %{days} 天）。",
       "download_posts_status": "已下载 %{portion} 推文", // Downloaded 10/30 posts
       "Enable": "开启",
@@ -1144,6 +1283,7 @@ if(preferredLanguage == "zh-CN"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "这个浏览器不能完全支持 File API。",
       "time_ago": "%{time} 之前", // 5 minutes ago
       "Time of the last block:": "最新区块的时间：",
@@ -1151,7 +1291,24 @@ if(preferredLanguage == "zh-CN"){
       "Unfollow": "取消关注",
       "Update": "更新",
       "Auto updating": "自动更新",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "状态更新中...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "其他节点还没有接受这个新用户。\n" +
         "很抱歉，现在你还不能保存你的个人简介\n" +
         "或发送新的推文。\n\n" +
@@ -1326,6 +1483,14 @@ if(preferredLanguage == "zh-CN"){
       "IP Overhead Upload:": "IP层开销上传:",
       "Payload Download:": "有效载荷下载:",
       "Payload Upload:": "有效载荷上传:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -1348,6 +1513,8 @@ if(preferredLanguage == "nl"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Annuleren",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1357,12 +1524,14 @@ if(preferredLanguage == "nl"){
             "Do you want to check [Network Status page](%{page}) instead?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Gebruiker wijzigen",
       "Checking...": "Controleren...", // checking if username is available
       "Collapse": "Uitklappen", // smaller view of a post
       "Configure block generation": "Block productie configureren",
       "Connections:": "Connecties: ", // to network
       "Connection lost.": "Verbinding kwijt.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} dag |||| %{smart_count} dagen",
       "Detailed information": "Gedetailleerde informatie",
       "DHT network down.": "DHT netwerk down.",
@@ -1370,11 +1539,16 @@ if(preferredLanguage == "nl"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Uitschakelen",
       "display_mentions": "Toon vermeldingen",
       "Display retransmissions": "Toon retransmissions",
       "DNS to obtain list of peers:": "DNS om peers lijst op te halen:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Bezig met downloaden block chain, wacht a.u.b. voordat je doorgaat (block chain is %{days} dagen oud).",
       "download_posts_status": "%{portion} berichten gedownload", // Downloaded 10/30 posts
       "Enable": "Activeren",
@@ -1478,6 +1652,7 @@ if(preferredLanguage == "nl"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "The File APIs are not fully supported in this browser.",
       "time_ago": "%{time} geleden", // 5 minutes ago
       "Time of the last block:": "Tijd van de laatste block: ",
@@ -1485,7 +1660,24 @@ if(preferredLanguage == "nl"){
       "Unfollow": "Ontvolgen",
       "Update": "Update",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Status aan het updaten...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Other peers have not yet accepted this new user.\n" +
                 "Unfortunately it is not possible to save profile\n" +
                 "or send any posts in this state.\n\n" +
@@ -1644,6 +1836,27 @@ if(preferredLanguage == "nl"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -1666,6 +1879,8 @@ if(preferredLanguage == "it"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancella",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1675,12 +1890,14 @@ if(preferredLanguage == "it"){
             "Vuoi controllare lo [stato della rete Twister](%{page}), invece?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Cambia utente",
       "Checking...": "Controllo in corso...", // checking if username is available
       "Collapse": "Chiudi", // smaller view of a post
       "Configure block generation": "Configura generatore di blocchi",
       "Connections:": "Connessioni: ", // to network
       "Connection lost.": "Connessione interrotta.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} giorno |||| %{smart_count} giorni",
       "Detailed information": "Informazioni dettagliate",
       "DHT network down.": "DHT network inaccessibile.",
@@ -1688,11 +1905,16 @@ if(preferredLanguage == "it"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Messaggi Diretti come %{username}",
       "Disable": "Disabilitato",
       "display_mentions": "Mostra le menzioni",
       "Display retransmissions": "Mostra Ripubblicazioni",
       "DNS to obtain list of peers:": "DNS per la lista dei nodi:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Scaricamento della catena di blocchi in corso, attendere prego (la catena risale a %{days} giorni fa).",
       "download_posts_status": "Scaricati %{portion} messaggi", // Downloaded 10/30 posts
       "Enable": "Attivato",
@@ -1796,6 +2018,7 @@ if(preferredLanguage == "it"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Le API File non sono interamente supportate da questo browser.",
       "time_ago": "%{time} fa", // 5 minutes ago
       "Time of the last block:": "Orario del blocco più recente: ",
@@ -1803,7 +2026,24 @@ if(preferredLanguage == "it"){
       "Unfollow": "Smetti di seguire",
       "Update": "Aggiorna",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Aggiornamento in corso...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Gli altri nodi non hanno ancora accettato il nuovo utente.\n" +
                 "Al momento non puoi salvare il profilo o spedire messaggi.\n" +
                 "Attendi qualche minuto prima di continuare.\n\n" +
@@ -1960,6 +2200,27 @@ if(preferredLanguage == "it"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -1982,6 +2243,8 @@ if(preferredLanguage == "fr"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Annuler",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -1991,12 +2254,14 @@ if(preferredLanguage == "fr"){
             "Voulez-vous consulter la [page d'état du réseau](%{page}) à la place?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Changer d'utilisateur",
       "Checking...": "Vérification...", // checking if username is available
       "Collapse": "Fermer", // smaller view of a post
       "Configure block generation": "Configuration de la production de blocs",
       "Connections:": "Connexions: ", // to network
       "Connection lost.": "Connexion perdue.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} jour |||| %{smart_count} jours",
       "Detailed information": "Informations détaillées",
       "DHT network down.": "Panne du réseau DHT.",
@@ -2004,11 +2269,16 @@ if(preferredLanguage == "fr"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Messages privés avec %{username}",
       "Disable": "Désactiver",
       "display_mentions": "Afficher les mentions",
       "Display retransmissions": "Afficher les retransmissions",
       "DNS to obtain list of peers:": "DNS où obtenir une liste des pairs:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Téléchargement de la chaîne de blocs, veuillez patienter avant de continuer (la chaîne de blocs a %{days} jours de retard).",
       "download_posts_status": "%{portion} billets téléchargés", // Downloaded 10/30 posts
       "Enable": "Activer",
@@ -2112,6 +2382,7 @@ if(preferredLanguage == "fr"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "L'API de fichier n'est pas entièrement pris en charge dans votre navigateur.",
       "time_ago": "Il y a %{time}", // 5 minutes ago
       "Time of the last block:": "Heure du dernier bloc: ",
@@ -2119,7 +2390,24 @@ if(preferredLanguage == "fr"){
       "Unfollow": "Se désabonner",
       "Update": "Mettre à jour",
       "Auto updating": "Mise à jour automatique",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Mise à jour du statut...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Les autres pairs n'ont pas encore accepté ce nouvel utilisateur.\n" +
                 "Malheureusement, il n'est pas possible d'enregistrer le profil\n" +
                 "ou envoyer des billets pour le moment.\n\n" +
@@ -2278,6 +2566,26 @@ if(preferredLanguage == "fr"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -2302,6 +2610,8 @@ if(preferredLanguage == "ru"){
        "busted_avowal": "я пойман на попытке вставить этот подозрительный код здесь",
        "btn_ok": "Лады́",
        "Cancel": "Отмена",
+      'cant_get_requested_resourse': 'Невозможно получить %{link}\n  статус: %{status}.',
+       "clear_cache": "Очистить кэш",
        "Confirm": "Несомненно",
        "сonfirm_group_leaving_header": "Подтверждение ухода из группы",
        "сonfirm_group_leaving_body": "Воистину покинуть группу %{alias}?",
@@ -2311,12 +2621,14 @@ if(preferredLanguage == "ru"){
             "Не хотите перейти на [страницу настройки сети](%{page})?",
        "confirm_terminate_daemon": "Вы уверены, что хотите выключить демон?\nTwister клиент перестанет работать.",
        "confirm_unfollow_@": "Действительно отписаться от @%{alias}?",
+       "confirm_uri_shortener_clear_cache": "В самом деле очистить кэш сокращённых URI в браузере?",
        "Change user": "Сменить пользователя",
        "Checking...": "Проверка...",
        "Collapse": "Свернуть",
        "Configure block generation": "Настройка майнинга",
        "Connections:": "Соединений: ",
        "Connection lost.": "Соединение с сетью было потеряно.",
+       "daemon_is_obsolete": "твистер демон устарел, необходима версия %{versionReq} или выше",
        "days": "%{smart_count} день |||| %{smart_count} дней",
        "Detailed information": "Подробная информация",
        "DHT network down.": "Недоступна DHT сеть.",
@@ -2324,11 +2636,16 @@ if(preferredLanguage == "ru"){
        "Group Messages": "Групповые сообщения",
        "Group Messages — New Group Creation": "Групповые сообщения — Создать новую группу",
        "Group Messages — Join Group": "Групповые сообщения — Присоединиться к группе",
+       "group_key_cant_import": "невозможно импортировать ключ ЛС группы",
+       "group_key_is_invalid_perhaps": "возможно, неправильный ключ",
+       "group_key_was_imported": "Ключ для ЛС группы %{alias} импортирован.\n"
+         + "Её сообщения будут подгружены в скором времени.",
        "direct_messages_with": "Личная переписка с %{username}",
        "Disable": "Отключено",
        "display_mentions": "Показать упоминания",
        "Display retransmissions": "Показать репосты",
        "DNS to obtain list of peers:": "DNS адрес для получения пиров:",
+       "do_not_show_it_again": "не показывать больше",
        "downloading_block_chain": "Загрузка цепочки блоков, пожалуйста подождите, (Цепочка блоков устарела на %{days} дней).",
        "download_posts_status": "Загружено %{portion} постов", // Downloaded 10/30 posts
        "Enable": "Включено",
@@ -2432,6 +2749,7 @@ if(preferredLanguage == "ru"){
         + "Примечание: в результате сокращения URL получается 'пустой' твист, содержащий эту URL.\n"
         + "Этот особый твист не отображается клиентами твистера, но учитывается в числе твоих твистов.",
        "shorten_URI_its_public_is_it_ok": "Ссылка будет общедоступной! Это приемлимо для тебя?",
+       "URI_shortener": "Сокращалка URI",
        "The File APIs are not fully supported in this browser.": "File APIs не полностью поддерживается этим браузером.",
        "time_ago": "%{time} назад", // 5 minutes ago
        "Time of the last block:": "Время последнего блока: ",
@@ -2439,7 +2757,24 @@ if(preferredLanguage == "ru"){
        "Unfollow": "Отписаться",
        "Update": "Обновить",
        "Auto updating": "Автоматическое обновление",
+      'updates_are_available': 'Доступны обновления',
+      'updates_not_available': 'Обновления не доступны',
+      'updates_check_client': 'Проверить обновления клиента',
+      'updates_repo_overview': 'Мы сейчас на ветке %{branch} в %{repo} на коммите\n  %{commit} от %{date},\n'
+        + 'а вот HEAD её источника уже на коммите\n  %{commitUpstream} от %{dateUpstream}.',
+      'updates_checkout_diff': 'Смотри [сравнение на GitHub](%{link}), чтобы узнать каковы изменения.',
+      'updates_checkout_diff_nfmt': 'Смотри сравнение на GitHub, чтобы узнать каковы изменения:\n  %{link}',
+      'updates_upstream_isnt_changed': 'Соответствующая ветка в исходном репозитории выглядит неизменённой.',
        "Updating status...": "Обновление информации...", // status of block chain
+      'new_account_briefing': 'Новая учётная запись создана и сейчас распространяется по сети. '
+        + 'Пожалуйста, не закрывай это окно: это может занять несколько минут.\n\n'
+        + 'Твой секретный ключ: *%{secretKey}*\n\n'
+        + 'Настоятельно рекомендуется провести время ожидания, сохраняя этот ключ. '
+        + 'Распечатай его, сделай скриншот, сфотографируй телефоном или перепиши на бумагу.\n\n'
+        + 'Секретный ключ будет необходим для использования на разных устройствах. '
+        + 'В случае его утери учётная запись окажется недосягаемой навсегда '
+        + '(заметь: ~это альфа-версия и возможны сбои, приводящие к утере данных~).\n\n'
+        + 'Подожди. Кнопка OK станет доступна быстрее, чем ты произнесёшь ~децентрализация~.',
        "user_not_yet_accepted": "Другие участники сети еще не получили информацию о новом пользователе.\n" +
                  "К сожалению, сейчас вы не можете редактировать ваш профиль\n" +
                  "или отправлять сообщение.\n\n" +
@@ -2602,6 +2937,27 @@ if(preferredLanguage == "ru"){
        "New post": "Новый пост",
        "Search": "Поиск",
        "Direct Msg": "ЛС",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -2624,6 +2980,8 @@ if(preferredLanguage == "de"){
       "busted_avowal": "Ich bin ertappt, habe versucht, hier Schadcode einzugeben!",
       "btn_ok": "Okay",
       "Cancel": "Abbrechen",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -2633,12 +2991,14 @@ if(preferredLanguage == "de"){
             "Möchtest du stattdessen den [Netzwerkstatus](%{page}) überprüfen?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Benutzer wechseln",
       "Checking...": "Überprüfe...", // checking if username is available
       "Collapse": "Einklappen", // smaller view of a post
       "Configure block generation": "Block-Generierung einstellen",
       "Connections:": "Verbindungen: ", // to network
       "Connection lost.": "Verbindung verloren.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} Tag |||| %{smart_count} Tage",
       "Detailed information": "Detaillierte Informationen",
       "DHT network down.": "DHT-Netzwerk nicht verfügbar.",
@@ -2646,11 +3006,16 @@ if(preferredLanguage == "de"){
       "Group Messages": "Gruppennachrichten",
       "Group Messages — New Group Creation": "Gruppennachrichten — Neue Gruppe erstellen",
       "Group Messages — Join Group": "Gruppennachrichten — Gruppe beitreten",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Direktnachrichten mit %{username}",
       "Disable": "Deaktivieren",
       "display_mentions": "Zeige Erwähnungen", // Ist das richtig? Ich weiß nicht, in welchem Zusammenhang das benutzt wird.
       "Display retransmissions": "Weiterleitungen anzeigen",
       "DNS to obtain list of peers:": "DNS um Peer-Liste abzurufen:",
+      "do_not_show_it_again": "don't show it again",
       "dns address": "DNS-Adresse",
       "downloading_block_chain": "Block-Chain wird heruntergeladen, bitte warten (Block-Chain ist %{days} Tage alt).",
       "download_posts_status": "%{portion} Posts heruntergeladen", // Downloaded 10/30 posts
@@ -2702,7 +3067,7 @@ if(preferredLanguage == "de"){
       "in postboard": "in der Timeline",
       "in search result": "in den Suchergebnissen",
       "in top trends": "in den Top Trends",
-      "new_posts": "%{smart_count} neuer Post |||| %{smart_count} neue Posts",
+      "new_posts": "%{smart_count} neuer Post |||| %{smart_count} neue Posts", /* FIXME: duplicate */
       "new_mentions": "%{smart_count} neue Erwähnung |||| %{smart_count} neue Erwähnungen",
       "new_direct_messages": "%{smart_count} neue Direktnachricht |||| %{smart_count} neue Direktnachrichten",
       "new_group_messages": "%{smart_count} neue Gruppen-Nachricht |||| %{smart_count} neue Gruppen-Nachrichten",
@@ -2755,6 +3120,7 @@ if(preferredLanguage == "de"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Die File-API's werden von diesem Browser nicht vollständig unterstützt.",
       "time_ago": "vor %{time}", // 5 minutes ago
       "Time of the last block:": "Zeit des letzten Blocks: ",
@@ -2762,7 +3128,24 @@ if(preferredLanguage == "de"){
       "Unfollow": "Nicht mehr folgen",
       "Update": "Aktualisieren",
       "Auto updating": "Automatische Aktualisierung",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Status wird aktualisiert...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Andere Peers haben diesen Benutzter noch nicht akzeptiert.\n" +
                 "Leider ist es nicht möglich, das Profil zu speichern\n" +
                 "oder Nachrichten zu senden.\n\n" +
@@ -2813,7 +3196,7 @@ if(preferredLanguage == "de"){
       "Options": "Einstellungen",
       "Switch to Promoted posts": "Wechsle zu Promoted Nachrichten",
       "Switch to Normal posts": "Switch to Normal posts",
-      "new_posts": "%{smart_count} neue Nachricht |||| %{smart_count} neue Nachrichten",
+      "new_posts": "%{smart_count} neue Nachricht |||| %{smart_count} neue Nachrichten", /* FIXME: duplicate */
       "Use language": "Sprache einstellen",
       "Ignore": "Ignorieren",
       "Ignore and clear out": "Ignore and clear out",
@@ -2922,6 +3305,27 @@ if(preferredLanguage == "de"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Kopie der Direktnachricht an mich selbst",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -2944,6 +3348,8 @@ if(preferredLanguage == "ja"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "キャンセル",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -2953,12 +3359,14 @@ if(preferredLanguage == "ja"){
             "[ネットワーク状態ペー](%{page})ジへ移動して確認しますか？",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "ユーザーを変更",
       "Checking...": "チェック...", // checking if username is available
       "Collapse": "閉じる", // smaller view of a post
       "Configure block generation": "ブロック生成の設定",
       "Connections:": "接続数: ", // to network
       "Connection lost.": "切断されました。",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count}日 |||| %{smart_count}日",
       "Detailed information": "詳細",
       "DHT network down.": "DHTネットワークがダウンしています",
@@ -2966,11 +3374,16 @@ if(preferredLanguage == "ja"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "停止",
       "display_mentions": "メンションを表示する",
       "Display retransmissions": "リトランスミットを表示する",
       "DNS to obtain list of peers:": "ピア取得用のDNS:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "ブロックチェインをダウンロードしています。しばらくお待ちください。（ブロックチェーンは%{days}日送れています）",
       "download_posts_status": "ダウンロード済みの投稿 %{portion}", // Downloaded 10/30 posts
       "Enable": "有効",
@@ -3074,6 +3487,7 @@ if(preferredLanguage == "ja"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "ご使用のブラウザーは完全にファイルAPIに対応していません。",
       "time_ago": "%{time}前", // 5 minutes ago
       "Time of the last block:": "最新ブロックの生成日時: ",
@@ -3081,7 +3495,24 @@ if(preferredLanguage == "ja"){
       "Unfollow": "解除",
       "Update": "アップデート",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "ブロックチェーンを更新中…", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "この新ユーザーが他のピアーにまだ認証されていない。\n" +
                 "なので、プロファイルの保存やメッセージの投稿は現在不可能です。\n" +
                 "しばらくしてから続行してください。\n\n" +
@@ -3237,6 +3668,27 @@ if(preferredLanguage == "ja"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -3260,6 +3712,8 @@ if(preferredLanguage == "pt-BR"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Cancelar",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -3269,12 +3723,14 @@ if(preferredLanguage == "pt-BR"){
             "Gostaria de verificar o [Estado da Rede](%{page}) ao invés disso?",
       "confirm_terminate_daemon": "Are you sure you want to exit the daemon?\nThe Twister client will stop working.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Trocar usuário",
       "Checking...": "Verificando...", // checking if username is available
       "Collapse": "Recolher", // smaller view of a post
       "Configure block generation": "Configurar a geração de blocos",
       "Connections:": "Conexões: ", // to network
       "Connection lost.": "Conexão perdida.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} dia |||| %{smart_count} dias",
       "Detailed information": "Informações detalhadas",
       "DHT network down.": "Falha na rede DHT",
@@ -3282,11 +3738,16 @@ if(preferredLanguage == "pt-BR"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Mensagens Diretas com %{username}",
       "Disable": "Desabilitado",
       "display_mentions": "Exibir menções",
       "Display retransmissions": "Exibir retransmissões",
       "DNS to obtain list of peers:": "DNS para obter a lista de nós:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Baixando a Cadeia de Blocos, por favor aguarde (A Cadeia de Blocos está %{days} dias desatualizada).",
       "download_posts_status": "%{portion} postagens carregadas.", // Downloaded 10/30 posts
       "Enable": "Habilitado",
@@ -3391,6 +3852,7 @@ if(preferredLanguage == "pt-BR"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "O gerenciamento de arquivos não é completamente suportado neste navegador.",
       "time_ago": "%{time} atrás", // 5 minutes ago
       "Time of the last block:": "Horário do último bloco: ",
@@ -3398,7 +3860,24 @@ if(preferredLanguage == "pt-BR"){
       "Unfollow": "Deixar de seguir",
       "Update": "Atualizar",
       "Auto updating": "Auto updating",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Atualizando estado da Cadeia de Blocos...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Outros nós ainda não aceitaram este novo usuário.\n" +
                 "Infelizmente não é possível salvar o perfil\n" +
                 "ou realizar postagens neste estado.\n\n" +
@@ -3546,7 +4025,6 @@ if(preferredLanguage == "pt-BR"){
       "post_rt_time_prep": "at",
       "undo": "undo",
       "Daemon exited...": "Daemon exited...",
-      "Secret Key": "Secret Key",
       "Copy to clipboard": "Copy to clipboard",
       "Full name here": "Full name here",
       "Describe yourself": "Describe yourself",
@@ -3558,6 +4036,27 @@ if(preferredLanguage == "pt-BR"){
       "Sound": "Sound",
       "Users": "Users",
       "Direct Message's copy to self": "Direct Message's copy to self",
+      "Traffic information": "Traffic information",
+      "DHT Torrents:": "DHT Torrents:",
+      "Peers:": "Peers:",
+      "Peer List Size:": "Peer List Size:",
+      "Active Requests:": "Active Requests:",
+      "Download:": "Download:",
+      "Upload:": "Upload:",
+      "DHT Download:": "DHT Download:",
+      "DHT Upload:": "DHT Upload:",
+      "IP Overhead Download:": "IP Overhead Download:",
+      "IP Overhead Upload:": "IP Overhead Upload:",
+      "Payload Download:": "Payload Download:",
+      "Payload Upload:": "Payload Upload:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -3580,6 +4079,8 @@ if(preferredLanguage == "tr"){
       "busted_avowal": "Şüpheli bir şeyler iliştirmeye çalışırken enselendim.",
       "btn_ok": "Tamam",
       "Cancel": "İptal",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Geçmişi temizle",
       "Confirm": "Onayla",
       "сonfirm_group_leaving_header": "Gruptan ayrılmayı onayla",
       "сonfirm_group_leaving_body": "%{alias} grubundan ayrılmak istiyor musun?",
@@ -3588,13 +4089,15 @@ if(preferredLanguage == "tr"){
             "Eğer bu sayfada kalırsanız eylemlerinizi işlemeyebilir.\n" +
             "Bunun yerine [Ağ Durumu sayfasını](%{page}) kontrol etmek ister misiniz?",
       "confirm_terminate_daemon": "Hizmeti sonlandırmak istiyor musun?\nTwister istemcisi çalışmayacak.",
-      "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_unfollow_@": "@%{alias} kullanıcısını takip etmeyi bırakmak istiyor musun?",
+      "confirm_uri_shortener_clear_cache": "Kısaltılmış adres geçimişini temizlemek istiyor musun?",
       "Change user": "Kullanıcı değiştir",
       "Checking...": "Denetleniyor...", // checking if username is available
       "Collapse": "Kapat", // smaller view of a post
       "Configure block generation": "Blok üretim ayarları",
       "Connections:": "Bağlantılar: ", // to network
       "Connection lost.": "Bağlantı koptu.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} gün |||| %{smart_count} gün",
       "Detailed information": "Detaylı bilgi",
       "DHT network down.": "DHT ağı çalışmıyor.",
@@ -3602,11 +4105,16 @@ if(preferredLanguage == "tr"){
       "Group Messages": "Grup Mesajları",
       "Group Messages — New Group Creation": "Grup Mesajları — Yeni Grup Oluştur",
       "Group Messages — Join Group": "Grup Mesajları — Gruba katıl",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "%{username} ile Direk Mesajlar",
       "Disable": "Kullanılmaz",
-      "display_mentions": "@ adının geçtiği gönderiler",  // FIXME
+      "display_mentions": "Bahsedenleri göster",
       "Display retransmissions": "Tekrar iletimleri göster",
       "DNS to obtain list of peers:": "Eş listesini almak için DNS:",
+      "do_not_show_it_again": "bir daha gösterme",
       "downloading_block_chain": "Blok zinciri indiriliyor, devam edebilmek için lütfen bekleyiniz (blok zinciri %{days} günlük).",
       "download_posts_status": "Göderilerin indirilme oranı: %{portion}", // Downloaded 10/30 posts
       "Enable": "Kullanılabilir",
@@ -3663,12 +4171,12 @@ if(preferredLanguage == "tr"){
       "new_group_messages": "%{smart_count} yeni grup mesajı |||| %{smart_count} yeni grup mesajı",
       "nobody": "hiçkimse", // used to promote a post without attaching the user
       "Not available": "Kullanılamaz", // username is not available
-      "warn_following_not_any": "Not following any twisters!\nSearch and follow someone.",
-      "warn_followers_not_all": "Well, currently here's no easy way to obtain all your followers.\n"
-        + "The counter indicates only a number of known peers sharing your torrent.\n"
-        + "In the list below are included ones, mostly, who are followed by you.",
-      "warn_followers_not_all_of": "Well, currently here's no easy way to obtain all followers of whoever.\n"
-        + "In the list below are included only few, perhaps, of ones who follow @%{alias} publicly.",
+      "warn_following_not_any": "Hiç kimseyi takip etmiyorsun!\nAra ve birilerini takip et.",
+      "warn_followers_not_all": "Tüm takipçilerini belirlemenin kolay bir yolu bulunmuyor.\n"
+        + "Takipçi sayacı torrent'ini paylaşan eşlerin sayısından ibaret ve\n"
+        + "aşağıdaki liste çoğunlukla takip ettiklerinden seni takip edenleri içerir.",
+      "warn_followers_not_all_of": "Tüm takipçilerini belirlemenin kolay bir yolu bulunmuyor.\n"
+        + "Aşağıdaki liste takipçilerin bir kısmını ve çoğunlukla takip ettiklerinden @%{alias} kullanıcısını gizlemeden takip edenleri içerir.",
       "notify_desktop_error": "Twister masaüstü uyarısını gösterimiyor: bilimeyen bir hata oluştu.",
       "notify_desktop_perm_denied": "Twister masaüstü uyarısını gösteremiyor: yetkilendirme hatası.\n\nUyarıları almak istiyorsanız, tarayıcı ayarlarında %{this_domain} alan adı için izin veriniz.",
       "notify_desktop_test": "Kasırga her yanı saracak\nBu karnavala hoşgeldin!",
@@ -3705,11 +4213,12 @@ if(preferredLanguage == "tr"){
       "send_DM": "Direk Mesaj Gönder",
       "Sent Post to @": "@ Kullanıcıya Gönder",
       "Setup account": "Hesap ayarları",
-      "shorten_URI": "Shorten URL",
-      "shorten_URI_enter_link": "Enter the long link.\n"
-        + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
-        + "This special twist is not displayed by twister clients, but your twist counter will increase.",
+      "shorten_URI": "URL kısalt",
+      "shorten_URI_enter_link": "Uzun bağlantıyı yazın.\n"
+        + "Not: URL kısaltma işlemi tam URL'i barındıran 'boş' bir twist oluşturacak.\n"
+        + "Bu özel twist görüntülenmeyecek, fakat gönderi sayınızda hesaba katılacak.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "Adres kısalt",
       "The File APIs are not fully supported in this browser.": "Dosya API'si tarayıcınızda tam olarak desteklenmiyor.",
       "time_ago": "%{time} önce", // 5 minutes ago
       "Time of the last block:": "Son blok saati: ",
@@ -3717,7 +4226,24 @@ if(preferredLanguage == "tr"){
       "Unfollow": "Takibi bırak",
       "Update": "Güncelle",
       "Auto updating": "Otomatik güncelleme",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Durum güncelleniyor...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Diğer eşler bu yeni kullanıcıyı henüz kabul etmediler.\n" +
                 "Malesef profili kaydetmek ya da bu durumda\n" +
                 "ileti gönedermek mümkün değil.\n\n" +
@@ -3752,8 +4278,8 @@ if(preferredLanguage == "tr"){
       "Terminate Daemon:": "Servisi Durdur:",
       "Exit": "Çıkış",
       "Save Changes": "Değişiklikleri Kaydet",
-      "profile_saved": "Profile data has been saved to DHT.",
-      "profile_not_saved": "Profile data has been not saved.",
+      "profile_saved": "Profil bilgileri DHT'ye kaydedildi.",
+      "profile_not_saved": "Profil bilgileri kaydedilmedi.",
       "Secret key:": "Gizli anahtar:",
       "Options": "Ayarlar",
       "Switch to Promoted posts": "Destekli Mesajlara Geç",
@@ -3829,7 +4355,7 @@ if(preferredLanguage == "tr"){
       "not analyzed": "incelenmedi",
       "Reason: this": "Sebep: %{this}",
       "this doesnt contain that": "%{that} %{this} tarafından kapsanmıyor",
-      "this is undefined": "%{this} is undefined",
+      "this is undefined": "%{this} tanımsız",
       "blacklist": "beyaz liste",
       "whitelist": "kara liste",
       "language of this": "dili",
@@ -3875,6 +4401,27 @@ if(preferredLanguage == "tr"){
       "Sound": "Ses",
       "Users": "Kullanıcılar",
       "Direct Message's copy to self": "Özel iletinin kopyasını sakla",
+      "Traffic information": "Trafik bilgileri",
+      "DHT Torrents:": "DHT Torrentleri:",
+      "Peers:": "Eşler:",
+      "Peer List Size:": "Eş listesi uzunluğu:",
+      "Active Requests:": "Aktif istekler:",
+      "Download:": "İndirme:",
+      "Upload:": "Yükleme:",
+      "DHT Download:": "DHT İndirme:",
+      "DHT Upload:": "DHT Yükleme:",
+      "IP Overhead Download:": "IP Başlık İndirme:",
+      "IP Overhead Upload:": "IP Başlık Yükleme:",
+      "Payload Download:": "İçerik İndirme:",
+      "Payload Upload:": "İçerik Yükleme:",
+      "No favs here because you are not logged in." : "Giriş yapmadan favorileri göremezsin.",
+      "users_favs": "@%{username} kullanıcısının favorileri",
+      "Favorites": "Favoriler",
+      "You have to log in to favorite messages.": "İletileri favorine eklemek için giriş yapmalısın.",
+      "fav_this": "Sana özel mi?",
+      "Last activity": "Son etkinlik",
+      "New Users": "Yeni Kullanıcılar",
+      "Live tracking" : "Canlı takip"
     };
 }
 
@@ -3897,6 +4444,8 @@ if(preferredLanguage == "cs"){
       "busted_avowal": "I\'m busted trying inject this suspicious stuff here",
       "btn_ok": "Okay",
       "Cancel": "Zrušit",
+      'cant_get_requested_resourse': 'Can\'t get resourse at %{link}\n  status: %{status}.',
+      "clear_cache": "Clear cache",
       "Confirm": "Confirm",
       "сonfirm_group_leaving_header": "Confirm group leaving",
       "сonfirm_group_leaving_body": "Are you sure want to leave %{alias} group?",
@@ -3906,12 +4455,14 @@ if(preferredLanguage == "cs"){
             "Chcete se místo toho podívat na [stav sítě](%{page})?",
       "confirm_terminate_daemon": "Skutečně chcete ukončit server?\nTwister tím vypnete.",
       "confirm_unfollow_@": "Are you sure you want to unfollow @%{alias}?",
+      "confirm_uri_shortener_clear_cache": "Are you sure you want to clear browser cache of shortened URIs?",
       "Change user": "Změnit uživatele",
       "Checking...": "Ověřuji...", // checking if username is available
       "Collapse": "Složit", // smaller view of a post
       "Configure block generation": "Nastavení generace bloků",
       "Connections:": "Připojení: ", // to network
       "Connection lost.": "Žádné připojení do sítě.",
+      "daemon_is_obsolete": "twister daemon is obsolete, version %{versionReq} or higher is required",
       "days": "%{smart_count} dnem |||| %{smart_count} dny |||| %{smart_count} dny",
       "Detailed information": "Podrobné informace",
       "DHT network down.": "Síť DHT je nedostupná.",
@@ -3919,11 +4470,16 @@ if(preferredLanguage == "cs"){
       "Group Messages": "Group Messages",
       "Group Messages — New Group Creation": "Group Messages — New Group Creation",
       "Group Messages — Join Group": "Group Messages — Join Group",
+      "group_key_cant_import": "Can\'t import DM group key",
+      "group_key_is_invalid_perhaps": "perhaps the key is invalid",
+      "group_key_was_imported": "Key for DM group %{alias} was imported.\n"
+        + "Its messages will be fetched soon.",
       "direct_messages_with": "Direct messages with %{username}",
       "Disable": "Vypnuto",
       "display_mentions": "Zobrazit zmínky",
       "Display retransmissions": "Zobrazit přeposlané",
       "DNS to obtain list of peers:": "DNS pro načtení seznamu uzlů:",
+      "do_not_show_it_again": "don't show it again",
       "downloading_block_chain": "Stahuji blockchain, prosím počkejte (blockchain je %{days} dnů starý).",
       "download_posts_status": "Staženo %{portion} příspěvků", // Downloaded 10/30 posts
       "Enable": "Zapnuto",
@@ -4028,6 +4584,7 @@ if(preferredLanguage == "cs"){
         + "Note: shortening an URL will produce an 'empty' twist on your behalf containing the full URL.\n"
         + "This special twist is not displayed by twister clients, but your twist counter will increase.",
       "shorten_URI_its_public_is_it_ok": "Your link will be public available! Are you OK with that?",
+      "URI_shortener": "URI Shortener",
       "The File APIs are not fully supported in this browser.": "Upozornění: váš webový prohlížeč nepodporuje File API.",
       "time_ago": "před %{time}", // 5 minutes ago
       "Time of the last block:": "Čas posledního bloku: ",
@@ -4035,7 +4592,24 @@ if(preferredLanguage == "cs"){
       "Unfollow": "Přestat sledovat",
       "Update": "Aktualizovat",
       "Auto updating": "Automatická aktualizace",
+      'updates_are_available': 'Updates are available',
+      'updates_not_available': 'No updates are available',
+      'updates_check_client': 'Check for client\'s updates',
+      'updates_repo_overview': 'Currently we are on the branch %{branch} of %{repo} at the commit\n  %{commit} of %{date}\n'
+        + 'but HEAD of its source is already at the commit\n  %{commitUpstream} of %{dateUpstream}.',
+      'updates_checkout_diff': 'Checkout [the diff on GitHub](%{link}) to learn what is changed.',
+      'updates_checkout_diff_nfmt': 'Checkout the diff on GitHub to learn what is changed:\n  %{link}',
+      'updates_upstream_isnt_changed': 'A corresponding branch of the source repository seems to have not changed.',
       "Updating status...": "Aktualizuji stav...", // status of block chain
+      'new_account_briefing': 'A new account was created and it is being propagated to the network. '
+        + 'Please do not close this window, this might take a few minutes.\n\n'
+        + 'Your secret key is: *%{secretKey}*\n\n'
+        + 'It is highly recommended that you take this time to save your secret key. '
+        + 'Print it, do a screenshot, use the camera in your phone or write it down to a piece of paper.\n\n'
+        + 'The secret key will be needed to use this account from different computers. '
+        + 'If you ever lose your secret key your account will be locked forever '
+        + '(note: ~this is alpha software and it may crash, causing loss of data~).\n\n'
+        + 'Just wait. The OK button will be shown faster you can say ~decentralization~.',
       "user_not_yet_accepted": "Ostatní uzly ještě nepřijaly tohoto nového uživatele.\n" +
                 "Proto zatím není možné uložit profil nebo vkládat příspěvky.\n" +
                 "Počkejte prosím pár minut.\n\n" +
@@ -4208,6 +4782,14 @@ if(preferredLanguage == "cs"){
       "IP Overhead Upload:": "IP Overhead - odesílání:",
       "Payload Download:": "Data aplikace - stahování:",
       "Payload Upload:": "Data aplikace - odesílání:",
+      "No favs here because you are not logged in." : "No favs here because you are not logged in.",
+      "users_favs": "Favorites of @%{username}",
+      "Favorites": "Favorites",
+      "You have to log in to favorite messages.": "You have to log in to favorite messages.",
+      "fav_this": "Is it for you only?",
+      "Last activity": "Last activity",
+        "New Users": "New Users",
+        "Live tracking" : "Live tracking"
     };
 }
 
@@ -4251,12 +4833,7 @@ var fixedLabels = [
   ".network label",
   ".network input",
 
-  // login page
-  ".login ul li span",
   ".module span",
-  ".login span",
-  ".login-local-username",
-  ".login input",
 
   // mobile version //
 
