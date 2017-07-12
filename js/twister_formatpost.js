@@ -266,10 +266,10 @@ function setPostInfoSent(n, k, item) {
 // format dmdata (returned by getdirectmsgs) to display in conversation thread
 function postToElemDM(dmData, localUser, remoteUser) {
     var senderAlias = (dmData.from && dmData.from.length && dmData.from.charCodeAt(0))
-        ? dmData.from : (dmData.fromMe ? localUser : remoteUser);
+        ? dmData.from : (dmData.fromMe || dmData.from === localUser ? localUser : remoteUser);
     var elem = $('#dm-chat-template').clone(true).appendTo(twister.html.detached)
         .removeAttr('id')
-        .addClass(dmData.fromMe ? 'sent' : 'received')
+        .addClass(dmData.fromMe || dmData.from === localUser ? 'sent' : 'received')
     ;
 
     var elemName = elem.find('.post-info-name')
