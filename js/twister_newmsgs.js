@@ -128,6 +128,9 @@ function queryPendingPushMentions(req, res) {
 }
 
 function resetMentionsCount() {
+    if (!twister.mentions.lengthNew)
+        return;
+
     twister.mentions.lengthNew = 0;
 
     for (var j in twister.mentions.twists.cached)
@@ -420,30 +423,47 @@ function getNewGroupDMsCount() {
 }
 
 function resetNewDMsCount() {
+    var isNewDetected;
+
     for (var peerAlias in twister.DMs)
-        if (peerAlias[0] !== '*') {
+        if (twister.DMs[peerAlias].lengthNew && peerAlias[0] !== '*') {
             twister.DMs[peerAlias].lengthNew = 0;
             for (var j in twister.DMs[peerAlias].twists.cached)
                 delete twister.DMs[peerAlias].twists.cached[j].isNew;
+
+            isNewDetected = true;
         }
+
+    if (!isNewDetected)
+        return;
 
     saveDMsToStorage();
     $.MAL.updateNewDMsUI(getNewDMsCount());
 }
 
 function resetNewDMsCountGroup() {
+    var isNewDetected;
+
     for (var peerAlias in twister.DMs)
-        if (peerAlias[0] === '*') {
+        if (twister.DMs[peerAlias].lengthNew && peerAlias[0] === '*') {
             twister.DMs[peerAlias].lengthNew = 0;
             for (var j in twister.DMs[peerAlias].twists.cached)
                 delete twister.DMs[peerAlias].twists.cached[j].isNew;
+
+            isNewDetected = true;
         }
+
+    if (!isNewDetected)
+        return;
 
     saveDMsToStorage();
     $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
 }
 
 function resetNewDMsCountForPeer(peerAlias) {
+    if (!twister.DMs[peerAlias].lengthNew)
+        return;
+
     twister.DMs[peerAlias].lengthNew = 0;
     for (var j in twister.DMs[peerAlias].twists.cached)
         delete twister.DMs[peerAlias].twists.cached[j].isNew;
