@@ -273,23 +273,37 @@ var router=new $.mobile.Router(
             $.mobile.showPageLoadingMsg();
             initializeTwister( true, true, function() {
                 $.mobile.showPageLoadingMsg();
-                requestDMsnippetList($('#directmsg .direct-messages-list'));
+                modalDMsSummaryDraw($('#directmsg .direct-messages-list'));
             });
         },
         dmchat: function(type,match,ui) {
             var params=router.getParams(match[1]);
             $.mobile.showPageLoadingMsg();
             initializeTwister( true, true, function() {
-                var user = params.user;
-                var dmConvo = $('#dmchat .direct-messages-thread');
-                $("#dmchat .rtitle").text("Chat @" + user);
+                var peerAlias = params.user;
+                var board = $('#dmchat .direct-messages-thread').empty();
+
+                $('#dmchat .rtitle').text('Chat @' + peerAlias);
                 $("#dmchat textarea").val("");
-                dmConvo.html("");
-                installDMSendClick();
+                installDMSendClick(peerAlias);
 
                 $.mobile.showPageLoadingMsg();
-                dmChatUser = user;
-                requestDmConversation(dmConvo,user);
+
+                tmobileQueryReq = queryStart(board, peerAlias, 'direct', undefined, 2000, {
+                    boardAutoAppend: true,
+                    lastId: 0,
+                    lengthNew: 0,
+                    ready: function (req, peerAlias) {
+                        twister.DMs[peerAlias] = twister.res[req];
+                    },
+                    readyReq: peerAlias,
+                    drawFinish: function (req) {
+                        setTimeout($.MAL.dmConversationLoaded, 200, twister.res[req].board);
+                    },
+                    skidoo: function (req) {
+                        return $.mobile.activePage.attr('id') !== 'dmchat' || req !== tmobileQueryReq;
+                    }
+                });
             });
         },
         search: function(type,match,ui) {
@@ -390,22 +404,20 @@ function installSubmitClick() {
     });
 }
 
-function installDMSendClick() {
-    var $postSubmit = $(".dm-submit");
-    $postSubmit.unbind('click').click(function(e){
-        e.stopPropagation();
-        e.preventDefault();
-        var $this = $( this );
-        var $replyText = $this.closest(".post-area-new").find("textarea");
+function installDMSendClick(peerAlias) {
+    $('.dm-submit').off('click').on('click', {peerAlias: peerAlias},
+        function (event) {
+            muteEvent(event, true);
 
-        var $dmConversation = $(".directMessages");
+            var elemTextArea = $(event.target).closest('.post-area-new').find('textarea');
+            if (!elemTextArea.val())
+                return;
 
-        var s = encode_utf8($replyText.val());
-        newDirectMsg(s, dmChatUser);
-        $replyText.val("");
-    });
+            newDirectMsg(encode_utf8(elemTextArea.val()), event.data.peerAlias);
+            elemTextArea.val('');
+        }
+    );
 }
-
 
 function installRetransmitConfirmClick() {
     var $postConfirmRt = $(".retransmit-confirm");
@@ -535,15 +547,13 @@ function setupHashtagOrMention(board, query, resource) {
     $.mobile.showPageLoadingMsg();
     board.empty();
 
-    var req = queryStart(board, query, resource, undefined, undefined, {
+    tmobileQueryReq = queryStart(board, query, resource, undefined, undefined, {
         boardAutoAppend: true,
         skidoo: function (req) {
             var curPage = $.mobile.activePage.attr('id');
             return (curPage !== 'mentions' && curPage !== 'hashtag') || req !== tmobileQueryReq;
         }
     });
-
-    tmobileQueryReq = req;
 }
 
 // every 2 seconds do something page specific.
@@ -565,8 +575,6 @@ function tmobileTick() {
                     }
                 }, {} );
     }
-    if (curPage === 'dmchat')
-        requestDmConversation($('#dmchat .direct-messages-thread'), dmChatUser);
 }
 
 $(document).bind('mobileinit', function () {

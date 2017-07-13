@@ -183,13 +183,18 @@ function processReceivedPosts(req, posts)
 }
 
 function updateTimeline(req, posts) {
-    attachPostsToStream($.MAL.getStreamPostsParent(), posts, req.getspam);
+    attachPostsToStream($.MAL.getStreamPostsParent(), posts, true,
+        function (twist, promoted) {
+            return {item: postToElem(twist, 'original', promoted), time: twist.userpost.time};
+        },
+        req.getspam
+    );
     for (var i = 0; i < posts.length; i++) {
         req.reportProcessedPost(posts[i]['userpost']['n'], posts[i]['userpost']['k'], true);
     }
 }
 
-function attachPostsToStream(stream, posts, isPromoted) {
+function attachPostsToStream(stream, posts, descendingOrder, createElem, createElemReq) {
     //console.log('attachPostsToStream:');
     //console.log(posts);
 
@@ -204,7 +209,7 @@ function attachPostsToStream(stream, posts, isPromoted) {
     for (var i = 0; i < posts.length; i++) {
         //console.log(posts[i]);
         var isAttached = false;
-        var intrantPost = {item: postToElem(posts[i], 'original', isPromoted), time: posts[i].userpost.time};
+        var intrantPost = createElem(posts[i], createElemReq);
         intrantPost.item.attr('data-time', intrantPost.time);
 
         if (streamPosts.length) {
@@ -213,10 +218,10 @@ function attachPostsToStream(stream, posts, isPromoted) {
                 if (intrantPost.time === streamPosts[j].time &&
                     intrantPost.item[0].innerHTML === streamPosts[j].item[0].innerHTML) {
                         isAttached = true;
-                        console.log('appending of duplicate twist prevented');
+                        console.warn('appending of duplicate twist prevented');
                         break;
-                } else if (intrantPost.time > streamPosts[j].time) {
-                    // this post in stream is older, so post must be inserted above
+                } else if (descendingOrder ?
+                    intrantPost.time > streamPosts[j].time : intrantPost.time < streamPosts[j].time) {
                     intrantPost.item.insertBefore(streamPosts[j].item).show();
                     streamPosts.splice(j, 0, intrantPost);
                     isAttached = true;

@@ -436,6 +436,24 @@ function updateProfilePosts(postsView, username, useGetposts) {
      });
 }
 
+function queryCreateRes(query, resource, extra) {
+    var req = query + '@' + resource;
+    twister.res[req] = {
+        query: query,
+        resource: resource,
+        lengthCached: 0,
+        twists: {
+            cached: {},
+            pending: []
+        }
+    };
+    if (extra)
+        for (i in extra)
+            twister.res[req][i] = extra[i];
+
+    return twister.res[req];
+}
+
 function queryStart(board, query, resource, timeoutArgs, intervalTimeout, extra) {
     var req = query + '@' + resource;
 
@@ -444,6 +462,7 @@ function queryStart(board, query, resource, timeoutArgs, intervalTimeout, extra)
             board: board,
             query: query,
             resource: resource,
+            lengthCached: 0,
             twists: {
                 cached: {},
                 pending: []
@@ -461,6 +480,15 @@ function queryStart(board, query, resource, timeoutArgs, intervalTimeout, extra)
         for (var i in twister.res[req].twists.cached)
             if (twister.res[req].twists.pending.indexOf(i) === -1)
                 twister.res[req].twists.pending.push(i);
+
+        if (extra) {
+            if (typeof extra.drawFinish === 'function') {
+                twister.res[req].drawFinish = extra.drawFinish;
+                twister.res[req].drawFinishReq = extra.drawFinishReq;
+            }
+            if (typeof extra.skidoo === 'function')
+                twister.res[req].skidoo = extra.skidoo;
+        }
 
         queryPendingDraw(req);
     }
@@ -510,27 +538,45 @@ function queryRequest(req) {
     } else if (twister.res[req].resource === 'fav')
         twisterRpc('getfavs', [twister.res[req].query, 1000],
             queryProcess, req);
-    else
+    else if (twister.res[req].resource === 'direct') {
+        var lengthStandard = 100;  // FIXME there may be the gap between .lastId and the lesser twist.id in response greater than 100 (very rare case)
+        if (twister.res[req].lengthCached < Math.min(twister.res[req].lastId, lengthStandard)
+            && !twister.res[req].triedToReCache) {
+            twister.res[req].triedToReCache = true;
+            var length = Math.min(twister.res[req].lastId + 1, lengthStandard);
+            var query = [{username: twister.res[req].query, max_id: twister.res[req].lastId}];
+        } else
+            var length = lengthStandard, query = [{username: twister.res[req].query, since_id: twister.res[req].lastId}];
+
+        twisterRpc('getdirectmsgs', [defaultScreenName, length, query],
+            queryProcess, req,
+            function (req, res) {
+                console.warn(polyglot.t('ajax_error', {error: (res && res.message) ? res.message : res}));
+            }
+        );
+    } else
         dhtget(twister.res[req].query, twister.res[req].resource, 'm',
             queryProcess, req, twister.res[req].timeoutArgs);
 }
 
-function queryProcess(req, twists) {
-    if (!req || !twister.res[req] || !twists || !twists.length)
+function queryProcess(req, res) {
+    if (!req || !twister.res[req] || typeof res !== 'object' || $.isEmptyObject(res))
         return;
 
     var lengthNew = 0;
     var lengthPending = twister.res[req].twists.pending.length;
 
     if (twister.res[req].resource === 'mention' && twister.res[req].query === defaultScreenName)
-        lengthNew = queryPendingPushMentions(req, twists);
+        lengthNew = queryPendingPushMentions(req, res);
+    else if (twister.res[req].resource === 'direct')
+        lengthNew = queryPendingPushDMs(res);
     else
-        lengthNew = queryPendingPush(req, twists);
+        lengthNew = queryPendingPush(req, res);
 
     if (typeof twister.res[req].skidoo === 'function' && twister.res[req].skidoo(req))
         return;
 
-    if (lengthNew)
+    if (lengthNew) {
         if (twister.res[req].resource === 'mention' && twister.res[req].query === defaultScreenName) {
             $.MAL.updateNewMentionsUI(twister.res[req].lengthNew);
             $.MAL.soundNotifyMentions();
@@ -550,6 +596,25 @@ function queryProcess(req, twists) {
                             $.MAL.showMentions(defaultScreenName);
                     }).bind({req: req})
                 });
+        } else if (twister.res[req].resource === 'direct') {
+            if (twister.res[req].query[0] !== '*')
+                $.MAL.updateNewDMsUI(getNewDMsCount());
+            else
+                $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+
+            $.MAL.soundNotifyDM();
+            if (!$.mobile && $.Options.showDesktopNotifDMs.val === 'enable')
+                $.MAL.showDesktopNotification({
+                    body: twister.res[req].query[0] === '*' ?
+                        polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', getNewGroupDMsCount()) + '.'
+                        : polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', getNewDMsCount()) + '.',
+                    tag: 'twister_notification_new_DMs',
+                    timeout: $.Options.showDesktopNotifDMsTimer.val,
+                    funcClick: (function () {
+                        focusModalWithElement(twister.res[this.req].board);
+                    }).bind({req: req})
+                });
+            // TODO new DMs counters on minimized modals'
         } else if (!$.mobile && $.Options.showDesktopNotifPostsModal.val === 'enable'
             && (twister.res[req].resource !== 'mention' || twister.res[req].query !== defaultScreenName)
             && twister.res[req].board && isModalWithElemExists(twister.res[req].board)
@@ -559,7 +624,7 @@ function queryProcess(req, twists) {
                     + polyglot.t('in search result') + '.',
                 tag: 'twister_notification_new_posts_modal',
                 timeout: $.Options.showDesktopNotifPostsModalTimer.val,
-                funcClick: (function() {
+                funcClick: (function () {
                     focusModalWithElement(twister.res[this.req].board,
                         function (req) {
                             twister.res[req].board.closest('.postboard')
@@ -569,6 +634,7 @@ function queryProcess(req, twists) {
                     );
                 }).bind({req: req})
             });
+    }
 
     if (twister.res[req].twists.pending.length > lengthPending) {  // there is some twists may be which are not considered new so lengthNew equals zero (mentions thing)
         if (!twister.res[req].board || (!$.mobile && !isModalWithElemExists(twister.res[req].board)))
@@ -619,6 +685,7 @@ function queryPendingPush(req, twists) {
 
             lengthNew++;
             twister.res[req].twists.cached[j] = twists[i];
+            twister.res[req].lengthCached++;
             twister.res[req].twists.pending.push(j);
         }
     }
@@ -627,13 +694,57 @@ function queryPendingPush(req, twists) {
 }
 
 function queryPendingDraw(req) {
-    var twists = [];
-    for (var i = 0; i < twister.res[req].twists.pending.length; i++)
-        twists.push(twister.res[req].twists.cached[twister.res[req].twists.pending[i]]);
+    var twists = [], length = 0;
 
-    attachPostsToStream(twister.res[req].board, twists, false);
+    if (twister.res[req].resource === 'direct') {
+        for (var j = 0; j < twister.res[req].twists.pending.length; j++) {
+            var twist = twister.res[req].twists.cached[twister.res[req].twists.pending[j]];
+            for (var i = 0; i < length; i++)
+                if (twist.id < twists[i].id) {
+                    twists.splice(i, 0, twist);
+                    break;
+                }
+
+            if (length === twists.length)
+                twists.push(twist);
+
+            length++;
+        }
+        attachPostsToStream(twister.res[req].board, twists, false,
+            function (twist, req) {
+                return {item: postToElemDM(twist, req.peerAliasLocal, req.peerAliasRemote)
+                    .attr('data-id', twist.id), time: twist.time};
+            },
+            {peerAliasLocal: defaultScreenName, peerAliasRemote: twister.res[req].query}
+        );
+        resetNewDMsCountForPeer(twister.res[req].query);
+    } else {
+        for (var j = 0; j < twister.res[req].twists.pending.length; j++) {
+            var twist = twister.res[req].twists.cached[twister.res[req].twists.pending[j]];
+            for (var i = 0; i < length; i++)
+                if (twist.userpost.time > twists[i].userpost.time) {
+                    twists.splice(i, 0, twist);
+                    break;
+                }
+
+            if (length === twists.length)
+                twists.push(twist);
+
+            length++;
+        }
+        attachPostsToStream(twister.res[req].board, twists, true,
+            function (twist) {
+                return {item: postToElem(twist, 'original'), time: twist.userpost.time};
+            }
+        );
+        if (twister.res[req].resource === 'mention' && twister.res[req].query === defaultScreenName)
+            resetMentionsCount();
+    }
 
     queryPendingClear(req);
 
-    $.MAL.postboardLoaded();
+    if (typeof twister.res[req].drawFinish === 'function')
+        twister.res[req].drawFinish(req, twister.res[req].drawFinishReq);
+    else
+        $.MAL.postboardLoaded();
 }
