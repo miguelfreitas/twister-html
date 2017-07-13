@@ -200,6 +200,8 @@ function saveDMsToStorage() {
         };
     }
 
+    pool = twister.var.key.pub.encrypt(JSON.stringify(pool));
+    delete pool.orig;  // WORKAROUND the decrypt function does .slice(0, orig) but something goes wrong in process of buffer decoding (if original string contains non-ASCII characters) and orig may be smaller than the actual size, if it is undefined .slice gets it whole
     $.initNamespaceStorage(defaultScreenName).localStorage.set('DMs', pool);
 }
 
@@ -208,6 +210,12 @@ function loadDMsFromStorage() {
 
     if (storage.isSet('DMs')) {
         var pool = storage.get('DMs');
+        if (pool.key && pool.body && pool.mac) {
+            if (pool = twister.var.key.decrypt(pool))
+                pool = JSON.parse(pool.toString());
+            else
+                console.warn('can\'t decrypt DMs\' data cache');
+        }
         if (typeof pool === 'object') {
             for (var peerAlias in pool) {
                 if (!twister.DMs[peerAlias])
@@ -454,16 +462,20 @@ function updateGroupList() {
 
 function initDMsCount() {
     twister.DMs = {};
-    loadDMsFromStorage();
-    $.MAL.updateNewDMsUI(getNewDMsCount());
-    $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
-    //quick hack to obtain list of group chat aliases
-    updateGroupList();
-    setInterval(updateGroupList, 60000);
+    dumpPrivkey(defaultScreenName, function (req, res) {
+        twister.var.key = TwisterCrypto.PrivKey.fromWIF(res);
 
-    setTimeout(requestDMsCount, 200);
-    //polling not needed: processNewPostsConfirmation will call requestDMsCount.
-    //setInterval('requestDMsCount()', 5000);
+        loadDMsFromStorage();
+        $.MAL.updateNewDMsUI(getNewDMsCount());
+        $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+        //quick hack to obtain list of group chat aliases
+        updateGroupList();
+        setInterval(updateGroupList, 60000);
+
+        setTimeout(requestDMsCount, 200);
+        //polling not needed: processNewPostsConfirmation will call requestDMsCount.
+        //setInterval('requestDMsCount()', 5000);
+    });
 }
 
 function newmsgsChangedUser() {
