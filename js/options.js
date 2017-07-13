@@ -228,6 +228,10 @@ function twisterOptions() {
         valDefault: 'enable'
     });
     this.add({
+        name: 'dmEncryptCache',
+        valDefault: 'enable'
+    });
+    this.add({
         name: 'hideReplies',
         valDefault: 'following'
     });

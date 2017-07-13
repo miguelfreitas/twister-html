@@ -200,8 +200,10 @@ function saveDMsToStorage() {
         };
     }
 
-    pool = twister.var.key.pub.encrypt(JSON.stringify(pool));
-    delete pool.orig;  // WORKAROUND the decrypt function does .slice(0, orig) but something goes wrong in process of buffer decoding (if original string contains non-ASCII characters) and orig may be smaller than the actual size, if it is undefined .slice gets it whole
+    if ($.Options.get('dmEncryptCache') === 'enable') {
+        pool = twister.var.key.pub.encrypt(JSON.stringify(pool));
+        delete pool.orig;  // WORKAROUND the decrypt function does .slice(0, orig) but something goes wrong in process of buffer decoding (if original string contains non-ASCII characters) and orig may be smaller than the actual size, if it is undefined .slice gets it whole
+    }
     $.initNamespaceStorage(defaultScreenName).localStorage.set('DMs', pool);
 }
 

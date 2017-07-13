@@ -52,6 +52,8 @@
       <label for="t-2" class="tabs selectable_theme theme_nin">Theme</label>
       <input id="t-3" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
       <label for="t-3" class="tabs selectable_theme theme_nin">Notifications</label>
+      <input id="t-8" name="option_tab" type="radio" class="selectable_theme theme_nin" />
+      <label for="t-8" class="tabs selectable_theme theme_nin">Direct Messages</label>
       <input id="t-4" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
       <label for="t-4" class="tabs selectable_theme theme_nin">Keys</label>
       <input id="t-5" name="option_tab" type="radio"  class="selectable_theme theme_nin"/>
@@ -190,6 +192,30 @@
             <div class="container">
                 <p class="label">Test</p>
                 <button id="testDesktopNotif" class="container">notify_desktop_title</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="DMs">
+          <div class="module">
+            <p class="label label-h">Direct Messages</p>
+            <div class="container">
+              <form action="" id="dmCopySelfOpt">
+                <p class="label">dm_copy_outgoing_to_self</p>
+                <select name="" id="dmCopySelf" class="container">
+                  <option value="enable">Enable</option>
+                  <option value="disable">Disable</option>
+                </select>
+              </form>
+            </div>
+            <div class="container">
+              <form action="" id="dmEncryptCacheOpt">
+                <p class="label">dm_encrypt_local_cache</p>
+                <select name="" id="dmEncryptCache" class="container">
+                  <option value="enable">Enable</option>
+                  <option value="disable">Disable</option>
+                </select>
+              </form>
             </div>
           </div>
         </div>
@@ -454,15 +480,6 @@
                   <option value="disable">Don't split</option>
                   <option value="enable">Split all</option>
                   <option value="only-new">Split only new post</option>
-                </select>
-              </form>
-            </div>
-            <div class="container">
-              <form action="" id="dmCopySelfOpt">
-                <p class="label">Direct Message's copy to self</p>
-                <select name="" id="dmCopySelf" class="container">
-                  <option value="disable">Disable</option>
-                  <option value="enable">Enable</option>
                 </select>
               </form>
             </div>
