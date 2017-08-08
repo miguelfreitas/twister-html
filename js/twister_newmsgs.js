@@ -42,6 +42,7 @@ function loadMentionsFromStorage() {
                 var j = mentions.twists[i].userpost.n + '/' + mentions.twists[i].userpost.time;
                 if (typeof twister.mentions.twists.cached[j] === 'undefined') {
                     twister.mentions.twists.cached[j] = mentions.twists[i];
+                    twister.mentions.lengthCached++;
                     if (twister.mentions.twists.cached[j].isNew)
                         twister.mentions.lengthNew++;
 
@@ -61,6 +62,7 @@ function loadMentionsFromStorage() {
                 var j = mentions[i].data.userpost.n + '/' + mentions[i].mentionTime;
                 if (typeof twister.mentions.twists.cached[j] === 'undefined') {
                     twister.mentions.twists.cached[j] = mentions[i].data;
+                    twister.mentions.lengthCached++;
                     if (twister.mentions.twists.cached[j].isNew)
                         twister.mentions.lengthNew++;
 
@@ -104,6 +106,7 @@ function queryPendingPushMentions(req, res) {
         var j = res[i].userpost.n + '/' + res[i].userpost.time;
         if (typeof twister.res[req].twists.cached[j] === 'undefined') {
             twister.res[req].twists.cached[j] = res[i];
+            twister.res[req].lengthCached++;
             twister.res[req].twists.pending.push(j);
 
             // mention must be somewhat recent compared to last known one to be considered new
@@ -125,6 +128,9 @@ function queryPendingPushMentions(req, res) {
 }
 
 function resetMentionsCount() {
+    if (!twister.mentions.lengthNew)
+        return;
+
     twister.mentions.lengthNew = 0;
 
     for (var j in twister.mentions.twists.cached)
@@ -159,10 +165,10 @@ function handleMentionsModalScroll(event) {
     if (elem.scrollTop() >= elem[0].scrollHeight - elem.height() - 50) {
         twister.mentions.scrollQueryActive = true;
 
-        twisterRpc('getmentions', [twister.mentions.query, 10,
+        twisterRpc('getmentions', [twister.mentions.query, postsPerRefresh,
             {max_id: twister.mentions.lastTorrentId - twister.mentions.lengthFromTorrent}],
             function (req, res) {
-                twister.mentions.scrollQueryActive = false;
+                twister.res[req].scrollQueryActive = false;
                 twister.res[req].boardAutoAppend = true;  // FIXME all pending twists will be appended
                 queryProcess(req, res);
                 twister.res[req].boardAutoAppend = false;
@@ -174,114 +180,299 @@ function handleMentionsModalScroll(event) {
 
 // --- direct messages ---
 
-var _lastDMIdPerUser = {};
-var _newDMsPerUser = {};
-
 function saveDMsToStorage() {
-    var ns = $.initNamespaceStorage(defaultScreenName);
-    ns.localStorage.set('lastDMIdPerUser', _lastDMIdPerUser);
-    ns.localStorage.set('newDMsPerUser', _newDMsPerUser);
+    var pool = {};
+
+    for (var peerAlias in twister.DMs) {
+        var twists = [], length = 0;
+        for (var j in twister.DMs[peerAlias].twists.cached) {
+            for (var i = 0; i < length; i++)
+                if (twister.DMs[peerAlias].twists.cached[j].id > twists[i].id) {
+                    twists.splice(i, 0, twister.DMs[peerAlias].twists.cached[j]);
+                    break;
+                }
+
+            if (length === twists.length)
+                twists.push(twister.DMs[peerAlias].twists.cached[j]);
+
+            length++;
+        }
+        pool[peerAlias] = {
+            twists: twists.slice(0, 100),  // TODO add an option to specify number of DMs to cache
+            lastId: twister.DMs[peerAlias].lastId,
+        };
+    }
+
+    if ($.Options.get('dmEncryptCache') === 'enable') {
+        pool = twister.var.key.pub.encrypt(JSON.stringify(pool));
+        delete pool.orig;  // WORKAROUND the decrypt function does .slice(0, orig) but something goes wrong in process of buffer decoding (if original string contains non-ASCII characters) and orig may be smaller than the actual size, if it is undefined .slice gets it whole
+    }
+    $.initNamespaceStorage(defaultScreenName).localStorage.set('DMs', pool);
 }
 
 function loadDMsFromStorage() {
-    var ns = $.initNamespaceStorage(defaultScreenName);
-    if (ns.localStorage.isSet('lastDMIdPerUser'))
-        _lastDMIdPerUser = ns.localStorage.get('lastDMIdPerUser');
-    if (ns.localStorage.isSet('newDMsPerUser'))
-        _newDMsPerUser = ns.localStorage.get('newDMsPerUser');
+    var storage = $.initNamespaceStorage(defaultScreenName).localStorage;
+
+    if (storage.isSet('DMs')) {
+        var pool = storage.get('DMs');
+        if (pool.key && pool.body && pool.mac) {
+            if (pool = twister.var.key.decrypt(pool))
+                pool = JSON.parse(pool.toString());
+            else
+                console.warn('can\'t decrypt DMs\' data cache');
+        }
+        if (typeof pool === 'object') {
+            for (var peerAlias in pool) {
+                if (!twister.DMs[peerAlias])
+                    twister.DMs[peerAlias] = queryCreateRes(peerAlias, 'direct',
+                        {boardAutoAppend: true, lastId: 0, lengthNew: 0});
+
+                for (var i = 0; i < pool[peerAlias].twists.length; i++) {
+                    var j = pool[peerAlias].twists[i].from + '/' + pool[peerAlias].twists[i].time;
+                    if (typeof twister.DMs[peerAlias].twists.cached[j] === 'undefined') {
+                        twister.DMs[peerAlias].twists.cached[j] = pool[peerAlias].twists[i];
+                        twister.DMs[peerAlias].lengthCached++;
+                        if (twister.DMs[peerAlias].twists.cached[j].isNew)
+                            twister.DMs[peerAlias].lengthNew++;
+                    }
+                }
+                twister.DMs[peerAlias].lastId = pool[peerAlias].lastId;
+            }
+        }
+    }
+
+    // WARN all following storage keys are deprecated (see commit FIXME)
+    if (storage.isSet('lastDMIdPerUser')) {
+        var pool = storage.get('lastDMIdPerUser');
+        if (typeof pool === 'object')
+            for (var peerAlias in pool) {
+                if (!twister.DMs[peerAlias])
+                    twister.DMs[peerAlias] = queryCreateRes(peerAlias, 'direct',
+                        {boardAutoAppend: true, lastId: 0, lengthNew: 0});
+
+                twister.DMs[peerAlias].lastId = pool[peerAlias];
+            }
+
+        storage.remove('lastDMIdPerUser');
+    }
+    if (storage.isSet('newDMsPerUser')) {
+        var pool = storage.get('newDMsPerUser');
+        if (typeof pool === 'object')
+            for (var peerAlias in pool) {
+                if (!twister.DMs[peerAlias])
+                    twister.DMs[peerAlias] = queryCreateRes(peerAlias, 'direct',
+                        {boardAutoAppend: true, lastId: 0, lengthNew: 0});
+
+                twister.DMs[peerAlias].lengthNew = pool[peerAlias];
+            }
+
+        storage.remove('newDMsPerUser');
+    }
+}
+
+function queryPendingPushDMs(res) {
+    var lengthNew = 0;
+    var lengthPending = 0;
+
+    for (var peerAlias in res) {
+        if (!res[peerAlias] || !res[peerAlias].length || !twister.DMs[peerAlias])
+            continue;
+
+        for (var i = 0; i < res[peerAlias].length; i++) {
+            var j = res[peerAlias][i].from + '/' + res[peerAlias][i].time;
+            if (typeof twister.DMs[peerAlias].twists.cached[j] === 'undefined') {
+                twister.DMs[peerAlias].twists.cached[j] = res[peerAlias][i];
+                twister.DMs[peerAlias].lengthCached++;
+                twister.DMs[peerAlias].twists.pending.push(j);
+                lengthPending++;
+                if (twister.DMs[peerAlias].lastId < res[peerAlias][i].id) {
+                    twister.DMs[peerAlias].lastId = res[peerAlias][i].id;
+                    if ((!twister.DMs[peerAlias].board || !twister.DMs[peerAlias].board.is('html *'))
+                        && !res[peerAlias][i].fromMe && res[peerAlias][i].from !== defaultScreenName) {
+                        lengthNew++;
+                        twister.DMs[peerAlias].lengthNew += 1;
+                        twister.DMs[peerAlias].twists.cached[j].isNew = true;
+                    }
+                }
+            }
+        }
+    }
+
+    if (lengthPending)
+        saveDMsToStorage();
+
+    return lengthNew;
 }
 
 function requestDMsCount() {
-    var followList = [];
+    var list = [];
     for (var i = 0; i < followingUsers.length; i++)
-        followList.push({username: followingUsers[i]});
-    for (var i = 0; i < groupChatAliases.length; i++ )
-        followList.push({username: groupChatAliases[i]});
+        list.push({username: followingUsers[i]});
+    for (var i = 0; i < groupChatAliases.length; i++)
+        list.push({username: groupChatAliases[i]});
 
-    twisterRpc('getdirectmsgs', [defaultScreenName, 1, followList],
-        function(req, dmUsers) {
-            var newDMsUpdated;
+    twisterRpc('getdirectmsgs', [defaultScreenName, 1, list],
+        function (req, res) {
+            var lengthNew = 0, lengthNewMax = 0;
+            var list = [];
 
-            for (var u in dmUsers) {
-                if (dmUsers[u]) {
-                    var dmData = dmUsers[u][0];
-                    if (u in _lastDMIdPerUser && u in _newDMsPerUser) {
-                        if (dmData.id !== _lastDMIdPerUser[u]) {
-                            _newDMsPerUser[u] += dmData.id - _lastDMIdPerUser[u];
-                            newDMsUpdated = true;
-                        }
-                    } else {
-                        _newDMsPerUser[u] = dmData.id + 1;
-                        newDMsUpdated = true;
-                    }
-                    _lastDMIdPerUser[u] = dmData.id;
-                }
+            for (var peerAlias in res) {
+                if (!res[peerAlias] || !res[peerAlias].length)
+                    continue;
+
+                if (!twister.DMs[peerAlias])
+                    twister.DMs[peerAlias] = queryCreateRes(peerAlias, 'direct',
+                        {boardAutoAppend: true, lastId: 0, lengthNew: 0});
+
+                if (res[peerAlias][0].id > twister.DMs[peerAlias].lastId) {
+                    lengthNew = res[peerAlias][0].id - twister.DMs[peerAlias].lastId;
+                    if (lengthNewMax < lengthNew)
+                        lengthNewMax = lengthNew;
+
+                    list.push({username: peerAlias});
+                } else if (!twister.DMs[peerAlias].lengthCached)
+                    queryPendingPushDMs(res);
             }
-            if (newDMsUpdated) {
-                saveDMsToStorage();
-                var newDMs = getNewDMsCount();
-                if (newDMs) {
-                    $.MAL.updateNewDMsUI(newDMs);
-                    $.MAL.soundNotifyDM();
 
-                    if (!$.mobile && $.Options.showDesktopNotifDMs.val === 'enable') {
-                        $.MAL.showDesktopNotification({
-                            body: polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', newDMs) + '.',
-                            tag: 'twister_notification_new_DMs',
-                            timeout: $.Options.showDesktopNotifDMsTimer.val,
-                            funcClick: function () {$.MAL.showDMchat();}
-                        });
-                    }
-                }
-                var newDMs = getNewGroupDMsCount();
-                if (newDMs) {
-                    $.MAL.updateNewGroupDMsUI(newDMs);
-                    $.MAL.soundNotifyDM();
+            if (list.length === 1)
+                queryProcess(list[0].username + '@direct', res);
+            else if (lengthNewMax === 1) {
+                if (queryPendingPushDMs(res))
+                    DMsSummaryProcessNew();
+            } else if (lengthNewMax) {
+                twisterRpc('getdirectmsgs', [defaultScreenName, lengthNewMax, list],
+                    function (req, res) {
+                        if (typeof res !== 'object' || $.isEmptyObject(res))
+                            return;
 
-                    if (!$.mobile && $.Options.showDesktopNotifDMs.val === 'enable') {
-                        $.MAL.showDesktopNotification({
-                            body: polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', newDMs) + '.',
-                            tag: 'twister_notification_new_DMs',
-                            timeout: $.Options.showDesktopNotifDMsTimer.val,
-                            funcClick: function () {$.MAL.showDMchat({group: true});}
-                        });
+                        if (queryPendingPushDMs(res))
+                            DMsSummaryProcessNew();
+                    }, undefined,
+                    function (req, res) {
+                        console.warn(polyglot.t('ajax_error',
+                            {error: (res && res.message) ? res.message : res}));
                     }
-                }
+                );
             }
-        }, null,
-        function(req, ret) {console.warn('ajax error:' + ret);}, null
+        }, undefined,
+        function (req, res) {
+            console.warn(polyglot.t('ajax_error', {error: (res && res.message) ? res.message : res}));
+        }
     );
 }
 
-function getNewDMsCount() {
-    var newDMs = 0;
-
-    for (var user in _newDMsPerUser) {
-        if (user[0] !== '*' && _newDMsPerUser[user])
-            newDMs += _newDMsPerUser[user];
+function DMsSummaryProcessNew() {
+    var lengthNew = getNewDMsCount();
+    if (lengthNew) {
+        $.MAL.updateNewDMsUI(lengthNew);
+        $.MAL.soundNotifyDM();
+        if (!$.mobile) {
+            if ($.Options.showDesktopNotifDMs.val === 'enable') {
+                $.MAL.showDesktopNotification({
+                    body: polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', lengthNew) + '.',
+                    tag: 'twister_notification_new_DMs',
+                    timeout: $.Options.showDesktopNotifDMsTimer.val,
+                    funcClick: function () {$.MAL.showDMchat();}
+                });
+            }
+            var elem = getElem('.directMessages .direct-messages-list');
+            if (isModalWithElemExists(elem))
+                modalDMsSummaryDraw(elem);
+        } else if ($.mobile.activePage.attr('id') !== 'directmsg')
+            modalDMsSummaryDraw($('#directmsg .direct-messages-list'));
     }
+    lengthNew = getNewGroupDMsCount();
+    if (lengthNew) {
+        $.MAL.updateNewGroupDMsUI(lengthNew);
+        $.MAL.soundNotifyDM();
+        if (!$.mobile) {
+            if ($.Options.showDesktopNotifDMs.val === 'enable') {
+                $.MAL.showDesktopNotification({
+                    body: polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', lengthNew) + '.',
+                    tag: 'twister_notification_new_DMs',
+                    timeout: $.Options.showDesktopNotifDMsTimer.val,
+                    funcClick: function () {$.MAL.showDMchat({group: true});}
+                });
+            }
+            var elem = getElem('.groupMessages .direct-messages-list');
+            if (isModalWithElemExists(elem))
+                modalDMsSummaryDraw(elem, true);
+        } else if ($.mobile.activePage.attr('id') !== 'directmsg')
+            modalDMsSummaryDraw($('#directmsg .direct-messages-list'), true);
+    }
+}
 
-    return newDMs;
+function getNewDMsCount() {
+    var lengthNew = 0;
+
+    for (var peerAlias in twister.DMs)
+        if (peerAlias[0] !== '*' && twister.DMs[peerAlias].lengthNew)
+            lengthNew += twister.DMs[peerAlias].lengthNew;
+
+    return lengthNew;
 }
 
 function getNewGroupDMsCount() {
-    var newDMs = 0;
+    var lengthNew = 0;
 
-    for (var user in _newDMsPerUser) {
-        if (user[0] === '*' && _newDMsPerUser[user])
-            newDMs += _newDMsPerUser[user];
-    }
+    for (var peerAlias in twister.DMs)
+        if (peerAlias[0] === '*' && twister.DMs[peerAlias].lengthNew)
+            lengthNew += twister.DMs[peerAlias].lengthNew;
 
-    return newDMs;
+    return lengthNew;
 }
 
-function resetNewDMsCountForUser(user, lastId) {
-    _newDMsPerUser[user] = 0;
-    _lastDMIdPerUser[user] = lastId;
+function resetNewDMsCount() {
+    var isNewDetected;
+
+    for (var peerAlias in twister.DMs)
+        if (twister.DMs[peerAlias].lengthNew && peerAlias[0] !== '*') {
+            twister.DMs[peerAlias].lengthNew = 0;
+            for (var j in twister.DMs[peerAlias].twists.cached)
+                delete twister.DMs[peerAlias].twists.cached[j].isNew;
+
+            isNewDetected = true;
+        }
+
+    if (!isNewDetected)
+        return;
 
     saveDMsToStorage();
     $.MAL.updateNewDMsUI(getNewDMsCount());
+}
+
+function resetNewDMsCountGroup() {
+    var isNewDetected;
+
+    for (var peerAlias in twister.DMs)
+        if (twister.DMs[peerAlias].lengthNew && peerAlias[0] === '*') {
+            twister.DMs[peerAlias].lengthNew = 0;
+            for (var j in twister.DMs[peerAlias].twists.cached)
+                delete twister.DMs[peerAlias].twists.cached[j].isNew;
+
+            isNewDetected = true;
+        }
+
+    if (!isNewDetected)
+        return;
+
+    saveDMsToStorage();
     $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+}
+
+function resetNewDMsCountForPeer(peerAlias) {
+    if (!twister.DMs[peerAlias].lengthNew)
+        return;
+
+    twister.DMs[peerAlias].lengthNew = 0;
+    for (var j in twister.DMs[peerAlias].twists.cached)
+        delete twister.DMs[peerAlias].twists.cached[j].isNew;
+
+    saveDMsToStorage();
+    if (peerAlias[0] !== '*')
+        $.MAL.updateNewDMsUI(getNewDMsCount());
+    else
+        $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
 }
 
 function updateGroupList() {
@@ -292,18 +483,58 @@ function updateGroupList() {
 }
 
 function initDMsCount() {
-    loadDMsFromStorage();
-    $.MAL.updateNewDMsUI(getNewDMsCount());
-    $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
-    //quick hack to obtain list of group chat aliases
-    updateGroupList();
-    setInterval(updateGroupList, 60000);
+    twister.DMs = {};
+    dumpPrivkey(defaultScreenName, function (req, res) {
+        twister.var.key = TwisterCrypto.PrivKey.fromWIF(res);
 
-    setTimeout(requestDMsCount, 200);
-    //polling not needed: processNewPostsConfirmation will call requestDMsCount.
-    //setInterval('requestDMsCount()', 5000);
+        loadDMsFromStorage();
+        $.MAL.updateNewDMsUI(getNewDMsCount());
+        $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
+        //quick hack to obtain list of group chat aliases
+        updateGroupList();
+        setInterval(updateGroupList, 60000);
+
+        setTimeout(requestDMsCount, 200);
+        //polling not needed: processNewPostsConfirmation will call requestDMsCount.
+        //setInterval('requestDMsCount()', 5000);
+    });
 }
 
 function newmsgsChangedUser() {
     clearInterval(twister.mentions.interval);
+}
+
+function handleDMsModalScroll(event) {
+    if (!event || !event.data.req || !twister.DMs[event.data.req]
+        || twister.DMs[event.data.req].scrollQueryActive)
+        return;
+
+    var length = twister.DMs[event.data.req].lastId - twister.DMs[event.data.req].lengthCached + 1;
+    if (!length)
+        return;
+
+    var elem = $(event.target);
+    if (elem.scrollTop() < 100) {
+        twister.DMs[event.data.req].scrollQueryActive = true;
+
+        twisterRpc('getdirectmsgs', [defaultScreenName, Math.min(length, postsPerRefresh),
+            [{username: twister.DMs[event.data.req].query, max_id: length - 1}]],
+            function (req, res) {
+                twister.res[req.k].scrollQueryActive = false;
+                //twister.res[req.k].boardAutoAppend = true;  // FIXME all pending twists will be appended
+                queryProcess(req.k, res);
+                //twister.res[req.k].boardAutoAppend = false;
+                if (req.container[0].scrollHeight !== req.containerScrollHeightPrev)
+                    req.container.scrollTop(req.container[0].scrollHeight - req.containerScrollHeightPrev);
+            }, {
+                k: twister.DMs[event.data.req].query + '@' + twister.DMs[event.data.req].resource,
+                container: elem,
+                containerScrollHeightPrev: elem[0].scrollHeight
+            },
+            function (req, res) {
+                console.warn(polyglot.t('ajax_error',
+                    {error: (res && res.message) ? res.message : res}));
+            }
+        );
+    }
 }

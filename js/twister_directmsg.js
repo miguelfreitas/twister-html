@@ -5,120 +5,6 @@
 
 var _groupMsgInviteToGroupQueue = [];
 
-function requestDMsnippetList(elemList, forGroup) {
-    var followList = [];
-    for (var i = 0; i < followingUsers.length; i++)
-        followList.push({username: followingUsers[i]});
-    for (var i = 0; i < groupChatAliases.length; i++)
-        followList.push({username: groupChatAliases[i]});
-
-    twisterRpc('getdirectmsgs', [defaultScreenName, 1, followList],
-        processDMsnippet, {elemList: elemList, forGroup: forGroup},
-        function(req, ret) {console.log('ajax error:' + ret);}, null
-    );
-}
-
-function processDMsnippet(req, DMs) {
-    req.elemList.empty();
-
-    for (var alias in DMs)
-        if ((req.forGroup && alias[0] === '*') || (!req.forGroup && alias[0] !== '*'))
-            addToCommonDMsList(req.elemList, alias, DMs[alias][0]);
-
-    $.MAL.commonDMsListLoaded();
-}
-
-function requestDmConversationModal(postboard, peerAlias) {
-    if (!isModalWithElemExists(postboard))
-        return;
-
-    requestDmConversation(postboard, peerAlias);
-    setTimeout(requestDmConversationModal, 1000, postboard, peerAlias);
-}
-
-function requestDmConversation(postboard, peerAlias) {
-    var since_id = undefined;
-
-    var oldItems = postboard.children();
-    if (oldItems.length)
-        since_id = parseInt(oldItems.eq(oldItems.length - 1).attr('data-id'));
-
-    var userDmReq = [{username: peerAlias}];
-    if (typeof since_id !== 'undefined')
-        userDmReq[0].since_id = since_id;
-
-    var count = 100;
-    twisterRpc('getdirectmsgs', [defaultScreenName, count, userDmReq],
-        function(req, ret) {processDmConversation(req.postboard, req.peerAlias, ret);},
-            {postboard: postboard, peerAlias: peerAlias},
-        function(req, ret) {
-            var msg = (ret.message) ? ret.message : ret;
-            alert(polyglot.t('ajax_error', {error: msg}));
-        }
-    );
-}
-
-function processDmConversation(stream, peerAlias, posts) {
-    if (!isModalWithElemExists(stream))
-        return;
-
-    var streamItems = stream.children();
-    var streamPostsIDs = [];
-    var newPosts = 0;
-
-    for (var i = 0; i < streamItems.length; i++) {
-        streamPostsIDs.push(parseInt(streamItems.eq(i).attr('data-id')));
-    }
-
-    if (posts[peerAlias] && posts[peerAlias].length) {
-        for (var i = 0; i < posts[peerAlias].length; i++) {
-            if (streamPostsIDs.indexOf(posts[peerAlias][i].id) === -1) {
-                var lastPostID = posts[peerAlias][i].id;
-                newPosts++;
-                postToElemDM(posts[peerAlias][i], defaultScreenName, peerAlias)
-                    .attr('data-id', lastPostID)
-                    .appendTo(stream)
-                ;
-                streamPostsIDs.push(lastPostID);
-            }
-        }
-        $.MAL.dmConversationLoaded(stream);
-    }
-
-    if (newPosts) {
-        resetNewDMsCountForUser(peerAlias, lastPostID);
-
-        if (getHashOfMinimizedModalWithElem(stream)) {
-            $.MAL.soundNotifyDM();
-            _newDMsPerUser[peerAlias] += newPosts;
-            if (peerAlias[0] === '*')
-                $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
-            else
-                $.MAL.updateNewDMsUI(getNewDMsCount());
-
-            if (!$.hasOwnProperty('mobile') && $.Options.showDesktopNotifDMs.val === 'enable')
-                $.MAL.showDesktopNotification({
-                    body: peerAlias[0] === '*' ?
-                        polyglot.t('You got') + ' ' + polyglot.t('new_group_messages', newPosts) + '.'
-                        : polyglot.t('You got') + ' ' + polyglot.t('new_direct_messages', newPosts) + '.',
-                    tag: 'twister_notification_new_DMs',
-                    timeout: $.Options.showDesktopNotifDMsTimer.val,
-                    funcClick: (function() {
-                        focusModalWithElement(this.postboard,
-                            function (peerAlias) {
-                                _newDMsPerUser[peerAlias] = 0;
-                                if (peerAlias[0] === '*')
-                                    $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
-                                else
-                                    $.MAL.updateNewDMsUI(getNewDMsCount());
-                            }, this.peerAlias);
-                    }).bind({postboard: stream, peerAlias: peerAlias})
-                });
-            // TODO here we need to set new DMs counter on minimized modal button
-        }
-    }
-}
-
 function directMsgSubmit(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -161,6 +47,20 @@ function newDirectMsg(msg, peerAlias) {
         alert(polyglot.t('Internal error: lastPostId unknown (following yourself may fix!)'));
 }
 
+function modalDMsSummaryDraw(elem, group) {
+    elem.empty();
+
+    for (var peerAlias in twister.DMs)
+        if (group ? peerAlias[0] === '*' : peerAlias[0] !== '*')
+            for (var j in twister.DMs[peerAlias].twists.cached)
+                if (twister.DMs[peerAlias].lastId === twister.DMs[peerAlias].twists.cached[j].id) {
+                    addToCommonDMsList(elem, peerAlias, twister.DMs[peerAlias].twists.cached[j]);
+                    break;
+                }
+
+    $.MAL.commonDMsListLoaded();
+}
+
 // dispara o modal de direct messages
 function openCommonDMsModal() {
     if (!defaultScreenName) {
@@ -174,19 +74,16 @@ function openCommonDMsModal() {
         title: polyglot.t('Direct Messages')
     });
 
-    requestDMsnippetList(modal.content.find('.direct-messages-list'));
+    modalDMsSummaryDraw(modal.content.find('.direct-messages-list'));
 
     modal.self.find('.mark-all-as-read')
         .css('display', 'inline')
         .attr('title', polyglot.t('Mark all as read'))
         .on('click', function (event) {
-            for (var user in _newDMsPerUser) {
-                if (user[0] !== '*')
-                    _newDMsPerUser[user] = 0;
-            }
-            saveDMsToStorage();
-            $.MAL.updateNewDMsUI(getNewDMsCount());
-            $(event.target).closest('.directMessages').find('.direct-messages-list .messages-qtd').hide();
+            resetNewDMsCount();
+            var elem = $(event.target).closest('.directMessages').find('.direct-messages-list');
+            elem.find('.messages-qtd').hide();
+            elem.find('.post.new').removeClass('new');
         })
     ;
 }
@@ -210,7 +107,21 @@ function openDmWithUserModal(peerAlias) {
     else
         getFullname(peerAlias, modal.self.find('.modal-header h3 span'));
 
-    requestDmConversationModal(modal.self.find('.direct-messages-thread').empty(), peerAlias);
+    queryStart(modal.content.find('.direct-messages-thread'),
+        peerAlias, 'direct', undefined, 2000, {
+            boardAutoAppend: true,
+            lastId: 0,
+            lengthNew: 0,
+            ready: function (req, peerAlias) {
+                twister.DMs[peerAlias] = twister.res[req];
+            },
+            readyReq: peerAlias,
+            drawFinish: function (req) {
+                $.MAL.dmConversationLoaded(twister.res[req].board);
+            }
+        }
+    );
+    modal.content.on('scroll', {req: peerAlias}, handleDMsModalScroll);
 
     $('.dm-form-template').children().clone(true)
         .addClass('open').appendTo(modal.content).fadeIn('fast')
@@ -232,19 +143,16 @@ function openGroupMessagesModal(groupAlias) {
 
         modal.content.prepend($('#group-messages-profile-modal-control-template').children().clone(true));
 
-        requestDMsnippetList(modal.content.find('.direct-messages-list'), true);
+        modalDMsSummaryDraw(modal.content.find('.direct-messages-list'), true);
 
         modal.self.find('.mark-all-as-read')
             .css('display', 'inline')
             .attr('title', polyglot.t('Mark all as read'))
             .on('click', function (event) {
-                for (var user in _newDMsPerUser) {
-                    if (user[0] === '*')
-                        _newDMsPerUser[user] = 0;
-                }
-                saveDMsToStorage();
-                $.MAL.updateNewGroupDMsUI(getNewGroupDMsCount());
-                $(event.target).closest('.groupMessages').find('.direct-messages-list .messages-qtd').hide();
+                resetNewDMsCountGroup();
+                var elem = $(event.target).closest('.groupMessages').find('.direct-messages-list');
+                elem.find('.messages-qtd').hide();
+                elem.find('.post.new').removeClass('new');
             })
         ;
     } else {
@@ -261,7 +169,21 @@ function openGroupMessagesModal(groupAlias) {
             function(req, ret) {
                 if (ret && ret.members.indexOf(defaultScreenName) !== -1) {
                     req.modal.content.append($('.messages-thread-template').children().clone(true));
-                    requestDmConversationModal(req.modal.content.find('.direct-messages-thread'), req.groupAlias);
+                    queryStart(req.modal.content.find('.direct-messages-thread'),
+                        req.groupAlias, 'direct', undefined, 2000, {
+                            boardAutoAppend: true,
+                            lastId: 0,
+                            lengthNew: 0,
+                            ready: function (req, peerAlias) {
+                                twister.DMs[peerAlias] = twister.res[req];
+                            },
+                            readyReq: req.groupAlias,
+                            drawFinish: function (req) {
+                                $.MAL.dmConversationLoaded(twister.res[req].board);
+                            }
+                        }
+                    );
+                    modal.content.on('scroll', {req: req.groupAlias}, handleDMsModalScroll);
 
                     var control = $('#group-messages-messages-modal-control-template').children().clone(true)
                         .appendTo(req.modal.content);

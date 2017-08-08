@@ -672,17 +672,10 @@ function openMentionsModalHandler(peerAlias) {
     });
 
     var req = queryStart(modal.content.find('.postboard-posts'), peerAlias, 'mention');
-    modal.content.find('.postboard-news')
-        .on('click',
-            {req: req, cbFunc: (peerAlias === defaultScreenName) ? resetMentionsCount : ''},
-            handleClickDisplayPendingTwists
-        )
-    ;
+    modal.content.find('.postboard-news').on('click', {req: req}, handleClickDisplayPendingTwists);
 
-    if (peerAlias === defaultScreenName) {
+    if (peerAlias === defaultScreenName)
         modal.content.on('scroll', handleMentionsModalScroll);
-        resetMentionsCount();
-    }
 }
 
 function openFollowersModal(peerAlias) {
@@ -943,9 +936,9 @@ function addToCommonDMsList(list, targetAlias, message) {
         getFullname(targetAlias, item.find('a.post-info-name'));
     }
 
-    if (_newDMsPerUser[targetAlias] > 0)
+    if (twister.DMs[targetAlias].lengthNew > 0)
         item.addClass('new')
-            .find('.messages-qtd').text(_newDMsPerUser[targetAlias]).show();
+            .find('.messages-qtd').text(twister.DMs[targetAlias].lengthNew).show();
 
     var items = list.children();
     for (var i = 0; i < items.length; i++) {
