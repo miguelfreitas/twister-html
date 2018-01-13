@@ -19,6 +19,11 @@ var twister = {
     modal: {},
     res: {},  // reses for various reqs are cached here
     var: {
+        dateFormatter: {
+            format: function (req) {
+                return req.toString().replace(/GMT.*/g, '');
+            }
+        },
         localAccounts: [],
         updatesCheckClient: {}
     }
@@ -406,7 +411,26 @@ function timeGmtToText(t) {
     if (t == 0) return '-';
     var d = new Date(0);
     d.setUTCSeconds(t);
-    return d.toString().replace(/GMT.*/g, '');
+    return twister.var.dateFormatter.format(d);
+}
+
+function setupTimeGmtToText(lang) {
+    if (typeof window.Intl !== 'object' || typeof window.Intl.DateTimeFormat !== 'function')
+        return;
+
+    twister.var.dateFormatter = new Intl.DateTimeFormat(
+        knownLanguages.indexOf(lang) !== -1 ? lang : undefined,
+        {
+            hour12: false,
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        }
+    );
 }
 
 function timeSincePost(t) {
@@ -2889,6 +2913,7 @@ function setTextcompleteDropdownListPos(position) {
 }
 
 $(document).ready(function () {
+    setupTimeGmtToText($.Options.locLang.val);
     if ($.localStorage.isSet('twistaURIs'))
         twister.URIs = $.localStorage.get('twistaURIs');
     twister.html.blanka.appendTo('body').hide();
