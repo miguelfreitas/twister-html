@@ -7,6 +7,12 @@ function twisterOptions() {
             if (elem.value !== 'auto')
                 twisterRpc('setpreferredspamlang', [elem.value]);
             location.reload();
+            /*
+            if (elem.value !== 'auto') {
+                setupTimeGmtToText(elem.value);
+                TODO redraw all timestamps
+            }
+            */
         },
         tickNotOnInit: 1
     });
