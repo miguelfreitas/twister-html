@@ -85,10 +85,10 @@ function getTopPostOfConversation(postLi, post, postboard) {
     }
 
     if( reply_n != undefined && reply_k != undefined ) {
-        dhtget( reply_n, "post" + reply_k, "s",
+        twisterRpc("peekpost", [reply_n, parseInt(reply_k)],
             function(postLi, postFromJson) {
                 getTopPostOfConversation(null, postFromJson, postboard);
-            }, postLi);
+            }, postLi, function(arg,ret) {console.log(ret)});
     } else {
         var newStreamPost;
         if (post)
