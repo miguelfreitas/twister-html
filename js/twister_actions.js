@@ -26,7 +26,7 @@ function requestRepliedBefore(postLi)
 
     if( reply_n != undefined && reply_k != undefined ) {
         if (reply_n[0] !== '!') {
-            dhtget(reply_n, "post" + reply_k, "s",
+            twisterRpc("peekpost", [reply_n, parseInt(reply_k)],
                 function (postLi, postFromJson) {
                     if (postFromJson) {
                         postLi.find('textarea').textcomplete('destroy'); // FIXME maybe we need to reset position instead (but curently it's cheaper)
@@ -37,7 +37,7 @@ function requestRepliedBefore(postLi)
                         $.MAL.relatedPostLoaded();
                         requestRepliedBefore(newStreamPost);
                     }
-                }, postLi);
+                }, postLi, function(arg,ret) {console.log(ret)});
         } else {
             //replied to a promoted post... try to get it..
             var params = [1, parseInt(reply_k)];
