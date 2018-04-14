@@ -2092,6 +2092,75 @@ ol.toptrends-list {
 }
 
 /*************************************
+************* LIVE CONSOLE ***********
+**************************************/
+.live-console-content .command-line {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border: solid 1px #caf;
+    background: #fac;
+    border-radius: 3px;
+}
+
+.live-console-content .history {
+    width: 570px;
+    height: 300px;
+    margin: 5px 5px 30px 5px;
+    position: absolute;
+    border-left: solid 1px #000;
+    font-size: 12px;
+    overflow: auto;
+}
+
+.live-console-content .history .item {
+    margin: 0 5px 5px 10px;
+}
+.live-console-content .history .item.sent:before {
+    content: '<';
+    margin: 5px;
+    font-weight: bold;
+    color: #aaf;
+}
+
+.live-console-content .history .item.received:before {
+    content: '>';
+    margin: 5px;
+    font-weight: bold;
+    color: #faa;
+}
+
+.live-console-content .history .item span {
+    margin-right: 5px;
+    border: solid 1px transparent;
+}
+
+.live-console-content .history .item span:hover {
+    border-color: #ccc;
+}
+
+.live-console-content .history .item .time {
+    font-style: oblique;
+}
+
+.live-console-content .history .item .type {
+    font-weight: bold;
+}
+
+.live-console-content .history .item .from {
+    font-style: italic;
+}
+
+.live-console-content .history .item .to {
+    color: #888;
+}
+
+.live-console-content .history .item .msg {
+    color: #aaf
+}
+
+/*************************************
 **************** LOADER **************
 **************************************/
 

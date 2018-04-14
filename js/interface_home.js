@@ -35,6 +35,22 @@ var InterfaceFunctions = function() {
 
         cleanupStorage();
 
+        var wsaddr = (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.hostname + ':' + (parseInt(location.port) + 1000).toString();
+        twister.webSocket = new WebSocket(wsaddr);
+        twister.webSocket.onmessage = function (msg) {
+            var data = JSON.parse(msg.data);
+
+            if (data.type === 'post') {
+                if (data.postboard === defaultScreenName){
+                    processNewPostsConfirmation(1, [data.post]);
+                }
+            } else if (data.type === 'mention') {
+                queryProcess(data.to + '@mention', [data.post]);
+            } else if (data.type === 'DM') {
+                //TODO: process DM here...
+            }
+        };
+
         initInterfaceCommon();
         initUserSearch();
         initInterfaceDirectMsg();
@@ -73,8 +89,10 @@ var InterfaceFunctions = function() {
 
             loadFollowing( function(args) {
                      $(".mini-profile .following-count").text(followingUsers.length-1);
-                     requestLastHave();
-                     setInterval(requestLastHave, 1000);
+                     if (twister.webSocket.readyState !== WebSocket.OPEN) {
+                         requestLastHave();
+                         setInterval(requestLastHave, 1000);
+                     }
                      initMentionsCount();
                      initDMsCount();
                      requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);

@@ -393,7 +393,8 @@ if(preferredLanguage == "en"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
       "New Users": "New Users",
-      "Live tracking" : "Live tracking"
+      "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 if(preferredLanguage == "es"){
@@ -759,7 +760,8 @@ if(preferredLanguage == "es"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
       "New Users": "New Users",
-      "Live tracking" : "Live tracking"
+      "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -1124,7 +1126,8 @@ if(preferredLanguage == "uk"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -1494,7 +1497,8 @@ if(preferredLanguage == "zh-CN"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -1861,7 +1865,8 @@ if(preferredLanguage == "nl"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -2226,7 +2231,8 @@ if(preferredLanguage == "it"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -2592,7 +2598,8 @@ if(preferredLanguage == "fr"){
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -2965,7 +2972,8 @@ if(preferredLanguage == "ru"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -3334,7 +3342,8 @@ if(preferredLanguage == "de"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -3698,7 +3707,8 @@ if(preferredLanguage == "ja"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -4067,7 +4077,8 @@ if(preferredLanguage == "pt-BR"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 
@@ -4433,7 +4444,8 @@ if(preferredLanguage == "tr"){
       "fav_this": "Sana özel mi?",
       "Last activity": "Son etkinlik",
       "New Users": "Yeni Kullanıcılar",
-      "Live tracking" : "Canlı takip"
+      "Live tracking" : "Canlı takip",
+      "Live Console" : "Anlık Komut Satırı"
     };
 }
 
@@ -4802,7 +4814,8 @@ if(preferredLanguage == "cs"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Live Console" : "Live Console"
     };
 }
 

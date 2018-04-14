@@ -26,7 +26,8 @@ var twister = {
         },
         localAccounts: [],
         updatesCheckClient: {}
-    }
+    },
+    webSocket: null
 };
 var window_scrollY = 0;
 var _watchHashChangeRelaxDontDoIt = window.location.hash === '' ? true : false;
@@ -922,6 +923,111 @@ function openModalUriShortener()
     //i + URIs are cached
 }
 
+function openConsoleModal()
+{
+    var ws = new WebSocket('ws://' + location.hostname + ':' + (parseInt(location.port) + 1000).toString());
+    var modal = openModal({
+        classAdd: 'live-console',
+        content: twister.tmpl.liveConsole.clone(true),
+        title: polyglot.t('Live Console'),
+        onClose: function() {
+            ws.close();
+        }
+    });
+
+    var history = modal.content.find('.history');
+
+    history.css('height', (modal.content.height() - 30).toString() + "px");
+
+    var commandline = modal.content.find('.command-line');
+
+    ws.onmessage = function(msg) {
+        var data = JSON.parse(msg.data);
+
+        var item = twister.tmpl.liveConsoleItem.clone(true);
+        item.addClass('received');
+
+        item.find('.time').text(Date.now());
+
+        if (data.type) {
+            item.find('.type').text(data.type);
+            item.find('.from').text(data.from);
+            if (data.type === 'post') {
+                item.find('.to').text(data.postboard);
+                item.find('.msg').text(data.post.userpost.msg + (data.post.userpost.msg2 ? data.post.userpost.msg2 : ''));
+            } else if (data.type === 'mention') {
+                item.find('.to').text(data.to);
+                item.find('.msg').text(data.post.userpost.msg + (data.post.userpost.msg2 ? data.post.userpost.msg2 : ''));
+            } else if (data.type === 'DM') {
+                item.find('.to').text(data.to);
+                item.find('.msg').text(data.msg);
+            }
+        } else if (data.result) {
+            var pre=$('<pre></pre>');
+            pre.text(JSON.stringify(data.result, undefined, 2));
+            item.find('.msg').append(pre);
+        } else {
+            var pre=$('<pre></pre>');
+            pre.text(JSON.stringify(data, undefined, 2));
+            item.find('.msg').append(pre);
+        }
+
+        history.append(item);
+    };
+
+    commandline.on('keydown', function(event){
+        if (event.keyCode === 13) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            var c = {};
+            var strC = commandline.val().split(' ');
+
+            if (strC.length < 1)
+                return;
+
+            c.method = strC[0];
+            c.params = [];
+            c.id = 1;
+
+            var tmp = '';
+            for(var i=1; i<strC.length; i++){
+                if (strC[i].charAt(0) === '"' && tmp === '') {
+                    tmp = strC[i].substr(1);
+                } else if (tmp !== '') {
+                    tmp += ' ';
+                    c.params.push(tmp);
+                    tmp = '';
+                    continue;
+                } else if (strC[i].charAt(strC[i].length - 1) === '"') {
+                    tmp += ' ' + strC[i].substr(0, strC[i].length - 1);
+                    c.params.push(tmp);
+                    tmp = '';
+                    continue;
+                }
+                if (strC[i].charAt(strC[i].length - 1) === '"') {
+                    c.params.push(tmp.substr(0, tmp.length - 1));
+                    tmp = '';
+                    continue;
+                }
+
+                c.params.push(parseInt(strC[i]));
+                tmp = '';
+            }
+
+            ws.send(JSON.stringify(c));
+
+            var item = twister.tmpl.liveConsoleItem.clone(true);
+            item.addClass('sent');
+            item.find('.time').text(Date.now());
+            item.find('.msg').text(JSON.stringify(c));
+            history.append(item);
+
+            commandline.val('');
+        }
+    });
+}
+
 function newConversationModal(peerAlias, resource) {
     var content = $('#hashtag-modal-template').children().clone(true);
 
@@ -1365,6 +1471,8 @@ function loadModalFromHash() {
         openModalUriShortener();
     else if (hashstring === '#newusers')
         openNewUsersModal();
+    else if (hashstring === '#live-console')
+        openConsoleModal();
 }
 
 function initHashWatching() {
@@ -2691,6 +2799,8 @@ function initInterfaceCommon() {
             elem.addClass('highlighted');
         })
     ;
+    twister.tmpl.liveConsole = extractTemplate('#template-live-console');
+    twister.tmpl.liveConsoleItem = extractTemplate('#template-live-console-item');
 
     getElem('.modal-wrapper .modal-close, .modal-wrapper .modal-blackout').on('click', closeModal);
 

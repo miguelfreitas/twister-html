@@ -496,6 +496,9 @@ function queryStart(board, query, resource, timeoutArgs, intervalTimeout, extra)
     if (twister.res[req].interval)
         return req;
 
+    if (twister.webSocket.readyState === WebSocket.OPEN)
+        return req;
+
     queryRequest(req);
 
     // use extended timeout parameters on modal refresh (requires twister_core >= 0.9.14).
