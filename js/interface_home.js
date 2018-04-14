@@ -89,8 +89,8 @@ var InterfaceFunctions = function() {
 
             loadFollowing( function(args) {
                      $(".mini-profile .following-count").text(followingUsers.length-1);
+                     requestLastHave();
                      if (twister.webSocket.readyState !== WebSocket.OPEN) {
-                         requestLastHave();
                          setInterval(requestLastHave, 1000);
                      }
                      initMentionsCount();
