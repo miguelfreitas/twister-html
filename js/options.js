@@ -45,7 +45,10 @@ function twisterOptions() {
     });
     this.add({
         name: 'WhoToFollow',
-        valDefault: 'enable'
+        valDefault: 'enable',
+        tickMethod: function (elem) {
+            $('#WhoToFollowCont').css('display', (elem.value === 'enable') ? 'block' : 'none');
+        }
     });
     this.add({
         name: 'WhoToFollowOnlyActiveUsers',
