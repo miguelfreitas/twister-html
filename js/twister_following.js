@@ -638,16 +638,26 @@ function processWhoToFollowSuggestion(module, peerAlias, followedBy, prepend) {
     item.find('.twister-user-tag').text('@' + peerAlias);
 
     getAvatar(peerAlias, item.find('.twister-user-photo'));
-    getStatusTime(peerAlias, item.find('.latest-activity .time'));
 
     if (module.hasClass('who-to-follow') || module.hasClass('who-to-follow-modal')) {
         item.find('.twister-by-user-name').attr('href', $.MAL.userUrl(followedBy));
         getFullname(followedBy, item.find('.followed-by').text(followedBy));
-        item.find('.twister-user-remove').on('click', {item: item}, function (event) {
+        var remFunc = function (event) {
             event.data.item.remove();
             getRandomFollowSuggestion();
-        });
+        };
+        item.find('.twister-user-remove').on('click', {item: item}, remFunc);
+        if (module.hasClass('who-to-follow')) {
+            getStatusTime(peerAlias, item.find('.latest-activity .time'), function (ltime, arg) {
+                if ($.Options.WhoToFollowOnlyActiveUsers.val === 'enable' &&
+                    ((Date.now() / 1000) - ltime) / 2592000 > $.Options.WhoToFollowOnlyActiveUsersInMonths.val) {
+                    arg.func({data: arg});
+                }
+            }, {item: item, func: remFunc});
+        } else
+            getStatusTime(peerAlias, item.find('.latest-activity .time'));
     } else if (module.hasClass('new-users') || module.hasClass('new-users-modal')) {
+        getStatusTime(peerAlias, item.find('.latest-activity .time'));
         item.find('.followers').remove();
         item.find('.twister-user-remove').remove();
     }

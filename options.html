@@ -372,10 +372,22 @@
             <p class="label label-h"> Who to Follow </p>
             <div class="container">
               <form>
-                <select id="WhoToFollow">
-                  <option value="enable">Enable</option>
-                  <option value="disable">Disable</option>
-                </select>
+                  <p>
+                    <select id="WhoToFollow">
+                      <option value="enable">Enable</option>
+                      <option value="disable">Disable</option>
+                    </select>
+                  </p>
+                  <div id="WhoToFollowCont" class="container">
+                      <p class="label"> Show only active users </p>
+                      <select id="WhoToFollowOnlyActiveUsers" class="container">
+                          <option value="enable">Enable</option>
+                          <option value="disable">Disable</option>
+                      </select>
+                      <div id="WhoToFollowOnlyActiveUsersOpt" class="container">
+                          <span class="label">in last</span> <input id="WhoToFollowOnlyActiveUsersInMonths" size="3" maxlength="3"/> <span class="label">month(s)</span>
+                      </div>
+                  </div>
               </form>
             </div>
           </div>

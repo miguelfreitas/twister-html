@@ -523,7 +523,7 @@ function getPostsCount(peerAlias, elem) {
     );
 }
 
-function getStatusTime(peerAlias, elem) {
+function getStatusTime(peerAlias, elem, cb, cbArg) {
     dhtget(peerAlias, 'status', 's',
         function (req, ret) {
             if (!ret || !ret.userpost)
@@ -535,7 +535,9 @@ function getStatusTime(peerAlias, elem) {
                     .attr('data-id', ret.userpost.k)
                     .attr('data-time', ret.userpost.time)
             ;
-        }, {peerAlias: peerAlias, elem: elem}
+            if (req.cbFunc)
+                req.cbFunc(ret.userpost.time, cbArg);
+        }, {peerAlias: peerAlias, elem: elem, cbFunc: cb}
     );
 }
 

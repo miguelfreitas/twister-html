@@ -48,6 +48,20 @@ function twisterOptions() {
         valDefault: 'enable'
     });
     this.add({
+        name: 'WhoToFollowOnlyActiveUsers',
+        valDefault: 'enable',
+        tickMethod: function (elem) {
+            $('#WhoToFollowOnlyActiveUsersOpt').css('display', (elem.value === 'enable') ? 'inline' : 'none');
+        }
+    });
+    this.add({
+        name: 'WhoToFollowOnlyActiveUsersInMonths',
+        type: 'numeric',
+        valDefault: '6',
+        valMes: 'month(s)',
+        getMethod: function (val) {return parseInt(val);}
+    });
+    this.add({
         name: 'NewUsers',
         valDefault: 'enable',
         tickMethod: function (elem) {

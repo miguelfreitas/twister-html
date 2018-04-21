@@ -393,7 +393,10 @@ if(preferredLanguage == "en"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
       "New Users": "New Users",
-      "Live tracking" : "Live tracking"
+      "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 if(preferredLanguage == "es"){
@@ -759,7 +762,10 @@ if(preferredLanguage == "es"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
       "New Users": "New Users",
-      "Live tracking" : "Live tracking"
+      "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -1124,7 +1130,10 @@ if(preferredLanguage == "uk"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -1494,7 +1503,10 @@ if(preferredLanguage == "zh-CN"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -1861,7 +1873,10 @@ if(preferredLanguage == "nl"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -2226,7 +2241,10 @@ if(preferredLanguage == "it"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -2592,7 +2610,10 @@ if(preferredLanguage == "fr"){
       "You have to log in to favorite messages.": "You have to log in to favorite messages.",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -2965,7 +2986,10 @@ if(preferredLanguage == "ru"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -3334,7 +3358,10 @@ if(preferredLanguage == "de"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -3698,7 +3725,10 @@ if(preferredLanguage == "ja"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -4067,7 +4097,10 @@ if(preferredLanguage == "pt-BR"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -4433,7 +4466,10 @@ if(preferredLanguage == "tr"){
       "fav_this": "Sana özel mi?",
       "Last activity": "Son etkinlik",
       "New Users": "Yeni Kullanıcılar",
-      "Live tracking" : "Canlı takip"
+      "Live tracking" : "Canlı takip",
+        "Show only active users" : "Sadece aktif kullanıcıları göster",
+        "in last" : "son",
+        "month(s)" : "ayda"
     };
 }
 
@@ -4802,7 +4838,10 @@ if(preferredLanguage == "cs"){
       "fav_this": "Is it for you only?",
       "Last activity": "Last activity",
         "New Users": "New Users",
-        "Live tracking" : "Live tracking"
+        "Live tracking" : "Live tracking",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -5181,7 +5220,10 @@ if(preferredLanguage == "cmn"){
       "fav_this": "它為您所獨有？",
       "Last activity": "最近一次活動",
       "New Users": "新近使用者",
-      "Live tracking" : "即時追蹤"
+      "Live tracking" : "即時追蹤",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
@@ -5560,7 +5602,10 @@ if(preferredLanguage == "yue"){
       "fav_this": "佢為閣下所獨有嘛？",
       "Last activity": "最近一次活動",
       "New Users": "新近用家",
-      "Live tracking" : "即時追蹤"
+      "Live tracking" : "即時追蹤",
+        "Show only active users" : "Show only active users",
+        "in last" : "in last",
+        "month(s)" : "month(s)"
     };
 }
 
