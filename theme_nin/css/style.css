@@ -791,6 +791,19 @@ samp {
     color: #B4C669;
 }
 
+.post.promoted > .post-data .post-text::after {
+    font-size: 8px;
+    color: #FFF;
+    background-color: #B4C669CC;
+    margin: 0px 8px;
+    padding: 2px 4px;
+    content: attr(data-promoted);
+}
+
+.post.promoted > .post-data:hover .post-text::after {
+    background-color: #B4C669;
+}
+
 /* line 55, ../sass/_postboard.sass */
 .post-data {
   padding: 10px;

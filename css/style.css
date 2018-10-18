@@ -1089,6 +1089,19 @@ ol.toptrends-list {
     background-color: #FFFFED;
 }
 
+.post.promoted > .post-data .post-text::after {
+    font-size: 8px;
+    color: #FFF;
+    background-color: #E34F42CC;
+    margin: 0px 8px;
+    padding: 2px 4px;
+    content: attr(data-promoted);
+}
+
+.post.promoted > .post-data:hover .post-text::after {
+    background-color: #E34F42;
+}
+
 .post.open
 {
     margin: 10px 0;

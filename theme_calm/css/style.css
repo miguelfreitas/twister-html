@@ -1301,6 +1301,19 @@ textarea.splited-post {
     background-color: #FFFFED;
 }
 
+.post.promoted > .post-data .post-text::after {
+    font-size: 10px;
+    color: #FFF;
+    background-color: #B2D67B;
+    margin: 0px 8px;
+    padding: 2px 4px;
+    content: attr(data-promoted);
+}
+
+.post.promoted > .post-data:hover .post-text::after {
+    background-color: #B2D67BCC;
+}
+
 .post.open
 {
     margin: 10px 0;

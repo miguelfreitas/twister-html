@@ -82,6 +82,18 @@
     .post-info-time
         color: $color-green
 
+.post.promoted
+    > .post-data
+        .post-text::after
+            font-size: 8px
+            color: #FFF
+            background-color: #B4C669CC
+            margin: 0px 8px
+            padding: 2px 4px
+            content: attr(data-promoted)
+        &:hover
+            .post-text::after
+                background-color: $color-green
 
 .open
     background: none

@@ -188,6 +188,9 @@ function postToElem(post, kind, promoted) {
         elem.find('.post-propagate').remove();
         postData.attr('data-promoted', 1);
         postData.attr('data-screen-name', '!' + username);
+    } else if (!post.sig_userpost) {  // .sig_userpost of promoted twists is empty so let's assume this one is promoted
+        elem.addClass('promoted')
+            .find('.post-text').attr('data-promoted', polyglot.t('promoted'));
     } else {
         setPostInfoSent(userpost.n, userpost.k, elem.find('.post-info-sent'));
         if ($.Options.filterLang.val !== 'disable' && $.Options.filterLangSimulate.val) {
