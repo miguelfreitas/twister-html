@@ -2514,9 +2514,10 @@ function postSubmit(e, oldLastPostId) {
         textArea.val('').attr('placeholder', polyglot.t('Your message was sent!'));
         btnPostSubmit.closest('form').find('.post-area-remaining').text('');
 
-        if (btnPostSubmit.closest('.post-area,.post-reply-content')) {
-            $('.post-area-new').removeClass('open').find('textarea').blur();
-        };
+        if (btnPostSubmit.closest('.post-area,.post-reply-content').length) {
+            btnPostSubmit.closest('.post-area-new').removeClass('open')
+                .find('textarea').blur();
+        }
         textArea.data('unicodeConversionStack', []);
         textArea.data('disabledUnicodeRules', []);
     }
