@@ -285,11 +285,12 @@ function newRtMsg(postData, msg) {
         sig_userpost = postData.attr('data-content_to_sigrt');
     }
 
-    if (typeof sig_userpost === 'undefined') {
-        alert(polyglot.t('error',
-            {error: 'can\'t sig_userpost is not deifned'}
-        ));
-
+    if (!sig_userpost) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'Can\'t handle retwisting of a twist —\n'
+                + polyglot.t('this is undefined', {'this': 'sig_userpost'})
+        });
         return;
     }
 
@@ -321,13 +322,15 @@ function newFavMsg(postData, priv, msg) {
     var userpost = $.evalJSON(postData.attr('data-content_to_rt'));
     var sig_userpost = postData.attr('data-content_to_sigrt');
 
-    if (typeof sig_userpost === 'undefined') {
-        alert(polyglot.t('error',
-            {error: 'can\'t sig_userpost is not deifned'}
-        ));
-
+    if (!sig_userpost) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'Can\'t handle favoriting of a twist —\n'
+                + polyglot.t('this is undefined', {'this': 'sig_userpost'})
+        });
         return;
     }
+
     var rtObj = {sig_userpost: sig_userpost, userpost: userpost};
 
     if (typeof lastPostId !== 'undefined') {
