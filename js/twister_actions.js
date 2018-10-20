@@ -243,23 +243,44 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
     }
 }
 
-function newPostMsg(msg, $postOrig) {
-    if( lastPostId != undefined ) {
-        if ( typeof _sendedPostIDs !== 'undefined' )
-            _sendedPostIDs.push(lastPostId + 1);
-
-        var params = [defaultScreenName, lastPostId + 1, msg]
-        if( $postOrig.length ) {
-            params.push($postOrig.attr('data-screen-name'));
-            params.push(parseInt($postOrig.attr('data-id')));
-        }
-        twisterRpc("newpostmsg", params,
-                   function(arg, ret) { incLastPostId(); }, null,
-                   function(arg, ret) { var msg = ("message" in ret) ? ret.message : ret;
-                                        alert(polyglot.t("ajax_error", { error: msg })); }, null);
-    } else {
-        alert(polyglot.t("Internal error: lastPostId unknown (following yourself may fix!)"));
+function newPostMsg(msg, reply_n, reply_k, cbFunc, cbReq) {
+    if (typeof lastPostId === 'undefined') {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'Can\'t handle the twisting of a new twist —\n'
+                + polyglot.t('Internal error: lastPostId unknown (following yourself may fix!)')
+        });
+        return;
     }
+    if (typeof _sendedPostIDs !== 'object') {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'Can\'t handle the twisting of a new twist —\n'
+                + polyglot.t('this is undefined', {'this': '_sendedPostIDs'})
+        });
+        return;
+    }
+
+    _sendedPostIDs.push(lastPostId + 1);
+
+    var req = [defaultScreenName, lastPostId + 1, msg];
+    if (reply_n)
+        req.push(reply_n, reply_k);
+
+    twisterRpc('newpostmsg', req,
+        function(req, ret) {
+            incLastPostId();
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.cbReq, ret);
+        }, {cbFunc: cbFunc, cbReq: cbReq},
+        function(req, ret) {
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                txtMessage: 'Can\'t handle the twisting of a new twist —\n'
+                    + polyglot.t('ajax_error', {error: (ret.message) ? ret.message : ret})
+            });
+        }
+    );
 }
 
 function newRtMsg(postData, msg) {

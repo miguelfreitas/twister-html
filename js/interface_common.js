@@ -2472,7 +2472,7 @@ function postSubmit(e, oldLastPostId) {
         }
 
         var doSubmitPost = function (postText, postData) {
-            newPostMsg(postText, postData);
+            newPostMsg(postText, postData.attr('data-screen-name'), parseInt(postData.attr('data-id')));
         }
     }
 

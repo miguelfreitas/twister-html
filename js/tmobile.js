@@ -395,7 +395,7 @@ function installSubmitClick() {
         var $postOrig = $("#newmsg .reply-original-post .post-data");
 
         var s = encode_utf8($replyText.val());
-        newPostMsg(s, $postOrig);
+        newPostMsg(s, $postOrig.attr('data-screen-name'), parseInt($postOrig.attr('data-id')));
 
         $replyText.val("");
         $replyText.attr("placeholder", polyglot.t("Your message was sent!"));
