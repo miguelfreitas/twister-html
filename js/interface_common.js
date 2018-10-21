@@ -2495,6 +2495,7 @@ function postSubmit(e, oldLastPostId) {
                         formerPostElem.after($('<li class="post-replies"><ol class="sub-replies"></ol></li>'));  // FIXME replace with template as like as a reqRepAfterCB()'s similar thing
 
                     postToElem(ret, 'related').hide()
+                        .addClass('new')
                         .appendTo(formerPostElem.next().children('.sub-replies'))
                         .slideDown('fast')
                     ;
