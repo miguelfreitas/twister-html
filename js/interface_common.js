@@ -2467,7 +2467,8 @@ function postSubmit(e, oldLastPostId) {
         if (splitedPostsCount > 1) {
             if (textArea.length < splitedPostsCount) {
                 //current part will be sent as reply to the previous part...
-                postData = $('<div data-id="' + lastPostId + '" data-screen-name="' + defaultScreenName
+                postData = $('<div data-id="' + (oldLastPostId + 1).toString()  // (lastPostId - oldLastPostId) may be more than 1 because of an async nature of getting of the confirmation of sending
+                    + '" data-screen-name="' + defaultScreenName
                     + '" data-reply-part-id="' + (splitedPostsCount - textArea.length).toString()
                     + '"></div>');
             }
