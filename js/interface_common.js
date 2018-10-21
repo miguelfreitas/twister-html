@@ -2467,13 +2467,47 @@ function postSubmit(e, oldLastPostId) {
         if (splitedPostsCount > 1) {
             if (textArea.length < splitedPostsCount) {
                 //current part will be sent as reply to the previous part...
-                postData = $('<div data-id="' + lastPostId + '" data-screen-name="' + defaultScreenName + '"></div>');
+                postData = $('<div data-id="' + lastPostId + '" data-screen-name="' + defaultScreenName
+                    + '" data-reply-part-id="' + (splitedPostsCount - textArea.length).toString()
+                    + '"></div>');
             }
         }
 
-        var doSubmitPost = function (postText, postData) {
-            newPostMsg(postText, postData.attr('data-screen-name'), parseInt(postData.attr('data-id')));
-        }
+        if (postData.length)
+            var doSubmitPost = function (postText, postDataElem) {
+                var reply_n = postDataElem.attr('data-screen-name');
+                var reply_k = parseInt(postDataElem.attr('data-id'));
+                var part_id = postDataElem.attr('data-reply-part-id');
+                var cbFunc = function (req, ret) {
+                    var postDataElem = $('.expanded-post .post-data'
+                        + '[data-screen-name=\'' + req.reply_n + '\']'
+                        + '[data-id=\'' + req.reply_k + '\']');
+
+                    if (!postDataElem.length) {
+                        if (req.part_id && ++req.tries < 5)
+                            setTimeout(req.cbFunc, 2000, req);
+                        return;
+                    }
+
+                    formerPostElem = postDataElem.closest('li.post');
+                    if (!formerPostElem.next().is('.post-replies'))
+                        formerPostElem.after($('<li class="post-replies"><ol class="sub-replies"></ol></li>'));  // FIXME replace with template as like as a reqRepAfterCB()'s similar thing
+
+                    postToElem(ret, 'related').hide()
+                        .appendTo(formerPostElem.next().children('.sub-replies'))
+                        .slideDown('fast')
+                    ;
+                };
+
+                newPostMsg(postText, reply_n, reply_k,
+                    cbFunc, {reply_n: reply_n, reply_k: reply_k, part_id: part_id,
+                        cbFunc: cbFunc, tries: 0}
+                );
+            };
+        else
+            var doSubmitPost = function (postText) {
+                newPostMsg(postText);
+            };
     }
 
     if (textArea.length <= 1) {
