@@ -2460,9 +2460,10 @@ function postSubmit(e, oldLastPostId) {
     }
 
     if (btnPostSubmit.hasClass('with-reference')) {
-        var doSubmitPost = function (postText, postData) {
-            newRtMsg(postData, postText);
-        }
+        var doSubmitPost = function (postText, postDataElem) {
+            newRtMsg($.evalJSON(postDataElem.attr('data-content_to_rt')),
+                postDataElem.attr('data-content_to_sigrt'), postText);
+        };
     } else {
         if (splitedPostsCount > 1) {
             if (textArea.length < splitedPostsCount) {
@@ -2564,8 +2565,11 @@ function retweetSubmit(event) {
     event.stopPropagation();
 
     var prompt = $(event.target).closest('.prompt-wrapper');
+    var postDataElem = prompt.find('.post-data');
 
-    newRtMsg(prompt.find('.post-data'));
+    newRtMsg($.evalJSON(postDataElem.attr('data-content_to_rt')),
+        postDataElem.attr('data-content_to_sigrt'));
+
     closePrompt(prompt);
 }
 

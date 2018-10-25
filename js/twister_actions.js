@@ -283,15 +283,37 @@ function newPostMsg(msg, reply_n, reply_k, cbFunc, cbReq) {
     );
 }
 
-function newRtMsg(postData, msg) {
-    var userpost = $.evalJSON(postData.attr('data-content_to_rt'));
-    var sig_userpost;
+function newRtMsg(userpost, sig_userpost, comment, cbFunc, cbReq) {
+    if (typeof lastPostId === 'undefined') {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'Can\'t handle the retwisting of a twist —\n'
+                + polyglot.t('Internal error: lastPostId unknown (following yourself may fix!)')
+        });
+        return;
+    }
+    if (typeof _sendedPostIDs !== 'object') {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'Can\'t handle the retwisting of a twist —\n'
+                + polyglot.t('this is undefined', {'this': '_sendedPostIDs'})
+        });
+        return;
+    }
 
+    if (typeof userpost !== 'object') {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: 'Can\'t handle the retwisting of a twist —\n'
+                + polyglot.t('this is undefined', {'this': 'userpost'})
+        });
+        return;
+    }
     if (userpost.rt) {
         if (parseInt(twisterVersion) <= 93000) {
             alertPopup({
                 //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-                txtMessage: 'Can\'t handle retwisting of commented retwisted twists —\n'
+                txtMessage: 'Can\'t handle the retwisting of commented retwisted twists —\n'
                     + polyglot.t('daemon_is_obsolete', {versionReq: '0.9.3+'})
             });
 
@@ -302,14 +324,11 @@ function newRtMsg(postData, msg) {
             userpost.rt = undefined;
             userpost.sig_rt = undefined;
         }
-    } else {
-        sig_userpost = postData.attr('data-content_to_sigrt');
     }
-
     if (!sig_userpost) {
         alertPopup({
             //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
-            txtMessage: 'Can\'t handle retwisting of a twist —\n'
+            txtMessage: 'Can\'t handle the retwisting of a twist —\n'
                 + polyglot.t('this is undefined', {'this': 'sig_userpost'})
         });
         return;
@@ -317,26 +336,27 @@ function newRtMsg(postData, msg) {
 
     userpost.sig_wort = undefined;
 
-    var rtObj = {sig_userpost: sig_userpost, userpost: userpost};
+    _sendedPostIDs.push(lastPostId + 1);
 
-    if (typeof lastPostId !== 'undefined') {
-        if (typeof _sendedPostIDs !== 'undefined')
-            _sendedPostIDs.push(lastPostId + 1);
+    var req = [defaultScreenName, lastPostId + 1,
+        {sig_userpost: sig_userpost, userpost: userpost}];
+    if (typeof comment !== 'undefined')
+        req.push(comment);
 
-        var params = [defaultScreenName, lastPostId + 1, rtObj];
-
-        if (typeof msg !== 'undefined')
-            params.push(msg);
-
-        twisterRpc('newrtmsg', params,
-            function(arg, ret) {incLastPostId();}, null,
-            function(arg, ret) {var msg = ('message' in ret) ? ret.message : ret;
-                alert(polyglot.t('ajax_error', {error: msg}));
-            }, null
-        );
-    } else {
-        alert(polyglot.t('Internal error: lastPostId unknown (following yourself may fix!)'));
-    }
+    twisterRpc('newrtmsg', req,
+        function(req, ret) {
+            incLastPostId();
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.cbReq, ret);
+        }, {cbFunc: cbFunc, cbReq: cbReq},
+        function(req, ret) {
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+                txtMessage: 'Can\'t handle the retwisting of a twist —\n'
+                    + polyglot.t('ajax_error', {error: (ret.message) ? ret.message : ret})
+            });
+        }
+    );
 }
 
 function newFavMsg(postData, priv, msg) {
