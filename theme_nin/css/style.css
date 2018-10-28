@@ -1097,6 +1097,20 @@ samp {
   height: 20px;
 }
 
+.post .new-replies-available {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.post .new-replies-available button {
+    font-size: 10px;
+    background-color: #B4C669;
+}
+
+.post .new-replies-available button:hover {
+    background-color: #aaa;
+}
+
 /* line 283, ../sass/_postboard.sass */
 .user-name-tooltip {
   display: none;

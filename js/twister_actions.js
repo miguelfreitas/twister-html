@@ -640,6 +640,51 @@ function queryProcess(req, res) {
                             $.MAL.showMentions(defaultScreenName);
                     }).bind({req: req})
                 });
+            for (var i = 0; i < twister.res[req].twists.pending.length; i++) {
+                var twist = twister.res[req].twists.cached[twister.res[req].twists.pending[i]];
+                if (!twist.userpost.reply)  // not '|| twist.userpost.reply.n !== defaultScreenName' too because a reply twist can be a bit deeper than a twist of the current user
+                    continue;
+
+                var postDataElem = getElem('.expanded-post .post-data'  // FIXME need to rewrite the appending of .post-replies to do it for not expanded twists too
+                    + '[data-screen-name=\'' + twist.userpost.reply.n + '\']'
+                    + '[data-id=\'' + twist.userpost.reply.k + '\']');
+
+                if (!postDataElem.length)
+                    continue;
+
+                for (var k = 0, twistElem = undefined; k < postDataElem.length; k++) {
+                    var formerPostElem = postDataElem.eq(k).closest('li.post');
+                    if (!formerPostElem.next().hasClass('post-replies'))
+                        var containerElem = $('<li class="post-replies"><ol class="sub-replies"></ol></li>')  // FIXME replace with template as like as a reqRepAfterCB()'s similar thing
+                            .insertAfter(formerPostElem)
+                            .children('.sub-replies')
+                        ;
+                    else {
+                        var containerElem = formerPostElem.next().children('.sub-replies');
+
+                        if (containerElem.find('.post-data'
+                            + '[data-screen-name=\'' + twist.userpost.n + '\']'
+                            + '[data-id=\'' + twist.userpost.k + '\']').length)
+                            continue;
+                    }
+
+                    if (typeof twistElem !== 'undefined')
+                        twistElem.clone(true).appendTo(containerElem);
+                    else
+                        twistElem = postToElem(twist, 'related').hide()
+                            .addClass('new pending')
+                            .appendTo(containerElem);
+
+                    while (formerPostElem.hasClass('pending'))
+                        formerPostElem = formerPostElem.closest('.post-replies').prev('li.post');
+
+                    formerPostElem.find('.new-replies-available button')
+                        .text(polyglot.t('new_mentions',
+                            formerPostElem.next().find('.post.pending').length))
+                        .slideDown('fast')
+                    ;
+                }
+            }
         } else if (twister.res[req].resource === 'direct') {
             if (twister.res[req].query[0] !== '*')
                 $.MAL.updateNewDMsUI(getNewDMsCount());

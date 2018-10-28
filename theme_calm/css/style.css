@@ -1754,6 +1754,24 @@ textarea.splited-post {
     height: 24px;
     border-radius: 100%;
 }
+
+.post .new-replies-available {
+    text-align: center;
+}
+
+.post .new-replies-available button {
+    font-size: 11px;
+    color: #EF0807;
+    background-color: unset;
+    width: 100%;
+    padding: 1px;
+}
+
+.post .new-replies-available button:hover {
+    cursor: pointer;
+    background-color: #FFF;
+}
+
 .user-name-tooltip
 {
     display: none;

@@ -2780,7 +2780,16 @@ function initInterfaceCommon() {
     $('#post-template.module.post').on('click', function(event) {
         if (event.button === 0 && window.getSelection() == 0)
             postExpandFunction(event, $(this));
-    });
+    })
+        .find('.new-replies-available button').hide()
+            .on('click', function (event) {
+                event.stopPropagation();
+                $(event.target).hide()
+                    .closest('li.post').next('.post-replies').find('.post.pending')
+                        .removeClass('pending').slideDown('fast')
+                ;
+            })
+    ;
     $('.post-area-new')
         .on('click', function(e) {composeNewPost(e, $(this));})
         .clickoutside(unfocusPostAreaNew)
