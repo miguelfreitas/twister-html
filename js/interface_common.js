@@ -2481,7 +2481,7 @@ function postSubmit(e, oldLastPostId) {
                 var reply_k = parseInt(postDataElem.attr('data-id'));
                 var part_id = postDataElem.attr('data-reply-part-id');
                 var cbFunc = function (req, ret) {
-                    var postDataElem = $('.expanded-post .post-data'
+                    var postDataElem = getElem('.expanded-post .post-data'
                         + '[data-screen-name=\'' + req.reply_n + '\']'
                         + '[data-id=\'' + req.reply_k + '\']');
 
@@ -2491,15 +2491,34 @@ function postSubmit(e, oldLastPostId) {
                         return;
                     }
 
-                    formerPostElem = postDataElem.closest('li.post');
-                    if (!formerPostElem.next().is('.post-replies'))
-                        formerPostElem.after($('<li class="post-replies"><ol class="sub-replies"></ol></li>'));  // FIXME replace with template as like as a reqRepAfterCB()'s similar thing
+                    for (var k = 0, twistElem = undefined; k < postDataElem.length; k++) {
+                        var formerPostElem = postDataElem.eq(k).closest('li.post');
+                        if (!formerPostElem.next().hasClass('post-replies'))
+                            var containerElem = $('<li class="post-replies"><ol class="sub-replies"></ol></li>')  // FIXME replace with template as like as a reqRepAfterCB()'s similar thing
+                                .insertAfter(formerPostElem)
+                                .children('.sub-replies')
+                            ;
+                        else {
+                            var containerElem = formerPostElem.next().children('.sub-replies');
 
-                    postToElem(ret, 'related').hide()
-                        .addClass('new')
-                        .appendTo(formerPostElem.next().children('.sub-replies'))
-                        .slideDown('fast')
-                    ;
+                            if (containerElem.find('.post-data'
+                                + '[data-screen-name=\'' + ret.userpost.n + '\']'
+                                + '[data-id=\'' + ret.userpost.k + '\']').length)
+                                continue;
+                        }
+
+                        if (typeof twistElem !== 'undefined')
+                            twistElem.clone(true)
+                                .appendTo(containerElem)
+                                .slideDown('fast')
+                            ;
+                        else
+                            twistElem = postToElem(ret, 'related').hide()
+                                .addClass('new')
+                                .appendTo(containerElem)
+                                .slideDown('fast')
+                            ;
+                    }
                 };
 
                 newPostMsg(postText, reply_n, reply_k,
