@@ -1021,6 +1021,12 @@ textarea.splited-post {
     opacity: .8;
 }
 
+.avatar.tiny {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+}
+
 /***********************************
 ********************* WHO TO FOLLOW
 ***********************************/
@@ -1718,41 +1724,43 @@ textarea.splited-post {
     display: none;
     padding: 5px 5px 0 5px;
 }
-.post-stats
-{
-    margin: 0 10px 0 55px;
-    border-top: solid 1px rgba( 69, 71, 77, .1 );
-    border-bottom: solid 1px rgba( 69, 71, 77, .1 );
+
+.post-stats {
+    height: 34px;
+    margin: 0 12px 8px 55px;
+    border-top: solid 1px rgba(69, 71, 77, .1);
+    border-bottom: solid 1px rgba(69, 71, 77, .1);
 }
-.post-stats li
-{
+
+.post-stats > div {
     display: inline-block;
+    line-height: 16px;
+    vertical-align: middle;
 }
-.post-stats li.stat-count
-{
-    border-right: solid 1px rgba( 69, 71, 77, .1 );
-    padding-right: 10px;
+
+.post-stats .stat-count {
+    font-size: 12px;
+    color: rgba(0, 0, 0, .5);
+    padding-right: 4px;
+    border-right: solid 1px rgba(69, 71, 77, .1);
 }
-.post-stats li.stat-count span
-{
-    display: block;
+
+.post-stats .stat-count .stat-count-value {
     font-weight: bold;
-    color: rgba( 0, 0, 0, .5 );
-    font-size: 13px;
 }
-.post-stats li.stat-count span:last-child
-{
-    font-weight: normal;
+
+.post-stats .avatar-row {
+    padding: 4px;
 }
-.post-stats a
-{
+
+.post-stats .avatar-row a {
+    display: inline-block;
     position: relative;
+    margin-right: 2px;
 }
-.post-stats a img
-{
-    width: 24px;
-    height: 24px;
-    border-radius: 100%;
+
+.post-stats .avatar-row a:hover .user-name-tooltip {
+    display: inline-block;
 }
 
 .post .new-replies-available {
@@ -1772,8 +1780,7 @@ textarea.splited-post {
     background-color: #FFF;
 }
 
-.user-name-tooltip
-{
+.user-name-tooltip {
     display: none;
     position: absolute;
     background: #43464d;
@@ -1781,25 +1788,22 @@ textarea.splited-post {
     white-space: nowrap;
     padding: 3px 5px;
     color: #fff;
-    top: -42px;
-    left: 0px;
+    top: -28px;
+    left: 2px;
     border-radius: 5px;
 }
-.user-name-tooltip:after
-{
+
+.user-name-tooltip:after {
     content: "";
     position: absolute;
     width: 0;
     left: 4px;
-    bottom: -5px;
+    bottom: -4px;
     border-top: solid 5px #43464d;
     border-left: solid 5px transparent;
     border-right: solid 5px transparent;
 }
-.post-stats a:hover .user-name-tooltip
-{
-    display: inline-block;
-}
+
 .post-replies .sub-replies {
     border-left: solid 3px #43464d;
     margin-left: 2px;

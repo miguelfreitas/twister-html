@@ -369,15 +369,13 @@
                 <span class="post-favorite">Favorite</span>
             </div>
             <div class="expanded-content" style="display: none;">
-                <ul class="post-stats" style="display: none;">
-                    <li class="stat-count">
-                            <span class="stat-count-value"></span>
-                            <span>Retransmits</span>
-                    </li>
-                    <li class="avatar-row">
-                        <!-- use "avatar-row-template" here -->
-                    </li>
-                </ul>
+                <div class="post-stats">
+                    <div class="stat-count">
+                        <div class="stat-count-value"></div>
+                        <div>Retransmits</div>
+                    </div>
+                    <div class="avatar-row"></div>
+                </div>
                 <div class="preview-container">
                 </div>
                 <div class="post-reply-content" style="display: block;">
@@ -428,11 +426,12 @@
         <a class="link-shortened" rel="nofollow noreferrer" target="_blank"></a>
     </div>
 
-    <!-- template para ir dentro de avatar-row -->
-    <a id="avatar-row-template" class="open-profile-modal" href="">
-       <img class="size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-       <span class="user-name-tooltip"></span>
-    </a>
+    <div id="template-avatar-tiny">
+        <a class="open-profile-modal" href="">
+            <img class="avatar tiny" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+            <span class="user-name-tooltip"></span>
+        </a>
+    </div>
 
     <li class="descendant module post">
     </li>

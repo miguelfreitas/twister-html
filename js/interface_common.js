@@ -1702,7 +1702,7 @@ function postExpandFunction(e, postLi) {
         // insert replies to this post after
         requestRepliesAfter(originalLi);
         // RTs faces and counter
-        requestRTs(originalLi);
+        requestRTs(originalPost);
     } else {
         postLi.removeClass(openClass);
 
@@ -3049,6 +3049,7 @@ $(document).ready(function () {
         .on('mouseup', {feeder: '.post-rt-reference'}, handleClickOpenConversation)
         .on('click', muteEvent)  // to prevent post expanding or collapsing
     ;
+    twister.tmpl.avatarTiny = extractTemplate('#template-avatar-tiny');
     twister.tmpl.postRtBy = extractTemplate('#template-post-rt-by');
     twister.tmpl.profileShowMoreFollowers = extractTemplate('#template-profile-show-more-followers');
 

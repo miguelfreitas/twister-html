@@ -59,7 +59,11 @@
     border-radius: 10px;
     width: 50px; height: 50px;
   }
-  img.size24 {width: 24px; height: 24px;}
+.avatar.tiny {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+}
   #profile-edit img.avatar {display:block; margin-left: auto; margin-right: auto; width: 64px; height: 64px;}
 
   .ui-listview .post a{ color: #0030ff; }
@@ -90,6 +94,41 @@
     font-weight: lighter;
     font-size: 12px;
     color: #555 !important;
+}
+
+.post-stats {
+    height: 34px;
+}
+
+.post-stats > div {
+    display: inline-block;
+    line-height: 16px;
+    vertical-align: middle;
+}
+
+.post-stats .stat-count {
+    font-size: 80%;
+    color: rgba(0, 0, 0, .5);
+    padding-right: 4px;
+    border-right: solid 1px rgba(69, 71, 77, .1);
+}
+
+.post-stats .stat-count .stat-count-value {
+    font-weight: bold;
+}
+
+.post-stats .avatar-row {
+    padding: 4px;
+}
+
+.post-stats .avatar-row a {
+    display: inline-block;
+    position: relative;
+    margin-right: 2px;
+}
+
+.post-stats .avatar-row .user-name-tooltip {
+    display: none;
 }
 
 .post-rt-by {
@@ -747,16 +786,14 @@
                 </div>
             </fieldset>
             <div class="expanded-content">
-                <span class="post-stats" style="display: none;">
-                    <span class="stat-count" style="font-size:80%;">
-                            <span class="stat-count-value"></span>
-                            <span>Retransmits</span>
-                    </span>
-                    <span class="avatar-row">
-                        <!-- use "avatar-row-template" here -->
-                    </span>
-                </span>
-            </div> <!-- expanded-content -->
+                <div class="post-stats">
+                    <div class="stat-count">
+                        <div class="stat-count-value"></div>
+                        <div>Retransmits</div>
+                    </div>
+                    <div class="avatar-row"></div>
+                </div>
+            </div>
         </div> <!-- post-data -->
     </li> <!-- post-template -->
 
@@ -791,10 +828,12 @@
         <a class="link-shortened" rel="nofollow noreferrer" target="_blank"></a>
     </div>
 
-    <!-- template para ir dentro de avatar-row -->
-    <a id="avatar-row-template" class="open-profile-modal" href="">
-       <img class="avatar size24" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
-    </a>
+    <div id="template-avatar-tiny">
+        <a class="open-profile-modal" href="">
+            <img class="avatar tiny" src="img/grayed_avatar_placeholder_24.png" alt="user-photo"/>
+            <span class="user-name-tooltip"></span>
+        </a>
+    </div>
 
     <div id="template-direct-messages-list-item">
         <li class="module post message" data-icon="arrow-r">

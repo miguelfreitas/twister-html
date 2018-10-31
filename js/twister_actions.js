@@ -120,37 +120,38 @@ function requestRepliesAfterAll(postLi)
     }
 }
 
-function requestRTs(postLi)
-{
-    var originalPost = postLi.find(".post-data");
+function requestRTs(postDataElem) {
+    var post_n = postDataElem.attr('data-screen-name');
+    var post_k = postDataElem.attr('data-id');
 
-    var original_n = originalPost.attr('data-screen-name');
-    var original_k = originalPost.attr('data-id');
+    if (!post_n || !post_k)
+        return;
 
-    if( original_n != undefined && original_k != undefined ) {
-        dhtget( original_n, "rts" + original_k, "m",
-               function(originalPost, postsFromJson) {
+    dhtget(post_n, 'rts' + post_k, 'm',
+        function (req, ret) {
+            if (!ret.length)
+                return;
 
-                    if( postsFromJson.length ) {
-                        var statCountValue = originalPost.find(".stat-count-value");
-                        statCountValue.text( postsFromJson.length );
+            req.find('.stat-count-value').text(ret.length);
 
-                        var avatarRow = originalPost.find(".avatar-row");
-                        avatarRow.empty();
-                        for( var i = 0; i < postsFromJson.length && i < 8; i++) {
-                            var n = postsFromJson[i]["userpost"]["n"];
-                            var elemUser = $("#avatar-row-template").clone(true);
-                            elemUser.removeAttr('id');
-                            elemUser.attr('href',$.MAL.userUrl(n));
-                            getFullname(n,elemUser.find(".user-name-tooltip"));
-                            getAvatar(n,elemUser.find(".size24"));
-                            avatarRow.append( elemUser );
-                        }
+            var avatarRowElem = req.find('.avatar-row').empty();
+            for (var i = 0; i < ret.length && i < 12; i++)
+                appendPeerAvatarToRTsRowElem(ret[i].userpost.n, avatarRowElem);
 
-                        originalPost.find(".post-stats").slideDown("fast");
-                    }
-               }, originalPost);
-    }
+            if (avatarRowElem.children().length)
+                req.slideDown('fast');
+        },
+        postDataElem.find('.post-stats').hide()
+    );
+}
+
+function appendPeerAvatarToRTsRowElem(peerAlias, rowElem) {
+    var elem = twister.tmpl.avatarTiny.clone(true)
+        .attr('href', $.MAL.userUrl(peerAlias))
+        .appendTo(rowElem)
+    ;
+    getFullname(peerAlias, elem.find('.user-name-tooltip'));
+    getAvatar(peerAlias, elem.find('.avatar.tiny'));
 }
 
 function appendPostToElem(post, elem) {

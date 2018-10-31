@@ -276,27 +276,28 @@
     background: black
 
 .post-stats
-    float: left
-    li
+    height: 34px
+    margin: 0 12px 8px 55px
+    > div
         display: inline-block
-        &.stat-count
-            font-weight: 700
-            font-size: 11px
-            float: left
-            line-height: 20px
-            color: llighten($dark-grey,30%)
-            span:last-child
-                padding-right: 5px
-    a
-        position: relative
-        text-decoration: none
-        display: inline-block
-        width: 20px
-        height: 20px
-        margin: 0 1px 0 0
-        img
-            width: 20px
-            height: 20px
+        line-height: 16px
+        vertical-align: middle
+    .stat-count
+        font-size: 12px
+        color: lighten($dark-grey, 30%)
+        padding-right: 4px
+        border-right: solid 1px $light-grey
+        .stat-count-value
+            font-weight: bold
+    .avatar-row
+        padding: 4px
+        a
+            display: inline-block
+            position: relative
+            margin-right: 2px
+            &:hover
+                .user-name-tooltip
+                    display: inline-block
 
 .post .new-replies-available
     text-align: center
@@ -316,20 +317,17 @@
     white-space: nowrap
     padding: 3px 5px
     color: #fff
-    top: -42px
-    left: 0px
+    top: -28px
+    left: 2px
     &:after
         content: ""
         position: absolute
         width: 0
         left: 4px
-        bottom: -5px
+        bottom: -4px
         border-top: solid 5px lighten($main-color-dark,3%)
         border-left: solid 5px transparent
         border-right: solid 5px transparent
-
-.post-stats a:hover .user-name-tooltip
-    display: inline-block
 
 .post-replies .sub-replies
     border-left: solid 3px $main-color-color

@@ -5607,7 +5607,7 @@ var fixedLabels = [
   ".post-interactions span",
   ".post-expand",
   ".post-context span",
-  ".post-stats .stat-count span",
+  ".post-stats .stat-count div",
   ".postboard span",
 
   // following page

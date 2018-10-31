@@ -182,7 +182,7 @@ var router=new $.mobile.Router(
                 // insert replies to this post after
                 requestRepliesAfter(originalLi);
                 // RTs faces and counter
-                requestRTs(originalLi);
+                requestRTs(originalLi.find('.post-data'));
             });
         },
         newmsg: function(type,match,ui) {

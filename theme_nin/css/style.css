@@ -1062,39 +1062,40 @@ samp {
   background: black;
 }
 
-/* line 259, ../sass/_postboard.sass */
 .post-stats {
-  float: left;
+  height: 34px;
+  margin: 0 12px 8px 55px;
 }
-/* line 261, ../sass/_postboard.sass */
-.post-stats li {
+
+.post-stats > div {
   display: inline-block;
+  line-height: 16px;
+  vertical-align: middle;
 }
-/* line 263, ../sass/_postboard.sass */
-.post-stats li.stat-count {
-  font-weight: 700;
-  font-size: 11px;
-  float: left;
-  line-height: 20px;
-  color: llighten(#66686B, 30%);
+
+.post-stats .stat-count {
+  font-size: 12px;
+  color: #b3b5b7;
+  padding-right: 4px;
+  border-right: solid 1px #E2E1DE;
 }
-/* line 269, ../sass/_postboard.sass */
-.post-stats li.stat-count span:last-child {
-  padding-right: 5px;
+
+.post-stats .stat-count .stat-count-value {
+  font-weight: bold;
 }
-/* line 271, ../sass/_postboard.sass */
-.post-stats a {
+
+.post-stats .avatar-row {
+  padding: 4px;
+}
+
+.post-stats .avatar-row a {
+  display: inline-block;
   position: relative;
-  text-decoration: none;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin: 0 1px 0 0;
+  margin-right: 2px;
 }
-/* line 278, ../sass/_postboard.sass */
-.post-stats a img {
-  width: 20px;
-  height: 20px;
+
+.post-stats .avatar-row a:hover .user-name-tooltip {
+  display: inline-block;
 }
 
 .post .new-replies-available {
@@ -1120,8 +1121,8 @@ samp {
   white-space: nowrap;
   padding: 3px 5px;
   color: #fff;
-  top: -42px;
-  left: 0px;
+  top: -28px;
+  left: 2px;
 }
 /* line 293, ../sass/_postboard.sass */
 .user-name-tooltip:after {
@@ -1129,15 +1130,10 @@ samp {
   position: absolute;
   width: 0;
   left: 4px;
-  bottom: -5px;
+  bottom: -4px;
   border-top: solid 5px #6d7073;
   border-left: solid 5px transparent;
   border-right: solid 5px transparent;
-}
-
-/* line 303, ../sass/_postboard.sass */
-.post-stats a:hover .user-name-tooltip {
-  display: inline-block;
 }
 
 /* line 306, ../sass/_postboard.sass */
@@ -2112,6 +2108,12 @@ textarea.splited-post {
 .twister-peer .bio {
     text-align: center;
     padding: 4px;
+}
+
+.avatar.tiny {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
 }
 
 /******** WHO TO FOLLOW ********/
