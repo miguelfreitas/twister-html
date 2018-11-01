@@ -135,8 +135,14 @@ function requestRTs(postDataElem) {
             req.find('.stat-count-value').text(ret.length);
 
             var avatarRowElem = req.find('.avatar-row').empty();
-            for (var i = 0; i < ret.length && i < 12; i++)
+            var avatarsAppended = [];
+            for (var i = 0; i < ret.length && i < 12; i++) {
+                if (avatarsAppended.indexOf(ret[i].userpost.n) !== -1)
+                    continue;
+
+                avatarsAppended.push(ret[i].userpost.n);
                 appendPeerAvatarToRTsRowElem(ret[i].userpost.n, avatarRowElem);
+            }
 
             if (avatarRowElem.children().length)
                 req.slideDown('fast');
