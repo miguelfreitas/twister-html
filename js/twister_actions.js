@@ -145,8 +145,49 @@ function requestRTs(postDataElem) {
     );
 }
 
+function updateRTsWithOwnOne(req, ret) {
+    if (!ret || !ret.userpost || !ret.userpost.rt || !ret.userpost.rt.n || !ret.userpost.rt.k)
+        return;
+
+    var postDataElem = getElem('.expanded-post .post-data'
+        + '[data-screen-name=\'' + ret.userpost.rt.n + '\']'
+        + '[data-id=\'' + ret.userpost.rt.k + '\']');
+
+    for (var i = 0; i < postDataElem.length; i++) {
+        var postStatsElem = postDataElem.eq(i).find('.post-stats');
+        var statCountValueElem = postStatsElem.find('.stat-count-value');
+
+        var avatarRowElem = postStatsElem.find('.avatar-row');
+
+        var ownAvatarElem = avatarRowElem.find('[data-peer-alias="' + defaultScreenName + '"]');
+        if (ownAvatarElem.length) {
+            if (avatarRowElem.children().length > 1)
+                ownAvatarElem.prependTo(avatarRowElem);
+
+            statCountValueElem.text(parseInt(statCountValueElem.text()) + 1);
+            continue;
+        }
+
+        appendPeerAvatarToRTsRowElem(defaultScreenName, avatarRowElem);
+
+        if (avatarRowElem.children().length === 1) {
+            statCountValueElem.text('1');
+            postStatsElem.slideDown('fast');
+            continue;
+        }
+
+        statCountValueElem.text(parseInt(statCountValueElem.text()) + 1);
+
+        avatarRowElem.children().last().prependTo(avatarRowElem);
+
+        if (avatarRowElem.children().length > 12)
+            avatarRowElem.children().eq(12).remove();
+    }
+}
+
 function appendPeerAvatarToRTsRowElem(peerAlias, rowElem) {
     var elem = twister.tmpl.avatarTiny.clone(true)
+        .attr('data-peer-alias', peerAlias)
         .attr('href', $.MAL.userUrl(peerAlias))
         .appendTo(rowElem)
     ;

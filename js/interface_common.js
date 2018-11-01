@@ -2462,7 +2462,8 @@ function postSubmit(e, oldLastPostId) {
     if (btnPostSubmit.hasClass('with-reference')) {
         var doSubmitPost = function (postText, postDataElem) {
             newRtMsg($.evalJSON(postDataElem.attr('data-content_to_rt')),
-                postDataElem.attr('data-content_to_sigrt'), postText);
+                postDataElem.attr('data-content_to_sigrt'), postText, updateRTsWithOwnOne
+            );
         };
     } else {
         if (splitedPostsCount > 1) {
@@ -2587,7 +2588,8 @@ function retweetSubmit(event) {
     var postDataElem = prompt.find('.post-data');
 
     newRtMsg($.evalJSON(postDataElem.attr('data-content_to_rt')),
-        postDataElem.attr('data-content_to_sigrt'));
+        postDataElem.attr('data-content_to_sigrt'), '', updateRTsWithOwnOne
+    );
 
     closePrompt(prompt);
 }
