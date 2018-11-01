@@ -120,10 +120,7 @@ function requestRepliesAfterAll(postLi)
     }
 }
 
-function requestRTs(postDataElem) {
-    var post_n = postDataElem.attr('data-screen-name');
-    var post_k = postDataElem.attr('data-id');
-
+function requestRTs(post_n, post_k) {
     if (!post_n || !post_k)
         return;
 
@@ -132,9 +129,17 @@ function requestRTs(postDataElem) {
             if (!ret.length)
                 return;
 
-            req.find('.stat-count-value').text(ret.length);
+            var postDataElem = getElem('.expanded-post .post-data'
+                + '[data-screen-name=\'' + req.post_n + '\']'
+                + '[data-id=\'' + req.post_k + '\']');
 
-            var avatarRowElem = req.find('.avatar-row').empty();
+            if (!postDataElem.length)
+                return;
+
+            var postStatsElem = postDataElem.find('.post-stats');
+            postStatsElem.find('.stat-count-value').text(ret.length);
+
+            var avatarRowElem = postStatsElem.find('.avatar-row').empty();
             var avatarsAppended = [];
             for (var i = 0; i < ret.length && i < 12; i++) {
                 if (avatarsAppended.indexOf(ret[i].userpost.n) !== -1)
@@ -144,10 +149,10 @@ function requestRTs(postDataElem) {
                 appendPeerAvatarToRTsRowElem(ret[i].userpost.n, avatarRowElem);
             }
 
-            if (avatarRowElem.children().length)
-                req.slideDown('fast');
+            if (avatarsAppended.length)
+                postStatsElem.slideDown('fast');
         },
-        postDataElem.find('.post-stats').hide()
+        {post_n: post_n, post_k: post_k}
     );
 }
 

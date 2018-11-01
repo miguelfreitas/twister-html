@@ -182,7 +182,8 @@ var router=new $.mobile.Router(
                 // insert replies to this post after
                 requestRepliesAfter(originalLi);
                 // RTs faces and counter
-                requestRTs(originalLi.find('.post-data'));
+                var postDataElem = originalLi.find('.post-data');
+                requestRTs(postDataElem.attr('data-screen-name'), postDataElem.attr('data-id'));
             });
         },
         newmsg: function(type,match,ui) {

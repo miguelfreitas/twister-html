@@ -1702,7 +1702,7 @@ function postExpandFunction(e, postLi) {
         // insert replies to this post after
         requestRepliesAfter(originalLi);
         // RTs faces and counter
-        requestRTs(originalPost);
+        requestRTs(originalPost.attr('data-screen-name'), originalPost.attr('data-id'));
     } else {
         postLi.removeClass(openClass);
 
@@ -2791,6 +2791,7 @@ function initInterfaceCommon() {
                         .removeClass('pending').slideDown('fast')
                 ;
             })
+        .closest('.post-data').find('.post-stats').hide()
     ;
     $('.post-area-new')
         .on('click', function(e) {composeNewPost(e, $(this));})
