@@ -169,11 +169,14 @@ var router=new $.mobile.Router(
             });
         },
         post: function(type,match,ui) {
-            var params=router.getParams(match[1]);
-            initializeTwister( true, true, function() {
+            initializeTwister( true, true, function (req) {
+                if (!req || !req.userpost) return;
+
+                var originalLi = postToElem(JSON.parse(req.userpost), 'original', false, twister.tmpl.postFull)
+                    .addClass('expanded-post')
+                ;
                 var $ulPost = $("#post ul.posts");
                 $ulPost.text("");
-                var originalLi = postToElem(JSON.parse(params.userpost), 'original', false, twister.tmpl.postFull);
                 $ulPost.append(originalLi);
                 $ulPost.find(".post-interactions").trigger('create');
                 $ulPost.listview('refresh');
@@ -185,7 +188,7 @@ var router=new $.mobile.Router(
                 // RTs faces and counter
                 var postDataElem = originalLi.find('.post-data');
                 requestRTs(postDataElem.attr('data-screen-name'), postDataElem.attr('data-id'));
-            });
+            }, router.getParams(match[1]));
         },
         newmsg: function(type,match,ui) {
             var params=router.getParams(match[1]);
