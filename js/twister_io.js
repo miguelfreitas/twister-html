@@ -13,7 +13,7 @@ function twisterRpc(method, params, resultFunc, resultArg, errorFunc, errorArg) 
     var foo = new $.JsonRpcClient({ajaxUrl: window.location.pathname.replace(/[^\/]*$/, '')});
     foo.call(method, params,
         function(ret) {resultFunc(resultArg, ret);},
-        function(ret) {if (ret != null) errorFunc(errorArg, ret);}  // FIXME why only if "(ret != null)"?
+        function(ret) {errorFunc(errorArg, ret);}  // FIXME why only if "(ret != null)"?
     );
 }
 

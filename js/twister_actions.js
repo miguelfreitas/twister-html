@@ -102,7 +102,7 @@ function getTopPostOfConversation(postLi, post, postboard) {
         }
         requestRepliesAfterAll(newStreamPost);
         newStreamPost.find('.post-expand').remove();
-        newStreamPost.unbind('click');
+        newStreamPost.off('click');
         newStreamPost.hide();
         postboard.append(newStreamPost);
         newStreamPost.slideDown("fast");
@@ -287,7 +287,7 @@ function requestPostRecursively(containerToAppend,username,resource,count,useGet
                        requestPostRecursively(args.containerToAppend, n, "post"+lastk, count-1);
                    } else {
                        profilePostsLoading = false;
-                       args.containerToAppend.scroll();
+                       args.containerToAppend.trigger('scroll');
                    }
                } else {
                    profilePostsLoading = false;
@@ -413,7 +413,7 @@ function newRtMsg(userpost, sig_userpost, comment, cbFunc, cbReq) {
 }
 
 function newFavMsg(postData, priv, msg) {
-    var userpost = $.evalJSON(postData.attr('data-content_to_rt'));
+    var userpost = JSON.parse(postData.attr('data-content_to_rt'));
     var sig_userpost = postData.attr('data-content_to_sigrt');
 
     if (!sig_userpost) {
@@ -523,7 +523,7 @@ function updateProfileData(profileModalContent, username) {
 function updateProfilePosts(postsView, username, useGetposts) {
     requestPostRecursively(postsView,username,"status",postsPerRefresh, useGetposts);
 
-    postsView.scroll(function(){
+    postsView.on('scroll', function () {
         if (!profilePostsLoading) {
             var $this = $(this);
             if ($this.scrollTop() >= this.scrollHeight - $this.height() - 20) {
@@ -686,7 +686,7 @@ function queryProcess(req, res) {
                         if (!twister.res[this.req].board || !focusModalWithElement(twister.res[this.req].board,
                             function (req) {
                                 twister.res[req].board.closest('.postboard')
-                                    .find('.postboard-news').click();
+                                    .find('.postboard-news').trigger('click');
                             },
                             this.req
                         ))
@@ -770,7 +770,7 @@ function queryProcess(req, res) {
                     focusModalWithElement(twister.res[this.req].board,
                         function (req) {
                             twister.res[req].board.closest('.postboard')
-                                .find('.postboard-news').click();
+                                .find('.postboard-news').trigger('click');
                         },
                         this.req
                     );

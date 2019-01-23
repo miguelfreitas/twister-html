@@ -7,7 +7,7 @@ var _htmlFormatMsgLinkTemplateExternal;
 var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
 
-$(document).ready(function() {
+$(function () {
     // we're setting it here for perfomance improvement purpose
     // to not search and prepare it for for every post every time
     _htmlFormatMsgLinkTemplateExternal = $('#external-page-link-template')
@@ -73,14 +73,14 @@ function postToElem(post, kind, promoted) {
             k = userpost.k;
             time = userpost.time;
             msg = userpost.msg + (userpost.msg2 || '');
-            content_to_rt = $.toJSON(userpost);
+            content_to_rt = JSON.stringify(userpost);
             content_to_sigrt = post.sig_userpost;
         } else {
             username = rt.n;
             k = rt.k;
             time = rt.time;
             msg = rt.msg + (rt.msg2 || '');
-            content_to_rt = $.toJSON(rt);
+            content_to_rt = JSON.stringify(rt);
             content_to_sigrt = userpost.sig_rt;
         }
         retweeted_by = userpost.n;
@@ -89,7 +89,7 @@ function postToElem(post, kind, promoted) {
         k = userpost.k;
         time = userpost.time;
         msg = userpost.msg + (userpost.msg2 || '');
-        content_to_rt = $.toJSON(userpost);
+        content_to_rt = JSON.stringify(userpost);
         content_to_sigrt = post.sig_userpost;
     }
     if (typeof msg !== 'string')
@@ -111,7 +111,7 @@ function postToElem(post, kind, promoted) {
 
     var postData = elem.find('.post-data');
     postData.addClass(kind)
-        .attr('data-userpost', $.toJSON(post))
+        .attr('data-userpost', JSON.stringify(post))
         .attr('data-content_to_rt', content_to_rt)
         .attr('data-content_to_sigrt', content_to_sigrt)
         .attr('data-screen-name', username)
@@ -246,7 +246,7 @@ function setPostReference(elem, rt, sig_rt) {
         .find('.post-rt-reference')
             .attr('data-screen-name', rt.n)
             .attr('data-id', rt.k)
-            .attr('data-userpost', $.toJSON({userpost: rt, sig_userpost: sig_rt}))
+            .attr('data-userpost', JSON.stringify({userpost: rt, sig_userpost: sig_rt}))
             .find('.post-text').each(function (i, elem) {fillElemWithTxt($(elem), rt.msg + (rt.msg2 || ''));})
     ;
     setPostCommon(elem, rt.n, rt.time);

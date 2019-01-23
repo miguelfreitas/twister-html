@@ -125,7 +125,7 @@ function openDmWithUserModal(peerAlias) {
 
     $('.dm-form-template').children().clone(true)
         .addClass('open').appendTo(modal.content).fadeIn('fast')
-            .find('textarea').focus();
+            .find('textarea').trigger('focus');
 }
 
 function openGroupMessagesModal(groupAlias) {
@@ -193,7 +193,7 @@ function openGroupMessagesModal(groupAlias) {
 
                     $('.dm-form-template').children().clone(true)
                         .addClass('open').appendTo(req.modal.content).fadeIn('fast')
-                            .find('textarea').focus();
+                            .find('textarea').trigger('focus');
                 }
             }, {groupAlias: groupAlias, modal: modal}
         );
@@ -259,7 +259,7 @@ function openGroupMessagesJoinGroupModal() {
                             .on('click', function (event) {
                                 var elemEvent = $(event.target);
                                 elemEvent.closest('.module').find('.join')
-                                    .attr('disabled',
+                                    .prop('disabled',
                                         !elemEvent.closest('.groups-list').find('input:checked').length);
                             })
                         ;
@@ -442,7 +442,7 @@ function initInterfaceDirectMsg() {
     $('.userMenu-groupmessages a').attr('href', '#groupmessages');
 
     $('.dm-submit').on('click', directMsgSubmit);
-    $('.direct-messages-with-user').on('click', function() {
+    $('.direct-messages-with-user').on('click', function () {
         window.location.hash = '#directmessages?user=' +
             $(this).closest('[data-screen-name]').attr('data-screen-name');
     });

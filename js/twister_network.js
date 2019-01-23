@@ -286,7 +286,6 @@ function setSpamMsg(event) {
 
 function exitDaemon() {
     $( ".terminate-daemon").text("Exiting...");
-    $( ".terminate-daemon").addClass("disabled");
     $.MAL.disableButton( $( ".terminate-daemon") );
 
     twisterRpc("stop", undefined,
@@ -304,12 +303,12 @@ function exitDaemon() {
 
 // handlers common to both desktop and mobile
 function interfaceNetworkHandlers() {
-    $( ".new-peer-addr" ).keyup( peerKeypress );
-    $( ".new-dns-addr" ).keyup( dnsKeypress );
-    $( ".add-peer").bind( "click", addPeerClick );
-    $( ".add-dns").bind( "click", addDNSClick );
-    $( "select.genblock").change( setGenerate );
-    $( ".genproclimit").change( setGenerate );
+    $('.new-peer-addr').on('keyup', peerKeypress);
+    $('.new-dns-addr').on('keyup', dnsKeypress);
+    $('.add-peer').on('click', addPeerClick);
+    $('.add-dns').on('click', addDNSClick);
+    $('select.genblock').on('change', setGenerate);
+    $('.genproclimit').on('change', setGenerate);
     $('.network .post-area-new').off('click').on('click',
         function (e) {e.stopPropagation(); $(this).addClass('open'); usePostSpliting = false;});
     $('.post-submit.update-spam-msg').off('click').on('click', setSpamMsg);

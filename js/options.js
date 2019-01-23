@@ -199,7 +199,7 @@ function twisterOptions() {
         name: 'useProxy',
         valDefault: 'disable',
         tickMethod: function (elem) {
-            $('#useProxyForImgOnly').attr('disabled', (elem.value === 'disable') ? true : false);
+            $('#useProxyForImgOnly').prop('disabled', elem.value === 'disable');
         }
     });
     this.add({

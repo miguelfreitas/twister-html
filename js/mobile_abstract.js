@@ -8,10 +8,10 @@ var MAL = function()
 {
     this.postboardLoading = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.showPageLoadingMsg();
+            $.mobile.loading('show');
             /*
             setTimeout(function(){
-              $.mobile.hidePageLoadingMsg();
+              $.mobile.loading('hide');
             }, 10 * 1000);
             */
         } else {
@@ -21,7 +21,7 @@ var MAL = function()
 
     this.postboardLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var curPage = $.mobile.activePage.attr("id");
             $( '#'+curPage+' .content ul.posts').listview('refresh');
 
@@ -33,7 +33,7 @@ var MAL = function()
 
     this.commonDMsListLoaded = function () {
         if ($.hasOwnProperty('mobile')) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             $('#directmsg .direct-messages-list').listview('refresh');
         } else {
         }
@@ -41,7 +41,7 @@ var MAL = function()
 
     this.dmConversationLoaded = function (dmConvo) {
         if ($.hasOwnProperty('mobile')) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             $('#dmchat .direct-messages-thread').listview('refresh');
             $.mobile.silentScroll($('.dm-form').offset().top);
         } else {
@@ -52,7 +52,7 @@ var MAL = function()
 
     this.relatedPostLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             var curPage = $.mobile.activePage.attr("id");
             $( '#'+curPage+' .content ul.posts').listview('refresh');
         } else {
@@ -75,7 +75,7 @@ var MAL = function()
 
     this.listLoaded = function (list) {
         if ($.hasOwnProperty('mobile')) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             list.listview('refresh');
         } else
             list.find('.loading-roller').hide();
@@ -83,7 +83,7 @@ var MAL = function()
 
     this.searchUserListLoaded = function() {
         if( $.hasOwnProperty("mobile") ) {
-            $.mobile.hidePageLoadingMsg();
+            $.mobile.loading('hide');
             $(".userMenu-search-profiles").listview('refresh');
         } else {
             var $searchResultsModal = $( ".search-results" );
@@ -405,7 +405,7 @@ var MAL = function()
              $button.button("enable");
          } else {
              $button.removeClass("disabled");
-             $button.removeAttr("disabled");
+             $button.prop('disabled', false);
          }
     }
 
@@ -414,7 +414,7 @@ var MAL = function()
              $button.button("disable");
          } else {
              $button.addClass("disabled");
-             $button.attr("disabled","true");
+             $button.prop('disabled', true);
          }
      }
 
@@ -440,11 +440,11 @@ var MAL = function()
                 removeClose: true
             });
 
-            modal.content.find('.confirm').attr('disabled', true);
+            modal.content.find('.confirm').prop('disabled', true);
 
             sendNewUserTransaction(peerAlias,
                 function (accountCreatedModal) {
-                    accountCreatedModal.content.find('.confirm').attr('disabled', false);
+                    accountCreatedModal.content.find('.confirm').prop('disabled', false);
                 }, modal
             );
         }

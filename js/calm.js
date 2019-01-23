@@ -1,13 +1,13 @@
 $(function(){
-	$('#showqr').on('click', function(){
+    $('#showqr').on('click', function () {
 		if($('#qrcode img')[0]) return;
          var skey = document.getElementById('skey').innerText;
          new QRCode(document.getElementById("qrcode"), skey);
     });
-    $('.tox-ctc').on('click', function(){
+    $('.tox-ctc').on('click', function () {
     	window.prompt('Press Ctrl/Cmd+C to copy then Enter to close', $(this).attr('data'))
     })
-    $('.bitmessage-ctc').on('click', function(){
+    $('.bitmessage-ctc').on('click', function () {
     	window.prompt('Press Ctrl/Cmd+C to copy then Enter to close', $(this).attr('data'))
     })
 })

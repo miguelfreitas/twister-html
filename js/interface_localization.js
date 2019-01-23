@@ -5628,8 +5628,8 @@ var fixedLabels = [
   ".ui-input-text"
 ];
 
-$(document).ready(function(){
-  $(document).bind('pagecreate', function (){
+$(function () {
+    $(document).on('pagecreate', function () {
     var elems,content,i,e,LenElem,elem;
     var LenLabels = fixedLabels.length;
 

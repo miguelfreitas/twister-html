@@ -1,6 +1,5 @@
 /**
- * This plugin requires jquery.json.js to be available, or at least the methods $.toJSON and
- * $.parseJSON.
+ * This plugin requires JSON to be available
  *
  * The plan is to make use of websockets if they are available, but work just as well with only
  * http if not.
@@ -84,29 +83,32 @@
       throw "$.JsonRpcClient.call used with no websocket and no http endpoint.";
     }
     var options = this.options;
-    
+
     $.ajax({
       type     : 'POST',
       url      : this.options.ajaxUrl,
-      data     : $.toJSON(request),
+      data     : JSON.stringify(request),
       dataType : 'json',
       contentType: "application/json; charset=utf-8",
       cache    : false,
-      beforeSend: function (xhr) { 
+      beforeSend: function (xhr) {
         if( options.username != null  && options.username != undefined ) {
           xhr.setRequestHeader('Authorization', "Basic " + btoa(options.username + ":" + options.password));
         }
       },
 
       success  : function(data) {
-        if ('error' in data) error_cb(data.error);
-        success_cb(data.result);
+        if ('error' in data && data.error !== null) {
+          errorCb(data.error);
+        } else {
+          success_cb(data.result);
+        }
       },
 
       // JSON-RPC Server could return non-200 on error
       error    : function(jqXHR, textStatus, errorThrown) {
         try {
-          var response = $.parseJSON(jqXHR.responseText);
+          var response = JSON.parse(jqXHR.responseText);
           if ('console' in window) console.log(response);
           error_cb(response.error);
         }
@@ -153,11 +155,11 @@
     $.ajax({
       type     : 'POST',
       url      : this.options.ajaxUrl,
-      data     : $.toJSON(request),
+      data     : JSON.stringify(request),
       dataType : 'json',
       contentType: "application/json; charset=utf-8",
       cache    : false,
-      beforeSend: function (xhr){ 
+      beforeSend: function (xhr){
         if( options.username != null  && options.username != undefined ) {
           xhr.setRequestHeader('Authorization', "Basic " + btoa(options.username + ":" + options.password));
         }
@@ -174,7 +176,7 @@
    *
    * @fn batch
    * @memberof $.JsonRpcClient
-   * 
+   *
    * @param callback    The main function which will get a batch handler to run call and notify on.
    * @param all_done_cb A callback function to call after all results have been handled.
    * @param error_cb    A callback function to call if there is an error from the server.
@@ -218,7 +220,7 @@
    * @memberof $.JsonRpcClient
    */
   $.JsonRpcClient.prototype._wsCall = function(socket, request, success_cb, error_cb) {
-    var request_json = $.toJSON(request);
+    var request_json = JSON.stringify(request);
 
     if (socket.readyState < 1) {
       // The websocket is not open yet; we have to set sending of the message in onopen.
@@ -251,7 +253,7 @@
   $.JsonRpcClient.prototype._wsOnMessage = function(event) {
     // Check if this could be a JSON RPC message.
     try {
-      var response = $.parseJSON(event.data);
+      var response = JSON.parse(event.data);
 
       /// @todo Make using the jsonrcp 2.0 check optional, to use this on JSON-RPC 1 backends.
 
@@ -395,7 +397,7 @@
     // Send request
     $.ajax({
       url      : self.jsonrpcclient.options.ajaxUrl,
-      data     : $.toJSON(batch_request),
+      data     : JSON.stringify(batch_request),
       dataType : 'json',
       contentType: "application/json; charset=utf-8",
       cache    : false,

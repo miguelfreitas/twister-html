@@ -32,10 +32,10 @@ var n=m.attr("style");g.push(n);m.attr("style",n?n+";"+d:d);});};j=function(){c.
    jQuery.fn.clickoutside = function(callback) {
       var outside = 1, self = $(this);
       self.cb = callback;
-      this.click(function() {
+      this.on('click', function () {
          outside = 0;
       });
-      $(document).click(function() {
+      $(document).on('click', function () {
          outside && self.cb();
          outside = 1;
       });

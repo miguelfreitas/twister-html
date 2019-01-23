@@ -10,7 +10,7 @@ var InterfaceFunctions = function() {
     //faço os binds no init
     this.init = function()
     {
-        $( ".wrapper .postboard-news").click(function() {
+        $('.wrapper .postboard-news').on('click', function () {
             var newPosts = parseInt($(".userMenu .menu-news").text());
             if (!newPosts)
                 newPosts = postsPerRefresh;
@@ -18,14 +18,14 @@ var InterfaceFunctions = function() {
         });
 
         // Add refresh posts for home link in menu
-        $( ".userMenu-home.current a").click(function() {
+        $('.userMenu-home.current a').on('click', function () {
             var newPosts = parseInt($(".userMenu .menu-news").text());
             if (!newPosts)
                 newPosts = postsPerRefresh;
             requestTimelineUpdate('pending',newPosts,followingUsers,promotedPostsOnly);
         });
 
-        $( ".promoted-posts-only").click(function() {
+        $('.promoted-posts-only').on('click', function () {
             promotedPostsOnly = !promotedPostsOnly;
 
             timelineChangedUser();
@@ -51,13 +51,13 @@ var InterfaceFunctions = function() {
         if (!defaultScreenName) {
             $('.userMenu-profile > a').attr('href', '#/login').text(polyglot.t('Login'));
             $(".post-area-new > textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
-            $(".post-area-new > textarea").attr("disabled","true");
+            $('.post-area-new > textarea').prop('disabled', true);
             $miniProfile.find(".mini-profile-name").text("guest");
             $miniProfile.find(".posts-count").text("0");
             $miniProfile.find(".following-count").text("0");
             $miniProfile.find(".followers-count").text("0");
             $(".dropdown-menu-following").attr("href","#");
-            $(".dropdown-menu-following").bind("click", function()
+            $('.dropdown-menu-following').on('click', function ()
             { alert(polyglot.t("You are not following anyone because you are not logged in."))} );
         } else {
             $miniProfile.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
@@ -80,7 +80,7 @@ var InterfaceFunctions = function() {
                      requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers,promotedPostsOnly);
 
                      // install scrollbottom handler to load more posts as needed
-                     $(window).scroll(function(){
+                     $(window).on('scroll', function () {
                         if  ($(window).scrollTop() >= $(document).height() - $(window).height() - 20){
                             if( timelineLoaded ) {
                                 requestTimelineUpdate("older", postsPerRefresh, followingUsers, promotedPostsOnly);
@@ -125,7 +125,7 @@ function initTopTrends() {
     if ($tt.length) {
         var $ttRefresh = $tt.find('.refresh-toptrends');
             $ttRefresh.on('click', updateTrendingHashtags);
-            setTimeout(function() { $ttRefresh.click() }, 100);
+            setTimeout(function (req) {req.trigger('click');}, 100, $ttRefresh);
     }
 }
 
@@ -184,8 +184,8 @@ function initWhoToFollow() {
     if (wtf.length) {
         var wtfRefresh = wtf.find('.refresh-users');
             wtfRefresh.on('click', refreshWhoToFollow);
-            setTimeout(function() {wtfRefresh.click();}, 100);
-        //wtf.find('.view-all-users').on('click', function() {window.location.hash = '#whotofollow';});
+            setTimeout(function (req) {req.trigger('click');}, 100, wtfRefresh);
+        //wtf.find('.view-all-users').on('click', function () {window.location.hash = '#whotofollow';});
     }
 }
 
@@ -211,7 +211,7 @@ function initNewUsers() {
     if (nus.length) {
         var nusRefresh = nus.find('.refresh-users');
         nusRefresh.on('click', refreshNewUsers);
-        setTimeout(function() {nusRefresh.click();}, 100);
+        setTimeout(function (req) {req.trigger('click');}, 100, nusRefresh);
     }
 }
 
@@ -234,7 +234,7 @@ function initTwistdayReminder() {
     if ($module.length) {
         var $moduleRefresh = $module.find('.refresh');
             $moduleRefresh.on('click', refreshTwistdayReminder);
-            setTimeout(function() { $moduleRefresh.click() }, 100);
+            setTimeout(function (req) {req.trigger('click');}, 100, $moduleRefresh);
         $module.find('.current').hide();
         $module.find('.upcoming').hide();
     }
@@ -263,7 +263,7 @@ function refreshTwistdayReminder() {
                             item.find('.twister-user-name').attr('href', $.MAL.userUrl(lucky));
                             item.find('.twister-user-tag').text('@' + lucky);
                             itemTwisterday = item.find('.twisterday');
-                            itemTwisterday.on('click', (function(e) {replyInitPopup(e, post);}).bind(post));
+                            itemTwisterday.on('click', (function (e) {replyInitPopup(e, post);}).bind(post));
                             if (typeof time !== 'undefined')
                                 itemTwisterday.text(timeGmtToText(time));
                             else
@@ -431,4 +431,4 @@ function shortenMagnetLink(event,magnetLink) {
 //******************* INIT **************
 //***********************************************
 var interfaceFunctions = new InterfaceFunctions;
-$( document ).ready( interfaceFunctions.init );
+$(interfaceFunctions.init);

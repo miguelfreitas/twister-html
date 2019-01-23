@@ -1,5 +1,4 @@
-$(function(){
-
+$(function () {
     $('.modal-close').html('');
     $('.modal-back').html('');
     $('.twister-user-remove').html('');
@@ -10,13 +9,12 @@ $(function(){
     $.globalEval(postToElem.toString().replace(/postContext.append\(twister\.tmpl\.postRtBy/,
         'postContext.prependTo(postContext.parent()).append(twister.tmpl.postRtBy'));
 
-
-    $( '.userMenu-home.current a' ).on( 'click', function() {
+    $('.userMenu-home.current a').on('click', function () {
         $('html, body').animate({scrollTop:0},300);
         return false
     });
 
-    $( ".promoted-posts-only").click(function() {
+    $('.promoted-posts-only').on('click', function () {
     // modify the way promoted posts are shown
         //active promoted posts tab
         $(this).children('.promoted-posts').addClass(promotedPostsOnly ? "active" : "disabled");
@@ -28,7 +26,7 @@ $(function(){
         $('#postboard-top').addClass(promotedPostsOnly ? "hide" : "show");
     });
 
-    $(window).scroll((function(){
+    $(window).on('scroll', (function () {
         if ($(document).scrollTop() >= 250) {
             if (this.css('display') === 'none')
                 this.slideDown(300);
@@ -49,7 +47,7 @@ $(function(){
     ;
 
     if (/\/options.html$/i.test(document.location))
-        $(document).ready(localizeLabels);
+        localizeLabels();
 });
 
 function localizeLabels() {

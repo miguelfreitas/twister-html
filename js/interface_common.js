@@ -95,8 +95,9 @@ function openModal(modal) {
         modal.drapper = $('<div>').appendTo(twister.html.detached);  // here modal goes instead detaching
 
         modal.content.outerHeight(modal.self.height() - modal.self.find('.modal-header').outerHeight()
-            - modal.self.find('.inline-warn').outerHeight()
-            * (modal.warn && !$.Options.get('skipWarn' + modal.warn.name) ? 1 : 0));
+            - (modal.warn && !$.Options.get('skipWarn' + modal.warn.name) ?
+                modal.self.find('.inline-warn').outerHeight() : 0)
+        );
 
         var windowHeight = $(window).height();
         if (modal.self.outerHeight() > windowHeight) {
@@ -191,7 +192,7 @@ function minimizeModal(modal, switchMode) {
         twister.modal[i].scroll = scroll;
         twister.modal[i].btnResume = $('<li>' + modal.find('.modal-header h3').text() + '</li>')
             .on('click', {hashString: window.location.hash}, function (event) {
-                if (!event.button)  // only if left mouse (button is 0) or elem.click() (button is undefined)
+                if (!event.button)  // only if left mouse (button is 0) or elem.trigger('click') (button is undefined)
                     resumeModal(event);
             })
             .on('mouseup', {route: window.location.hash, blankOnly: true}, routeOnClick)
@@ -277,7 +278,7 @@ function focusModalWithElement(elem, cbFunc, cbReq) {
         if (typeof i === 'object') i = i[0]; // several modals, but only one may be active currently
         twister.modal[i].onResume = cbFunc;
         twister.modal[i].onResumeReq = cbReq;
-        twister.modal[i].btnResume.click();
+        twister.modal[i].btnResume.trigger('click');
         return true;
     }
 
@@ -557,7 +558,7 @@ function openGroupProfileModalWithNameHandler(groupAlias) {
                 ;
 
                 if (ret.members.indexOf(defaultScreenName) !== -1)
-                    req.modal.content.find('.group-messages-control').children('button').attr('disabled', false);
+                    req.modal.content.find('.group-messages-control').children('button').prop('disabled', false);
 
                 var membersList = req.modal.content.find('.members');
                 var memberTemplate = $('#group-profile-member-template').children();
@@ -1246,7 +1247,7 @@ function routeOnClick(event) {
                 .bind({elem: event.target, href: event.target.getAttribute('href')}), 200);
             event.target.removeAttribute('href');
         }
-        twister.html.blanka.attr('href', event.data.route)[0].click();  // opens .route in new tab
+        twister.html.blanka.attr('href', event.data.route)[0].trigger('click');  // opens .route in new tab
     }
 
     if (!event || !event.data || !event.data.route)
@@ -1300,10 +1301,10 @@ function watchHashChange(event) {
 function loadModalFromHash() {
     var i = window.location.hash;
     if (twister.modal[i] && twister.modal[i].minimized) {
-        // need to close active modal(s) before btnResume.click() or it will be minimized in resumeModal()
+        // need to close active modal(s) before btnResume.trigger('click') or it will be minimized in resumeModal()
         // e.g. for case when you click on profile link in some modal having this profile's modal minimized already
         closeModal(undefined, true);
-        twister.modal[i].btnResume.click();
+        twister.modal[i].btnResume.trigger('click');
         return;
     }
 
@@ -1396,7 +1397,7 @@ function reTwistPopup(event, post, textArea) {
     }
 
     if (typeof post === 'undefined')
-        post = $.evalJSON($(event.target).closest('.post-data').attr('data-userpost'));
+        post = JSON.parse($(event.target).closest('.post-data').attr('data-userpost'));
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
@@ -1430,7 +1431,7 @@ function reTwistPopup(event, post, textArea) {
     } else {
         replyArea.find('textarea').replaceWith(textArea);
         if (textArea.val()) {
-            textArea.focus();
+            textArea.trigger('focus');
             replyArea.addClass('open');
         }
     }
@@ -1448,7 +1449,7 @@ function favPopup(event, post, textArea) {
     }
 
     if (typeof post === 'undefined')
-        post = $.evalJSON($(event.target).closest('.post-data').attr('data-userpost'));
+        post = JSON.parse($(event.target).closest('.post-data').attr('data-userpost'));
 
     var modal = openModal({
         classBase: '.prompt-wrapper',
@@ -1472,7 +1473,7 @@ function favPopup(event, post, textArea) {
     } else {
         replyArea.find('textarea').replaceWith(textArea);
         if (textArea.val()) {
-            textArea.focus();
+            textArea.trigger('focus');
             replyArea.addClass('open');
         }
     }
@@ -1734,7 +1735,7 @@ function postReplyClick(event) {
 
     var post = $(this).closest('.post');
     if (!post.hasClass('original'))
-        replyInitPopup(event, $.evalJSON(post.find('.post-data').attr('data-userpost')));
+        replyInitPopup(event, JSON.parse(post.find('.post-data').attr('data-userpost')));
     else {
         if (!post.closest('.post.open').length)
             postExpandFunction(event, post);
@@ -1774,7 +1775,7 @@ function composeNewPost(e, postAreaNew) {
         poseTextareaPostTools(textArea);
     }
     if (!postAreaNew.find('textarea:focus').length)
-        postAreaNew.find('textarea:last').focus();
+        postAreaNew.find('textarea:last').trigger('focus');
 }
 
 function poseTextareaPostTools(event) {
@@ -1920,7 +1921,7 @@ function replyTextInput(event) {
 
             if (typeof targetta !== 'undefined' && targetta[0] !== document.activeElement) {
                 textArea = targetta;
-                textArea.focus();
+                textArea.trigger('focus');
                 textArea.caret(caretPos);
             }
         }
@@ -2036,7 +2037,7 @@ function replyTextKeySend(event) {
                     textArea.val(textArea.val().trim());
 
                     if (!buttonSend.hasClass('disabled'))
-                        buttonSend.click();
+                        buttonSend.trigger('click');
                 }
         }
     }
@@ -2461,7 +2462,7 @@ function postSubmit(e, oldLastPostId) {
 
     if (btnPostSubmit.hasClass('with-reference')) {
         var doSubmitPost = function (postText, postDataElem) {
-            newRtMsg($.evalJSON(postDataElem.attr('data-content_to_rt')),
+            newRtMsg(JSON.parse(postDataElem.attr('data-content_to_rt')),
                 postDataElem.attr('data-content_to_sigrt'), postText, updateRTsWithOwnOne
             );
         };
@@ -2573,7 +2574,7 @@ function postSubmit(e, oldLastPostId) {
 
         if (btnPostSubmit.closest('.post-area,.post-reply-content').length) {
             btnPostSubmit.closest('.post-area-new').removeClass('open')
-                .find('textarea').blur();
+                .find('textarea').trigger('blur');
         }
         textArea.data('unicodeConversionStack', []);
         textArea.data('disabledUnicodeRules', []);
@@ -2587,7 +2588,7 @@ function retweetSubmit(event) {
     var prompt = $(event.target).closest('.prompt-wrapper');
     var postDataElem = prompt.find('.post-data');
 
-    newRtMsg($.evalJSON(postDataElem.attr('data-content_to_rt')),
+    newRtMsg(JSON.parse(postDataElem.attr('data-content_to_rt')),
         postDataElem.attr('data-content_to_sigrt'), '', updateRTsWithOwnOne
     );
 
@@ -2626,7 +2627,7 @@ function changeStyle() {
     $('#profilecss').attr('href', profile);
     $('<style type="text/css"> .selectable_theme:not(.theme_' + theme + ')' +
       '{display:none!important;}\n</style>').appendTo('head');
-    setTimeout(function() {$(menu).removeAttr('style');}, 0);
+    setTimeout(function() {console.log($(menu)); $(menu).removeAttr('style');}, 0);
 }
 
 function getMentionsForAutoComplete() {
@@ -2779,7 +2780,7 @@ function initInterfaceCommon() {
     $('.post-favorite').on('click', favPopup);
     $('.userMenu-config').clickoutside(closeThis.bind($('.config-menu')));
     $('.userMenu-config-dropdown').on('click', dropDownMenu);
-    $('#post-template.module.post').on('click', function(event) {
+    $('#post-template.module.post').on('click', function (event) {
         if (event.button === 0 && window.getSelection() == 0)
             postExpandFunction(event, $(this));
     })
@@ -2794,7 +2795,7 @@ function initInterfaceCommon() {
         .closest('.post-data').find('.post-stats').hide()
     ;
     $('.post-area-new')
-        .on('click', function(e) {composeNewPost(e, $(this));})
+        .on('click', function (e) {composeNewPost(e, $(this));})
         .clickoutside(unfocusPostAreaNew)
         .children('textarea')
             .on({
@@ -2830,7 +2831,7 @@ function initInterfaceCommon() {
         {feeder: '.latest-activity'}, handleClickOpenConversation);
 
     replaceDashboards();
-    $(window).resize(replaceDashboards);
+    $(window).on('resize', replaceDashboards);
 
     $('.profile-card .profile-bio .group-description')
         .on('focus', function (event) {
@@ -2928,7 +2929,7 @@ function elemFitNextIntoParentHeight(elem) {
 function inputEnterActivator(event) {
     var elemEvent = $(event.target);
     elemEvent.closest(event.data.parentSelector).find(event.data.enterSelector)
-        .attr('disabled', elemEvent.val().trim() === '');
+        .prop('disabled', elemEvent.val().trim() === '');
 }
 
 function pasteToTextarea(ta, p) {
@@ -2947,7 +2948,7 @@ function pasteToTextarea(ta, p) {
     } else
         ta.val(p + ' ');
 
-    ta.focus().caret(c + p.length + ((ta.val().length - s.length - p.length) > 1 ? 2 : 1));
+    ta.trigger('focus').caret(c + p.length + ((ta.val().length - s.length - p.length) > 1 ? 2 : 1));
 }
 
 function setTextcompleteOnEventTarget(event) {
@@ -2984,7 +2985,7 @@ function setTextcompleteDropdownListPos(position) {
     return this;
 }
 
-$(document).ready(function () {
+$(function () {
     setupTimeGmtToText($.Options.locLang.val);
     if ($.localStorage.isSet('twistaURIs'))
         twister.URIs = $.localStorage.get('twistaURIs');

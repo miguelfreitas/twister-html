@@ -15,7 +15,7 @@ function initProfileEdit() {
 
     initInterfaceCommon();
 
-    $('.profile-card-photo.forEdition').on('click', function() { $('#avatar-file').click(); });
+    $('.profile-card-photo.forEdition').on('click', function () {$('#avatar-file').trigger('click');});
     $('#avatar-file').on('change', handleAvatarFileSelect);
     $('.submit-changes').on('click', saveProfile);
     $('.cancel-changes').on('click', $.MAL.goHome);
@@ -116,4 +116,4 @@ function localizePlaceholders() {
     $('.input-bitmessage').attr('placeholder', polyglot.t('Bitmessage address'));
 }
 
-$(document).ready(localizePlaceholders);
+$(localizePlaceholders);
