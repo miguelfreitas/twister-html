@@ -1351,6 +1351,7 @@ ol.toptrends-list {
 }
 
 .post-stats {
+    display: flex;
     height: 34px;
     margin: 0 12px 8px 55px;
     border-top: solid 1px rgba(69, 71, 77, .1);
@@ -1358,7 +1359,6 @@ ol.toptrends-list {
 }
 
 .post-stats > div {
-    display: inline-block;
     line-height: 16px;
     vertical-align: middle;
 }
