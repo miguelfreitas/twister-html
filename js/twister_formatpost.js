@@ -30,7 +30,7 @@ $(function () {
 
 // format "userpost" to html element
 // kind = "original"/"ancestor"/"descendant"
-function postToElem(post, kind, promoted) {
+function postToElem(post, kind, promoted, templatePost) {
     /*
     "userpost" :
     {
@@ -99,8 +99,11 @@ function postToElem(post, kind, promoted) {
         msg = msg.slice(0,$.Options.MaxPostDisplayChars.val) + "\u2026";
     }
 
+    if (!templatePost)
+        templatePost = twister.tmpl.post;
+
     // Now create the html elements
-    var elem = $.MAL.getPostTemplate().clone(true).appendTo(twister.html.detached);
+    var elem = templatePost.clone(true).appendTo(twister.html.detached);
     elem.removeAttr('id')
         .addClass(kind)
         .attr('data-time', time)

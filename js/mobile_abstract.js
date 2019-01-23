@@ -140,20 +140,6 @@ var MAL = function()
         }
     }
 
-    this.setPostTemplate = function(p) {
-        if( $.hasOwnProperty("mobile") ) {
-            this.postTemplate = p;
-        }
-    }
-
-    this.getPostTemplate = function() {
-        if( $.hasOwnProperty("mobile") ) {
-            return this.postTemplate;
-        } else {
-            return $("#post-template");
-        }
-    }
-
     // how do we map usernames into urls
     this.userUrl = function(username) {
         //if( $.hasOwnProperty("mobile") ) {

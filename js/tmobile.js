@@ -5,6 +5,7 @@
 
 var twisterInitialized = false;
 var handlersInstalled = false;
+
 function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
     if( !handlersInstalled ) {
         interfaceNetworkHandlers();
@@ -18,7 +19,6 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
         });
         // home screen timeline refresh button
         $('.timeline-refresh').on('click', function (e) {
-            $.MAL.setPostTemplate( $("#post-template-home") );
             requestTimelineUpdate("latest",postsPerRefresh,followingUsers);
             $.mobile.silentScroll(0);
         });
@@ -31,6 +31,10 @@ function initializeTwister( redirectNetwork, redirectLogin, cbFunc, cbArg ) {
         ;
 
         handlersInstalled = true;
+
+        twister.tmpl.post = extractTemplate('#template-post');
+        twister.tmpl.postFull = extractTemplate('#template-post-full');
+        twister.tmpl.postFull.find('.post-stats').hide();
     }
 
     if( twisterInitialized ) {
@@ -103,7 +107,6 @@ var router=new $.mobile.Router(
                     cleanupStorage();
                     getFullname( defaultScreenName, $("#home .rtitle"));
                     $(".mentions-count").attr("href","#mentions?user="+defaultScreenName );
-                    $.MAL.setPostTemplate( $("#post-template-home") );
                     requestTimelineUpdate("latestFirstTime",postsPerRefresh,followingUsers);
                 }
             });
@@ -127,7 +130,6 @@ var router=new $.mobile.Router(
                 }
 
                 $.mobile.loading('show');
-                $.MAL.setPostTemplate( $("#post-template-home") );
                 updateProfileData( $("#profile"), user);
             });
         },
@@ -171,8 +173,7 @@ var router=new $.mobile.Router(
             initializeTwister( true, true, function() {
                 var $ulPost = $("#post ul.posts");
                 $ulPost.text("");
-                $.MAL.setPostTemplate( $("#post-template-post") );
-                var originalLi = postToElem(JSON.parse(params.userpost), 'original');
+                var originalLi = postToElem(JSON.parse(params.userpost), 'original', false, twister.tmpl.postFull);
                 $ulPost.append(originalLi);
                 $ulPost.find(".post-interactions").trigger('create');
                 $ulPost.listview('refresh');
@@ -201,7 +202,6 @@ var router=new $.mobile.Router(
                 var $replyOriginal = $(".reply-original-post")
                 $replyOriginal.html("");
                 if( params && params.hasOwnProperty("userpost") ) {
-                    $.MAL.setPostTemplate( $("#post-template-home") );
                     var originalLi = postToElem(JSON.parse(params.userpost), 'original');
                     $replyOriginal.append(originalLi);
                     $replyOriginal.listview('refresh');
@@ -215,7 +215,6 @@ var router=new $.mobile.Router(
             initializeTwister( true, true, function() {
                 var $rtOriginal = $(".rt-original-post")
                 $rtOriginal.html("");
-                $.MAL.setPostTemplate( $("#post-template-home") );
                 var originalLi = postToElem(JSON.parse(params.userpost), 'original');
                 $rtOriginal.append(originalLi);
                 $rtOriginal.listview('refresh');
@@ -521,7 +520,6 @@ function reachedScrollBottom() {
     var curPage = $.mobile.activePage.attr("id");
     if( curPage == "home" ) {
         if( timelineLoaded ) {
-            $.MAL.setPostTemplate( $("#post-template-home") );
             requestTimelineUpdate("older", postsPerRefresh, followingUsers);
         }
     }
@@ -544,7 +542,6 @@ function encode_utf8(s) {
 var tmobileQueryReq;
 
 function setupHashtagOrMention(board, query, resource) {
-    $.MAL.setPostTemplate( $("#post-template-home") );
     $.mobile.loading('show');
     board.empty();
 

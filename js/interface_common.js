@@ -2775,25 +2775,8 @@ function initInterfaceCommon() {
     $('.module.mini-profile .open-followers').on('mouseup', {route: '#followers'}, routeOnClick);
 
     $('.post-text').on('click', 'a', muteEvent);
-    $('.post-reply').on('click', postReplyClick);
-    $('.post-propagate').on('click', reTwistPopup);
-    $('.post-favorite').on('click', favPopup);
     $('.userMenu-config').clickoutside(closeThis.bind($('.config-menu')));
     $('.userMenu-config-dropdown').on('click', dropDownMenu);
-    $('#post-template.module.post').on('click', function (event) {
-        if (event.button === 0 && window.getSelection() == 0)
-            postExpandFunction(event, $(this));
-    })
-        .find('.new-replies-available button').hide()
-            .on('click', function (event) {
-                event.stopPropagation();
-                $(event.target).hide()
-                    .closest('li.post').next('.post-replies').find('.post.pending')
-                        .removeClass('pending').slideDown('fast')
-                ;
-            })
-        .closest('.post-data').find('.post-stats').hide()
-    ;
     $('.post-area-new')
         .on('click', function (e) {composeNewPost(e, $(this));})
         .clickoutside(unfocusPostAreaNew)
@@ -2809,10 +2792,6 @@ function initInterfaceCommon() {
     $('.modal-propagate').on('click', retweetSubmit);
     $('.modal-fav-public').on('click', favSubmit);
     $('.modal-fav-private').on('click', favSubmit);
-    $('.expanded-content .show-more').on('mouseup',
-        {feeder: '.module.post.original.open .module.post.original .post-data'}, handleClickOpenConversation)
-        .on('click', muteEvent)  // to prevent post collapsing
-    ;
     if ($.Options.unicodeConversion.val === 'disable')
         $('.undo-unicode').on('click', undoLastUnicode).css('display', 'none');
     else
@@ -2897,6 +2876,33 @@ function initInterfaceCommon() {
             }
         )
     ;
+
+    twister.tmpl.post = extractTemplate('#template-post')
+        .on('click', function (event) {
+            if (event.button === 0 && window.getSelection() == 0)
+                postExpandFunction(event, $(this));
+        })
+    ;
+    twister.tmpl.post.find('.post-reply').on('click', postReplyClick);
+    twister.tmpl.post.find('.post-propagate').on('click', reTwistPopup);
+    twister.tmpl.post.find('.post-favorite').on('click', favPopup);
+    twister.tmpl.post.find('.expanded-content .show-more')
+        .on('mouseup',
+            {feeder: '.module.post.original.open .module.post.original .post-data'},
+            handleClickOpenConversation
+        )
+        .on('click', muteEvent)  // to prevent post collapsing
+    ;
+    twister.tmpl.post.find('.new-replies-available button').hide()
+        .on('click', function (event) {
+            event.stopPropagation();
+            $(event.target).hide()
+                .closest('li.post').next('.post-replies').find('.post.pending')
+                    .removeClass('pending').slideDown('fast')
+            ;
+        })
+    ;
+    twister.tmpl.post.find('.post-stats').hide();
 }
 
 function extractTemplate(selector) {

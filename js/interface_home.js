@@ -51,7 +51,7 @@ var InterfaceFunctions = function() {
         if (!defaultScreenName) {
             $('.userMenu-profile > a').attr('href', '#/login').text(polyglot.t('Login'));
             $(".post-area-new > textarea").attr("placeholder",polyglot.t("You have to log in to post messages."));
-            $('.post-area-new > textarea').prop('disabled', true);
+            getElem('.post-area-new > textarea', true).prop('disabled', true);
             $miniProfile.find(".mini-profile-name").text("guest");
             $miniProfile.find(".posts-count").text("0");
             $miniProfile.find(".following-count").text("0");
