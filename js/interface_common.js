@@ -24,6 +24,7 @@ var twister = {
                 return req.toString().replace(/GMT.*/g, '');
             }
         },
+        isCurrentInputSplittable: false,
         localAccounts: [],
         updatesCheckClient: {}
     }
@@ -1752,21 +1753,6 @@ function composeNewPost(e, postAreaNew) {
         postAreaNew.addClass('open');
         //se o usuário clicar fora é pra fechar
         postAreaNew.clickoutside(unfocusPostAreaNew);
-
-        if ($.Options.splitPosts.val === 'enable')
-            usePostSpliting = true;
-        else if ($.Options.splitPosts.val === 'only-new') {
-            var postOrig = postAreaNew.closest('.post-data');
-
-            if (!postOrig.length)
-                postOrig = postAreaNew.closest('.modal-content').find('.post-data');
-
-            if (postOrig.length)
-                usePostSpliting = false;
-            else
-                usePostSpliting = true;
-        } else
-            usePostSpliting = false;
     }
 
     var textArea = postAreaNew.find('textarea');
@@ -1776,6 +1762,22 @@ function composeNewPost(e, postAreaNew) {
     }
     if (!postAreaNew.find('textarea:focus').length)
         postAreaNew.find('textarea:last').trigger('focus');
+}
+
+function prepareTextareaToInput(event) {
+    var elem = $(event.target);
+
+    if (!elem.closest('.directMessages').length
+        && !elem.closest('.network').length
+        && ($.Options.splitPosts.val === 'enable'
+            || ($.Options.splitPosts.val === 'only-new'
+                && !(elem.closest('.post-data').length
+                    || elem.closest('.modal-content').find('.post-data').length))))
+        twister.var.isCurrentInputSplittable = true;
+    else
+        twister.var.isCurrentInputSplittable = false;
+
+    poseTextareaPostTools(elem);
 }
 
 function poseTextareaPostTools(event) {
@@ -1833,7 +1835,6 @@ function checkPostForMentions(post, mentions, max) {
 }
 
 var splitedPostsCount = 1; // FIXME it could be property of future textAreaInput and composeNewPost united thing; currently stuff is hell
-var usePostSpliting = false;
 
 function replyTextInput(event) {
     var textArea = $(event.target);
@@ -1842,7 +1843,7 @@ function replyTextInput(event) {
         if ($.Options.unicodeConversion.val !== 'disable')
             textArea.val(convert2Unicodes(textArea.val(), textArea));
 
-        if (usePostSpliting && !textArea.closest('.directMessages').length) {
+        if (twister.var.isCurrentInputSplittable) {
             var caretPos = textArea.caret();
             var reply_to = textArea.attr('data-reply-to');
             var tas = textAreaForm.find('textarea');
@@ -1975,7 +1976,7 @@ function replyTextUpdateRemaining(ta) {
             var remainingCount = textAreaForm.find('.post-area-remaining');
             var c = replyTextCountRemaining(ta);
 
-            if (usePostSpliting && !textArea.closest('.directMessages').length && splitedPostsCount > 1)
+            if (twister.var.isCurrentInputSplittable && splitedPostsCount > 1)
                 remainingCount.text((textAreaForm.find('textarea').index(ta) + 1).toString()
                     + '/' + splitedPostsCount.toString() + ': ' + c.toString());
             else
@@ -2010,7 +2011,7 @@ function replyTextCountRemaining(ta) {
     var c;
 
     var MaxPostSize = $.Options.MaxPostEditorChars.val;
-    if (usePostSpliting && !textArea.closest('.directMessages').length && splitedPostsCount > 1) {
+    if (twister.var.isCurrentInputSplittable && splitedPostsCount > 1) {
         c = MaxPostSize - ta.value.length - (textArea.closest('form').find('textarea').index(ta) + 1).toString().length - splitedPostsCount.toString().length - 4;
         var reply_to = textArea.attr('data-reply-to');
         if (typeof reply_to !== 'undefined' &&
@@ -2782,7 +2783,7 @@ function initInterfaceCommon() {
         .clickoutside(unfocusPostAreaNew)
         .children('textarea')
             .on({
-                'focus': poseTextareaPostTools,
+                'focus': prepareTextareaToInput,
                 'input': replyTextInput,  // input event fires in modern browsers (IE9+) on any changes in textarea (and copypasting with mouse too)
                 'input focus': replyTextUpdateRemaining,
                 'keyup': replyTextKeySend
