@@ -309,8 +309,6 @@ function interfaceNetworkHandlers() {
     $('.add-dns').on('click', addDNSClick);
     $('select.genblock').on('change', setGenerate);
     $('.genproclimit').on('change', setGenerate);
-    $('.network .post-area-new').off('click').on('click',
-        function (e) {e.stopPropagation(); $(this).addClass('open');});
     $('.post-submit.update-spam-msg').off('click').on('click', setSpamMsg);
     $('.terminate-daemon').on('click',
         {txtMessage: {polyglot: 'confirm_terminate_daemon'}, cbConfirm: exitDaemon}, confirmPopup);

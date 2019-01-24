@@ -1818,7 +1818,10 @@ function poseTextareaEditBar(textArea) {
             .css('margin-left', textArea.css('margin-left'))
             .css('margin-right', textArea.css('margin-right'))
         ;
-        editBar.find('.shorten-uri').text(polyglot.t('shorten_URI'));
+        if (textArea.closest('.network').length)
+            editBar.find('.shorten-uri').remove();
+        else
+            editBar.find('.shorten-uri').text(polyglot.t('shorten_URI'));
     }
     editBar.insertAfter(textArea).show();
 }
