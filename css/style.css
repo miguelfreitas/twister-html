@@ -310,10 +310,6 @@ button.follow:hover, button.unfollow:hover, .following-own-modal .following-list
     font-size: 24px;
 }
 
-.userMenu li.userMenu-profile > a {
-    background: url(../img/profile.png) no-repeat 5px center;
-}
-
 .userMenu li.userMenu-config {
     float: right;
     position: relative;
