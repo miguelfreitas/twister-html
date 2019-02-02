@@ -6,6 +6,8 @@
 // Post actions: submit, count characters
 
 var twister = {
+    profiles: {},
+    avatars: {},
     URIs: {},  // shortened URIs are cached here after fetching
     torrentIds: {},  // auto-download torrentIds
     focus: {},  // focused elements are counted here

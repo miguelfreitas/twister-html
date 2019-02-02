@@ -20,9 +20,6 @@ function twisterRpc(method, params, resultFunc, resultArg, errorFunc, errorArg) 
 // join multiple dhtgets to the same resources in this map
 var _dhtgetPendingMap = {};
 
-// memory cache for profile and avatar
-var _profileMap = {};
-var _avatarMap = {};
 var _pubkeyMap = {};
 
 // number of dhtgets in progress (requests to the daemon)
@@ -228,32 +225,27 @@ function dhtput(peerAlias, resource, multi, value, sig_user, seq, cbFunc, cbReq)
 // get something from profile and store it in elem.text or do callback
 function getProfileResource(peerAlias, resource, elem, cbFunc, cbReq) {
     var profile;
-    if (_profileMap[peerAlias]) {
-        profile = _profileMap[peerAlias];
+    if (twister.profiles[peerAlias]) {
+        profile = twister.profiles[peerAlias];
     } else {
         profile = _getResourceFromStorage('profile:' + peerAlias);
+        if (profile)
+            twister.profiles[peerAlias] = profile;
     }
     if (profile) {
-        _profileMap[peerAlias] = profile;
         if (elem)
             elem.text(profile[resource]);
         if (cbFunc)
             cbFunc(cbReq, profile[resource]);
     } else {
-        dhtget(peerAlias, 'profile', 's',
-            function(req, profile) {
-                if (profile) {
-                    _profileMap[req.peerAlias] = profile;
-                    _putResourceIntoStorage('profile:' + peerAlias, profile);
-                    if (req.elem)
-                        req.elem.text(profile[resource]);
-                    if (req.cbFunc)
-                        req.cbFunc(req.cbReq, profile[resource]);
-                } else {
-                    if (req.cbFunc)
-                        req.cbFunc(req.cbReq);
-                }
-            }, {peerAlias: peerAlias, elem: elem, cbFunc: cbFunc, cbReq: cbReq}
+        loadProfile(peerAlias,
+            function (peerAlias, req, res) {
+                if (req.elem)
+                    req.elem.text(res[req.resource]);
+                if (typeof req.cbFunc === 'function')
+                    req.cbFunc(req.cbReq, res[req.resource]);
+            },
+            {elem: elem, resource: resource, cbFunc: cbFunc, cbReq: cbReq}
         );
     }
 }
@@ -438,59 +430,122 @@ function getAvatar(peerAlias, img) {
         return;
     }
 
-    if (_avatarMap[peerAlias]) {
-        //img.attr('src', 'data:image/jpg;base64,'+avatarMap[peerAlias]);
-        img.attr('src', _avatarMap[peerAlias]);
+    if (twister.avatars[peerAlias]) {
+        img.attr('src', twister.avatars[peerAlias].src);
     } else {
         var data = _getResourceFromStorage('avatar:' + peerAlias);
 
         if (data) {
-            switch (data.substr(0, 4)) {
+            if (typeof data !== 'object')
+                data = {src: data, version: 0};
+
+            switch (data.src.substr(0, 4)) {
                 case 'jpg/':
-                    data = 'data:image/jpeg;base64,/9j/' + window.btoa(data.slice(4));
+                    data.src = 'data:image/jpeg;base64,/9j/' + window.btoa(data.src.slice(4));
                     break;
                 case 'png/':
-                    data = 'data:image/png;base64,' + window.btoa(data.slice(4));
+                    data.src = 'data:image/png;base64,' + window.btoa(data.src.slice(4));
                     break;
                 case 'gif/':
-                    data = 'data:image/gif;base64,' + window.btoa(data.slice(4));
+                    data.src = 'data:image/gif;base64,' + window.btoa(data.src.slice(4));
                     break;
             }
-            _avatarMap[peerAlias] = data;
-            img.attr('src', data);
+            twister.avatars[peerAlias] = data;
+            img.attr('src', data.src);
         } else {
-            dhtget(peerAlias, 'avatar', 's',
-                function(req, imagedata) {
-                    if (imagedata && imagedata.length) {
-                        _avatarMap[req.peerAlias] = imagedata;
-                        if (imagedata !== 'img/genericPerson.png') {
-                            if (imagedata.substr(0, 27) === 'data:image/jpeg;base64,/9j/')
-                                _putResourceIntoStorage('avatar:' + peerAlias, 'jpg/' + window.atob(imagedata.slice(27)));
-                            else {
-                                var s = imagedata.substr(0, 22);
-                                if (s === 'data:image/png;base64,' || s === 'data:image/gif;base64,')
-                                    _putResourceIntoStorage('avatar:' + peerAlias, imagedata.substr(11, 3) + '/' + window.atob(imagedata.slice(22)));
-                                else
-                                    _putResourceIntoStorage('avatar:' + peerAlias, imagedata);
-                            }
-                        }
-                        req.img.attr('src', imagedata);
-                    }
-                }, {peerAlias: peerAlias, img: img}
+            loadAvatar(peerAlias,
+                function (peerAlias, req, res) {
+                    req.attr('src', res);
+                },
+                img
             );
         }
     }
+}
+
+function loadProfile(peerAlias, cbFunc, cbReq) {
+    dhtget(peerAlias, 'profile', 's',
+        function(req, res, resRaw) {
+            if (!resRaw || typeof res !== 'object')
+                return;
+
+            res.version = parseInt(resRaw[0].p.seq);
+
+            if (!twister.profiles[req.peerAlias] || !twister.profiles[req.peerAlias].version
+                || res.version > twister.profiles[req.peerAlias].version) {
+                console.log('got ' + req.peerAlias + '\'s profile version ' + res.version + ' — going to cache and redraw globally');
+                cacheProfile(req.peerAlias, res);
+                redrawProfile(req.peerAlias, res);
+            }
+
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.peerAlias, req.cbReq, res);
+        },
+        {peerAlias: peerAlias, cbFunc: cbFunc, cbReq: cbReq}
+    );
+}
+
+function loadAvatar(peerAlias, cbFunc, cbReq) {
+    dhtget(peerAlias, 'avatar', 's',
+        function(req, res, resRaw) {
+            if (!resRaw)
+                return;
+
+            if (!res)
+                res = 'img/genericPerson.png';
+
+            var version = parseInt(resRaw[0].p.seq);
+
+            if (!twister.avatars[req.peerAlias] || !twister.avatars[req.peerAlias].version
+                || version > twister.avatars[req.peerAlias].version) {
+                console.log('got ' + req.peerAlias + '\'s avatar version ' + version + ' — going to cache and redraw globally');
+                cacheAvatar(req.peerAlias, res, version);
+                redrawAvatar(req.peerAlias, res);
+            }
+
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.peerAlias, req.cbReq, res);
+        },
+        {peerAlias: peerAlias, cbFunc: cbFunc, cbReq: cbReq}
+    );
+}
+
+function cacheProfile(peerAlias, req) {
+    var dat = {};
+    for (var i in req)
+        if (req[i])
+            dat[i] = req[i];
+
+    twister.profiles[peerAlias] = dat;
+
+    _putResourceIntoStorage('profile:' + peerAlias, dat);
+}
+
+function cacheAvatar(peerAlias, req, version) {
+    twister.avatars[peerAlias] = {src: req, version: version};
+
+    if (req === 'img/genericPerson.png')
+        return;
+
+    if (req.substr(0, 27) === 'data:image/jpeg;base64,/9j/') {
+        req = 'jpg/' + window.atob(req.slice(27));
+    } else {
+        var s = req.substr(0, 22);
+        if (s === 'data:image/png;base64,' || s === 'data:image/gif;base64,')
+            req = req.substr(11, 3) + '/' + window.atob(req.slice(22));
+    }
+    _putResourceIntoStorage('avatar:' + peerAlias, {src: req, version: version});
 }
 
 function clearAvatarAndProfileCache(peerAlias) {
     var storage = $.localStorage;
     storage.remove('avatar:' + peerAlias);
     storage.remove('profile:' + peerAlias);
-    if (_avatarMap[peerAlias]) {
-        delete _avatarMap[peerAlias];
+    if (twister.avatars[peerAlias]) {
+        delete twister.avatars[peerAlias];
     }
-    if (_profileMap[peerAlias]) {
-        delete _profileMap[peerAlias];
+    if (twister.profiles[peerAlias]) {
+        delete twister.profiles[peerAlias];
     }
 }
 
