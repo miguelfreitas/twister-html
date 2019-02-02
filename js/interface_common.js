@@ -2744,19 +2744,17 @@ function changeStyle() {
     if (theme === 'nin') {
         style = 'theme_nin/css/style.css';
         profile = 'theme_nin/css/profile.css';
+        // we use .ajax because .getScript requires 'unsafe-inline' CSP rule for now, see https://github.com/jquery/jquery/issues/3969
         $.ajax({dataType: 'text', url: 'theme_nin/js/theme_option.js'})
-            .done(function(script, textStatus) {
-                eval(script);  // FIXME
-                //applyThemePptions();
-            })
-        ;
+            .done(function(res) {eval(res);});
     } else if (theme === 'calm') {
         style = 'theme_calm/css/style.css';
         profile = 'theme_calm/css/profile.css';
     } else if (theme === 'original') {
         style = 'css/style.css';
         profile = 'css/profile.css';
-        $.getScript('theme_original/js/theme_option.js');
+        $.ajax({dataType: 'text', url: 'theme_original/js/theme_option.js'})
+            .done(function(res) {eval(res);});
     }
 
     $('#stylecss').attr('href', style);

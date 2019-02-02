@@ -6,7 +6,8 @@ $(function () {
     $('img[src$="img/tornado_avatar.png"]').attr("src","theme_nin/img/tornado_avatar.png");
     $('.mini-profile-actions span').html('');
 
-    $.globalEval(postToElem.toString().replace(/postContext.append\(twister\.tmpl\.postRtBy/,
+    // indirect eval call in hope to execute code globally
+    (1, eval)(postToElem.toString().replace(/postContext.append\(twister\.tmpl\.postRtBy/,
         'postContext.prependTo(postContext.parent()).append(twister.tmpl.postRtBy'));
 
     $('.userMenu-home.current a').on('click', function () {
