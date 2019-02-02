@@ -51,7 +51,7 @@
             <a class="dropdown-menu-item uri-shortener">URI_shortener</a>
             <a class="dropdown-menu-item" href="options.html">Options</a>
             <a class="dropdown-menu-item" href="network.html">Network config</a>
-            <a class="dropdown-menu-item" href="profile-edit.html">Setup account</a>
+            <a class="dropdown-menu-item" href="#/account">Setup account</a>
             <a class="dropdown-menu-item" href="#/login">Change user</a>
             <a class="dropdown-menu-item updates-check-client">Check for client's updates</a>
             <a class="dropdown-menu-item dropdown-menu-following" href="#following">Following users</a>
@@ -472,6 +472,32 @@
             <button class="confirm"></button>
             <button class="cancel"></button>
         </div>
+    </div>
+
+    <div id="template-account-modal">
+        <div class="module">
+            <div>
+                <div class="avatar">
+                    <img src="img/genericPerson.png"/>
+                </div>
+                <input type="text" class="input-name"/>
+                <h2 class="alias"></h2>
+                <textarea class="input-bio"></textarea>
+                <input type="text" class="input-location"/>
+                <input type="text" class="input-url"/>
+                <input type="text" class="input-tox"/>
+                <input type="text" class="input-bitmessage"/>
+            </div>
+            <div class="c-buttons">
+                <button class="toggle-secret-key">Secret Key</button>
+                <button class="submit-changes">Save Changes</button>
+            </div>
+        </div>
+        <div class="module secret-key-container">
+            <div class="label">Secret key:</div>
+            <div class="secret-key"></div>
+        </div>
+        <input type="file" accept="image/*" class="input-avatar" style="display: none;"/>
     </div>
 
     <div id="template-login-modal">

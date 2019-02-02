@@ -20,6 +20,7 @@ var twister = {
     },
     modal: {},
     res: {},  // reses for various reqs are cached here
+    twists: {},
     var: {
         dateFormatter: {
             format: function (req) {
@@ -454,6 +455,121 @@ function timeSincePost(t) {
         expression = polyglot.t('days', Math.floor(t_delta / 86400));  // 24 * 60 * 60
 
     return polyglot.t('time_ago', {time: expression});
+}
+
+function openModalAccount() {
+    if (!defaultScreenName) {
+        alertPopup({
+            //txtTitle: polyglot.t(''), add some title (not 'error', please) or just KISS
+            txtMessage: polyglot.t('username_undefined')
+        });
+        history.back();
+        return;
+    }
+
+    var modal = openModal({
+        classAdd: 'account-modal',
+        content: twister.tmpl.accountMC.clone(true),
+        title: polyglot.t('Edit profile')
+    });
+
+    modal.content.find('.alias').text('@' + defaultScreenName);
+
+    loadProfileForEdit(defaultScreenName, {
+        fullname: modal.content.find('.input-name').attr('placeholder', polyglot.t('Full name here')),
+        bio: modal.content.find('.input-bio').attr('placeholder', polyglot.t('Describe yourself')),
+        location: modal.content.find('.input-location').attr('placeholder', polyglot.t('Location')),
+        url: modal.content.find('.input-url').attr('placeholder', polyglot.t('website')),
+        tox: modal.content.find('.input-tox').attr('placeholder', polyglot.t('Tox address')),
+        bitmessage: modal.content.find('.input-bitmessage').attr('placeholder', polyglot.t('Bitmessage address'))
+    });
+    loadAvatarForEdit(defaultScreenName, modal.content.find('.avatar img'));
+
+    dumpPubkey(defaultScreenName, checkAccountRegistrationCB, {
+        peerAlias: defaultScreenName,
+        cbFunc: checkAccountRegistrationCB,
+        submitChangesElem: modal.content.find('.submit-changes')
+    });
+}
+
+function checkAccountRegistrationCB(req, res) {
+    if (res.length > 0) {
+        if (followingUsers.indexOf('twister') !== -1) {
+            if (!isModalWithElemExists(req.submitChangesElem))
+                return;
+
+            req.submitChangesElem.attr('data-blocked', 'false');
+            if (req.submitChangesElem.attr('data-profile-changed') === 'true'
+                || req.submitChangesElem.attr('data-avatar-changed') === 'true')
+                $.MAL.enableButton(req.submitChangesElem);
+        } else {
+            follow('twister', true,
+                function (req) {
+                    // TODO add alertPopup() with welcome message
+
+                    if (!isModalWithElemExists(req))
+                        return;
+
+                    req.attr('data-blocked', 'false');
+                    if (req.attr('data-profile-changed') === 'true'
+                        || req.attr('data-avatar-changed') === 'true')
+                        $.MAL.enableButton(req);
+                },
+                req.submitChangesElem
+            );
+        }
+    } else {
+        if (!req.notYetAcceptedWarnDisplayed) {
+            req.notYetAcceptedWarnDisplayed = true;
+            alertPopup({
+                //txtTitle: polyglot.t(''), add some title or just KISS
+                txtMessage: polyglot.t('user_not_yet_accepted')
+            });
+        }
+        setTimeout(dumpPubkey, 5000, req.peerAlias, req.cbFunc, req);
+    }
+}
+
+function handleAvatarFileSelect(event, avatarElem) {
+    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+        alert('The File APIs are not fully supported in this browser.');
+        return;
+    }
+
+    if (!event || !event.target || !event.target.files || !event.target.files.length
+        || !avatarElem || !avatarElem.length)
+        return;
+
+    var file = event.target.files[0];
+
+    if (!file.type.startsWith('image/'))
+        return;
+
+    var reader = new FileReader();
+
+    reader.data = avatarElem;
+    reader.onload = function (event) {
+        var img = document.createElement('img');
+
+        img.data = event.target.data;
+        img.onload = function (event) {
+            var ratio = 64 / Math.max(event.target.width, event.target.height);
+            var canvas = document.createElement('canvas');
+
+            canvas.width = Math.round(event.target.width * ratio);
+            canvas.height = Math.round(event.target.height * ratio);
+            canvas.getContext('2d').drawImage(event.target, 0, 0, canvas.width, canvas.height);
+
+            var imgURL;
+            for (var quality = 1.0; (!imgURL || imgURL.length > 4096) && quality > 0.1; quality -= 0.01)
+                imgURL = canvas.toDataURL('image/jpeg', quality);
+
+            event.target.data.attr('src', imgURL);
+        };
+
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
 }
 
 function openModalLogin() {
@@ -958,7 +1074,8 @@ function addToCommonDMsList(list, targetAlias, message) {
             .text(timeGmtToText(message.time))
     ;
     if (targetAlias[0] === '*') {
-        getAvatar(message.from, item.find('.post-photo img'));  // it's impossible yet to get group avatar
+        getAvatar(message.from,  // it's impossible yet to get or to set an avatar of a group itself
+            item.find('.post-photo').attr('data-peer-alias', message.from).find('img'));
         getGroupChatName(targetAlias, item.find('a.post-info-name'));
     } else {
         getAvatar(targetAlias, item.find('.post-photo img'));
@@ -1367,6 +1484,8 @@ function loadModalFromHash() {
         openGroupMessagesNewGroupModal();
     else if (hashstring === '#groupmessages+joingroup')
         openGroupMessagesJoinGroupModal();
+    else if (hashstring === '#/account')
+        openModalAccount();
     else if (hashstring === '#/login')
         openModalLogin();
     else if (hashstring === '#whotofollow')
@@ -2625,7 +2744,12 @@ function changeStyle() {
     if (theme === 'nin') {
         style = 'theme_nin/css/style.css';
         profile = 'theme_nin/css/profile.css';
-        $.getScript('theme_nin/js/theme_option.js');
+        $.ajax({dataType: 'text', url: 'theme_nin/js/theme_option.js'})
+            .done(function(script, textStatus) {
+                eval(script);  // FIXME
+                //applyThemePptions();
+            })
+        ;
     } else if (theme === 'calm') {
         style = 'theme_calm/css/style.css';
         profile = 'theme_calm/css/profile.css';
@@ -2915,6 +3039,157 @@ function initInterfaceCommon() {
         })
     ;
     twister.tmpl.post.find('.post-stats').hide();
+
+    twister.tmpl.accountMC = extractTemplate('#template-account-modal');
+    twister.tmpl.accountMC.find('.avatar').on('click',
+        function (event) {
+            $(event.target).closest('.modal-content').find('.input-avatar').trigger('click');
+        }
+    );
+    twister.tmpl.accountMC.find('input[type="text"], textarea').on('input', function (event) {
+        var saveElem = $(event.target).closest('.modal-content').find('.submit-changes')
+            .attr('data-profile-changed', 'true');
+
+        if (saveElem.prop('disabled') && saveElem.attr('data-blocked') !== 'true')
+            $.MAL.enableButton(saveElem);
+    });
+    twister.tmpl.accountMC.filter('.input-avatar').on('change', function (event) {
+        var containerElem = $(event.target).closest('.modal-content');
+        var saveElem = containerElem.find('.submit-changes')
+            .attr('data-avatar-changed', 'true');
+
+        if (saveElem.prop('disabled') && saveElem.attr('data-blocked') !== 'true')
+            $.MAL.enableButton(saveElem);
+
+        handleAvatarFileSelect(event, containerElem.find('.avatar img'));
+    });
+    twister.tmpl.accountMC.find('.submit-changes').attr('data-blocked', 'true')
+        .on('click', function (event) {
+            var saveElem = $(event.target);
+            var containerElem = saveElem.closest('.modal-content');
+
+            $.MAL.disableButton(saveElem);
+
+            var profileDataChanged = saveElem.attr('data-profile-changed') === 'true';
+            var avatarDataChanged = saveElem.attr('data-avatar-changed') === 'true';
+
+            if (profileDataChanged) {
+                saveElem.attr('data-profile-changed', 'false');
+                var profileData = {
+                    fullname: containerElem.find('.input-name').val(),
+                    bio: containerElem.find('.input-bio').val(),
+                    location: containerElem.find('.input-location').val(),
+                    url: containerElem.find('.input-url').val(),
+                    tox: containerElem.find('.input-tox').val(),
+                    bitmessage: containerElem.find('.input-bitmessage').val()
+                };
+            }
+            if (avatarDataChanged) {
+                saveElem.attr('data-avatar-changed', 'false');
+                var avatarData = containerElem.find('.avatar img').attr('src');
+            }
+
+            if (profileDataChanged && avatarDataChanged) {
+                redrawProfileAndAvatar(defaultScreenName, profileData, avatarData);
+
+                saveProfile(defaultScreenName, profileData,
+                    function (req) {
+                        saveAvatar(req.peerAlias, req.avatarData,
+                            alertPopup,
+                            {
+                                txtMessage: polyglot.t('profile_saved')
+                            },
+                            alertPopup,
+                            {
+                                txtMessage: polyglot.t('profile_not_saved') + '\n\nCan\'t save avatar data.',
+                                cbConfirm: function (req) {
+                                    $.MAL.enableButton(req.attr('data-avatar-changed', 'true'));
+                                },
+                                cbConfirmReq: req.saveElem,
+                                cbClose: 'cbConfirm'
+                            }
+                        );
+                    },
+                    {
+                        peerAlias: defaultScreenName,
+                        avatarData: avatarData,
+                        saveElem: saveElem
+                    },
+                    alertPopup,
+                    {
+                        txtMessage: polyglot.t('profile_not_saved') + '\n\nCan\'t save profile data.',
+                        cbConfirm: function (req) {
+                            $.MAL.enableButton(req.attr('data-profile-changed', 'true'));
+                        },
+                        cbConfirmReq: saveElem,
+                        cbClose: 'cbConfirm'
+                    }
+                );
+            } else if (profileDataChanged) {
+                redrawProfile(defaultScreenName, profileData);
+
+                saveProfile(defaultScreenName, profileData,
+                    alertPopup,
+                    {
+                        txtMessage: polyglot.t('profile_saved')
+                    },
+                    alertPopup,
+                    {
+                        txtMessage: polyglot.t('profile_not_saved') + '\n\nCan\'t save profile data.',
+                        cbConfirm: function (req) {
+                            $.MAL.enableButton(req.attr('data-profile-changed', 'true'));
+                        },
+                        cbConfirmReq: saveElem,
+                        cbClose: 'cbConfirm'
+                    }
+                );
+            } else if (avatarDataChanged) {
+                redrawAvatar(defaultScreenName, avatarData);
+
+                saveAvatar(defaultScreenName, avatarData,
+                    alertPopup,
+                    {
+                        txtMessage: polyglot.t('profile_saved')
+                    },
+                    alertPopup,
+                    {
+                        txtMessage: polyglot.t('profile_not_saved') + '\n\nCan\'t save avatar data.',
+                        cbConfirm: function (req) {
+                            $.MAL.enableButton(req.attr('data-avatar-changed', 'true'));
+                        },
+                        cbConfirmReq: saveElem,
+                        cbClose: 'cbConfirm'
+                    }
+                );
+            } else
+                $.MAL.enableButton(saveElem);
+        })
+    ;
+    $.MAL.disableButton(twister.tmpl.accountMC.find('.submit-changes'));
+    twister.tmpl.accountMC.filter('.secret-key-container').hide();
+    twister.tmpl.accountMC.find('.toggle-secret-key').on('click', function (event) {
+        var containerElem = $(event.target).closest('.modal-content').find('.secret-key-container');
+
+        if (containerElem.is(':visible'))
+            containerElem.slideUp('fast');
+        else {
+            var secretKeyElem = containerElem.find('.secret-key');
+
+            if (secretKeyElem.text())
+                containerElem.slideDown('fast');
+            else
+                dumpPrivkey(defaultScreenName,
+                    function(req, res) {
+                        req.secretKeyElem.text(res);
+                        req.containerElem.slideDown('fast');
+                    },
+                    {
+                        containerElem: containerElem,
+                        secretKeyElem: secretKeyElem
+                    }
+                );
+        }
+    });
 }
 
 function extractTemplate(selector) {
@@ -3082,8 +3357,6 @@ $(function () {
     } else if (page.indexOf('options.html') === 0) {
         initInterfaceCommon();
         $.Options.initControls();
-    } else if (page.indexOf("profile-edit.html") === 0) {
-        initProfileEdit();
     }
 
     changeStyle();

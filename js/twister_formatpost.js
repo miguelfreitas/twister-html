@@ -54,6 +54,14 @@ function postToElem(post, kind, promoted, templatePost) {
     "sig_userpost" : signature by userpost.n
     */
 
+    /*if (!twister.twists[post.userpost.n])
+        twister.twists[post.userpost.n] = {};
+    else {
+        var i = post.sig_userpost ? post.userpost.k : - post.userpost.k;
+        if (twister.twists[post.userpost.n][i])
+            return twister.twists[post.userpost.n][i].elem.clone(true);
+    }*/
+
     var username, k, time, msg, rt, content_to_rt, content_to_sigrt, retweeted_by;
 
     // Obtain data from userpost
@@ -108,6 +116,14 @@ function postToElem(post, kind, promoted, templatePost) {
         .addClass(kind)
         .attr('data-time', time)
     ;
+
+    /*var i = post.sig_userpost ? post.userpost.k : - post.userpost.k;
+    twister.twists[post.userpost.n][i] = {
+        data: post,
+        elem: elem
+    };
+    var twistId = post.userpost.n + '/' + i;
+    elem.attr('data-twist-id', twistId);*/
 
     if (post.isNew)
         elem.addClass('new');
@@ -226,7 +242,7 @@ function postToElem(post, kind, promoted, templatePost) {
         }
     }
 
-    return elem;
+    return elem; //.clone(true);
 }
 
 function setPostCommon(elem, username, time) {

@@ -122,13 +122,6 @@ $modal-postboard-post-height: 100%
   display: block
   width: auto
 
-.profile-card-photo.forEdition
-  +border-radius(50%)
-  height: 75px
-  margin: 0 auto
-  display: block
-  width: 75px
-
 .profile-bio
   padding: 10px
   font-style: italic
@@ -215,51 +208,60 @@ $modal-postboard-post-height: 100%
 .profile-modal .modal-buttons
   display: none
 
-  /* EDITION PROFILE*/
-
-.forEdition.profile-card
-  +box-sizing(border-box)
-  @extend .clear-fix
-  width: auto
-  background: $background-light
-  .profile-card-main
-    margin: 0
-    width: 330px
-    +box-sizing(border-box)
-    padding: 10px
-    background: $background-light
-    input
-      display: block
-      margin: 5px auto
-      background: white
-      border: 1px solid  lighten($dark-grey, 50%)
-      padding: 6px 4px
-      margin-bottom: 4px
-      text-align: center
-      transition: all .2s linear
-      &:hover, &:focus
-        background: white
-        border-color: $main-color-light
-
-.input-description
-  width: 90%
-
-.input-name
-  font-size: 20px
-
-.forEdition .profile-card-main
-  .input-website, .input-city
-    display: inline-block
-  .input-tox, .input-bitmessage
-    width: 90%
-    margin-top: 10px
-  h2
-    text-transform: none
-    font-weight: 700
-    font-size: .9em
-
-.profile-edition-buttons
-  text-align: right
-
 .selectable_theme.theme_calm
   display: none
+
+/*************************************
+************ ACCOUNT MODAL ***********
+**************************************/
+
+.account-modal
+  &.modal-wrapper
+    width: 580px
+    height: 394px
+    margin: -197px 0 0 -290px
+  .modal-content
+    padding: 0
+  .module
+    margin: 4px
+    > div
+      margin: 4px 0
+      padding: 4px 12px
+  input, textarea
+    display: block
+    border: 1px solid rgba(0, 0, 0, .1)
+    width: 320px
+    margin: 12px 16px
+    padding: 2px 4px
+  textarea
+    width: 320px
+    max-width: 320px
+    min-width: 320px
+    min-height: 28px
+  input:focus, textarea:focus
+    border-bottom: solid 1px $color-green
+  .alias
+    margin: 0px 16px
+  .avatar
+    position: absolute
+    right: 12px
+    top: 42px
+    cursor: pointer
+    width: 64px
+    height: 64px
+    overflow: hidden
+    margin: 12px 16px
+    img
+      width: 64px
+      height: auto
+      border: 1px solid rgba(0, 0, 0, .1)
+  .c-buttons
+    text-align: right
+  .toggle-secret-key
+    float: left
+  .secret-key-container
+    text-align: center
+    font-size: 12px
+  .secret-key
+    background-color: $bloc-background-color
+    font-weight: bold

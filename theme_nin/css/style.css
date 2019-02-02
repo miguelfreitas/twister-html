@@ -281,7 +281,7 @@ samp {
 
 /* FONTS */
 /* line 2, ../sass/_utils.sass */
-.clear-fix:after, .userMenu ul:after, .profile-modal .profile-data:after, .profile-card .twister-user-info:after, .forEdition.profile-card:after, .postboard:after, .following:after, .expanded-content:after, .following-list li:after, .twistday-reminder li:after, .mini-following-info:after, .network.singleBlock:after, .options .tab-content:after, .promoted-posts-only:after, .dashboard.right:after, ul.userMenu-search-profiles li:after, .mini-profile .post-area:after, .mini-profile-indicators:after, .profile-data:after, #postboard-top:after, #postboard-top .post-area:after, .who-to-follow ol:after, .toptrends ol:after, .twistday-reminder ol:after, .twister-user:after, .modal-content:after, .modal-header:after, .direct-messages-thread .post:after {
+.clear-fix:after, .userMenu ul:after, .profile-modal .profile-data:after, .profile-card .twister-user-info:after, .postboard:after, .following:after, .expanded-content:after, .following-list li:after, .twistday-reminder li:after, .mini-following-info:after, .network.singleBlock:after, .options .tab-content:after, .promoted-posts-only:after, .dashboard.right:after, ul.userMenu-search-profiles li:after, .mini-profile .post-area:after, .mini-profile-indicators:after, .profile-data:after, #postboard-top:after, #postboard-top .post-area:after, .who-to-follow ol:after, .toptrends ol:after, .twistday-reminder ol:after, .twister-user:after, .modal-content:after, .modal-header:after, .direct-messages-thread .post:after {
   content: "";
   display: table;
   clear: both;
@@ -541,17 +541,6 @@ samp {
   width: auto;
 }
 
-/* line 127, ../sass/_profile.sass */
-.profile-card-photo.forEdition {
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  height: 75px;
-  margin: 0 auto;
-  display: block;
-  width: 75px;
-}
-
 /* line 134, ../sass/_profile.sass */
 .profile-bio {
   padding: 10px;
@@ -655,77 +644,90 @@ samp {
   color: #B4C669;
 }
 
-/* line 222, ../sass/_profile.sass */
-.forEdition.profile-card {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: auto;
-  background: #f3f2f1;
-}
-/* line 227, ../sass/_profile.sass */
-.forEdition.profile-card .profile-card-main {
-  margin: 0;
-  width: 330px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 10px;
-  background: #f3f2f1;
-}
-/* line 233, ../sass/_profile.sass */
-.forEdition.profile-card .profile-card-main input, .forEdition .profile-card-main textarea {
-  display: block;
-  margin: 5px auto;
-  background: white;
-  border: 1px solid #e7e8e9;
-  padding: 6px 4px;
-  margin-bottom: 4px;
-  text-align: center;
-  transition: all 0.2s linear;
-}
-/* line 242, ../sass/_profile.sass */
-.forEdition .profile-card-main textarea:hover, .forEdition .profile-card-main textarea:focus,
-.forEdition.profile-card .profile-card-main input:hover, .forEdition.profile-card .profile-card-main input:focus {
-  background: white;
-  border-color: #aaa;
-}
-
-/* line 246, ../sass/_profile.sass */
-.input-description {
-  width: 90%;
-    max-width: 90%;
-}
-
-/* line 249, ../sass/_profile.sass */
-.input-name {
-  font-size: 20px;
-}
-
-/* line 253, ../sass/_profile.sass */
-.forEdition .profile-card-main .input-website, .forEdition .profile-card-main .input-city {
-  display: inline-block;
-}
-/* line 255, ../sass/_profile.sass */
-.forEdition .profile-card-main .input-tox, .forEdition .profile-card-main .input-bitmessage {
-  width: 90%;
-  margin-top: 10px;
-}
-/* line 258, ../sass/_profile.sass */
-.forEdition .profile-card-main h2 {
-  text-transform: none;
-  font-weight: 700;
-  font-size: 0.9em;
-}
-
-/* line 263, ../sass/_profile.sass */
-.profile-edition-buttons {
-  text-align: right;
-}
-
 /* line 266, ../sass/_profile.sass */
 .selectable_theme.theme_calm {
   display: none;
+}
+
+/*************************************
+************ ACCOUNT MODAL ***********
+**************************************/
+
+.account-modal.modal-wrapper {
+    width: 580px;
+    height: 394px;
+    margin: -197px 0 0 -290px;
+}
+
+.account-modal .modal-content {
+    padding: 0;
+}
+
+.account-modal .module {
+    margin: 4px;
+}
+
+.account-modal .module > div {
+    margin: 4px 0;
+    padding: 4px 12px;
+}
+
+.account-modal input, .account-modal textarea {
+    display: block;
+    border: 1px solid rgba(0, 0, 0, .1);
+    width: 320px;
+    margin: 12px 16px;
+    padding: 2px 4px;
+}
+
+.account-modal textarea {
+    width: 320px;
+    max-width: 320px;
+    min-width: 320px;
+    min-height: 28px;
+}
+
+.account-modal input:focus, .account-modal textarea:focus {
+    border-bottom: solid 1px #B4C669;
+}
+
+.account-modal .alias {
+    margin: 0px 16px;
+}
+
+.account-modal .avatar {
+    position: absolute;
+    right: 12px;
+    top: 42px;
+    cursor: pointer;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    margin: 12px 16px;
+}
+
+.account-modal .avatar img {
+    width: 64px;
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.account-modal .c-buttons {
+    text-align: right;
+}
+
+.account-modal .toggle-secret-key {
+    float: left;
+}
+
+.account-modal .secret-key-container {
+    text-align: center;
+    font-size: 12px;
+}
+
+.account-modal .secret-key {
+    background-color: white;
+    font-weight: bold;
 }
 
 /************* POST BOARD ************ */

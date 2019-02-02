@@ -537,16 +537,59 @@ function cacheAvatar(peerAlias, req, version) {
     _putResourceIntoStorage('avatar:' + peerAlias, {src: req, version: version});
 }
 
-function clearAvatarAndProfileCache(peerAlias) {
-    var storage = $.localStorage;
-    storage.remove('avatar:' + peerAlias);
-    storage.remove('profile:' + peerAlias);
-    if (twister.avatars[peerAlias]) {
-        delete twister.avatars[peerAlias];
-    }
-    if (twister.profiles[peerAlias]) {
-        delete twister.profiles[peerAlias];
-    }
+function saveProfile(peerAlias, req, cbFunc, cbReq, cbErrFunc, cbErrReq) {
+    if (twister.profiles[peerAlias] && twister.profiles[peerAlias].version)
+        req.version = ++twister.profiles[peerAlias].version;
+    else
+        req.version = 1;
+
+    cacheProfile(peerAlias, req);
+
+    var dat = {};
+    for (var i in req)
+        if (i !== 'version' && req[i])
+            dat[i] = req[i];
+
+    dhtput(peerAlias, 'profile', 's', dat,
+        peerAlias, req.version,
+        function (req, res) {
+            if (!res) {
+                if (typeof req.cbErrFunc === 'function')
+                    req.cbErrFunc(req.cbErrReq);
+
+                return;
+            }
+
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.cbReq);
+        },
+        {cbFunc: cbFunc, cbReq: cbReq, cbErrFunc: cbErrFunc, cbErrReq: cbErrReq}
+    );
+}
+
+function saveAvatar(peerAlias, req, cbFunc, cbReq, cbErrFunc, cbErrReq) {
+    if (twister.avatars[peerAlias] && twister.avatars[peerAlias].version)
+        var version = ++twister.avatars[peerAlias].version;
+    else
+        var version = 1;
+
+    cacheAvatar(peerAlias, req, version);
+
+    dhtput(peerAlias, 'avatar', 's', req,
+        peerAlias, version,
+        function (req, res) {
+            if (!res) {
+                if (typeof req.cbErrFunc === 'function')
+                    req.cbErrFunc(req.cbErrReq);
+
+                return;
+            }
+
+            if (typeof req.cbFunc === 'function')
+                req.cbFunc(req.cbReq);
+        },
+        {cbFunc: cbFunc, cbReq: cbReq, cbErrFunc: cbErrFunc, cbErrReq: cbErrReq}
+    );
 }
 
 // get estimative for number of followers (use known peers of torrent tracker)

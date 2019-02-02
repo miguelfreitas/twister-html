@@ -533,6 +533,152 @@ function updateProfilePosts(postsView, username, useGetposts) {
      });
 }
 
+function loadProfileForEdit(peerAlias, req) {
+    loadProfile(peerAlias,
+        function (peerAlias, req, res) {
+            for (var i in req)
+                if (req[i].length && res[i])
+                    req[i].val(res[i]);
+        },
+        req
+    );
+}
+
+function loadAvatarForEdit(peerAlias, req) {
+    loadAvatar(peerAlias,
+        function (peerAlias, req, res) {
+            req.attr('src', res);
+        },
+        req
+    );
+}
+
+function redrawProfileAndAvatar(peerAlias, profileData, avatarData) {
+    var containerElem;
+
+    if (peerAlias === defaultScreenName) {
+        containerElem = $('.module .mini-profile-info, .userMenu .mini-profile-info');
+        containerElem.find('.mini-profile-name').text(profileData.fullname);
+        containerElem.find('.mini-profile-photo img').attr('src', avatarData);
+    }
+
+    containerElem = getElem('.profile-modal[data-modal-id="#profile?user=' + peerAlias + '"]')
+        .find('.profile-card-main');
+    if (containerElem.length) {
+        containerElem.find('.profile-name').text(profileData.fullname);
+        containerElem.find('.profile-bio').text(profileData.bio);
+        containerElem.find('.profile-location').text(profileData.location);
+        containerElem.find('.profile-url').text(profileData.url).attr('href', profileData.url);
+        containerElem.find('.profile-tox').text(profileData.tox);
+        containerElem.find('.profile-bitmessage').text(profileData.bitmessage);
+        containerElem.find('img.profile-card-photo').attr('src', avatarData);
+    }
+
+    containerElem = getElem('.post-data[data-screen-name="' + peerAlias + '"]');
+    if (containerElem.length) {
+        containerElem.find('.post-info-name').text(profileData.fullname);
+        containerElem.find('.post-photo img').attr('src', avatarData);
+    }
+
+    containerElem = getElem('.directMessages .direct-messages-thread .post.sent');
+    if (containerElem.length) {
+        containerElem.find('.post-info-name').text(profileData.fullname);
+        containerElem.find('.post-photo img').attr('src', avatarData);
+    }
+
+    getElem('.directMessages .direct-messages-list .post-photo'
+        + '[data-peer-alias="' + peerAlias + '"] img').attr('src', avatarData);
+
+    containerElem = getElem('.twister-user-info[data-screen-name="' + peerAlias + '"]')
+        .closest('.twister-user');
+    if (containerElem.length) {
+        containerElem.find('.twister-user-full').text(profileData.fullname);
+        containerElem.find('.bio').text(profileData.bio);
+        containerElem.find('img.twister-user-photo').attr('src', avatarData);
+    }
+
+    containerElem = getElem('.twister-peer[data-peer-alias="' + peerAlias + '"]');
+    if (containerElem.length) {
+        containerElem.find('.fullname').text(profileData.fullname);
+        containerElem.find('.bio').text(profileData.bio);
+        containerElem.find('.avatar img').attr('src', avatarData);
+    }
+
+    containerElem = getElem('.avatar-row [data-peer-alias="' + peerAlias + '"]');
+    if (containerElem.length) {
+        containerElem.find('.user-name-tooltip').text(profileData.fullname);
+        containerElem.find('img.avatar').attr('src', avatarData);
+    }
+}
+
+function redrawProfile(peerAlias, profileData) {
+    var containerElem;
+
+    if (peerAlias === defaultScreenName)
+        $('.module .mini-profile-info, .userMenu .mini-profile-info')
+            .find('.mini-profile-name').text(profileData.fullname);
+
+    containerElem = getElem('.profile-modal[data-modal-id="#profile?user=' + peerAlias + '"]')
+        .find('.profile-card-main');
+    if (containerElem.length) {
+        containerElem.find('.profile-name').text(profileData.fullname);
+        containerElem.find('.profile-bio').text(profileData.bio);
+        containerElem.find('.profile-location').text(profileData.location);
+        containerElem.find('.profile-url').text(profileData.url).attr('href', profileData.url);
+        containerElem.find('.profile-tox').text(profileData.tox);
+        containerElem.find('.profile-bitmessage').text(profileData.bitmessage);
+    }
+
+    getElem('.post-data[data-screen-name="' + peerAlias + '"]')
+        .find('.post-info-name').text(profileData.fullname);
+
+    getElem('.directMessages .direct-messages-thread .post.sent')
+        .find('.post-info-name').text(profileData.fullname);
+
+    containerElem = getElem('.twister-user-info[data-screen-name="' + peerAlias + '"]')
+        .closest('.twister-user');
+    if (containerElem.length) {
+        containerElem.find('.twister-user-full').text(profileData.fullname);
+        containerElem.find('.bio').text(profileData.bio);
+    }
+
+    containerElem = getElem('.twister-peer[data-peer-alias="' + peerAlias + '"]');
+    if (containerElem.length) {
+        containerElem.find('.fullname').text(profileData.fullname);
+        containerElem.find('.bio').text(profileData.bio);
+    }
+
+    getElem('.avatar-row [data-peer-alias="' + peerAlias + '"]')
+        .find('.user-name-tooltip').text(profileData.fullname);
+}
+
+function redrawAvatar(peerAlias, avatarData) {
+    if (peerAlias === defaultScreenName)
+        $('.module .mini-profile-info, .userMenu .mini-profile-info')
+            .find('.mini-profile-photo img').attr('src', avatarData);
+
+    getElem('.profile-modal[data-modal-id="#profile?user=' + peerAlias + '"]').find('.profile-card-main')
+        .find('img.profile-card-photo').attr('src', avatarData);
+
+    getElem('.post-data[data-screen-name="' + peerAlias + '"]')
+        .find('.post-photo img').attr('src', avatarData);
+
+    getElem('.directMessages .direct-messages-thread .post.sent')
+        .find('.post-photo img').attr('src', avatarData);
+
+    getElem('.directMessages .direct-messages-list .post-photo'
+        + '[data-peer-alias="' + peerAlias + '"] img').attr('src', avatarData);
+
+    getElem('.twister-user-info[data-screen-name="' + peerAlias + '"]').closest('.twister-user')
+        .find('img.twister-user-photo').attr('src', avatarData);
+
+    getElem('.twister-peer[data-peer-alias="' + peerAlias + '"]')
+        .find('.avatar img').attr('src', avatarData);
+
+    getElem('.avatar-row [data-peer-alias="' + peerAlias + '"]')
+        .find('img.avatar').attr('src', avatarData);
+}
+
 function queryCreateRes(query, resource, extra) {
     var req = query + '@' + resource;
     twister.res[req] = {

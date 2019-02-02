@@ -3,7 +3,7 @@
 //
 // Load/save current user to localStorage
 // keep track of lastPostId (used for posting as defaultScreenName)
-// Load/save profile (profile-edit.html)
+// Load/save profile
 
 var defaultScreenName = undefined;
 var lastPostId = undefined;
@@ -157,101 +157,4 @@ function sendNewUserTransaction(peerAlias, cbFunc, cbReq) {
             alert(polyglot.t('Error in \'sendnewusertransaction\' RPC.'));
         }
     );
-}
-
-// profile-related functions used by profile-edit
-// ----------------------------------------------
-var avatarSeqNum = 0;
-var profileSeqNum = 0;
-
-function loadAvatarForEdit() {
-    dhtget( defaultScreenName, "avatar", "s",
-           function(args, imagedata, rawdata) {
-               if( rawdata ) {
-                   var seq = parseInt(rawdata[0]["p"]["seq"]);
-                   if( seq > avatarSeqNum ) avatarSeqNum = seq;
-               }
-               if( imagedata && imagedata.length ) {
-                   $(".profile-card-photo.forEdition").attr("src", imagedata);
-               }
-           }, {} );
-}
-
-function loadProfileForEdit() {
-    dhtget( defaultScreenName, "profile", "s",
-           function(args, profile, rawdata) {
-               if( rawdata ) {
-                   var seq = parseInt(rawdata[0]["p"]["seq"]);
-                   if( seq > profileSeqNum ) profileSeqNum = seq;
-               }
-               if( profile ) {
-                   if( "fullname" in profile)
-                       $(".input-name").val(profile.fullname);
-                   if( "bio" in profile)
-                       $(".input-description").val(profile.bio);
-                   if( "location" in profile)
-                       $(".input-city").val(profile.location);
-                   if( "url" in profile)
-                       $(".input-website").val(profile.url);
-                   if( "tox" in profile)
-                       $(".input-tox").val(profile.tox);
-                   if( "bitmessage" in profile)
-                       $(".input-bitmessage").val(profile.bitmessage);
-               }
-           }, {} );
-}
-
-function saveProfile(e) {
-    function saveAvatar(req, isProfileDataSaved) {
-        dhtput(defaultScreenName, 'avatar', 's',
-            req.avatarImgSrc,
-            defaultScreenName, ++avatarSeqNum,
-            completeProfileSaving, {isProfileDataSaved: isProfileDataSaved}
-        );
-    }
-
-    function completeProfileSaving(req, isAvatarDataSaved) {
-        if (req.isProfileDataSaved && isAvatarDataSaved) {
-            clearAvatarAndProfileCache(defaultScreenName);
-            var txtTitle = '';
-            var txtMessage = polyglot.t('profile_saved');
-        } else {
-            var txtTitle = polyglot.t('error', {error: ''});
-            var txtMessage = polyglot.t('profile_not_saved');
-        }
-        alertPopup({
-            txtTitle: txtTitle,
-            txtMessage: txtMessage,
-            cbConfirm: $.MAL.enableButton,
-            cbConfirmReq: $('.submit-changes'),
-            cbClose: 'cbConfirm'
-        });
-    }
-
-    $.MAL.disableButton($('.submit-changes'));
-
-    dhtput(defaultScreenName, 'profile', 's',
-        setObjPropFromElemVal({}, {
-            fullname:   '.input-name',
-            bio:        '.input-description',
-            location:   '.input-city',
-            url:        '.input-website',
-            tox:        '.input-tox',
-            bitmessage: '.input-bitmessage'
-        }),
-        defaultScreenName, ++profileSeqNum,
-        saveAvatar, {avatarImgSrc: $('.profile-card-photo.forEdition').attr('src')}
-    );
-}
-
-function setObjPropFromElemVal(object, req) {
-    var props = Object.getOwnPropertyNames(req);  // req's props names will be object's props names
-
-    for (var i = 0; i < props.length; i++) {
-        elem = $(req[props[i]]);  // req's props values are elements selectors
-        if (elem.length && elem.val())
-            object[props[i]] = elem.val();
-    }
-
-    return object;
 }

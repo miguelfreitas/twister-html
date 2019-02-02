@@ -136,8 +136,14 @@ var router=new $.mobile.Router(
         profileedit: function(type,match,ui) {
             $.mobile.loading('show');
             initializeTwister( true, true, function() {
-                loadAvatarForEdit();
-                loadProfileForEdit();
+                var containerElem = $('.profile-card.forEdition');
+                loadProfileForEdit(defaultScreenName, {
+                    fullname: containerElem.find('.input-name').attr('placeholder', polyglot.t('Full name here')),
+                    bio: containerElem.find('.input-bio').attr('placeholder', polyglot.t('Describe yourself')),
+                    location: containerElem.find('.input-location').attr('placeholder', polyglot.t('Location')),
+                    url: containerElem.find('.input-url').attr('placeholder', polyglot.t('website'))
+                });
+                loadAvatarForEdit(defaultScreenName, $('.profile-card-photo.forEdition'));
                 dumpPrivkey(defaultScreenName, function(args, key) {
                     $(".secret-key").text(key);
                 }, {});
@@ -449,10 +455,47 @@ function installUserSearchHandler() {
 function installProfileEditHandlers() {
     $('.profile-card-photo.forEdition').on('click', function () {$('#avatar-file').trigger('click');});
     $('#avatar-file').on('change', handleAvatarFileSelectMobile);
-    $('.submit-changes').on('click', function () {
-        saveProfile();
-        setTimeout( function() {$.MAL.goHome();}, 1000);
-    } );
+    $('.submit-changes').on('click', function (event) {
+        var saveElem = $(event.target);
+        var containerElem = saveElem.closest('.content');
+
+        $.MAL.disableButton(saveElem);
+
+        saveProfile(defaultScreenName,
+            {
+                fullname: containerElem.find('.input-name').val(),
+                bio: containerElem.find('.input-bio').val(),
+                location: containerElem.find('.input-location').val(),
+                url: containerElem.find('.input-url').val(),
+                tox: containerElem.find('.input-tox').val(),
+                bitmessage: containerElem.find('.input-bitmessage').val()
+            },
+            function (req) {
+                saveAvatar(req.peerAlias, req.avatarData,
+                    function () {
+                        alert(polyglot.t('profile_saved'));
+                        $.MAL.goHome();
+                    },
+                    null,
+                    function (req) {
+                        alert(polyglot.t('profile_not_saved') + '\n\nCan\'t save avatar data.');
+                        $.MAL.enableButton(req);
+                    },
+                    req.saveElem
+                );
+            },
+            {
+                peerAlias: defaultScreenName,
+                avatarData: containerElem.find('.profile-card-photo.forEdition').attr('src'),
+                saveElem: saveElem
+            },
+            function (req) {
+                alert(polyglot.t('profile_not_saved') + '\n\nCan\'t save profile data.');
+                $.MAL.enableButton(req);
+            },
+            saveElem
+        );
+    });
     $('.cancel-changes').on('click', $.mobile.back);
 }
 

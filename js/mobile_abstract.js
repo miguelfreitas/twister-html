@@ -326,7 +326,7 @@ var MAL = function()
         if( $.hasOwnProperty("mobile") ) {
             $.mobile.navigate( "#profile-edit" );
         } else {
-            window.location.href = "profile-edit.html";
+            window.location.hash = '#/account';
         }
     }
 
@@ -420,7 +420,13 @@ var MAL = function()
                 txtTitle: polyglot.t('propagating_nickname', {username: peerAlias}),
                 txtMessage: polyglot.t('new_account_briefing', {secretKey: secretKey}),
                 txtConfirm: polyglot.t('Login'),
-                cbConfirm: $.MAL.goProfileEdit,
+                cbConfirm: function () {
+                    // FIXME we're reloading the page entirely for now
+                    // here should be $.MAL.goProfileEdit but first an additional code should be added to change user globally
+                    twister.var.initializated = false;  // to not do openModalAccount()
+                    window.location.href = '/#/account';
+                    location.reload();
+                },
                 addBlackout: true,
                 removeCancel: true,
                 removeClose: true

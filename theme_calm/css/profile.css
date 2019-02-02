@@ -56,11 +56,6 @@
     color: #7691ce;
     font-size: 14px;
 }
-.forEdition .profile-card-main h2 {
-    left: 20%;
-    top: 19%;
-    color: #f8f8f8;
-}
 
 .profile-card-buttons {
     padding: 4px 0;
@@ -72,135 +67,86 @@
     right: 0;
 }
 
-.profile-card.forEdition
-{
-    margin: 0 auto;
-    width: 540px;
-}
-.forEdition .profile-card-photo
-{
-    border: solid 2px #fff;
-    position: relative;
-    cursor: pointer;
-    transition: all .2s linear;
-    z-index: 10;
-}
-.forEdition .profile-card-main:hover:after,
-.forEdition .profile-card-photo:after
-{
-    content: "";
-    width: 36px;
-    height: 36px;
-    position: absolute;
-    top: -5px;
-    right: 0px;
-    background: url(../img/edit.png) no-repeat right top;
-}
-.forEdition .profile-card-main:hover:before
-{
-    border: solid 5px #fff;
-}
-.forEdition .profile-card-main h2
-{
-    margin-bottom: 8px;
+
+/*************************************
+************ ACCOUNT MODAL ***********
+**************************************/
+
+.account-modal.modal-wrapper {
+    height: 394px;
+    margin-top: -197px;
 }
 
-.forEdition .profile-card-main input, .forEdition .profile-card-main textarea {
+.account-modal .module {
+    margin: 4px;
+}
+
+.account-modal .module > div {
+    width: 100%;
+    margin: 4px 0;
+    padding: 4px 12px;
+}
+
+.account-modal input, .account-modal textarea {
     display: block;
-    margin: 0 auto;
-    background: rgba( 255, 255, 255, .8 );
-    border: none;
-    padding: 6px 4px;
-    margin-bottom: 4px;
-    text-align: center;
-    transition: all .2s linear;
+    border: solid 1px rgba(0, 0, 0, .3);
+    border-radius: 4px;
+    width: 320px;
+    margin: 12px 16px;
+    padding: 2px 4px;
 }
 
-.forEdition .profile-card-main input:hover, .forEdition .profile-card-main textarea:hover {
-    background: rgba( 255, 255, 255, .7 );
+.account-modal textarea {
+    width: 330px;
+    max-width: 330px;
+    min-width: 330px;
+    min-height: 28px;
 }
 
-.forEdition .profile-card-photo:hover{
-    background: #9096a5;
+.account-modal input:focus, .account-modal textarea:focus {
+    border: solid 1px rgba(118, 145, 206, .8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 }
 
-.forEdition .profile-card-main input:focus, .forEdition .profile-card-main textarea:focus {
-    background: #fff;
-    color: #4d4d4d;
+.account-modal .alias {
+    margin: 0px 16px;
 }
 
-/* inputs placeholders color */
-.forEdition .profile-card-main input::-webkit-input-placeholder {
-    color: #4d4d4d;
-}
-.forEdition .profile-card-main input:-moz-placeholder {
-    color: #4d4d4d;
-}
-.forEdition .profile-card-main input::-moz-placeholder {
-    color: #4d4d4d;
-}
-.forEdition .profile-card-main input:-ms-input-placeholder {
-    color: #4d4d4d;
-}
-.forEdition .profile-card-main input:focus::-webkit-input-placeholder {
-    color: #fff;
-}
-.forEdition .profile-card-main input:focus:-moz-placeholder {
-    color: #fff;
-}
-.forEdition .profile-card-main input:focus::-moz-placeholder {
-    color: #fff;
-}
-.forEdition .profile-card-main input:focus::-ms-input-placeholder {
-    color: #fff;
-}
-
-.profile-card-main input.input-name{
+.account-modal .avatar {
     position: absolute;
-    top: 30px;
-    right: 20px;
+    right: 12px;
+    top: 42px;
+    cursor: pointer;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    margin: 12px 16px;
 }
 
-.profile-card-main .input-description {
-    width: 90%;
-    max-width: 90%;
-    margin-top: 100px;
+.account-modal .avatar img {
+    width: 64px;
+    height: auto;
+    border: solid 1px rgba(0, 0, 0, .3);
+    border-radius: 4px;
 }
 
-.input-name
-{
-    font-size: 20px;
-}
-.forEdition .profile-card-main .input-website,
-.forEdition .profile-card-main .input-city
-{
-    display: inline-block;
-    margin-top: 10px;
-}
-.forEdition .profile-card-main .input-tox,
-.forEdition .profile-card-main .input-bitmessage
-{
-    width: 90%;
-    margin-top: 10px;
-}
-.profile-edition-buttons
-{
-    padding: 10px;
+.account-modal .c-buttons {
     text-align: right;
 }
-.profile-edition-buttons button {
-    background: #f1f1f1;
-    color: #333;
+
+.account-modal .toggle-secret-key {
+    float: left;
 }
-.profile-edition-buttons button:hover {
-    background: #fff;
-    transition: background-color 300ms ease-in;
+
+.account-modal .secret-key-container {
+    text-align: center;
+    font-size: 12px;
 }
-.secret-key-container .label {
-    color: #9096a5;
-}
-.secret-key-container .secret-key {
-    color: #d2dbf1;
+
+.account-modal .secret-key {
+    background-color: #FFF;
+    border: solid 1px rgba(0, 0, 0, .3);
+    font-weight: bold;
 }
 
 /*************************************
