@@ -68,6 +68,11 @@ function openCommonDMsModal() {
       return;
     }
 
+    if ($.isEmptyObject(twister.DMs)) {
+        setTimeout(openCommonDMsModal, 1000);
+        return;
+    }
+
     var modal = openModal({
         classAdd: 'directMessages',
         content: twister.tmpl.commonDMsList.clone(true),
@@ -91,6 +96,11 @@ function openCommonDMsModal() {
 function openDmWithUserModal(peerAlias) {
     if (!defaultScreenName) {
         alert(polyglot.t('You have to log in to use direct messages.'));
+        return;
+    }
+
+    if ($.isEmptyObject(twister.DMs)) {
+        setTimeout(openDmWithUserModal, 1000, peerAlias);
         return;
     }
 
@@ -131,6 +141,11 @@ function openDmWithUserModal(peerAlias) {
 function openGroupMessagesModal(groupAlias) {
     if (!defaultScreenName) {
         alert(polyglot.t('You have to log in to use group messages.'));
+        return;
+    }
+
+    if ($.isEmptyObject(twister.DMs)) {
+        setTimeout(openGroupMessagesModal, 1000, groupAlias);
         return;
     }
 
