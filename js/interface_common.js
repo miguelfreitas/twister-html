@@ -24,6 +24,7 @@ var twister = {
                 return req.toString().replace(/GMT.*/g, '');
             }
         },
+        initializated: false,
         isCurrentInputSplittable: false,
         localAccounts: [],
         updatesCheckClient: {}
@@ -1315,6 +1316,11 @@ function loadModalFromHash() {
         return;
     }
     var hashdata = hashstring.split(':');
+
+    if (!twister.var.initializated) {
+        setTimeout(loadModalFromHash, 1000);
+        return;
+    }
 
     // FIXME rework hash scheme from '#following?user=twister' to something like '#/@twister/following'
     if (hashdata[0] !== '#web+twister')

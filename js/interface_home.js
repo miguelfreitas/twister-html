@@ -58,6 +58,7 @@ var InterfaceFunctions = function() {
             $(".dropdown-menu-following").attr("href","#");
             $('.dropdown-menu-following').on('click', function ()
             { alert(polyglot.t("You are not following anyone because you are not logged in."))} );
+            twister.var.initializated = true;
         } else {
             $miniProfile.find("a.mini-profile-name").attr("href",$.MAL.userUrl(defaultScreenName));
             $miniProfile.find("a.open-profile-modal").attr("href",$.MAL.userUrl(defaultScreenName));
@@ -71,6 +72,7 @@ var InterfaceFunctions = function() {
             getFollowers( defaultScreenName, $miniProfile.find(".followers-count") );
 
             loadFollowing( function(args) {
+                twister.var.initializated = true;
                      $(".mini-profile .following-count").text(followingUsers.length-1);
                      requestLastHave();
                      setInterval(requestLastHave, 1000);
