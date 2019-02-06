@@ -556,6 +556,9 @@ function loadAvatarForEdit(peerAlias, req) {
 function redrawProfileAndAvatar(peerAlias, profileData, avatarData) {
     var containerElem;
 
+    if (!profileData.fullname)
+        profileData.fullname = peerAlias;
+
     if (peerAlias === defaultScreenName) {
         containerElem = $('.module .mini-profile-info, .userMenu .mini-profile-info');
         containerElem.find('.mini-profile-name').text(profileData.fullname);
@@ -613,6 +616,9 @@ function redrawProfileAndAvatar(peerAlias, profileData, avatarData) {
 
 function redrawProfile(peerAlias, profileData) {
     var containerElem;
+
+    if (!profileData.fullname)
+        profileData.fullname = peerAlias;
 
     if (peerAlias === defaultScreenName)
         $('.module .mini-profile-info, .userMenu .mini-profile-info')
