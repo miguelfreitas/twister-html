@@ -656,6 +656,9 @@ function processWhoToFollowSuggestion(module, peerAlias, followedBy, prepend) {
         getFullname(peerAlias, item.find('.twister-user-full'));
         getBioToElem(peerAlias, item.find('.bio'));
         item.find('.twister-user-remove').remove();
+    } else {
+        item.find('.twister-user-full').remove();
+        item.find('.bio').remove();
     }
 
     if (prepend)
