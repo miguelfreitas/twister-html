@@ -698,6 +698,18 @@ function htmlFormatMsg(msg, opt) {
             msg = msgAddHtmlEntity(msg, i, i + str.length,
                 newHtmlEntityLink(twister.tmpl.linkShortened, str, str));
             i = msg.i;
+        } else if (msg.str.slice(i, i + 4).toLowerCase() === 'ipfs' &&
+                   msg.str.slice(i + 4, i + 7) === '://' &&
+                   stopCharsRight.indexOf(msg.str[i + 7]) === -1) {
+           j = getSubStrEnd(msg.str, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
+           if (j > i + 6) {
+               str = msg.str.slice(i, j + 1);
+               msg = msgAddHtmlEntity(msg, i, i + str.length,
+                   newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                       proxyURL(str), str)
+               );
+               i = msg.i;
+           }
         }
     }
 
