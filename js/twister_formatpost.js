@@ -706,7 +706,7 @@ function htmlFormatMsg(msg, opt) {
                str = msg.str.slice(i, j + 1);
                msg = msgAddHtmlEntity(msg, i, i + str.length,
                    newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
-                       proxyURL(str), str)
+                       str, str)
                );
                i = msg.i;
            }
