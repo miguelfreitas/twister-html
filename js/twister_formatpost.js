@@ -731,6 +731,17 @@ function htmlFormatMsg(msg, opt) {
                );
                i = msg.i;
            }
+        } else if (msg.str.slice(i, i + 7).toLowerCase() === 'ipns://' &&
+                   stopCharsRight.indexOf(msg.str[i + 7]) === -1) {
+           j = getSubStrEnd(msg.str, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
+           if (j > i + 6) {
+               str = msg.str.slice(i, j + 1);
+               msg = msgAddHtmlEntity(msg, i, i + str.length,
+                   newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                       str, str)
+               );
+               i = msg.i;
+           }
         }
     }
 
