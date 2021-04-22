@@ -720,6 +720,17 @@ function htmlFormatMsg(msg, opt) {
             msg = msgAddHtmlEntity(msg, i, i + str.length,
                 newHtmlEntityLink(twister.tmpl.linkShortened, str, str));
             i = msg.i;
+        } else if (['ipfs://', 'ipns://'].indexOf(msg.str.slice(i, i + 7).toLowerCase()) >= 0 &&
+                   stopCharsRight.indexOf(msg.str[i + 7]) === -1) {
+           j = getSubStrEnd(msg.str, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
+           if (j > i + 6) {
+               str = msg.str.slice(i, j + 1);
+               msg = msgAddHtmlEntity(msg, i, i + str.length,
+                   newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                       str, str)
+               );
+               i = msg.i;
+           }
         }
     }
 
