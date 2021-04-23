@@ -51,7 +51,7 @@ and keep in mind that your pull requests should have **blaster** branch as both 
 
 5. Commit and push:
 
-        git commit -m "fix of #12345: bad foobarizer" && git push
+        git commit -m "fix of #12345: bad foobarizer" && git push --set-upstream origin my-awesome-fix
 
 6. Now open a pull request from branch 'YOURNICKNAME:my-awesome-fix' to 'miguelfreitas:blaster' on GitHub.
 
