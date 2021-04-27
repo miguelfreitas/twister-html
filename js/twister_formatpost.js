@@ -3,6 +3,8 @@
 //
 // Format JSON posts and DMs to HTML.
 
+const _htmlFormatMsgAllowedUriSchemes = ['ed2k://', 'ipfs://', 'ipns://', 'magnet:?', 'xmmp:']; // TODO it should be optional
+
 var _htmlFormatMsgLinkTemplateExternal;
 var _htmlFormatMsgLinkTemplateUser;
 var _htmlFormatMsgLinkTemplateHashtag;
@@ -720,16 +722,22 @@ function htmlFormatMsg(msg, opt) {
             msg = msgAddHtmlEntity(msg, i, i + str.length,
                 newHtmlEntityLink(twister.tmpl.linkShortened, str, str));
             i = msg.i;
-        } else if (['ipfs://', 'ipns://'].indexOf(msg.str.slice(i, i + 7).toLowerCase()) >= 0
-            && stopCharsRight.indexOf(msg.str[i + 7]) === -1) {
-            j = getSubStrEnd(msg.str, i + 7, stopCharsRight, false, stopCharsTrailingUrl);
-            if (j > i + 6) {
-                str = msg.str.slice(i, j + 1);
-                msg = msgAddHtmlEntity(msg, i, i + str.length,
-                    newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
-                        str, str)
-                );
-                i = msg.i;
+        } else {
+            for (k = 0; k < _htmlFormatMsgAllowedUriSchemes.length; k++) {
+                let l = _htmlFormatMsgAllowedUriSchemes[k].length;
+                if (_htmlFormatMsgAllowedUriSchemes[k] === msg.str.slice(i, i + l).toLowerCase()
+                    && stopCharsRight.indexOf(msg.str[i + l]) === -1) {
+                    j = getSubStrEnd(msg.str, i + l, stopCharsRight, false, stopCharsTrailingUrl);
+                    if (j > i + l - 1) {
+                        str = msg.str.slice(i, j + 1);
+                        msg = msgAddHtmlEntity(msg, i, i + str.length,
+                            newHtmlEntityLink(_htmlFormatMsgLinkTemplateExternal,
+                                str, str)
+                        );
+                        i = msg.i;
+                        break;
+                    }
+                }
             }
         }
     }
