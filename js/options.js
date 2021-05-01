@@ -18,7 +18,7 @@ function twisterOptions() {
     });
     this.add({
         name: 'theme',
-        valDefault: 'original',
+        valDefault: 'nin',
         tickMethod: function () {location.reload();},
         tickNotOnInit: 1
     });
