@@ -1,0 +1,86 @@
+/********** LOGIN AND NETWORK PAGES *******/
+.network
+	&.singleBlock
+		@extend .clear-fix
+
+
+		ul
+			line-height: 2rem
+			padding: 1rem 2rem
+
+
+		.module
+
+			background: $bloc-background-color
+			+box-shadow(0 1px 1px rgba(#555, .1))
+			margin-bottom: 50px
+			width: 49%
+			float: left
+			margin-right: 1%
+			@extend .clear-fix
+			&:last-child
+				margin-right: 0
+
+			&:last-child
+				h2
+					+background-image(linear-gradient(to right , $color-green, #5E80A2) )
+
+
+
+	.spam-msg
+		resize: none
+		width: 100%
+		display: block
+		padding: $space
+		height: 180px
+		border: solid 1px rgba(0, 0, 0, 0.1)
+		position: relative
+		margin: $space 0
+		font-family: $main-font-family
+
+
+	.highlight
+		font-size: 1.2rem
+		display: block
+		margin: $space 0
+
+	span.connection-status
+		font-weight: 500
+		&:before
+			content: ""
+			display: inline-block
+			height: .8em
+			width: .8em
+			margin-right: .8em
+			background: $color-red
+			color: white
+		&.connected:before
+			background: $main-color-color
+
+	.post-area-extras
+		margin-right: 20px
+
+	.connections span, .known-peers, .dht-nodes, .blocks, .last-block-time, .mining-difficulty
+		color: $main-color-color
+		font-weight: 700
+		font-family: Arial
+		font-size: 95%
+	h2
+		font-weight: 400
+		+background-image(linear-gradient(to left , $color-green, #5E80A2) )
+		padding: 1rem 2rem
+		color: white
+
+
+	h3
+		font-weight: 600
+		margin-top: 2*$space
+		padding: 0 1.5rem
+		+box-sizing(content-box)
+		&:after
+			display: block
+			content: ''
+			height: 1px
+			width: 100%
+			background: rgba(#5F81A1,.5)
+			margin-top: $space

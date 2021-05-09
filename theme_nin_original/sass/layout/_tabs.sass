@@ -1,0 +1,72 @@
+.options
+  position: relative
+
+  input
+    display: inline-block
+
+  button, input, select
+    font-size: 13px
+
+  label
+    cursor: pointer
+
+  .label-h
+    font-weight: 700
+
+  input[type=radio]
+    display: none!important
+    visibility: hidden
+    opacity: 0
+
+  input[type='checkbox']
+    cursor: pointer
+    vertical-align: sub
+
+  input[type='range']
+    cursor: pointer
+    vertical-align: -16px
+
+  .container
+    margin: 5px 0px 5px 12px
+
+  .tab-content
+    background: $bloc-background-color
+    position: relative
+    padding: 20px
+    @extend .clear-fix
+    > div
+      position: absolute
+      top: 0
+      left: 0
+      height: auto
+      width: 100%
+      z-index: -1
+      opacity: 0
+      visibility: hidden
+  input
+    &#tab_language:checked ~ .tab-content .language,
+    &#t-2:checked ~ .tab-content .theme,
+    &#t-3:checked ~ .tab-content .notifications,
+    &#t-4:checked ~ .tab-content .keys,
+    &#t-5:checked ~ .tab-content .appearance,
+    &#t-6:checked ~ .tab-content .users,
+    &#t-7:checked ~ .tab-content .webtorrent,
+    &#t-8:checked ~ .tab-content .DMs
+      position: relative
+      z-index: 10
+      opacity: 1
+      visibility: visible
+
+  label.tabs
+    &:hover
+      color: $main-color-dark
+    text-align: center
+    width: auto
+    display: inline-block!important
+    margin: 0 5px 0 0
+    padding: 5px 15px
+    color: $main-color-light
+
+  input:checked + label.tabs
+    background: $bloc-background-color
+    color: $main-color-dark

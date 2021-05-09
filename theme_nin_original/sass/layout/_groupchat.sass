@@ -1,0 +1,150 @@
+// group messages
+
+
+.group-messages-join-group
+	.modal-content
+		padding: 20px
+	button
+		margin: 5px 0
+	.label
+		font-weight: 700
+		padding: 5px 0
+		text-align: left
+	input[type="text"]
+		padding: 3px
+		width: 100%
+		margin-bottom: 10px
+	input[type="checkbox"]
+		float: left
+		margin-right: 10px
+
+.groupMessages
+	button
+		margin: 5px
+
+	.direct-messages-thread
+		padding-bottom: 200px
+	.post-area-new.open
+		bottom: 40px
+	.direct-messages-list
+		li
+			padding: 10px 20px
+
+		.post-photo
+			display: none
+
+		.post-text
+			display: none
+		.post-info-time
+			position: static
+			display: block
+			text-align: left
+			padding: 5px 0
+			color: inherit
+
+			&:hover
+				text-decoration: none
+				color: inherit
+
+		.post .messages-qtd
+			top: 50%
+			left: unset
+			right: 24px
+			margin-top: -13px
+
+
+// new group
+.group-messages-new-group
+	text-align: center!important
+	.label
+		font-weight: 700
+		padding: 5px 1%
+		text-align: left
+	textarea
+		&.description, &.invite
+			width: 98%
+			margin: 5px auto
+			padding: 5px
+			text-align: left
+			border: 1px solid darken( #F8F8F8 , 5%)
+
+
+// there is no special class for group DM profile modal window currently
+.profile-card[data-screen-name^=\*]
+	.profile-bio
+		text-align: center
+		margin: 0
+
+		.group-description
+			display: inline-block
+			border: 1px solid rgba(0, 0, 0, 0)
+			background: none
+			text-align: center
+			width: 58%
+			padding: 4px
+			vertical-align: middle
+
+			&:focus
+				border: 1px solid rgba(0, 0, 0, .1)
+				background: white
+
+			&:hover
+				border: 1px solid rgba(0, 0, 0, .1)
+
+			.save, .cancel
+				display: none
+
+
+// messages control
+.group-messages-control
+	text-align: left!important
+	button
+		margin: 3px 0 3px 3px
+	textarea
+		width: 98%
+		margin: 5px auto
+		padding: 5px
+		text-align: left
+		border: 1px solid darken( #F8F8F8 , 5%)
+	.invite-form
+		display: none
+	div.profile-bio
+		margin-left: 0
+
+	.secret-key
+		display: none
+		font-size: 10px
+		padding: 5px
+		margin: 3px
+		cursor: pointer
+		border: 1px solid darken( #F8F8F8 , 5%)
+		color: $dark-grey
+		background: #F8F8F8
+		overflow: hidden
+		&:hover
+			background: white
+
+
+.direct-messages-thread + .group-messages-control
+	position: absolute
+	bottom: 0
+	height: 40px
+	overflow: hidden
+	left: 0
+	width: 100%
+	padding: 3px 10px
+	text-align: right!important
+	z-index: 200
+	background: $bloc-light-color
+	+box-shadow(0 -8px 13px rgba(#111, 0.1))
+	.invite-form
+		@include prompt-wrapper-basic
+		bottom: 40px
+		top: auto
+		textarea
+			min-height: 100px
+	button
+		float: none
+		display: inline-block
+		padding: 7px
+		@include button-color-basic

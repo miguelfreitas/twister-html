@@ -1,0 +1,102 @@
+/*********** POPUP PROMPT *************/
+
+@mixin prompt-wrapper-basic
+	background: $bloc-light-color
+	z-index: 200
+	position: fixed
+	top: 50%
+	left: 50%
+	width: 600px
+	margin-left: -300px
+	+box-shadow(0 8px 33px rgba(#000, .3))
+
+.prompt-wrapper
+	@include prompt-wrapper-basic
+	.following-config-method-buttons
+		padding: 0 20px 20px 0
+		float: right
+	.modal-content
+		background: $bloc-light-color
+		padding: 20px
+		.post-area
+			textarea
+				clear: both
+	.post-data
+		border: 1px solid $bloc-background-color
+		position: relative
+		padding: 10px
+		background: white
+	.modal-header
+		@extend .modal-header
+		h3 span
+			padding-left: 5px
+			color: white
+			&:hover
+				cursor: default
+	.modal-buttons
+		margin: 4px 0
+		text-align: right
+	.switch-mode
+		display: inline-block
+		float: left
+		margin: 12px 4px 4px
+		color: $main-color-color
+		cursor: pointer
+		font-size: .8rem
+		line-height: .8rem
+		@extend .ion
+		@extend .ion-shuffle
+
+
+.confirm-popup.prompt-wrapper
+	margin-top: -100px
+
+
+/******** NEW ACCOUNT POPUP **********/
+
+.new-account-briefing
+	&.prompt-wrapper
+		margin-top: -184px
+		.modal-blackout
+			@include modal-blackout
+
+
+/************ FOLLOWING-CONFIG MODAL **********/
+
+.prompt-wrapper.following-config-modal
+	margin-top: -100px
+	h2
+		text-transform: none
+		display: inline-block!important
+		font-size: 1rem
+		font-weight: 400
+		padding: $space
+		span
+			display: inline-block!important
+			b
+				font-weight: 400
+
+
+
+/************ RETWIST POSTS MODAL **********/
+
+.prompt-wrapper.reTwist
+	&.prompt-wrapper
+		margin-top: -150px
+
+	.post-expand, .post-interactions
+		display: none
+	.post-info-time
+		position: static
+		float: right
+
+
+/********* REPLY POSTS MODAL***************/
+
+.prompt-wrapper.reply
+	&.prompt-wrapper
+		margin-top: -110px
+	.post-expand, .post-interactions
+		display: none
+	.post-area
+		padding-bottom: 6px

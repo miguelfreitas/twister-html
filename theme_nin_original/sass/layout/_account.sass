@@ -1,0 +1,43 @@
+/********* ACCOUNT MODAL *********/
+
+.account-modal
+	.module
+		margin: 4px
+		> div
+			margin: 4px 0
+			padding: 4px 12px
+	input, textarea
+		display: block
+		border: 1px solid rgba(0, 0, 0, .1)
+		width: 320px
+		margin: 12px 16px
+		padding: 2px 4px
+	textarea
+		width: 320px
+		max-width: 320px
+		min-width: 320px
+		min-height: 28px
+	input:focus, textarea:focus
+		border-bottom: solid 1px $main-color-color
+	.alias
+		margin: 0px 16px
+	.avatar
+		cursor: pointer
+		width: 64px
+		height: 64px
+		overflow: hidden
+		margin: 12px 16px
+		img
+			width: 64px
+			height: auto
+			border: 1px solid rgba(0, 0, 0, .1)
+	.c-buttons
+		text-align: right
+	.toggle-secret-key
+		float: left
+	.secret-key-container
+		text-align: center
+		font-size: 12px
+	.secret-key
+		background-color: $color-green
+		font-weight: bold

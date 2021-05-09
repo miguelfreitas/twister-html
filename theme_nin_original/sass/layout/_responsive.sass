@@ -1,0 +1,103 @@
+
+@media (max-width: $site-width)
+	.right
+		display: none
+	.userMenu
+		ul
+			padding: 0
+	.postboard
+		position: absolute
+		left: $leftWidth
+		right: 20px
+		width: auto!important
+
+
+	.modal-wrapper
+		width: 85%
+		.postboard
+			width: $postboardWidth
+			float: left
+			position: relative
+			left: 0
+
+@media (max-width: 700px)
+
+	.network
+		&.singleBlock
+			margin-top: $menu-height
+			.module
+				width: 100%
+				margin: 0 !important
+				float: none
+
+	.userMenu
+		> ul
+			background-image: none
+
+
+	.userMenu li.userMenu-search > input
+		width: 150px
+
+	.prompt-wrapper
+		width: 98%
+		left: 1%
+		margin-left: 0
+
+	.dashboard
+		&.left
+			top: 0
+			margin-top: 0
+			min-height: $menu-height + 70px
+			width: 100%
+			> .module
+				top: $menu-height
+				float: none
+				width:  100%
+				position: fixed
+				z-index: 10
+
+			.mini-profile-info
+				display: none
+	.mini-profile-indicators li
+		width: 20%
+		margin: 0
+		float: left
+
+		&.userMenu-user, &.userMenu-collapsePosts
+			display: none
+
+	.who-follow
+		display: none
+	.promoted-posts-only
+		display: none
+
+	.wrapper
+		padding-top: 0
+	.postboard
+		width: 100%
+		float: none
+		left: 0
+		z-index: 5
+		top: 0
+		position: relative
+		margin-top: 0
+		.modal-wrapper &
+			top: auto
+	#postboard-top
+		display: none
+	.modal-wrapper
+		width: 90%
+
+
+
+
+
+
+@media (max-width: 360px)
+
+
+	.userMenu li.userMenu-search > input
+		width: 100px
+	.dialog-modal
+		right: -50px
+		width: 290px

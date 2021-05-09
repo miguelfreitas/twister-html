@@ -1,0 +1,51 @@
+/* Wrapper and blocks */
+.wrapper
+	width: $site-width
+	max-width: 100%
+	margin: auto
+	padding-top: $menu-height + $gut
+	position: relative
+	z-index: 1
+	@extend .clear-fix
+.dashboard
+	&.left
+		top: $menu-height
+		float: left
+		width:  $leftWidth
+		min-height: 700px
+		> .module
+			width: $miniProfileWidth
+			position: fixed
+			top: $menu-height + $gut
+			z-index: 2000
+
+	&.right
+		float: left
+		top: $menu-height
+		overflow: hidden
+		width: $rightWidth
+		padding-left: $gut
+		padding-right: 3px
+	> .module
+		width: 100%
+		margin-bottom: 20px
+		background: $bloc-light-color
+		width: 100%
+		min-height: $mini-usr-img
+		+box-shadow(1px 2px 2px rgba(#111, 0.1))
+		+border-radius(3px)
+		@extend .clear-fix
+		overflow: hidden
+		h3
+			float: left
+			padding: 10px
+		h4
+			clear: left
+			padding: 10px 10px 5px 10px
+			font-size: 90%
+		small
+			display: none
+		ol
+			@extend .clear-fix
+			clear: both
+			position: relative

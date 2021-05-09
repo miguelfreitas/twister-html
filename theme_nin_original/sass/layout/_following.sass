@@ -1,0 +1,83 @@
+/********** FOLLOWING OWN ***********/
+
+.following-own-modal
+	.modal-content
+		padding: 0
+	.following-list
+		display: flex
+		flex-wrap: wrap
+		justify-content: space-evenly
+		> li
+			width: 48%
+			margin: 2px
+			padding-top: 12px
+			padding-bottom: 8px
+			border: solid 1px rgba(69, 71, 77, .1)
+			background: #FFF
+			text-align: center
+			> div
+				position: relative
+			&:hover
+				border-bottom: solid 1px $main-color-color
+				.mini-profile-actions
+					display: block
+		.mini-profile-photo
+			width: 64px
+			height: 64px
+			margin: 2px
+		.mini-profile-name
+			padding: 4px
+		.mini-screen-name
+			display: none
+		.following-config
+			width: 100%
+			text-align: center
+			margin: 4px
+		.following-config button
+			display: inline-block
+		.mini-profile-actions
+			display: none
+			position: absolute
+			top: 0
+			right: 8px
+		.mini-profile-actions
+			span
+				cursor: pointer
+				display: inline-block
+				position: relative
+				top: -12px
+				right: -8px
+				z-index: 10
+				background: $main-color-color
+				&:hover
+					background: #AAA
+			ul
+				height: 0
+				overflow: hidden
+				position: absolute
+				z-index: 20
+				top: 8px
+				right: -8px
+				padding: 0
+				background: #FFF
+				transition: height .2s linear
+				> li
+					text-align: left
+					white-space: nowrap
+					color: rgba(0, 0, 0, .7)
+					font-size: 12px
+					margin: 0
+					padding: 4px 16px 4px 8px
+					border-bottom: solid 1px rgba(0, 0, 0, 0)
+					background: #FFF
+					&:hover
+						border-bottom: solid 1px $main-color-color
+			&:hover
+				ul
+					height: 57px
+					box-shadow: 8px 10px 10px 0px rgba(0, 0, 0, .2)
+		.swarm-status
+			font-size: 11px
+			display: block
+		.latest-activity
+			font-size: 11px
