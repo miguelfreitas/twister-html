@@ -2747,6 +2747,12 @@ function changeStyle() {
         // we use .ajax because .getScript requires 'unsafe-inline' CSP rule for now, see https://github.com/jquery/jquery/issues/3969
         $.ajax({dataType: 'text', url: 'theme_nin/js/theme_option.js'})
             .done(function(res) {eval(res);});
+    } else if (theme === 'nin_original') {
+        theme = 'nin'; // related to native theme in class definitions, so easiest way to integrate original version
+        style = 'theme_nin_original/css/style.css';
+        profile = 'theme_nin_original/css/profile.css';
+        $.ajax({dataType: 'text', url: 'theme_nin_original/js/theme_option.js'})
+            .done(function(res) {eval(res);});
     } else if (theme === 'calm') {
         style = 'theme_calm/css/style.css';
         profile = 'theme_calm/css/profile.css';

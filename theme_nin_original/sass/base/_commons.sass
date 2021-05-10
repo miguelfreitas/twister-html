@@ -1,0 +1,107 @@
+*
+	outline: none!important
+	+box-sizing(border-box)
+	list-style: none
+
+
+
+html, body
+	min-height: 100%
+	color: $defaut-font-color
+	position: absolute
+	width: 100%
+
+html
+	font-size: $global-font-size
+	background-color: #ddd
+	background-image: image-url("bg.png", false, false)
+	background-attachment: fixed
+
+body
+	font-size: $main-font-size
+	line-height : $main-line-height
+	font-family : $main-font-family, "Symbola"
+	font-weight: 400
+	overflow-y: scroll!important
+
+
+
+a
+	text-decoration: none
+	color: $main-color-color
+	&:hover, &:active
+		color: $main-color-color
+		text-decoration: underline
+	i
+		text-decoration: underline
+		font-style: normal
+
+i, em
+	font-style: italic
+	font-family: $serif-font-family
+	letter-spacing: 0
+
+strong, b
+	font-weight: 600
+
+img
+	background: $bloc-background-color
+
+h1
+	font-size: 1.1em
+	font-weight: 700
+	line-height: 1.1em
+
+h2
+	font-size: 1.1em
+	text-transform: uppercase
+	letter-spacing: 0.07em
+	font-weight: 400
+	line-height: 1.1em
+
+h3
+	font-size: 1.1em
+	font-weight: 400
+	line-height: 1.1em
+
+br
+	display: block
+
+textarea, input
+	background: white
+	display: block
+	border: none
+	font-family: "Monospace", $main-font-family
+	font-size: .8rem
+
+
+samp
+	background: $dark-grey
+	color: white
+	font-size: 11px
+	line-height: 11px
+	display: inline-block
+	padding:  5px
+	+border-radius(1px)
+	font-weight: 500
+	font-family: monospace
+	word-wrap: break-word
+
+/* isFollowing */
+
+
+.isFollowing
+	@extend .ion-checkmark
+	@extend .ion-after
+	&:after
+		color: $main-color-color
+		padding-left: 3px
+		display: inline
+		font-size: 11px
+		vertical-align: top
+		line-height: 10px
+h3
+	.isFollowing:before
+		display: none!important
+	.isFollowing:after
+		display: none!important

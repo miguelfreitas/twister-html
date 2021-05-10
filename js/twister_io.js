@@ -425,8 +425,20 @@ function getAvatar(peerAlias, img) {
         return;
 
     if (peerAlias === 'nobody') {
-        img.attr('src', ($.Options.theme.val === 'nin') ?
-            'theme_nin/img/tornado_avatar.png' : 'img/tornado_avatar.png');
+
+        var avatar = 'img/tornado_avatar.png';
+
+        switch ($.Options.theme.val) {
+          case 'nin':
+            avatar = 'theme_nin/img/tornado_avatar.png';
+          break;
+          case 'nin_original':
+            avatar = 'theme_nin_original/img/tornado_avatar.png';
+          break;
+        }
+
+        img.attr('src', avatar);
+
         return;
     }
 

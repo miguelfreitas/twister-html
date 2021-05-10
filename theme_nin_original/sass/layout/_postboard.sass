@@ -1,0 +1,393 @@
+/*************  TOP TEXTAREA *************/
+#postboard-top
+	position: relative
+	@extend .clear-fix
+	margin-bottom: 10px
+	transition: height .3s linear
+	padding: 15px
+	background: white
+	overflow: hidden
+	background: $bloc-light-color
+	+transition-property( top)
+	+transition-duration(.1s)
+	+transition-timing-function(ease-out)
+	top: 0
+	+box-shadow(1px 2px 2px rgba(#111, 0.1))
+	z-index: 120
+
+	.profile-photo
+		position: absolute
+		top: 10px
+		left: 10px
+		width: $mini-usr-img
+		img
+			width: 100%
+	.post-area
+		overflow: hidden
+		@extend .clear-fix
+		width: 100%
+		padding-left: 58px
+		padding-right: 0
+		display: inline
+		+box-sizing(border-box)
+		background: none
+		float: right
+		.post-area-new
+			@extend .open
+			+box-shadow(none)
+			textarea
+				margin: 0 0 10px 0
+
+	&.onTop
+		position: fixed
+		bottom: 0
+		left: 0
+		top: auto
+		margin-bottom: 0
+		z-index: 2000
+		+box-shadow(0 -5px 13px rgba(#111, 0.2))
+		width: 320px
+		max-width: 100%
+		.profile-photo
+			display: none!important
+		.post-area
+			padding-left: 0
+
+
+
+/*************  POSTBOARD *************/
+
+
+.postboard
+	width: $postboardWidth
+	float: left
+
+	h2, .postboard-news
+		display: none
+
+	&.large
+		width: $postboardLargeWidth
+
+.postboard-posts
+	position: relative
+	z-index: 1
+	clear: both
+
+
+	.post
+
+		position: relative
+		margin-bottom: 1px
+		+transition-property(margin)
+		+transition-duration(.5s)
+		+transition-timing-function(ease-out)
+		color: $defaut-font-color
+		cursor: pointer
+
+		&:hover
+			color: #000
+
+		.show-more
+			display: inline-block
+			float: right
+			font-size: .8rem
+			color: lighten($dark-grey,30%)
+
+			&:hover
+				color: lighten($dark-grey,5%)
+		.post-expand
+			color: lighten($dark-grey,30%)
+			background: $bloc-light-color
+			cursor: pointer
+			font-size: .8rem
+			position: absolute
+			left: 10px
+			bottom: 10px
+			&:hover
+				color: lighten($dark-grey,5%)
+		.post-data
+			padding:  15px
+			background: $bloc-light-color
+
+		&.promoted
+			> .post-data
+				.post-text::after
+					font-size: 70%
+					color: #FFF
+					background-color: rgba($color-green, 0.75)
+					margin: 0px 8px
+					padding: 2px 4px
+					content: attr(data-promoted)
+				&:hover
+					.post-text::after
+						background-color: $color-green
+
+
+
+
+
+	/*********** EVERYTHING SPECIFIC TO OPEN POSTS  **************/
+
+	> .post
+		+box-shadow(1px 2px 2px rgba(#111, 0.1))
+		&.open
+			margin-top: $space
+			margin-bottom: $space
+			+box-shadow(1px 2px 2px rgba(#111, 0))
+			.post
+				color: darken($defaut-font-color, 15%)
+				+box-shadow(1px 2px 2px rgba(#111, 0.1))
+				margin-bottom: 1px
+				&:not(.original)
+					.post-expand
+						display: none
+						margin: 0
+
+.post-photo
+	margin: 0
+	display: inline-block
+	float: left
+	vertical-align: middle
+	overflow: hidden
+	width: $mini-usr-img
+	margin: 0 15px 15px 0
+	max-height: $mini-usr-img
+	clear: both
+	img
+		width: 100%
+		height: auto!important
+
+.post-info-name
+	font-weight: 500
+	color: inherit
+	text-decoration: none
+	display: inline-block
+	font-size: 1rem
+	float: left
+	&:hover
+		text-decoration: none
+		color: black
+
+.post-info-tag
+	font-size: .8rem
+	opacity: .6
+	margin-top: 4px
+	display: inline-block
+
+.post-info-sent
+	display: block
+	position: absolute
+	top: -10px
+	right: 0
+	font-size: 15px
+
+
+.post-info-time
+	position: absolute
+	font-size: .8rem
+	line-height: .8rem
+	text-decoration: none
+	top: 12px
+	right: 0
+	padding-right: 11px
+	text-align: right
+	color: lighten($dark-grey,30%)
+	&:hover
+		color: lighten($dark-grey,5%)
+
+.post-text
+	margin: 0 0 0 ($mini-usr-img +15)
+	word-wrap: break-word
+	min-height: $mini-usr-img - 20
+	padding: 0
+	a:hover
+		text-decoration: underline
+
+
+.post-context
+	font-size: .8rem
+	line-height: .8rem
+	margin: 2px 0 4px 60px
+
+	color: lighten($dark-grey,30%)
+
+
+.post-rt-by
+	margin: 0 0 1em
+	div
+		display: inline
+	.prep:before, .prep:after
+		content: ' '
+
+
+.post-rt-icon
+	@extend .ion-shuffle
+	@extend .ion
+	&:before
+		display: block
+		float: left
+		color: $main-color-color
+
+		line-height: .8rem
+		font-size: .8rem
+
+		margin-right: .4em
+
+
+// .post-interactions (reply, retransmit, fav)
+
+.post-interactions
+	margin: 10px 0 3px 0
+	text-align: right
+	height: .8rem
+	line-height: .8rem
+	span
+		color: lighten($dark-grey,30%)
+		cursor: pointer
+		font-size: .8rem
+		line-height: .8rem
+		@extend .ion
+		position: relative
+		margin-left: 7px
+		display: none
+		.open .original &
+			display: inline-block!important
+
+		&:hover
+			color: lighten($dark-grey,5%)
+		&:before
+			padding: 3px
+		&.post-reply
+			@extend .ion-plus
+		&.post-propagate
+			@extend .ion-shuffle
+		&.post-favorite
+			@extend .ion-alert
+
+	.post:hover &
+		.post-reply, .post-propagate , .post-favorite
+			display: inline-block
+
+
+.open .related
+	.post-reply,
+	.post-propagate,
+	.post-favorite
+		display: none!important
+	&:hover
+		.post-reply,
+		.post-propagate,
+		.post-favorite
+			display: inline-block!important
+
+
+.expanded-content
+	//display: none
+	padding: 0
+	@extend .clear-fix
+	textarea
+		clear: left
+
+.image-preview
+	max-width: 100%
+	width: auto
+	display: block
+	margin: auto
+
+.preview-container
+	width: 100%
+	text-align: center
+	overflow-y: auto
+	background: black
+	clear: both
+
+.post-stats
+	display: flex
+	float: left
+	clear: left
+	height: 34px
+	> div
+		line-height: 16px
+		vertical-align: middle
+	.stat-count
+		font-size: 12px
+		padding-right: 4px
+		border-right: solid 1px $light-grey
+		div:last-child
+			display: none
+	.avatar-row
+		padding: 4px
+		a
+			display: inline-block
+			position: relative
+			margin-right: 2px
+
+.post
+	.new-replies-available
+		text-align: center
+		margin-top: 8px
+		button
+			@include button-color-basic
+
+
+
+
+//what appears on top of .avatar-row img on hover
+
+.avatar-row
+	a:hover
+		.user-name-tooltip
+			display: block
+
+	.user-name-tooltip
+		display: none
+		position: absolute
+		background: $main-color-dark
+		font-size: 11px
+		line-height: 11px
+		white-space: nowrap
+		padding:  5px
+		+border-radius(3px)
+		color: #fff
+		top: -28px
+		left: -10px
+		&:after
+			content: ""
+			position: absolute
+			width: 0
+			left: 13px
+			bottom: -4px
+			border-top: solid 5px $main-color-dark
+			border-left: solid 5px transparent
+			border-right: solid 5px transparent
+
+// Posts replies get left border to show threads
+
+.post-replies .sub-replies
+	border-left: solid 18px transparent
+
+
+
+
+.post-rt-reference
+	padding: 10px
+	margin-top: 10px
+	position: relative
+	border: 1px solid #eee
+	+border-radius(3px)
+	&:hover
+		background-color: #FFF
+		cursor: pointer
+	.post-photo
+		display: none
+	.post-info-name
+		font-size: 12px
+	.post-text
+		margin: 5px 0 0 0
+		clear: both
+		font-size: 12px
+		line-height: 130%
+	.post-info-time
+		font-size: 80%
+	.post-area
+		padding-left: 0

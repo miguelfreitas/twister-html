@@ -1,0 +1,79 @@
+
+
+
+.box-shadow
+	+box-shadow(0 8px 13px rgba(#111, 0))
+
+
+.clear-fix
+	&:after // clearfix
+		content: ""
+		display: table
+		clear: both
+
+
+
+/************** BUTTONS ************/
+
+@mixin button-basic
+	padding: .6rem 1rem
+	display: inline-block
+	line-height: .75rem
+	letter-spacing: 0.07rem
+	font-size: .75rem
+	position: relative
+	font-weight: 300
+	text-transform: uppercase
+	+transition-property(background, border-color)
+	+transition-duration(.1s)
+	color: $dark-grey
+	background: #F8F8F8
+	border: 1px solid darken( #F8F8F8 , 5%)
+	font-family: $symbol-font-family, $main-font-family
+	cursor: pointer
+	&:hover
+		border-color: darken( #F8F8F8 , 15%)
+		text-decoration: none
+		color: $dark-grey
+	&.disabled
+		opacity: .5
+		color: #999
+		background-color: $bloc-background-color
+		&:hover
+			color: #666
+			+box-shadow(1px 1px 0 rgba(#444, .3))
+
+@mixin button-color-basic($type: 1)
+	$color: $main-color-color
+	$hover-border-color-darken-amount: 22%
+	@if $type == 2
+		$color: #64676C
+		$hover-border-color-darken-amount: 15%
+	background: $color
+	border-color: darken($color, 5%)
+	color: white
+	font-weight: 500
+	&:hover
+		border-color: darken($color, $hover-border-color-darken-amount)
+
+@mixin button-small-basic
+	padding:  .5rem
+	font-weight: 700
+	font-size: .7rem
+	line-height: .7rem
+
+button, a.button
+	@include button-basic
+	&.color-1
+		@include button-color-basic
+	&.color-2
+		@include button-color-basic(2)
+	&.small
+		@include button-small-basic
+	&.light
+		background: #eee
+		border-color: darken(#eee, 5%)
+		color: $main-color-dark
+		font-weight: 500
+		&:hover
+			border-color: darken(#eee, 25%)

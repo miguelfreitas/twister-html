@@ -1,0 +1,167 @@
+/****** DIRECT MESSAGES MODAL**********/
+
+.modal-wrapper.directMessages
+
+	.post-area-new
+		display: none
+		z-index: 5
+		background: $bloc-light-color !important
+		position: absolute
+		bottom: 0px
+		width: 100% !important
+		padding: 10px 20px!important
+		+box-shadow(0 -8px 13px rgba(#111, 0.1))
+	#post-preview
+		background: none
+		border: none
+		padding: 5px
+		width: 100%!important
+
+
+	.modal-header
+		h3 span
+			display: inline-block!important
+			padding-left: 5px
+			color: white
+			cursor: default
+
+	.modal-content
+		+box-sizing(border-box)
+		width: 100%
+
+	.post-photo
+		width: $mini-usr-img
+	.post-text
+		margin-left: $mini-usr-img + 10px
+		font-size: .9rem
+	.post-info-name
+		float: none
+	.message.received, .message.sent
+		.post-info-name
+			display: none
+	.post-info-tag
+		line-height: 1em
+		padding: 0
+		display: inline
+		font-size: 80%
+		margin: 0 0 0 1em
+	.post-info-sent
+		position: absolute
+		left: 50%
+		top: 10px
+		display: none
+
+.direct-messages-list .post
+	padding: 20px
+	cursor: pointer
+	@extend .ion-after
+	@extend .ion-right
+	&:after
+		position: absolute
+		right: 25px
+		top: 50%
+		font-size: 1.1em
+		margin: -0.55em 0 0 0
+		color: rgba(0, 0, 0, 0.4)
+		opacity: 0
+		+transition-property(right, opacity)
+		+transition-duration(.2s)
+		+transition-timing-function(ease-out)
+.direct-messages-list
+	.post:hover:after
+		opacity: 1
+		right: 5px
+	.post:hover
+		background: white
+
+	.post .messages-qtd
+		display: none
+		top: 4px
+		left: 56px
+
+	li
+		position: relative
+		border-bottom: 1px solid $main-background-color
+		background: $bloc-light-color
+.direct-messages-thread
+	padding-bottom: 160px
+	max-width: 420px
+	margin: auto
+	li
+		position: relative!important
+
+	.post
+		@extend .clear-fix
+		background: none
+		left: 0
+		margin: 0px 10px 20px 10px
+		cursor: default
+		position: relative
+		.post-info-time
+			float: none
+			display: block
+			text-align: center
+			font-size: 10px
+			padding-top: 10px
+			margin-bottom: 10px
+			cursor: default
+			position: static
+			&:hover
+				color: $main-color-light
+
+
+
+
+		.post-text:after, .post-text:nth-child(2n):after
+			content: ""
+			width: 1px
+			background: transparent
+			position: absolute
+			top: 10px
+			white-space: normal
+
+		.post-text:after
+			border-top: solid 7px transparent
+			border-bottom: solid 7px transparent
+			border-right: solid 7px white
+			left: -7px
+
+		.post-text
+			background: white
+			margin-right: $mini-usr-img + 10
+			margin-left: $mini-usr-img + 10
+			position: relative
+			display: inline-block
+			max-width: 300px
+			font-size: .9rem
+			padding: 5px 10px
+			z-index: 4
+			float: left
+			word-wrap: break-word
+			max-width: 70%
+			min-height: $mini-usr-img
+
+		.post-photo
+			position: absolute
+			left: 0
+			top: 30px
+			float: none
+			margin: 0
+
+
+
+	.post.sent
+
+		.post-text:after
+			border-top: solid 7px transparent
+			border-bottom: solid 7px transparent
+			border-right: none
+			border-left: solid 7px white
+			right: -7px
+			left: auto
+		.post-text
+			float: right
+		.post-photo
+			position: absolute
+			right: 0
+			left: auto

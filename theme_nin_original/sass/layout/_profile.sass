@@ -1,0 +1,156 @@
+
+// variables for width
+
+$modal-width: 980px
+$modal-height: 580px
+$modal-gut: 15px
+$modal-postboard-height: $modal-height - 3*$modal-gut
+$modal-left-col: 400px
+$modal-right-col: ($modal-width - 2*$modal-gut) - $modal-left-col - $modal-gut
+$modal-postboard-post-height: 100%
+
+/*************************************
+ ******************* PROFILE MODAL
+ ***************************************/
+
+.profile-modal
+
+	.modal-content
+		overflow: hidden
+		padding: 0
+		position: relative
+		#profile-posts
+			padding: 0
+
+		.postboard
+			width: 100%
+			height: 100%
+			position: absolute
+
+		.postboard-posts
+			display: block
+			height: $modal-postboard-post-height
+			overflow: auto
+
+		.profile-card
+			margin: 0
+			padding: 0
+			border-bottom: 1px solid $main-background-color
+		.profile-data
+			background: none
+
+		.members
+			overflow-y: auto
+
+.profile-modal
+	h2.profile-screen-name
+		display: block
+		letter-spacing: 0
+		text-transform: none
+		color: lighten($dark-grey, 30%)
+		padding:  5px 0
+		margin: 0
+		font-size: 13px
+		line-height: 13px
+
+
+/* Profile card*/
+
+.profile-card
+	width: 100%
+	background: $bloc-light-color
+	padding: $modal-gut
+.profile-card-main
+	position: relative
+	text-align: left
+	word-wrap: break-word
+	background: none!important
+	padding: 10px
+	h1, h2
+		display: inline !important
+		b
+			font-weight: 400
+	&:before
+		content: ""
+		border: solid 0px #fff
+		position: absolute
+		left: 1px
+		top: 1px
+		right: 1px
+		bottom: 1px
+		z-index: 0
+	*
+		position: relative
+		z-index: 1
+
+.profile-card-photo
+	height: auto
+	width: $usr-img
+	margin: 0 10px 10px 0
+	display: block
+	float: left
+
+.profile-bio
+	@extend i
+	text-align: left
+	font-size: .9rem
+
+	margin-left:  $usr-img + 10
+.profile-card-buttons
+	text-align: center
+	padding: 0 0 $space 0
+
+
+.isFollowing:after
+	font-size: 10px
+
+
+
+.follow
+	@include button-color-basic
+.unfollow
+	@include button-color-basic(2)
+
+
+.known-followers
+	text-align: center
+	clear: both
+	width: 100%
+
+
+#msngrswr
+	display: none
+	text-align: center
+	margin: 10px 0
+
+.profile-extra-contact
+	display: none
+	margin: 0 15px 0 0
+	font-weight: 500
+	padding: 2px 8px 3px 8px
+	+border-radius(2px)
+
+
+
+.bitmessage-ctc, .tox-ctc
+	background: #999
+	color: white
+	font-size: 1rem
+	display: inline-block
+	padding: 10px
+	line-height: 1rem
+	@extend .ion-copy
+	@extend .ion
+
+
+
+.profile-modal
+	.profile-tox, .profile-bitmessage
+		display: inline-block
+		margin-right: 5px
+		font-size: 13px
+		&:hover
+			color: $main-color-color
+			text-decoration: none
+		@extend .ion-tox
+		@extend .ion

@@ -1,0 +1,118 @@
+// vars for the menu
+
+$menu-height : 52px
+$menu-font-color: white
+$menuBgColor : $dark-grey
+.userMenu
+	width: 100%
+	position: fixed
+	height: $menu-height
+	left: 0
+	margin: 0
+	//background-color: #FFAF1C
+	//+background-image(linear-gradient(to right , $color-green, #5E80A2) )
+	background-color: $menuBgColor
+	z-index: 20
+	> ul
+		@extend .clear-fix
+		+box-sizing(border-box)
+		max-width: 100%
+		width: $site-width
+		margin: auto
+		background: image-url("logo.png", false, false) no-repeat 50% 50%
+		background-size: 20px
+		li
+			position: relative
+			display: block
+			float: left
+			margin: 0 10px
+			> a
+				line-height: $menu-height
+				display: inline-block
+				color: rgba($menu-font-color, 0.5)!important
+				font-size: 1rem
+				position: relative
+				font-size: 1rem
+				&:hover
+					color: $menu-font-color!important
+					text-decoration: none
+
+				&:before
+					padding-right: 5px
+				span
+					display: inline-block
+
+
+			&.current  a
+				color: $menu-font-color!important
+
+
+/* Menu specific entries */
+
+.userMenu li
+
+	&.userMenu-home
+		a
+			.label
+				display: inline-block!important
+
+		.menu-news
+			position: absolute
+			text-align: center
+			display: none
+			top: 5px
+			right: -12px
+			background: $main-color-color
+			width: 15px
+			height: 15px
+			line-height: 15px
+			font-size: 10px
+			padding: 1px
+			margin: 0
+			font-weight: 900
+			+border-radius(50%)
+			+box-sizing(content-box)
+			color: white
+			&.show
+				display: block
+
+
+	&.userMenu-dhtindicator, &.userMenu-connections, &.userMenu-messages, &.userMenu-groupmessages
+		display: none!important
+
+	&.userMenu-config, &.userMenu-search
+		float: right
+		color: $menu-font-color
+		+ a
+			color: $main-color-dark
+	&.userMenu-search
+		> input
+			border: 1px solid rgba(white,.3)
+			line-height: $menu-height/2
+			margin-top: $menu-height/4
+			font-size: 12px
+			padding: 0 7px
+			background: rgba(white,.1)
+			color: white
+			+border-radius(7px)
+			&:focus
+				border-color: rgba(white,.7)
+	&.userMenu-config > a
+		@extend .ion
+		@extend .ion-gear
+		font-size: 1.5rem
+	.config-menu.dialog-modal
+		a
+			background: $bloc-light-color
+			border-top: 1px solid $main-background-color
+			&:hover
+				background: white
+			text-decoration: none
+			display: block
+			width: 100%
+			font-weight: 400
+			line-height: $mini-usr-img / 1.5
+			display: block
+			margin: 0
+			padding: 5px
+			color: $defaut-font-color!important
