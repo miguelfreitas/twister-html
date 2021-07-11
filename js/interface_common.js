@@ -1334,7 +1334,7 @@ function _startTorrentDownloadAndPreview(torrentId, previewContainer, isMedia) {
 function webtorrentFilePreview(file, previewContainer, isMedia) {
     if (!isMedia) {
         // try guessing by filename extension
-        isMedia = /^[^?]+\.(?:jpe?g|gif|png|mp4|webm|mp3|ogg|wav|)$/i.test(file.name)
+        isMedia = /^[^?]+\.(?:jpe?g|gif|png|webp|mp4|webm|mp3|ogg|wav|)$/i.test(file.name)
     }
 
     if (isMedia) {

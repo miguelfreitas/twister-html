@@ -885,7 +885,7 @@ function setPostImagePreview(elem, links) {
         if (!previewContainer.children().length) {
             // is there any links to images in the post?
             for (var i = 0; i < links.length; i++) {
-                if (/^[^?]+\.(?:jpe?g|gif|png)$/i.test(links[i].href)) {
+                if (/^[^?]+\.(?:jpe?g|gif|png|webp)$/i.test(links[i].href)) {
                     var url = proxyURL(links[i].href);
                     previewContainer.append($('<img src="' + url + '" class="image-preview" />'));
                 }
